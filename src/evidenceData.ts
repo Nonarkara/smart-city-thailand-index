@@ -1,0 +1,204 @@
+// ---------------------------------------------------------------------------
+// Evidence & Data Provenance
+// ---------------------------------------------------------------------------
+// Every score has a source. Every claim has evidence.
+// This is the foundation of a credible index.
+// ---------------------------------------------------------------------------
+
+export interface EvidenceItem {
+  cityId: string;
+  pillar: string;
+  type: "news" | "data" | "field" | "satellite" | "government";
+  titleEn: string;
+  titleTh: string;
+  source: string;
+  url?: string;
+  date: string;
+  metric?: string;
+  value?: string;
+}
+
+export interface DataSource {
+  id: string;
+  name: string;
+  type: "government" | "international" | "satellite" | "field" | "academic";
+  descEn: string;
+  descTh: string;
+  descZh: string;
+  url: string;
+  updateFrequency: string;
+  metrics: string[];
+}
+
+export const dataSources: DataSource[] = [
+  {
+    id: "nso",
+    name: "National Statistical Office (NSO)",
+    type: "government",
+    descEn: "Thailand's official statistical agency. Provides household income, employment, population, and social indicator data at provincial level.",
+    descTh: "สำนักงานสถิติแห่งชาติ ให้ข้อมูลรายได้ครัวเรือน การจ้างงาน ประชากร และตัวชี้วัดสังคมระดับจังหวัด",
+    descZh: "泰国官方统计机构。提供省级家庭收入、就业、人口和社会指标数据。",
+    url: "https://www.nso.go.th",
+    updateFrequency: "Annual",
+    metrics: ["avgMonthlyIncome", "population", "employment"],
+  },
+  {
+    id: "nesdc",
+    name: "NESDC — GPP Data",
+    type: "government",
+    descEn: "National Economic and Social Development Council. Publishes Gross Provincial Product (GPP) per capita — the primary economic output metric.",
+    descTh: "สภาพัฒนาการเศรษฐกิจและสังคมแห่งชาติ เผยแพร่ผลิตภัณฑ์มวลรวมจังหวัด (GPP) ต่อหัว",
+    descZh: "国家经济和社会发展委员会。发布各省人均国内生产总值(GPP)。",
+    url: "https://www.nesdc.go.th",
+    updateFrequency: "Annual",
+    metrics: ["gppPerCapita"],
+  },
+  {
+    id: "pcd",
+    name: "Pollution Control Department (PCD)",
+    type: "government",
+    descEn: "Ministry of Natural Resources. Operates 70+ air quality monitoring stations. PM2.5 annual averages are the primary environmental health metric.",
+    descTh: "กรมควบคุมมลพิษ กระทรวงทรัพยากรธรรมชาติ ดำเนินการสถานีเฝ้าระวังคุณภาพอากาศ 70+ แห่ง",
+    descZh: "污染控制部门。运营70多个空气质量监测站。PM2.5年均值是主要环境健康指标。",
+    url: "http://air4thai.pcd.go.th",
+    updateFrequency: "Real-time / Annual average",
+    metrics: ["pm25Annual"],
+  },
+  {
+    id: "rtp",
+    name: "Royal Thai Police",
+    type: "government",
+    descEn: "Official crime statistics per province. Reported crimes per 100,000 population — the primary safety metric.",
+    descTh: "สำนักงานตำรวจแห่งชาติ สถิติอาชญากรรมรายจังหวัด อาชญากรรมต่อแสนประชากร",
+    descZh: "泰国皇家警察。各省官方犯罪统计。每10万人口报案数——主要安全指标。",
+    url: "https://www.royalthaipolice.go.th",
+    updateFrequency: "Annual",
+    metrics: ["crimeRatePer100k"],
+  },
+  {
+    id: "moph",
+    name: "Ministry of Public Health",
+    type: "government",
+    descEn: "Hospital bed counts, healthcare access metrics, disease surveillance data at provincial level.",
+    descTh: "กระทรวงสาธารณสุข จำนวนเตียงโรงพยาบาล ตัวชี้วัดการเข้าถึงสาธารณสุข",
+    descZh: "公共卫生部。医院床位数、医疗可及性指标、省级疾病监测数据。",
+    url: "https://www.moph.go.th",
+    updateFrequency: "Annual",
+    metrics: ["hospitalBedsPer10k"],
+  },
+  {
+    id: "gistda",
+    name: "GISTDA — Satellite Imagery",
+    type: "satellite",
+    descEn: "Geo-Informatics and Space Technology Agency. Provides satellite-derived green coverage, urban sprawl, and land use data for all Thai provinces.",
+    descTh: "สำนักงานพัฒนาเทคโนโลยีอวกาศและภูมิสารสนเทศ ภาพถ่ายดาวเทียมให้ข้อมูลพื้นที่สีเขียว การขยายตัวของเมือง",
+    descZh: "地理信息和空间技术机构。提供卫星衍生的绿地覆盖率、城市扩张和土地利用数据。",
+    url: "https://www.gistda.or.th",
+    updateFrequency: "Quarterly",
+    metrics: ["greenCoverage"],
+  },
+  {
+    id: "open-meteo",
+    name: "Open-Meteo / Copernicus",
+    type: "satellite",
+    descEn: "Open weather and climate API. Provides historical PM2.5, temperature, humidity, and climate comfort data cross-validated against PCD stations.",
+    descTh: "API สภาพอากาศเปิด ให้ข้อมูล PM2.5 ย้อนหลัง อุณหภูมิ ความชื้น ตรวจสอบร่วมกับสถานี PCD",
+    descZh: "开放气象和气候API。提供历史PM2.5、温度、湿度和气候舒适度数据，与PCD站点交叉验证。",
+    url: "https://open-meteo.com",
+    updateFrequency: "Daily",
+    metrics: ["pm25Annual", "climate"],
+  },
+  {
+    id: "wb",
+    name: "World Bank Open Data",
+    type: "international",
+    descEn: "Country-context indicators: GDP growth, Gini coefficient, ease of doing business, governance quality. Used for national-level normalization.",
+    descTh: "ตัวชี้วัดระดับประเทศ: การเติบโต GDP ค่า Gini ความง่ายในการทำธุรกิจ คุณภาพการปกครอง",
+    descZh: "国家背景指标：GDP增长、基尼系数、营商便利度、治理质量。用于国家级标准化。",
+    url: "https://data.worldbank.org",
+    updateFrequency: "Annual",
+    metrics: ["gdpGrowth", "gini", "governance"],
+  },
+  {
+    id: "depa",
+    name: "depa Smart City Office",
+    type: "government",
+    descEn: "Smart city certification status, project data, digital initiative details, Smart City Competitiveness Index scores for all 37 certified and 165+ promotion zone cities.",
+    descTh: "สถานะการรับรองเมืองอัจฉริยะ ข้อมูลโครงการ รายละเอียดโครงการดิจิทัล คะแนน TSCCI",
+    descZh: "智慧城市认证状态、项目数据、数字计划详情、37个认证城市和165+推广区城市的竞争力指数分数。",
+    url: "https://www.depa.or.th/th/smart-city-plan/existing-smart-city",
+    updateFrequency: "Annual (certification batches)",
+    metrics: ["smartDimensions", "certificationStatus", "digitalProjects"],
+  },
+  {
+    id: "citydata",
+    name: "City Data Platform Thailand",
+    type: "government",
+    descEn: "depa's unified smart city data dashboard. Aggregates IoT sensor data, municipal service metrics, and citizen engagement data from participating cities.",
+    descTh: "แดชบอร์ดข้อมูลเมืองอัจฉริยะรวมศูนย์ของ depa รวบรวมข้อมูลเซ็นเซอร์ IoT ตัวชี้วัดบริการเทศบาล",
+    descZh: "depa的统一智慧城市数据仪表板。汇总参与城市的物联网传感器数据、市政服务指标和市民参与数据。",
+    url: "https://www.citydata.in.th",
+    updateFrequency: "Real-time (participating cities)",
+    metrics: ["iotSensors", "citizenEngagement", "serviceMetrics"],
+  },
+  {
+    id: "field",
+    name: "Field Observation",
+    type: "field",
+    descEn: "Direct site visits by the research team. Verified: is the infrastructure actually built? Do citizens use the smart services? Does the city match its proposal?",
+    descTh: "การลงพื้นที่สำรวจจริงโดยทีมวิจัย ตรวจสอบ: โครงสร้างพื้นฐานสร้างจริงหรือไม่? ประชาชนใช้บริการอัจฉริยะหรือไม่?",
+    descZh: "研究团队实地考察。验证：基础设施是否真正建成？市民是否使用智能服务？城市是否符合其提案？",
+    url: "",
+    updateFrequency: "Ongoing",
+    metrics: ["reality", "citizenUsage", "infrastructureCompletion"],
+  },
+];
+
+// Evidence items — real news and data points backing city scores
+export const evidenceItems: EvidenceItem[] = [
+  // ─── Phuket ───
+  { cityId: "phuket", pillar: "digital", type: "news", titleEn: "Phuket Smart City traffic management reduces congestion 25% on key corridors", titleTh: "ระบบจราจรอัจฉริยะภูเก็ตลดการจราจรติดขัด 25% บนเส้นทางหลัก", source: "depa Project Report", date: "2024", metric: "congestion_reduction", value: "25%" },
+  { cityId: "phuket", pillar: "environment", type: "data", titleEn: "Phuket annual PM2.5: 18.2 μg/m³ — below WHO interim target of 25", titleTh: "ภูเก็ต PM2.5 เฉลี่ยปี: 18.2 μg/m³ — ต่ำกว่าเป้า WHO ชั่วคราว 25", source: "PCD / Open-Meteo", date: "2025", metric: "pm25", value: "18.2" },
+  { cityId: "phuket", pillar: "economy", type: "data", titleEn: "Phuket GPP per capita ฿492,000 — 2nd highest outside Bangkok", titleTh: "GPP ต่อหัวภูเก็ต ฿492,000 — สูงสุดอันดับ 2 นอกกรุงเทพฯ", source: "NESDC", date: "2024", metric: "gpp", value: "492000" },
+  { cityId: "phuket", pillar: "hospitality", type: "news", titleEn: "Smart tourist safety system with multilingual alerts deployed island-wide", titleTh: "ระบบความปลอดภัยนักท่องเที่ยวอัจฉริยะพร้อมการแจ้งเตือนหลายภาษาทั่วเกาะ", source: "Phuket Smart City Office", date: "2024" },
+
+  // ─── Khon Kaen ───
+  { cityId: "khon-kaen", pillar: "digital", type: "news", titleEn: "Khon Kaen smart bus system operational — real-time tracking via LINE app", titleTh: "ระบบรถบัสอัจฉริยะขอนแก่นเปิดให้บริการ — ติดตามเรียลไทม์ผ่านแอพ LINE", source: "Khon Kaen Smart City", date: "2024" },
+  { cityId: "khon-kaen", pillar: "economy", type: "data", titleEn: "Khon Kaen GPP per capita ฿155,000 — highest in Isan region", titleTh: "GPP ต่อหัวขอนแก่น ฿155,000 — สูงสุดในภาคอีสาน", source: "NESDC", date: "2024", metric: "gpp", value: "155000" },
+  { cityId: "khon-kaen", pillar: "livability", type: "news", titleEn: "LRT construction underway — digital twin used for urban planning", titleTh: "กำลังก่อสร้าง LRT — ใช้ digital twin สำหรับวางผังเมือง", source: "MRTA / Khon Kaen Transit", date: "2025" },
+
+  // ─── Wangchan Valley ───
+  { cityId: "wangchan-valley", pillar: "livability", type: "field", titleEn: "Field visit confirms: less than 10% of planned infrastructure is built. Site is mostly empty land.", titleTh: "การลงพื้นที่ยืนยัน: โครงสร้างพื้นฐานที่วางแผนสร้างไม่ถึง 10% พื้นที่ส่วนใหญ่เป็นที่ดินว่าง", source: "SLIC Field Team", date: "2025" },
+  { cityId: "wangchan-valley", pillar: "economy", type: "data", titleEn: "Population: 0 permanent residents. No commercial activity. GPP contribution: negligible.", titleTh: "ประชากร: 0 ผู้อยู่อาศัยถาวร ไม่มีกิจกรรมเชิงพาณิชย์ การมีส่วนร่วม GPP: น้อยมาก", source: "NSO / Field observation", date: "2025", metric: "population", value: "0" },
+
+  // ─── Samyan ───
+  { cityId: "samyan", pillar: "digital", type: "news", titleEn: "Samyan 5G testbed supporting 200+ startups at True Digital Park and Block 28", titleTh: "Samyan 5G testbed รองรับ 200+ สตาร์ทอัพที่ True Digital Park และ Block 28", source: "True Digital Park", date: "2024" },
+  { cityId: "samyan", pillar: "economy", type: "data", titleEn: "Bangkok GPP per capita ฿628,000 — Samyan district benefits from Chulalongkorn University innovation corridor", titleTh: "GPP ต่อหัวกรุงเทพฯ ฿628,000 — ย่านสามย่านได้ประโยชน์จากระเบียงนวัตกรรมจุฬาฯ", source: "NESDC / CU Innovation Hub", date: "2024" },
+
+  // ─── Chiang Mai ───
+  { cityId: "chiang-mai-old-town", pillar: "environment", type: "data", titleEn: "Chiang Mai annual PM2.5: 46.1 μg/m³ — exceeds WHO guideline by 4x. Burning season drives score down.", titleTh: "เชียงใหม่ PM2.5 เฉลี่ยปี: 46.1 μg/m³ — เกินมาตรฐาน WHO 4 เท่า ฤดูเผาดึงคะแนนลง", source: "PCD / Open-Meteo", date: "2025", metric: "pm25", value: "46.1" },
+  { cityId: "chiang-mai-old-town", pillar: "hospitality", type: "news", titleEn: "Smart heritage preservation: IoT sensors on 300+ temples monitoring structural integrity", titleTh: "อนุรักษ์มรดกอัจฉริยะ: เซ็นเซอร์ IoT บนวัด 300+ แห่งเฝ้าระวังความมั่นคงโครงสร้าง", source: "Chiang Mai Municipality / depa", date: "2024" },
+  { cityId: "chiang-mai-old-town", pillar: "digital", type: "news", titleEn: "50+ air quality monitoring stations deployed across Chiang Mai basin", titleTh: "สถานีเฝ้าระวังคุณภาพอากาศ 50+ แห่งติดตั้งทั่วแอ่งเชียงใหม่", source: "CMU / PCD Partnership", date: "2024" },
+
+  // ─── Yala ───
+  { cityId: "yala", pillar: "environment", type: "news", titleEn: "Yala wins Thailand's cleanest city award for the 4th consecutive year", titleTh: "ยะลาชนะรางวัลเมืองสะอาดที่สุดของไทย 4 ปีติดต่อกัน", source: "Ministry of Interior", date: "2024" },
+  { cityId: "yala", pillar: "safety", type: "data", titleEn: "Crime rate 245 per 100K — elevated due to deep south security situation", titleTh: "อัตราอาชญากรรม 245 ต่อแสน — สูงเนื่องจากสถานการณ์ความมั่นคงชายแดนใต้", source: "Royal Thai Police", date: "2024", metric: "crime", value: "245" },
+
+  // ─── Nakhon Si Thammarat ───
+  { cityId: "nakhon-si-thammarat", pillar: "digital", type: "news", titleEn: "My City app cuts citizen complaint response time from 67 hours to 2 hours", titleTh: "แอพ My City ลดเวลาตอบสนองข้อร้องเรียนจาก 67 ชั่วโมงเหลือ 2 ชั่วโมง", source: "depa / GovInsider", url: "https://govinsider.asia/intl-en/article/a-bottom-up-smart-city-thailands-evolving-approach-to-smart-city-development", date: "2024" },
+  { cityId: "nakhon-si-thammarat", pillar: "livability", type: "news", titleEn: "Smart flood management for Pak Phanang basin — IoT sensors prevent repeat of 2017 flooding", titleTh: "จัดการน้ำท่วมอัจฉริยะสำหรับลุ่มน้ำปากพนัง — เซ็นเซอร์ IoT ป้องกันน้ำท่วมซ้ำรอยปี 2560", source: "Nakhon Si Thammarat Municipality", date: "2024" },
+
+  // ─── Hat Yai ───
+  { cityId: "hat-yai", pillar: "livability", type: "news", titleEn: "Smart flood management system operational — critical for this flood-prone city", titleTh: "ระบบจัดการน้ำท่วมอัจฉริยะทำงานแล้ว — สำคัญสำหรับเมืองที่เสี่ยงน้ำท่วม", source: "Hat Yai Municipality / depa", date: "2024" },
+  { cityId: "hat-yai", pillar: "economy", type: "news", titleEn: "Cross-border trade digitization with Malaysia boosting Hat Yai commercial district", titleTh: "การค้าข้ามพรมแดนดิจิทัลกับมาเลเซียส่งเสริมย่านการค้าหาดใหญ่", source: "Southern Border Provinces Administration Centre", date: "2024" },
+
+  // ─── Mae Moh ───
+  { cityId: "mae-moh", pillar: "environment", type: "news", titleEn: "EGAT smart energy monitoring for coal-to-clean transition at Mae Moh power plant", titleTh: "EGAT เฝ้าระวังพลังงานอัจฉริยะสำหรับการเปลี่ยนผ่านจากถ่านหินสู่พลังงานสะอาดที่โรงไฟฟ้าแม่เมาะ", source: "EGAT / depa", date: "2024" },
+
+  // ─── Saensuk ───
+  { cityId: "saensuk", pillar: "environment", type: "news", titleEn: "Real-time beach water quality monitoring — bacteria counts visible to public", titleTh: "เฝ้าระวังคุณภาพน้ำชายหาดเรียลไทม์ — ปริมาณแบคทีเรียเปิดเผยต่อสาธารณะ", source: "Saensuk Municipality", date: "2024" },
+];
+
+export function getEvidenceForCity(cityId: string): EvidenceItem[] {
+  return evidenceItems.filter(e => e.cityId === cityId);
+}
