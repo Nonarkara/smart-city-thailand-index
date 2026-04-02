@@ -10,8 +10,70 @@ import {
   translate,
 } from "./cityPresentation";
 import type { CityTier, Locale, SmartCity } from "./types";
-import { TIER_LABELS, PILLAR_COLORS } from "./types";
+import { TIER_LABELS, PILLAR_COLORS, PILLAR_SHORT_LABELS } from "./types";
+import { SCORING_PILLARS } from "./scoring";
 import TrendIntelligencePanel from "./TrendIntelligencePanel";
+
+/** Short, unique vibe phrase per city — keeps the reality color but says something memorable */
+function getCityVibe(city: SmartCity, locale: Locale): string {
+  // Find the city's strongest and weakest pillars
+  const pillars = SCORING_PILLARS;
+  const sorted = [...pillars].sort((a, b) => city.scores[b] - city.scores[a]);
+  const strongest = sorted[0];
+  const weakest = sorted[sorted.length - 1];
+
+  // City-specific vibes for well-known cities
+  const vibes: Record<string, { en: string; th: string; zh: string }> = {
+    "phuket": { en: "Tourism engine, real tech", th: "เครื่องยนต์ท่องเที่ยว เทคจริง", zh: "旅游引擎，真技术" },
+    "samyan": { en: "Innovation district, alive", th: "ย่านนวัตกรรม มีชีวิต", zh: "创新区，活的" },
+    "chiang-mai-old-town": { en: "Heritage meets sensors", th: "มรดกพบเซ็นเซอร์", zh: "遗产遇上传感器" },
+    "khon-kaen": { en: "Isan's real deal", th: "ของจริงอีสาน", zh: "伊善的真货" },
+    "cmu-smart-city": { en: "Campus as living lab", th: "แคมปัสเป็นห้องทดลอง", zh: "校园即实验室" },
+    "saensuk": { en: "Beach town, clean data", th: "เมืองชายหาด ข้อมูลสะอาด", zh: "海滩小城，干净数据" },
+    "phra-ram-4": { en: "CBD corridor, gritty", th: "ระเบียง CBD ดิบๆ", zh: "CBD走廊，硬核" },
+    "krabi": { en: "Quiet coast, steady build", th: "ชายฝั่งเงียบ สร้างต่อเนื่อง", zh: "静谧海岸，稳步建设" },
+    "chachoengsao": { en: "EEC gateway, working", th: "ประตู EEC ใช้งานได้", zh: "EEC门户，运转中" },
+    "hat-yai": { en: "Border trade hub", th: "ศูนย์กลางค้าชายแดน", zh: "边贸枢纽" },
+    "nakhon-si-thammarat": { en: "The city that listens", th: "เมืองที่ฟัง", zh: "会倾听的城市" },
+    "yala": { en: "Cleanest city, real grit", th: "เมืองสะอาดสุด ใจสู้", zh: "最干净城市，真韧性" },
+    "mae-moh": { en: "Coal to clean pivot", th: "เปลี่ยนจากถ่านสู่สะอาด", zh: "从煤到清洁" },
+    "nakhonsawan": { en: "River sensors, flood-ready", th: "เซ็นเซอร์แม่น้ำ พร้อมรับน้ำท่วม", zh: "河流传感器，防洪就绪" },
+    "klong-phadung": { en: "Canal revival project", th: "โครงการฟื้นคลอง", zh: "运河复兴" },
+    "makkasan": { en: "Big plan, no ground yet", th: "แผนใหญ่ ยังไม่ลงดิน", zh: "大计划，尚未落地" },
+    "wangchan-valley": { en: "Empty land, bold pitch", th: "ที่ดินว่าง pitch กล้า", zh: "空地一片，愿景很大" },
+    "rattanakosin": { en: "Old Bangkok, new wiring", th: "กรุงเก่า สายไฟใหม่", zh: "老曼谷，新线路" },
+    "chon-buri": { en: "Industrial spine, EEC", th: "กระดูกสันหลังอุตสาหกรรม", zh: "工业脊柱，EEC" },
+    "rayong": { en: "Petrochem meets digital", th: "ปิโตรเคมีพบดิจิทัล", zh: "石化遇上数字" },
+    "udon-thani": { en: "Isan's quiet riser", th: "ม้ามืดอีสาน", zh: "伊善的黑马" },
+    "nonthaburi": { en: "Bangkok's overflow, growing", th: "ล้นจากกรุงเทพฯ กำลังโต", zh: "曼谷溢出，增长中" },
+    "phitsanulok": { en: "Two-river city, steady", th: "เมืองสองแม่น้ำ มั่นคง", zh: "双河之城，稳健" },
+    "surat-thani": { en: "Gulf gateway, emerging", th: "ประตูอ่าวไทย กำลังมา", zh: "湾区门户，崛起中" },
+  };
+
+  if (vibes[city.id]) {
+    return vibes[city.id][locale];
+  }
+
+  // Auto-generate from strongest pillar for cities without custom vibes
+  const pillarVibes: Record<string, { en: string; th: string; zh: string }> = {
+    livability: { en: "Built for living", th: "สร้างเพื่ออยู่", zh: "为生活而建" },
+    economy: { en: "Money moves here", th: "เงินไหลที่นี่", zh: "资金流动之地" },
+    safety: { en: "Quiet streets, real data", th: "ถนนสงบ ข้อมูลจริง", zh: "安静街道，真实数据" },
+    wellbeing: { en: "People-first signal", th: "สัญญาณคนมาก่อน", zh: "以人为先信号" },
+    environment: { en: "Green signal, verified", th: "สัญญาณเขียว ยืนยันแล้ว", zh: "绿色信号，已验证" },
+    hospitality: { en: "Warm city, open doors", th: "เมืองอบอุ่น เปิดประตู", zh: "温暖城市，敞开大门" },
+    digital: { en: "Wired and running", th: "เชื่อมต่อและวิ่ง", zh: "已联网，运行中" },
+  };
+
+  if (city.reality === "planned") {
+    return locale === "th" ? "แผนบนกระดาษ" : locale === "zh" ? "纸上规划" : "Paper plan, unbuilt";
+  }
+  if (city.reality === "partial") {
+    return locale === "th" ? "กำลังสร้าง มีช่องว่าง" : locale === "zh" ? "建设中，有缺口" : "Building, gaps remain";
+  }
+
+  return pillarVibes[strongest]?.[locale] ?? (locale === "th" ? "ทำงานจริง" : locale === "zh" ? "运行中" : "Running");
+}
 
 interface Props {
   locale: Locale;
@@ -70,24 +132,29 @@ function RankingRow({
         }
       }}
     >
-      <span className="dashboard-ranking-rank">{String(rank).padStart(2, "0")}</span>
-      <div className="dashboard-ranking-main">
+      {/* Top line: rank, name, score */}
+      <div className="dashboard-ranking-topline">
+        <span className="dashboard-ranking-rank">{String(rank).padStart(2, "0")}</span>
         <span className="dashboard-ranking-name">{cityName}</span>
-        <span className="dashboard-ranking-meta">
-          {getProvinceName(city, locale)} · {TIER_LABELS[locale][city.tier]} · {getCityStatusLabel(city.status, locale)}
-        </span>
+        <span className="dashboard-ranking-score">{city.compositeScore.toFixed(1)}</span>
       </div>
+
+      {/* Full-width color bars — the main visual */}
       <div className="dashboard-ranking-bars">
-        {(["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"] as const).map(p => (
-          <div key={p} className="dashboard-ranking-bar-track">
+        {(SCORING_PILLARS).map(p => (
+          <div key={p} className="dashboard-ranking-bar-track" title={`${PILLAR_SHORT_LABELS[locale][p]}: ${city.scores[p]}`}>
             <div className="dashboard-ranking-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }} />
           </div>
         ))}
       </div>
-      <div className="dashboard-ranking-scoreblock">
-        <span className="dashboard-ranking-score">{city.compositeScore.toFixed(1)}</span>
-        <span className={`dashboard-ranking-reality dashboard-ranking-reality-${city.reality}`}>
-          {getCityRealityLabel(city.reality, locale)}
+
+      {/* Bottom line: province, vibe phrase */}
+      <div className="dashboard-ranking-bottomline">
+        <span className="dashboard-ranking-meta">
+          {getProvinceName(city, locale)} · {TIER_LABELS[locale][city.tier]}
+        </span>
+        <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${city.reality}`}>
+          {getCityVibe(city, locale)}
         </span>
       </div>
     </button>
