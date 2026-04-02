@@ -618,7 +618,9 @@ export const promotionZoneCities: SmartCity[] = [
 // Combined and sorted
 // ---------------------------------------------------------------------------
 
-export const allCities: SmartCity[] = [...certifiedCities, ...promotionZoneCities]
+import { registeredCities } from "./registeredCityData";
+
+export const allCities: SmartCity[] = [...certifiedCities, ...promotionZoneCities, ...registeredCities]
   .sort((a, b) => b.compositeScore - a.compositeScore);
 
 export const alphaCities = allCities.filter(c => c.tier === "alpha");

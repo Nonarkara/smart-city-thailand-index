@@ -24,6 +24,8 @@ import {
   translate,
 } from "./cityPresentation";
 import { getEvidenceForCity, dataSources } from "./evidenceData";
+import { generateSWOT } from "./swotAnalysis";
+import { recommendInstruments } from "./financialToolkit";
 import type { Locale, ScoringPillar } from "./types";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
 import { PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_COLORS, TIER_LABELS, DIMENSION_LABELS, PILLAR_WEIGHTS } from "./types";
@@ -83,17 +85,17 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
       {rings.map(r => {
         const pts = pillars.map((_, i) => getPoint(i, r));
         const path = pts.map((pt, i) => `${i === 0 ? "M" : "L"} ${pt.x},${pt.y}`).join(" ") + " Z";
-        return <path key={r} d={path} fill="none" stroke="var(--border-hard)" strokeWidth="0.5" opacity="0.5" />;
+        return <path key={r} d={path} fill="none" stroke="#E8E8EC" strokeWidth="0.5" opacity="0.5" />;
       })}
 
       {/* Axis lines */}
       {pillars.map((_, i) => {
         const pt = getPoint(i, 100);
-        return <line key={i} x1={cx} y1={cy} x2={pt.x} y2={pt.y} stroke="var(--border-hard)" strokeWidth="0.5" opacity="0.3" />;
+        return <line key={i} x1={cx} y1={cy} x2={pt.x} y2={pt.y} stroke="#E8E8EC" strokeWidth="0.5" opacity="0.3" />;
       })}
 
       {/* Data fill */}
-      <path d={dataPath} fill="rgba(232, 145, 58, 0.12)" stroke="var(--saffron)" strokeWidth="2" />
+      <path d={dataPath} fill="rgba(43, 186, 160, 0.15)" stroke="#2BBAA0" strokeWidth="2" />
 
       {/* Data points */}
       {dataPoints.map((pt, i) => (
@@ -113,7 +115,7 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
             fontSize="8"
             fontFamily="var(--font-mono)"
             fontWeight="600"
-            fill="var(--ink-soft)"
+            fill="#888"
           >
             {PILLAR_SHORT_LABELS[locale][p]}
           </text>
@@ -203,6 +205,8 @@ function ScoreBreakdown({
 export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const city = useMemo(() => getCityById(cityId), [cityId]);
   const evidence = useMemo(() => getEvidenceForCity(cityId), [cityId]);
+  const swot = useMemo(() => city ? generateSWOT(city, locale) : { strengths: [], weaknesses: [], opportunities: [], threats: [] }, [city, locale]);
+  const finRecs = useMemo(() => city ? recommendInstruments(city) : [], [city]);
   const planningProfile = useMemo(() => getCityPlanningProfile(cityId), [cityId]);
 
   if (!city) {
@@ -768,6 +772,58 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           ))}
         </div>
       </section>
+      {/* ─── SWOT ANALYSIS ─── */}
+      <section className="section">
+        <p className="eyebrow">{locale === "th" ? "วิเคราะห์ SWOT" : locale === "zh" ? "SWOT 分析" : "SWOT Analysis"}</p>
+        <h2>{locale === "th" ? "จุดแข็ง จุดอ่อน โอกาส ภัยคุกคาม" : locale === "zh" ? "优势、劣势、机会、威胁" : "Strengths, Weaknesses, Opportunities, Threats"}</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, border: "1px solid var(--5, #E5E5E5)", marginBottom: "2rem" }}>
+          {(["strengths", "weaknesses", "opportunities", "threats"] as const).map(cat => {
+            const labels = { strengths: "S", weaknesses: "W", opportunities: "O", threats: "T" };
+            const colors = { strengths: "var(--alpha, #1A8A72)", weaknesses: "var(--gamma, #B03030)", opportunities: "var(--teal, #2BBAA0)", threats: "var(--beta, #9A7A1A)" };
+            return (
+              <div key={cat} style={{ padding: ".6rem .7rem", borderRight: cat === "strengths" || cat === "opportunities" ? "1px solid var(--5, #E5E5E5)" : "none", borderBottom: cat === "strengths" || cat === "weaknesses" ? "1px solid var(--5, #E5E5E5)" : "none" }}>
+                <div style={{ font: "700 .9rem var(--mono, monospace)", color: colors[cat], marginBottom: ".3rem" }}>{labels[cat]}</div>
+                {swot[cat].map((item, i) => (
+                  <div key={i} style={{ fontSize: ".62rem", color: "var(--2, #444)", lineHeight: 1.45, marginBottom: ".2rem", paddingLeft: ".5rem", position: "relative" }}>
+                    <span style={{ position: "absolute", left: 0, color: colors[cat] }}>·</span>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ─── FINANCIAL TOOLKIT ─── */}
+      {finRecs.length > 0 && (
+        <section className="section">
+          <p className="eyebrow">{locale === "th" ? "เครื่องมือการเงิน" : locale === "zh" ? "金融工具" : "Financial Toolkit"}</p>
+          <h2>{locale === "th" ? "กลไกการเงินที่แนะนำ" : locale === "zh" ? "推荐融资机制" : "Recommended Financing"}</h2>
+          <div style={{ borderTop: "2px solid var(--ink, #111)", marginBottom: "2rem" }}>
+            {finRecs.slice(0, 6).map((rec, i) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: ".5rem", padding: ".5rem 0", borderBottom: "1px solid var(--5, #E5E5E5)", alignItems: "start" }}>
+                <span style={{
+                  font: "700 .42rem var(--mono, monospace)", padding: ".06rem .25rem",
+                  background: rec.priority === "primary" ? "var(--alpha-bg, #F0FAF7)" : rec.priority === "secondary" ? "var(--beta-bg, #FEFAEF)" : "var(--surface, #F5F5F5)",
+                  color: rec.priority === "primary" ? "var(--alpha, #1A8A72)" : rec.priority === "secondary" ? "var(--beta, #9A7A1A)" : "var(--3, #888)",
+                }}>{rec.priority.toUpperCase()}</span>
+                <div>
+                  <div style={{ fontSize: ".72rem", fontWeight: 700, marginBottom: ".1rem" }}>
+                    {locale === "th" ? rec.instrument.nameTh : rec.instrument.name}
+                  </div>
+                  <div style={{ fontSize: ".55rem", color: "var(--3, #888)", fontFamily: "var(--mono, monospace)" }}>
+                    {rec.instrument.category} · {rec.instrument.typicalSize}
+                  </div>
+                  <div style={{ fontSize: ".58rem", color: "var(--2, #444)", lineHeight: 1.45, marginTop: ".1rem" }}>
+                    {locale === "th" ? rec.reasonTh : rec.reason}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

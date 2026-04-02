@@ -47,6 +47,11 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | แผนที่เมืองอัจฉริยะ`,
     zh: `${SITE_NAME} | 城市地图仪表盘`,
   },
+  asus: {
+    en: `${SITE_NAME} | UN-Habitat ASUS Project`,
+    th: `${SITE_NAME} | โครงการ ASUS UN-Habitat`,
+    zh: `${SITE_NAME} | 联合国人居署ASUS项目`,
+  },
   partners: {
     en: `${SITE_NAME} | International Partnerships`,
     th: `${SITE_NAME} | ความร่วมมือระหว่างประเทศ`,
