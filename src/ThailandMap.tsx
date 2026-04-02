@@ -71,8 +71,8 @@ const cityCoords: Record<string, { lat: number; lng: number }> = {
   "phlapphla": { lat: 12.58, lng: 102.12 },
 };
 
-// Simplified Thailand outline path (key coastal/border points)
-const THAILAND_OUTLINE = "M 198,30 L 210,45 225,55 235,52 245,60 250,75 260,85 270,80 285,90 290,105 280,120 275,135 280,150 290,160 300,175 310,180 320,195 310,210 305,225 295,240 300,260 295,275 288,290 280,300 285,315 278,330 270,340 260,350 252,365 245,380 238,395 230,410 222,420 215,435 220,445 225,460 218,470 210,475 205,485 195,490 188,500 182,510 178,520 185,530 192,540 198,548 205,555 210,560 202,565 190,558 180,555 170,548 158,540 148,530 140,520 135,510 128,502 120,510 115,520 108,530 102,535 95,530 88,520 82,510 78,500 82,490 88,480 95,470 102,460 110,445 115,430 112,415 108,400 105,385 100,375 95,360 90,345 88,330 92,315 95,300 100,290 105,275 108,260 115,245 120,232 125,220 128,205 132,190 138,178 145,165 150,150 158,138 165,125 170,110 175,95 180,80 185,65 190,50 195,38 Z";
+// Use real Thailand SVG map from MapSVG (CC0 license)
+const THAILAND_SVG_URL = "/thailand-map.svg";
 
 function tierColor(tier: string): string {
   if (tier === "alpha") return "#1A7D72";
@@ -96,8 +96,8 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
       <div className="map-layout">
         <div className="map-panel">
           <svg viewBox="0 0 400 600" className="map-svg">
-            {/* Thailand outline */}
-            <path d={THAILAND_OUTLINE} fill="rgba(26, 22, 18, 0.03)" stroke="var(--border-hard)" strokeWidth="1" />
+            {/* Real Thailand map as background */}
+            <image href={THAILAND_SVG_URL} x="0" y="0" width="400" height="600" preserveAspectRatio="xMidYMid meet" opacity="0.15" />
 
             {/* City dots */}
             {allCities.map(city => {

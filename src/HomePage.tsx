@@ -285,80 +285,20 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      {/* ─── MAP ─── */}
-      <Suspense fallback={null}>
-        <ThailandMap locale={locale} onNavigate={onNavigate} />
-      </Suspense>
-
-      {/* ─── INTERACTIVE SPIDER ALLOCATOR ─── */}
-      <Suspense fallback={null}>
-        <SpiderAllocator locale={locale} onNavigate={onNavigate} />
-      </Suspense>
-
-      {/* ─── RANKING TABLE ─── */}
-      <section className="ranking-section section" id="rankings">
-        <p className="eyebrow">{locale === "th" ? "ตารางอันดับ" : locale === "zh" ? "排序表" : "The ranking"}</p>
-        <h2>{locale === "th" ? "เมืองอัจฉริยะทั้งหมด" : locale === "zh" ? "全部智慧城市" : "All Smart Cities"}</h2>
-
-        {/* Filters */}
-        <div className="filter-row">
-          <div className="filter-group">
-            <button className={`filter-btn ${filter === "all" ? "active" : ""}`} onClick={() => setFilter("all")}>
-              {locale === "th" ? "ทั้งหมด" : locale === "zh" ? "全部" : "All"} ({stats.total})
-            </button>
-            <button className={`filter-btn ${filter === "certified" ? "active" : ""}`} onClick={() => setFilter("certified")}>
-              {locale === "th" ? "รับรองแล้ว" : locale === "zh" ? "已认证" : "Certified"} ({stats.certified})
-            </button>
-            <button className={`filter-btn ${filter === "promotion" ? "active" : ""}`} onClick={() => setFilter("promotion")}>
-              {locale === "th" ? "เขตส่งเสริม" : locale === "zh" ? "推广区" : "Promotion"} ({stats.promotion})
-            </button>
-          </div>
-          <div className="filter-group">
-            <button className={`filter-btn ${tierFilter === "all" ? "active" : ""}`} onClick={() => setTierFilter("all")}>
-              α β γ
-            </button>
-            <button className={`filter-btn tier-alpha ${tierFilter === "alpha" ? "active" : ""}`} onClick={() => setTierFilter("alpha")}>
-              α Alpha
-            </button>
-            <button className={`filter-btn tier-beta ${tierFilter === "beta" ? "active" : ""}`} onClick={() => setTierFilter("beta")}>
-              β Beta
-            </button>
-            <button className={`filter-btn tier-gamma ${tierFilter === "gamma" ? "active" : ""}`} onClick={() => setTierFilter("gamma")}>
-              γ Gamma
-            </button>
-          </div>
-        </div>
-
-        {/* Pillar legend */}
-        <div className="pillar-legend">
-          {PILLAR_ORDER.map(p => (
-            <span key={p} className="legend-item">
-              <span className="legend-dot" style={{ background: PILLAR_COLORS[p] }} />
-              {PILLAR_LABELS[locale][p]}
-            </span>
-          ))}
-        </div>
-
-        {/* Table */}
-        <div className="table-wrap">
-          <table className="ranking-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>{locale === "th" ? "เมือง" : locale === "zh" ? "城市" : "City"}</th>
-                <th>{locale === "th" ? "ระดับ" : locale === "zh" ? "层级" : "Tier"}</th>
-                <th>{locale === "th" ? "คะแนน" : locale === "zh" ? "分数" : "Score"}</th>
-                <th>{locale === "th" ? "สถานะ" : locale === "zh" ? "状态" : "Status"}</th>
-                <th>{locale === "th" ? "เสาหลัก" : locale === "zh" ? "维度" : "Pillars"}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((city, i) => (
-                <CityRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={i + 1} />
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* ─── CITY PHOTO STRIP ─── */}
+      <section className="photo-strip">
+        {[
+          { city: "Bangkok", src: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600&h=340&fit=crop", id: "samyan" },
+          { city: "Phuket", src: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&h=340&fit=crop", id: "phuket" },
+          { city: "Chiang Mai", src: "https://images.unsplash.com/photo-1598935898639-81586f7d2129?w=600&h=340&fit=crop", id: "chiang-mai-old-town" },
+          { city: "Khon Kaen", src: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=600&h=340&fit=crop", id: "khon-kaen" },
+          { city: "Krabi", src: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&h=340&fit=crop", id: "krabi" },
+        ].map(p => (
+          <button key={p.id} className="photo-strip-item" onClick={() => onNavigate(`/city/${p.id}`)}>
+            <img src={p.src} alt={p.city} loading="lazy" />
+            <span className="photo-strip-label">{p.city}</span>
+          </button>
+        ))}
       </section>
 
       {/* ─── REALITY CHECK CALLOUT ─── */}
