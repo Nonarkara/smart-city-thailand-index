@@ -290,16 +290,16 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ─── TESLA-STYLE CINEMATIC HERO ─── */}
       <section className="cinematic-hero">
         <img
-          src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=1920&h=900&fit=crop&q=80"
-          alt="Bangkok skyline at dusk"
+          src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?w=1920&h=900&fit=crop&q=80"
+          alt="Urban cityscape at night"
           className="cinematic-hero-img"
         />
         <div className="cinematic-hero-overlay">
           <h1 className="cinematic-hero-title">
-            {locale === "th" ? "ดัชนีเมืองอัจฉริยะ" : locale === "zh" ? "智慧城市指数" : "Smart City Index"}
+            {locale === "th" ? "ดัชนีเมืองอัจฉริยะ" : locale === "zh" ? "智慧城市指数" : <>Smart City<br />Thailand Index</>}
           </h1>
           <p className="cinematic-hero-sub">
-            {locale === "th" ? "ประเทศไทย · 2026" : locale === "zh" ? "泰国 · 2026" : "Thailand · 2026"}
+            {locale === "th" ? "SCTI · ประเทศไทย · 2026" : locale === "zh" ? "SCTI · 泰国 · 2026" : "SCTI · Thailand · 2026"}
           </p>
         </div>
       </section>
