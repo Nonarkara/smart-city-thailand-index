@@ -85,11 +85,11 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
       <section className="section" style={{ paddingTop: "7.5rem", paddingBottom: "1.5rem" }}>
         <p className="eyebrow">{t(locale, "Case study", "กรณีศึกษา", "案例研究")}</p>
         <h1 className="hero-title" style={{ fontSize: "clamp(2rem, 5.5vw, 4rem)" }}>
-          {t(locale,
-            <>Nakhon Si Thammarat:<br />the city that listened.</>,
-            <>นครศรีธรรมราช:<br />เมืองที่ฟังประชาชน</>,
-            <>那空是贪玛叻：<br />一座学会倾听的城市。</>
-          )}
+          {locale === "th"
+            ? <>นครศรีธรรมราช:<br />เมืองที่ฟังประชาชน</>
+            : locale === "zh"
+              ? <>那空是贪玛叻：<br />一座学会倾听的城市。</>
+              : <>Nakhon Si Thammarat:<br />the city that listened.</>}
         </h1>
         <p className="hero-strapline">
           {t(locale,

@@ -37,6 +37,11 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | ทำไมต้องมีดัชนีนี้`,
     zh: `${SITE_NAME} | 为什么需要这个指数`,
   },
+  showcase: {
+    en: `${SITE_NAME} | Showcase — Nakhon Si Thammarat`,
+    th: `${SITE_NAME} | ต้นแบบ — นครศรีธรรมราช`,
+    zh: `${SITE_NAME} | 样板 — 那空是贪玛叻`,
+  },
   city: {
     en: `${SITE_NAME} | City Profile`,
     th: `${SITE_NAME} | โปรไฟล์เมือง`,
