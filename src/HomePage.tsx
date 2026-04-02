@@ -348,8 +348,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ─── CINEMATIC HERO ─── */}
       <section className="cinematic-hero">
         <img
-          src="/photos/slic-waterfront.jpg"
-          alt="Smart city waterfront at dusk"
+          src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?w=1920&h=900&fit=crop&q=80"
+          alt="Bangkok skyline aerial view at dusk"
           className="cinematic-hero-img"
         />
         <div className="cinematic-hero-overlay">
