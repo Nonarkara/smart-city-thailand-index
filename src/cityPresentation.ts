@@ -3,10 +3,10 @@ import type { CityReality, CityStatus, Locale, SmartCity, SmartDimension } from 
 
 export function translate(
   locale: Locale,
-  copy: { en: string; th: string; zh?: string },
+  copy: { en: string; th: string; zh: string },
 ): string {
   if (locale === "th") return copy.th;
-  if (locale === "zh") return copy.zh ?? copy.en;
+  if (locale === "zh") return copy.zh;
   return copy.en;
 }
 
@@ -45,4 +45,3 @@ export function getDimensionChipLabel(dimension: SmartDimension, locale: Locale)
   if (locale === "th") return label.replace(/อัจฉริยะ/g, "").trim();
   return label.replace(/^智慧/, "").trim();
 }
-

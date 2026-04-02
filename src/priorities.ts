@@ -52,22 +52,63 @@ export function redistributePriorityWeights(
   const nextValue = Math.max(PRIORITY_MIN_WEIGHT, Math.min(PRIORITY_MAX_WEIGHT, rawValue));
   if (nextValue === weights[target]) return weights;
 
-  const otherPillars = PRIORITY_PILLARS.filter(pillar => pillar.id !== target);
-  const otherTotal = otherPillars.reduce((sum, pillar) => sum + weights[pillar.id], 0);
+  const otherPillars = PRIORITY_PILLARS
+    .filter(pillar => pillar.id !== target)
+    .map(pillar => pillar.id);
   const nextWeights = { ...weights, [target]: nextValue };
 
-  let remaining = PRIORITY_TOTAL - nextValue;
-  otherPillars.forEach((pillar, index) => {
-    if (index === otherPillars.length - 1) {
-      nextWeights[pillar.id] = Math.max(PRIORITY_MIN_WEIGHT, remaining);
-      return;
-    }
-
-    const proportionalShare = Math.round((weights[pillar.id] / otherTotal) * (PRIORITY_TOTAL - nextValue));
-    nextWeights[pillar.id] = Math.max(PRIORITY_MIN_WEIGHT, proportionalShare);
-    remaining -= nextWeights[pillar.id];
+  otherPillars.forEach(pillar => {
+    nextWeights[pillar] = PRIORITY_MIN_WEIGHT;
   });
+
+  let remaining = PRIORITY_TOTAL - nextValue - (otherPillars.length * PRIORITY_MIN_WEIGHT);
+  if (remaining <= 0) return nextWeights;
+
+  let activePillars = [...otherPillars];
+
+  while (remaining > 0 && activePillars.length > 0) {
+    const basisTotal = activePillars.reduce((sum, pillar) => {
+      return sum + Math.max(0, weights[pillar] - PRIORITY_MIN_WEIGHT, 1);
+    }, 0);
+
+    const allocations = activePillars.map(pillar => {
+      const capacity = PRIORITY_MAX_WEIGHT - nextWeights[pillar];
+      const basis = Math.max(0, weights[pillar] - PRIORITY_MIN_WEIGHT, 1);
+      const rawShare = remaining * (basis / basisTotal);
+      const wholeShare = Math.min(capacity, Math.floor(rawShare));
+
+      return {
+        pillar,
+        capacity,
+        fraction: rawShare - Math.floor(rawShare),
+        wholeShare,
+      };
+    });
+
+    let allocated = 0;
+    allocations.forEach(({ pillar, wholeShare }) => {
+      nextWeights[pillar] += wholeShare;
+      allocated += wholeShare;
+    });
+    remaining -= allocated;
+
+    if (remaining <= 0) break;
+
+    let progressed = false;
+    allocations
+      .filter(({ capacity, wholeShare }) => capacity > wholeShare)
+      .sort((left, right) => right.fraction - left.fraction)
+      .forEach(({ pillar }) => {
+        if (remaining <= 0 || nextWeights[pillar] >= PRIORITY_MAX_WEIGHT) return;
+        nextWeights[pillar] += 1;
+        remaining -= 1;
+        progressed = true;
+      });
+
+    if (!progressed) break;
+
+    activePillars = activePillars.filter(pillar => nextWeights[pillar] < PRIORITY_MAX_WEIGHT);
+  }
 
   return nextWeights;
 }
-

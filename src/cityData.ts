@@ -6,25 +6,10 @@
 // A city where people actually live well scores high.
 // ---------------------------------------------------------------------------
 
-import type { SmartCity, CityScores, CityTier } from "./types";
+import { assignTier, computeComposite } from "./scoring";
+import type { SmartCity, CityScores } from "./types";
 
-/** Compute weighted composite score from pillar scores */
-export function computeComposite(scores: CityScores): number {
-  const weights = { livability: 25, economy: 20, safety: 15, wellbeing: 15, environment: 10, hospitality: 10, digital: 5 };
-  const total = Object.values(weights).reduce((a, b) => a + b, 0);
-  let sum = 0;
-  for (const [key, weight] of Object.entries(weights)) {
-    sum += scores[key as keyof CityScores] * weight;
-  }
-  return Math.round((sum / total) * 10) / 10;
-}
-
-/** Assign tier based on composite score */
-export function assignTier(composite: number): CityTier {
-  if (composite >= 65) return "alpha";
-  if (composite >= 45) return "beta";
-  return "gamma";
-}
+export { assignTier, computeComposite } from "./scoring";
 
 function city(
   id: string,
@@ -639,7 +624,8 @@ export const allCities: SmartCity[] = [...certifiedCities, ...promotionZoneCitie
 export const alphaCities = allCities.filter(c => c.tier === "alpha");
 export const betaCities = allCities.filter(c => c.tier === "beta");
 export const gammaCities = allCities.filter(c => c.tier === "gamma");
+const cityLookup = new Map(allCities.map(city => [city.id, city]));
 
 export function getCityById(id: string): SmartCity | undefined {
-  return allCities.find(c => c.id === id);
+  return cityLookup.get(id);
 }

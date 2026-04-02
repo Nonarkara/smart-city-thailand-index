@@ -1,10 +1,16 @@
 import { useMemo } from "react";
 import { getCityById } from "./cityData";
+import {
+  getCityName,
+  getCityRealityLabel,
+  getCityTagline,
+  getProvinceName,
+  translate,
+} from "./cityPresentation";
 import { getEvidenceForCity, dataSources } from "./evidenceData";
 import type { Locale, ScoringPillar } from "./types";
+import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
 import { PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_COLORS, TIER_LABELS, DIMENSION_LABELS, PILLAR_WEIGHTS } from "./types";
-
-const PILLAR_ORDER: ScoringPillar[] = ["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"];
 
 interface Props {
   cityId: string;
@@ -36,7 +42,7 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
   const cx = 140;
   const cy = 140;
   const maxR = 110;
-  const pillars = PILLAR_ORDER;
+  const pillars = SCORING_PILLARS;
   const n = pillars.length;
 
   const angleStep = (2 * Math.PI) / n;
@@ -128,34 +134,39 @@ function StatBar({ pillar, value, locale }: { pillar: ScoringPillar; value: numb
 }
 
 /** Score decomposition — shows how composite was computed */
-function ScoreBreakdown({ scores }: { scores: Record<ScoringPillar, number> }) {
-  const terms = PILLAR_ORDER.map(p => ({
-    pillar: p,
-    score: scores[p],
-    weight: PILLAR_WEIGHTS[p],
-    contribution: (scores[p] * PILLAR_WEIGHTS[p]) / 100,
-  }));
-  const totalWeight = Object.values(PILLAR_WEIGHTS).reduce((a, b) => a + b, 0);
-  const composite = terms.reduce((sum, t) => sum + t.contribution, 0) / (totalWeight / 100);
+function ScoreBreakdown({
+  scores,
+  locale,
+}: {
+  scores: Record<ScoringPillar, number>;
+  locale: Locale;
+}) {
+  const { composite, terms, totalWeight } = getCompositeBreakdown(scores);
 
   return (
     <div className="score-decomposition">
       <div className="decomp-header">
-        <span className="decomp-title">SCORE DECOMPOSITION</span>
+        <span className="decomp-title">
+          {translate(locale, {
+            en: "Score decomposition",
+            th: "สมการคะแนน",
+            zh: "得分拆解",
+          })}
+        </span>
         <span className="decomp-formula">Composite = Σ (score × weight) / Σ weights</span>
       </div>
       <div className="decomp-table">
         <div className="decomp-row decomp-row-header">
-          <span>Pillar</span>
-          <span>Score</span>
-          <span>Weight</span>
-          <span>Contribution</span>
+          <span>{translate(locale, { en: "Pillar", th: "เสาหลัก", zh: "支柱" })}</span>
+          <span>{translate(locale, { en: "Score", th: "คะแนน", zh: "分数" })}</span>
+          <span>{translate(locale, { en: "Weight", th: "น้ำหนัก", zh: "权重" })}</span>
+          <span>{translate(locale, { en: "Contribution", th: "ผลต่อคะแนนรวม", zh: "贡献值" })}</span>
         </div>
         {terms.map(t => (
           <div key={t.pillar} className="decomp-row">
             <span className="decomp-pillar">
               <span className="decomp-dot" style={{ background: PILLAR_COLORS[t.pillar] }} />
-              {t.pillar}
+              {PILLAR_LABELS[locale][t.pillar]}
             </span>
             <span className="decomp-num">{t.score}</span>
             <span className="decomp-num">{t.weight}%</span>
@@ -163,9 +174,9 @@ function ScoreBreakdown({ scores }: { scores: Record<ScoringPillar, number> }) {
           </div>
         ))}
         <div className="decomp-row decomp-row-total">
-          <span>Composite</span>
+          <span>{translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合分" })}</span>
           <span />
-          <span className="decomp-num">100%</span>
+          <span className="decomp-num">{totalWeight}%</span>
           <span className="decomp-num decomp-total-value">{composite.toFixed(1)}</span>
         </div>
       </div>
@@ -180,9 +191,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   if (!city) {
     return (
       <section className="section" style={{ paddingTop: "7rem" }}>
-        <h1>{locale === "th" ? "ไม่พบเมือง" : locale === "zh" ? "未找到城市" : "City not found"}</h1>
+        <h1>{translate(locale, { en: "City not found", th: "ไม่พบเมือง", zh: "未找到城市" })}</h1>
         <button className="cta-button" onClick={() => onNavigate("/")}>
-          {locale === "th" ? "กลับหน้าหลัก" : locale === "zh" ? "返回首页" : "Back to home"}
+          {translate(locale, { en: "Back to home", th: "กลับหน้าหลัก", zh: "返回首页" })}
         </button>
       </section>
     );
@@ -190,6 +201,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
   const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
   const overallGrade = statGrade(city.compositeScore);
+  const cityName = getCityName(city, locale);
+  const provinceName = getProvinceName(city, locale);
+  const cityTagline = getCityTagline(city, locale);
 
   return (
     <>
@@ -206,8 +220,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 ? (locale === "th" ? `ตราสัญลักษณ์เมืองอัจฉริยะ · รุ่น ${city.batch}` : locale === "zh" ? `智慧城市认证 · 第 ${city.batch} 批` : `Smart City Local · Batch ${city.batch}`)
                 : (locale === "th" ? "เขตส่งเสริมเมืองอัจฉริยะ" : locale === "zh" ? "智慧城市推广区" : "Smart City Promotion Zone")}
             </p>
-            <h1>{locale === "th" ? city.nameTh : city.nameEn}</h1>
-            <p className="city-detail-province">{locale === "th" ? city.provinceTh : city.province}</p>
+            <h1>{cityName}</h1>
+            <p className="city-detail-province">{provinceName}</p>
           </div>
           <div className="city-detail-score-block">
             <div className={`tier-badge-large tier-${city.tier}`}>
@@ -215,16 +229,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
             </div>
             <div className="composite-large">{city.compositeScore.toFixed(1)}</div>
             <div className={`reality-badge reality-${city.reality}`}>
-              {city.reality === "operational"
-                ? (locale === "th" ? "ใช้งานจริง" : locale === "zh" ? "已运行" : "Operational")
-                : city.reality === "partial"
-                  ? (locale === "th" ? "บางส่วน" : locale === "zh" ? "部分落实" : "Partial")
-                  : (locale === "th" ? "แผนเท่านั้น" : locale === "zh" ? "仅有规划" : "Plan only")}
+              {getCityRealityLabel(city.reality, locale)}
             </div>
           </div>
         </div>
 
-        <p className="city-detail-tagline">{locale === "th" ? city.taglineTh : city.tagline}</p>
+        <p className="city-detail-tagline">{cityTagline}</p>
       </section>
 
       {/* ─── RPG STAT SHEET ─── */}
@@ -237,7 +247,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           <div className="rpg-radar-panel">
             <RadarChart scores={city.scores} locale={locale} />
             <div className="rpg-overall-grade">
-              <span className="rpg-grade-label">RANK</span>
+              <span className="rpg-grade-label">
+                {translate(locale, { en: "Rank", th: "ระดับ", zh: "评级" })}
+              </span>
               <span className="rpg-grade-letter" style={{ color: gradeColor(overallGrade) }}>
                 {overallGrade}
               </span>
@@ -246,7 +258,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
           {/* Stat bars */}
           <div className="rpg-stats-panel">
-            {PILLAR_ORDER.map(p => (
+            {SCORING_PILLARS.map(p => (
               <StatBar key={p} pillar={p} value={city.scores[p]} locale={locale} />
             ))}
           </div>
@@ -257,7 +269,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       <section className="section">
         <p className="eyebrow">{locale === "th" ? "การคำนวณ" : locale === "zh" ? "计算方式" : "Score math"}</p>
         <h2>{locale === "th" ? "ตัวเลขมาจากไหน" : locale === "zh" ? "这些数字怎么来的" : "Where the numbers come from"}</h2>
-        <ScoreBreakdown scores={city.scores} />
+        <ScoreBreakdown scores={city.scores} locale={locale} />
       </section>
 
       {/* ─── SMART DIMENSIONS ─── */}
