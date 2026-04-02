@@ -212,6 +212,23 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
   return (
     <div className="dashboard-home">
+      {/* ─── TESLA-STYLE CINEMATIC HERO ─── */}
+      <section className="cinematic-hero">
+        <img
+          src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=1920&h=900&fit=crop&q=80"
+          alt="Bangkok skyline at dusk"
+          className="cinematic-hero-img"
+        />
+        <div className="cinematic-hero-overlay">
+          <h1 className="cinematic-hero-title">
+            {locale === "th" ? "ดัชนีเมืองอัจฉริยะ" : locale === "zh" ? "智慧城市指数" : "Smart City Index"}
+          </h1>
+          <p className="cinematic-hero-sub">
+            {locale === "th" ? "ประเทศไทย · 2026" : locale === "zh" ? "泰国 · 2026" : "Thailand · 2026"}
+          </p>
+        </div>
+      </section>
+
       <section className="dashboard-panel dashboard-hero-panel">
         <div className="dashboard-panel-head dashboard-panel-head-hero">
           <div>

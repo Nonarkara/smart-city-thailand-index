@@ -42,4 +42,21 @@ describe("App", () => {
       expect(document.documentElement.lang).toBe("th");
     });
   });
+
+  it("opens the responsive nav and closes it after navigating", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    const navToggle = screen.getByRole("button", { name: "Open navigation menu" });
+    await user.click(navToggle);
+
+    const navLinks = container.querySelector(".nav-links");
+    expect(navLinks).toHaveClass("nav-links-open");
+
+    await user.click(screen.getByRole("button", { name: "Rankings" }));
+    await vi.dynamicImportSettled();
+    await screen.findByRole("heading", { name: /who delivers, who just talks/i });
+
+    expect(navLinks).not.toHaveClass("nav-links-open");
+  });
 });
