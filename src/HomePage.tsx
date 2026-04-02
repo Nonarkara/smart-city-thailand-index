@@ -528,37 +528,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="dashboard-panel dashboard-spotlight-panel">
-        <div className="dashboard-panel-head">
-          <div>
-            <p className="dashboard-kicker">
-              {translate(locale, { en: "Lead signals", th: "สัญญาณนำ", zh: "领先信号" })}
-            </p>
-            <h2>
-              {translate(locale, { en: "Cities worth opening first", th: "เมืองที่ควรเปิดดูก่อน", zh: "最值得先点开的城市" })}
-            </h2>
-          </div>
-        </div>
-
-        <div className="dashboard-spotlight-list">
-          {spotlightCities.map((city, index) => (
-            <SpotlightRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 1} />
-          ))}
-        </div>
-
-        <div className="dashboard-reality-strip">
-          <span className="dashboard-reality-chip dashboard-reality-chip-operational">
-            {realityCounts.operational} {translate(locale, { en: "operational", th: "ใช้งานจริง", zh: "已运行" })}
-          </span>
-          <span className="dashboard-reality-chip dashboard-reality-chip-partial">
-            {realityCounts.partial} {translate(locale, { en: "partial", th: "บางส่วน", zh: "部分落实" })}
-          </span>
-          <span className="dashboard-reality-chip dashboard-reality-chip-planned">
-            {realityCounts.planned} {translate(locale, { en: "plan only", th: "แผนล้วน", zh: "仅有规划" })}
-          </span>
-        </div>
-      </section>
-
       <section className="dashboard-panel dashboard-region-panel">
         <div className="dashboard-panel-head">
           <div>
