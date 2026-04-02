@@ -357,11 +357,11 @@ export default function HomePage({ locale, onNavigate }: Props) {
               })}
             </p>
             <h1 className="data-hero-title">
-              {translate(locale, {
-                en: "Reality, not ribbon-cutting.",
-                th: "เอาความจริง ไม่เอาพิธีตัดริบบิ้น",
-                zh: "看现实，不看剪彩。",
-              })}
+              {locale === "th"
+                ? <>เอา<em>ความจริง</em> ไม่เอาพิธีตัดริบบิ้น</>
+                : locale === "zh"
+                  ? <>看<em>现实</em>，不看剪彩。</>
+                  : <><em>Reality</em>, not ribbon&#8209;cutting.</>}
             </h1>
             <p className="data-hero-sub">
               {translate(locale, {
