@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 
@@ -21,13 +21,16 @@ describe("App", () => {
     window.history.pushState({}, "", "/city/phuket");
     render(<App />);
 
-    await vi.dynamicImportSettled();
+    await act(async () => {
+      await vi.dynamicImportSettled();
+    });
     await screen.findByRole("heading", { name: "Phuket Smart City" });
 
-    window.history.pushState({}, "", "/city/chiang-mai-old-town");
-    window.dispatchEvent(new PopStateEvent("popstate"));
-
-    await vi.dynamicImportSettled();
+    await act(async () => {
+      window.history.pushState({}, "", "/city/chiang-mai-old-town");
+      window.dispatchEvent(new PopStateEvent("popstate"));
+      await vi.dynamicImportSettled();
+    });
     await screen.findByRole("heading", { name: "Chiang Mai Smart Old Town" });
   });
 

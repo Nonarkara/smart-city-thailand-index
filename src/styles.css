@@ -577,3 +577,208 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 800; letter-spacing: 
 .map-dash-legend { margin-top: 1rem; padding-top: .5rem; border-top: 1px solid var(--5, #E5E5E5); }
 .map-dash-legend-item { display: flex; align-items: center; gap: .25rem; font-size: .5rem; color: var(--2, #444); margin-bottom: .2rem; }
 @media (max-width: 768px) { .map-dash-body { grid-template-columns: 1fr; } .map-dash-map { border-right: 0; } }
+
+/* ─── TREND INTELLIGENCE PANEL ─── */
+.trend-panel {
+  margin-top: 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.08);
+  background:
+    linear-gradient(135deg, rgba(255, 247, 231, 0.9), rgba(255, 255, 255, 0.96)),
+    radial-gradient(circle at top right, rgba(19, 119, 95, 0.12), transparent 42%);
+}
+.trend-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.9fr);
+  gap: 1rem;
+  align-items: start;
+}
+.trend-refresh,
+.trend-submit {
+  border: 1px solid var(--ink, #111);
+  background: var(--ink, #111);
+  color: #fff;
+  font: 700 0.72rem var(--mono, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.8rem 1rem;
+}
+.trend-refresh:disabled,
+.trend-submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.trend-status-card,
+.trend-form {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  box-shadow: 0 18px 40px rgba(17, 17, 17, 0.07);
+}
+.trend-status-card {
+  padding: 1rem;
+}
+.trend-status-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.trend-backend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  font: 700 0.62rem var(--mono, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.trend-backend-pill-supabase {
+  background: rgba(19, 119, 95, 0.12);
+  color: #13775f;
+}
+.trend-backend-pill-google-apps-script {
+  background: rgba(194, 139, 37, 0.12);
+  color: #8a5d12;
+}
+.trend-backend-pill-local {
+  background: rgba(144, 54, 45, 0.1);
+  color: #8a2d21;
+}
+.trend-status-time,
+.trend-status-note,
+.trend-metric-label,
+.trend-signal-meta,
+.trend-feedback,
+.trend-form-copy p,
+.trend-field span {
+  font: 500 0.62rem var(--mono, monospace);
+  letter-spacing: 0.03em;
+  color: var(--3, #666);
+}
+.trend-status-note {
+  margin: 0.8rem 0 1rem;
+  max-width: 60ch;
+}
+.trend-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.trend-metric-card {
+  padding: 0.9rem;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(17, 17, 17, 0.07);
+}
+.trend-metric-value {
+  display: block;
+  font-size: clamp(1.15rem, 2.4vw, 1.8rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ink, #111);
+}
+.trend-chip-row,
+.trend-signal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.trend-chip,
+.trend-signal-tag {
+  padding: 0.32rem 0.5rem;
+  background: rgba(17, 17, 17, 0.05);
+  font: 700 0.55rem var(--mono, monospace);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.trend-chip-row {
+  margin: 1rem 0;
+}
+.trend-signal-list {
+  display: grid;
+  gap: 0.7rem;
+}
+.trend-signal-item {
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(17, 17, 17, 0.08);
+}
+.trend-signal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+.trend-signal-text {
+  margin: 0.4rem 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+.trend-sentiment {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.45rem;
+  font: 700 0.55rem var(--mono, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.trend-sentiment-positive {
+  background: rgba(19, 119, 95, 0.12);
+  color: #13775f;
+}
+.trend-sentiment-neutral {
+  background: rgba(17, 17, 17, 0.08);
+  color: #444;
+}
+.trend-sentiment-negative {
+  background: rgba(144, 54, 45, 0.12);
+  color: #8a2d21;
+}
+.trend-form {
+  padding: 1rem;
+  display: grid;
+  gap: 0.85rem;
+}
+.trend-form-copy h3 {
+  margin-bottom: 0.35rem;
+  font-size: 1.2rem;
+}
+.trend-field {
+  display: grid;
+  gap: 0.35rem;
+}
+.trend-field input,
+.trend-field select,
+.trend-field textarea {
+  width: 100%;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  background: rgba(255, 255, 255, 0.96);
+  padding: 0.8rem 0.85rem;
+  font: 500 0.95rem/1.45 var(--sans, inherit);
+  color: var(--ink, #111);
+}
+.trend-field textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+.trend-feedback {
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .trend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trend-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .trend-status-head {
+    align-items: flex-start;
+  }
+
+  .trend-metric-grid {
+    grid-template-columns: 1fr;
+  }
+}

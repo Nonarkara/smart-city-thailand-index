@@ -20,6 +20,7 @@ PostgreSQL schema for Supabase powering the full City Data Platform (CDP).
 | `city_highlights` | What actually works per city | 200+ |
 | `page_views` | Analytics | growing |
 | `chat_messages` | Gemini chatbot conversation history | growing |
+| `smart_city_signals` | Incoming opinions, field notes, media scan, and trend signals | growing |
 
 ## Key Design Decisions
 
@@ -31,7 +32,9 @@ PostgreSQL schema for Supabase powering the full City Data Platform (CDP).
 
 4. **Composite formula**: `(livability×25 + economy×20 + safety×15 + wellbeing×15 + environment×10 + hospitality×10 + digital×5) / 100`. Helper function `compute_composite()` in SQL.
 
-5. **Row-Level Security**: All tables have RLS enabled. Public read access. Write access requires Supabase service role key (server-side only). Analytics tables allow anonymous inserts.
+5. **Row-Level Security**: All tables have RLS enabled. Public read access. Most content writes stay server-side. `page_views`, `chat_messages`, and `smart_city_signals` allow anonymous inserts so the public-facing app can collect telemetry and sentiment without a heavyweight auth layer.
+
+6. **Trend intake**: `smart_city_signals` stores how people actually talk about smart city work: source, city, raw text, tone, themes, and timestamps. It supports direct Supabase reads, Vercel API proxying, and a Google Sheets fallback via Apps Script.
 
 ## Setup
 
@@ -40,10 +43,38 @@ PostgreSQL schema for Supabase powering the full City Data Platform (CDP).
 # 2. Run the schema:
 psql $DATABASE_URL < database/schema.sql
 
-# 3. Set environment variables:
+# 3. Set environment variables for the frontend:
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
+
+# 4. Set environment variables for the Vercel API (preferred):
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# Optional force-order:
+TREND_BACKEND=supabase
 ```
+
+## Google Sheets fallback
+
+If Supabase is blocked, you can use Google Sheets as a scrappy but perfectly serviceable backend.
+
+1. Open [`database/google-apps-script/Code.gs`](./google-apps-script/Code.gs) in a Google Apps Script project.
+2. Set script properties:
+   - `SMART_CITY_SIGNAL_SHEET_ID`
+   - `SMART_CITY_SIGNAL_SECRET`
+3. Deploy the script as a web app.
+4. Set:
+
+```bash
+GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/your-deployment/exec
+GOOGLE_APPS_SCRIPT_SECRET=shared-secret
+
+# Optional browser-side direct fallback
+VITE_GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/your-deployment/exec
+```
+
+The frontend and `/api/smart-city-signals` both know how to use this endpoint.
 
 ## Data Sources
 

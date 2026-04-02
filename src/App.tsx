@@ -92,7 +92,10 @@ export default function App() {
   const isDashboardRoute = route.kind === "home";
 
   useEffect(() => {
-    const sync = () => setRoute(parseRoute(window.location.pathname));
+    const sync = () => {
+      setRoute(parseRoute(window.location.pathname));
+      setMobileMenuOpen(false);
+    };
     window.addEventListener("popstate", sync);
     return () => window.removeEventListener("popstate", sync);
   }, []);
@@ -106,16 +109,13 @@ export default function App() {
     syncDocumentMeta(route.path, locale);
   }, [locale, route]);
 
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [route.path]);
-
   const navigate = (path: string) => {
     if (window.location.pathname !== path) {
       window.history.pushState({}, "", path);
     }
     window.scrollTo({ top: 0, behavior: "auto" });
     setRoute(parseRoute(path));
+    setMobileMenuOpen(false);
   };
 
   const cycleLocale = () => setLocale(l => l === "en" ? "th" : l === "th" ? "zh" : "en");

@@ -10,6 +10,8 @@
 -- - Visitor analytics
 -- ═══════════════════════════════════════════════════════════════════════════
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- ─── ENUMS ───
 
 CREATE TYPE city_status AS ENUM ('certified', 'promotion', 'registered');
@@ -21,6 +23,7 @@ CREATE TYPE evidence_type AS ENUM ('news', 'data', 'field', 'satellite', 'govern
 CREATE TYPE recommendation_priority AS ENUM ('primary', 'secondary', 'exploratory');
 CREATE TYPE partnership_status AS ENUM ('active', 'completed', 'stalled', 'early');
 CREATE TYPE smart_dimension AS ENUM ('economy', 'energy', 'environment', 'governance', 'living', 'mobility', 'people');
+CREATE TYPE signal_sentiment AS ENUM ('positive', 'neutral', 'negative');
 
 -- ─── 1. CITIES — Core registry ───
 
@@ -215,6 +218,36 @@ CREATE TABLE chat_messages (
 
 CREATE INDEX idx_chat_session ON chat_messages(session_id);
 
+-- ─── 13. SMART CITY SIGNALS — Incoming sentiment / trend observations ───
+
+CREATE TABLE smart_city_signals (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  city_id TEXT REFERENCES cities(id) ON DELETE SET NULL,
+  source TEXT NOT NULL,
+  channel TEXT NOT NULL DEFAULT 'manual',
+  text_body TEXT NOT NULL,
+  sentiment_label signal_sentiment NOT NULL DEFAULT 'neutral',
+  sentiment_score DECIMAL(4, 2) NOT NULL DEFAULT 0 CHECK (sentiment_score BETWEEN -1 AND 1),
+  themes TEXT[] NOT NULL DEFAULT '{}',
+  metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+  observed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  ingested_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_smart_city_signals_observed ON smart_city_signals(observed_at DESC);
+CREATE INDEX idx_smart_city_signals_city ON smart_city_signals(city_id);
+CREATE INDEX idx_smart_city_signals_sentiment ON smart_city_signals(sentiment_label);
+CREATE INDEX idx_smart_city_signals_themes ON smart_city_signals USING GIN(themes);
+
+CREATE OR REPLACE VIEW smart_city_signal_daily_trends AS
+SELECT
+  DATE_TRUNC('day', observed_at) AS observed_day,
+  sentiment_label,
+  COUNT(*) AS signal_count,
+  AVG(sentiment_score) AS avg_sentiment
+FROM smart_city_signals
+GROUP BY 1, 2;
+
 -- ═══════════════════════════════════════════════════════════════════════════
 -- ROW-LEVEL SECURITY
 -- ═══════════════════════════════════════════════════════════════════════════
@@ -231,6 +264,7 @@ ALTER TABLE partnership_cities ENABLE ROW LEVEL SECURITY;
 ALTER TABLE city_highlights ENABLE ROW LEVEL SECURITY;
 ALTER TABLE page_views ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE smart_city_signals ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for all content tables
 CREATE POLICY "Public read" ON cities FOR SELECT USING (true);
@@ -243,10 +277,12 @@ CREATE POLICY "Public read" ON data_sources FOR SELECT USING (true);
 CREATE POLICY "Public read" ON partnerships FOR SELECT USING (true);
 CREATE POLICY "Public read" ON partnership_cities FOR SELECT USING (true);
 CREATE POLICY "Public read" ON city_highlights FOR SELECT USING (true);
+CREATE POLICY "Public read" ON smart_city_signals FOR SELECT USING (true);
 
 -- Analytics: anyone can insert (anonymous writes)
 CREATE POLICY "Anyone can insert" ON page_views FOR INSERT WITH CHECK (true);
 CREATE POLICY "Anyone can insert" ON chat_messages FOR INSERT WITH CHECK (true);
+CREATE POLICY "Anyone can insert" ON smart_city_signals FOR INSERT WITH CHECK (true);
 
 -- Write access for content tables requires service role (server-side only)
 -- Supabase service_role key bypasses RLS automatically

@@ -166,6 +166,13 @@ let localSignals = [...seedSignals].sort((left, right) => {
   return Date.parse(right.observedAt) - Date.parse(left.observedAt);
 });
 
+function createId(): string {
+  if (typeof globalThis.crypto?.randomUUID === "function") {
+    return globalThis.crypto.randomUUID();
+  }
+  return `signal-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 function isLocalRuntime(): boolean {
   if (typeof window === "undefined") return false;
   return window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
@@ -208,7 +215,7 @@ function normalizeSignalRecord(record: unknown): SmartCitySignal {
     sentiment === "positive" || sentiment === "negative" ? sentiment : "neutral";
 
   return {
-    id: String(item.id ?? crypto.randomUUID()),
+    id: String(item.id ?? createId()),
     cityId: typeof item.city_id === "string"
       ? item.city_id
       : typeof item.cityId === "string"
@@ -234,10 +241,14 @@ function normalizeSignalRecord(record: unknown): SmartCitySignal {
   };
 }
 
-export function summarizeSignals(signals: SmartCitySignal[], backend: SignalBackendStatus): SignalSnapshot {
+export function summarizeSignals(
+  signals: SmartCitySignal[],
+  backend: SignalBackendStatus,
+  limit = DEFAULT_LIMIT,
+): SignalSnapshot {
   const recentSignals = [...signals]
     .sort((left, right) => Date.parse(right.observedAt) - Date.parse(left.observedAt))
-    .slice(0, DEFAULT_LIMIT);
+    .slice(0, limit);
 
   const themeCounts = new Map<string, number>();
   const cityCounts = new Map<string, number>();
@@ -280,7 +291,7 @@ function normalizeInput(input: SignalInput): SmartCitySignal {
   const sentimentScore = SENTIMENT_SCORES[input.sentiment] ?? 0;
 
   return {
-    id: crypto.randomUUID(),
+    id: createId(),
     cityId: input.cityId?.trim() ? input.cityId.trim() : null,
     source: input.source.trim(),
     channel: input.channel?.trim() || "manual",
@@ -317,7 +328,7 @@ async function fetchFromSignalApi(limit: number): Promise<SignalSnapshot> {
     mode: payload.backend?.mode ?? "local",
     healthy: payload.backend?.healthy ?? false,
     detail: payload.backend?.detail ?? "Backend API responded without provider metadata.",
-  });
+  }, limit);
 }
 
 async function fetchFromSupabase(limit: number): Promise<SignalSnapshot> {
@@ -341,7 +352,7 @@ async function fetchFromSupabase(limit: number): Promise<SignalSnapshot> {
     mode: "supabase",
     healthy: true,
     detail: "Live Supabase trend table is responding.",
-  });
+  }, limit);
 }
 
 async function fetchFromAppsScript(limit: number): Promise<SignalSnapshot> {
@@ -365,15 +376,15 @@ async function fetchFromAppsScript(limit: number): Promise<SignalSnapshot> {
     mode: "google-apps-script",
     healthy: true,
     detail: "Google Sheets + Apps Script fallback is responding.",
-  });
+  }, limit);
 }
 
-function buildLocalSnapshot(detail: string, healthy = false): SignalSnapshot {
+function buildLocalSnapshot(detail: string, limit: number, healthy = false): SignalSnapshot {
   return summarizeSignals(localSignals, {
     mode: "local",
     healthy,
     detail,
-  });
+  }, limit);
 }
 
 export async function loadSignalSnapshot(limit = DEFAULT_LIMIT): Promise<SignalSnapshot> {
@@ -404,10 +415,10 @@ export async function loadSignalSnapshot(limit = DEFAULT_LIMIT): Promise<SignalS
   }
 
   if (errors.length > 0) {
-    return buildLocalSnapshot(`Remote backend is down or unconfigured. Falling back to local demo. ${errors[0]}`);
+    return buildLocalSnapshot(`Remote backend is down or unconfigured. Falling back to local demo. ${errors[0]}`, limit);
   }
 
-  return buildLocalSnapshot("No remote backend configured yet. Using local demo signals until Supabase or Apps Script is wired.");
+  return buildLocalSnapshot("No remote backend configured yet. Using local demo signals until Supabase or Apps Script is wired.", limit);
 }
 
 async function submitToSignalApi(signal: SmartCitySignal): Promise<void> {

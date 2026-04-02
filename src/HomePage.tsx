@@ -11,6 +11,7 @@ import {
 } from "./cityPresentation";
 import type { CityTier, Locale, SmartCity } from "./types";
 import { TIER_LABELS } from "./types";
+import TrendIntelligencePanel from "./TrendIntelligencePanel";
 
 interface Props {
   locale: Locale;
@@ -228,6 +229,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </p>
         </div>
       </section>
+
+      
 
       <section className="dashboard-panel dashboard-hero-panel">
         <div className="dashboard-panel-head dashboard-panel-head-hero">
