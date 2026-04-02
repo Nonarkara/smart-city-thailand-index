@@ -28,7 +28,9 @@ export type ScoringPillar =
 export type CityTier = "alpha" | "beta" | "gamma";
 
 /** Smart City Local (certified) vs Promotion Zone (aspiring) */
-export type CityStatus = "certified" | "promotion";
+export type CityStatus = "certified" | "promotion" | "registered";
+
+export type DataConfidence = "high" | "medium" | "low";
 
 /** Whether city is built and operational or still mostly plans */
 export type CityReality = "operational" | "partial" | "planned";
@@ -71,6 +73,7 @@ export interface SmartCity {
   tagline: string;
   taglineTh: string;
   highlights: string[];
+  dataConfidence?: DataConfidence;
 }
 
 export const PILLAR_WEIGHTS: Record<ScoringPillar, number> = {
