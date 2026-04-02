@@ -14,6 +14,8 @@ const GeminiChat = lazy(() => import("./GeminiChat"));
 const PartnershipsPage = lazy(() => import("./PartnershipsPage"));
 const MapDashboardPage = lazy(() => import("./MapDashboardPage"));
 const AsusPage = lazy(() => import("./AsusPage"));
+const AuditPage = lazy(() => import("./AuditPage"));
+const ReferencesPage = lazy(() => import("./ReferencesPage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 
@@ -25,6 +27,8 @@ const NAV_ITEMS = [
   { kind: "why", path: "/why", label: { en: "Why", th: "ทำไม", zh: "为什么" } },
   { kind: "showcase", path: "/showcase", label: { en: "NST", th: "ต้นแบบ", zh: "样板" } },
   { kind: "partners", path: "/partners", label: { en: "Partners", th: "พันธมิตร", zh: "伙伴" } },
+  { kind: "audit", path: "/audit", label: { en: "Audit", th: "ตรวจสอบ", zh: "审计" } },
+  { kind: "references", path: "/references", label: { en: "Ref", th: "อ้างอิง", zh: "参考" } },
 ] as const;
 
 const newsItems = [
@@ -124,7 +128,13 @@ export default function App() {
   return (
     <div className={`page-shell ${isDashboardRoute ? "page-shell-dashboard" : ""}`}>
       {/* ─── INSTITUTIONAL BANNER ─── */}
-      {/* Institutional banner removed — logos now inline with nav */}
+      <div className="institutional-banner">
+        <div className="institutional-logos">
+          <img src="/mdes_logo.jpg" alt={locale === "th" ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม" : "Ministry of Digital Economy and Society"} className="institutional-logo" />
+          <img src="/depa_logo.jpg" alt={locale === "th" ? "สำนักงานส่งเสริมเศรษฐกิจดิจิทัล" : "Digital Economy Promotion Agency (depa)"} className="institutional-logo" />
+          <img src="/smart_city_thailand_logo.jpg" alt={locale === "th" ? "สำนักงานเมืองอัจฉริยะประเทศไทย" : "Smart City Thailand Office"} className="institutional-logo" />
+        </div>
+      </div>
 
       {/* ─── TOPBAR ─── */}
       <nav className="topbar">
@@ -201,6 +211,10 @@ export default function App() {
             <MapDashboardPage locale={locale} onNavigate={navigate} />
           ) : route.kind === "asus" ? (
             <AsusPage locale={locale} onNavigate={navigate} />
+          ) : route.kind === "audit" ? (
+            <AuditPage locale={locale} onNavigate={navigate} />
+          ) : route.kind === "references" ? (
+            <ReferencesPage locale={locale} onNavigate={navigate} />
           ) : route.kind === "city" ? (
             <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
           ) : (
@@ -295,44 +309,55 @@ export default function App() {
                       ? "基于 SLIC 方法论构建 · 开放数据，可追溯可审计"
                       : "Built on SLIC methodology · Open data, fully auditable"}
                 </p>
+                <button
+                  type="button"
+                  className="footer-ref-link"
+                  onClick={() => navigate("/references")}
+                  style={{ background: "none", border: "none", font: "600 .42rem var(--mono)", color: "var(--teal)", cursor: "pointer", marginTop: ".15rem", padding: 0 }}
+                >
+                  {locale === "th" ? "API แหล่งข้อมูล และมาตรฐาน →" : locale === "zh" ? "API、数据来源与标准 →" : "APIs, Data Sources & Standards →"}
+                </button>
               </div>
 
               {/* ─── FINE PRINT: Standards, Compliance & Accessibility ─── */}
               <div className="footer-fineprint">
-                <p>
-                  {locale === "th"
-                    ? "ดัชนีนี้จัดทำขึ้นตามแนวทางและมาตรฐานสากล ได้แก่ กรอบ UN-Habitat City Prosperity Initiative (CPI), ตัวชี้วัดเมืองอัจฉริยะ ISO 37122:2019, เป้าหมายการพัฒนาที่ยั่งยืนแห่งสหประชาชาติ (SDGs) โดยเฉพาะเป้าหมาย 11 (เมืองและชุมชนที่ยั่งยืน), กรอบ ASEAN Smart Cities Framework (ASCF) 2018, แผนปฏิบัติการเมืองอัจฉริยะอาเซียน (ASCAP) 2021–2025, และ New Urban Agenda ปี 2016"
-                    : locale === "zh"
-                      ? "本指数参照以下国际框架与标准编制：联合国人居署城市繁荣倡议（CPI）、ISO 37122:2019 智慧城市指标、联合国可持续发展目标第 11 项（可持续城市与社区）、东盟智慧城市框架（ASCF）2018、东盟智慧城市行动计划（ASCAP）2021–2025，以及 2016 年《新城市议程》。"
-                      : "This index is developed in alignment with: UN-Habitat City Prosperity Initiative (CPI), ISO 37122:2019 Sustainable Cities — Indicators for Smart Cities, UN Sustainable Development Goal 11 (Sustainable Cities and Communities), ASEAN Smart Cities Framework (ASCF) 2018, ASEAN Smart Cities Action Plan (ASCAP) 2021–2025, and the New Urban Agenda 2016."}
+                <p style={{ fontWeight: 600, color: "var(--3)", marginBottom: ".15rem", fontSize: ".44rem", letterSpacing: ".06em", textTransform: "uppercase" as const, fontFamily: "var(--mono)" }}>
+                  {locale === "th" ? "เอกสารอ้างอิง SCTI-2026-R1 · ปรับปรุงล่าสุด เมษายน 2026" : locale === "zh" ? "参考文件 SCTI-2026-R1 · 最后更新：2026 年 4 月" : "Document ref. SCTI-2026-R1 · Last updated April 2026"}
                 </p>
                 <p>
                   {locale === "th"
-                    ? "ข้อมูลที่ใช้มาจากแหล่งสาธารณะที่ตรวจสอบได้: สำนักงานสถิติแห่งชาติ (NSO), สภาพัฒนาการเศรษฐกิจและสังคมแห่งชาติ (NESDC), กรมควบคุมมลพิษ (PCD), สำนักงานพัฒนาเทคโนโลยีอวกาศฯ (GISTDA), ธนาคารโลก Open Data, ธนาคารพัฒนาเอเชีย (ADB), Open-Meteo/Copernicus, สำนักงานตำรวจแห่งชาติ, กรมการปกครอง (DOPA), และแพลตฟอร์มข้อมูลเมือง citydata.in.th โดย depa"
+                    ? "มาตรฐาน: ดัชนีนี้จัดทำขึ้นตามแนวทาง UN-Habitat City Prosperity Initiative (CPI), ISO 37122:2019 Sustainable Cities — Indicators for Smart Cities, เป้าหมาย SDG 11 (เมืองและชุมชนที่ยั่งยืน), กรอบ ASEAN Smart Cities Framework (ASCF) 2018, แผนปฏิบัติการ ASCAP 2021–2025, และ New Urban Agenda 2016."
                     : locale === "zh"
-                      ? "数据来自可验证的公开来源：泰国国家统计局（NSO）、国家经济与社会发展委员会（NESDC）、污染控制部（PCD）、地理信息与空间技术机构（GISTDA）、世界银行公开数据、亚洲开发银行（ADB）、Open-Meteo/Copernicus、泰国皇家警察、内政部地方行政厅（DOPA），以及 depa 的城市数据平台 citydata.in.th。"
-                      : "Data sourced from verifiable public sources: National Statistical Office (NSO), National Economic and Social Development Council (NESDC), Pollution Control Department (PCD), Geo-Informatics and Space Technology Development Agency (GISTDA), World Bank Open Data, Asian Development Bank (ADB), Open-Meteo/Copernicus, Royal Thai Police, Department of Provincial Administration (DOPA), and depa City Data Platform (citydata.in.th)."}
+                      ? "标准：本指数参照 UN-Habitat CPI、ISO 37122:2019 智慧城市指标、SDG 11（可持续城市与社区）、ASCF 2018、ASCAP 2021–2025 及 2016 年《新城市议程》编制。"
+                      : "Standards alignment: UN-Habitat City Prosperity Initiative (CPI) · ISO 37122:2019 Sustainable Cities — Indicators for Smart Cities · UN SDG 11 (Sustainable Cities and Communities) · ASEAN Smart Cities Framework (ASCF) 2018 · ASCAP 2021–2025 · New Urban Agenda 2016."}
                 </p>
                 <p>
                   {locale === "th"
-                    ? "การเงิน: กลไกที่แนะนำอ้างอิงจาก ASEAN Smart City Financing Toolkit (smartcitytoolkit.asean.org), กองทุน ASEAN Catalytic Green Finance Facility (ACGF) ของ ADB, กรอบพันธบัตรสีเขียวของ สำนักงาน ก.ล.ต., และสิทธิประโยชน์ BOI ภายใต้นโยบาย S-Curve ของไทย"
+                    ? "แหล่งข้อมูล: สำนักงานสถิติแห่งชาติ (NSO) · สภาพัฒน์ (NESDC) · กรมควบคุมมลพิษ (PCD) · GISTDA · ธนาคารโลก Open Data · ADB · Open-Meteo/Copernicus · สำนักงานตำรวจแห่งชาติ · กรมการปกครอง (DOPA) · depa City Data Platform (citydata.in.th) · กระทรวงสาธารณสุข (MOPH)"
                     : locale === "zh"
-                      ? "金融机制：推荐工具参照东盟智慧城市融资工具箱（smartcitytoolkit.asean.org）、ADB 的东盟催化绿色金融工具（ACGF）、泰国证券交易委员会绿色债券框架，以及泰国 BOI 在 S-Curve 政策下的投资激励。"
-                      : "Financial mechanisms referenced from: ASEAN Smart City Financing Toolkit (smartcitytoolkit.asean.org), ADB ASEAN Catalytic Green Finance Facility (ACGF), Thailand SEC Green Bond Framework, and BOI investment incentives under Thailand's S-Curve policy."}
+                      ? "数据来源：NSO · NESDC · PCD · GISTDA · 世界银行 · ADB · Open-Meteo/Copernicus · 泰国皇家警察 · DOPA · depa citydata.in.th · 公共卫生部。"
+                      : "Data sources: NSO · NESDC · PCD · GISTDA · World Bank Open Data · ADB · Open-Meteo/Copernicus · Royal Thai Police · DOPA · depa City Data Platform (citydata.in.th) · Ministry of Public Health (MOPH)."}
                 </p>
                 <p>
                   {locale === "th"
-                    ? "การเข้าถึง: เว็บไซต์นี้ออกแบบตามแนวทาง WCAG 2.1 AA ทุกองค์ประกอบโต้ตอบได้รองรับการนำทางด้วยคีย์บอร์ด ภาพทุกภาพมี alt text ตารางข้อมูลใช้โครงสร้าง semantic HTML รองรับ 3 ภาษา (อังกฤษ ไทย จีน)"
+                    ? "การเงิน: กลไกที่แนะนำอ้างอิงจาก ASEAN Smart City Financing Toolkit (smartcitytoolkit.asean.org) · กองทุน ACGF ของ ADB · กรอบพันธบัตรสีเขียวของ ก.ล.ต. · สิทธิประโยชน์ BOI ภายใต้นโยบาย S-Curve · UNCDF Smart Green ASEAN Cities (SGAC)"
                     : locale === "zh"
-                      ? "无障碍：本网站遵循 WCAG 2.1 AA 标准设计。所有交互元素均支持键盘导航，图片均配有替代文本，数据表使用语义化 HTML 结构。支持三种语言（英文、泰文、中文）。"
-                      : "Accessibility: This site follows WCAG 2.1 AA guidelines. All interactive elements support keyboard navigation. Images have alt text. Data tables use semantic HTML. Available in three languages (English, Thai, Chinese)."}
+                      ? "金融机制：东盟融资工具箱 · ADB ACGF · 泰国 SEC 绿色债券框架 · BOI S-Curve 激励 · UNCDF SGAC。"
+                      : "Financial mechanisms: ASEAN Smart City Financing Toolkit (smartcitytoolkit.asean.org) · ADB ACGF · Thailand SEC Green Bond Framework · BOI S-Curve incentives · UNCDF Smart Green ASEAN Cities (SGAC)."}
                 </p>
                 <p>
                   {locale === "th"
-                    ? "© 2026 สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa) กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม ราชอาณาจักรไทย · วิธีการ SLIC (Smart Liveable Cities Index) · สงวนลิขสิทธิ์ ข้อมูลเปิดเผยภายใต้ Creative Commons Attribution 4.0 International"
+                    ? "การเข้าถึง: ออกแบบตาม WCAG 2.1 AA · รองรับคีย์บอร์ด · ภาพมี alt text · ตารางใช้ semantic HTML · รองรับ 3 ภาษา (EN/TH/ZH) · Focus visible สำหรับ keyboard navigation"
                     : locale === "zh"
-                      ? "© 2026 数字经济促进局（depa），泰国数字经济与社会部 · SLIC（Smart Liveable Cities Index）方法论 · 版权所有。数据依据 Creative Commons Attribution 4.0 International 许可公开。"
-                      : "© 2026 Digital Economy Promotion Agency (depa), Ministry of Digital Economy and Society, Kingdom of Thailand · SLIC (Smart Liveable Cities Index) methodology · All rights reserved. Data published under Creative Commons Attribution 4.0 International."}
+                      ? "无障碍：遵循 WCAG 2.1 AA · 支持键盘导航 · 图片含 alt 文本 · 语义化表格 · 三语支持 (EN/TH/ZH)"
+                      : "Accessibility: WCAG 2.1 AA compliant · Keyboard navigable · Alt text on images · Semantic HTML tables · Trilingual (EN/TH/ZH) · Focus-visible indicators for assistive technology."}
+                </p>
+                <p style={{ borderTop: "1px solid var(--5)", paddingTop: ".35rem", marginTop: ".25rem" }}>
+                  {locale === "th"
+                    ? "© 2026 สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa) กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม ราชอาณาจักรไทย · วิธีการ SLIC (Smart Liveable Cities Index) · สงวนลิขสิทธิ์ · ข้อมูลเปิดเผยภายใต้สัญญาอนุญาต Creative Commons Attribution 4.0 International (CC BY 4.0) · คะแนนสะท้อนสภาพ ณ เวลาที่ประเมิน ไม่ใช่คำแนะนำการลงทุน"
+                    : locale === "zh"
+                      ? "© 2026 数字经济促进局（depa），泰国数字经济与社会部 · SLIC 方法论 · 版权所有 · 数据依据 CC BY 4.0 许可公开 · 评分反映评估时状况，不构成投资建议。"
+                      : "© 2026 Digital Economy Promotion Agency (depa), Ministry of Digital Economy and Society, Kingdom of Thailand · SLIC (Smart Liveable Cities Index) methodology · All rights reserved · Data published under Creative Commons Attribution 4.0 International (CC BY 4.0) · Scores reflect conditions at time of assessment and do not constitute investment advice."}
                 </p>
               </div>
             </div>

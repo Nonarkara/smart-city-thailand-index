@@ -127,19 +127,23 @@ export default function GlobeMap({ locale }: Props) {
           );
         })}
 
-        {/* Tooltip */}
+        {/* Tooltip — large and obvious */}
         {hovered && (() => {
           const pt = projectWorld(hovered.lat, hovered.lng);
-          const tx = pt.x > 650 ? pt.x - 160 : pt.x + 10;
-          const ty = pt.y < 40 ? pt.y + 10 : pt.y - 35;
+          const tx = pt.x > 550 ? pt.x - 220 : pt.x + 15;
+          const ty = pt.y < 60 ? pt.y + 15 : pt.y - 55;
           return (
             <g transform={`translate(${tx}, ${ty})`}>
-              <rect x="0" y="0" width="155" height="32" fill="rgba(10,18,16,0.95)" />
-              <text x="5" y="11" fontSize="6.5" fontWeight="700" fill="#fff" fontFamily="var(--font-body, sans-serif)">
+              <rect x="0" y="0" width="210" height="52" fill="var(--ink, #1A1A1A)" rx="0" />
+              <rect x="0" y="0" width="3" height="52" fill={typeColor(hovered.type)} />
+              <text x="10" y="14" fontSize="9" fontWeight="700" fill="#fff" fontFamily="var(--font, sans-serif)">
                 {hovered.flag} {hovered.name}
               </text>
-              <text x="5" y="22" fontSize="5" fill="var(--teal, #2BBAA0)" fontFamily="var(--font-mono, monospace)" fontWeight="600">
-                {locale === "th" ? hovered.focusTh : hovered.focusEn}
+              <text x="10" y="27" fontSize="6.5" fill="var(--teal, #2BBAA0)" fontFamily="var(--mono, monospace)" fontWeight="600">
+                {hovered.country} · {hovered.type}
+              </text>
+              <text x="10" y="42" fontSize="6" fill="rgba(255,255,255,0.7)" fontFamily="var(--font, sans-serif)" fontWeight="500">
+                {(locale === "th" ? hovered.focusTh : hovered.focusEn).slice(0, 45)}
               </text>
             </g>
           );

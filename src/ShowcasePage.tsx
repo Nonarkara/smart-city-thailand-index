@@ -206,6 +206,25 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             {t(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开 ASEAN CSCO 手册" })}
           </a>
         </div>
+        {/* NST Photo Strip */}
+        <div className="photo-strip" style={{ marginTop: "1.25rem" }}>
+          <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
+            <img src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=500&h=300&fit=crop" alt="Thai southern temple" />
+            <span className="photo-strip-label">Wat Phra Mahathat</span>
+          </div>
+          <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
+            <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=500&h=300&fit=crop" alt="Thai local market" />
+            <span className="photo-strip-label">Local market</span>
+          </div>
+          <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
+            <img src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=500&h=300&fit=crop" alt="Southern Thailand coast" />
+            <span className="photo-strip-label">Gulf of Thailand</span>
+          </div>
+          <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
+            <img src="/Photos international/459288254_924132223081934_9217219278417242092_n.jpg" alt="CSCO Workshop" />
+            <span className="photo-strip-label">CSCO Workshop</span>
+          </div>
+        </div>
         <p className="showcase-source-note">
           {t(locale, {
             en: "Outcome figures below are reported in municipal case materials, nomination files, and the ASEAN CSCO case-study stack. They are presented here as documented case evidence, not as live telemetry.",

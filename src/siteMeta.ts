@@ -52,10 +52,20 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | โครงการ ASUS UN-Habitat`,
     zh: `${SITE_NAME} | 联合国人居署ASUS项目`,
   },
+  audit: {
+    en: `${SITE_NAME} | depa Performance Audit`,
+    th: `${SITE_NAME} | ตรวจสอบผลงาน depa`,
+    zh: `${SITE_NAME} | depa绩效审计`,
+  },
   partners: {
     en: `${SITE_NAME} | International Partnerships`,
     th: `${SITE_NAME} | ความร่วมมือระหว่างประเทศ`,
     zh: `${SITE_NAME} | 国际合作`,
+  },
+  references: {
+    en: `${SITE_NAME} | APIs, Data Sources & Standards`,
+    th: `${SITE_NAME} | API แหล่งข้อมูล และมาตรฐาน`,
+    zh: `${SITE_NAME} | API、数据来源与标准`,
   },
   city: {
     en: `${SITE_NAME} | City Profile`,

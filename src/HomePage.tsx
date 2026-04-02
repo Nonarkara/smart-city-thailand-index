@@ -77,10 +77,10 @@ function RankingRow({
           {getProvinceName(city, locale)} · {TIER_LABELS[locale][city.tier]} · {getCityStatusLabel(city.status, locale)}
         </span>
       </div>
-      <div className="dashboard-ranking-bars" style={{ display: "flex", gap: "1px", flex: "0 0 100px" }}>
+      <div className="dashboard-ranking-bars">
         {(["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"] as const).map(p => (
-          <div key={p} style={{ flex: 1, height: "14px", background: "var(--surface, #F5F5F5)" }}>
-            <div style={{ width: `${city.scores[p]}%`, height: "100%", background: PILLAR_COLORS[p] }} />
+          <div key={p} className="dashboard-ranking-bar-track">
+            <div className="dashboard-ranking-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }} />
           </div>
         ))}
       </div>
