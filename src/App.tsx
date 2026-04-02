@@ -15,6 +15,16 @@ const PartnershipsPage = lazy(() => import("./PartnershipsPage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 
+const NAV_ITEMS = [
+  { kind: "home", path: "/", label: { en: "Home", th: "หน้าหลัก", zh: "首页" } },
+  { kind: "rankings", path: "/rankings", label: { en: "Rankings", th: "จัดอันดับ", zh: "排名" } },
+  { kind: "methodology", path: "/methodology", label: { en: "Methodology", th: "วิธีการ", zh: "方法论" } },
+  { kind: "story", path: "/story", label: { en: "Story", th: "เรื่องราว", zh: "故事" } },
+  { kind: "why", path: "/why", label: { en: "Why", th: "ทำไม", zh: "为什么" } },
+  { kind: "showcase", path: "/showcase", label: { en: "NST", th: "ต้นแบบ", zh: "样板" } },
+  { kind: "partners", path: "/partners", label: { en: "Partners", th: "พันธมิตร", zh: "伙伴" } },
+] as const;
+
 const newsItems = [
   {
     date: "2026-03-18",
@@ -77,6 +87,7 @@ function getInitialLocale(): Locale {
 export default function App() {
   const [route, setRoute] = useState<Route>(() => parseRoute(window.location.pathname));
   const [locale, setLocale] = useState<Locale>(getInitialLocale);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isDashboardRoute = route.kind === "home";
 
   useEffect(() => {
@@ -93,6 +104,10 @@ export default function App() {
   useEffect(() => {
     syncDocumentMeta(route.path, locale);
   }, [locale, route]);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [route.path]);
 
   const navigate = (path: string) => {
     if (window.location.pathname !== path) {
@@ -111,41 +126,57 @@ export default function App() {
 
       {/* ─── TOPBAR ─── */}
       <nav className="topbar">
-        <button className="brand-lockup" onClick={() => navigate("/")}>
+        <button type="button" className="brand-lockup" onClick={() => navigate("/")}>
           <img src="/smart_city_thailand_logo.jpg" alt="Smart City Thailand" className="brand-logo" />
           <span className="brand-name">
             {locale === "th" ? "ดัชนีเมืองอัจฉริยะไทย" : locale === "zh" ? "泰国智慧城市指数" : "Smart City Thailand Index"}
           </span>
         </button>
-        <div className="nav-links">
-          <button className={`nav-link ${route.kind === "home" ? "active" : ""}`} onClick={() => navigate("/")}>
-            {locale === "th" ? "หน้าหลัก" : locale === "zh" ? "首页" : "Home"}
-          </button>
-          <button className={`nav-link ${route.kind === "rankings" ? "active" : ""}`} onClick={() => navigate("/rankings")}>
-            {locale === "th" ? "จัดอันดับ" : locale === "zh" ? "排名" : "Rankings"}
-          </button>
-          <button className={`nav-link ${route.kind === "methodology" ? "active" : ""}`} onClick={() => navigate("/methodology")}>
-            {locale === "th" ? "วิธีการ" : locale === "zh" ? "方法论" : "Methodology"}
-          </button>
-          <button className={`nav-link ${route.kind === "story" ? "active" : ""}`} onClick={() => navigate("/story")}>
-            {locale === "th" ? "เรื่องราว" : locale === "zh" ? "故事" : "Story"}
-          </button>
-          <button className={`nav-link ${route.kind === "why" ? "active" : ""}`} onClick={() => navigate("/why")}>
-            {locale === "th" ? "ทำไม" : locale === "zh" ? "为什么" : "Why"}
-          </button>
-          <button className={`nav-link ${route.kind === "showcase" ? "active" : ""}`} onClick={() => navigate("/showcase")}>
-            {locale === "th" ? "ต้นแบบ" : locale === "zh" ? "样板" : "NST"}
-          </button>
-          <button className={`nav-link ${route.kind === "partners" ? "active" : ""}`} onClick={() => navigate("/partners")}>
-            {locale === "th" ? "พันธมิตร" : locale === "zh" ? "伙伴" : "Partners"}
-          </button>
+        <div className="topbar-actions">
           <button
-            className="locale-toggle"
-            aria-label={locale === "en" ? "Switch language to Thai" : locale === "th" ? "Switch language to Chinese" : "Switch language to English"}
-            onClick={cycleLocale}
+            type="button"
+            className="nav-toggle"
+            aria-expanded={mobileMenuOpen}
+            aria-label={
+              mobileMenuOpen
+                ? locale === "th"
+                  ? "ปิดเมนูนำทาง"
+                  : locale === "zh"
+                    ? "关闭导航菜单"
+                    : "Close navigation menu"
+                : locale === "th"
+                  ? "เปิดเมนูนำทาง"
+                  : locale === "zh"
+                    ? "打开导航菜单"
+                    : "Open navigation menu"
+            }
+            onClick={() => setMobileMenuOpen(open => !open)}
           >
-            {locale === "en" ? "TH" : locale === "th" ? "中" : "EN"}
+            <span />
+            <span />
+            <span />
           </button>
+          <div className={`nav-links ${mobileMenuOpen ? "nav-links-open" : ""}`}>
+            {NAV_ITEMS.map(item => (
+              <button
+                key={item.kind}
+                type="button"
+                className={`nav-link ${route.kind === item.kind ? "active" : ""}`}
+                aria-current={route.kind === item.kind ? "page" : undefined}
+                onClick={() => navigate(item.path)}
+              >
+                {item.label[locale]}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="locale-toggle"
+              aria-label={locale === "en" ? "Switch language to Thai" : locale === "th" ? "Switch language to Chinese" : "Switch language to English"}
+              onClick={cycleLocale}
+            >
+              {locale === "en" ? "TH" : locale === "th" ? "中" : "EN"}
+            </button>
+          </div>
         </div>
       </nav>
 

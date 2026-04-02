@@ -5,300 +5,214 @@ interface Props {
   onNavigate: (path: string) => void;
 }
 
-interface TimelineEvent {
-  year: string;
+interface StoryMetric {
+  value: string;
+  labelEn: string;
+  labelTh: string;
+  labelZh: string;
+}
+
+interface StoryShift {
   titleEn: string;
   titleTh: string;
   titleZh: string;
   bodyEn: string;
   bodyTh: string;
   bodyZh: string;
+}
+
+interface TimelineEvent {
+  period: string;
+  titleEn: string;
+  titleTh: string;
+  titleZh: string;
+  bodyEn: string;
+  bodyTh: string;
+  bodyZh: string;
+  impactEn: string;
+  impactTh: string;
+  impactZh: string;
   photos: string[];
   captionEn?: string;
   captionTh?: string;
   captionZh?: string;
 }
 
+const storyMetrics: StoryMetric[] = [
+  { value: "2016–2026", labelEn: "Archive window", labelTh: "ช่วงเวลาที่เล่า", labelZh: "时间跨度" },
+  { value: "37", labelEn: "Certified cities", labelTh: "เมืองที่ได้รับการรับรอง", labelZh: "认证城市" },
+  { value: "49", labelEn: "Cities tracked in this release", labelTh: "เมืองที่ติดตามในรุ่นนี้", labelZh: "本版纳入城市" },
+  { value: "53", labelEn: "Countries at SCSE 2026", labelTh: "ประเทศในงาน SCSE 2026", labelZh: "SCSE 2026 参会国家" },
+];
+
+const storyShifts: StoryShift[] = [
+  {
+    titleEn: "From pilot projects to a national operating model",
+    titleTh: "จากโครงการนำร่องสู่โมเดลการทำงานระดับชาติ",
+    titleZh: "从试点项目走向全国操作模型",
+    bodyEn: "The early years were about proving that Thailand could run smart city pilots at all. The later years turned that into committees, certification rounds, toolkits, and repeatable city-delivery playbooks.",
+    bodyTh: "ช่วงแรกคือการพิสูจน์ว่าประเทศไทยทำเมืองอัจฉริยะนำร่องได้จริง ช่วงหลังคือการแปลงสิ่งนั้นให้เป็นคณะกรรมการ รุ่นการรับรอง toolkit และคู่มือส่งมอบที่เอาไปใช้ซ้ำได้",
+    bodyZh: "早期阶段是在证明泰国做得出智慧城市试点；后期则把它沉淀成委员会机制、认证批次、工具包与可复制的城市交付方法。",
+  },
+  {
+    titleEn: "From technology theatre to citizen value",
+    titleTh: "จากละครเทคโนโลยีสู่คุณค่าที่ประชาชนรู้สึกได้",
+    titleZh: "从技术表演转向市民感受到的价值",
+    bodyEn: "The decisive move was cultural, not technical. Hackathons, design-thinking workshops, CSCO training, and case cities like Nakhon Si Thammarat shifted the question from ‘what gadget can we buy?’ to ‘what pain can we remove?’",
+    bodyTh: "จุดเปลี่ยนที่แท้จริงไม่ใช่เรื่องเทค แต่เป็นเรื่องวัฒนธรรม แฮกกาธอน เวิร์กช็อป design thinking การฝึก CSCO และเมืองตัวอย่างอย่างนครศรีธรรมราช ทำให้คำถามเปลี่ยนจาก 'จะซื้อ gadget อะไร' เป็น 'จะเอาความเจ็บปวดอะไรออกไป'",
+    bodyZh: "真正的转折不是技术，而是文化。黑客松、设计思维工作坊、CSCO 培训，以及那空是贪玛叻这样的案例，把问题从“买什么设备”改成“先解决什么痛点”。",
+  },
+  {
+    titleEn: "From logo distribution to auditable evidence",
+    titleTh: "จากการแจกตราสู่หลักฐานที่ตรวจสอบได้",
+    titleZh: "从颁发标识走向可审计证据",
+    bodyEn: "Certification mattered, but it was not enough. SLIC and this Thailand index push the story one step further: every city claim should be benchmarked against outcomes, evidence, and delivery maturity rather than ceremony alone.",
+    bodyTh: "การรับรองมีความหมาย แต่ยังไม่พอ SLIC และดัชนีประเทศไทยผลักเรื่องนี้ต่ออีกขั้น: คำกล่าวอ้างของเมืองต้องถูกเทียบกับผลลัพธ์ หลักฐาน และความพร้อมในการส่งมอบ ไม่ใช่พิธีการอย่างเดียว",
+    bodyZh: "认证有意义，但还不够。SLIC 与泰国这一版指数把事情再往前推一步：城市的说法必须对照结果、证据与交付成熟度，而不是只看仪式。",
+  },
+];
+
 const timeline: TimelineEvent[] = [
   {
-    year: "2016–2017",
-    titleEn: "Before the office: the Phuket pilot and depa's founding",
-    titleTh: "ก่อนสำนักงาน: โครงการนำร่องภูเก็ตและการก่อตั้ง depa",
-    titleZh: "办公室之前：普吉试点与 depa 的创立",
-    bodyEn: "Thailand's smart city journey begins before the office even exists. In 2016, Phuket becomes the country's first smart city pilot — testing digital tourism, traffic management, and environmental monitoring on the island. Then in 2017, depa (Digital Economy Promotion Agency) is formally established under the Digital Economy and Society Development Act. On October 15, 2017, the Smart City Thailand Office is born. The mission: build a national smart city framework. The 7 dimensions are defined — Economy, Energy, Environment, Governance, Living, Mobility, People. Initial pilot cities: Phuket, Chiang Mai, Khon Kaen, plus three EEC cities (Chon Buri, Rayong, Chachoengsao) and Bangkok. Dr. Passakorn Prathombutr leads the digital promotion division. The team is small. The ambition is enormous.",
-    bodyTh: "การเดินทางเมืองอัจฉริยะไทยเริ่มก่อนสำนักงานจะเกิด ปี 2559 ภูเก็ตเป็นเมืองนำร่องเมืองอัจฉริยะแห่งแรก — ทดสอบท่องเที่ยวดิจิทัล จัดการจราจร เฝ้าระวังสิ่งแวดล้อม จากนั้นปี 2560 depa ก่อตั้งอย่างเป็นทางการ 15 ตุลาคม 2560 สำนักงานเมืองอัจฉริยะถือกำเนิด กำหนด 7 มิติ เมืองนำร่อง: ภูเก็ต เชียงใหม่ ขอนแก่น ชลบุรี ระยอง ฉะเชิงเทรา กรุงเทพฯ ดร.ภาสกร ประถมบุตร นำกองส่งเสริมดิจิทัล ทีมเล็ก ความทะเยอทะยานใหญ่",
-    bodyZh: "泰国智慧城市之旅早在办公室成立之前就开始了。2016 年，普吉岛成为首个试点，测试数字旅游、交通管理与环境监测。2017 年，depa 根据《数字经济与社会发展法》正式成立。10 月 15 日，智慧城市办公室诞生。七大维度确立。首批试点城市：普吉、清迈、孔敬，加上三座 EEC 城市和曼谷。Passakorn Prathombutr 博士带领数字促进部门。团队很小，野心很大。",
+    period: "2016–2017",
+    titleEn: "The groundwork: Phuket pilot and the birth of the office",
+    titleTh: "ปูพื้นสนาม: โครงการนำร่องภูเก็ตและการเกิดของสำนักงาน",
+    titleZh: "打地基：普吉试点与办公室成立",
+    bodyEn: "Thailand's smart city push starts before the bureaucracy is fully assembled. Phuket is used as an early proving ground for digital tourism, traffic, and environmental monitoring. In 2017, depa is formally established and the Smart City Thailand Office takes shape with the now-familiar seven dimensions.",
+    bodyTh: "การขับเคลื่อนเมืองอัจฉริยะไทยเริ่มก่อนระบบราชการจะประกอบตัวเสร็จ ภูเก็ตถูกใช้เป็นสนามพิสูจน์สำหรับท่องเที่ยวดิจิทัล จราจร และการติดตามสิ่งแวดล้อม ปี 2560 depa ก่อตั้งอย่างเป็นทางการ และสำนักงานเมืองอัจฉริยะไทยก็เริ่มเป็นรูปเป็นร่างพร้อม 7 มิติที่คุ้นเคยกันทุกวันนี้",
+    bodyZh: "泰国的智慧城市推动在官僚结构完全成形前就已经开始。普吉被拿来做数字旅游、交通与环境监测的早期试验场。2017 年 depa 正式成立，Smart City Thailand Office 也随之成形，并确立了今天熟悉的七大维度。",
+    impactEn: "Impact: the program moved from scattered pilots to a national frame.",
+    impactTh: "ผลกระทบ: โครงการขยับจากการทดลองกระจัดกระจายสู่กรอบระดับชาติ",
+    impactZh: "影响：项目从零散试点转向全国框架。",
     photos: ["P6204927.JPG", "P6205097.JPG", "318402.jpg"],
-    captionEn: "Smart City Thailand Roadshow and the depa Smart City Innovation Park — the foundation is laid",
-    captionTh: "Smart City Thailand Roadshow และ depa Smart City Innovation Park — วางรากฐาน",
-    captionZh: "Smart City Thailand 路演与 depa 智慧城市创新园区——奠基之初",
+    captionEn: "Roadshows and early depa innovation spaces laid the first layer of the ecosystem.",
+    captionTh: "โรดโชว์และพื้นที่นวัตกรรมช่วงแรกของ depa คือชั้นแรกของระบบนิเวศนี้",
+    captionZh: "路演与早期 depa 创新空间，为整个生态打下了第一层基础。",
   },
   {
-    year: "2018",
-    titleEn: "ASEAN Smart Cities Network: Thailand takes the stage",
-    titleTh: "ASEAN Smart Cities Network: ไทยขึ้นเวที",
-    titleZh: "东盟智慧城市网络：泰国走上前台",
-    bodyEn: "At the 33rd ASEAN Summit in November 2018, ASEAN leaders adopt the ASEAN Smart Cities Framework. Thailand joins with Bangkok, Chonburi, and Phuket as pilot cities. The National Smart City Committee is established, chaired by the Deputy PM, with depa as co-secretariat. Thailand doesn't just participate — it hosts. The ASCN Conference on Smart and Sustainable Cities in June becomes Thailand's coming-out moment on the international smart city stage. Dr. Non Arkaraprasertkul — Harvard-trained anthropologist, architect, and urban researcher — joins depa as Senior Expert in Smart City Promotion. He immediately begins pushing the program toward a citizen-centric approach.",
-    bodyTh: "ที่การประชุมสุดยอดอาเซียนครั้งที่ 33 เดือนพฤศจิกายน 2561 ผู้นำอาเซียนรับรอง ASEAN Smart Cities Framework ไทยเข้าร่วมด้วยกรุงเทพฯ ชลบุรี ภูเก็ต ตั้งคณะกรรมการเมืองอัจฉริยะแห่งชาติ depa เป็นฝ่ายเลขานุการร่วม ไทยไม่แค่เข้าร่วม — แต่เป็นเจ้าภาพ งาน ASCN Conference มิถุนายนกลายเป็นจุดเปิดตัวไทยบนเวทีนานาชาติ ดร.ณณ อาคาราประเสริฐกุล เข้าร่วม depa เป็นผู้เชี่ยวชาญอาวุโส",
-    bodyZh: "2018 年 11 月第 33 届东盟峰会上，东盟领导人通过《ASEAN Smart Cities Framework》。泰国以曼谷、春武里和普吉为试点加入。国家智慧城市委员会成立，depa 任联合秘书处。泰国不只是参与者，还是主办方。6 月的 ASCN 会议成为泰国在国际智慧城市舞台上的亮相时刻。Non Arkaraprasertkul 博士加入 depa，立刻推动项目走向市民中心。",
-    photos: [
-      "IMG_4107.JPG",
-      "f4b929dc011fb96fba76c9618ca6b93e.jpg",
-      "IMG_5849.JPG",
-      "IMG_5304.JPG",
-    ],
-    captionEn: "Dr. Non at the ASCN podium, the ASCN Conference panel, and the depa team at the founding moment",
-    captionTh: "ดร.ณณ บนโพเดียม ASCN แพเนล ASCN Conference และทีม depa ในช่วงก่อตั้ง",
-    captionZh: "Non 博士在 ASCN 讲台上，ASCN 会议讨论组，以及创始阶段的 depa 团队",
+    period: "2018",
+    titleEn: "Thailand enters the ASEAN smart city conversation seriously",
+    titleTh: "ไทยเข้าสู่บทสนทนาเมืองอัจฉริยะของอาเซียนอย่างจริงจัง",
+    titleZh: "泰国正式走进东盟智慧城市话语场",
+    bodyEn: "With the ASEAN Smart Cities Framework and the National Smart City Committee in place, Thailand stops acting like a collection of disconnected city projects. depa becomes co-secretariat, Bangkok, Chonburi, and Phuket represent the country, and the work starts gaining regional shape. This is also the moment when a more citizen-centric line of thought enters the program with force.",
+    bodyTh: "เมื่อมี ASEAN Smart Cities Framework และคณะกรรมการเมืองอัจฉริยะแห่งชาติ ไทยก็เลิกดูเหมือนกองโครงการแยกส่วน depa รับบทเลขานุการร่วม กรุงเทพฯ ชลบุรี และภูเก็ตเป็นตัวแทนประเทศ งานเริ่มมีรูปทรงระดับภูมิภาค และนี่ก็เป็นช่วงที่แนวคิดเน้นประชาชนเริ่มเข้ามาอย่างมีน้ำหนัก",
+    bodyZh: "随着东盟智慧城市框架与国家智慧城市委员会落地，泰国不再像一堆彼此无关的城市项目。depa 成为联合秘书处，曼谷、春武里与普吉代表国家，整项工作开始具备区域轮廓。也是在这个节点，以市民为中心的思路开始真正进入主线。",
+    impactEn: "Impact: the work gained institutional backing and regional visibility.",
+    impactTh: "ผลกระทบ: งานได้ทั้งหลังบ้านเชิงสถาบันและหน้าเวทีระดับภูมิภาค",
+    impactZh: "影响：项目同时获得制度背书与区域可见度。",
+    photos: ["IMG_4107.JPG", "f4b929dc011fb96fba76c9618ca6b93e.jpg", "IMG_5849.JPG", "IMG_5304.JPG"],
+    captionEn: "Panels, conferences, and early team-building put Thailand on the regional map.",
+    captionTh: "เวทีเสวนา การประชุม และการสร้างทีมช่วงแรก ทำให้ไทยเริ่มอยู่บนแผนที่ภูมิภาค",
+    captionZh: "论坛、会议与早期团队建设，让泰国开始在区域地图上被看见。",
   },
   {
-    year: "2019",
-    titleEn: "Seoul Biennale, PM visits, and going global",
-    titleTh: "Seoul Biennale นายกฯ เยี่ยมชม และก้าวสู่เวทีโลก",
-    titleZh: "首尔双年展、总理视察，走向全球",
-    bodyEn: "The year Thailand's smart city program goes truly international. The team exhibits at the Seoul Biennale of Architecture and Urbanism — Thailand's pavilion, 'Towards the Future of Smart Urbanity,' showcases Bangkok's 'urban presence' with architectural models and Dr. Non's research. The depa smart city team is displayed on a yellow exhibition wall. Prime Minister Prayuth visits the 'Smart Cities, Connecting ASEAN' exhibition. Back home, 27 cities submit their smart city plans to the National Committee. Dr. Non speaks at the ASCN podium. The team travels to Korea for the Seoul Biennale of Architecture and Urbanism partnership. Late nights in meeting rooms, planning the next decade.",
-    bodyTh: "ปีที่โปรแกรมเมืองอัจฉริยะไทยก้าวสู่สากลจริงๆ ทีมจัดแสดงที่ Seoul Biennale — พาวิลเลียนไทย 'Towards the Future of Smart Urbanity' โชว์ Bangkok urban presence ด้วยโมเดลสถาปัตยกรรมและงานวิจัยของ ดร.ณณ นายกฯ ประยุทธ์เยี่ยมชมนิทรรศการ 'Smart Cities, Connecting ASEAN' 27 เมืองส่งแผนเมืองอัจฉริยะ ดร.ณณ ขึ้นเวที ASCN ทีมเดินทางไปเกาหลี ประชุมดึกในห้องวางแผนทศวรรษหน้า",
-    bodyZh: "泰国智慧城市项目在这一年真正走向国际。团队在首尔建筑与城市双年展上参展，泰国馆主题为「走向智慧城市的未来」，展示曼谷的「城市存在」，配合建筑模型与 Non 博士的研究成果。总理巴育参观「Smart Cities, Connecting ASEAN」展览。27 座城市向国家委员会提交智慧城市规划。Non 博士在 ASCN 讲台上发言。团队为了规划未来十年，深夜还在会议室里讨论。",
+    period: "2019",
+    titleEn: "Global exposure changes the tone of the program",
+    titleTh: "การออกสู่เวทีโลกเปลี่ยนน้ำเสียงของโครงการ",
+    titleZh: "走向国际舞台，改变了整个项目的气质",
+    bodyEn: "From the Seoul Biennale to ASCN stages, Thailand's smart city team begins presenting itself as more than a procurement machine. International exposure matters because it forces the program to explain what it is doing and why. The story starts shifting from infrastructure announcements to a broader argument about urban life, governance, and public value.",
+    bodyTh: "ตั้งแต่ Seoul Biennale ถึงเวที ASCN ทีมเมืองอัจฉริยะไทยเริ่มนำเสนอตัวเองว่าไม่ใช่แค่เครื่องจักรจัดซื้อ ความเป็นสากลมีผล เพราะมันบังคับให้โครงการต้องอธิบายว่ากำลังทำอะไรและทำไปทำไม เรื่องเล่าจึงเริ่มขยับจากการประกาศโครงสร้างพื้นฐาน ไปสู่ข้อถกเถียงเรื่องชีวิตเมือง การปกครอง และคุณค่าต่อสาธารณะ",
+    bodyZh: "从首尔双年展到 ASCN 主舞台，泰国智慧城市团队开始把自己呈现为不只是一个采购机器。国际曝光的重要性在于，它逼着整个项目解释自己到底在做什么、为什么做。叙事也因此从基础设施公告，转向城市生活、治理与公共价值。",
+    impactEn: "Impact: the program gained an international vocabulary, not just a domestic checklist.",
+    impactTh: "ผลกระทบ: โครงการเริ่มมีภาษาระดับนานาชาติ ไม่ใช่แค่เช็กลิสต์ในประเทศ",
+    impactZh: "影响：项目开始拥有国际语言，而不只是国内清单。",
     photos: [
       "depa x korea SBAU2019.jpg",
       "IMG_7331.JPG",
       "49614469.198c81947727b25aeb394554315b2b74.19090306.jpg",
       "49880176.c69e12bcd4cc4e80925f28838ebcb215.19091017.jpg",
-      "SWP_8806.JPG",
-      "4A2A6179.JPG",
-      "4A2A6250.JPG",
-      "IMG_20191125142610000000_l.jpg",
-      "OI000016.JPG",
     ],
-    captionEn: "Seoul Biennale exhibition, PM Prayuth at ASEAN Smart Cities, Dr. Non at ASCN, and late-night strategy sessions",
-    captionTh: "นิทรรศการ Seoul Biennale นายกฯ ที่ ASEAN Smart Cities ดร.ณณ ที่ ASCN และประชุมกลยุทธ์ดึก",
-    captionZh: "首尔双年展、巴育总理参观东盟智慧城市展、Non 博士在 ASCN 上演讲，以及深夜战略会议",
+    captionEn: "Exhibitions and international stages gave the team a larger frame to work inside.",
+    captionTh: "นิทรรศการและเวทีนานาชาติ ทำให้ทีมมีกรอบใหญ่ขึ้นในการขับงาน",
+    captionZh: "展览与国际舞台，为团队提供了更大的叙事框架。",
   },
   {
-    year: "2019",
-    titleEn: "The culture shift: hackathons, bean bags, and design thinking",
-    titleTh: "วัฒนธรรมเปลี่ยน: แฮกกาธอน เบาะ และ design thinking",
-    titleZh: "文化转向：黑客松、豆袋与设计思维",
-    bodyEn: "Dr. Non runs the first 'Co-Founder Dating' hackathon — matching city problems with startup solutions. Not in Silicon Valley fashion, but Thai-style: on bean bags, in co-working spaces, with food. He launches the ASEAN Startup Hackathon at depa's Bangkok headquarters. Students and young professionals flood in. The Smart City Leadership (SCL) program begins — training local officials not in technology procurement but in design thinking, citizen engagement, and service design. The paradigm shifts from 'deploy sensors' to 'understand what citizens actually need.' The depa team poses at headquarters — yellow shirts, green carpet, a mix of government formality and startup energy.",
-    bodyTh: "ดร.ณณ จัดแฮกกาธอน Co-Founder Dating ครั้งแรก — จับคู่ปัญหาเมืองกับสตาร์ทอัพ ไม่แบบ Silicon Valley แต่แบบไทย: เบาะ โคเวิร์กกิง มีอาหาร เปิด ASEAN Startup Hackathon ที่สำนักงาน depa นักศึกษาและคนรุ่นใหม่หลั่งไหลเข้ามา เริ่ม Smart City Leadership (SCL) ฝึกเจ้าหน้าที่ท้องถิ่นด้วย design thinking การมีส่วนร่วม service design ทีม depa ถ่ายรูปที่สำนักงาน — เสื้อเหลือง หญ้าเทียมเขียว ผสมความเป็นทางการกับพลังสตาร์ทอัพ",
-    bodyZh: "Non 博士发起首次「Co-Founder Dating」黑客松，把城市问题和创业解决方案配对。不是硅谷那一套，而是泰式：豆袋、共享空间、食物。他在 depa 曼谷总部启动 ASEAN Startup Hackathon，学生和年轻人涌入。SCL 项目启动，训练地方官员的重点不是怎么买技术，而是设计思维、市民参与和服务设计。范式转变：从「部署传感器」到「先弄清市民到底需要什么」。",
-    photos: [
-      "IMG_6691.JPG",
-      "350263.jpg",
-      "72639510_2459479007664540_4785365931712839680_o.jpg",
-      "73513755_10157605754953794_5475140449704345600_n.jpg",
-      "IMG_7504.JPG",
-      "IMG_6692.JPG",
-      "66438786_2265889173489652_6708326457757663232_o.jpg",
-      "350284.jpg",
-      "49986603.6c8a36f3a263586c1cdb4d69a519f036.19121909.jpg",
-      "4620693218562314640.aae26f153ccbb847f06488bb208048ff.20061511.jpg",
-    ],
-    captionEn: "Co-Creating Smart City workshops, Co-Founder Dating, ASEAN Hackathon, depa team at HQ, and Dr. Non leading design thinking sessions",
-    captionTh: "เวิร์กช็อป Co-Creating Smart City, Co-Founder Dating, ASEAN Hackathon, ทีม depa ที่สำนักงาน, ดร.ณณ นำ design thinking",
-    captionZh: "Co-Creating Smart City 工作坊、Co-Founder Dating、ASEAN Hackathon、depa 团队合影，以及 Non 博士主持设计思维工作坊",
-  },
-  {
-    year: "2020",
-    titleEn: "Smart City Week, the Hamburger, CSCO, and COVID",
-    titleTh: "Smart City Week, เบอร์เกอร์, CSCO, และ COVID",
-    titleZh: "Smart City Week、汉堡模型、CSCO 与 COVID",
-    bodyEn: "Thailand launches Smart City Week 2020 at True Digital Park — the country's biggest smart city event. Dr. Non presents the 'Smart City Hamburger' framework: technology is just the meat; governance and citizen engagement are the buns. The metaphor sticks. The first Chief Smart City Officer (CSCO) training program launches — SC20 W20. Mastercard partners with depa, bringing 27 Thai cities into the City Possible network. The first Smart City Competitiveness Index (TSCCI) is developed. 4 cities receive initial Smart City status. Then COVID hits. The team pivots to digital governance — citizen reporting, telemedicine, smart health monitoring. The crisis proves the citizen-centric approach: cities with strong citizen engagement handle the pandemic better. The committee meets. The provincial teams visit. Late-night group photos after SCL training batches.",
-    bodyTh: "ไทยจัด Smart City Week 2020 ที่ True Digital Park — งานเมืองอัจฉริยะใหญ่ที่สุด ดร.ณณ นำเสนอ Smart City Hamburger: เทคโนโลยีเป็นเนื้อ การปกครองและการมีส่วนร่วมเป็นขนมปัง เปิดตัวโปรแกรม Chief Smart City Officer (CSCO) SC20 W20 Mastercard ร่วมมือกับ depa นำ 27 เมืองเข้า City Possible พัฒนา TSCCI 4 เมืองได้สถานะเบื้องต้น COVID มา ทีมปรับตัว — digital governance ระบบรายงาน telemedicine เฝ้าระวังสุขภาพ วิกฤตพิสูจน์ว่าแนวทางเน้นประชาชนได้ผล",
-    bodyZh: "2020 年，Smart City Week 在 True Digital Park 举办。Non 博士提出「智慧城市汉堡」框架——技术只是中间的肉，治理和市民参与才是面包。首个 CSCO 培训项目 SC20 W20 启动。Mastercard 合作将 27 座城市纳入 City Possible 网络。TSCCI 首版完成。4 座城市获得初步认证。然后 COVID 来了。团队转向数字治理。危机证明了市民中心路径是对的。",
-    photos: [
-      "_K635402.jpg",
-      "1-57.jpg",
-      "IMG_4034.JPG",
-      "58033009.B00E02276AB24B3FA8F8C10C163AFBB9.20101619.jpg",
-      "58033009.DF5F008FA2E043F2B701B94D7980FA39.20101619.jpg",
-      "IMG_4797.JPG",
-      "4620693218559028740.4ebd8c3a68d7b3872267f3444b9c7662.20012908.jpg",
-      "d49adab4-a786-4fcb-922c-39883728de7f.jpg",
-    ],
-    captionEn: "Smart City Week, CSCO program launch, committee meetings, provincial visits, SCL training groups, and the three depa leaders",
-    captionTh: "Smart City Week เปิดตัว CSCO ประชุมคณะกรรมการ ลงพื้นที่จังหวัด กลุ่มฝึก SCL และผู้นำ depa สามคน",
-    captionZh: "Smart City Week、CSCO 项目启动、委员会会议、各府考察、SCL 培训合影，以及 depa 三位核心领导",
-  },
-  {
-    year: "2021",
-    titleEn: "Batch 1: 15 cities get the logo. Hitachi Review published.",
-    titleTh: "รุ่น 1: 15 เมืองได้ตราสัญลักษณ์ บทความ Hitachi Review ตีพิมพ์",
-    titleZh: "第一批：15 城获标识，Hitachi Review 发表",
-    bodyEn: "The Smart City Thailand committee awards the official Smart City Local logo to 15 cities. Deputy PM Prawit Wongsuwan presents them. The list: Chiang Mai, CMU, Mae Moh, Nakhonsawan, Khon Kaen, Samyan, Phra Ram 4, Klong Phadung, Makkasan, Chachoengsao, Saensuk, Wangchan Valley, Phuket, Sri Trang, and Yala. Dr. Non publishes 'Smart City Initiatives in Thailand: Key Concepts and Methods' in Hitachi Review — the definitive articulation of the citizen-centric approach for international audiences. It becomes required reading across ASEAN. Design thinking workshops intensify across the country. Shell partners with depa on 'Imagine the Future.'",
-    bodyTh: "คณะกรรมการมอบตราสัญลักษณ์เมืองอัจฉริยะ 15 เมือง รุ่นที่ 1 รอง นรม. ประวิตร มอบ ดร.ณณ ตีพิมพ์ใน Hitachi Review เวิร์กช็อป design thinking ทั่วประเทศเข้มข้นขึ้น Shell ร่วมมือกับ depa ในโครงการ Imagine the Future",
-    bodyZh: "委员会向首批 15 座城市颁发 Smart City Local 标识。Non 博士在《Hitachi Review》发表文章，系统地向国际读者阐述以市民为中心的方法论。Shell 与 depa 合作推出「Imagine the Future」项目。",
-    photos: [
-      "35663858.1bc37816278448879bdf3935d73727f4.21021520.JPG",
-      "IMG_7760.JPG",
-      "IMG_7761.JPG",
-      "IMG_1457.JPG",
-      "f40e0bd32c239122ed14b39d13bc3c53.jpg",
-    ],
-    captionEn: "Design thinking workshops, Shell-depa 'Imagine the Future' partnership, and training mayors to listen",
-    captionTh: "เวิร์กช็อป design thinking ความร่วมมือ Shell-depa Imagine the Future สอนนายกเทศมนตรีให้ฟัง",
-    captionZh: "设计思维工作坊、Shell-depa'Imagine the Future'合作，以及教市长先学会倾听",
-  },
-  {
-    year: "2022",
-    titleEn: "Batch 2: 15 more cities, international expansion",
-    titleTh: "สู่สากล: อาเซียนและไกลกว่า",
-    titleZh: "走向国际：东盟，以及更远的地方",
-    bodyEn: "Thailand joins the ASEAN Smart Cities Network (ASCN) with Bangkok, Chonburi, and Phuket as pilot cities. Dr. Non Arkaraprasertkul — a Harvard-trained anthropologist and architect who had been studying cities from Shanghai to Chicago — joins depa as Senior Expert in Smart City Promotion. The team goes to Seoul for the Seoul Biennale of Architecture and Urbanism, to Taipei for SCSE, and begins building international partnerships with Japan, Korea, and the EU. Dr. Non starts pushing a radical idea: smart cities should be measured by how citizens feel, not by how much technology is deployed.",
-    bodyTh: "ไทยเข้าร่วม ASEAN Smart Cities Network (ASCN) กรุงเทพฯ ชลบุรี และภูเก็ตเป็นเมืองนำร่อง ดร.ณณ อาคาราประเสริฐกุล — นักมานุษยวิทยาและสถาปนิกจากฮาร์วาร์ดที่ศึกษาเมืองจากเซี่ยงไฮ้ถึงชิคาโก — เข้าร่วม depa เป็นผู้เชี่ยวชาญอาวุโสด้านส่งเสริมเมืองอัจฉริยะ ทีมไปโซลงาน Biennale ไปไทเปงาน SCSE เริ่มสร้างความร่วมมือระหว่างประเทศกับญี่ปุ่น เกาหลี EU ดร.ณณ เริ่มผลักดันแนวคิดสุดขั้ว: เมืองอัจฉริยะควรวัดจากความรู้สึกของประชาชน ไม่ใช่จากปริมาณเทคโนโลยี",
-    bodyZh: "泰国加入东盟智慧城市网络（ASCN），以曼谷、春武里和普吉为试点城市。曾从上海研究到芝加哥的哈佛背景人类学家兼建筑师 Non Arkaraprasertkul 博士加入 depa，担任智慧城市推进高级专家。团队去了首尔建筑双年展，也去了台北 SCSE，并开始与日本、韩国和欧盟建立国际合作。Non 博士开始推动一个激进但正确的观点：智慧城市不该按部署了多少技术来衡量，而该看市民的真实感受。",
-    photos: [
-      "depa x korea SBAU2019.jpg",
-      "SWP_8806.JPG",
-      "4A2A6179.JPG",
-      "4A2A6250.JPG",
-      "IMG_5304.JPG",
-      "IMG_5849.JPG",
-    ],
-    captionEn: "Seoul Biennale, ASEAN Smart Cities Network Conference 2019, and the early team",
-    captionTh: "Seoul Biennale งาน ASEAN Smart Cities Network 2019 และทีมในช่วงเริ่มต้น",
-    captionZh: "首尔双年展、2019 东盟智慧城市网络会议，以及早期团队",
-  },
-  {
-    year: "2019",
-    titleEn: "The shift: from tech-centric to citizen-centric",
-    titleTh: "จุดเปลี่ยน: จากเน้นเทคโนโลยี สู่เน้นประชาชน",
-    titleZh: "转向：从技术中心到市民中心",
-    bodyEn: "Dr. Non runs the first \"Co-Founder Dating\" hackathons — matching city problems with startup solutions. Not in Silicon Valley fashion, but Thai-style: on bean bags, in co-working spaces, with food. He launches the ASEAN Startup Hackathon at depa's headquarters in Bangkok. The Smart City Leadership (SCL) program begins: training local government officials not in technology procurement, but in design thinking, citizen engagement, and service design. The paradigm shifts from \"deploy sensors\" to \"understand what citizens actually need.\" Mastercard partners with depa to bring 27 Thai cities into the City Possible network.",
-    bodyTh: "ดร.ณณ จัด Co-Founder Dating แฮกกาธอนครั้งแรก — จับคู่ปัญหาเมืองกับโซลูชันสตาร์ทอัพ ไม่แบบ Silicon Valley แต่แบบไทย: บนเบาะ ในโคเวิร์กกิง มีอาหาร เปิดตัว ASEAN Startup Hackathon ที่สำนักงาน depa เริ่มโปรแกรม Smart City Leadership (SCL): ฝึกเจ้าหน้าที่ท้องถิ่นไม่ใช่เรื่องจัดซื้อเทคโนโลยี แต่เรื่อง design thinking การมีส่วนร่วมของพลเมือง และ service design กระบวนทัศน์เปลี่ยนจาก 'ติดเซ็นเซอร์' เป็น 'เข้าใจสิ่งที่ประชาชนต้องการจริงๆ'",
-    bodyZh: "Non 博士发起第一次“Co-Founder Dating”黑客松，把城市问题和创业解决方案真正配对起来。不是硅谷那一套，而是更泰式：豆袋、共享空间、食物、然后狠狠干活。他在曼谷 depa 总部启动 ASEAN Startup Hackathon，也开启了 Smart City Leadership（SCL）项目，训练地方官员的重点不再是怎么买技术，而是设计思维、市民参与和服务设计。范式从“部署传感器”转向“先理解市民到底需要什么”。Mastercard 也与 depa 合作，把 27 座泰国城市带入 City Possible 网络。",
+    period: "2019–2020",
+    titleEn: "The cultural turn: hackathons, SCL, CSCO, then COVID",
+    titleTh: "จุดหักเหทางวัฒนธรรม: แฮกกาธอน SCL CSCO แล้วก็ COVID",
+    titleZh: "文化转向：黑客松、SCL、CSCO，接着是疫情",
+    bodyEn: "This is the phase where the work stops being only about systems and starts being about people. Co-Founder Dating, the ASEAN Startup Hackathon, Smart City Leadership, and the Smart City Hamburger idea all push the same message: technology is only useful when it is attached to trust, service design, and citizen pain points. When COVID hits, that shift stops sounding theoretical. Cities need reporting systems, telemedicine, and practical digital channels that people can actually use.",
+    bodyTh: "นี่คือช่วงที่งานหยุดเป็นเรื่องระบบอย่างเดียว แล้วเริ่มเป็นเรื่องคนจริงๆ Co-Founder Dating, ASEAN Startup Hackathon, Smart City Leadership และแนวคิด Smart City Hamburger ต่างผลักข้อความเดียวกัน: เทคโนโลยีมีค่าก็ต่อเมื่อมันผูกอยู่กับความไว้ใจ service design และปัญหาของประชาชน พอ COVID มา การเปลี่ยนนี้ก็ไม่ใช่ทฤษฎีอีกต่อไป เมืองต้องมีระบบรายงาน telemedicine และช่องทางดิจิทัลที่คนใช้ได้จริง",
+    bodyZh: "这一阶段，工作不再只是系统工程，而是开始真正面向人。Co-Founder Dating、ASEAN Startup Hackathon、Smart City Leadership，以及“智慧城市汉堡”都在推同一个意思：技术只有绑定信任、服务设计与市民痛点时才有意义。等到 COVID 来临，这个转向也不再只是理论。城市需要报修系统、远程医疗，以及居民真的会用的数字渠道。",
+    impactEn: "Impact: citizen-centric thinking moved from workshop language into operating logic.",
+    impactTh: "ผลกระทบ: แนวคิดเน้นประชาชนย้ายจากภาษาในเวิร์กช็อปไปสู่ตรรกะการทำงานจริง",
+    impactZh: "影响：以市民为中心，从工作坊语言变成了真正的操作逻辑。",
     photos: [
       "IMG_6691.JPG",
       "72639510_2459479007664540_4785365931712839680_o.jpg",
       "73513755_10157605754953794_5475140449704345600_n.jpg",
-      "IMG_7504.JPG",
-      "66438786_2265889173489652_6708326457757663232_o.jpg",
-      "350284.jpg",
-    ],
-    captionEn: "Co-Founder Dating, ASEAN Hackathon, depa team building — the culture shift begins",
-    captionTh: "Co-Founder Dating, ASEAN Hackathon, สร้างทีม depa — วัฒนธรรมเริ่มเปลี่ยน",
-    captionZh: "Co-Founder Dating、ASEAN Hackathon 与 depa 团队建设，文化转向由此开始",
-  },
-  {
-    year: "2020",
-    titleEn: "Smart City Week and the first certifications",
-    titleTh: "Smart City Week และการรับรองครั้งแรก",
-    titleZh: "Smart City Week 与首轮认证",
-    bodyEn: "Thailand launches Smart City Week 2020 — the biggest smart city event in the country. Dr. Non presents the \"Smart City Hamburger\" — a visual framework showing that technology is just the meat; the buns are governance and citizen engagement. The metaphor sticks. The first Smart City Competitiveness Index (TSCCI) is developed. 4 cities receive initial Smart City status: Phuket, Khon Kaen, Chiang Mai, and Yala. COVID hits. The team pivots to digital governance — citizen reporting systems, telemedicine, smart health monitoring. The crisis proves the citizen-centric approach: cities with strong citizen engagement handle the pandemic better.",
-    bodyTh: "ไทยจัด Smart City Week 2020 — งานเมืองอัจฉริยะใหญ่ที่สุดในประเทศ ดร.ณณ นำเสนอ 'Smart City Hamburger' — กรอบภาพที่แสดงว่าเทคโนโลยีเป็นแค่เนื้อ ขนมปังคือการปกครองและการมีส่วนร่วมของประชาชน อุปมาติดหู พัฒนาดัชนีการแข่งขันเมืองอัจฉริยะ (TSCCI) ครั้งแรก 4 เมืองได้สถานะเมืองอัจฉริยะเบื้องต้น COVID มา ทีมปรับตัวสู่ digital governance — ระบบรายงานของประชาชน telemedicine วิกฤตพิสูจน์ว่าแนวทางเน้นประชาชนได้ผล",
-    bodyZh: "2020 年，泰国举办 Smart City Week，这是全国最大的智慧城市活动。Non 博士提出“智慧城市汉堡”框架：技术只是中间那块肉，上下两层面包分别是治理与市民参与。这个比喻很好用，也确实留下来了。第一版智慧城市竞争力指数（TSCCI）在这一年完成。普吉、孔敬、清迈和也拉成为首批获得智慧城市身份的四座城市。随后疫情袭来，团队转向数字治理，包括市民报修、远程医疗与智慧健康监测。危机反过来证明了市民中心路径是对的：市民参与更强的城市，抗疫表现也更稳。",
-    photos: [
       "_K635402.jpg",
       "1-57.jpg",
-      "IMG_4034.JPG",
     ],
-    captionEn: "Smart City Week, depa boardroom strategy, and the three leaders in depa jackets",
-    captionTh: "Smart City Week ยุทธศาสตร์ห้องประชุม depa และผู้นำสามคนในแจ็คเก็ต depa",
-    captionZh: "Smart City Week、depa 会议室战略讨论，以及穿着 depa 外套的三位领导",
+    captionEn: "The visual language changed too: less theatre, more workshops, more fieldwork, more citizens in the loop.",
+    captionTh: "ภาษาทางภาพก็เปลี่ยนไปด้วย: พิธีน้อยลง เวิร์กช็อปมากขึ้น ลงพื้นที่มากขึ้น และมีประชาชนอยู่ในลูปมากขึ้น",
+    captionZh: "视觉语言也变了：少一点表演，多一点工作坊、实地工作与市民参与。",
   },
   {
-    year: "2021",
-    titleEn: "Batch 1: 15 cities get the Smart City logo",
-    titleTh: "รุ่นที่ 1: 15 เมืองได้รับตราสัญลักษณ์เมืองอัจฉริยะ",
-    titleZh: "第一批：15 座城市获得智慧城市标识",
-    bodyEn: "The Smart City Thailand committee awards the official Smart City Local logo (ตราสัญลักษณ์เมืองอัจฉริยะ) to 15 cities in the first batch. Deputy PM Prawit Wongsuwan presents the logos. The list includes Chiang Mai, Phuket, Khon Kaen, Samyan, Yala, and Wangchan Valley. Dr. Non publishes a landmark article in Hitachi Review: \"Smart City Initiatives in Thailand: Key Concepts and Methods\" — articulating the citizen-centric approach for an international audience. The article becomes required reading for smart city practitioners across ASEAN. Workshop training intensifies: Dr. Non and team run design thinking sessions with local government officials across the country.",
-    bodyTh: "คณะกรรมการเมืองอัจฉริยะไทยมอบตราสัญลักษณ์เมืองอัจฉริยะให้ 15 เมืองรุ่นที่ 1 รอง นรม. ประวิตร วงษ์สุวรรณ มอบตราสัญลักษณ์ ดร.ณณ ตีพิมพ์บทความสำคัญใน Hitachi Review: 'Smart City Initiatives in Thailand' — นำเสนอแนวทางเน้นประชาชนต่อผู้อ่านนานาชาติ บทความกลายเป็นบทอ่านบังคับสำหรับผู้ปฏิบัติงานเมืองอัจฉริยะทั่วอาเซียน",
-    bodyZh: "泰国智慧城市委员会向首批 15 座城市授予官方 Smart City Local 标识，其中包括清迈、普吉、孔敬、Samyan、也拉和 Wangchan Valley。副总理 Prawit Wongsuwan 出席颁发。Non 博士也在这一年于《Hitachi Review》发表代表性文章《Smart City Initiatives in Thailand: Key Concepts and Methods》，把以市民为中心的方法论清楚地讲给国际读者听。这篇文章后来几乎成了东盟智慧城市从业者的必读材料。与此同时，培训也越来越密集，Non 博士和团队在全国为地方政府官员持续举办设计思维工作坊。",
+    period: "2021–2023",
+    titleEn: "Certification expands, but the serious question becomes delivery",
+    titleTh: "การรับรองขยายตัว แต่คำถามจริงกลายเป็นเรื่องการส่งมอบ",
+    titleZh: "认证在扩张，但真正的问题变成交付能力",
+    bodyEn: "The certification batches matter because they give cities legitimacy and momentum. But this is also the moment when the gap between logo and lived reality becomes impossible to ignore. Some cities clearly deliver. Others mostly brand themselves. Case cities like Nakhon Si Thammarat stand out because the citizen-service loop, flood response, and operational improvements are visible in practice rather than only in slides.",
+    bodyTh: "รุ่นการรับรองมีความสำคัญ เพราะมันให้ความชอบธรรมและโมเมนตัมกับเมือง แต่ช่วงนี้เองที่ช่องว่างระหว่างตราสัญลักษณ์กับชีวิตจริงเริ่มมองข้ามไม่ได้ บางเมืองส่งมอบได้จริง บางเมืองมีแต่แบรนด์ เมืองอย่างนครศรีธรรมราชจึงเด่น เพราะวงจรบริการประชาชน การตอบสนองน้ำท่วม และการปรับปรุงการปฏิบัติงานมองเห็นได้จากของจริง ไม่ใช่แค่ในสไลด์",
+    bodyZh: "认证批次之所以重要，是因为它给城市带来了正当性与动能。但也是在这个阶段，标识与现实生活之间的落差开始无法忽视。有些城市确实交付了成果；另一些城市更多是在做品牌。像那空是贪玛叻这样的案例会脱颖而出，因为市民服务闭环、洪灾响应与运维改进，是在现实里看得见的，不只是 PPT 上漂亮。",
+    impactEn: "Impact: certification became necessary but insufficient; evidence became the differentiator.",
+    impactTh: "ผลกระทบ: การรับรองกลายเป็นสิ่งจำเป็นแต่ไม่พอ หลักฐานต่างหากที่แยกเมืองออกจากกัน",
+    impactZh: "影响：认证变成必要条件，但不再是充分条件；证据才是分水岭。",
     photos: [
       "35663858.1bc37816278448879bdf3935d73727f4.21021520.JPG",
       "IMG_7760.JPG",
       "IMG_7761.JPG",
-      "IMG_1457.JPG",
-    ],
-    captionEn: "Design thinking workshops with local governments — teaching mayors to listen to citizens",
-    captionTh: "เวิร์กช็อป design thinking กับรัฐบาลท้องถิ่น — สอนนายกเทศมนตรีให้ฟังประชาชน",
-    captionZh: "与地方政府开展设计思维工作坊，教市长先学会听市民讲话",
-  },
-  {
-    year: "2022",
-    titleEn: "Batch 2: 15 more cities, international expansion",
-    titleTh: "รุ่นที่ 2: อีก 15 เมือง ขยายสู่สากล",
-    titleZh: "第二批：再增 15 城，国际影响扩大",
-    bodyEn: "Batch 2 adds 15 more cities including Rayong, Chiang Rai, Nan, Korat, Krabi, Hat Yai, and Koh Samui. Thailand now has 30 certified smart cities across 20 provinces. Dr. Supakorn joins the leadership team, bringing expertise in digital infrastructure and platform development. The team develops the City Data Platform (citydata.in.th) — Thailand's first unified smart city data dashboard. ASEAN Smart Cities Network adds Chiang Mai, Khon Kaen, and Rayong to Thailand's representation. Dr. Non is featured in The ASEAN Magazine and begins consulting for the ASEAN Digital Masterplan 2025.",
-    bodyTh: "รุ่น 2 เพิ่มอีก 15 เมือง รวมถึงระยอง เชียงราย น่าน โคราช กระบี่ หาดใหญ่ สมุย ไทยมี 30 เมืองอัจฉริยะรับรองแล้วใน 20 จังหวัด ดร.ศุภกร เข้าร่วมทีมผู้นำ นำความเชี่ยวชาญด้านโครงสร้างพื้นฐานดิจิทัล ทีมพัฒนา City Data Platform (citydata.in.th) — แดชบอร์ดข้อมูลเมืองอัจฉริยะแบบรวมศูนย์แห่งแรกของไทย",
-    bodyZh: "第二批再加入 15 座城市，包括罗勇、清莱、难府、呵叻、甲米、合艾和苏梅。泰国的认证智慧城市总数来到 30 座，分布在 20 个府。Supakorn 博士加入核心领导团队，把数字基础设施与平台开发经验带了进来。团队开发了 City Data Platform（citydata.in.th），这是泰国第一套统一的智慧城市数据看板。东盟智慧城市网络也把清迈、孔敬与罗勇加入泰国代表城市。Non 博士登上《The ASEAN Magazine》，并开始为《ASEAN Digital Masterplan 2025》提供咨询。",
-    photos: [
-      "IMG_6065.JPG",
-      "IMG_6482.JPG",
-      "IMG_6508.JPG",
-      "IMG_6426.JPG",
-      "IMG_6654.JPG",
-    ],
-    captionEn: "Training programs, international forums, and building the smart city ecosystem",
-    captionTh: "โปรแกรมฝึกอบรม เวทีนานาชาติ และการสร้างระบบนิเวศเมืองอัจฉริยะ",
-    captionZh: "培训项目、国际论坛，以及智慧城市生态系统的搭建",
-  },
-  {
-    year: "2023",
-    titleEn: "Batch 3 and the Nakhon Si Thammarat breakthrough",
-    titleTh: "รุ่น 3 และความสำเร็จนครศรีธรรมราช",
-    titleZh: "第三批，以及那空是贪玛叻的突破",
-    bodyEn: "6 more cities join: Lampang, Samut Prakan, Nakhon Si Thammarat, and others. The Nakhon Si Thammarat \"My City\" app becomes the flagship example of citizen-centric smart city: citizens report clogged drains, data analytics identify flood root causes, targeted infrastructure upgrades solve them. Response time drops from 67 hours to 2 hours. This is Dr. Non's proof of concept — technology serving citizens, not the other way around. TNGlobal publishes a major interview: \"A smart city cannot exist without its citizens.\" Dr. Non begins conceptualizing the SLIC Index.",
-    bodyTh: "อีก 6 เมืองเข้าร่วม: ลำปาง สมุทรปราการ นครศรีธรรมราช แอพ 'เมืองของฉัน' นครศรีธรรมราชกลายเป็นตัวอย่างเรือธงของเมืองอัจฉริยะเน้นประชาชน: ประชาชนรายงานท่อระบายอุดตัน วิเคราะห์ข้อมูลหาสาเหตุน้ำท่วม แก้โครงสร้างพื้นฐานตรงจุด เวลาตอบสนองลดจาก 67 ชั่วโมงเหลือ 2 ชั่วโมง นี่คือ proof of concept ของ ดร.ณณ",
-    bodyZh: "第三批又加入 6 座城市，包括南邦、北榄和那空是贪玛叻等。那空是贪玛叻的“My City”应用成为以市民为中心智慧城市的代表案例：市民报告排水堵塞，数据分析找出洪水根因，再把基础设施升级打在正确的位置上。响应时间从 67 小时降到 2 小时。这就是 Non 博士的概念验证：技术应该服务市民，而不是反过来让市民服务技术。TNGlobal 也发表了一篇重要专访，标题很直接：“没有市民，就不存在智慧城市。”Non 博士开始构思 SLIC Index。",
-    photos: [
       "IMG_0964.JPG",
       "IMG_0861.JPG",
-      "IMG_1089.JPG",
-      "IMG_1382.JPG",
-      "IMG_1596.JPG",
-      "IMG_1447.JPG",
     ],
-    captionEn: "Training local government teams, Inno Tourism Boot-Up, and hands-on workshops across Thailand",
-    captionTh: "ฝึกทีมรัฐบาลท้องถิ่น Inno Tourism Boot-Up และเวิร์กช็อปภาคปฏิบัติทั่วไทย",
-    captionZh: "培训地方政府团队、Inno Tourism Boot-Up，以及遍布全国的实战工作坊",
+    captionEn: "Certification, workshops, and field cases gradually turned the conversation toward delivery quality.",
+    captionTh: "การรับรอง เวิร์กช็อป และกรณีภาคสนาม ค่อยๆ ดันบทสนทนาไปสู่คุณภาพการส่งมอบ",
+    captionZh: "认证、工作坊与一线案例，逐步把讨论推向交付质量。",
   },
   {
-    year: "2024–2025",
-    titleEn: "SLIC Index V1, UNCRD, and 37 cities",
-    titleTh: "SLIC Index V1, UNCRD และ 37 เมือง",
-    titleZh: "SLIC Index V1、UNCRD，以及 37 座认证城市",
-    bodyEn: "The Smart Liveable Cities Index (SLIC) V1 launches — a transparent, open-source city ranking built from the ground up. Dr. Non presents Thailand's citizen-centric approach at the UNCRD International Training Workshop on Smart Cities in Kobe, Japan. Phuket Tinicon Valley receives the Smart City Local logo in Batch 4, bringing the total to 37 certified cities. depa sets a target of 105 inclusive smart cities by 2027. The Smart and Liveable City Lab soft-launches with support from Thai and New Zealand governments.",
-    bodyTh: "SLIC Index V1 เปิดตัว — ดัชนีจัดอันดับเมืองแบบโปร่งใส โอเพนซอร์ส สร้างจากศูนย์ ดร.ณณ นำเสนอแนวทางเน้นประชาชนของไทยที่ UNCRD Training Workshop เมืองอัจฉริยะ โกเบ ญี่ปุ่น ภูเก็ตทินิคอนวัลเลย์ได้ตราสัญลักษณ์รุ่น 4 รวม 37 เมืองรับรอง depa ตั้งเป้า 105 เมืองอัจฉริยะภายปี 2570",
-    bodyZh: "Smart Liveable Cities Index（SLIC）V1 正式发布。这是一套从零搭起来、透明且开源的城市指数。Non 博士在日本神户举行的 UNCRD 智慧城市国际培训工作坊上，介绍泰国的市民中心路径。普吉 Tinicon Valley 在第四批获得 Smart City Local 标识，使认证城市总数来到 37 座。depa 同时提出到 2027 年建设 105 座包容型智慧城市的目标。Smart and Liveable City Lab 也在泰国与新西兰政府支持下低调启动。",
-    photos: [
-      "IMG_9995.JPG",
-      "IMG_3619.JPG",
-      "IMG_4175.JPG",
-      "IMG_4207.JPG",
-      "IMG_7649.JPG",
-    ],
-    captionEn: "MOPH collaborations, training the next generation, and building partnerships",
-    captionTh: "ความร่วมมือกับ สธ. ฝึกคนรุ่นใหม่ และสร้างความร่วมมือ",
-    captionZh: "与公共卫生部合作、培训下一代人才，并建立新的伙伴关系",
+    period: "2024–2025",
+    titleEn: "SLIC arrives as the accountability layer",
+    titleTh: "SLIC เข้ามาเป็นชั้นของความรับผิดชอบ",
+    titleZh: "SLIC 作为问责层开始出现",
+    bodyEn: "By this stage the Thailand program has reach, archive, and political language. What it still needs is a sharper way to compare outcomes honestly. That is the opening for SLIC V1: transparent weights, traceable sources, and a framework that makes it harder for cities to hide behind award language. The count of certified cities reaches 37, but the more important change is methodological: the conversation can now move from prestige to proof.",
+    bodyTh: "ถึงช่วงนี้ โครงการไทยมีทั้งขนาด เอกสารสะสม และภาษาทางการเมืองแล้ว สิ่งที่ยังต้องมีคือวิธีเทียบผลลัพธ์อย่างตรงไปตรงมามากขึ้น นั่นคือช่องที่ SLIC V1 เข้ามา: น้ำหนักคะแนนที่เปิดเผย แหล่งข้อมูลที่สืบย้อนกลับได้ และกรอบที่ทำให้เมืองซ่อนตัวหลังภาษารางวัลได้ยากขึ้น จำนวนเมืองรับรองขึ้นถึง 37 เมือง แต่การเปลี่ยนที่สำคัญกว่าคือเชิงวิธีวิทยา: บทสนทนาสามารถขยับจากศักดิ์ศรีไปสู่หลักฐานได้",
+    bodyZh: "到了这个阶段，泰国项目已经有了规模、档案与政治话语。它仍然缺的是一种更锋利、更诚实的结果比较方法。这就是 SLIC V1 出现的入口：透明权重、可追溯来源，以及一套让城市更难躲在奖项语言后面的框架。认证城市数量来到 37，但更重要的变化是方法论上的：讨论终于可以从“面子”转向“证据”。",
+    impactEn: "Impact: the index stops being decoration and starts becoming an auditing tool.",
+    impactTh: "ผลกระทบ: ดัชนีเลิกเป็นของประดับ แล้วเริ่มกลายเป็นเครื่องมือ audit",
+    impactZh: "影响：指数不再只是装饰，而开始变成审计工具。",
+    photos: ["IMG_9995.JPG", "IMG_3619.JPG", "IMG_4175.JPG", "IMG_4207.JPG"],
+    captionEn: "The later phase is less about saying 'smart city' and more about proving what the phrase means.",
+    captionTh: "ช่วงหลังไม่ใช่แค่พูดคำว่า smart city แต่เป็นการพิสูจน์ว่าคำนั้นหมายถึงอะไร",
+    captionZh: "后期重点不再是喊“智慧城市”，而是证明这个词到底是什么意思。",
   },
   {
-    year: "2026",
-    titleEn: "SCSE Taipei: SLIC V2 and the world stage",
-    titleTh: "SCSE ไทเป: SLIC V2 และเวทีโลก",
-    titleZh: "台北 SCSE：SLIC V2 走上世界舞台",
-    bodyEn: "March 2026. Smart City Summit & Expo, Taipei. The largest smart city event in Asia — 174 cities, 53 countries, 120,000 visitors. The Vice President of Taiwan opens the event. Dr. Non takes the City Vision in Action stage as keynote speaker. He shows a war dashboard built in 45 minutes, a bus tracker running without GPS, a citizen reporting system that cut response times from 67 hours to 2. Then: the SLIC Index V2. Interactive. Transparent. Every number traceable. A European mayor's alliance asks to use it instead of The Economist's index. City leaders line up asking: \"Can you do this for my city?\" The Smart City Thailand Index — this page you're reading — is born from this momentum.",
-    bodyTh: "มีนาคม 2569. Smart City Summit & Expo ไทเป งานเมืองอัจฉริยะใหญ่ที่สุดในเอเชีย — 174 เมือง 53 ประเทศ 120,000 ผู้เยี่ยมชม รองประธานาธิบดีไต้หวันเปิดงาน ดร.ณณ ขึ้นเวที City Vision in Action เป็น keynote speaker เขาโชว์ war dashboard ที่สร้างใน 45 นาที ระบบติดตามรถเมล์โดยไม่ใช้ GPS ระบบรายงานของประชาชนที่ลดเวลาตอบสนองจาก 67 ชั่วโมงเหลือ 2 แล้ว: SLIC Index V2 แบบโต้ตอบ โปร่งใส ทุกตัวเลขสืบย้อนได้ พันธมิตรนายกเทศมนตรียุโรปขอใช้แทนดัชนี The Economist ดัชนีเมืองอัจฉริยะไทย — หน้าที่คุณกำลังอ่าน — เกิดจากโมเมนตัมนี้",
-    bodyZh: "2026 年 3 月，台北智慧城市展（Smart City Summit & Expo）登场。这是亚洲最大的智慧城市活动，汇聚 53 个国家、174 座城市和 12 万名参观者。台湾副总统开幕，Non 博士受邀在 City Vision in Action 主舞台发表主题演讲。他展示了 45 分钟做出来的战情仪表板、不靠 GPS 也能跑的公交追踪器，以及把市民报修响应时间从 67 小时压到 2 小时的系统。然后轮到 SLIC Index V2：可交互、透明、每个数字都可追溯。欧洲一个市长联盟当场表示希望用它替代《经济学人》的指数。城市领导排队来问：能不能也给我们做一套？你现在看到的 Smart City Thailand Index，就是从这股动能里长出来的。",
-    photos: [
-      "IMG_7607.JPG",
-      "IMG_7613.JPG",
-      "IMG_0396.JPG",
-      "IMG_0324.JPG",
-      "593016939.296474.jpg",
-      "578383385.557473.jpg",
-    ],
-    captionEn: "The team — from Taipei stages to Bangkok food courts, building the future of Thai smart cities",
-    captionTh: "ทีม — จากเวทีไทเปถึงศูนย์อาหารกรุงเทพ สร้างอนาคตเมืองอัจฉริยะไทย",
-    captionZh: "这支团队，从台北舞台走到曼谷食阁，一路把泰国智慧城市的未来做出来",
+    period: "2026",
+    titleEn: "Taipei puts the accountability argument on a bigger stage",
+    titleTh: "ไทเปพาข้อถกเถียงเรื่อง accountability ขึ้นเวทีที่ใหญ่กว่า",
+    titleZh: "台北把问责这件事推上更大的舞台",
+    bodyEn: "At Smart City Summit & Expo 2026 in Taipei, the argument sharpens. The pitch is no longer 'Thailand has smart city projects too.' It becomes: here is a transparent way to compare delivery, show the evidence, and build something useful fast. SLIC V2 and the Thailand index sit inside that momentum. They are not the end of the story. They are the part where the program becomes harder to fake.",
+    bodyTh: "ที่ Smart City Summit & Expo 2026 ไทเป ข้อถกเถียงยิ่งคมขึ้น จุดขายไม่ใช่แค่ 'ไทยก็มีโครงการเมืองอัจฉริยะเหมือนกัน' อีกแล้ว แต่มันกลายเป็นว่า: นี่คือวิธีเปรียบเทียบการส่งมอบอย่างโปร่งใส แสดงหลักฐาน และสร้างของที่ใช้ได้จริงอย่างรวดเร็ว SLIC V2 และดัชนีประเทศไทยอยู่ในโมเมนตัมนี้ มันไม่ใช่ตอนจบของเรื่อง แต่เป็นช่วงที่โครงการปลอมได้ยากขึ้น",
+    bodyZh: "在 2026 年台北智慧城市展上，论点变得更锋利。重点不再是“泰国也有智慧城市项目”，而是“这里有一套透明比较交付、展示证据、并能快速做出实用产品的方法”。SLIC V2 与泰国这一版指数就长在这股动能里。它们不是故事的终点，而是让这件事更难被作假的那一段。",
+    impactEn: "Impact: the Thailand story becomes exportable because the proof layer is finally visible.",
+    impactTh: "ผลกระทบ: เรื่องเล่าของไทยเริ่มส่งออกได้ เพราะชั้นของหลักฐานมองเห็นชัดแล้ว",
+    impactZh: "影响：泰国路径开始具备可输出性，因为证据层终于清晰可见。",
+    photos: ["IMG_7607.JPG", "IMG_7613.JPG", "IMG_0396.JPG", "IMG_0324.JPG"],
+    captionEn: "Taipei did not invent the work. It made the work legible.",
+    captionTh: "ไทเปไม่ได้สร้างงานนี้ขึ้นมาใหม่ แต่มันทำให้งานนี้อ่านออก",
+    captionZh: "台北没有发明这套工作，但它让这套工作变得可读、可见。",
   },
 ];
+
+function t(locale: Locale, en: string, th: string, zh: string): string {
+  return locale === "th" ? th : locale === "zh" ? zh : en;
+}
 
 export default function StoryPage({ locale, onNavigate }: Props) {
   return (
     <>
       <section className="section story-hero">
-        <p className="eyebrow">{locale === "th" ? "เรื่องราว" : locale === "zh" ? "故事" : "The story"}</p>
+        <p className="eyebrow">{t(locale, "The story", "เรื่องราว", "故事")}</p>
         <h1 className="hero-title">
           {locale === "th"
             ? <>จากเซ็นเซอร์<br />สู่ประชาชน</>
@@ -307,20 +221,67 @@ export default function StoryPage({ locale, onNavigate }: Props) {
               : <>From sensors<br />to citizens.</>}
         </h1>
         <p className="hero-strapline">
-          {locale === "th"
-            ? "ประวัติศาสตร์การเปลี่ยนแปลงเมืองอัจฉริยะไทยจากแนวทางเน้นเทคโนโลยีเป็นแนวทางเน้นประชาชน — เรื่องราวของคนที่ทำให้มันเกิดขึ้น"
-            : locale === "zh"
-              ? "泰国智慧城市项目如何从技术优先，转向以市民为中心。这是那群把事情做成的人留下来的轨迹。"
-            : "How Thailand's smart city program transformed from a technology-first approach to a citizen-centric movement — and the people who made it happen."}
+          {t(
+            locale,
+            "This is the short history of Thailand's smart city program as a shift in operating logic: from scattered pilots, to citizen-centric delivery, to an index that makes cities show their work.",
+            "นี่คือประวัติศาสตร์แบบย่อของโครงการเมืองอัจฉริยะไทยในฐานะการเปลี่ยนตรรกะการทำงาน: จากโครงการนำร่องกระจัดกระจาย สู่การส่งมอบที่เน้นประชาชน และสู่ดัชนีที่บังคับให้เมืองต้องโชว์ผลงานจริง",
+            "这是一段关于泰国智慧城市计划的简史，但重点是操作逻辑的变化：从零散试点，到以市民为中心的交付，再到逼着城市亮出证据的指数。")}
         </p>
       </section>
 
-      {/* ─── TIMELINE ─── */}
+      <section className="section story-metric-section">
+        <div className="story-metric-grid">
+          {storyMetrics.map(metric => (
+            <div key={metric.labelEn} className="story-metric-card">
+              <div className="story-metric-value">{metric.value}</div>
+              <div className="story-metric-label">
+                {locale === "th" ? metric.labelTh : locale === "zh" ? metric.labelZh : metric.labelEn}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="story-source-note">
+          {t(
+            locale,
+            "Compiled from depa program materials, public event records, case-study documents, and the archive photo set used across this site.",
+            "สรุปจากเอกสารโครงการของ depa บันทึกงานสาธารณะ เอกสารกรณีศึกษา และชุดภาพถ่ายคลังที่ใช้ทั่วทั้งเว็บไซต์นี้",
+            "内容整理自 depa 项目材料、公开活动记录、案例文件，以及本站使用的档案照片集。")}
+        </p>
+      </section>
+
+      <section className="section story-shift-section">
+        <div className="story-section-head">
+          <div>
+            <p className="eyebrow">{t(locale, "Three shifts", "สามจุดเปลี่ยน", "三个转折")}</p>
+            <h2>{t(locale, "What actually changed", "สิ่งที่เปลี่ยนจริง", "真正改变了什么")}</h2>
+          </div>
+          <p className="section-intro story-section-intro">
+            {t(
+              locale,
+              "The story is not just dates and conferences. It is a sequence of changes in how the work gets justified, financed, and delivered.",
+              "เรื่องนี้ไม่ใช่แค่ลำดับวันที่กับการประชุม แต่มันคือชุดของการเปลี่ยนว่า งานนี้ถูกให้เหตุผล หาเงิน และส่งมอบอย่างไร",
+              "这段历史不只是时间线和会议记录，而是一连串关于这项工作如何被论证、融资与交付的变化。")}
+          </p>
+        </div>
+        <div className="story-shift-grid">
+          {storyShifts.map(shift => (
+            <article key={shift.titleEn} className="story-shift-card">
+              <h3 className="story-shift-title">
+                {locale === "th" ? shift.titleTh : locale === "zh" ? shift.titleZh : shift.titleEn}
+              </h3>
+              <p className="story-shift-body">
+                {locale === "th" ? shift.bodyTh : locale === "zh" ? shift.bodyZh : shift.bodyEn}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="section">
-        {timeline.map((event, i) => (
-          <div key={i} className="timeline-event">
+        {timeline.map(event => (
+          <article key={event.period} className="timeline-event">
             <div className="timeline-year-bar">
-              <span className="timeline-year">{event.year}</span>
+              <span className="timeline-year">{event.period}</span>
               <span className="timeline-line" />
             </div>
             <div className="timeline-content">
@@ -330,13 +291,22 @@ export default function StoryPage({ locale, onNavigate }: Props) {
               <p className="timeline-body">
                 {locale === "th" ? event.bodyTh : locale === "zh" ? event.bodyZh : event.bodyEn}
               </p>
+              <p className="timeline-impact">
+                {locale === "th" ? event.impactTh : locale === "zh" ? event.impactZh : event.impactEn}
+              </p>
               {event.photos.length > 0 && (
                 <div className="timeline-photos">
-                  {event.photos.map((photo, j) => (
+                  {event.photos.map(photo => (
                     <img
-                      key={j}
+                      key={photo}
                       src={`/photos/${photo}`}
-                      alt={locale === "th" ? (event.captionTh ?? event.titleTh) : locale === "zh" ? (event.captionZh ?? event.titleZh) : (event.captionEn ?? event.titleEn)}
+                      alt={
+                        locale === "th"
+                          ? (event.captionTh ?? event.titleTh)
+                          : locale === "zh"
+                            ? (event.captionZh ?? event.titleZh)
+                            : (event.captionEn ?? event.titleEn)
+                      }
                       className="timeline-photo"
                       loading="lazy"
                     />
@@ -349,31 +319,35 @@ export default function StoryPage({ locale, onNavigate }: Props) {
                 </p>
               )}
             </div>
-          </div>
+          </article>
         ))}
       </section>
 
-      {/* ─── CLOSING ─── */}
       <section className="section story-closing">
-        <div className="callout-card">
-          <p className="eyebrow">{locale === "th" ? "ปัจจุบัน" : locale === "zh" ? "现在" : "Now"}</p>
+        <div className="callout-card story-closing-card">
+          <p className="eyebrow">{t(locale, "Now", "ตอนนี้", "现在")}</p>
           <h2>
-            {locale === "th"
-              ? "37 เมืองรับรอง. 12 เขตส่งเสริมที่เราคัดมานำเสนอ. 1 ดัชนีที่วัดความจริง."
-              : locale === "zh"
-                ? "37 座认证城市，12 个本版收录推广区，1 套衡量现实的指数。"
-                : "37 certified cities. 12 profiled promotion zones. 1 index that measures reality."}
+            {t(
+              locale,
+              "The index is the accountability layer the program was missing.",
+              "ดัชนีคือชั้นของ accountability ที่โครงการนี้ขาดอยู่",
+              "这个指数，就是此前缺失的问责层。")}
           </h2>
           <p>
-            {locale === "th"
-              ? "เป้าหมายระดับประเทศคือ 105 เมืองอัจฉริยะภายในปี 2570 ส่วนเวอร์ชันนี้ติดตาม 49 เมืองที่เรามีหลักฐานพอจะเปรียบเทียบได้ — ไม่ใช่ด้วยแผนที่สวยหรู แต่ด้วยผลลัพธ์จริงที่ประชาชนสัมผัสได้"
-              : locale === "zh"
-                ? "全国目标是到 2027 年达到 105 座智慧城市；而这一版只追踪 49 座我们手上有足够证据可比较的城市。不是看谁 PPT 做得漂亮，而是看市民能不能真实感受到结果。"
-                : "The national target is 105 smart cities by 2027. This release tracks the 49 cities where we have enough evidence to compare outcomes honestly — not by beautiful plans, but by results citizens can actually feel."}
+            {t(
+              locale,
+              "Thailand still has a national target of 105 smart cities by 2027. This release is narrower and stricter: it tracks only the 49 cities where the team has enough evidence to compare reality, not just ambition.",
+              "ประเทศไทยยังมีเป้าหมายระดับชาติ 105 เมืองอัจฉริยะภายในปี 2570 แต่รุ่นนี้แคบกว่าและเข้มกว่า มันติดตามแค่ 49 เมืองที่เรามีหลักฐานพอจะเทียบความจริง ไม่ใช่แค่ความทะเยอทะยาน",
+              "泰国到 2027 年仍然有 105 座智慧城市的国家目标。但这一版更窄、更严：只追踪那 49 座有足够证据可比较现实表现的城市，而不是只比雄心。")}
           </p>
-          <button className="cta-button" onClick={() => onNavigate("/rankings")}>
-            {locale === "th" ? "ดูอันดับ" : locale === "zh" ? "查看排名" : "See the rankings"}
-          </button>
+          <div className="story-closing-actions">
+            <button type="button" className="cta-button" onClick={() => onNavigate("/rankings")}>
+              {t(locale, "See the rankings", "ดูอันดับ", "查看排名")}
+            </button>
+            <button type="button" className="ghost-button" onClick={() => onNavigate("/methodology")}>
+              {t(locale, "Read the methodology", "ดูวิธีการ", "阅读方法论")}
+            </button>
+          </div>
         </div>
       </section>
     </>

@@ -7,6 +7,9 @@ interface Props {
 
 interface BenefitBlock {
   iconEn: string;
+  lensEn: string;
+  lensTh: string;
+  lensZh: string;
   titleEn: string;
   titleTh: string;
   titleZh: string;
@@ -18,6 +21,9 @@ interface BenefitBlock {
 const benefits: BenefitBlock[] = [
   {
     iconEn: "📊",
+    lensEn: "Capital allocation",
+    lensTh: "การจัดสรรทุน",
+    lensZh: "资本配置",
     titleEn: "For investors: discover what's beyond Bangkok",
     titleTh: "สำหรับนักลงทุน: ค้นพบสิ่งที่อยู่นอกเหนือจากกรุงเทพฯ",
     titleZh: "投资者：发现曼谷以外的机遇",
@@ -27,6 +33,9 @@ const benefits: BenefitBlock[] = [
   },
   {
     iconEn: "🏛️",
+    lensEn: "Benchmarking",
+    lensTh: "การเทียบเคียง",
+    lensZh: "基准比较",
     titleEn: "For cities: know where you stand, learn from peers",
     titleTh: "สำหรับเมือง: รู้ว่าคุณอยู่ตรงไหน เรียนรู้จากเพื่อน",
     titleZh: "城市：了解自身定位，向同行学习",
@@ -36,6 +45,9 @@ const benefits: BenefitBlock[] = [
   },
   {
     iconEn: "👥",
+    lensEn: "Accountability",
+    lensTh: "ความรับผิดรับชอบ",
+    lensZh: "问责",
     titleEn: "For citizens: hold your city accountable",
     titleTh: "สำหรับประชาชน: ตรวจสอบเมืองของคุณ",
     titleZh: "市民：让你的城市承担责任",
@@ -45,6 +57,9 @@ const benefits: BenefitBlock[] = [
   },
   {
     iconEn: "🌏",
+    lensEn: "Regional model",
+    lensTh: "โมเดลระดับภูมิภาค",
+    lensZh: "区域模型",
     titleEn: "For ASEAN: a model for regional benchmarking",
     titleTh: "สำหรับอาเซียน: แบบจำลองสำหรับการเปรียบเทียบระดับภูมิภาค",
     titleZh: "东盟：区域基准评估的典范",
@@ -54,6 +69,9 @@ const benefits: BenefitBlock[] = [
   },
   {
     iconEn: "🎯",
+    lensEn: "Policy targeting",
+    lensTh: "การกำหนดเป้าหมายนโยบาย",
+    lensZh: "政策瞄准",
     titleEn: "For policymakers: evidence-based decisions",
     titleTh: "สำหรับผู้กำหนดนโยบาย: ตัดสินใจบนหลักฐาน",
     titleZh: "政策制定者：基于证据的决策",
@@ -97,11 +115,35 @@ export default function WhyPage({ locale, onNavigate }: Props) {
         </p>
       </section>
 
+      <section className="section story-metric-section">
+        <div className="story-metric-grid">
+          <div className="story-metric-card">
+            <div className="story-metric-value">49</div>
+            <div className="story-metric-label">{t(locale, "Cities compared", "เมืองที่เปรียบเทียบ", "比较城市")}</div>
+          </div>
+          <div className="story-metric-card">
+            <div className="story-metric-value">3</div>
+            <div className="story-metric-label">{t(locale, "Tiers, not fake precision", "จัดเป็น 3 ระดับ ไม่ใช่ความแม่นยำปลอม", "三层级，而非虚假精确")}</div>
+          </div>
+          <div className="story-metric-card">
+            <div className="story-metric-value">7</div>
+            <div className="story-metric-label">{t(locale, "Pillars under the hood", "เสาหลักใต้ฝากระโปรง", "底层 7 个支柱")}</div>
+          </div>
+          <div className="story-metric-card">
+            <div className="story-metric-value">Open</div>
+            <div className="story-metric-label">{t(locale, "Weights and sources", "น้ำหนักและแหล่งข้อมูล", "权重与来源")}</div>
+          </div>
+        </div>
+      </section>
+
       <section className="section">
         {benefits.map((b, i) => (
           <div key={i} className="benefit-block">
             <div className="benefit-icon">{b.iconEn}</div>
             <div className="benefit-content">
+              <p className="benefit-lens">
+                {locale === "th" ? b.lensTh : locale === "zh" ? b.lensZh : b.lensEn}
+              </p>
               <h2 className="benefit-title">
                 {locale === "th" ? b.titleTh : locale === "zh" ? b.titleZh : b.titleEn}
               </h2>
@@ -114,6 +156,13 @@ export default function WhyPage({ locale, onNavigate }: Props) {
       </section>
 
       <section className="section" style={{ marginBottom: "2.5rem" }}>
+        <p className="story-source-note">
+          {t(
+            locale,
+            "These references explain why benchmarking matters. Some are Thailand-specific, some are broader smart-city research, and together they justify the need for a transparent city index.",
+            "เอกสารอ้างอิงชุดนี้อธิบายว่าทำไมการเทียบเคียงจึงสำคัญ บางชิ้นเฉพาะไทย บางชิ้นเป็นงานวิจัยกว้างๆ ด้านสมาร์ตซิตี้ และเมื่อนำมารวมกัน มันรองรับเหตุผลของการมีดัชนีเมืองที่โปร่งใส",
+            "这些参考文献用于说明为什么城市比较有必要。有些专门针对泰国，有些属于更广泛的智慧城市研究，合起来为透明城市指数提供了论证基础。")}
+        </p>
         <p className="eyebrow">{t(locale, "References", "เอกสารอ้างอิง", "参考文献")}</p>
         <h2>{t(locale, "Sources and citations", "แหล่งข้อมูลและการอ้างอิง", "来源与引用")}</h2>
         <div className="references-list">

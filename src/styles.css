@@ -10,7 +10,6 @@
   --font-heading: "Outfit", "Noto Sans Thai", "Noto Sans SC", -apple-system, sans-serif;
   --font-body: "Outfit", "Noto Sans Thai", "Noto Sans SC", -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
-  /* ── Cyberpunk × Smart City Thailand logo ── */
   --teal: #2BBAA0;
   --teal-glow: rgba(43, 186, 160, 0.25);
   --gold: #D4A843;
@@ -42,16 +41,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; border-radius: 0; }
 html { scroll-behavior: smooth; }
 
-/* Dot-grid background — cyberpunk texture */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-image: radial-gradient(rgba(43,186,160,0.07) 1px, transparent 1px);
-  background-size: 24px 24px;
-  pointer-events: none;
-}
 body {
   font-family: var(--font-body);
   color: var(--ink);
@@ -109,8 +98,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.5rem min(calc((100% - var(--max-width)) / 2), 1.5rem);
-  background: rgba(10, 18, 16, 0.92); backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(43, 186, 160, 0.12);
+  background: rgba(255,255,255,0.96); backdrop-filter: blur(16px);
+  border-bottom: 1px solid #E8E8E8;
 }
 .brand-lockup { display: flex; align-items: center; gap: 0.5rem; }
 .brand-mark { width: 24px; height: 24px; display: grid; place-items: center; background: var(--saffron); color: white; font-weight: 800; font-size: 0.5rem; letter-spacing: 0.05em; }
@@ -1807,152 +1796,6 @@ button, input, select, textarea { border-radius: 0 !important; }
   .chat-panel { width: calc(100% - 2rem); right: 1rem; bottom: 1rem; }
 }
 
-/* ═══════ CYBERPUNK OVERRIDES ═══════ */
-
-/* Glow on interactive elements */
-.city-card:hover, .news-item:hover, .hero-city-chip:hover, .spider-ranking-row:hover {
-  box-shadow: 0 0 20px var(--teal-glow) !important;
-}
-
-/* Gold glow for CTA */
-.cta-button {
-  background: var(--teal) !important;
-  color: var(--bg) !important;
-  font-weight: 700 !important;
-  box-shadow: 0 0 12px var(--teal-glow);
-  transition: box-shadow 0.2s, transform 0.2s !important;
-}
-.cta-button:hover {
-  box-shadow: 0 0 24px var(--teal-glow);
-  transform: translateY(-1px) !important;
-}
-
-/* Ghost button — teal border glow */
-.ghost-button {
-  border-color: rgba(43, 186, 160, 0.3) !important;
-  color: var(--teal) !important;
-}
-.ghost-button:hover {
-  border-color: var(--teal) !important;
-  box-shadow: 0 0 12px var(--teal-glow);
-}
-
-/* Eyebrow — gold accent */
-.eyebrow { color: var(--gold) !important; }
-
-/* Active nav — teal underline glow */
-.nav-link.active {
-  color: var(--teal) !important;
-}
-.nav-link.active::after {
-  background: var(--teal) !important;
-  box-shadow: 0 0 8px var(--teal-glow);
-}
-
-/* Locale toggle — teal */
-.locale-toggle {
-  color: var(--teal) !important;
-  border-color: var(--teal) !important;
-}
-.locale-toggle:hover {
-  background: var(--teal) !important;
-  color: var(--bg) !important;
-}
-
-/* Scanline texture on hero */
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(43, 186, 160, 0.015) 2px,
-    rgba(43, 186, 160, 0.015) 4px
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-.hero { position: relative; }
-.hero > * { position: relative; z-index: 1; }
-
-/* Glitch micro-animation on hero title */
-@keyframes glitch {
-  0%, 95% { transform: none; }
-  96% { transform: translate(-2px, 1px); }
-  97% { transform: translate(2px, -1px); }
-  98% { transform: translate(-1px, 0); }
-  100% { transform: none; }
-}
-.hero-title { animation: glitch 8s infinite; }
-
-/* Stat values — teal first, gold second pattern */
-.stat-card:nth-child(1) .stat-value { color: var(--ink) !important; }
-.stat-card:nth-child(2) .stat-value { color: var(--teal) !important; }
-.stat-card:nth-child(3) .stat-value { color: var(--gold) !important; }
-.stat-card:nth-child(4) .stat-value { color: var(--teal) !important; }
-.stat-card:nth-child(5) .stat-value { color: var(--coral) !important; }
-
-/* Tier section headers — 2px teal rule */
-.tier-section-header { border-bottom-color: var(--teal) !important; }
-
-/* Evidence type badges */
-.evidence-type-news { background: rgba(212, 168, 67, 0.15) !important; color: var(--gold) !important; }
-.evidence-type-data { background: rgba(43, 186, 160, 0.15) !important; color: var(--teal) !important; }
-
-/* Chat FAB — teal glow pulse */
-.chat-fab {
-  background: var(--teal) !important;
-  box-shadow: 0 0 16px var(--teal-glow);
-  animation: fabPulse 3s infinite;
-}
-@keyframes fabPulse {
-  0%, 100% { box-shadow: 0 0 16px var(--teal-glow); }
-  50% { box-shadow: 0 0 28px rgba(43, 186, 160, 0.4); }
-}
-
-/* Chat panel — dark teal */
-.chat-panel {
-  background: var(--bg) !important;
-  border-color: rgba(43, 186, 160, 0.2) !important;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4) !important;
-}
-.chat-header { background: rgba(43, 186, 160, 0.12) !important; color: var(--teal) !important; }
-.chat-close { color: var(--teal) !important; }
-.chat-send { background: var(--teal) !important; color: var(--bg) !important; }
-.chat-msg-user .chat-msg-content { background: rgba(43, 186, 160, 0.15) !important; color: var(--ink) !important; }
-.chat-msg-assistant .chat-msg-content { background: rgba(43, 186, 160, 0.05) !important; }
-.chat-suggestion { border-color: rgba(43, 186, 160, 0.15) !important; color: var(--teal) !important; }
-
-/* Footer logos — teal glow on hover */
-.footer-logo:hover { filter: brightness(0) invert(1) !important; opacity: 1 !important; }
-
-/* Photo strip items — teal border glow on hover */
-.photo-strip-item:hover { box-shadow: 0 0 16px var(--teal-glow); }
-
-/* ═══════ MAP LAYER TOGGLE ═══════ */
-.map-layer-toggle {
-  display: flex;
-  gap: 0;
-  margin-bottom: 0.5rem;
-  border: 1px solid var(--border);
-}
-.map-layer-btn {
-  flex: 1;
-  padding: 0.3rem 0.5rem;
-  font-size: 0.55rem;
-  font-weight: 600;
-  font-family: var(--font-mono, monospace);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ink-muted, rgba(255,255,255,0.35));
-  background: transparent;
-  border: none;
-  border-right: 1px solid var(--border);
-  cursor: pointer;
-  transition: all 0.12s;
-}
 .map-layer-btn:last-child { border-right: none; }
 .map-layer-btn:hover { color: var(--ink); }
 .map-layer-btn.active {
