@@ -1,4 +1,7 @@
+import { lazy, Suspense } from "react";
 import type { Locale } from "./types";
+
+const GlobeMap = lazy(() => import("./GlobeMap"));
 
 interface Props {
   locale: Locale;
@@ -142,6 +145,19 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
             "泰国智慧城市项目并非闭门造车。从日本24亿美元的东盟基金，到孔敬市民团体说服韩国帮忙规划轻轨——这些合作把全球专业知识带到了本地问题面前。"
           )}
         </p>
+      </section>
+
+      {/* ─── GLOBE MAP ─── */}
+      <section className="section" style={{ marginBottom: "2.5rem" }}>
+        <p className="eyebrow">{t(locale, "Global network", "เครือข่ายทั่วโลก", "全球网络")}</p>
+        <h2>{t(locale,
+          "50+ organizations across 15 countries",
+          "50+ องค์กรใน 15+ ประเทศ",
+          "15个国家50+个组织"
+        )}</h2>
+        <Suspense fallback={null}>
+          <GlobeMap locale={locale} />
+        </Suspense>
       </section>
 
       {/* ─── PARTNERSHIP CARDS ─── */}

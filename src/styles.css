@@ -2677,3 +2677,24 @@ button, input, select, textarea { border-radius: 0 !important; }
     align-items: flex-start;
   }
 }
+
+/* ═══════ GLOBE MAP ═══════ */
+.globe-container { margin: 1.5rem 0; }
+.globe-svg { width: 100%; height: auto; display: block; border: 1px solid var(--border); }
+.globe-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.55rem;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+.globe-legend-item { display: flex; align-items: center; gap: 0.25rem; }
+.globe-legend-dot { width: 6px; height: 6px; flex-shrink: 0; }
+.globe-legend-count {
+  margin-left: auto;
+  font-family: var(--font-mono, monospace);
+  font-weight: 600;
+  color: var(--teal, #2BBAA0);
+}
