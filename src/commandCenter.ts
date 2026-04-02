@@ -408,15 +408,16 @@ export function generateImprovementPlan(city: SmartCity): ImprovementRecommendat
   const scores = city.scores;
 
   // Sort pillars by score (weakest first) weighted by pillar importance
-  const pillarPriority: { pillar: ScoringPillar; urgency: number }[] = [
-    { pillar: "livability", urgency: (100 - scores.livability) * 0.25 },
-    { pillar: "economy", urgency: (100 - scores.economy) * 0.20 },
-    { pillar: "safety", urgency: (100 - scores.safety) * 0.15 },
-    { pillar: "wellbeing", urgency: (100 - scores.wellbeing) * 0.15 },
-    { pillar: "environment", urgency: (100 - scores.environment) * 0.10 },
-    { pillar: "hospitality", urgency: (100 - scores.hospitality) * 0.10 },
-    { pillar: "digital", urgency: (100 - scores.digital) * 0.05 },
-  ].sort((a, b) => b.urgency - a.urgency);
+  const pillarPriorityUnsorted: Array<{ pillar: ScoringPillar; urgency: number }> = [
+    { pillar: "livability" as const, urgency: (100 - scores.livability) * 0.25 },
+    { pillar: "economy" as const, urgency: (100 - scores.economy) * 0.20 },
+    { pillar: "safety" as const, urgency: (100 - scores.safety) * 0.15 },
+    { pillar: "wellbeing" as const, urgency: (100 - scores.wellbeing) * 0.15 },
+    { pillar: "environment" as const, urgency: (100 - scores.environment) * 0.10 },
+    { pillar: "hospitality" as const, urgency: (100 - scores.hospitality) * 0.10 },
+    { pillar: "digital" as const, urgency: (100 - scores.digital) * 0.05 },
+  ];
+  const pillarPriority = pillarPriorityUnsorted.sort((a, b) => b.urgency - a.urgency);
 
   for (const { pillar } of pillarPriority.slice(0, 4)) {
     const score = scores[pillar];

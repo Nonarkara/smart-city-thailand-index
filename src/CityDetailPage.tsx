@@ -26,6 +26,7 @@ import {
 import { getEvidenceForCity, dataSources } from "./evidenceData";
 import { generateSWOT } from "./swotAnalysis";
 import { recommendInstruments } from "./financialToolkit";
+import { getRelevantCaseStudies, generateImprovementPlan, analyzeTierUpgrade } from "./commandCenter";
 import type { Locale, ScoringPillar } from "./types";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
 import { PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_COLORS, TIER_LABELS, DIMENSION_LABELS, PILLAR_WEIGHTS } from "./types";
@@ -207,6 +208,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const evidence = useMemo(() => getEvidenceForCity(cityId), [cityId]);
   const swot = useMemo(() => city ? generateSWOT(city, locale) : { strengths: [], weaknesses: [], opportunities: [], threats: [] }, [city, locale]);
   const finRecs = useMemo(() => city ? recommendInstruments(city) : [], [city]);
+  const caseStudies = useMemo(() => city ? getRelevantCaseStudies(city, 4) : [], [city]);
+  const improvementPlan = useMemo(() => city ? generateImprovementPlan(city) : [], [city]);
+  const tierUpgrade = useMemo(() => city ? analyzeTierUpgrade(city) : null, [city]);
   const planningProfile = useMemo(() => getCityPlanningProfile(cityId), [cityId]);
 
   if (!city) {
@@ -772,51 +776,218 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           ))}
         </div>
       </section>
-      {/* ─── SWOT ANALYSIS ─── */}
-      <section className="section">
-        <p className="eyebrow">{locale === "th" ? "วิเคราะห์ SWOT" : locale === "zh" ? "SWOT 分析" : "SWOT Analysis"}</p>
-        <h2>{locale === "th" ? "จุดแข็ง จุดอ่อน โอกาส ภัยคุกคาม" : locale === "zh" ? "优势、劣势、机会、威胁" : "Strengths, Weaknesses, Opportunities, Threats"}</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0, border: "1px solid var(--5, #E5E5E5)", marginBottom: "2rem" }}>
-          {(["strengths", "weaknesses", "opportunities", "threats"] as const).map(cat => {
-            const labels = { strengths: "S", weaknesses: "W", opportunities: "O", threats: "T" };
-            const colors = { strengths: "var(--alpha, #1A8A72)", weaknesses: "var(--gamma, #B03030)", opportunities: "var(--teal, #2BBAA0)", threats: "var(--beta, #9A7A1A)" };
-            return (
-              <div key={cat} style={{ padding: ".6rem .7rem", borderRight: cat === "strengths" || cat === "opportunities" ? "1px solid var(--5, #E5E5E5)" : "none", borderBottom: cat === "strengths" || cat === "weaknesses" ? "1px solid var(--5, #E5E5E5)" : "none" }}>
-                <div style={{ font: "700 .9rem var(--mono, monospace)", color: colors[cat], marginBottom: ".3rem" }}>{labels[cat]}</div>
-                {swot[cat].map((item, i) => (
-                  <div key={i} style={{ fontSize: ".62rem", color: "var(--2, #444)", lineHeight: 1.45, marginBottom: ".2rem", paddingLeft: ".5rem", position: "relative" }}>
-                    <span style={{ position: "absolute", left: 0, color: colors[cat] }}>·</span>
-                    {item}
+      {/* ═══ COMMAND CENTER: TIER UPGRADE ANALYSIS ═══ */}
+      {tierUpgrade && tierUpgrade.nextTier && (
+        <section className="section cc-section">
+          <p className="eyebrow">{translate(locale, { en: "Control tower", th: "หอควบคุม", zh: "控制塔" })}</p>
+          <h2>{translate(locale, { en: "Tier upgrade path", th: "เส้นทางอัพเกรดระดับ", zh: "升级路径" })}</h2>
+          <div className="cc-upgrade-banner">
+            <div className="cc-upgrade-current">
+              <span className="cc-upgrade-tier-label">{translate(locale, { en: "Current", th: "ปัจจุบัน", zh: "当前" })}</span>
+              <span className={`cc-upgrade-tier tier-${tierUpgrade.currentTier}`}>{tierUpgrade.currentTier === "gamma" ? "γ" : tierUpgrade.currentTier === "beta" ? "β" : "α"} {tierUpgrade.currentTier}</span>
+              <span className="cc-upgrade-score">{tierUpgrade.currentScore.toFixed(1)}</span>
+            </div>
+            <div className="cc-upgrade-arrow">
+              <span className="cc-upgrade-gap">+{tierUpgrade.gap?.toFixed(1)}</span>
+              →
+            </div>
+            <div className="cc-upgrade-target">
+              <span className="cc-upgrade-tier-label">{translate(locale, { en: "Target", th: "เป้าหมาย", zh: "目标" })}</span>
+              <span className={`cc-upgrade-tier tier-${tierUpgrade.nextTier}`}>{tierUpgrade.nextTier === "beta" ? "β" : "α"} {tierUpgrade.nextTier}</span>
+              <span className="cc-upgrade-score">{tierUpgrade.nextThreshold}</span>
+            </div>
+            <div className="cc-upgrade-meta">
+              <span className={`cc-feasibility cc-feasibility-${tierUpgrade.feasibility}`}>{tierUpgrade.feasibility}</span>
+              <span className="cc-timeline">{tierUpgrade.projectedTimeline}</span>
+            </div>
+          </div>
+          <p className="cc-upgrade-summary">{tierUpgrade.summary[locale]}</p>
+          {tierUpgrade.quickestWins.length > 0 && (
+            <div className="cc-quickwins">
+              <div className="cc-quickwins-title">{translate(locale, { en: "Quickest composite gains", th: "ทางลัดคะแนนรวมเร็วที่สุด", zh: "最快综合分提升" })}</div>
+              <div className="cc-quickwins-grid">
+                {tierUpgrade.quickestWins.map(w => (
+                  <div key={w.pillar} className="cc-quickwin-card">
+                    <div className="cc-quickwin-pillar" style={{ color: PILLAR_COLORS[w.pillar] }}>{PILLAR_LABELS[locale][w.pillar]}</div>
+                    <div className="cc-quickwin-detail">+{w.pointsNeeded} pts × {w.weight}% = <strong>+{w.compositeGain.toFixed(1)}</strong></div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* ═══ COMMAND CENTER: IMPROVEMENT ROADMAP ═══ */}
+      {improvementPlan.length > 0 && (
+        <section className="section cc-section">
+          <p className="eyebrow">{translate(locale, { en: "Improvement roadmap", th: "แผนยกระดับ", zh: "改善路线图" })}</p>
+          <h2>{translate(locale, { en: "What to invest in — and why", th: "ลงทุนอะไร — และทำไม", zh: "投资什么——以及为什么" })}</h2>
+          <p className="section-intro">
+            {translate(locale, {
+              en: "Prioritized by pillar weight × gap size. Each recommendation shows the specific composite score gain and actionable next steps.",
+              th: "จัดลำดับตามน้ำหนักเสาหลัก × ขนาดช่องว่าง แต่ละข้อเสนอแนะแสดงคะแนนรวมที่จะได้และขั้นตอนปฏิบัติได้ทันที",
+              zh: "按支柱权重×差距大小排序。每项建议显示具体综合分收益和可执行的下一步。",
+            })}
+          </p>
+          <div className="cc-improvement-stack">
+            {improvementPlan.map((rec, idx) => (
+              <div key={rec.pillar} className={`cc-improvement-card cc-priority-${rec.priority}`}>
+                <div className="cc-improvement-header">
+                  <div className="cc-improvement-rank">#{idx + 1}</div>
+                  <div className="cc-improvement-main">
+                    <span className={`cc-priority-badge cc-priority-badge-${rec.priority}`}>{rec.priority}</span>
+                    <h3 className="cc-improvement-title">{rec.title[locale]}</h3>
+                    <div className="cc-improvement-scores">
+                      <span className="cc-score-current" style={{ color: PILLAR_COLORS[rec.pillar] }}>{rec.currentScore}</span>
+                      <span className="cc-score-arrow">→</span>
+                      <span className="cc-score-target">{rec.targetScore}</span>
+                      <span className="cc-pillar-name">{PILLAR_LABELS[locale][rec.pillar]}</span>
+                    </div>
+                  </div>
+                  <div className="cc-improvement-impact">
+                    <span className="cc-impact-label">{translate(locale, { en: "Impact", th: "ผลกระทบ", zh: "影响" })}</span>
+                    <span className="cc-impact-value">{rec.estimatedImpact[locale]}</span>
+                  </div>
+                </div>
+                <p className="cc-improvement-rationale">{rec.rationale[locale]}</p>
+                <div className="cc-improvement-actions">
+                  {rec.actions.map((action, ai) => (
+                    <div key={ai} className="cc-action-item">
+                      <span className="cc-action-number">{ai + 1}</span>
+                      <span>{action[locale]}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="cc-improvement-footer">
+                  <span>{translate(locale, { en: "Timeline", th: "ระยะเวลา", zh: "周期" })}: {rec.timeframe}</span>
+                  <span>{translate(locale, { en: "Investment", th: "งบลงทุน", zh: "投资" })}: {rec.investmentRange}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══ COMMAND CENTER: SWOT ANALYSIS ═══ */}
+      <section className="section cc-section">
+        <p className="eyebrow">{translate(locale, { en: "Strategic intelligence", th: "ข่าวกรองเชิงกลยุทธ์", zh: "战略情报" })}</p>
+        <h2>{translate(locale, { en: "SWOT Analysis", th: "วิเคราะห์ SWOT", zh: "SWOT分析" })}</h2>
+        <div className="cc-swot-grid">
+          {(["strengths", "weaknesses", "opportunities", "threats"] as const).map(cat => {
+            const labels = { strengths: "S", weaknesses: "W", opportunities: "O", threats: "T" };
+            const fullLabels = {
+              strengths: translate(locale, { en: "Strengths", th: "จุดแข็ง", zh: "优势" }),
+              weaknesses: translate(locale, { en: "Weaknesses", th: "จุดอ่อน", zh: "劣势" }),
+              opportunities: translate(locale, { en: "Opportunities", th: "โอกาส", zh: "机会" }),
+              threats: translate(locale, { en: "Threats", th: "ภัยคุกคาม", zh: "威胁" }),
+            };
+            return (
+              <div key={cat} className={`cc-swot-card cc-swot-${cat}`}>
+                <div className="cc-swot-header">
+                  <span className="cc-swot-letter">{labels[cat]}</span>
+                  <span className="cc-swot-label">{fullLabels[cat]}</span>
+                </div>
+                <div className="cc-swot-items">
+                  {swot[cat].map((item, i) => (
+                    <div key={i} className="cc-swot-item">{item}</div>
+                  ))}
+                </div>
               </div>
             );
           })}
         </div>
       </section>
 
-      {/* ─── FINANCIAL TOOLKIT ─── */}
+      {/* ═══ COMMAND CENTER: INTERNATIONAL CASE STUDIES ═══ */}
+      {caseStudies.length > 0 && (
+        <section className="section cc-section">
+          <p className="eyebrow">{translate(locale, { en: "Global intelligence", th: "ข่าวกรองระดับโลก", zh: "全球情报" })}</p>
+          <h2>{translate(locale, { en: "Reference projects from similar contexts", th: "โครงการอ้างอิงจากบริบทใกล้เคียง", zh: "相似背景的参考项目" })}</h2>
+          <p className="section-intro">
+            {translate(locale, {
+              en: "These are famous smart city projects from countries with comparable challenges. Each includes the financial model used and lessons directly applicable to this city.",
+              th: "นี่คือโครงการเมืองอัจฉริยะที่มีชื่อเสียงจากประเทศที่มีความท้าทายเทียบเคียงได้ แต่ละโครงการรวมโมเดลการเงินที่ใช้และบทเรียนที่ใช้กับเมืองนี้ได้โดยตรง",
+              zh: "这些是来自具有可比挑战的国家的著名智慧城市项目。每个都包含使用的财务模型和直接适用于本城市的经验教训。",
+            })}
+          </p>
+          <div className="cc-casestudy-stack">
+            {caseStudies.map(cs => (
+              <div key={cs.id} className="cc-casestudy-card">
+                <div className="cc-casestudy-header">
+                  <div>
+                    <div className="cc-casestudy-city">{cs.city}, {cs.country}</div>
+                    <h3 className="cc-casestudy-project">{cs.project}</h3>
+                  </div>
+                  <div className="cc-casestudy-meta">
+                    <span className="cc-casestudy-year">{cs.year}</span>
+                    <span className="cc-casestudy-investment">{cs.investment}</span>
+                  </div>
+                </div>
+                <div className="cc-casestudy-body">
+                  <div className="cc-casestudy-section">
+                    <span className="cc-casestudy-section-label">{translate(locale, { en: "Context", th: "บริบท", zh: "背景" })}</span>
+                    <p>{cs.context[locale]}</p>
+                  </div>
+                  <div className="cc-casestudy-section">
+                    <span className="cc-casestudy-section-label">{translate(locale, { en: "Outcome", th: "ผลลัพธ์", zh: "成果" })}</span>
+                    <p>{cs.outcome[locale]}</p>
+                  </div>
+                  <div className="cc-casestudy-section cc-casestudy-lesson">
+                    <span className="cc-casestudy-section-label">{translate(locale, { en: "Lesson for Thailand", th: "บทเรียนสำหรับไทย", zh: "对泰国的启示" })}</span>
+                    <p>{cs.lesson[locale]}</p>
+                  </div>
+                </div>
+                <div className="cc-casestudy-footer">
+                  <span className="cc-casestudy-finance-label">{translate(locale, { en: "Financial model", th: "โมเดลการเงิน", zh: "财务模型" })}</span>
+                  <span className="cc-casestudy-finance-value">{cs.financialModel}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ═══ COMMAND CENTER: FINANCIAL TOOLKIT ═══ */}
       {finRecs.length > 0 && (
-        <section className="section">
-          <p className="eyebrow">{locale === "th" ? "เครื่องมือการเงิน" : locale === "zh" ? "金融工具" : "Financial Toolkit"}</p>
-          <h2>{locale === "th" ? "กลไกการเงินที่แนะนำ" : locale === "zh" ? "推荐融资机制" : "Recommended Financing"}</h2>
-          <div style={{ borderTop: "2px solid var(--ink, #111)", marginBottom: "2rem" }}>
+        <section className="section cc-section">
+          <p className="eyebrow">{translate(locale, { en: "Financial clinic", th: "คลินิกการเงิน", zh: "金融诊所" })}</p>
+          <h2>{translate(locale, { en: "Recommended financing instruments", th: "เครื่องมือการเงินที่แนะนำ", zh: "推荐融资工具" })}</h2>
+          <p className="section-intro">
+            {translate(locale, {
+              en: "Matched to this city's tier, development stage, and pillar gaps. Includes real ASEAN examples and Thai-specific relevance.",
+              th: "จับคู่กับระดับเมือง ระยะพัฒนา และช่องว่างเสาหลัก รวมตัวอย่างจริงจากอาเซียนและความเกี่ยวข้องเฉพาะไทย",
+              zh: "匹配本城市级别、发展阶段与支柱差距。包含真实东盟案例和泰国特定相关性。",
+            })}
+          </p>
+          <div className="cc-finance-stack">
             {finRecs.slice(0, 6).map((rec, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: ".5rem", padding: ".5rem 0", borderBottom: "1px solid var(--5, #E5E5E5)", alignItems: "start" }}>
-                <span style={{
-                  font: "700 .42rem var(--mono, monospace)", padding: ".06rem .25rem",
-                  background: rec.priority === "primary" ? "var(--alpha-bg, #F0FAF7)" : rec.priority === "secondary" ? "var(--beta-bg, #FEFAEF)" : "var(--surface, #F5F5F5)",
-                  color: rec.priority === "primary" ? "var(--alpha, #1A8A72)" : rec.priority === "secondary" ? "var(--beta, #9A7A1A)" : "var(--3, #888)",
-                }}>{rec.priority.toUpperCase()}</span>
-                <div>
-                  <div style={{ fontSize: ".72rem", fontWeight: 700, marginBottom: ".1rem" }}>
-                    {locale === "th" ? rec.instrument.nameTh : rec.instrument.name}
+              <div key={i} className={`cc-finance-card cc-finance-${rec.priority}`}>
+                <div className="cc-finance-header">
+                  <span className={`cc-finance-priority cc-finance-priority-${rec.priority}`}>{rec.priority}</span>
+                  <span className="cc-finance-category">{rec.instrument.category}</span>
+                </div>
+                <h3 className="cc-finance-name">{locale === "th" ? rec.instrument.nameTh : rec.instrument.name}</h3>
+                <p className="cc-finance-desc">{locale === "th" ? rec.instrument.descTh : rec.instrument.descEn}</p>
+                <p className="cc-finance-reason">{locale === "th" ? rec.reasonTh : rec.reason}</p>
+                <div className="cc-finance-details">
+                  <div className="cc-finance-detail">
+                    <span className="cc-finance-detail-label">{translate(locale, { en: "Typical size", th: "ขนาดโดยทั่วไป", zh: "典型规模" })}</span>
+                    <span className="cc-finance-detail-value">{rec.instrument.typicalSize}</span>
                   </div>
-                  <div style={{ fontSize: ".55rem", color: "var(--3, #888)", fontFamily: "var(--mono, monospace)" }}>
-                    {rec.instrument.category} · {rec.instrument.typicalSize}
+                  <div className="cc-finance-detail">
+                    <span className="cc-finance-detail-label">{translate(locale, { en: "Complexity", th: "ความซับซ้อน", zh: "复杂度" })}</span>
+                    <span className="cc-finance-detail-value">{rec.instrument.complexity}</span>
                   </div>
-                  <div style={{ fontSize: ".58rem", color: "var(--2, #444)", lineHeight: 1.45, marginTop: ".1rem" }}>
-                    {locale === "th" ? rec.reasonTh : rec.reason}
+                  {rec.instrument.aseanExample && (
+                    <div className="cc-finance-detail cc-finance-detail-wide">
+                      <span className="cc-finance-detail-label">{translate(locale, { en: "ASEAN example", th: "ตัวอย่าง ASEAN", zh: "东盟案例" })}</span>
+                      <span className="cc-finance-detail-value">{rec.instrument.aseanExample}</span>
+                    </div>
+                  )}
+                  <div className="cc-finance-detail cc-finance-detail-wide">
+                    <span className="cc-finance-detail-label">{translate(locale, { en: "Thai relevance", th: "ความเกี่ยวข้องกับไทย", zh: "泰国相关性" })}</span>
+                    <span className="cc-finance-detail-value">{rec.instrument.thaiRelevance}</span>
                   </div>
                 </div>
               </div>
