@@ -42,6 +42,11 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | ต้นแบบ — นครศรีธรรมราช`,
     zh: `${SITE_NAME} | 样板 — 那空是贪玛叻`,
   },
+  partners: {
+    en: `${SITE_NAME} | International Partnerships`,
+    th: `${SITE_NAME} | ความร่วมมือระหว่างประเทศ`,
+    zh: `${SITE_NAME} | 国际合作`,
+  },
   city: {
     en: `${SITE_NAME} | City Profile`,
     th: `${SITE_NAME} | โปรไฟล์เมือง`,
