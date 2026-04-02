@@ -1083,3 +1083,22 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 .editorial-section {
   padding: 2.5rem 0;
 }
+
+/* ─── FINE PRINT ─── */
+.footer-fineprint {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--5, #E5E5E5);
+}
+.footer-fineprint p {
+  font-size: .48rem;
+  line-height: 1.55;
+  color: var(--4, #BBB);
+  margin-bottom: .4rem;
+  max-width: 720px;
+}
+.footer-fineprint p:last-child {
+  margin-bottom: 0;
+  font-weight: 500;
+  color: var(--3, #888);
+}
