@@ -10,7 +10,7 @@ import {
   translate,
 } from "./cityPresentation";
 import type { CityTier, Locale, SmartCity } from "./types";
-import { TIER_LABELS } from "./types";
+import { TIER_LABELS, PILLAR_COLORS } from "./types";
 import TrendIntelligencePanel from "./TrendIntelligencePanel";
 
 interface Props {
@@ -76,6 +76,13 @@ function RankingRow({
         <span className="dashboard-ranking-meta">
           {getProvinceName(city, locale)} · {TIER_LABELS[locale][city.tier]} · {getCityStatusLabel(city.status, locale)}
         </span>
+      </div>
+      <div className="dashboard-ranking-bars" style={{ display: "flex", gap: "1px", flex: "0 0 100px" }}>
+        {(["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"] as const).map(p => (
+          <div key={p} style={{ flex: 1, height: "14px", background: "var(--surface, #F5F5F5)" }}>
+            <div style={{ width: `${city.scores[p]}%`, height: "100%", background: PILLAR_COLORS[p] }} />
+          </div>
+        ))}
       </div>
       <div className="dashboard-ranking-scoreblock">
         <span className="dashboard-ranking-score">{city.compositeScore.toFixed(1)}</span>

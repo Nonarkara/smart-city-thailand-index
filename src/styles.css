@@ -1102,3 +1102,209 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
   font-weight: 500;
   color: var(--3, #888);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   COMMAND CENTER — Control Tower Styling
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.cc-section { margin-bottom: 1rem; }
+
+/* ─── Tier Upgrade Banner ─── */
+.cc-upgrade-banner {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem; margin-top: .6rem;
+  background: var(--surface); border: 1px solid var(--5);
+  border-left: 4px solid var(--teal);
+}
+.cc-upgrade-current, .cc-upgrade-target { display: flex; flex-direction: column; align-items: center; gap: .15rem; }
+.cc-upgrade-tier-label { font: 600 .38rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--3); }
+.cc-upgrade-tier { font: 700 .85rem var(--mono); text-transform: uppercase; }
+.cc-upgrade-tier.tier-gamma { color: var(--gamma); }
+.cc-upgrade-tier.tier-beta { color: var(--beta); }
+.cc-upgrade-tier.tier-alpha { color: var(--alpha); }
+.cc-upgrade-score { font: 700 1.2rem var(--mono); }
+.cc-upgrade-arrow { font: 700 1.2rem var(--mono); color: var(--teal); display: flex; align-items: center; gap: .4rem; }
+.cc-upgrade-gap { font: 700 .55rem var(--mono); background: var(--teal-glow); color: var(--teal); padding: .1rem .3rem; border-radius: var(--radius-xs); }
+.cc-upgrade-meta { display: flex; flex-direction: column; align-items: center; gap: .2rem; margin-left: auto; }
+.cc-feasibility { font: 700 .48rem var(--mono); padding: .12rem .4rem; border-radius: var(--radius-xs); letter-spacing: .06em; text-transform: uppercase; }
+.cc-feasibility-achievable { background: var(--alpha-bg); color: var(--alpha); }
+.cc-feasibility-stretch { background: var(--beta-bg); color: var(--beta); }
+.cc-feasibility-long-term { background: var(--gamma-bg); color: var(--gamma); }
+.cc-timeline { font: 600 .48rem var(--mono); color: var(--3); }
+.cc-upgrade-summary { font-size: .72rem; line-height: 1.6; color: var(--2); margin-top: .6rem; max-width: 600px; }
+
+/* ─── Quick Wins ─── */
+.cc-quickwins { margin-top: .75rem; }
+.cc-quickwins-title { font: 700 .48rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--3); margin-bottom: .35rem; }
+.cc-quickwins-grid { display: flex; gap: .4rem; }
+.cc-quickwin-card { padding: .5rem .65rem; background: var(--surface); border: 1px solid var(--5); flex: 1; }
+.cc-quickwin-pillar { font: 700 .72rem var(--font); margin-bottom: .1rem; }
+.cc-quickwin-detail { font: 500 .55rem var(--mono); color: var(--2); }
+.cc-quickwin-detail strong { color: var(--teal); font-weight: 700; }
+
+/* ─── Improvement Roadmap ─── */
+.cc-improvement-stack { display: grid; gap: .5rem; margin-top: .6rem; }
+.cc-improvement-card {
+  padding: 1rem 1.25rem; background: #fff; border: 1px solid var(--5);
+  box-shadow: var(--card-shadow); transition: all .2s var(--ease);
+}
+.cc-improvement-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-1px); }
+.cc-priority-critical { border-left: 4px solid var(--gamma); }
+.cc-priority-high { border-left: 4px solid var(--beta); }
+.cc-priority-medium { border-left: 4px solid var(--alpha); }
+.cc-improvement-header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .5rem; }
+.cc-improvement-rank { font: 700 1.4rem var(--mono); color: var(--4); width: 1.8rem; flex-shrink: 0; }
+.cc-improvement-main { flex: 1; }
+.cc-priority-badge { font: 700 .4rem var(--mono); letter-spacing: .1em; padding: .06rem .3rem; text-transform: uppercase; margin-bottom: .2rem; display: inline-block; }
+.cc-priority-badge-critical { background: var(--gamma-bg); color: var(--gamma); }
+.cc-priority-badge-high { background: var(--beta-bg); color: var(--beta); }
+.cc-priority-badge-medium { background: var(--alpha-bg); color: var(--alpha); }
+.cc-improvement-title { font-size: .82rem; font-weight: 700; line-height: 1.2; margin-top: .1rem; }
+.cc-improvement-scores { display: flex; align-items: center; gap: .3rem; margin-top: .2rem; font: 600 .6rem var(--mono); }
+.cc-score-current { font-weight: 700; }
+.cc-score-arrow { color: var(--4); }
+.cc-score-target { color: var(--alpha); font-weight: 700; }
+.cc-pillar-name { color: var(--3); margin-left: .2rem; }
+.cc-improvement-impact { text-align: right; flex-shrink: 0; }
+.cc-impact-label { display: block; font: 600 .38rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--3); }
+.cc-impact-value { display: block; font: 600 .55rem var(--mono); color: var(--teal); margin-top: .1rem; }
+.cc-improvement-rationale { font-size: .65rem; color: var(--2); line-height: 1.55; margin-bottom: .5rem; padding-left: 2.55rem; }
+.cc-improvement-actions { padding-left: 2.55rem; margin-bottom: .5rem; }
+.cc-action-item { display: flex; gap: .4rem; align-items: baseline; font-size: .62rem; color: var(--2); line-height: 1.5; margin-bottom: .25rem; }
+.cc-action-number { font: 700 .5rem var(--mono); color: var(--teal); background: var(--teal-glow); width: 1.1rem; height: 1.1rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; flex-shrink: 0; }
+.cc-improvement-footer { display: flex; gap: 1.5rem; padding-left: 2.55rem; font: 500 .5rem var(--mono); color: var(--3); }
+
+/* ─── SWOT Grid ─── */
+.cc-swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: .6rem; border: 1px solid var(--5); }
+.cc-swot-card { padding: .75rem .85rem; }
+.cc-swot-strengths { border-right: 1px solid var(--5); border-bottom: 1px solid var(--5); }
+.cc-swot-weaknesses { border-bottom: 1px solid var(--5); }
+.cc-swot-opportunities { border-right: 1px solid var(--5); }
+.cc-swot-header { display: flex; align-items: baseline; gap: .35rem; margin-bottom: .4rem; }
+.cc-swot-letter { font: 700 1.1rem var(--mono); }
+.cc-swot-strengths .cc-swot-letter { color: var(--alpha); }
+.cc-swot-weaknesses .cc-swot-letter { color: var(--gamma); }
+.cc-swot-opportunities .cc-swot-letter { color: var(--teal); }
+.cc-swot-threats .cc-swot-letter { color: var(--beta); }
+.cc-swot-label { font: 600 .55rem var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--3); }
+.cc-swot-items { display: grid; gap: .2rem; }
+.cc-swot-item { font-size: .62rem; color: var(--2); line-height: 1.5; padding-left: .65rem; position: relative; }
+.cc-swot-item::before { content: ""; position: absolute; left: 0; top: .35rem; width: 4px; height: 4px; border-radius: 50%; }
+.cc-swot-strengths .cc-swot-item::before { background: var(--alpha); }
+.cc-swot-weaknesses .cc-swot-item::before { background: var(--gamma); }
+.cc-swot-opportunities .cc-swot-item::before { background: var(--teal); }
+.cc-swot-threats .cc-swot-item::before { background: var(--beta); }
+
+/* ─── Case Studies ─── */
+.cc-casestudy-stack { display: grid; gap: .5rem; margin-top: .6rem; }
+.cc-casestudy-card {
+  background: #fff; border: 1px solid var(--5); box-shadow: var(--card-shadow);
+  transition: all .2s var(--ease); overflow: hidden;
+}
+.cc-casestudy-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-1px); }
+.cc-casestudy-header {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: .75rem;
+  padding: .75rem 1rem; border-bottom: 1px solid var(--5); background: var(--surface);
+}
+.cc-casestudy-city { font: 600 .48rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); margin-bottom: .1rem; }
+.cc-casestudy-project { font-size: .82rem; font-weight: 700; line-height: 1.2; }
+.cc-casestudy-meta { display: flex; flex-direction: column; align-items: flex-end; gap: .15rem; flex-shrink: 0; }
+.cc-casestudy-year { font: 500 .48rem var(--mono); color: var(--3); }
+.cc-casestudy-investment { font: 700 .65rem var(--mono); color: var(--ink); }
+.cc-casestudy-body { padding: .75rem 1rem; display: grid; gap: .5rem; }
+.cc-casestudy-section p { font-size: .62rem; color: var(--2); line-height: 1.55; margin: 0; }
+.cc-casestudy-section-label { display: block; font: 700 .42rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--3); margin-bottom: .1rem; }
+.cc-casestudy-lesson { background: var(--teal-glow); padding: .5rem .65rem; margin: 0 -.25rem; border-radius: var(--radius-xs); }
+.cc-casestudy-lesson .cc-casestudy-section-label { color: var(--teal); }
+.cc-casestudy-lesson p { color: var(--ink); font-weight: 500; }
+.cc-casestudy-footer {
+  display: flex; gap: .5rem; align-items: baseline;
+  padding: .5rem 1rem; border-top: 1px solid var(--5); background: var(--surface);
+}
+.cc-casestudy-finance-label { font: 700 .42rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--3); }
+.cc-casestudy-finance-value { font: 500 .58rem var(--mono); color: var(--ink); }
+
+/* ─── Financial Toolkit (Enhanced) ─── */
+.cc-finance-stack { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .6rem; }
+.cc-finance-card {
+  padding: .85rem 1rem; background: #fff; border: 1px solid var(--5);
+  box-shadow: var(--card-shadow); transition: all .2s var(--ease);
+}
+.cc-finance-card:hover { box-shadow: var(--card-shadow-hover); }
+.cc-finance-primary { border-left: 3px solid var(--teal); }
+.cc-finance-secondary { border-left: 3px solid var(--gold); }
+.cc-finance-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .3rem; }
+.cc-finance-priority { font: 700 .42rem var(--mono); letter-spacing: .08em; padding: .06rem .3rem; text-transform: uppercase; }
+.cc-finance-priority-primary { background: var(--alpha-bg); color: var(--alpha); }
+.cc-finance-priority-secondary { background: var(--beta-bg); color: var(--beta); }
+.cc-finance-priority-exploratory { background: var(--surface); color: var(--3); }
+.cc-finance-category { font: 600 .42rem var(--mono); color: var(--4); text-transform: uppercase; letter-spacing: .06em; }
+.cc-finance-name { font-size: .78rem; font-weight: 700; margin-bottom: .25rem; line-height: 1.2; }
+.cc-finance-desc { font-size: .58rem; color: var(--2); line-height: 1.5; margin-bottom: .25rem; }
+.cc-finance-reason { font-size: .58rem; color: var(--teal); line-height: 1.5; font-weight: 500; margin-bottom: .4rem; }
+.cc-finance-details { display: grid; grid-template-columns: 1fr 1fr; gap: .3rem; border-top: 1px solid var(--5); padding-top: .4rem; }
+.cc-finance-detail { min-width: 0; }
+.cc-finance-detail-wide { grid-column: 1 / -1; }
+.cc-finance-detail-label { display: block; font: 600 .38rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--4); }
+.cc-finance-detail-value { font-size: .55rem; color: var(--2); line-height: 1.4; }
+
+/* ─── depa Audit Page ─── */
+.audit-hero { padding-top: 4.5rem; padding-bottom: 1rem; }
+.audit-section { margin-bottom: 2rem; }
+.audit-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--5); margin-top: .6rem; }
+.audit-kpi { padding: .75rem .65rem; border-right: 1px solid var(--5); text-align: center; }
+.audit-kpi:last-child { border-right: 0; }
+.audit-kpi-value { font: 700 1.5rem var(--mono); margin-bottom: .1rem; }
+.audit-kpi-label { font: 600 .42rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--3); }
+.audit-kpi-sub { font: 500 .48rem var(--mono); color: var(--4); margin-top: .1rem; }
+.audit-gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .6rem; }
+.audit-gap-card { padding: .85rem 1rem; border: 1px solid var(--5); background: var(--surface); }
+.audit-gap-title { font: 700 .55rem var(--mono); color: var(--teal); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .3rem; }
+.audit-gap-stat { font: 700 1.3rem var(--mono); color: var(--ink); margin-bottom: .2rem; }
+.audit-gap-desc { font-size: .62rem; color: var(--2); line-height: 1.5; }
+.audit-sentiment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-top: .6rem; }
+.audit-sentiment-card { padding: .75rem .85rem; border: 1px solid var(--5); text-align: center; }
+.audit-sentiment-emoji { font-size: 1.5rem; margin-bottom: .2rem; }
+.audit-sentiment-label { font: 700 .55rem var(--mono); margin-bottom: .15rem; }
+.audit-sentiment-pct { font: 700 1.1rem var(--mono); margin-bottom: .1rem; }
+.audit-sentiment-desc { font-size: .52rem; color: var(--2); line-height: 1.4; }
+.audit-rec-grid { display: grid; gap: .4rem; margin-top: .6rem; }
+.audit-rec-card {
+  display: grid; grid-template-columns: auto 1fr; gap: .65rem;
+  padding: .75rem 1rem; border: 1px solid var(--5); background: #fff;
+  box-shadow: var(--card-shadow); align-items: start;
+}
+.audit-rec-card:hover { box-shadow: var(--card-shadow-hover); }
+.audit-rec-type { font: 700 .42rem var(--mono); padding: .12rem .35rem; border-radius: var(--radius-xs); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; align-self: start; margin-top: .1rem; }
+.audit-rec-more { background: var(--alpha-bg); color: var(--alpha); }
+.audit-rec-less { background: var(--gamma-bg); color: var(--gamma); }
+.audit-rec-title { font-size: .78rem; font-weight: 700; margin-bottom: .15rem; }
+.audit-rec-body { font-size: .62rem; color: var(--2); line-height: 1.55; }
+.audit-rec-evidence { font: 500 .5rem var(--mono); color: var(--teal); margin-top: .15rem; }
+.audit-domain-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem; margin-top: .6rem; }
+.audit-domain-card { padding: .6rem .5rem; border: 1px solid var(--5); text-align: center; }
+.audit-domain-name { font: 700 .48rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--3); margin-bottom: .15rem; }
+.audit-domain-pr { font: 700 .85rem var(--mono); color: var(--teal); }
+.audit-domain-result { font: 700 .85rem var(--mono); }
+.audit-domain-bar { height: 4px; background: var(--5); margin-top: .2rem; position: relative; overflow: hidden; }
+.audit-domain-bar-fill { height: 100%; position: absolute; left: 0; top: 0; }
+
+/* ─── Command Center Responsive ─── */
+@media (max-width: 768px) {
+  .cc-upgrade-banner { flex-direction: column; gap: .5rem; text-align: center; }
+  .cc-upgrade-meta { margin-left: 0; flex-direction: row; }
+  .cc-quickwins-grid { flex-direction: column; }
+  .cc-improvement-header { flex-direction: column; gap: .4rem; }
+  .cc-improvement-rank { display: none; }
+  .cc-improvement-rationale, .cc-improvement-actions, .cc-improvement-footer { padding-left: 0; }
+  .cc-swot-grid { grid-template-columns: 1fr; }
+  .cc-swot-strengths, .cc-swot-opportunities { border-right: 0; }
+  .cc-swot-strengths, .cc-swot-weaknesses { border-bottom: 1px solid var(--5); }
+  .cc-finance-stack { grid-template-columns: 1fr; }
+  .audit-kpi-grid { grid-template-columns: 1fr 1fr; }
+  .audit-kpi:nth-child(2) { border-right: 0; }
+  .audit-kpi:nth-child(1), .audit-kpi:nth-child(2) { border-bottom: 1px solid var(--5); }
+  .audit-gap-grid { grid-template-columns: 1fr; }
+  .audit-sentiment-grid { grid-template-columns: 1fr; }
+  .audit-domain-grid { grid-template-columns: 1fr 1fr; }
+}
