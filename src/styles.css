@@ -12,7 +12,9 @@
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
-  --font: "Outfit", "Noto Sans Thai", "Noto Sans SC", system-ui, sans-serif;
+  --font: "Outfit";
+  --font-heading: "Outfit", "Noto Sans Thai", "Noto Sans SC", system-ui, sans-serif;
+  --font-body: "Outfit", "Noto Sans Thai", "Noto Sans SC", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
   --teal: #2BBAA0;
   --gold: #D4A843;
@@ -554,3 +556,24 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 800; letter-spacing: 
   color: rgba(255,255,255,.7);
   letter-spacing: .05em;
 }
+
+/* ─── MAP DASHBOARD (full page) ─── */
+.map-dashboard { padding-top: 3.5rem; }
+.map-dash-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: .75rem; padding: 1rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem); border-bottom: 2px solid var(--ink, #111); margin-bottom: 0; }
+.map-dash-controls { display: flex; gap: .5rem; }
+.map-dash-filter, .map-dash-layers { display: flex; border: 1px solid var(--5, #E5E5E5); }
+.map-dash-body { display: grid; grid-template-columns: 1fr 220px; }
+.map-dash-map { border-right: 1px solid var(--5, #E5E5E5); }
+.map-dash-map svg { display: block; }
+.map-dash-sidebar { padding: 1rem .85rem; }
+.map-dash-sidebar-title { font: 700 .52rem var(--mono, monospace); text-transform: uppercase; letter-spacing: .1em; color: var(--3, #888); margin-bottom: .6rem; }
+.map-dash-region { margin-bottom: .6rem; }
+.map-dash-region-head { display: flex; justify-content: space-between; margin-bottom: .15rem; }
+.map-dash-region-name { font-size: .65rem; font-weight: 700; }
+.map-dash-region-count { font: 700 .6rem var(--mono, monospace); }
+.map-dash-region-bar { display: flex; height: 6px; gap: 1px; margin-bottom: .12rem; }
+.map-dash-region-bar > div { min-width: 2px; }
+.map-dash-region-detail { display: flex; gap: .4rem; font: 600 .45rem var(--mono, monospace); }
+.map-dash-legend { margin-top: 1rem; padding-top: .5rem; border-top: 1px solid var(--5, #E5E5E5); }
+.map-dash-legend-item { display: flex; align-items: center; gap: .25rem; font-size: .5rem; color: var(--2, #444); margin-bottom: .2rem; }
+@media (max-width: 768px) { .map-dash-body { grid-template-columns: 1fr; } .map-dash-map { border-right: 0; } }

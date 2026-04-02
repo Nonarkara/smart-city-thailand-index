@@ -12,6 +12,7 @@ const WhyPage = lazy(() => import("./WhyPage"));
 const ShowcasePage = lazy(() => import("./ShowcasePage"));
 const GeminiChat = lazy(() => import("./GeminiChat"));
 const PartnershipsPage = lazy(() => import("./PartnershipsPage"));
+const MapDashboardPage = lazy(() => import("./MapDashboardPage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 
@@ -195,6 +196,8 @@ export default function App() {
             <ShowcasePage locale={locale} onNavigate={navigate} />
           ) : route.kind === "partners" ? (
             <PartnershipsPage locale={locale} onNavigate={navigate} />
+          ) : route.kind === "map" ? (
+            <MapDashboardPage locale={locale} onNavigate={navigate} />
           ) : route.kind === "city" ? (
             <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
           ) : (
