@@ -378,6 +378,34 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
+      {/* ─── HOW TO READ THIS ─── */}
+      <section className="guide-strip">
+        <div className="guide-strip-inner">
+          <p className="guide-item">
+            <strong>{translate(locale, { en: "Score 0\u2013100", th: "คะแนน 0\u2013100", zh: "0\u2013100 分" })}</strong>
+            {translate(locale, {
+              en: " \u2014 higher means more built, more lived-in, more real. Not plans. Outcomes.",
+              th: " \u2014 ยิ่งสูง ยิ่งสร้างจริง ยิ่งมีคนอยู่ ยิ่งจริง ไม่ใช่แผน แต่คือผลลัพธ์",
+              zh: " \u2014 越高 = 越真实建成、越有人居住。不是规划，而是结果。",
+            })}
+          </p>
+          <p className="guide-item">
+            <strong>Alpha</strong> {translate(locale, { en: "\u2265 65 operational", th: "\u2265 65 ใช้งานจริง", zh: "\u2265 65 真实运行" })}
+            {" \u00b7 "}
+            <strong>Beta</strong> {translate(locale, { en: "45\u201364 building", th: "45\u201364 กำลังสร้าง", zh: "45\u201364 建设中" })}
+            {" \u00b7 "}
+            <strong>Gamma</strong> {translate(locale, { en: "< 45 planning", th: "< 45 วางแผน", zh: "< 45 规划阶段" })}
+          </p>
+          <p className="guide-item">
+            {translate(locale, {
+              en: "Each bar = one pillar. Click any city to see the full breakdown, evidence, financial toolkit, and what to do next.",
+              th: "แต่ละแท่ง = หนึ่งเสาหลัก คลิกเมืองใดก็ได้เพื่อดูรายละเอียด หลักฐาน เครื่องมือการเงิน และสิ่งที่ควรทำต่อ",
+              zh: "每根柱 = 一个维度。点击任意城市，查看完整拆解、证据、融资工具和下一步行动。",
+            })}
+          </p>
+        </div>
+      </section>
+
       <section className="dashboard-panel dashboard-ranking-panel">
         <div className="fieldboard-header">
           <h2 className="fieldboard-title">

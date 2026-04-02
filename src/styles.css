@@ -950,6 +950,24 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .dashboard-chip { display: inline-flex; padding: .08rem .3rem; font: 700 .5rem var(--mono, monospace); }
 .dashboard-controls { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; padding: 0 min(calc((100% - var(--w, 1060px)) / 2), 1.25rem); }
 .dashboard-control-group { display: flex; }
+/* ─── GUIDE STRIP: How to read this ─── */
+.guide-strip {
+  padding: 1.25rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
+  background: var(--surface);
+}
+.guide-strip-inner {
+  display: flex; flex-direction: column; gap: .35rem;
+}
+.guide-item {
+  font-size: .72rem; color: var(--2); line-height: 1.5; letter-spacing: -.005em;
+}
+.guide-item strong {
+  color: var(--ink); font-weight: 600;
+}
+@media (max-width: 768px) {
+  .guide-strip { padding: 1rem 1.25rem; }
+}
+
 .dashboard-ranking-panel { padding: 1.5rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem) 0; }
 .fieldboard-header {
   display: flex; justify-content: space-between; align-items: baseline;
