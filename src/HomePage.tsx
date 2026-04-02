@@ -445,9 +445,45 @@ export default function HomePage({ locale, onNavigate }: Props) {
           ))}
         </div>
 
+        {/* ─── TOP 3 FEATURED CARDS ─── */}
+        {previewCities.length >= 3 && (
+          <div className="podium-grid">
+            {previewCities.slice(0, 3).map((city, i) => {
+              const cityName = getCityName(city, locale);
+              const strongest = [...SCORING_PILLARS].sort((a, b) => city.scores[b] - city.scores[a])[0];
+              return (
+                <button
+                  key={city.id}
+                  type="button"
+                  className={`podium-card podium-card-${i === 0 ? "gold" : i === 1 ? "silver" : "bronze"}`}
+                  onClick={() => onNavigate(`/city/${city.id}`)}
+                >
+                  <div className="podium-rank">{String(i + 1).padStart(2, "0")}</div>
+                  <h3 className="podium-name">{cityName}</h3>
+                  <div className="podium-score">{city.compositeScore.toFixed(1)}</div>
+                  <div className="podium-bars">
+                    {SCORING_PILLARS.map(p => (
+                      <div key={p} className="podium-bar-track">
+                        <div className="podium-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }} />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="podium-meta">
+                    <span>{getProvinceName(city, locale)}</span>
+                    <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${city.reality}`}>
+                      {getCityVibe(city, locale)}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ─── REST AS COMPACT ROWS ─── */}
         <div className="dashboard-ranking-list">
-          {previewCities.map((city, index) => (
-            <RankingRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 1} />
+          {previewCities.slice(3).map((city, index) => (
+            <RankingRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 4} />
           ))}
         </div>
       </section>
