@@ -389,21 +389,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
       </section>
 
       <section className="dashboard-panel dashboard-ranking-panel">
-        <div className="dashboard-panel-head">
-          <div>
-            <p className="dashboard-kicker">
-              {translate(locale, { en: "Fieldboard", th: "กระดานสนามจริง", zh: "现场看板" })}
-            </p>
-            <h2>
-              {translate(locale, {
-                en: "Filtered live ranking",
-                th: "อันดับสดแบบกรองได้",
-                zh: "可筛选实时排名",
-              })}
-            </h2>
-          </div>
-          <span className="dashboard-chip">
-            {previewCities.length} {translate(locale, { en: "shown", th: "รายการ", zh: "已显示" })}
+        <div className="fieldboard-header">
+          <h2 className="fieldboard-title">
+            {translate(locale, { en: "Fieldboard", th: "กระดานสนามจริง", zh: "现场看板" })}
+          </h2>
+          <span className="fieldboard-count">
+            {previewCities.length} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })}
           </span>
         </div>
 
@@ -445,40 +436,71 @@ export default function HomePage({ locale, onNavigate }: Props) {
           ))}
         </div>
 
-        {/* ─── TOP 3 FEATURED CARDS ─── */}
-        {previewCities.length >= 3 && (
-          <div className="podium-grid">
-            {previewCities.slice(0, 3).map((city, i) => {
-              const cityName = getCityName(city, locale);
-              const strongest = [...SCORING_PILLARS].sort((a, b) => city.scores[b] - city.scores[a])[0];
-              return (
-                <button
-                  key={city.id}
-                  type="button"
-                  className={`podium-card podium-card-${i === 0 ? "gold" : i === 1 ? "silver" : "bronze"}`}
-                  onClick={() => onNavigate(`/city/${city.id}`)}
-                >
-                  <div className="podium-rank">{String(i + 1).padStart(2, "0")}</div>
-                  <h3 className="podium-name">{cityName}</h3>
-                  <div className="podium-score">{city.compositeScore.toFixed(1)}</div>
-                  <div className="podium-bars">
-                    {SCORING_PILLARS.map(p => (
-                      <div key={p} className="podium-bar-track">
-                        <div className="podium-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }} />
-                      </div>
-                    ))}
+        {/* ─── PODIUM: #1 hero + #2 #3 flanking ─── */}
+        {previewCities.length >= 3 && (() => {
+          const top3 = previewCities.slice(0, 3);
+          const leader = top3[0];
+          return (
+            <div className="podium-layout">
+              {/* #1 — dominant card */}
+              <button
+                type="button"
+                className="podium-leader"
+                onClick={() => onNavigate(`/city/${leader.id}`)}
+              >
+                <div className="podium-leader-top">
+                  <div>
+                    <div className="podium-rank">01</div>
+                    <h3 className="podium-leader-name">{getCityName(leader, locale)}</h3>
+                    <span className="podium-leader-province">{getProvinceName(leader, locale)}</span>
                   </div>
-                  <div className="podium-meta">
-                    <span>{getProvinceName(city, locale)}</span>
-                    <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${city.reality}`}>
-                      {getCityVibe(city, locale)}
+                  <div className="podium-leader-scoreblock">
+                    <div className="podium-leader-score">{leader.compositeScore.toFixed(1)}</div>
+                    <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${leader.reality}`}>
+                      {getCityVibe(leader, locale)}
                     </span>
                   </div>
-                </button>
-              );
-            })}
-          </div>
-        )}
+                </div>
+                <div className="podium-bars podium-leader-bars">
+                  {SCORING_PILLARS.map(p => (
+                    <div key={p} className="podium-bar-track">
+                      <div className="podium-bar-fill" style={{ width: `${leader.scores[p]}%`, background: PILLAR_COLORS[p] }} />
+                    </div>
+                  ))}
+                </div>
+              </button>
+
+              {/* #2 and #3 — compact flanking cards */}
+              <div className="podium-runners">
+                {top3.slice(1).map((city, i) => (
+                  <button
+                    key={city.id}
+                    type="button"
+                    className="podium-card"
+                    onClick={() => onNavigate(`/city/${city.id}`)}
+                  >
+                    <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
+                    <h3 className="podium-name">{getCityName(city, locale)}</h3>
+                    <div className="podium-score">{city.compositeScore.toFixed(1)}</div>
+                    <div className="podium-bars">
+                      {SCORING_PILLARS.map(p => (
+                        <div key={p} className="podium-bar-track">
+                          <div className="podium-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }} />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="podium-meta">
+                      <span>{getProvinceName(city, locale)}</span>
+                      <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${city.reality}`}>
+                        {getCityVibe(city, locale)}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ─── REST AS COMPACT ROWS ─── */}
         <div className="dashboard-ranking-list">

@@ -953,10 +953,60 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .dashboard-chip { display: inline-flex; padding: .08rem .3rem; font: 700 .5rem var(--mono, monospace); }
 .dashboard-controls { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; padding: 0 min(calc((100% - var(--w, 1060px)) / 2), 1.25rem); }
 .dashboard-control-group { display: flex; }
-.dashboard-ranking-panel { padding: 0 min(calc((100% - var(--w, 1060px)) / 2), 1.25rem); }
+.dashboard-ranking-panel { padding: 1.5rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem) 0; }
+.fieldboard-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 2px solid var(--ink); padding-bottom: .4rem; margin-bottom: .6rem;
+}
+.fieldboard-title {
+  font-size: .65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--3);
+}
+.fieldboard-count { font: 600 .52rem var(--mono); color: var(--4); }
 .dashboard-ranking-list { border-top: 1px solid var(--5, #E8E8EC); margin-top: .5rem; }
 
 /* ─── PODIUM: Top 3 Featured Cards ─── */
+/* Asymmetric podium — #1 wide, #2 + #3 stacked on the right */
+.podium-layout {
+  display: grid; grid-template-columns: 1.6fr 1fr; gap: .5rem;
+  margin: .75rem 0 .75rem;
+}
+.podium-leader {
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 1.25rem 1.1rem; border: 1px solid var(--5);
+  cursor: pointer; text-align: left; width: 100%;
+  background: var(--bg); transition: all .25s var(--ease);
+  border-radius: var(--radius); position: relative; overflow: hidden;
+}
+.podium-leader::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+}
+.podium-leader:hover {
+  transform: translateY(-3px); box-shadow: 0 12px 32px rgba(43,186,160,.12), 0 2px 6px rgba(0,0,0,.06);
+}
+[data-theme="dark"] .podium-leader:hover { box-shadow: 0 12px 32px rgba(43,186,160,.15), 0 2px 6px rgba(0,0,0,.3); }
+.podium-leader-top {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+  margin-bottom: .75rem;
+}
+.podium-leader-name {
+  font-size: 1.3rem; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; margin-top: .15rem;
+}
+.podium-leader-province { font-size: .55rem; color: var(--3); }
+.podium-leader-scoreblock { text-align: right; }
+.podium-leader-score {
+  font: 700 2.5rem var(--mono); letter-spacing: -.04em; color: var(--teal); line-height: 1;
+}
+.podium-leader-bars .podium-bar-track { height: 28px; }
+.podium-runners {
+  display: flex; flex-direction: column; gap: .5rem;
+}
+@media (max-width: 768px) {
+  .podium-layout { grid-template-columns: 1fr; }
+  .podium-runners { flex-direction: row; }
+  .podium-runners .podium-card { flex: 1; }
+}
 .podium-grid {
   display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .5rem;
   margin: .75rem 0 .5rem;
