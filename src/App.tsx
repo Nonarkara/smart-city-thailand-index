@@ -10,6 +10,7 @@ const CityDetailPage = lazy(() => import("./CityDetailPage"));
 const StoryPage = lazy(() => import("./StoryPage"));
 const WhyPage = lazy(() => import("./WhyPage"));
 const ShowcasePage = lazy(() => import("./ShowcasePage"));
+const GeminiChat = lazy(() => import("./GeminiChat"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 
@@ -258,6 +259,11 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* ─── GEMINI CHATBOT ─── */}
+      <Suspense fallback={null}>
+        <GeminiChat locale={locale} />
+      </Suspense>
     </div>
   );
 }
