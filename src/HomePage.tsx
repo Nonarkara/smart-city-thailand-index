@@ -12,7 +12,6 @@ import {
 import type { CityTier, Locale, SmartCity } from "./types";
 import { TIER_LABELS, PILLAR_COLORS, PILLAR_SHORT_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
-import TrendIntelligencePanel from "./TrendIntelligencePanel";
 
 /** Short, unique vibe phrase per city — keeps the reality color but says something memorable */
 function getCityVibe(city: SmartCity, locale: Locale): string {
@@ -20,7 +19,6 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
   const pillars = SCORING_PILLARS;
   const sorted = [...pillars].sort((a, b) => city.scores[b] - city.scores[a]);
   const strongest = sorted[0];
-  const weakest = sorted[sorted.length - 1];
 
   // City-specific vibes for well-known cities
   const vibes: Record<string, { en: string; th: string; zh: string }> = {
@@ -224,6 +222,66 @@ function SignalCard({
   );
 }
 
+/* ─── Photo collage data: all cityscape photos from /photos ─── */
+const COLLAGE_PHOTOS = [
+  "1-57.jpg", "318402.jpg", "350263.jpg", "350284.jpg",
+  "4A2A6179.JPG", "4A2A6250.JPG",
+  "578383385.557473.jpg", "593016939.296474.jpg",
+  "66438786_2265889173489652_6708326457757663232_o.jpg",
+  "72639510_2459479007664540_4785365931712839680_o.jpg",
+  "73513755_10157605754953794_5475140449704345600_n.jpg",
+  "IMG_0324.JPG", "IMG_0396.JPG", "IMG_0861.JPG", "IMG_0964.JPG",
+  "IMG_1089.JPG", "IMG_1382.JPG", "IMG_1447.JPG", "IMG_1457.JPG",
+  "IMG_1596.JPG", "IMG_3619.JPG", "IMG_4034.JPG", "IMG_4107.JPG",
+  "IMG_4175.JPG", "IMG_4207.JPG", "IMG_4797.JPG", "IMG_5304.JPG",
+  "IMG_5849.JPG", "IMG_6065.JPG", "IMG_6426.JPG", "IMG_6482.JPG",
+  "IMG_6508.JPG", "IMG_6654.JPG", "IMG_6691.JPG", "IMG_6692.JPG",
+  "IMG_7331.JPG", "IMG_7504.JPG", "IMG_7607.JPG", "IMG_7613.JPG",
+  "IMG_7649.JPG", "IMG_7760.JPG", "IMG_7761.JPG", "IMG_9995.JPG",
+  "OI000016.JPG", "P6204927.JPG", "P6205097.JPG", "SWP_8806.JPG",
+  "_K635402.jpg", "d49adab4-a786-4fcb-922c-39883728de7f.jpg",
+  "depa x korea SBAU2019.jpg",
+  "f40e0bd32c239122ed14b39d13bc3c53.jpg", "f4b929dc011fb96fba76c9618ca6b93e.jpg",
+];
+
+const SHUFFLED_ROWS = (() => {
+  const shuffled = [...COLLAGE_PHOTOS].sort(() => Math.random() - 0.5);
+  const perRow = Math.ceil(shuffled.length / 4);
+  return [
+    shuffled.slice(0, perRow),
+    shuffled.slice(perRow, perRow * 2),
+    shuffled.slice(perRow * 2, perRow * 3),
+    shuffled.slice(perRow * 3),
+  ];
+})();
+
+/** Infinite scrolling photo collage — 4 rows moving in alternating directions */
+function CollageStrip() {
+  const rows = SHUFFLED_ROWS;
+
+  return (
+    <div className="collage-strip" aria-hidden="true">
+      {rows.map((photos, i) => (
+        <div
+          key={i}
+          className={`collage-row collage-row-${i % 2 === 0 ? "left" : "right"}`}
+        >
+          {/* Duplicate for seamless loop */}
+          {[...photos, ...photos].map((p, j) => (
+            <img
+              key={`${i}-${j}`}
+              src={`/photos/${p}`}
+              alt=""
+              className="collage-thumb"
+              loading="lazy"
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function HomePage({ locale, onNavigate }: Props) {
   const [statusFilter, setStatusFilter] = useState<"all" | "certified" | "promotion">("all");
   const [tierFilter, setTierFilter] = useState<"all" | CityTier>("all");
@@ -287,85 +345,46 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
   return (
     <div className="dashboard-home">
-      {/* ─── TESLA-STYLE CINEMATIC HERO ─── */}
-      <section className="cinematic-hero">
-        <img
-          src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?w=1920&h=900&fit=crop&q=80"
-          alt="Urban cityscape at night"
-          className="cinematic-hero-img"
-        />
-        <div className="cinematic-hero-overlay">
-          <h1 className="cinematic-hero-title">
-            {locale === "th" ? "ดัชนีเมืองอัจฉริยะ" : locale === "zh" ? "智慧城市指数" : <>Smart City<br />Thailand Index</>}
-          </h1>
-          <p className="cinematic-hero-sub">
-            {locale === "th" ? "SCTI · ประเทศไทย · 2026" : locale === "zh" ? "SCTI · 泰国 · 2026" : "SCTI · Thailand · 2026"}
-          </p>
-        </div>
-      </section>
-
-      
-
-      <section className="dashboard-panel dashboard-hero-panel">
-        <div className="dashboard-panel-head dashboard-panel-head-hero">
-          <div>
+      {/* ─── DATA-FORWARD HERO ─── */}
+      <section className="dashboard-panel dashboard-hero-panel data-hero">
+        <div className="data-hero-inner">
+          <div className="data-hero-text">
             <p className="eyebrow">
               {translate(locale, {
-                en: "Smart City Thailand Index · 2026 dashboard",
-                th: "ดัชนีเมืองอัจฉริยะไทย · แดชบอร์ด 2026",
-                zh: "泰国智慧城市指数 · 2026 仪表盘",
+                en: "SCTI · 2026 dashboard",
+                th: "SCTI · แดชบอร์ด 2026",
+                zh: "SCTI · 2026 仪表盘",
               })}
             </p>
-            <h1 className="dashboard-title">
+            <h1 className="data-hero-title">
               {translate(locale, {
                 en: "Reality, not ribbon-cutting.",
                 th: "เอาความจริง ไม่เอาพิธีตัดริบบิ้น",
                 zh: "看现实，不看剪彩。",
               })}
             </h1>
-            <p className="dashboard-copy">
+            <p className="data-hero-sub">
               {translate(locale, {
-                en: "No brochure mode. No whole-page scrolling. Just the Thai city fieldboard: live tiers, hard filters, and the places that still survive contact with the street.",
-                th: "ไม่มีโหมดโบรชัวร์ ไม่มีการเลื่อนทั้งหน้า มีแต่กระดานสนามจริงของเมืองไทย: ชั้นคะแนน ตัวกรอง และเมืองที่ยังรอดเมื่อเจอของจริงบนถนน",
-                zh: "没有宣传册模式，也没有整页滚动。这里只有泰国城市现场看板：真实分层、硬过滤，以及经得住街头现实检验的城市。",
+                en: "The Thai city fieldboard. Live tiers, hard filters, and the places that survive contact with the street.",
+                th: "กระดานสนามจริงของเมืองไทย ชั้นคะแนน ตัวกรอง และเมืองที่ยังรอดเมื่อเจอของจริงบนถนน",
+                zh: "泰国城市现场看板。真实分层、硬过滤，以及经得住街头检验的城市。",
               })}
             </p>
+            <div className="dashboard-action-row">
+              <button className="cta-button" onClick={() => onNavigate("/rankings")}>
+                {translate(locale, { en: "Open full rankings", th: "เปิดอันดับทั้งหมด", zh: "打开完整排名" })}
+              </button>
+              <button className="ghost-button" onClick={() => onNavigate("/methodology")}>
+                {translate(locale, { en: "Methodology", th: "วิธีการ", zh: "方法论" })}
+              </button>
+            </div>
           </div>
-          <div className="dashboard-action-row">
-            <button className="cta-button" onClick={() => onNavigate("/rankings")}>
-              {translate(locale, {
-                en: "Open full rankings",
-                th: "เปิดอันดับทั้งหมด",
-                zh: "打开完整排名",
-              })}
-            </button>
-            <button className="ghost-button" onClick={() => onNavigate("/methodology")}>
-              {translate(locale, {
-                en: "Why this scoring works",
-                th: "ทำไมวิธีนี้ถึงใช้ได้",
-                zh: "为什么这套评分有用",
-              })}
-            </button>
+          <div className="data-hero-stats">
+            <DashboardMetric label={translate(locale, { en: "Cities", th: "เมือง", zh: "城市" })} value={stats.total} />
+            <DashboardMetric label={translate(locale, { en: "Operational", th: "ใช้งานจริง", zh: "运行中" })} value={stats.operational} />
+            <DashboardMetric label={translate(locale, { en: "Certified", th: "รับรอง", zh: "认证" })} value={stats.certified} />
+            <DashboardMetric label={translate(locale, { en: "Alpha", th: "Alpha", zh: "Alpha" })} value={stats.alpha} />
           </div>
-        </div>
-
-        <div className="dashboard-metric-grid">
-          <DashboardMetric
-            label={translate(locale, { en: "Cities tracked", th: "เมืองที่ติดตาม", zh: "纳入城市" })}
-            value={stats.total}
-          />
-          <DashboardMetric
-            label={translate(locale, { en: "Operational now", th: "ใช้งานจริงตอนนี้", zh: "当前运行中" })}
-            value={stats.operational}
-          />
-          <DashboardMetric
-            label={translate(locale, { en: "Certified", th: "ได้รับตรารับรอง", zh: "已认证" })}
-            value={stats.certified}
-          />
-          <DashboardMetric
-            label={translate(locale, { en: "Alpha tier", th: "ระดับ Alpha", zh: "Alpha 级" })}
-            value={stats.alpha}
-          />
         </div>
       </section>
 
@@ -414,6 +433,16 @@ export default function HomePage({ locale, onNavigate }: Props) {
               Gamma
             </button>
           </div>
+        </div>
+
+        {/* ─── PILLAR LEGEND ─── */}
+        <div className="pillar-legend">
+          {SCORING_PILLARS.map(p => (
+            <span key={p} className="legend-item">
+              <span className="legend-dot" style={{ background: PILLAR_COLORS[p] }} />
+              {PILLAR_SHORT_LABELS[locale][p]}
+            </span>
+          ))}
         </div>
 
         <div className="dashboard-ranking-list">

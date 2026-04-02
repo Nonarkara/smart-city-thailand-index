@@ -18,6 +18,14 @@ const AuditPage = lazy(() => import("./AuditPage"));
 const ReferencesPage = lazy(() => import("./ReferencesPage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
+const THEME_STORAGE_KEY = "smart-city-thailand-theme";
+type Theme = "light" | "dark";
+
+function getInitialTheme(): Theme {
+  const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (stored === "dark") return "dark";
+  return "light";
+}
 
 const NAV_ITEMS = [
   { kind: "home", path: "/", label: { en: "Home", th: "หน้าหลัก", zh: "首页" } },
@@ -93,6 +101,7 @@ function getInitialLocale(): Locale {
 export default function App() {
   const [route, setRoute] = useState<Route>(() => parseRoute(window.location.pathname));
   const [locale, setLocale] = useState<Locale>(getInitialLocale);
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isDashboardRoute = route.kind === "home";
 
@@ -111,6 +120,11 @@ export default function App() {
   }, [locale]);
 
   useEffect(() => {
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  useEffect(() => {
     syncDocumentMeta(route.path, locale);
   }, [locale, route]);
 
@@ -124,6 +138,7 @@ export default function App() {
   };
 
   const cycleLocale = () => setLocale(l => l === "en" ? "th" : l === "th" ? "zh" : "en");
+  const toggleTheme = () => setTheme(t => t === "light" ? "dark" : "light");
 
   return (
     <div className={`page-shell ${isDashboardRoute ? "page-shell-dashboard" : ""}`}>
@@ -180,6 +195,14 @@ export default function App() {
                 {item.label[locale]}
               </button>
             ))}
+            <button
+              type="button"
+              className="theme-toggle"
+              aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+              onClick={toggleTheme}
+            >
+              {theme === "light" ? "\u263E" : "\u2600"}
+            </button>
             <button
               type="button"
               className="locale-toggle"
