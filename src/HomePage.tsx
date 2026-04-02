@@ -345,45 +345,35 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
   return (
     <div className="dashboard-home">
-      {/* ─── DATA-FORWARD HERO ─── */}
-      <section className="dashboard-panel dashboard-hero-panel data-hero">
-        <div className="data-hero-inner">
-          <div className="data-hero-text">
-            <p className="eyebrow">
-              {translate(locale, {
-                en: "SCTI · 2026 dashboard",
-                th: "SCTI · แดชบอร์ด 2026",
-                zh: "SCTI · 2026 仪表盘",
-              })}
-            </p>
-            <h1 className="data-hero-title">
-              {locale === "th"
-                ? <>เอา<em>ความจริง</em> ไม่เอาพิธีตัดริบบิ้น</>
-                : locale === "zh"
-                  ? <>看<em>现实</em>，不看剪彩。</>
-                  : <><em>Reality</em>, not ribbon&#8209;cutting.</>}
-            </h1>
-            <p className="data-hero-sub">
-              {translate(locale, {
-                en: "The Thai city fieldboard. Live tiers, hard filters, and the places that survive contact with the street.",
-                th: "กระดานสนามจริงของเมืองไทย ชั้นคะแนน ตัวกรอง และเมืองที่ยังรอดเมื่อเจอของจริงบนถนน",
-                zh: "泰国城市现场看板。真实分层、硬过滤，以及经得住街头检验的城市。",
-              })}
-            </p>
-            <div className="dashboard-action-row">
-              <button className="cta-button" onClick={() => onNavigate("/rankings")}>
-                {translate(locale, { en: "Open full rankings", th: "เปิดอันดับทั้งหมด", zh: "打开完整排名" })}
-              </button>
-              <button className="ghost-button" onClick={() => onNavigate("/methodology")}>
-                {translate(locale, { en: "Methodology", th: "วิธีการ", zh: "方法论" })}
-              </button>
-            </div>
+      {/* ─── CINEMATIC HERO ─── */}
+      <section className="cinematic-hero">
+        <img
+          src="/photos/slic-waterfront.jpg"
+          alt="Smart city waterfront at dusk"
+          className="cinematic-hero-img"
+        />
+        <div className="cinematic-hero-overlay">
+          <p className="cinematic-hero-eyebrow">SCTI · 2026</p>
+          <h1 className="cinematic-hero-title">
+            {locale === "th"
+              ? <>เอาความจริง<br />ไม่เอาพิธีตัดริบบิ้น</>
+              : locale === "zh"
+                ? <>看现实<br />不看剪彩</>
+                : <>Reality, not<br />ribbon&#8209;cutting.</>}
+          </h1>
+          <div className="cinematic-hero-stats">
+            <span>{stats.total} {locale === "th" ? "เมือง" : "cities"}</span>
+            <span>{stats.operational} {locale === "th" ? "ใช้งานจริง" : "operational"}</span>
+            <span>{stats.certified} {locale === "th" ? "รับรอง" : "certified"}</span>
+            <span>{stats.alpha} Alpha</span>
           </div>
-          <div className="data-hero-stats">
-            <DashboardMetric label={translate(locale, { en: "Cities", th: "เมือง", zh: "城市" })} value={stats.total} />
-            <DashboardMetric label={translate(locale, { en: "Operational", th: "ใช้งานจริง", zh: "运行中" })} value={stats.operational} />
-            <DashboardMetric label={translate(locale, { en: "Certified", th: "รับรอง", zh: "认证" })} value={stats.certified} />
-            <DashboardMetric label={translate(locale, { en: "Alpha", th: "Alpha", zh: "Alpha" })} value={stats.alpha} />
+          <div className="cinematic-hero-actions">
+            <button className="cta-button" onClick={() => onNavigate("/rankings")}>
+              {translate(locale, { en: "Open full rankings", th: "เปิดอันดับทั้งหมด", zh: "打开完整排名" })}
+            </button>
+            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/methodology")}>
+              {translate(locale, { en: "Methodology", th: "วิธีการ", zh: "方法论" })}
+            </button>
           </div>
         </div>
       </section>

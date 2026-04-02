@@ -1258,42 +1258,40 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .record-label { display: block; font: 700 .38rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--3); margin-bottom: .1rem; }
 .record-value { font: 600 .65rem var(--mono); color: var(--ink); }
 
-/* ─── DATA-FORWARD HERO ─── */
-.data-hero {
-  padding: 4rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem) 2.5rem;
-  background: var(--bg);
-}
-[data-theme="dark"] .data-hero {
-  background: var(--bg);
-}
-.data-hero-inner {
-  display: grid; grid-template-columns: 1.3fr 1fr; gap: 2.5rem; align-items: end;
-}
-.data-hero-title {
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-weight: 700;
-  letter-spacing: -.04em; line-height: .95; margin-bottom: .7rem;
-}
-.data-hero-title em {
-  font-style: normal; color: var(--teal);
-}
-.data-hero-sub {
-  font-size: .82rem; line-height: 1.6; color: var(--2); max-width: 440px;
-  margin-bottom: 1.1rem; letter-spacing: -.005em;
-}
-.data-hero-stats {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-  border: 1px solid var(--5); border-radius: var(--radius-sm);
+/* ─── CINEMATIC PHOTO HERO ─── */
+.cinematic-hero {
+  position: relative; width: 100%;
+  height: 70vh; min-height: 380px; max-height: 560px;
   overflow: hidden;
 }
-.data-hero-stats .dashboard-metric-card {
-  border-right: 1px solid var(--5); border-bottom: 1px solid var(--5);
-  padding: .75rem .6rem;
+.cinematic-hero-img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
 }
-.data-hero-stats .dashboard-metric-card:nth-child(2n) { border-right: 0; }
-.data-hero-stats .dashboard-metric-card:nth-child(n+3) { border-bottom: 0; }
+.cinematic-hero-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 2.5rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
+  background: linear-gradient(transparent 30%, rgba(0,0,0,.65));
+}
+.cinematic-hero-eyebrow {
+  font: 600 .55rem var(--mono); letter-spacing: .12em;
+  color: var(--teal); margin-bottom: .4rem;
+}
+.cinematic-hero-title {
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-weight: 700;
+  color: #fff; letter-spacing: -.04em; line-height: .95;
+  margin-bottom: .6rem;
+}
+.cinematic-hero-stats {
+  display: flex; gap: 1.5rem; font: 500 .65rem var(--mono);
+  color: rgba(255,255,255,.65); margin-bottom: .8rem;
+}
+.cinematic-hero-actions { display: flex; gap: .4rem; }
+.cinematic-ghost { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.8); }
+.cinematic-ghost:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,.08); }
 @media (max-width: 768px) {
-  .data-hero-inner { grid-template-columns: 1fr; gap: 1.25rem; }
-  .data-hero { padding-top: 2.5rem; }
+  .cinematic-hero { height: 55vh; min-height: 320px; }
+  .cinematic-hero-overlay { padding-bottom: 1.5rem; }
 }
 
 /* ─── DASHBOARD PANELS (premium upgrade) ─── */
