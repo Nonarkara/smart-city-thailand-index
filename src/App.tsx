@@ -106,14 +106,7 @@ export default function App() {
   return (
     <div className="page-shell">
       {/* ─── INSTITUTIONAL BANNER ─── */}
-      <div className="institutional-banner">
-        <div className="institutional-logos">
-          <img src="/mdes_logo.jpg" alt="Ministry of Digital Economy and Society" className="inst-logo" />
-          <img src="/depa_logo.jpg" alt="depa — Digital Economy Promotion Agency" className="inst-logo" />
-          <img src="/smart_city_thailand_logo.jpg" alt="Smart City Thailand Office" className="inst-logo" />
-          <img src="/slic_logo.jpg" alt="SLIC — Smart Liveable Cities Index" className="inst-logo" />
-        </div>
-      </div>
+      {/* Institutional banner removed — logos now inline with nav */}
 
       {/* ─── TOPBAR ─── */}
       <nav className="topbar">
