@@ -1872,3 +1872,33 @@ button, input, select, textarea { border-radius: 0 !important; }
 
 /* Photo strip items — teal border glow on hover */
 .photo-strip-item:hover { box-shadow: 0 0 16px var(--teal-glow); }
+
+/* ═══════ MAP LAYER TOGGLE ═══════ */
+.map-layer-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border);
+}
+.map-layer-btn {
+  flex: 1;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.55rem;
+  font-weight: 600;
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted, rgba(255,255,255,0.35));
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.map-layer-btn:last-child { border-right: none; }
+.map-layer-btn:hover { color: var(--ink); }
+.map-layer-btn.active {
+  color: var(--teal, #2BBAA0);
+  background: var(--alpha-wash, rgba(43,186,160,0.08));
+}
+.map-grid line { stroke-dasharray: 2 4; }

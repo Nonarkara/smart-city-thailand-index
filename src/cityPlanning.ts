@@ -49,7 +49,9 @@ export type GlobalModelId =
   | "seoul_citizen_reporting"
   | "curitiba_transit";
 
-interface LocalizedContent {
+export type RecommendationHorizon = "now" | "next" | "later";
+
+export interface LocalizedContent {
   en: string;
   th: string;
   zh: string;
@@ -105,6 +107,47 @@ export interface CityPlanningProfile {
   resourceIds: ResourceId[];
   globalModelIds: GlobalModelId[];
   deliveryNote: LocalizedContent;
+}
+
+export interface ActionRecommendation {
+  id: PlanningStepId;
+  horizon: RecommendationHorizon;
+  title: LocalizedContent;
+  body: LocalizedContent;
+}
+
+export interface FinanceBlueprint {
+  revenueLogic: LocalizedContent;
+  publicRole: LocalizedContent;
+  privateRole: LocalizedContent;
+  riskAllocation: LocalizedContent;
+  contractLens: LocalizedContent;
+}
+
+export interface DataRail {
+  id: "local" | "national" | "public";
+  label: LocalizedContent;
+  description: LocalizedContent;
+}
+
+export interface CityPlanningDatasetRow {
+  cityId: string;
+  status: string;
+  reality: string;
+  tier: string;
+  vision: PlanningStepStatus;
+  infrastructure: PlanningStepStatus;
+  dataPlatform: PlanningStepStatus;
+  businessModel: PlanningStepStatus;
+  partnerships: PlanningStepStatus;
+  primaryFinance: FinanceMechanismId;
+  secondaryFinance: FinanceMechanismId;
+  concessionYears: string;
+  toolkits: string;
+  resources: string;
+  globalModels: string;
+  recommendedLeadStep: PlanningStepId;
+  leadRevenueModel: string;
 }
 
 export const PLANNING_STEPS: PlanningStepDefinition[] = [
@@ -191,6 +234,12 @@ export const PLANNING_STATUS_META: Record<
     label: { en: "Gap", th: "ยังขาด", zh: "缺口" },
     className: "gap",
   },
+};
+
+export const RECOMMENDATION_HORIZON_LABELS: Record<RecommendationHorizon, LocalizedContent> = {
+  now: { en: "Now", th: "ตอนนี้", zh: "现在" },
+  next: { en: "Next", th: "ต่อไป", zh: "下一步" },
+  later: { en: "Then", th: "จากนั้น", zh: "然后" },
 };
 
 export const FINANCE_MECHANISMS: Record<FinanceMechanismId, FinanceMechanismDefinition> = {
@@ -642,6 +691,154 @@ function localized(locale: Locale, copy: LocalizedContent): string {
   return copy[locale];
 }
 
+function leadRevenueModel(mechanismId: FinanceMechanismId): LocalizedContent {
+  switch (mechanismId) {
+    case "government_budget":
+      return {
+        en: "Budget-backed service funding",
+        th: "งบประมาณรองรับการให้บริการ",
+        zh: "预算支持的服务资金",
+      };
+    case "ppp":
+      return {
+        en: "Availability payment + shared upside",
+        th: "จ่ายตามความพร้อมบริการ + แบ่ง upside",
+        zh: "可用性付费 + 收益共享",
+      };
+    case "concession":
+      return {
+        en: "User fees, tariffs, and corridor value capture",
+        th: "ค่าธรรมเนียมผู้ใช้ ค่าใช้บริการ และการจับมูลค่าพื้นที่",
+        zh: "用户收费、费率与走廊价值回收",
+      };
+    case "debt_financing":
+      return {
+        en: "Debt service backed by budget or utility cash flow",
+        th: "ชำระหนี้ด้วยงบหรือกระแสเงินสดของระบบสาธารณูปโภค",
+        zh: "以预算或公用事业现金流偿债",
+      };
+    case "performance_contract":
+      return {
+        en: "Pay from verified savings or service improvement",
+        th: "จ่ายจากผลประหยัดหรือการยกระดับบริการที่พิสูจน์ได้",
+        zh: "按核验后的节省或服务改善付费",
+      };
+    case "blended_finance":
+      return {
+        en: "Grants + concessional capital + local match",
+        th: "เงินอุดหนุน + ทุนผ่อนปรน + เงินสมทบท้องถิ่น",
+        zh: "赠款 + 优惠资本 + 地方配套资金",
+      };
+  }
+}
+
+function stepPriority(status: PlanningStepStatus): number {
+  if (status === "gap") return 0;
+  if (status === "building") return 1;
+  return 2;
+}
+
+function buildActionRecommendation(
+  stepId: PlanningStepId,
+  city: SmartCity,
+  horizon: RecommendationHorizon,
+): ActionRecommendation {
+  if (stepId === "vision") {
+    return {
+      id: stepId,
+      horizon,
+      title: {
+        en: "Lock the mission and geography",
+        th: "ล็อกภารกิจและขอบเขตพื้นที่",
+        zh: "先把任务与空间范围钉死",
+      },
+      body: city.status === "certified"
+        ? {
+            en: "Turn the city's smart-city label into a precise delivery area with named projects, target users, and a visible first win.",
+            th: "เปลี่ยนตราเมืองอัจฉริยะให้กลายเป็นพื้นที่ส่งมอบจริงที่มีชื่อโครงการ กลุ่มผู้ใช้เป้าหมาย และชัยชนะชิ้นแรกที่มองเห็นได้",
+            zh: "把智慧城市标识收紧成一个真正的交付区域，明确项目、目标用户与第一个看得见的成果。",
+          }
+        : {
+            en: "Define one pilot geography and one political story the city can actually finish before trying to be smart everywhere at once.",
+            th: "กำหนดพื้นที่นำร่องหนึ่งจุดและเรื่องเล่าทางการเมืองหนึ่งเรื่องที่เมืองทำให้จบได้จริง ก่อนจะพยายามฉลาดทั้งเมืองพร้อมกัน",
+            zh: "先定义一个试点地理范围和一个城市真能讲完、做完的政治叙事，而不是一口气说自己到处都智慧。",
+          },
+    };
+  }
+
+  if (stepId === "infrastructure") {
+    return {
+      id: stepId,
+      horizon,
+      title: {
+        en: "Build the boring base layer",
+        th: "สร้างฐานที่น่าเบื่อแต่จำเป็น",
+        zh: "先把无聊但必要的底层搭好",
+      },
+      body: city.reality === "planned"
+        ? {
+            en: "Start with connectivity, utilities, and operations-grade systems. The dashboard can wait until there is something real to monitor.",
+            th: "เริ่มจากการเชื่อมต่อ สาธารณูปโภค และระบบที่ถึงระดับปฏิบัติการจริงก่อน แดชบอร์ดค่อยตามมาทีหลังเมื่อมีของให้ดูจริง",
+            zh: "先把连接、公用设施和运营级系统做出来。等真的有东西可监控，再谈仪表板。",
+          }
+        : {
+            en: "Move from scattered pilots to reliable uptime. Integration and maintenance now matter more than announcing new toys.",
+            th: "ขยับจากนำร่องกระจัดกระจายไปสู่ uptime ที่เชื่อถือได้ ตอนนี้การเชื่อมระบบและการบำรุงรักษาสำคัญกว่าการประกาศของเล่นใหม่",
+            zh: "从零散试点走向稳定 uptime。现在比起宣布新玩具，更重要的是整合和维护。",
+          },
+    };
+  }
+
+  if (stepId === "dataPlatform") {
+    return {
+      id: stepId,
+      horizon,
+      title: {
+        en: "Stand up the city data spine",
+        th: "ตั้งแกนข้อมูลของเมือง",
+        zh: "把城市数据主干立起来",
+      },
+      body: {
+        en: "Start with local operations, citizen reporting, and national data feeds in one place. Public dashboards should be the surface, not the architecture.",
+        th: "เริ่มจากการรวมข้อมูลปฏิบัติการเมือง การรายงานของประชาชน และฟีดข้อมูลระดับชาติไว้ที่เดียว แดชบอร์ดสาธารณะควรเป็นผิวหน้า ไม่ใช่ทั้งสถาปัตยกรรม",
+        zh: "先把本地运营、市民报告和国家数据流放到一个地方。公开看板应该只是表层，不该是整套架构。",
+      },
+    };
+  }
+
+  if (stepId === "businessModel") {
+    return {
+      id: stepId,
+      horizon,
+      title: {
+        en: "Write the operating model before buying kit",
+        th: "เขียนโมเดลเดินระบบก่อนซื้อของ",
+        zh: "先写运营模型，再去买设备",
+      },
+      body: {
+        en: `Shape the project around ${leadRevenueModel(pickFinanceMechanisms(city).primaryFinance).en.toLowerCase()}, then define who pays opex, who owns downtime, and what happens when demand misses the forecast.`,
+        th: `จัดโครงโครงการบนตรรกะ ${leadRevenueModel(pickFinanceMechanisms(city).primaryFinance).th} แล้วตอบให้ชัดว่าใครจ่าย opex ใครรับผิด downtime และจะทำอย่างไรเมื่อดีมานด์ไม่มาตามคาด`,
+        zh: `围绕${leadRevenueModel(pickFinanceMechanisms(city).primaryFinance).zh}来搭项目，然后把谁付运维、谁承担停机、需求不达预期怎么办讲清楚。`,
+      },
+    };
+  }
+
+  return {
+    id: stepId,
+    horizon,
+    title: {
+      en: "Build the delivery coalition",
+      th: "จัดตั้งแนวร่วมส่งมอบ",
+      zh: "把交付联盟搭起来",
+    },
+    body: {
+      en: "Name the operators, agencies, universities, and civic partners that actually own work packages across the city's active smart-city domains.",
+      th: "ระบุชื่อผู้ให้บริการ หน่วยงาน มหาวิทยาลัย และภาคประชาชนที่รับผิด work package จริงในมิติเมืองอัจฉริยะที่เมืองกำลังทำ",
+      zh: "把真正负责各工作包的运营商、机构、大学与社区伙伴点名出来，别只挂 logo。",
+    },
+  };
+}
+
 function buildStepStatus(city: SmartCity): Record<PlanningStepId, PlanningStepStatus> {
   return {
     vision: city.status === "certified" ? "ready" : city.reality !== "planned" ? "building" : "gap",
@@ -893,6 +1090,251 @@ export function getCityPlanningProfile(cityId: string): CityPlanningProfile | un
   return CITY_PLANNING_PROFILES.get(cityId);
 }
 
+export function getCityActionRecommendations(cityId: string): ActionRecommendation[] {
+  const city = allCities.find(candidate => candidate.id === cityId);
+  const profile = getCityPlanningProfile(cityId);
+  if (!city || !profile) return [];
+
+  const rankedSteps = [...PLANNING_STEPS]
+    .sort((left, right) => {
+      const leftScore = stepPriority(profile.stepStatus[left.id]);
+      const rightScore = stepPriority(profile.stepStatus[right.id]);
+      return leftScore - rightScore;
+    })
+    .map(step => step.id);
+
+  const chosenSteps = rankedSteps.slice(0, 3);
+  const horizons: RecommendationHorizon[] = ["now", "next", "later"];
+
+  return chosenSteps.map((stepId, index) =>
+    buildActionRecommendation(stepId, city, horizons[index]),
+  );
+}
+
+export function getCityFinanceBlueprint(cityId: string): FinanceBlueprint | undefined {
+  const city = allCities.find(candidate => candidate.id === cityId);
+  const profile = getCityPlanningProfile(cityId);
+  if (!city || !profile) return undefined;
+
+  const mechanism = profile.primaryFinance;
+  const support = profile.secondaryFinance;
+
+  if (mechanism === "government_budget") {
+    return {
+      revenueLogic: {
+        en: "Fund the base layer with public budget first, then isolate recurring opex in a line item the city cannot quietly forget next year.",
+        th: "ลงฐานด้วยงบสาธารณะก่อน แล้วแยก opex ประจำไว้เป็นงบเฉพาะที่เมืองจะลืมเงียบๆ ปีหน้าไม่ได้",
+        zh: "先用公共预算把底层做出来，再把持续运维单列成一条明明白白的预算项，不能明年装死。",
+      },
+      publicRole: {
+        en: "City hall carries scope, land, public value, and the first proof of seriousness.",
+        th: "เมืองรับผิดชอบขอบเขต ที่ดิน คุณค่าภาครัฐ และหลักฐานชิ้นแรกว่าพูดจริงทำจริง",
+        zh: "市政府要扛范围、土地、公共价值，以及第一块证明自己不是瞎说的证据。",
+      },
+      privateRole: {
+        en: `Use ${FINANCE_MECHANISMS[support].label.en.toLowerCase()} later to scale operations once the first system works.`,
+        th: `ใช้ ${FINANCE_MECHANISMS[support].label.th} เป็นระยะถัดไปเพื่อขยายการเดินระบบเมื่อระบบแรกเริ่มวิ่งแล้ว`,
+        zh: `等第一套系统跑起来之后，再把 ${FINANCE_MECHANISMS[support].label.zh} 拉进来放大运营。`,
+      },
+      riskAllocation: {
+        en: "Public side keeps demand and policy risk early. Vendors should carry performance risk only on what they can actually control.",
+        th: "ช่วงแรกภาครัฐควรถือความเสี่ยงด้านดีมานด์และนโยบายเอง ส่วนผู้รับจ้างถือความเสี่ยงเฉพาะ performance ที่ควบคุมได้จริง",
+        zh: "前期需求和政策风险应由公共部门扛，供应商只对自己真能控制的绩效负责。",
+      },
+      contractLens: {
+        en: "Keep the first contract short, measurable, and brutally operational.",
+        th: "สัญญาแรกควรสั้น วัดผลได้ และเน้นปฏิบัติการแบบไม่อ้อมค้อม",
+        zh: "第一份合同要短、可量化，而且狠抓运营。",
+      },
+    };
+  }
+
+  if (mechanism === "concession") {
+    return {
+      revenueLogic: {
+        en: "Tie the concession to user fees, service charges, or corridor value capture. If demand is fake, the concession is fake too.",
+        th: "ผูกสัมปทานกับค่าธรรมเนียมผู้ใช้ ค่าใช้บริการ หรือการจับมูลค่าจาก corridor ถ้าดีมานด์ปลอม สัมปทานก็ปลอมตาม",
+        zh: "把特许经营绑在用户费、服务费或走廊价值回收上。需求是假的，特许经营也会跟着假。",
+      },
+      publicRole: {
+        en: "The city must secure land, approvals, tariff legitimacy, and a regulator mindset instead of acting like a ceremonial sponsor.",
+        th: "เมืองต้องจัดการที่ดิน อนุมัติ ความชอบธรรมของค่าธรรมเนียม และทำตัวเหมือน regulator ไม่ใช่สปอนเซอร์เชิงพิธี",
+        zh: "城市得扛土地、审批、费率正当性，并像监管者那样做事，而不是礼仪性赞助商。",
+      },
+      privateRole: {
+        en: "Operator finances, runs, and maintains the asset under hard uptime and service obligations.",
+        th: "ผู้เดินระบบลงทุน เดินระบบ และบำรุงรักษาสินทรัพย์ภายใต้ข้อผูกมัด uptime และระดับบริการที่แข็งจริง",
+        zh: "运营方负责投融资、运营与维护，并接受硬指标的 uptime 与服务义务约束。",
+      },
+      riskAllocation: {
+        en: "Demand and operating risk should sit substantially with the operator. Policy and force majeure stay public.",
+        th: "ความเสี่ยงด้านดีมานด์และการเดินระบบควรอยู่กับ operator เป็นหลัก ส่วนนโยบายและเหตุสุดวิสัยยังเป็นฝั่งรัฐ",
+        zh: "需求和运营风险应主要由运营商承担，政策与不可抗力仍归公共部门。",
+      },
+      contractLens: {
+        en: profile.concessionYears
+          ? `A ${profile.concessionYears}-year concession lens is defensible if tariff politics and service standards are explicit.`
+          : "Use a long enough term for the operator to recover capex without turning the city into a hostage.",
+        th: profile.concessionYears
+          ? `กรอบสัมปทาน ${profile.concessionYears} ปีพอป้องกันได้ หากเมืองพูดเรื่องค่าธรรมเนียมและมาตรฐานบริการตรงๆ`
+          : "ใช้อายุสัญญาที่ยาวพอให้ operator คืนทุน capex ได้ โดยไม่ทำให้เมืองกลายเป็นตัวประกัน",
+        zh: profile.concessionYears
+          ? `如果费率政治和服务标准讲清楚了，${profile.concessionYears} 年的特许视角是站得住的。`
+          : "年限要长到让运营商能回收资本开支，但又不能长到把城市绑成人质。",
+      },
+    };
+  }
+
+  if (mechanism === "performance_contract") {
+    return {
+      revenueLogic: {
+        en: "Pay from measurable savings or verified service gains. If nobody can audit the result, do not sign the contract.",
+        th: "จ่ายจากผลประหยัดที่วัดได้หรือคุณภาพบริการที่พิสูจน์ได้ ถ้าไม่มีใคร audit ผลลัพธ์ได้ ก็ยังไม่ควรเซ็น",
+        zh: "按可量化的节省或经核验的服务提升付费。没有人能审结果，就别签。",
+      },
+      publicRole: {
+        en: "City sets baselines, measurement rules, and data rights.",
+        th: "เมืองตั้ง baseline กติกาการวัดผล และสิทธิในข้อมูล",
+        zh: "城市负责设 baseline、衡量规则与数据权属。",
+      },
+      privateRole: {
+        en: "Private partner delivers operational improvements rather than selling hardware for its own sake.",
+        th: "เอกชนส่งมอบผลการเดินระบบที่ดีขึ้น ไม่ใช่ขายฮาร์ดแวร์เพราะอยากขายอย่างเดียว",
+        zh: "私人伙伴交付的是运营改善，不是为了卖设备而卖设备。",
+      },
+      riskAllocation: {
+        en: "Performance risk sits private; baseline integrity and policy continuity sit public.",
+        th: "ความเสี่ยงด้าน performance อยู่ฝั่งเอกชน ส่วนความถูกต้องของ baseline และความต่อเนื่องเชิงนโยบายอยู่ฝั่งรัฐ",
+        zh: "绩效风险归私人方，baseline 的真实性与政策连续性归公共方。",
+      },
+      contractLens: {
+        en: "Structure milestone payments around audited improvements, not around installation ceremonies.",
+        th: "จัดการจ่ายเงินเป็น milestone ตามผลปรับปรุงที่ audit ได้ ไม่ใช่ตามพิธีติดตั้ง",
+        zh: "付款节点应围绕审计后的改善，而不是围绕剪彩式安装。",
+      },
+    };
+  }
+
+  if (mechanism === "blended_finance") {
+    return {
+      revenueLogic: {
+        en: "Blend grant money, concessional capital, and local match funding around resilience or green outcomes the city can actually document.",
+        th: "ผสมทุนอุดหนุน เงินกู้ผ่อนปรน และเงินสมทบท้องถิ่นเข้ากับผลลัพธ์ด้านความยืดหยุ่นหรือสิ่งแวดล้อมที่เมืองพิสูจน์ได้จริง",
+        zh: "把赠款、优惠资金和地方配套围绕城市真能举证的韧性或绿色成果拼起来。",
+      },
+      publicRole: {
+        en: "Public side owns reporting discipline, land coordination, and long-term stewardship of the asset.",
+        th: "ภาครัฐถือวินัยการรายงาน การประสานที่ดิน และการดูแลสินทรัพย์ระยะยาว",
+        zh: "公共部门负责汇报纪律、土地协调与资产的长期托管。",
+      },
+      privateRole: {
+        en: `Bring in ${FINANCE_MECHANISMS[support].label.en.toLowerCase()} only where there is enough operating certainty to absorb commercial expectations.`,
+        th: `ดึง ${FINANCE_MECHANISMS[support].label.th} เข้ามาเฉพาะส่วนที่มีความแน่นอนด้านการเดินระบบพอจะรับความคาดหวังเชิงพาณิชย์ได้`,
+        zh: `只有在运营确定性足够高的环节，才把 ${FINANCE_MECHANISMS[support].label.zh} 拉进来承接商业预期。`,
+      },
+      riskAllocation: {
+        en: "Climate-performance risk requires public measurement discipline; delivery risk can be shared or transferred by package.",
+        th: "ความเสี่ยงด้านผลลัพธ์ภูมิอากาศต้องอาศัยวินัยการวัดผลของภาครัฐ ส่วนความเสี่ยงการส่งมอบแบ่งหรือโอนเป็น package ได้",
+        zh: "气候绩效风险要求公共部门有严格测量纪律，交付风险则可按工作包分担或转移。",
+      },
+      contractLens: {
+        en: "Treat the project like a capital stack, not one magic cheque.",
+        th: "มองโครงการเป็น capital stack ไม่ใช่เช็คมหัศจรรย์ใบเดียว",
+        zh: "把项目当成资本结构，不要幻想一张神奇支票能解决全部问题。",
+      },
+    };
+  }
+
+  return {
+    revenueLogic: {
+      en: "Use staged funding: public derisking first, then private capital or debt when operating assumptions are finally credible.",
+      th: "ใช้การเงินแบบเป็นช่วง: ภาครัฐลดความเสี่ยงก่อน แล้วค่อยดึงทุนเอกชนหรือหนี้เข้ามาเมื่อสมมติฐานการเดินระบบน่าเชื่อถือแล้ว",
+      zh: "用分阶段融资：先由公共部门去风险，等运营假设可信了，再把私人资本或债务拉进来。",
+    },
+    publicRole: {
+      en: "City must own the platform logic, standards, land, and public service commitment.",
+      th: "เมืองต้องถือ logic ของแพลตฟอร์ม มาตรฐาน ที่ดิน และพันธะบริการสาธารณะเอง",
+      zh: "城市必须掌握平台逻辑、标准、土地与公共服务承诺。",
+    },
+    privateRole: {
+      en: "Private side comes in where operations, systems integration, and long-term maintenance can be priced cleanly.",
+      th: "เอกชนเข้ามาในส่วนที่การเดินระบบ การเชื่อมระบบ และการบำรุงรักษาระยะยาวตีราคาได้ชัด",
+      zh: "私人方应进入那些运营、系统整合与长期维护可以被清楚定价的部分。",
+    },
+    riskAllocation: {
+      en: "Keep policy and public trust risk public. Push delivery and uptime risk down to whoever claims they can solve it.",
+      th: "เก็บความเสี่ยงด้านนโยบายและความเชื่อมั่นสาธารณะไว้กับรัฐ แล้วกดความเสี่ยงด้านการส่งมอบและ uptime ไปยังคนที่อ้างว่าแก้ได้",
+      zh: "把政策与公共信任风险留在公共部门，把交付与 uptime 风险压给那个声称自己能解决的人。",
+    },
+    contractLens: {
+      en: "Do not over-contract fantasy demand. Stage the scope and make each phase earn the next.",
+      th: "อย่า contract ความต้องการในฝันมากเกินไป จัด scope เป็นระยะ และให้แต่ละระยะพิสูจน์สิทธิ์ของระยะถัดไป",
+      zh: "别把幻想中的需求一次性写进大合同。把范围分阶段，让每一阶段去挣下一阶段。",
+    },
+  };
+}
+
+export function getCityDataRails(cityId: string): DataRail[] {
+  const city = allCities.find(candidate => candidate.id === cityId);
+  if (!city) return [];
+
+  const localFocus = city.smartDimensions.includes("mobility")
+    ? {
+        en: "Transit operations, traffic flows, fleet data, service requests, and corridor performance.",
+        th: "การเดินระบบขนส่ง การไหลจราจร ข้อมูลกองรถ คำร้องบริการ และ performance ของ corridor",
+        zh: "交通运营、流量、车队数据、服务请求与走廊绩效。",
+      }
+    : city.smartDimensions.includes("environment") || city.smartDimensions.includes("energy")
+      ? {
+          en: "Utility operations, climate sensors, environmental compliance, and field maintenance logs.",
+          th: "การเดินระบบสาธารณูปโภค เซ็นเซอร์ภูมิอากาศ การกำกับสิ่งแวดล้อม และบันทึกบำรุงรักษาภาคสนาม",
+          zh: "公用事业运营、气候传感器、环境合规与现场维护日志。",
+        }
+      : {
+          en: "Citizen reporting, permits, local service tickets, and department-level operational data.",
+          th: "การรายงานของประชาชน ใบอนุญาต ticket งานบริการท้องถิ่น และข้อมูลปฏิบัติการรายหน่วย",
+          zh: "市民报告、许可、服务工单与部门级运营数据。",
+        };
+
+  return [
+    {
+      id: "local",
+      label: {
+        en: "Local operations layer",
+        th: "ชั้นข้อมูลปฏิบัติการท้องถิ่น",
+        zh: "本地运营层",
+      },
+      description: localFocus,
+    },
+    {
+      id: "national",
+      label: {
+        en: "National data layer",
+        th: "ชั้นข้อมูลระดับชาติ",
+        zh: "国家数据层",
+      },
+      description: {
+        en: "Pull in data.go.th, NSO, GISTDA, climate feeds, and any ministry datasets the city cannot reliably generate by itself.",
+        th: "ดึง data.go.th, NSO, GISTDA, ข้อมูลภูมิอากาศ และชุดข้อมูลกระทรวงที่เมืองผลิตเองอย่างสม่ำเสมอไม่ได้",
+        zh: "把 data.go.th、NSO、GISTDA、气候数据，以及城市自己做不稳的部委数据一起拉进来。",
+      },
+    },
+    {
+      id: "public",
+      label: {
+        en: "Public accountability layer",
+        th: "ชั้นความรับผิดชอบต่อสาธารณะ",
+        zh: "公众问责层",
+      },
+      description: {
+        en: "Expose the city's real operating picture with dashboards, downloadable CSV, evidence links, and citizen-facing feedback loops.",
+        th: "เปิดภาพปฏิบัติการจริงของเมืองผ่านแดชบอร์ด CSV ดาวน์โหลดได้ ลิงก์หลักฐาน และ feedback loop ที่ประชาชนใช้ได้",
+        zh: "通过看板、可下载 CSV、证据链接和面向市民的反馈闭环，把城市真实运转图公开出来。",
+      },
+    },
+  ];
+}
+
 export function getCityDomainProxies(city: SmartCity): DomainProxy[] {
   return (Object.keys(DOMAIN_PROXY_PILLARS) as SmartDimension[]).map(dimension => {
     const pillars = DOMAIN_PROXY_PILLARS[dimension];
@@ -907,6 +1349,44 @@ export function getCityDomainProxies(city: SmartCity): DomainProxy[] {
       initiative: DOMAIN_PROXY_COPY[dimension],
     };
   });
+}
+
+function buildDatasetRow(city: SmartCity, profile: CityPlanningProfile): CityPlanningDatasetRow {
+  const recommendations = getCityActionRecommendations(city.id);
+  const blueprint = getCityFinanceBlueprint(city.id);
+
+  return {
+    cityId: city.id,
+    status: city.status,
+    reality: city.reality,
+    tier: city.tier,
+    vision: profile.stepStatus.vision,
+    infrastructure: profile.stepStatus.infrastructure,
+    dataPlatform: profile.stepStatus.dataPlatform,
+    businessModel: profile.stepStatus.businessModel,
+    partnerships: profile.stepStatus.partnerships,
+    primaryFinance: profile.primaryFinance,
+    secondaryFinance: profile.secondaryFinance,
+    concessionYears: profile.concessionYears ?? "",
+    toolkits: profile.toolkitIds.join("|"),
+    resources: profile.resourceIds.join("|"),
+    globalModels: profile.globalModelIds.join("|"),
+    recommendedLeadStep: recommendations[0]?.id ?? "vision",
+    leadRevenueModel: blueprint ? blueprint.revenueLogic.en : "",
+  };
+}
+
+export const CITY_PLANNING_DATASET_ROWS: CityPlanningDatasetRow[] = allCities.map(city => {
+  const profile = getCityPlanningProfile(city.id);
+  if (!profile) {
+    throw new Error(`Missing planning profile for city ${city.id}`);
+  }
+
+  return buildDatasetRow(city, profile);
+});
+
+export function getCityPlanningDatasetRow(cityId: string): CityPlanningDatasetRow | undefined {
+  return CITY_PLANNING_DATASET_ROWS.find(row => row.cityId === cityId);
 }
 
 function csvEscape(value: string): string {
@@ -930,27 +1410,28 @@ export const CITY_PLANNING_DATASET_CSV = [
     "toolkits",
     "resources",
     "globalModels",
+    "recommendedLeadStep",
+    "leadRevenueModel",
   ].join(","),
-  ...allCities.map(city => {
-    const profile = getCityPlanningProfile(city.id);
-    if (!profile) return "";
-
+  ...CITY_PLANNING_DATASET_ROWS.map(row => {
     return [
-      city.id,
-      city.status,
-      city.reality,
-      city.tier,
-      profile.stepStatus.vision,
-      profile.stepStatus.infrastructure,
-      profile.stepStatus.dataPlatform,
-      profile.stepStatus.businessModel,
-      profile.stepStatus.partnerships,
-      profile.primaryFinance,
-      profile.secondaryFinance,
-      profile.concessionYears ?? "",
-      profile.toolkitIds.join("|"),
-      profile.resourceIds.join("|"),
-      profile.globalModelIds.join("|"),
+      row.cityId,
+      row.status,
+      row.reality,
+      row.tier,
+      row.vision,
+      row.infrastructure,
+      row.dataPlatform,
+      row.businessModel,
+      row.partnerships,
+      row.primaryFinance,
+      row.secondaryFinance,
+      row.concessionYears,
+      row.toolkits,
+      row.resources,
+      row.globalModels,
+      row.recommendedLeadStep,
+      row.leadRevenueModel,
     ]
       .map(csvEscape)
       .join(",");
@@ -959,6 +1440,13 @@ export const CITY_PLANNING_DATASET_CSV = [
 
 export function getLocalizedPlanningStatus(status: PlanningStepStatus, locale: Locale): string {
   return localized(locale, PLANNING_STATUS_META[status].label);
+}
+
+export function getLocalizedRecommendationHorizon(
+  horizon: RecommendationHorizon,
+  locale: Locale,
+): string {
+  return localized(locale, RECOMMENDATION_HORIZON_LABELS[horizon]);
 }
 
 export function getLocalizedFinanceMechanism(

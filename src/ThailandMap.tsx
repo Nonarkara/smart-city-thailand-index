@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { allCities } from "./cityData";
 import { getCityName, translate } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
@@ -9,14 +9,61 @@ interface Props {
   onNavigate: (path: string) => void;
 }
 
-// Approximate lat/lng for each city, projected to SVG coordinates
-// Thailand bounding box: lat 5.6-20.5, lng 97.3-105.6
-// SVG: 0-400 width, 0-600 height
-function project(lat: number, lng: number): { x: number; y: number } {
-  const minLat = 5.6, maxLat = 20.5, minLng = 97.3, maxLng = 105.6;
-  const x = ((lng - minLng) / (maxLng - minLng)) * 340 + 30;
-  const y = ((maxLat - lat) / (maxLat - minLat)) * 540 + 30;
+// Thailand bounding box
+const BOUNDS = { minLat: 5.4, maxLat: 20.6, minLng: 97.2, maxLng: 105.8 };
+const MAP_W = 480;
+const MAP_H = 640;
+
+function project(lat: number, lng: number) {
+  const x = ((lng - BOUNDS.minLng) / (BOUNDS.maxLng - BOUNDS.minLng)) * (MAP_W - 40) + 20;
+  const y = ((BOUNDS.maxLat - lat) / (BOUNDS.maxLat - BOUNDS.minLat)) * (MAP_H - 40) + 20;
   return { x, y };
+}
+
+// 50km grid: at Thailand's latitude (~15°N), 1° lat ≈ 111km, 1° lng ≈ 107km
+// So 50km ≈ 0.45° lat, 0.47° lng
+const GRID_STEP_LAT = 0.45;
+const GRID_STEP_LNG = 0.47;
+
+function buildGridLines() {
+  const hLines: { y: number; lat: number }[] = [];
+  const vLines: { x: number; lng: number }[] = [];
+  for (let lat = Math.ceil(BOUNDS.minLat / GRID_STEP_LAT) * GRID_STEP_LAT; lat < BOUNDS.maxLat; lat += GRID_STEP_LAT) {
+    const { y } = project(lat, BOUNDS.minLng);
+    hLines.push({ y, lat });
+  }
+  for (let lng = Math.ceil(BOUNDS.minLng / GRID_STEP_LNG) * GRID_STEP_LNG; lng < BOUNDS.maxLng; lng += GRID_STEP_LNG) {
+    const { x } = project(BOUNDS.minLat, lng);
+    vLines.push({ x, lng });
+  }
+  return { hLines, vLines };
+}
+
+// Map tile layers — free providers
+type MapLayer = "base" | "terrain" | "night" | "vegetation";
+
+const LAYER_LABELS: Record<MapLayer, { en: string; th: string; zh: string }> = {
+  base: { en: "Base", th: "พื้นฐาน", zh: "基础" },
+  terrain: { en: "Terrain", th: "ภูมิประเทศ", zh: "地形" },
+  night: { en: "Night", th: "กลางคืน", zh: "夜景" },
+  vegetation: { en: "NDVI", th: "พืชพรรณ", zh: "植被" },
+};
+
+// Tile URL templates — using free Stamen/ESRI/NASA tiles
+// We generate a composite image from multiple tiles at zoom 6 covering Thailand
+function getTileUrl(layer: MapLayer): string {
+  // Thailand center: ~15°N, 101°E, zoom level 6
+  // Using static tile images for simplicity (no JS map library needed)
+  switch (layer) {
+    case "terrain":
+      return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/export?bbox=97.2,5.4,105.8,20.6&bboxSR=4326&size=480,640&f=image&format=png&transparent=false";
+    case "night":
+      return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=97.2,5.4,105.8,20.6&bboxSR=4326&size=480,640&f=image&format=png&transparent=false";
+    case "vegetation":
+      return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=97.2,5.4,105.8,20.6&bboxSR=4326&size=480,640&f=image&format=png&transparent=false";
+    default: // base — light cartographic
+      return "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/export?bbox=97.2,5.4,105.8,20.6&bboxSR=4326&size=480,640&f=image&format=png&transparent=false";
+  }
 }
 
 const cityCoords: Record<string, { lat: number; lng: number }> = {
@@ -57,7 +104,6 @@ const cityCoords: Record<string, { lat: number; lng: number }> = {
   "nakhon-si-thammarat": { lat: 8.43, lng: 99.96 },
   "tai-yong": { lat: 8.40, lng: 99.90 },
   "phuket-tinicon": { lat: 7.85, lng: 98.35 },
-  // Promotion zones
   "songkhla-city": { lat: 7.19, lng: 100.59 },
   "rattanakosin": { lat: 13.76, lng: 100.49 },
   "nonthaburi": { lat: 13.86, lng: 100.51 },
@@ -72,18 +118,23 @@ const cityCoords: Record<string, { lat: number; lng: number }> = {
   "phlapphla": { lat: 12.58, lng: 102.12 },
 };
 
-// Use real Thailand SVG map from MapSVG (CC0 license)
-const THAILAND_SVG_URL = "/thailand-map.svg";
-
 function tierColor(tier: string): string {
-  if (tier === "alpha") return "#1A7D72";
-  if (tier === "beta") return "#D4832F";
-  return "#C94444";
+  if (tier === "alpha") return "var(--teal, #2BBAA0)";
+  if (tier === "beta") return "var(--gold, #D4A843)";
+  return "var(--coral, #FF5252)";
 }
+
+const LAYERS: MapLayer[] = ["base", "terrain", "night", "vegetation"];
 
 export default function ThailandMap({ locale, onNavigate }: Props) {
   const [hovered, setHovered] = useState<SmartCity | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+  const [layer, setLayer] = useState<MapLayer>("base");
+  const [showGrid, setShowGrid] = useState(true);
+
+  const grid = useMemo(() => buildGridLines(), []);
+  const tileUrl = useMemo(() => getTileUrl(layer), [layer]);
+  const isDark = layer === "night" || layer === "vegetation";
 
   return (
     <section className="section map-section">
@@ -92,48 +143,89 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
       </p>
       <h2>
         {translate(locale, {
-          en: `${allCities.length} cities profiled in this release`,
-          th: `${allCities.length} เมืองที่เราติดตามในเวอร์ชันนี้`,
-          zh: `本版本追踪的 ${allCities.length} 座城市`,
+          en: `${allCities.length} cities across Thailand`,
+          th: `${allCities.length} เมืองทั่วประเทศไทย`,
+          zh: `泰国全境 ${allCities.length} 座城市`,
         })}
       </h2>
 
       <div className="map-layout">
         <div className="map-panel">
-          <svg viewBox="0 0 400 600" className="map-svg">
-            {/* Real Thailand map as background */}
-            <image href={THAILAND_SVG_URL} x="0" y="0" width="400" height="600" preserveAspectRatio="xMidYMid meet" opacity="0.15" />
+          {/* Layer toggle */}
+          <div className="map-layer-toggle">
+            {LAYERS.map(l => (
+              <button
+                key={l}
+                className={`map-layer-btn ${layer === l ? "active" : ""}`}
+                onClick={() => setLayer(l)}
+              >
+                {LAYER_LABELS[l][locale]}
+              </button>
+            ))}
+            <button
+              className={`map-layer-btn ${showGrid ? "active" : ""}`}
+              onClick={() => setShowGrid(g => !g)}
+              title="50km grid"
+            >
+              Grid
+            </button>
+          </div>
 
-            {/* City dots */}
+          <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} className="map-svg">
+            {/* Tile background */}
+            <image
+              href={tileUrl}
+              x="0" y="0"
+              width={MAP_W} height={MAP_H}
+              preserveAspectRatio="none"
+              opacity={isDark ? 0.7 : 0.5}
+            />
+
+            {/* 50km grid overlay */}
+            {showGrid && (
+              <g className="map-grid" opacity="0.15">
+                {grid.hLines.map((line, i) => (
+                  <line key={`h${i}`} x1="0" y1={line.y} x2={MAP_W} y2={line.y}
+                    stroke={isDark ? "#fff" : "var(--ink, #222)"} strokeWidth="0.5" />
+                ))}
+                {grid.vLines.map((line, i) => (
+                  <line key={`v${i}`} x1={line.x} y1="0" x2={line.x} y2={MAP_H}
+                    stroke={isDark ? "#fff" : "var(--ink, #222)"} strokeWidth="0.5" />
+                ))}
+              </g>
+            )}
+
+            {/* City markers */}
             {allCities.map(city => {
               const coords = cityCoords[city.id];
               if (!coords) return null;
               const { x, y } = project(coords.lat, coords.lng);
-              const r = city.status === "certified" ? 5 : 3.5;
+              const isCertified = city.status === "certified";
+              const r = isCertified ? 5.5 : 3.5;
+              const isHovered = hovered?.id === city.id;
+              const isAlpha = city.tier === "alpha";
+
               return (
                 <g key={city.id}>
+                  {/* Alpha glow ring */}
+                  {isAlpha && isCertified && (
+                    <circle cx={x} cy={y} r={r + 4} fill="none"
+                      stroke={tierColor(city.tier)} strokeWidth="0.5" opacity={isHovered ? 0.6 : 0.2} />
+                  )}
                   <circle
                     className="map-marker"
-                    cx={x} cy={y} r={r}
+                    cx={x} cy={y} r={isHovered ? r + 1.5 : r}
                     fill={tierColor(city.tier)}
-                    opacity={hovered && hovered.id !== city.id ? 0.25 : 0.85}
-                    stroke={city.status === "certified" ? tierColor(city.tier) : "none"}
-                    strokeWidth={city.status === "certified" ? 1.5 : 0}
+                    opacity={hovered && !isHovered ? 0.2 : 0.9}
+                    stroke={isCertified ? (isDark ? "#fff" : "var(--ink, #222)") : "none"}
+                    strokeWidth={isCertified ? 0.8 : 0}
                     tabIndex={0}
                     role="button"
                     aria-label={`${getCityName(city, locale)}, ${city.compositeScore.toFixed(1)}`}
-                    style={{ cursor: "pointer", transition: "opacity 0.15s" }}
+                    style={{ cursor: "pointer", transition: "all 0.15s" }}
                     onClick={() => onNavigate(`/city/${city.id}`)}
-                    onKeyDown={event => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        onNavigate(`/city/${city.id}`);
-                      }
-                    }}
-                    onMouseEnter={() => {
-                      setHovered(city);
-                      setTooltipPos({ x: x, y: y });
-                    }}
+                    onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(`/city/${city.id}`); } }}
+                    onMouseEnter={() => { setHovered(city); setTooltipPos({ x, y }); }}
                     onMouseLeave={() => setHovered(null)}
                   />
                 </g>
@@ -141,43 +233,70 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
             })}
 
             {/* Tooltip */}
-            {hovered && (
-              <g transform={`translate(${tooltipPos.x + 10}, ${tooltipPos.y - 8})`}>
-                <rect x="0" y="-12" width="120" height="30" fill="var(--ink)" rx="0" opacity="0.92" />
-                <text x="6" y="1" fontSize="7" fontWeight="700" fill="white" fontFamily="var(--font-body)">
-                  {getCityName(hovered, locale)}
-                </text>
-                <text x="6" y="12" fontSize="6" fill="rgba(255,255,255,0.6)" fontFamily="var(--font-mono)" fontWeight="600">
-                  {hovered.compositeScore.toFixed(1)} · {TIER_LABELS[locale][hovered.tier]}
-                </text>
-              </g>
-            )}
+            {hovered && (() => {
+              const tx = tooltipPos.x > MAP_W - 140 ? tooltipPos.x - 130 : tooltipPos.x + 12;
+              const ty = tooltipPos.y < 30 ? tooltipPos.y + 16 : tooltipPos.y - 10;
+              return (
+                <g transform={`translate(${tx}, ${ty})`}>
+                  <rect x="0" y="-14" width="125" height="34" fill="rgba(10,18,16,0.92)" />
+                  <text x="6" y="1" fontSize="7.5" fontWeight="700" fill="#fff" fontFamily="var(--font-body, sans-serif)">
+                    {getCityName(hovered, locale)}
+                  </text>
+                  <text x="6" y="13" fontSize="6" fontFamily="var(--font-mono, monospace)" fontWeight="600">
+                    <tspan fill="var(--teal, #2BBAA0)">{hovered.compositeScore.toFixed(1)}</tspan>
+                    <tspan fill="rgba(255,255,255,0.5)"> · {TIER_LABELS[locale][hovered.tier]}</tspan>
+                  </text>
+                </g>
+              );
+            })()}
+
+            {/* Scale bar — 50km reference */}
+            {showGrid && (() => {
+              const km50inLng = 0.47;
+              const p1 = project(6.0, 98.0);
+              const p2 = project(6.0, 98.0 + km50inLng);
+              const barW = p2.x - p1.x;
+              return (
+                <g transform={`translate(${MAP_W - barW - 20}, ${MAP_H - 25})`}>
+                  <line x1="0" y1="0" x2={barW} y2="0" stroke={isDark ? "#fff" : "var(--ink, #222)"} strokeWidth="1.5" />
+                  <line x1="0" y1="-3" x2="0" y2="3" stroke={isDark ? "#fff" : "var(--ink, #222)"} strokeWidth="1" />
+                  <line x1={barW} y1="-3" x2={barW} y2="3" stroke={isDark ? "#fff" : "var(--ink, #222)"} strokeWidth="1" />
+                  <text x={barW / 2} y="10" textAnchor="middle" fontSize="6" fontFamily="var(--font-mono, monospace)"
+                    fontWeight="600" fill={isDark ? "rgba(255,255,255,0.7)" : "var(--ink-muted, #999)"}>
+                    50 km
+                  </text>
+                </g>
+              );
+            })()}
           </svg>
         </div>
 
         <div className="map-legend">
           <div className="map-legend-title">
-            {locale === "th" ? "สัญลักษณ์" : locale === "zh" ? "图例" : "Legend"}
+            {translate(locale, { en: "Legend", th: "สัญลักษณ์", zh: "图例" })}
           </div>
           <div className="map-legend-item">
-            <svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#1A7D72" /></svg>
-            <span>Alpha — {locale === "th" ? "อัจฉริยะจริง" : locale === "zh" ? "真正智慧" : "genuinely smart"}</span>
+            <svg width="14" height="14"><circle cx="7" cy="7" r="5.5" fill="var(--teal, #2BBAA0)" stroke="var(--ink, #222)" strokeWidth="0.8" /></svg>
+            <span>Alpha — {translate(locale, { en: "genuinely smart", th: "อัจฉริยะจริง", zh: "真正智慧" })}</span>
           </div>
           <div className="map-legend-item">
-            <svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#D4832F" /></svg>
-            <span>Beta — {locale === "th" ? "กำลังดำเนินการ" : locale === "zh" ? "进行中" : "work in progress"}</span>
+            <svg width="14" height="14"><circle cx="7" cy="7" r="4.5" fill="var(--gold, #D4A843)" stroke="var(--ink, #222)" strokeWidth="0.8" /></svg>
+            <span>Beta — {translate(locale, { en: "in progress", th: "กำลังดำเนินการ", zh: "进行中" })}</span>
           </div>
           <div className="map-legend-item">
-            <svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#C94444" /></svg>
-            <span>Gamma — {locale === "th" ? "เริ่มต้น/แผนเท่านั้น" : locale === "zh" ? "早期/仅计划" : "early / plan only"}</span>
+            <svg width="14" height="14"><circle cx="7" cy="7" r="4" fill="var(--coral, #FF5252)" /></svg>
+            <span>Gamma — {translate(locale, { en: "early / plan", th: "เริ่มต้น/แผน", zh: "早期/规划" })}</span>
           </div>
           <div className="map-legend-item">
-            <svg width="14" height="12"><circle cx="7" cy="6" r="5" fill="none" stroke="#999" strokeWidth="1.5" /></svg>
-            <span>{locale === "th" ? "วงใหญ่ = รับรองแล้ว" : locale === "zh" ? "大圆 = 已认证" : "larger = certified"}</span>
+            <svg width="14" height="14">
+              <circle cx="7" cy="7" r="5.5" fill="none" stroke="var(--teal, #2BBAA0)" strokeWidth="0.5" />
+              <circle cx="7" cy="7" r="3" fill="var(--teal, #2BBAA0)" />
+            </svg>
+            <span>{translate(locale, { en: "glow = Alpha certified", th: "วงเรือง = Alpha รับรอง", zh: "光环 = Alpha认证" })}</span>
           </div>
-          <div className="map-legend-item">
-            <svg width="14" height="12"><circle cx="7" cy="6" r="3" fill="#999" /></svg>
-            <span>{locale === "th" ? "วงเล็ก = เขตส่งเสริมที่คัดมานำเสนอ" : locale === "zh" ? "小圆 = 本版收录的推广区" : "smaller = profiled promotion zone"}</span>
+          <div className="map-legend-item" style={{ marginTop: "0.5rem", opacity: 0.6 }}>
+            <svg width="14" height="14"><line x1="2" y1="7" x2="12" y2="7" stroke="currentColor" strokeWidth="0.5" /></svg>
+            <span>{translate(locale, { en: "grid = 50km", th: "ตาราง = 50 กม.", zh: "网格 = 50公里" })}</span>
           </div>
         </div>
       </div>

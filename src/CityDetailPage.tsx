@@ -7,9 +7,14 @@ import {
   PLANNING_STEPS,
   RESOURCES,
   TOOLKITS,
+  getCityActionRecommendations,
+  getCityDataRails,
+  getCityFinanceBlueprint,
   getCityDomainProxies,
+  getCityPlanningDatasetRow,
   getCityPlanningProfile,
   getLocalizedPlanningStatus,
+  getLocalizedRecommendationHorizon,
 } from "./cityPlanning";
 import {
   getCityName,
@@ -217,6 +222,10 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const provinceName = getProvinceName(city, locale);
   const cityTagline = getCityTagline(city, locale);
   const domainProxies = getCityDomainProxies(city);
+  const actionRecommendations = getCityActionRecommendations(cityId);
+  const financeBlueprint = getCityFinanceBlueprint(cityId);
+  const dataRails = getCityDataRails(cityId);
+  const dataRow = getCityPlanningDatasetRow(cityId);
   const planningCsvHref = `data:text/csv;charset=utf-8,${encodeURIComponent(CITY_PLANNING_DATASET_CSV)}`;
 
   return (
@@ -341,6 +350,37 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
           <section className="section">
             <p className="eyebrow">
+              {translate(locale, { en: "Action board", th: "กระดานภารกิจ", zh: "行动板" })}
+            </p>
+            <h2>
+              {translate(locale, {
+                en: "What this city should do next",
+                th: "เมืองนี้ควรทำอะไรต่อ",
+                zh: "这座城市接下来该做什么",
+              })}
+            </h2>
+            <p className="section-intro">
+              {translate(locale, {
+                en: "These are not generic feel-good talking points. They are the next three operational moves implied by the city's planning gaps and delivery shape.",
+                th: "นี่ไม่ใช่ถ้อยคำปลอบใจทั่วไป แต่คือสามก้าวปฏิบัติการถัดไปที่อนุมานจากช่องว่างการวางแผนและรูปทรงการส่งมอบของเมือง",
+                zh: "这不是套话式鼓励，而是从这座城市的规划缺口和交付形态里推出来的三个实际动作。",
+              })}
+            </p>
+            <div className="action-board">
+              {actionRecommendations.map(action => (
+                <div key={action.id} className="action-card">
+                  <div className="action-card-kicker">
+                    {getLocalizedRecommendationHorizon(action.horizon, locale)}
+                  </div>
+                  <h3 className="action-card-title">{action.title[locale]}</h3>
+                  <p className="action-card-body">{action.body[locale]}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="section">
+            <p className="eyebrow">
               {translate(locale, { en: "Finance + delivery", th: "การเงิน + กลไกส่งมอบ", zh: "融资与交付" })}
             </p>
             <h2>
@@ -394,6 +434,40 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 );
               })}
             </div>
+            {financeBlueprint && (
+              <div className="finance-blueprint-grid">
+                <div className="finance-blueprint-card">
+                  <div className="finance-blueprint-label">
+                    {translate(locale, { en: "Revenue logic", th: "ตรรกะรายได้", zh: "收入逻辑" })}
+                  </div>
+                  <p className="finance-blueprint-body">{financeBlueprint.revenueLogic[locale]}</p>
+                </div>
+                <div className="finance-blueprint-card">
+                  <div className="finance-blueprint-label">
+                    {translate(locale, { en: "Public role", th: "บทบาทภาครัฐ", zh: "公共角色" })}
+                  </div>
+                  <p className="finance-blueprint-body">{financeBlueprint.publicRole[locale]}</p>
+                </div>
+                <div className="finance-blueprint-card">
+                  <div className="finance-blueprint-label">
+                    {translate(locale, { en: "Private role", th: "บทบาทเอกชน", zh: "私人角色" })}
+                  </div>
+                  <p className="finance-blueprint-body">{financeBlueprint.privateRole[locale]}</p>
+                </div>
+                <div className="finance-blueprint-card">
+                  <div className="finance-blueprint-label">
+                    {translate(locale, { en: "Risk allocation", th: "การจัดสรรความเสี่ยง", zh: "风险分配" })}
+                  </div>
+                  <p className="finance-blueprint-body">{financeBlueprint.riskAllocation[locale]}</p>
+                </div>
+                <div className="finance-blueprint-card finance-blueprint-card-wide">
+                  <div className="finance-blueprint-label">
+                    {translate(locale, { en: "Contract lens", th: "มุมมองสัญญา", zh: "合同视角" })}
+                  </div>
+                  <p className="finance-blueprint-body">{financeBlueprint.contractLens[locale]}</p>
+                </div>
+              </div>
+            )}
           </section>
 
           <section className="section">
@@ -432,6 +506,27 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                     <span className="domain-proxy-score">{proxy.proxyScore}</span>
                   </div>
                   <p className="domain-proxy-copy">{proxy.initiative[locale]}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="section">
+            <p className="eyebrow">
+              {translate(locale, { en: "City data platform", th: "City Data Platform", zh: "城市数据平台" })}
+            </p>
+            <h2>
+              {translate(locale, {
+                en: "The minimum data stack this city needs",
+                th: "สแต็กข้อมูลขั้นต่ำที่เมืองนี้ต้องมี",
+                zh: "这座城市至少该有的数据栈",
+              })}
+            </h2>
+            <div className="data-rail-grid">
+              {dataRails.map(rail => (
+                <div key={rail.id} className="data-rail-card">
+                  <div className="data-rail-label">{rail.label[locale]}</div>
+                  <p className="data-rail-body">{rail.description[locale]}</p>
                 </div>
               ))}
             </div>
@@ -501,6 +596,43 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
               </div>
             </div>
           </section>
+
+          {dataRow && (
+            <section className="section">
+              <p className="eyebrow">
+                {translate(locale, { en: "Machine-readable record", th: "เรคคอร์ดที่เครื่องอ่านได้", zh: "机器可读记录" })}
+              </p>
+              <h2>
+                {translate(locale, {
+                  en: "This city's CSV row",
+                  th: "แถว CSV ของเมืองนี้",
+                  zh: "这座城市的 CSV 记录",
+                })}
+              </h2>
+              <p className="section-intro">
+                {translate(locale, {
+                  en: "Same logic, same fields, same export structure. This is the row that turns the index into a city data platform skeleton.",
+                  th: "ตรรกะเดียวกัน ฟิลด์เดียวกัน โครงสร้าง export เดียวกัน นี่คือแถวข้อมูลที่ทำให้ดัชนีกลายเป็นโครงกระดูกของ city data platform",
+                  zh: "同一套逻辑、同一组字段、同一种导出结构。这就是把指数变成城市数据平台骨架的那一行。",
+                })}
+              </p>
+              <div className="record-grid">
+                {[
+                  ["cityId", dataRow.cityId],
+                  ["status", dataRow.status],
+                  ["reality", dataRow.reality],
+                  ["tier", dataRow.tier],
+                  ["leadStep", dataRow.recommendedLeadStep],
+                  ["leadFinance", dataRow.primaryFinance],
+                ].map(([label, value]) => (
+                  <div key={label} className="record-item">
+                    <span className="record-label">{label}</span>
+                    <span className="record-value">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </>
       )}
 
