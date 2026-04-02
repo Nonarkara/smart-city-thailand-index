@@ -136,7 +136,11 @@ export default function App() {
           <button className={`nav-link ${route.kind === "why" ? "active" : ""}`} onClick={() => navigate("/why")}>
             {locale === "th" ? "ทำไม" : locale === "zh" ? "为什么" : "Why"}
           </button>
-          <button className="locale-toggle" onClick={cycleLocale}>
+          <button
+            className="locale-toggle"
+            aria-label={locale === "en" ? "Switch language to Thai" : locale === "th" ? "Switch language to Chinese" : "Switch language to English"}
+            onClick={cycleLocale}
+          >
             {locale === "en" ? "TH" : locale === "th" ? "中" : "EN"}
           </button>
         </div>

@@ -6,7 +6,7 @@
 // A city where people actually live well scores high.
 // ---------------------------------------------------------------------------
 
-import type { SmartCity, CityScores, CityTier, PILLAR_WEIGHTS } from "./types";
+import type { SmartCity, CityScores, CityTier } from "./types";
 
 /** Compute weighted composite score from pillar scores */
 export function computeComposite(scores: CityScores): number {

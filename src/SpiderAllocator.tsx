@@ -109,7 +109,7 @@ export default function SpiderAllocator({ locale, onNavigate }: Props) {
     }
 
     setWeights(newWeights);
-  }, [dragging, weights]);
+  }, [cx, cy, dragging, maxR, weights]);
 
   const t = (en: string, th: string, zh: string) =>
     locale === "th" ? th : locale === "zh" ? zh : en;
@@ -222,9 +222,11 @@ export default function SpiderAllocator({ locale, onNavigate }: Props) {
             <span>{t("Score", "คะแนน", "分数")}</span>
           </div>
           {ranked.slice(0, 20).map((city, i) => (
-            <div
+            <button
+              type="button"
               key={city.id}
               className="spider-ranking-row"
+              aria-label={locale === "th" ? city.nameTh : city.nameEn}
               onClick={() => onNavigate(`/city/${city.id}`)}
             >
               <span className="spider-rank">{i + 1}</span>
@@ -235,7 +237,7 @@ export default function SpiderAllocator({ locale, onNavigate }: Props) {
                 {city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ"}
               </span>
               <span className="spider-score">{city.customScore.toFixed(1)}</span>
-            </div>
+            </button>
           ))}
         </div>
       </div>

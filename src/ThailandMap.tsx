@@ -90,7 +90,7 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
         {locale === "th" ? "แผนที่" : locale === "zh" ? "地图" : "Geography"}
       </p>
       <h2>
-        {locale === "th" ? "49 เมืองทั่วประเทศ" : locale === "zh" ? "全国49个城市" : "49 cities across Thailand"}
+        {locale === "th" ? "49 เมืองที่เราติดตามในเวอร์ชันนี้" : locale === "zh" ? "本版本追踪的 49 座城市" : "49 cities profiled in this release"}
       </h2>
 
       <div className="map-layout">
@@ -108,14 +108,24 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
               return (
                 <g key={city.id}>
                   <circle
+                    className="map-marker"
                     cx={x} cy={y} r={r}
                     fill={tierColor(city.tier)}
                     opacity={hovered && hovered.id !== city.id ? 0.25 : 0.85}
                     stroke={city.status === "certified" ? tierColor(city.tier) : "none"}
                     strokeWidth={city.status === "certified" ? 1.5 : 0}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`${locale === "th" ? city.nameTh : city.nameEn}, ${city.compositeScore.toFixed(1)}`}
                     style={{ cursor: "pointer", transition: "opacity 0.15s" }}
                     onClick={() => onNavigate(`/city/${city.id}`)}
-                    onMouseEnter={(e) => {
+                    onKeyDown={event => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        onNavigate(`/city/${city.id}`);
+                      }
+                    }}
+                    onMouseEnter={() => {
                       setHovered(city);
                       setTooltipPos({ x: x, y: y });
                     }}
@@ -162,7 +172,7 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
           </div>
           <div className="map-legend-item">
             <svg width="14" height="12"><circle cx="7" cy="6" r="3" fill="#999" /></svg>
-            <span>{locale === "th" ? "วงเล็ก = เขตส่งเสริม" : locale === "zh" ? "小圆 = 推广区" : "smaller = promotion zone"}</span>
+            <span>{locale === "th" ? "วงเล็ก = เขตส่งเสริมที่คัดมานำเสนอ" : locale === "zh" ? "小圆 = 本版收录的推广区" : "smaller = profiled promotion zone"}</span>
           </div>
         </div>
       </div>

@@ -180,9 +180,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   if (!city) {
     return (
       <section className="section" style={{ paddingTop: "7rem" }}>
-        <h1>{locale === "th" ? "ไม่พบเมือง" : "City not found"}</h1>
+        <h1>{locale === "th" ? "ไม่พบเมือง" : locale === "zh" ? "未找到城市" : "City not found"}</h1>
         <button className="cta-button" onClick={() => onNavigate("/")}>
-          {locale === "th" ? "กลับหน้าหลัก" : "Back to home"}
+          {locale === "th" ? "กลับหน้าหลัก" : locale === "zh" ? "返回首页" : "Back to home"}
         </button>
       </section>
     );
@@ -196,15 +196,15 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       {/* ─── HERO ─── */}
       <section className="section city-detail-hero">
         <button className="back-link" onClick={() => onNavigate("/rankings")}>
-          ← {locale === "th" ? "กลับ" : "Back"}
+          ← {locale === "th" ? "กลับ" : locale === "zh" ? "返回" : "Back"}
         </button>
 
         <div className="city-detail-header">
           <div>
             <p className="eyebrow">
               {city.status === "certified"
-                ? (locale === "th" ? `ตราสัญลักษณ์เมืองอัจฉริยะ · รุ่น ${city.batch}` : `Smart City Local · Batch ${city.batch}`)
-                : (locale === "th" ? "เขตส่งเสริมเมืองอัจฉริยะ" : "Smart City Promotion Zone")}
+                ? (locale === "th" ? `ตราสัญลักษณ์เมืองอัจฉริยะ · รุ่น ${city.batch}` : locale === "zh" ? `智慧城市认证 · 第 ${city.batch} 批` : `Smart City Local · Batch ${city.batch}`)
+                : (locale === "th" ? "เขตส่งเสริมเมืองอัจฉริยะ" : locale === "zh" ? "智慧城市推广区" : "Smart City Promotion Zone")}
             </p>
             <h1>{locale === "th" ? city.nameTh : city.nameEn}</h1>
             <p className="city-detail-province">{locale === "th" ? city.provinceTh : city.province}</p>
@@ -216,10 +216,10 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
             <div className="composite-large">{city.compositeScore.toFixed(1)}</div>
             <div className={`reality-badge reality-${city.reality}`}>
               {city.reality === "operational"
-                ? (locale === "th" ? "ใช้งานจริง" : "Operational")
+                ? (locale === "th" ? "ใช้งานจริง" : locale === "zh" ? "已运行" : "Operational")
                 : city.reality === "partial"
-                  ? (locale === "th" ? "บางส่วน" : "Partial")
-                  : (locale === "th" ? "แผนเท่านั้น" : "Plan only")}
+                  ? (locale === "th" ? "บางส่วน" : locale === "zh" ? "部分落实" : "Partial")
+                  : (locale === "th" ? "แผนเท่านั้น" : locale === "zh" ? "仅有规划" : "Plan only")}
             </div>
           </div>
         </div>
@@ -229,8 +229,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
       {/* ─── RPG STAT SHEET ─── */}
       <section className="section rpg-section">
-        <p className="eyebrow">{locale === "th" ? "สถิติเมือง" : "City stats"}</p>
-        <h2>{locale === "th" ? "แผ่นสถิติ" : "Stat Sheet"}</h2>
+        <p className="eyebrow">{locale === "th" ? "สถิติเมือง" : locale === "zh" ? "城市数据" : "City stats"}</p>
+        <h2>{locale === "th" ? "แผ่นสถิติ" : locale === "zh" ? "城市属性表" : "Stat Sheet"}</h2>
 
         <div className="rpg-layout">
           {/* Radar chart */}
@@ -255,15 +255,15 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
       {/* ─── SCORE DECOMPOSITION ─── */}
       <section className="section">
-        <p className="eyebrow">{locale === "th" ? "การคำนวณ" : "Score math"}</p>
-        <h2>{locale === "th" ? "ตัวเลขมาจากไหน" : "Where the numbers come from"}</h2>
+        <p className="eyebrow">{locale === "th" ? "การคำนวณ" : locale === "zh" ? "计算方式" : "Score math"}</p>
+        <h2>{locale === "th" ? "ตัวเลขมาจากไหน" : locale === "zh" ? "这些数字怎么来的" : "Where the numbers come from"}</h2>
         <ScoreBreakdown scores={city.scores} />
       </section>
 
       {/* ─── SMART DIMENSIONS ─── */}
       <section className="section">
-        <p className="eyebrow">{locale === "th" ? "มิติอัจฉริยะ depa" : "depa dimensions"}</p>
-        <h2>{locale === "th" ? "ขอบเขต" : "Focus areas"}</h2>
+        <p className="eyebrow">{locale === "th" ? "มิติอัจฉริยะ depa" : locale === "zh" ? "depa 智慧维度" : "depa dimensions"}</p>
+        <h2>{locale === "th" ? "ขอบเขต" : locale === "zh" ? "关注领域" : "Focus areas"}</h2>
         <div className="dimension-grid">
           {city.smartDimensions.map(d => (
             <div key={d} className="dimension-card">
@@ -279,25 +279,25 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       {/* ─── METRICS ─── */}
       {(city.metrics.gppPerCapita || city.metrics.avgMonthlyIncome || city.metrics.pm25Annual) && (
         <section className="section">
-          <p className="eyebrow">{locale === "th" ? "ข้อมูล" : "Raw data"}</p>
-          <h2>{locale === "th" ? "ตัวเลขจริง" : "Real numbers"}</h2>
+          <p className="eyebrow">{locale === "th" ? "ข้อมูล" : locale === "zh" ? "原始数据" : "Raw data"}</p>
+          <h2>{locale === "th" ? "ตัวเลขจริง" : locale === "zh" ? "真实数字" : "Real numbers"}</h2>
           <div className="metrics-grid">
             {city.metrics.population > 0 && (
               <div className="metric-card">
                 <div className="metric-value">{city.metrics.population.toLocaleString()}K</div>
-                <div className="metric-label">{locale === "th" ? "ประชากร" : "Population"}</div>
+                <div className="metric-label">{locale === "th" ? "ประชากร" : locale === "zh" ? "人口" : "Population"}</div>
               </div>
             )}
             {city.metrics.gppPerCapita && city.metrics.gppPerCapita > 0 && (
               <div className="metric-card">
                 <div className="metric-value">฿{(city.metrics.gppPerCapita / 1000).toFixed(0)}K</div>
-                <div className="metric-label">{locale === "th" ? "GPP ต่อหัว" : "GPP / capita"}</div>
+                <div className="metric-label">{locale === "th" ? "GPP ต่อหัว" : locale === "zh" ? "人均 GPP" : "GPP / capita"}</div>
               </div>
             )}
             {city.metrics.avgMonthlyIncome && city.metrics.avgMonthlyIncome > 0 && (
               <div className="metric-card">
                 <div className="metric-value">฿{city.metrics.avgMonthlyIncome.toLocaleString()}</div>
-                <div className="metric-label">{locale === "th" ? "รายได้/เดือน" : "Income / mo"}</div>
+                <div className="metric-label">{locale === "th" ? "รายได้/เดือน" : locale === "zh" ? "月收入" : "Income / mo"}</div>
               </div>
             )}
             {city.metrics.pm25Annual && (
@@ -311,7 +311,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
             {city.metrics.hospitalBedsPer10k && (
               <div className="metric-card">
                 <div className="metric-value">{city.metrics.hospitalBedsPer10k}</div>
-                <div className="metric-label">{locale === "th" ? "เตียง/หมื่น" : "Beds / 10K"}</div>
+                <div className="metric-label">{locale === "th" ? "เตียง/หมื่น" : locale === "zh" ? "每万人床位" : "Beds / 10K"}</div>
               </div>
             )}
             {city.metrics.crimeRatePer100k && (
@@ -319,13 +319,13 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 <div className={`metric-value ${city.metrics.crimeRatePer100k > 200 ? "metric-warning" : ""}`}>
                   {city.metrics.crimeRatePer100k}
                 </div>
-                <div className="metric-label">{locale === "th" ? "อาชญากรรม/แสน" : "Crime / 100K"}</div>
+                <div className="metric-label">{locale === "th" ? "อาชญากรรม/แสน" : locale === "zh" ? "每十万犯罪" : "Crime / 100K"}</div>
               </div>
             )}
             {city.metrics.greenCoverage && (
               <div className="metric-card">
                 <div className="metric-value">{city.metrics.greenCoverage}%</div>
-                <div className="metric-label">{locale === "th" ? "สีเขียว" : "Green %"}</div>
+                <div className="metric-label">{locale === "th" ? "สีเขียว" : locale === "zh" ? "绿地 %" : "Green %"}</div>
               </div>
             )}
           </div>
@@ -334,8 +334,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
       {/* ─── HIGHLIGHTS ─── */}
       <section className="section">
-        <p className="eyebrow">{locale === "th" ? "จุดเด่น" : "Evidence"}</p>
-        <h2>{locale === "th" ? "สิ่งที่ทำได้จริง" : "What actually works"}</h2>
+        <p className="eyebrow">{locale === "th" ? "จุดเด่น" : locale === "zh" ? "重点证据" : "Evidence"}</p>
+        <h2>{locale === "th" ? "สิ่งที่ทำได้จริง" : locale === "zh" ? "真正运作的东西" : "What actually works"}</h2>
         <ul className="highlights-list">
           {city.highlights.map((h, i) => (
             <li key={i} className="highlight-item">{h}</li>
@@ -359,7 +359,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                   <span className="evidence-date">{e.date}</span>
                 </div>
                 <div className="evidence-title">
-                  {locale === "th" ? e.titleTh : e.titleEn}
+                  {locale === "th" ? e.titleTh : locale === "zh" ? e.titleZh : e.titleEn}
                 </div>
                 <div className="evidence-source">
                   {e.url ? (
