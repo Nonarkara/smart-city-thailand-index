@@ -1,6 +1,17 @@
 import { useMemo } from "react";
 import { getCityById } from "./cityData";
 import {
+  CITY_PLANNING_DATASET_CSV,
+  FINANCE_MECHANISMS,
+  GLOBAL_MODELS,
+  PLANNING_STEPS,
+  RESOURCES,
+  TOOLKITS,
+  getCityDomainProxies,
+  getCityPlanningProfile,
+  getLocalizedPlanningStatus,
+} from "./cityPlanning";
+import {
   getCityName,
   getCityRealityLabel,
   getCityTagline,
@@ -187,6 +198,7 @@ function ScoreBreakdown({
 export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const city = useMemo(() => getCityById(cityId), [cityId]);
   const evidence = useMemo(() => getEvidenceForCity(cityId), [cityId]);
+  const planningProfile = useMemo(() => getCityPlanningProfile(cityId), [cityId]);
 
   if (!city) {
     return (
@@ -204,6 +216,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const cityName = getCityName(city, locale);
   const provinceName = getProvinceName(city, locale);
   const cityTagline = getCityTagline(city, locale);
+  const domainProxies = getCityDomainProxies(city);
+  const planningCsvHref = `data:text/csv;charset=utf-8,${encodeURIComponent(CITY_PLANNING_DATASET_CSV)}`;
 
   return (
     <>
@@ -271,6 +285,224 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         <h2>{locale === "th" ? "ตัวเลขมาจากไหน" : locale === "zh" ? "这些数字怎么来的" : "Where the numbers come from"}</h2>
         <ScoreBreakdown scores={city.scores} locale={locale} />
       </section>
+
+      {planningProfile && (
+        <>
+          <section className="section">
+            <div className="planning-section-header">
+              <div>
+                <p className="eyebrow">
+                  {translate(locale, { en: "Planning stack", th: "แผนเดินเมือง", zh: "规划栈" })}
+                </p>
+                <h2>
+                  {translate(locale, {
+                    en: "Five steps from badge to delivery",
+                    th: "ห้าขั้นจากตราไปสู่การส่งมอบจริง",
+                    zh: "从徽章走到交付的五个步骤",
+                  })}
+                </h2>
+              </div>
+              <a
+                className="ghost-button csv-download"
+                href={planningCsvHref}
+                download="city-planning-profiles.csv"
+              >
+                {translate(locale, {
+                  en: "Download planning CSV",
+                  th: "ดาวน์โหลด CSV แผนเมือง",
+                  zh: "下载规划 CSV",
+                })}
+              </a>
+            </div>
+            <p className="section-intro">
+              {translate(locale, {
+                en: "This is the city-delivery view: vision, infrastructure, data platform, business model, and partnerships. It turns the index into a practical operating brief.",
+                th: "นี่คือมุมมองแบบส่งมอบจริงของเมือง: วิสัยทัศน์ โครงสร้างพื้นฐาน แพลตฟอร์มข้อมูล โมเดลธุรกิจ และพันธมิตร ทำให้ดัชนีกลายเป็น operating brief ที่ใช้งานได้",
+                zh: "这是城市交付视角：愿景、基础设施、数据平台、商业模式与伙伴关系。它把指数变成一份能拿去工作的操作简报。",
+              })}
+            </p>
+            <div className="planning-stack">
+              {PLANNING_STEPS.map(step => (
+                <div key={step.id} className="planning-step">
+                  <div className="planning-step-header-row">
+                    <div>
+                      <h3 className="planning-step-title">{step.label[locale]}</h3>
+                      <p className="planning-step-desc">{step.description[locale]}</p>
+                    </div>
+                    <span className={`planning-step-status planning-step-status-${planningProfile.stepStatus[step.id]}`}>
+                      {getLocalizedPlanningStatus(planningProfile.stepStatus[step.id], locale)}
+                    </span>
+                  </div>
+                  <p className="planning-step-note">{planningProfile.stepNotes[step.id][locale]}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="section">
+            <p className="eyebrow">
+              {translate(locale, { en: "Finance + delivery", th: "การเงิน + กลไกส่งมอบ", zh: "融资与交付" })}
+            </p>
+            <h2>
+              {translate(locale, {
+                en: "What could actually finance the next move",
+                th: "อะไรที่ใช้จ่ายเงินสำหรับก้าวถัดไปได้จริง",
+                zh: "什么机制真的能支撑下一步",
+              })}
+            </h2>
+            <p className="section-intro">
+              {planningProfile.deliveryNote[locale]}{" "}
+              {translate(locale, {
+                en: "These are fit-for-purpose mechanisms based on city maturity and domain mix, not verified live contracts.",
+                th: "นี่คือกลไกที่เหมาะกับบริบทของเมืองตามระดับความพร้อมและมิติที่กำลังขับเคลื่อน ไม่ใช่สัญญาที่ยืนยันแล้วว่าใช้อยู่จริง",
+                zh: "这些是根据城市成熟度与领域组合推导出的适配机制，不是已经核实在执行中的真实合同。",
+              })}
+            </p>
+            <div className="finance-grid">
+              {[planningProfile.primaryFinance, planningProfile.secondaryFinance].map((mechanismId, index) => {
+                const mechanism = FINANCE_MECHANISMS[mechanismId];
+                return (
+                  <div
+                    key={`${mechanismId}-${index}`}
+                    className={`finance-card ${index === 0 ? "finance-card-primary" : ""}`}
+                  >
+                    <div className="finance-card-kicker">
+                      {index === 0
+                        ? translate(locale, { en: "Lead mechanism", th: "กลไกนำ", zh: "主机制" })
+                        : translate(locale, { en: "Secondary mechanism", th: "กลไกรอง", zh: "次机制" })}
+                    </div>
+                    <h3 className="finance-card-title">{mechanism.label[locale]}</h3>
+                    <p className="finance-card-body">{mechanism.description[locale]}</p>
+                    <p className="finance-card-body finance-card-consideration">{mechanism.consideration[locale]}</p>
+                    {mechanism.tenor && (
+                      <div className="finance-card-meta">
+                        <span className="finance-card-meta-label">
+                          {translate(locale, { en: "Typical tenor", th: "ช่วงเวลาโดยทั่วไป", zh: "典型期限" })}
+                        </span>
+                        <span className="finance-card-meta-value">{mechanism.tenor[locale]}</span>
+                      </div>
+                    )}
+                    {index === 0 && planningProfile.concessionYears && (
+                      <div className="finance-card-meta">
+                        <span className="finance-card-meta-label">
+                          {translate(locale, { en: "Concession lens", th: "มุมมองสัมปทาน", zh: "特许年限视角" })}
+                        </span>
+                        <span className="finance-card-meta-value">{planningProfile.concessionYears} {translate(locale, { en: "years", th: "ปี", zh: "年" })}</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="section">
+            <p className="eyebrow">
+              {translate(locale, { en: "Seven domains", th: "7 มิติเมืองอัจฉริยะ", zh: "七大智慧城市领域" })}
+            </p>
+            <h2>
+              {translate(locale, {
+                en: "Proxy signals across the smart city stack",
+                th: "สัญญาณตัวแทนในสแต็กเมืองอัจฉริยะ",
+                zh: "贯穿智慧城市栈的代理信号",
+              })}
+            </h2>
+            <p className="section-intro">
+              {translate(locale, {
+                en: "These seven domains act as planning proxies. The score is derived from the weighted pillars already used in the index, then translated into domain-level reading.",
+                th: "7 มิตินี้ทำหน้าที่เป็นตัวแทนเชิงวางแผน คะแนนคำนวณจากเสาหลักถ่วงน้ำหนักที่ใช้ในดัชนีอยู่แล้ว แล้วแปลออกมาเป็นการอ่านระดับมิติ",
+                zh: "这七个领域被当作规划代理变量。分数来自指数里已经在用的加权支柱，再翻译成领域级读法。",
+              })}
+            </p>
+            <div className="domain-proxy-grid">
+              {domainProxies.map(proxy => (
+                <div
+                  key={proxy.dimension}
+                  className={`domain-proxy-card ${proxy.active ? "domain-proxy-card-active" : "domain-proxy-card-watch"}`}
+                >
+                  <div className="domain-proxy-head">
+                    <div>
+                      <h3 className="domain-proxy-title">{DIMENSION_LABELS[locale][proxy.dimension]}</h3>
+                      <span className="domain-proxy-state">
+                        {proxy.active
+                          ? translate(locale, { en: "Declared / visible in city profile", th: "อยู่ในโปรไฟล์เมือง", zh: "已在城市画像中声明" })
+                          : translate(locale, { en: "Not yet visible in city profile", th: "ยังไม่ปรากฏชัดในโปรไฟล์เมือง", zh: "尚未在城市画像中显性出现" })}
+                      </span>
+                    </div>
+                    <span className="domain-proxy-score">{proxy.proxyScore}</span>
+                  </div>
+                  <p className="domain-proxy-copy">{proxy.initiative[locale]}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="section">
+            <p className="eyebrow">
+              {translate(locale, { en: "Delivery stack", th: "ชุดเครื่องมือส่งมอบ", zh: "交付工具栈" })}
+            </p>
+            <h2>
+              {translate(locale, {
+                en: "Toolkits, data rails, and reference models",
+                th: "Toolkit, data rails และต้นแบบอ้างอิง",
+                zh: "工具包、数据轨道与参考模型",
+              })}
+            </h2>
+            <div className="delivery-stack-grid">
+              <div className="delivery-column">
+                <h3 className="delivery-column-title">
+                  {translate(locale, { en: "Toolkits", th: "Toolkit", zh: "工具包" })}
+                </h3>
+                <div className="delivery-list">
+                  {planningProfile.toolkitIds.map(toolkitId => {
+                    const toolkit = TOOLKITS[toolkitId];
+                    return (
+                      <div key={toolkitId} className="delivery-item">
+                        <div className="delivery-item-title">{toolkit.label[locale]}</div>
+                        <p className="delivery-item-body">{toolkit.description[locale]}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="delivery-column">
+                <h3 className="delivery-column-title">
+                  {translate(locale, { en: "Data + funding resources", th: "ทรัพยากรข้อมูล + เงินทุน", zh: "数据与资金资源" })}
+                </h3>
+                <div className="delivery-list">
+                  {planningProfile.resourceIds.map(resourceId => {
+                    const resource = RESOURCES[resourceId];
+                    return (
+                      <div key={resourceId} className="delivery-item">
+                        <div className="delivery-item-title">{resource.label[locale]}</div>
+                        <p className="delivery-item-body">{resource.description[locale]}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="delivery-column">
+                <h3 className="delivery-column-title">
+                  {translate(locale, { en: "Global reference models", th: "ต้นแบบจากต่างประเทศ", zh: "全球参考模型" })}
+                </h3>
+                <div className="delivery-list">
+                  {planningProfile.globalModelIds.map(modelId => {
+                    const model = GLOBAL_MODELS[modelId];
+                    return (
+                      <div key={modelId} className="delivery-item">
+                        <div className="delivery-item-title">{model.label[locale]}</div>
+                        <p className="delivery-item-body">{model.lesson[locale]}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* ─── SMART DIMENSIONS ─── */}
       <section className="section">

@@ -76,7 +76,7 @@ export default function SpiderAllocator({ locale, onNavigate }: Props) {
     const rawValue = Math.round((distance / maxR) * PRIORITY_TOTAL);
 
     updateWeight(PRIORITY_PILLARS[dragging].id, rawValue);
-  }, [cx, cy, dragging, maxR, n, size, updateWeight]);
+  }, [cx, cy, dragging, maxR, size, updateWeight]);
 
   return (
     <section className="section spider-section">

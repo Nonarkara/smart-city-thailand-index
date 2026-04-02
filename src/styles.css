@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap");
 
 /* ═══════════════════════════════════════════════════════════════════════
    SMART CITY THAILAND INDEX
@@ -7,8 +7,8 @@
 
 :root {
   color-scheme: light;
-  --font-heading: "Space Grotesk", "Noto Sans Thai", "Noto Sans SC", -apple-system, sans-serif;
-  --font-body: "Space Grotesk", "Noto Sans Thai", "Noto Sans SC", -apple-system, sans-serif;
+  --font-heading: "Syne", "Noto Sans Thai", "Noto Sans SC", sans-serif;
+  --font-body: "Space Grotesk", "Noto Sans Thai", "Noto Sans SC", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   /* ── Smart City Thailand logo palette ── */
   --teal: #2BBAA0;          /* logo teal - primary */
@@ -42,7 +42,9 @@ html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
   color: var(--ink);
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top left, rgba(227, 90, 25, 0.08), transparent 34%),
+    linear-gradient(180deg, #fffbf5 0%, #f6f0e6 100%);
   min-width: 320px;
   -webkit-font-smoothing: antialiased;
   line-height: 1.55;
@@ -893,8 +895,8 @@ body {
 .hero-signal-card,
 .hero-spotlight-card {
   border: 1px solid rgba(20, 17, 24, 0.12);
-  border-radius: 4px;
-  box-shadow: 8px 8px 0 rgba(20, 17, 24, 0.1);
+  border-left-width: 4px;
+  box-shadow: none;
 }
 
 .hero-signal-card {
@@ -902,6 +904,7 @@ body {
   padding: 1.05rem;
   background: var(--ink);
   color: #fffaf2;
+  border-left-color: var(--silk-blue);
 }
 
 .hero-signal-card::before {
@@ -964,6 +967,7 @@ body {
 .hero-spotlight-card {
   padding: 0.95rem 1rem 1rem;
   background: #fffaf2;
+  border-left-color: var(--saffron);
 }
 
 .hero-spotlight-list {
@@ -1029,9 +1033,10 @@ body {
 .stat-card {
   padding: 1rem 0.95rem;
   text-align: left;
-  background: #fffaf2;
+  background: rgba(255, 250, 242, 0.86);
   border: 1px solid rgba(20, 17, 24, 0.12);
-  box-shadow: 8px 8px 0 rgba(20, 17, 24, 0.08);
+  box-shadow: none;
+  border-top-width: 3px;
 }
 
 .stat-card + .stat-card::before {
@@ -1070,10 +1075,15 @@ body {
 .map-legend,
 .spider-chart-panel,
 .spider-ranking,
-.table-wrap {
+.table-wrap,
+.principle-card,
+.source-card,
+.metric-card,
+.pillar-detail-card,
+.dimension-card {
   border: 1px solid rgba(20, 17, 24, 0.12);
-  border-radius: 4px;
-  box-shadow: 8px 8px 0 rgba(20, 17, 24, 0.08);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .tier-card,
@@ -1082,17 +1092,76 @@ body {
 .map-legend,
 .spider-chart-panel,
 .spider-ranking,
-.table-wrap {
-  background: #fffaf2;
+.table-wrap,
+.principle-card,
+.source-card,
+.metric-card,
+.pillar-detail-card,
+.dimension-card {
+  background: rgba(255, 250, 242, 0.88);
 }
 
 .city-grid {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
+  gap: 0;
 }
 
 .city-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem 1rem;
+  padding: 1rem 0.15rem;
+  border-top: none;
+  border-left: none;
   border-right: none;
-  border-bottom: none;
+  border-bottom: 1px solid rgba(20, 17, 24, 0.12);
+}
+
+.city-card-top {
+  margin-bottom: 0;
+}
+
+.city-card-score-row {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  margin-bottom: 0;
+}
+
+.city-card-pillars,
+.city-card-dims,
+.city-card-tagline {
+  grid-column: 1 / -1;
+}
+
+.city-card-pillars {
+  margin-bottom: 0;
+}
+
+.city-card-dims {
+  margin-bottom: 0;
+}
+
+.city-card-tagline {
+  max-width: 54ch;
+}
+
+.city-card-status {
+  padding: 0.16rem 0.42rem;
+  border: 1px solid rgba(20, 17, 24, 0.1);
+}
+
+.mini-pillar-track,
+.pillar-bar {
+  background: rgba(20, 17, 24, 0.06);
+}
+
+.dim-chip,
+.signal-chip {
+  background: rgba(20, 17, 24, 0.05);
+  color: var(--ink-soft);
 }
 
 .callout-card {
@@ -1306,4 +1375,254 @@ button, input, select, textarea { border-radius: 0 !important; }
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+/* ═══════ CITY DELIVERY STACK ═══════ */
+.planning-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.csv-download {
+  min-height: 2.75rem;
+  text-decoration: none;
+}
+
+.planning-stack {
+  border-top: 2px solid var(--ink);
+  margin-bottom: 2.5rem;
+}
+
+.planning-step {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.planning-step-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.planning-step-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.planning-step-desc,
+.planning-step-note {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 60ch;
+}
+
+.planning-step-note {
+  margin-top: 0.5rem;
+}
+
+.planning-step-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.58rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.planning-step-status-ready {
+  background: var(--alpha-wash);
+  border-color: rgba(26, 138, 114, 0.22);
+  color: var(--alpha-ink);
+}
+
+.planning-step-status-building {
+  background: var(--beta-wash);
+  border-color: rgba(154, 122, 26, 0.22);
+  color: var(--beta-ink);
+}
+
+.planning-step-status-gap {
+  background: var(--gamma-wash);
+  border-color: rgba(184, 56, 56, 0.18);
+  color: var(--gamma-ink);
+}
+
+.finance-grid,
+.domain-proxy-grid,
+.delivery-stack-grid {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 2.5rem;
+}
+
+.finance-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.domain-proxy-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.delivery-stack-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.finance-card,
+.domain-proxy-card,
+.delivery-column {
+  padding: 1rem;
+  border: 1px solid rgba(20, 17, 24, 0.12);
+  background: rgba(255, 250, 242, 0.92);
+}
+
+.finance-card-primary {
+  background: linear-gradient(135deg, #fff1de 0%, #fffaf2 100%);
+  border-color: rgba(212, 168, 67, 0.28);
+}
+
+.finance-card-kicker,
+.delivery-column-title {
+  font-size: 0.56rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.finance-card-title,
+.domain-proxy-title {
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0.35rem 0 0.45rem;
+}
+
+.finance-card-body,
+.domain-proxy-copy,
+.delivery-item-body {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  line-height: 1.58;
+}
+
+.finance-card-consideration {
+  margin-top: 0.55rem;
+}
+
+.finance-card-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.finance-card-meta-label {
+  font-size: 0.56rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.finance-card-meta-value,
+.domain-proxy-score {
+  font-size: 1.35rem;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.domain-proxy-card-active {
+  border-color: rgba(26, 138, 114, 0.22);
+}
+
+.domain-proxy-card-watch {
+  border-color: rgba(20, 17, 24, 0.08);
+  background: rgba(255, 250, 242, 0.72);
+}
+
+.domain-proxy-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.45rem;
+}
+
+.domain-proxy-state {
+  display: inline-block;
+  font-size: 0.55rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--ink-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.delivery-column-title {
+  margin-bottom: 0.8rem;
+}
+
+.delivery-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery-item + .delivery-item {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.delivery-item-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 960px) {
+  .finance-grid,
+  .domain-proxy-grid,
+  .delivery-stack-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .planning-section-header,
+  .planning-step-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .city-card {
+    grid-template-columns: 1fr;
+    padding: 0.9rem 0.1rem;
+  }
+
+  .city-card-score-row {
+    grid-column: 1;
+    grid-row: auto;
+    flex-direction: row;
+    align-items: baseline;
+  }
 }

@@ -9,6 +9,7 @@ const MethodologyPage = lazy(() => import("./MethodologyPage"));
 const CityDetailPage = lazy(() => import("./CityDetailPage"));
 const StoryPage = lazy(() => import("./StoryPage"));
 const WhyPage = lazy(() => import("./WhyPage"));
+const ShowcasePage = lazy(() => import("./ShowcasePage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 
@@ -136,6 +137,9 @@ export default function App() {
           <button className={`nav-link ${route.kind === "why" ? "active" : ""}`} onClick={() => navigate("/why")}>
             {locale === "th" ? "ทำไม" : locale === "zh" ? "为什么" : "Why"}
           </button>
+          <button className={`nav-link ${route.kind === "showcase" ? "active" : ""}`} onClick={() => navigate("/showcase")}>
+            {locale === "th" ? "ต้นแบบ" : locale === "zh" ? "样板" : "Showcase"}
+          </button>
           <button
             className="locale-toggle"
             aria-label={locale === "en" ? "Switch language to Thai" : locale === "th" ? "Switch language to Chinese" : "Switch language to English"}
@@ -157,6 +161,8 @@ export default function App() {
             <StoryPage locale={locale} onNavigate={navigate} />
           ) : route.kind === "why" ? (
             <WhyPage locale={locale} onNavigate={navigate} />
+          ) : route.kind === "showcase" ? (
+            <ShowcasePage locale={locale} onNavigate={navigate} />
           ) : route.kind === "city" ? (
             <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
           ) : (

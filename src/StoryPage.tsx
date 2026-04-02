@@ -58,7 +58,7 @@ const timeline: TimelineEvent[] = [
     titleZh: "首尔双年展、总理视察，走向全球",
     bodyEn: "The year Thailand's smart city program goes truly international. The team exhibits at the Seoul Biennale of Architecture and Urbanism — Thailand's pavilion, 'Towards the Future of Smart Urbanity,' showcases Bangkok's 'urban presence' with architectural models and Dr. Non's research. The depa smart city team is displayed on a yellow exhibition wall. Prime Minister Prayuth visits the 'Smart Cities, Connecting ASEAN' exhibition. Back home, 27 cities submit their smart city plans to the National Committee. Dr. Non speaks at the ASCN podium. The team travels to Korea for the Seoul Biennale of Architecture and Urbanism partnership. Late nights in meeting rooms, planning the next decade.",
     bodyTh: "ปีที่โปรแกรมเมืองอัจฉริยะไทยก้าวสู่สากลจริงๆ ทีมจัดแสดงที่ Seoul Biennale — พาวิลเลียนไทย 'Towards the Future of Smart Urbanity' โชว์ Bangkok urban presence ด้วยโมเดลสถาปัตยกรรมและงานวิจัยของ ดร.ณณ นายกฯ ประยุทธ์เยี่ยมชมนิทรรศการ 'Smart Cities, Connecting ASEAN' 27 เมืองส่งแผนเมืองอัจฉริยะ ดร.ณณ ขึ้นเวที ASCN ทีมเดินทางไปเกาหลี ประชุมดึกในห้องวางแผนทศวรรษหน้า",
-    bodyZh: "泰国智慧城市项目在这一年真正走向国际。团队在首尔建筑与城市双年展上参展，泰国馆主题为"走向智慧城市的未来"，展示曼谷的"城市存在"，配合建筑模型与 Non 博士的研究成果。总理巴育参观"Smart Cities, Connecting ASEAN"展览。27 座城市向国家委员会提交智慧城市规划。Non 博士在 ASCN 讲台上发言。团队为了规划未来十年，深夜还在会议室里讨论。",
+    bodyZh: "泰国智慧城市项目在这一年真正走向国际。团队在首尔建筑与城市双年展上参展，泰国馆主题为「走向智慧城市的未来」，展示曼谷的「城市存在」，配合建筑模型与 Non 博士的研究成果。总理巴育参观「Smart Cities, Connecting ASEAN」展览。27 座城市向国家委员会提交智慧城市规划。Non 博士在 ASCN 讲台上发言。团队为了规划未来十年，深夜还在会议室里讨论。",
     photos: [
       "depa x korea SBAU2019.jpg",
       "IMG_7331.JPG",
@@ -81,7 +81,7 @@ const timeline: TimelineEvent[] = [
     titleZh: "文化转向：黑客松、豆袋与设计思维",
     bodyEn: "Dr. Non runs the first 'Co-Founder Dating' hackathon — matching city problems with startup solutions. Not in Silicon Valley fashion, but Thai-style: on bean bags, in co-working spaces, with food. He launches the ASEAN Startup Hackathon at depa's Bangkok headquarters. Students and young professionals flood in. The Smart City Leadership (SCL) program begins — training local officials not in technology procurement but in design thinking, citizen engagement, and service design. The paradigm shifts from 'deploy sensors' to 'understand what citizens actually need.' The depa team poses at headquarters — yellow shirts, green carpet, a mix of government formality and startup energy.",
     bodyTh: "ดร.ณณ จัดแฮกกาธอน Co-Founder Dating ครั้งแรก — จับคู่ปัญหาเมืองกับสตาร์ทอัพ ไม่แบบ Silicon Valley แต่แบบไทย: เบาะ โคเวิร์กกิง มีอาหาร เปิด ASEAN Startup Hackathon ที่สำนักงาน depa นักศึกษาและคนรุ่นใหม่หลั่งไหลเข้ามา เริ่ม Smart City Leadership (SCL) ฝึกเจ้าหน้าที่ท้องถิ่นด้วย design thinking การมีส่วนร่วม service design ทีม depa ถ่ายรูปที่สำนักงาน — เสื้อเหลือง หญ้าเทียมเขียว ผสมความเป็นทางการกับพลังสตาร์ทอัพ",
-    bodyZh: "Non 博士发起首次"Co-Founder Dating"黑客松，把城市问题和创业解决方案配对。不是硅谷那一套，而是泰式：豆袋、共享空间、食物。他在 depa 曼谷总部启动 ASEAN Startup Hackathon，学生和年轻人涌入。SCL 项目启动，训练地方官员的重点不是怎么买技术，而是设计思维、市民参与和服务设计。范式转变：从"部署传感器"到"先弄清市民到底需要什么"。",
+    bodyZh: "Non 博士发起首次「Co-Founder Dating」黑客松，把城市问题和创业解决方案配对。不是硅谷那一套，而是泰式：豆袋、共享空间、食物。他在 depa 曼谷总部启动 ASEAN Startup Hackathon，学生和年轻人涌入。SCL 项目启动，训练地方官员的重点不是怎么买技术，而是设计思维、市民参与和服务设计。范式转变：从「部署传感器」到「先弄清市民到底需要什么」。",
     photos: [
       "IMG_6691.JPG",
       "350263.jpg",
@@ -105,7 +105,7 @@ const timeline: TimelineEvent[] = [
     titleZh: "Smart City Week、汉堡模型、CSCO 与 COVID",
     bodyEn: "Thailand launches Smart City Week 2020 at True Digital Park — the country's biggest smart city event. Dr. Non presents the 'Smart City Hamburger' framework: technology is just the meat; governance and citizen engagement are the buns. The metaphor sticks. The first Chief Smart City Officer (CSCO) training program launches — SC20 W20. Mastercard partners with depa, bringing 27 Thai cities into the City Possible network. The first Smart City Competitiveness Index (TSCCI) is developed. 4 cities receive initial Smart City status. Then COVID hits. The team pivots to digital governance — citizen reporting, telemedicine, smart health monitoring. The crisis proves the citizen-centric approach: cities with strong citizen engagement handle the pandemic better. The committee meets. The provincial teams visit. Late-night group photos after SCL training batches.",
     bodyTh: "ไทยจัด Smart City Week 2020 ที่ True Digital Park — งานเมืองอัจฉริยะใหญ่ที่สุด ดร.ณณ นำเสนอ Smart City Hamburger: เทคโนโลยีเป็นเนื้อ การปกครองและการมีส่วนร่วมเป็นขนมปัง เปิดตัวโปรแกรม Chief Smart City Officer (CSCO) SC20 W20 Mastercard ร่วมมือกับ depa นำ 27 เมืองเข้า City Possible พัฒนา TSCCI 4 เมืองได้สถานะเบื้องต้น COVID มา ทีมปรับตัว — digital governance ระบบรายงาน telemedicine เฝ้าระวังสุขภาพ วิกฤตพิสูจน์ว่าแนวทางเน้นประชาชนได้ผล",
-    bodyZh: "2020 年，Smart City Week 在 True Digital Park 举办。Non 博士提出"智慧城市汉堡"框架——技术只是中间的肉，治理和市民参与才是面包。首个 CSCO 培训项目 SC20 W20 启动。Mastercard 合作将 27 座城市纳入 City Possible 网络。TSCCI 首版完成。4 座城市获得初步认证。然后 COVID 来了。团队转向数字治理。危机证明了市民中心路径是对的。",
+    bodyZh: "2020 年，Smart City Week 在 True Digital Park 举办。Non 博士提出「智慧城市汉堡」框架——技术只是中间的肉，治理和市民参与才是面包。首个 CSCO 培训项目 SC20 W20 启动。Mastercard 合作将 27 座城市纳入 City Possible 网络。TSCCI 首版完成。4 座城市获得初步认证。然后 COVID 来了。团队转向数字治理。危机证明了市民中心路径是对的。",
     photos: [
       "_K635402.jpg",
       "1-57.jpg",
@@ -127,7 +127,7 @@ const timeline: TimelineEvent[] = [
     titleZh: "第一批：15 城获标识，Hitachi Review 发表",
     bodyEn: "The Smart City Thailand committee awards the official Smart City Local logo to 15 cities. Deputy PM Prawit Wongsuwan presents them. The list: Chiang Mai, CMU, Mae Moh, Nakhonsawan, Khon Kaen, Samyan, Phra Ram 4, Klong Phadung, Makkasan, Chachoengsao, Saensuk, Wangchan Valley, Phuket, Sri Trang, and Yala. Dr. Non publishes 'Smart City Initiatives in Thailand: Key Concepts and Methods' in Hitachi Review — the definitive articulation of the citizen-centric approach for international audiences. It becomes required reading across ASEAN. Design thinking workshops intensify across the country. Shell partners with depa on 'Imagine the Future.'",
     bodyTh: "คณะกรรมการมอบตราสัญลักษณ์เมืองอัจฉริยะ 15 เมือง รุ่นที่ 1 รอง นรม. ประวิตร มอบ ดร.ณณ ตีพิมพ์ใน Hitachi Review เวิร์กช็อป design thinking ทั่วประเทศเข้มข้นขึ้น Shell ร่วมมือกับ depa ในโครงการ Imagine the Future",
-    bodyZh: "委员会向首批 15 座城市颁发 Smart City Local 标识。Non 博士在《Hitachi Review》发表文章，系统地向国际读者阐述以市民为中心的方法论。Shell 与 depa 合作推出"Imagine the Future"项目。",
+    bodyZh: "委员会向首批 15 座城市颁发 Smart City Local 标识。Non 博士在《Hitachi Review》发表文章，系统地向国际读者阐述以市民为中心的方法论。Shell 与 depa 合作推出「Imagine the Future」项目。",
     photos: [
       "35663858.1bc37816278448879bdf3935d73727f4.21021520.JPG",
       "IMG_7760.JPG",

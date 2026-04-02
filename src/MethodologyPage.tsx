@@ -1,7 +1,6 @@
+import { SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_LABELS, PILLAR_COLORS, PILLAR_WEIGHTS } from "./types";
-
-const PILLAR_ORDER: ScoringPillar[] = ["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"];
 
 interface Props {
   locale: Locale;
@@ -118,7 +117,7 @@ export default function MethodologyPage({ locale }: Props) {
         </p>
 
         <div className="methodology-pillars">
-          {PILLAR_ORDER.map(p => {
+          {SCORING_PILLARS.map(p => {
             const desc = pillarDescriptions[p];
             return (
               <div key={p} className="methodology-pillar-card">

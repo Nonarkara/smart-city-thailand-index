@@ -910,7 +910,7 @@ export function getCityDomainProxies(city: SmartCity): DomainProxy[] {
 }
 
 function csvEscape(value: string): string {
-  return `"${value.replaceAll(`"`, `""`)}"`;
+  return `"${value.replace(/"/g, `""`)}"`;
 }
 
 export const CITY_PLANNING_DATASET_CSV = [
@@ -963,7 +963,7 @@ export function getLocalizedPlanningStatus(status: PlanningStepStatus, locale: L
 
 export function getLocalizedFinanceMechanism(
   mechanismId: FinanceMechanismId,
-  locale: Locale,
+  _locale: Locale,
 ): FinanceMechanismDefinition {
   return FINANCE_MECHANISMS[mechanismId];
 }

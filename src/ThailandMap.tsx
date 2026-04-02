@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { allCities } from "./cityData";
+import { getCityName, translate } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
 import { TIER_LABELS } from "./types";
 
@@ -87,10 +88,14 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
   return (
     <section className="section map-section">
       <p className="eyebrow">
-        {locale === "th" ? "แผนที่" : locale === "zh" ? "地图" : "Geography"}
+        {translate(locale, { en: "Geography", th: "แผนที่", zh: "地图" })}
       </p>
       <h2>
-        {locale === "th" ? "49 เมืองที่เราติดตามในเวอร์ชันนี้" : locale === "zh" ? "本版本追踪的 49 座城市" : "49 cities profiled in this release"}
+        {translate(locale, {
+          en: `${allCities.length} cities profiled in this release`,
+          th: `${allCities.length} เมืองที่เราติดตามในเวอร์ชันนี้`,
+          zh: `本版本追踪的 ${allCities.length} 座城市`,
+        })}
       </h2>
 
       <div className="map-layout">
@@ -116,7 +121,7 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
                     strokeWidth={city.status === "certified" ? 1.5 : 0}
                     tabIndex={0}
                     role="button"
-                    aria-label={`${locale === "th" ? city.nameTh : city.nameEn}, ${city.compositeScore.toFixed(1)}`}
+                    aria-label={`${getCityName(city, locale)}, ${city.compositeScore.toFixed(1)}`}
                     style={{ cursor: "pointer", transition: "opacity 0.15s" }}
                     onClick={() => onNavigate(`/city/${city.id}`)}
                     onKeyDown={event => {
@@ -140,7 +145,7 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
               <g transform={`translate(${tooltipPos.x + 10}, ${tooltipPos.y - 8})`}>
                 <rect x="0" y="-12" width="120" height="30" fill="var(--ink)" rx="0" opacity="0.92" />
                 <text x="6" y="1" fontSize="7" fontWeight="700" fill="white" fontFamily="var(--font-body)">
-                  {locale === "th" ? hovered.nameTh : hovered.nameEn}
+                  {getCityName(hovered, locale)}
                 </text>
                 <text x="6" y="12" fontSize="6" fill="rgba(255,255,255,0.6)" fontFamily="var(--font-mono)" fontWeight="600">
                   {hovered.compositeScore.toFixed(1)} · {TIER_LABELS[locale][hovered.tier]}
