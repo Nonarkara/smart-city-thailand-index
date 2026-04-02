@@ -1,7 +1,10 @@
 import { getCityById } from "./cityData";
 import {
   CITY_PLANNING_DATASET_CSV,
+  getCityActionRecommendations,
   getCityDomainProxies,
+  getCityFinanceBlueprint,
+  getCityPlanningDatasetRow,
   getCityPlanningProfile,
 } from "./cityPlanning";
 
@@ -26,5 +29,21 @@ describe("city planning layer", () => {
   it("exports a CSV-shaped dataset for the planning layer", () => {
     expect(CITY_PLANNING_DATASET_CSV).toContain("cityId");
     expect(CITY_PLANNING_DATASET_CSV).toContain("phuket");
+  });
+
+  it("derives concrete next-step recommendations for a city", () => {
+    const actions = getCityActionRecommendations("phuket");
+
+    expect(actions).toHaveLength(3);
+    expect(actions[0].title.en.length).toBeGreaterThan(0);
+  });
+
+  it("builds a machine-readable row and finance blueprint for a city", () => {
+    const row = getCityPlanningDatasetRow("phuket");
+    const blueprint = getCityFinanceBlueprint("phuket");
+
+    expect(row?.primaryFinance).toBeTruthy();
+    expect(row?.leadRevenueModel).toContain(" ");
+    expect(blueprint?.revenueLogic.en.length).toBeGreaterThan(0);
   });
 });

@@ -6,8 +6,8 @@ describe("ThailandMap", () => {
     const onNavigate = vi.fn();
     render(<ThailandMap locale="en" onNavigate={onNavigate} />);
 
-    const markers = screen.getAllByRole("button");
-    fireEvent.keyDown(markers[0], { key: "Enter" });
+    const marker = screen.getByLabelText(/Phuket Smart City/i);
+    fireEvent.keyDown(marker, { key: "Enter" });
 
     expect(onNavigate).toHaveBeenCalled();
   });

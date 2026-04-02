@@ -1,72 +1,47 @@
-import { lazy, Suspense, useMemo, useState } from "react";
-import { allCities, getCityById } from "./cityData";
+import { useMemo, useState } from "react";
+import { allCities, getCityById, promotionZoneCities } from "./cityData";
 import { filterCities, getSpotlightCities, sortCities, summarizeCities } from "./cityCollections";
 import {
   getCityName,
+  getCityRealityLabel,
   getCityStatusLabel,
+  getCityTagline,
   getProvinceName,
   translate,
 } from "./cityPresentation";
-import { SCORING_PILLARS } from "./scoring";
 import type { CityTier, Locale, SmartCity } from "./types";
-import { PILLAR_COLORS, TIER_LABELS } from "./types";
-
-const SpiderAllocator = lazy(() => import("./SpiderAllocator"));
-const ThailandMap = lazy(() => import("./ThailandMap"));
-
-const PHOTO_STRIP_ITEMS = [
-  {
-    id: "samyan",
-    fallbackLabel: "Bangkok",
-    src: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600&h=340&fit=crop",
-  },
-  {
-    id: "phuket",
-    fallbackLabel: "Phuket",
-    src: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&h=340&fit=crop",
-  },
-  {
-    id: "chiang-mai-old-town",
-    fallbackLabel: "Chiang Mai",
-    src: "https://images.unsplash.com/photo-1598935898639-81586f7d2129?w=600&h=340&fit=crop",
-  },
-  {
-    id: "khon-kaen",
-    fallbackLabel: "Khon Kaen",
-    src: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=600&h=340&fit=crop",
-  },
-  {
-    id: "krabi",
-    fallbackLabel: "Krabi",
-    src: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&h=340&fit=crop",
-  },
-] as const;
+import { TIER_LABELS } from "./types";
 
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
 }
 
-function TierBadge({ tier, locale }: { tier: CityTier; locale: Locale }) {
-  return (
-    <span className={`tier-badge tier-${tier}`}>
-      {tier === "alpha" ? "α" : tier === "beta" ? "β" : "γ"} {TIER_LABELS[locale][tier]}
-    </span>
-  );
-}
+const REGION_LABELS: Record<SmartCity["region"], { en: string; th: string; zh: string }> = {
+  bangkok: { en: "Bangkok", th: "กรุงเทพฯ", zh: "曼谷" },
+  central: { en: "Central", th: "ภาคกลาง", zh: "中部" },
+  east: { en: "East", th: "ภาคตะวันออก", zh: "东部" },
+  north: { en: "North", th: "ภาคเหนือ", zh: "北部" },
+  northeast: { en: "Northeast", th: "อีสาน", zh: "东北部" },
+  south: { en: "South", th: "ภาคใต้", zh: "南部" },
+};
 
-function PillarBar({ pillar, value }: { pillar: (typeof SCORING_PILLARS)[number]; value: number }) {
+function DashboardMetric({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number;
+}) {
   return (
-    <div className="pillar-bar">
-      <div
-        className="pillar-bar-fill"
-        style={{ width: `${value}%`, background: PILLAR_COLORS[pillar] }}
-      />
+    <div className="dashboard-metric-card">
+      <span className="dashboard-metric-value">{value}</span>
+      <span className="dashboard-metric-label">{label}</span>
     </div>
   );
 }
 
-function CityRow({
+function RankingRow({
   city,
   locale,
   onNavigate,
@@ -77,43 +52,100 @@ function CityRow({
   onNavigate: (path: string) => void;
   rank: number;
 }) {
-  const path = `/city/${city.id}`;
   const cityName = getCityName(city, locale);
-  const provinceName = getProvinceName(city, locale);
+  const cityPath = `/city/${city.id}`;
 
   return (
-    <tr
-      className="city-row"
+    <button
+      type="button"
+      className="dashboard-ranking-row"
       role="link"
-      tabIndex={0}
-      aria-label={`${cityName}, ${provinceName}`}
-      onClick={() => onNavigate(path)}
+      aria-label={`${cityName}, ${getProvinceName(city, locale)}`}
+      onClick={() => onNavigate(cityPath)}
       onKeyDown={event => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          onNavigate(path);
+          onNavigate(cityPath);
         }
       }}
     >
-      <td className="city-rank">{rank}</td>
-      <td className="city-name-cell">
-        <div className="city-name">{cityName}</div>
-        <div className="city-province">{provinceName}</div>
-      </td>
-      <td className="city-tier-cell">
-        <TierBadge tier={city.tier} locale={locale} />
-      </td>
-      <td className="city-score">{city.compositeScore.toFixed(1)}</td>
-      <td className="city-status-cell">
-        <span className={`status-dot status-${city.reality}`} />
-        {getCityStatusLabel(city.status, locale)}
-      </td>
-      <td className="pillar-bars-cell">
-        {SCORING_PILLARS.map(pillar => (
-          <PillarBar key={pillar} pillar={pillar} value={city.scores[pillar]} />
-        ))}
-      </td>
-    </tr>
+      <span className="dashboard-ranking-rank">{String(rank).padStart(2, "0")}</span>
+      <div className="dashboard-ranking-main">
+        <span className="dashboard-ranking-name">{cityName}</span>
+        <span className="dashboard-ranking-meta">
+          {getProvinceName(city, locale)} · {TIER_LABELS[locale][city.tier]} · {getCityStatusLabel(city.status, locale)}
+        </span>
+      </div>
+      <div className="dashboard-ranking-scoreblock">
+        <span className="dashboard-ranking-score">{city.compositeScore.toFixed(1)}</span>
+        <span className={`dashboard-ranking-reality dashboard-ranking-reality-${city.reality}`}>
+          {getCityRealityLabel(city.reality, locale)}
+        </span>
+      </div>
+    </button>
+  );
+}
+
+function SpotlightRow({
+  city,
+  locale,
+  onNavigate,
+  rank,
+}: {
+  city: SmartCity;
+  locale: Locale;
+  onNavigate: (path: string) => void;
+  rank: number;
+}) {
+  return (
+    <button
+      type="button"
+      className="dashboard-spotlight-row"
+      onClick={() => onNavigate(`/city/${city.id}`)}
+    >
+      <span className="dashboard-spotlight-rank">{String(rank).padStart(2, "0")}</span>
+      <div className="dashboard-spotlight-copy">
+        <span className="dashboard-spotlight-name">{getCityName(city, locale)}</span>
+        <span className="dashboard-spotlight-meta">
+          {TIER_LABELS[locale][city.tier]} · {getCityRealityLabel(city.reality, locale)}
+        </span>
+      </div>
+      <span className="dashboard-spotlight-score">{city.compositeScore.toFixed(1)}</span>
+    </button>
+  );
+}
+
+function SignalCard({
+  title,
+  city,
+  locale,
+  onNavigate,
+  tone,
+  note,
+}: {
+  title: string;
+  city: SmartCity;
+  locale: Locale;
+  onNavigate: (path: string) => void;
+  tone: "good" | "watch" | "risk";
+  note: string;
+}) {
+  return (
+    <button
+      type="button"
+      className={`dashboard-signal-card dashboard-signal-card-${tone}`}
+      onClick={() => onNavigate(`/city/${city.id}`)}
+    >
+      <span className="dashboard-signal-kicker">{title}</span>
+      <div className="dashboard-signal-head">
+        <strong>{getCityName(city, locale)}</strong>
+        <span>{city.compositeScore.toFixed(1)}</span>
+      </div>
+      <p className="dashboard-signal-meta">
+        {TIER_LABELS[locale][city.tier]} · {getCityRealityLabel(city.reality, locale)} · {getCityStatusLabel(city.status, locale)}
+      </p>
+      <p className="dashboard-signal-note">{note}</p>
+    </button>
   );
 }
 
@@ -122,280 +154,159 @@ export default function HomePage({ locale, onNavigate }: Props) {
   const [tierFilter, setTierFilter] = useState<"all" | CityTier>("all");
 
   const stats = useMemo(() => summarizeCities(allCities), []);
-  const spotlightCities = useMemo(() => getSpotlightCities(allCities), []);
+  const spotlightCities = useMemo(() => getSpotlightCities(allCities, 5), []);
   const previewCities = useMemo(() => {
-    const filteredCities = filterCities(allCities, {
-      status: statusFilter,
-      tier: tierFilter,
-    });
-    return sortCities(filteredCities).slice(0, 12);
+    return sortCities(
+      filterCities(allCities, {
+        status: statusFilter,
+        tier: tierFilter,
+      }),
+    ).slice(0, 24);
   }, [statusFilter, tierFilter]);
-  const photoStripCities = useMemo(() => {
-    return PHOTO_STRIP_ITEMS.map(item => ({
-      ...item,
-      city: getCityById(item.id),
-    }));
+
+  const regionPulse = useMemo(() => {
+    const grouped = new Map<SmartCity["region"], { cities: SmartCity[]; scoreSum: number; operational: number }>();
+
+    allCities.forEach(city => {
+      const current = grouped.get(city.region) ?? { cities: [], scoreSum: 0, operational: 0 };
+      current.cities.push(city);
+      current.scoreSum += city.compositeScore;
+      if (city.reality === "operational") current.operational += 1;
+      grouped.set(city.region, current);
+    });
+
+    return Array.from(grouped.entries())
+      .map(([region, summary]) => {
+        const topCity = sortCities(summary.cities)[0];
+
+        return {
+          region,
+          total: summary.cities.length,
+          operational: summary.operational,
+          avgScore: Number((summary.scoreSum / summary.cities.length).toFixed(1)),
+          topCity,
+        };
+      })
+      .sort((left, right) => right.avgScore - left.avgScore);
+  }, []);
+
+  const operationalLeader = useMemo(() => {
+    return sortCities(allCities.filter(city => city.reality === "operational"))[0];
+  }, []);
+
+  const promotionLeader = useMemo(() => {
+    return sortCities(promotionZoneCities)[0];
+  }, []);
+
+  const realityGapCity = useMemo(() => {
+    return getCityById("wangchan-valley") ?? sortCities(allCities.filter(city => city.reality === "planned"))[0];
+  }, []);
+
+  const realityCounts = useMemo(() => {
+    return {
+      operational: allCities.filter(city => city.reality === "operational").length,
+      partial: allCities.filter(city => city.reality === "partial").length,
+      planned: allCities.filter(city => city.reality === "planned").length,
+    };
   }, []);
 
   return (
-    <>
-      <section className="hero section">
-        <div className="hero-grid">
-          <div className="hero-copy">
+    <div className="dashboard-home">
+      <section className="dashboard-panel dashboard-hero-panel">
+        <div className="dashboard-panel-head dashboard-panel-head-hero">
+          <div>
             <p className="eyebrow">
               {translate(locale, {
-                en: "Smart City Thailand Index — 2026",
-                th: "ดัชนีเมืองอัจฉริยะประเทศไทย — 2026",
-                zh: "泰国智慧城市指数 — 2026",
+                en: "Smart City Thailand Index · 2026 dashboard",
+                th: "ดัชนีเมืองอัจฉริยะไทย · แดชบอร์ด 2026",
+                zh: "泰国智慧城市指数 · 2026 仪表盘",
               })}
             </p>
-            <h1 className="hero-title">
-              {locale === "th"
-                ? <>ไม่ใช่แผน<br />แต่คือความจริง</>
-                : locale === "zh"
-                  ? <>不是规划。<br />而是现实校验。</>
-                  : <>Not a plan.<br />A reality check.</>}
+            <h1 className="dashboard-title">
+              {translate(locale, {
+                en: "Reality, not ribbon-cutting.",
+                th: "เอาความจริง ไม่เอาพิธีตัดริบบิ้น",
+                zh: "看现实，不看剪彩。",
+              })}
             </h1>
-            <p className="hero-strapline">
+            <p className="dashboard-copy">
               {translate(locale, {
-                en: `${stats.total} smart cities grouped by what actually exists, not what was promised in a deck. Cities with outcomes rise. Cities with logos and empty land sink.`,
-                th: `${stats.total} เมืองอัจฉริยะที่เราจัดกลุ่มจากสิ่งที่มีอยู่จริง ไม่ใช่สิ่งที่เขียนไว้ในสไลด์ เมืองที่มีผลลัพธ์ขึ้น เมืองที่มีแต่โลโก้กับที่ดินว่างตกลง`,
-                zh: `${stats.total} 座智慧城市按真实落地结果分组，不按幻灯片里的承诺排场。有成果的城市会上升，只有标识和空地的城市会往下掉。`,
+                en: "No brochure mode. No whole-page scrolling. Just the Thai city fieldboard: live tiers, hard filters, and the places that still survive contact with the street.",
+                th: "ไม่มีโหมดโบรชัวร์ ไม่มีการเลื่อนทั้งหน้า มีแต่กระดานสนามจริงของเมืองไทย: ชั้นคะแนน ตัวกรอง และเมืองที่ยังรอดเมื่อเจอของจริงบนถนน",
+                zh: "没有宣传册模式，也没有整页滚动。这里只有泰国城市现场看板：真实分层、硬过滤，以及经得住街头现实检验的城市。",
               })}
             </p>
-            <div className="hero-actions">
-              <button className="cta-button" onClick={() => onNavigate("/rankings")}>
-                {translate(locale, {
-                  en: "View full rankings",
-                  th: "ดูอันดับทั้งหมด",
-                  zh: "查看完整排名",
-                })}
-              </button>
-              <button className="ghost-button" onClick={() => onNavigate("/story")}>
-                {translate(locale, {
-                  en: "Read the backstory",
-                  th: "ดูเรื่องราวเบื้องหลัง",
-                  zh: "查看背后故事",
-                })}
-              </button>
-            </div>
-            <div className="hero-scanline" aria-label="Index summary">
-              <span>{stats.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城" })}</span>
-              <span>{stats.certified} {translate(locale, { en: "certified", th: "รับรอง", zh: "认证" })}</span>
-              <span>{stats.promotion} {translate(locale, { en: "promotion zones", th: "เขตส่งเสริม", zh: "推广区" })}</span>
-              <span>{stats.operational} {translate(locale, { en: "operational", th: "ใช้งานจริง", zh: "真实运行" })}</span>
-            </div>
           </div>
-
-          <div className="hero-rail">
-            <div className="hero-signal-card">
-              <p className="hero-panel-kicker">
-                {translate(locale, {
-                  en: "Field signal",
-                  th: "สนามจริง",
-                  zh: "现场信号",
-                })}
-              </p>
-              <div className="hero-panel-headline">
-                {translate(locale, {
-                  en: "We score cities by what actually runs",
-                  th: "เราวัดเมืองจากของที่เดินอยู่จริง",
-                  zh: "我们按真实运转的东西给城市打分",
-                })}
-              </div>
-              <p className="hero-panel-copy">
-                {translate(locale, {
-                  en: "Not by PowerPoint. Not by logos. Not by declarations. If the result is not visible in the city, the score does not move.",
-                  th: "ไม่ใช่ PowerPoint ไม่ใช่โลโก้ ไม่ใช่คำประกาศ ถ้าไม่มีผลลัพธ์ในเมือง คะแนนก็ไม่ขยับ",
-                  zh: "不是 PPT，不是徽章，不是口号。城市里看不到结果，分数就不会自己动起来。",
-                })}
-              </p>
-              <div className="hero-signal-grid">
-                <div className="hero-mini-metric">
-                  <span className="hero-mini-label">Alpha</span>
-                  <strong>{stats.alpha}</strong>
-                </div>
-                <div className="hero-mini-metric">
-                  <span className="hero-mini-label">Beta</span>
-                  <strong>{stats.beta}</strong>
-                </div>
-                <div className="hero-mini-metric">
-                  <span className="hero-mini-label">Gamma</span>
-                  <strong>{stats.gamma}</strong>
-                </div>
-                <div className="hero-mini-metric">
-                  <span className="hero-mini-label">
-                    {translate(locale, { en: "Live", th: "จริง", zh: "真实" })}
-                  </span>
-                  <strong>{stats.operational}</strong>
-                </div>
-              </div>
-            </div>
-
-            <div className="hero-spotlight-card">
-              <p className="hero-panel-kicker">
-                {translate(locale, {
-                  en: "Lead signals",
-                  th: "สัญญาณนำ",
-                  zh: "领先信号",
-                })}
-              </p>
-              <div className="hero-spotlight-list">
-                {spotlightCities.map((city, index) => (
-                  <button
-                    key={city.id}
-                    type="button"
-                    className="hero-city-chip"
-                    onClick={() => onNavigate(`/city/${city.id}`)}
-                  >
-                    <span className="hero-city-rank">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="hero-city-meta">
-                      <span className="hero-city-name">{getCityName(city, locale)}</span>
-                      <span className="hero-city-tier">{TIER_LABELS[locale][city.tier]}</span>
-                    </span>
-                    <span className="hero-city-score">{city.compositeScore.toFixed(1)}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="dashboard-action-row">
+            <button className="cta-button" onClick={() => onNavigate("/rankings")}>
+              {translate(locale, {
+                en: "Open full rankings",
+                th: "เปิดอันดับทั้งหมด",
+                zh: "打开完整排名",
+              })}
+            </button>
+            <button className="ghost-button" onClick={() => onNavigate("/methodology")}>
+              {translate(locale, {
+                en: "Why this scoring works",
+                th: "ทำไมวิธีนี้ถึงใช้ได้",
+                zh: "为什么这套评分有用",
+              })}
+            </button>
           </div>
+        </div>
+
+        <div className="dashboard-metric-grid">
+          <DashboardMetric
+            label={translate(locale, { en: "Cities tracked", th: "เมืองที่ติดตาม", zh: "纳入城市" })}
+            value={stats.total}
+          />
+          <DashboardMetric
+            label={translate(locale, { en: "Operational now", th: "ใช้งานจริงตอนนี้", zh: "当前运行中" })}
+            value={stats.operational}
+          />
+          <DashboardMetric
+            label={translate(locale, { en: "Certified", th: "ได้รับตรารับรอง", zh: "已认证" })}
+            value={stats.certified}
+          />
+          <DashboardMetric
+            label={translate(locale, { en: "Alpha tier", th: "ระดับ Alpha", zh: "Alpha 级" })}
+            value={stats.alpha}
+          />
         </div>
       </section>
 
-      <section className="stats-strip section">
-        <div className="stat-card">
-          <div className="stat-value">{stats.total}</div>
-          <div className="stat-label">
-            {translate(locale, { en: "Cities tracked", th: "เมืองทั้งหมด", zh: "纳入城市" })}
+      <section className="dashboard-panel dashboard-ranking-panel">
+        <div className="dashboard-panel-head">
+          <div>
+            <p className="dashboard-kicker">
+              {translate(locale, { en: "Fieldboard", th: "กระดานสนามจริง", zh: "现场看板" })}
+            </p>
+            <h2>
+              {translate(locale, {
+                en: "Filtered live ranking",
+                th: "อันดับสดแบบกรองได้",
+                zh: "可筛选实时排名",
+              })}
+            </h2>
           </div>
+          <span className="dashboard-chip">
+            {previewCities.length} {translate(locale, { en: "shown", th: "รายการ", zh: "已显示" })}
+          </span>
         </div>
-        <div className="stat-card">
-          <div className="stat-value">{stats.certified}</div>
-          <div className="stat-label">
-            {translate(locale, {
-              en: "Certified (Smart City Local)",
-              th: "ได้รับตราสัญลักษณ์",
-              zh: "已认证城市",
-            })}
-          </div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">{stats.promotion}</div>
-          <div className="stat-label">
-            {translate(locale, {
-              en: "Profiled promotion zones",
-              th: "เขตส่งเสริม",
-              zh: "本版收录推广区",
-            })}
-          </div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">{stats.operational}</div>
-          <div className="stat-label">
-            {translate(locale, {
-              en: "Actually operational",
-              th: "ใช้งานจริง",
-              zh: "真实运行中",
-            })}
-          </div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">{stats.alpha}</div>
-          <div className="stat-label">
-            {translate(locale, { en: "Alpha tier", th: "ระดับ Alpha", zh: "Alpha 级" })}
-          </div>
-        </div>
-      </section>
 
-      <section className="tier-overview section">
-        <p className="eyebrow">
-          {translate(locale, { en: "Tier system", th: "ระบบจัดกลุ่ม", zh: "分层系统" })}
-        </p>
-        <h2>Alpha · Beta · Gamma</h2>
-        <p className="section-intro">
-          {translate(locale, {
-            en: "We do not pretend the difference between rank 7 and rank 8 means anything sacred. We group cities by outcome tier, then let you inspect the evidence.",
-            th: "เราไม่แกล้งทำเป็นว่าความต่างระหว่างอันดับ 7 กับ 8 มีความหมายศักดิ์สิทธิ์ เราจัดกลุ่มเมืองตามระดับผลลัพธ์ แล้วให้คุณดูหลักฐานเอง",
-            zh: "我们不假装第 7 名和第 8 名之间有什么神圣差别。先按结果层级分组，再把证据摊给你看。",
-          })}
-        </p>
-        <div className="tier-cards">
-          <div className="tier-card tier-card-alpha">
-            <div className="tier-card-header">
-              <span className="tier-symbol">α</span>
-              <span className="tier-name">Alpha</span>
-              <span className="tier-count">{stats.alpha} {translate(locale, { en: "cities", th: "เมือง", zh: "城" })}</span>
-            </div>
-            <p className="tier-desc">
-              {translate(locale, {
-                en: "Cities where infrastructure works, daily life is bearable, and the smart-city claim survives contact with the street.",
-                th: "เมืองที่โครงสร้างพื้นฐานทำงาน ชีวิตประจำวันอยู่ได้ และคำว่าเมืองอัจฉริยะยังไม่พังเมื่อเจอของจริงบนถนน",
-                zh: "基础设施能运转、日常生活站得住脚，而且“智慧城市”这句话放到街头也不会露馅的城市。",
-              })}
-            </p>
-          </div>
-          <div className="tier-card tier-card-beta">
-            <div className="tier-card-header">
-              <span className="tier-symbol">β</span>
-              <span className="tier-name">Beta</span>
-              <span className="tier-count">{stats.beta} {translate(locale, { en: "cities", th: "เมือง", zh: "城" })}</span>
-            </div>
-            <p className="tier-desc">
-              {translate(locale, {
-                en: "Work in progress. Some real movement, some visible gaps, and a lot riding on whether execution catches up with the promise.",
-                th: "กำลังขยับ มีของจริงบางส่วน มีช่องว่างให้เห็นชัด และทุกอย่างขึ้นกับว่าการลงมือทำจะตามคำพูดทันไหม",
-                zh: "正在推进。有些成果看得见，也有明显缺口，最后要看执行能不能追上承诺。",
-              })}
-            </p>
-          </div>
-          <div className="tier-card tier-card-gamma">
-            <div className="tier-card-header">
-              <span className="tier-symbol">γ</span>
-              <span className="tier-name">Gamma</span>
-              <span className="tier-count">{stats.gamma} {translate(locale, { en: "cities", th: "เมือง", zh: "城" })}</span>
-            </div>
-            <p className="tier-desc">
-              {translate(locale, {
-                en: "Plan-heavy or early-stage cities. Some have badges. Some have speeches. Too many still do not have outcomes.",
-                th: "เมืองที่ยังหนักไปทางแผนหรืออยู่ช่วงเริ่มต้น บางเมืองมีตรา บางเมืองมีคำพูด แต่ยังไม่มีผลลัพธ์พอ",
-                zh: "以规划和早期阶段为主的城市。有些有徽章，有些有演讲，但成果仍然太少。",
-              })}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <p className="eyebrow">
-          {translate(locale, { en: "Quick scan", th: "ดูภาพเร็ว", zh: "快速扫描" })}
-        </p>
-        <h2>
-          {translate(locale, {
-            en: "Filter the fieldboard",
-            th: "กรองกระดานภาคสนาม",
-            zh: "筛选现场看板",
-          })}
-        </h2>
-        <p className="section-intro">
-          {translate(locale, {
-            en: "A compact preview of the ranking logic. Filter by program status or tier, then jump into the city pages if something looks off.",
-            th: "ตัวอย่างย่อของตรรกะการจัดอันดับ กรองตามสถานะโครงการหรือระดับชั้น แล้วกดเข้าไปดูเมืองถ้าตัวเลขมันชวนสงสัย",
-            zh: "这是排名逻辑的紧凑预览。按项目状态或层级筛选，哪座城市看着不对劲就点进去看细节。",
-          })}
-        </p>
-        <div className="filter-row">
-          <div className="filter-group">
+        <div className="dashboard-controls">
+          <div className="dashboard-control-group">
             <button className={`filter-btn ${statusFilter === "all" ? "active" : ""}`} onClick={() => setStatusFilter("all")}>
               {translate(locale, { en: "All", th: "ทั้งหมด", zh: "全部" })}
             </button>
             <button className={`filter-btn ${statusFilter === "certified" ? "active" : ""}`} onClick={() => setStatusFilter("certified")}>
-              {translate(locale, { en: "Certified", th: "รับรองแล้ว", zh: "已认证" })}
+              {translate(locale, { en: "Certified", th: "รับรอง", zh: "认证" })}
             </button>
             <button className={`filter-btn ${statusFilter === "promotion" ? "active" : ""}`} onClick={() => setStatusFilter("promotion")}>
               {translate(locale, { en: "Promotion", th: "เขตส่งเสริม", zh: "推广区" })}
             </button>
           </div>
-          <div className="filter-group">
+          <div className="dashboard-control-group">
             <button className={`filter-btn ${tierFilter === "all" ? "active" : ""}`} onClick={() => setTierFilter("all")}>
               {translate(locale, { en: "All tiers", th: "ทุกระดับ", zh: "全部层级" })}
             </button>
@@ -410,75 +321,138 @@ export default function HomePage({ locale, onNavigate }: Props) {
             </button>
           </div>
         </div>
-        <div className="table-wrap">
-          <table className="ranking-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>{translate(locale, { en: "City", th: "เมือง", zh: "城市" })}</th>
-                <th>{translate(locale, { en: "Tier", th: "ระดับ", zh: "层级" })}</th>
-                <th>{translate(locale, { en: "Score", th: "คะแนน", zh: "分数" })}</th>
-                <th>{translate(locale, { en: "Program", th: "สถานะ", zh: "状态" })}</th>
-                <th>{translate(locale, { en: "Pillars", th: "เสาหลัก", zh: "支柱" })}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {previewCities.map((city, index) => (
-                <CityRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 1} />
-              ))}
-            </tbody>
-          </table>
+
+        <div className="dashboard-ranking-list">
+          {previewCities.map((city, index) => (
+            <RankingRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 1} />
+          ))}
         </div>
       </section>
 
-      <Suspense fallback={<div className="loading">Loading geography…</div>}>
-        <ThailandMap locale={locale} onNavigate={onNavigate} />
-      </Suspense>
+      <section className="dashboard-panel dashboard-spotlight-panel">
+        <div className="dashboard-panel-head">
+          <div>
+            <p className="dashboard-kicker">
+              {translate(locale, { en: "Lead signals", th: "สัญญาณนำ", zh: "领先信号" })}
+            </p>
+            <h2>
+              {translate(locale, { en: "Cities worth opening first", th: "เมืองที่ควรเปิดดูก่อน", zh: "最值得先点开的城市" })}
+            </h2>
+          </div>
+        </div>
 
-      <Suspense fallback={<div className="loading">Loading priorities…</div>}>
-        <SpiderAllocator locale={locale} onNavigate={onNavigate} />
-      </Suspense>
+        <div className="dashboard-spotlight-list">
+          {spotlightCities.map((city, index) => (
+            <SpotlightRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 1} />
+          ))}
+        </div>
 
-      <section className="photo-strip">
-        {photoStripCities.map(item => {
-          const label = item.city ? getCityName(item.city, locale) : item.fallbackLabel;
-          return (
-            <button key={item.id} className="photo-strip-item" onClick={() => onNavigate(`/city/${item.id}`)}>
-              <img src={item.src} alt={label} loading="lazy" />
-              <span className="photo-strip-label">{label}</span>
-            </button>
-          );
-        })}
-      </section>
-
-      <section className="callout-section section">
-        <div className="callout-card">
-          <p className="eyebrow">
-            {translate(locale, { en: "Reality check", th: "ตรวจสอบความเป็นจริง", zh: "现实校验" })}
-          </p>
-          <h2>
-            {translate(locale, {
-              en: "Why is Wangchan Valley in Gamma?",
-              th: "ทำไมวังจันทร์วัลเลย์ถึงอยู่ Gamma?",
-              zh: "为什么 Wangchan Valley 会落在 Gamma？",
-            })}
-          </h2>
-          <p>
-            {translate(locale, {
-              en: "Because when you go there, you still see more promise than city. Less than 10% built, yet older indices put it at the top. That is exactly the bug this index is trying to kill.",
-              th: "เพราะถ้าคุณไปจริง คุณยังเห็นคำสัญญามากกว่าเมือง สร้างไม่ถึง 10% แต่ดัชนีเก่ากลับเคยให้ขึ้นอันดับบน นี่แหละคือบั๊กที่ดัชนีนี้ตั้งใจฆ่าทิ้ง",
-              zh: "因为你真的去看，会发现那里仍然更像承诺而不是城市。建成不到 10%，旧指数却曾把它放在前排。这正是本指数要狠狠干掉的错误。",
-            })}
-          </p>
-          <button className="cta-button" onClick={() => onNavigate("/methodology")}>
-            {translate(locale, {
-              en: "Read our methodology",
-              th: "อ่านวิธีการให้คะแนน",
-              zh: "查看评分方法",
-            })}
-          </button>
+        <div className="dashboard-reality-strip">
+          <span className="dashboard-reality-chip dashboard-reality-chip-operational">
+            {realityCounts.operational} {translate(locale, { en: "operational", th: "ใช้งานจริง", zh: "已运行" })}
+          </span>
+          <span className="dashboard-reality-chip dashboard-reality-chip-partial">
+            {realityCounts.partial} {translate(locale, { en: "partial", th: "บางส่วน", zh: "部分落实" })}
+          </span>
+          <span className="dashboard-reality-chip dashboard-reality-chip-planned">
+            {realityCounts.planned} {translate(locale, { en: "plan only", th: "แผนล้วน", zh: "仅有规划" })}
+          </span>
         </div>
       </section>
-    </>
+
+      <section className="dashboard-panel dashboard-region-panel">
+        <div className="dashboard-panel-head">
+          <div>
+            <p className="dashboard-kicker">
+              {translate(locale, { en: "Regional spread", th: "ภาพรวมรายภูมิภาค", zh: "区域分布" })}
+            </p>
+            <h2>
+              {translate(locale, { en: "Where the signal is strongest", th: "สัญญาณแรงสุดอยู่ตรงไหน", zh: "哪里信号最强" })}
+            </h2>
+          </div>
+        </div>
+
+        <div className="dashboard-region-list">
+          {regionPulse.map(region => (
+            <div key={region.region} className="dashboard-region-row">
+              <div className="dashboard-region-head">
+                <strong>{REGION_LABELS[region.region][locale]}</strong>
+                <span>{region.avgScore.toFixed(1)}</span>
+              </div>
+              <div className="dashboard-region-track">
+                <div className="dashboard-region-fill" style={{ width: `${region.avgScore}%` }} />
+              </div>
+              <div className="dashboard-region-meta">
+                <span>
+                  {region.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })} · {region.operational}{" "}
+                  {translate(locale, { en: "live", th: "ใช้งานจริง", zh: "真实运行" })}
+                </span>
+                <button type="button" className="dashboard-region-link" onClick={() => onNavigate(`/city/${region.topCity.id}`)}>
+                  {getCityName(region.topCity, locale)}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="dashboard-panel dashboard-signal-panel">
+        <div className="dashboard-panel-head">
+          <div>
+            <p className="dashboard-kicker">
+              {translate(locale, { en: "Reality checks", th: "เช็กความจริง", zh: "现实校验" })}
+            </p>
+            <h2>
+              {translate(locale, { en: "Three quick reads", th: "สามเรื่องที่ควรดู", zh: "三个快速判断" })}
+            </h2>
+          </div>
+        </div>
+
+        <div className="dashboard-signal-stack">
+          {operationalLeader && (
+            <SignalCard
+              title={translate(locale, { en: "Operational leader", th: "ผู้นำที่วิ่งจริง", zh: "真实运行领跑者" })}
+              city={operationalLeader}
+              locale={locale}
+              onNavigate={onNavigate}
+              tone="good"
+              note={translate(locale, {
+                en: getCityTagline(operationalLeader, locale),
+                th: getCityTagline(operationalLeader, locale),
+                zh: getCityTagline(operationalLeader, locale),
+              })}
+            />
+          )}
+          {promotionLeader && (
+            <SignalCard
+              title={translate(locale, { en: "Best promotion zone", th: "เขตส่งเสริมที่ดูดีที่สุด", zh: "最佳推广区" })}
+              city={promotionLeader}
+              locale={locale}
+              onNavigate={onNavigate}
+              tone="watch"
+              note={translate(locale, {
+                en: "The strongest thing still outside certification. Worth opening before anyone starts bragging.",
+                th: "ตัวที่แข็งสุดในกลุ่มนอกการรับรอง ควรเปิดดูก่อนที่ใครจะเริ่มโม้",
+                zh: "认证之外最强的一座。有人开始吹之前，先点开看。",
+              })}
+            />
+          )}
+          {realityGapCity && (
+            <SignalCard
+              title={translate(locale, { en: "Reality gap", th: "ช่องว่างระหว่างคำพูดกับของจริง", zh: "现实落差" })}
+              city={realityGapCity}
+              locale={locale}
+              onNavigate={onNavigate}
+              tone="risk"
+              note={translate(locale, {
+                en: "Big branding, weak street-level evidence. Exactly the kind of fake precision this index is meant to kill.",
+                th: "แบรนด์ใหญ่ แต่หลักฐานระดับถนนยังบาง นี่แหละของปลอมที่ดัชนีนี้ตั้งใจฆ่า",
+                zh: "品牌很大，街头证据很薄。这正是假精确最该被干掉的地方。",
+              })}
+            />
+          )}
+        </div>
+      </section>
+    </div>
   );
 }

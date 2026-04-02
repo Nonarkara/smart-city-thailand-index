@@ -77,6 +77,7 @@ function getInitialLocale(): Locale {
 export default function App() {
   const [route, setRoute] = useState<Route>(() => parseRoute(window.location.pathname));
   const [locale, setLocale] = useState<Locale>(getInitialLocale);
+  const isDashboardRoute = route.kind === "home";
 
   useEffect(() => {
     const sync = () => setRoute(parseRoute(window.location.pathname));
@@ -104,7 +105,7 @@ export default function App() {
   const cycleLocale = () => setLocale(l => l === "en" ? "th" : l === "th" ? "zh" : "en");
 
   return (
-    <div className="page-shell">
+    <div className={`page-shell ${isDashboardRoute ? "page-shell-dashboard" : ""}`}>
       {/* ─── INSTITUTIONAL BANNER ─── */}
       {/* Institutional banner removed — logos now inline with nav */}
 
@@ -149,7 +150,7 @@ export default function App() {
       </nav>
 
       {/* ─── CONTENT ─── */}
-      <main className="page-frame" key={getRouteKey(route)}>
+      <main className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""}`} key={getRouteKey(route)}>
         <Suspense fallback={<div className="loading">Loading...</div>}>
           {route.kind === "rankings" ? (
             <RankingsPage locale={locale} onNavigate={navigate} />
@@ -171,93 +172,97 @@ export default function App() {
         </Suspense>
       </main>
 
-      {/* ─── NEWS FEED ─── */}
-      <section className="news-section">
-        <div className="section">
-          <p className="eyebrow">{locale === "th" ? "ข่าวสาร" : locale === "zh" ? "资讯" : "News feed"}</p>
-          <h2>{locale === "th" ? "ข่าวล่าสุด" : locale === "zh" ? "最新动态" : "Latest"}</h2>
-          <div className="news-grid">
-            {newsItems.map((item, i) => (
-              <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" className="news-item">
-                <span className="news-date">{item.date}</span>
-                <span className="news-title">{locale === "th" ? item.titleTh : locale === "zh" ? item.titleZh : item.titleEn}</span>
-                <span className="news-source">{item.source} →</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PARTNERS FOOTER ─── */}
-      <footer className="site-footer">
-        <div className="section">
-          <div className="footer-partners">
-            <div className="footer-partner-block">
-              <p className="footer-partner-label">{locale === "th" ? "จัดทำโดย" : locale === "zh" ? "出品机构" : "Produced by"}</p>
-              <p className="footer-partner-name">
-                {locale === "th"
-                  ? "สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa)"
-                  : locale === "zh"
-                    ? "数字经济促进局（depa）"
-                  : "Digital Economy Promotion Agency (depa)"}
-              </p>
-              <p className="footer-partner-sub">
-                {locale === "th"
-                  ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม"
-                  : locale === "zh"
-                    ? "泰国数字经济与社会部"
-                  : "Ministry of Digital Economy and Society"}
-              </p>
+      {!isDashboardRoute && (
+        <>
+          {/* ─── NEWS FEED ─── */}
+          <section className="news-section">
+            <div className="section">
+              <p className="eyebrow">{locale === "th" ? "ข่าวสาร" : locale === "zh" ? "资讯" : "News feed"}</p>
+              <h2>{locale === "th" ? "ข่าวล่าสุด" : locale === "zh" ? "最新动态" : "Latest"}</h2>
+              <div className="news-grid">
+                {newsItems.map((item, i) => (
+                  <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" className="news-item">
+                    <span className="news-date">{item.date}</span>
+                    <span className="news-title">{locale === "th" ? item.titleTh : locale === "zh" ? item.titleZh : item.titleEn}</span>
+                    <span className="news-source">{item.source} →</span>
+                  </a>
+                ))}
+              </div>
             </div>
-            <div className="footer-partner-block">
-              <p className="footer-partner-label">{locale === "th" ? "วิธีการโดย" : locale === "zh" ? "方法论来源" : "Methodology by"}</p>
-              <p className="footer-partner-name">SLIC — Smart Liveable Cities Index</p>
-              <p className="footer-partner-sub">
-                {locale === "th"
-                  ? "เปิดตัว SCSE 2026 ไทเป · 174 เมือง 53 ประเทศ"
-                  : locale === "zh"
-                    ? "于 2026 台北 SCSE 发布 · 53 个国家的 174 座城市"
-                    : "Launched at SCSE 2026 Taipei · 174 cities across 53 countries"}
-              </p>
-            </div>
-            <div className="footer-partner-block">
-              <p className="footer-partner-label">{locale === "th" ? "แหล่งข้อมูล" : locale === "zh" ? "数据来源" : "Data from"}</p>
-              <p className="footer-partner-name">NSO · World Bank · Open-Meteo · GISTDA</p>
-              <p className="footer-partner-sub">
-                {locale === "th"
-                  ? "Copernicus Sentinel Hub · สำนักงานตำรวจแห่งชาติ · depa"
-                  : locale === "zh"
-                    ? "Copernicus Sentinel Hub · 泰国皇家警察 · depa"
-                  : "Copernicus Sentinel Hub · Royal Thai Police · depa"}
-              </p>
-            </div>
-          </div>
+          </section>
 
-          <div className="footer-logos">
-            <img src="/mdes_logo.jpg" alt="MDES" className="footer-logo" />
-            <img src="/depa_logo.jpg" alt="depa" className="footer-logo" />
-            <img src="/smart_city_thailand_logo.jpg" alt="Smart City Thailand" className="footer-logo" />
-            <img src="/slic_logo.jpg" alt="SLIC Index" className="footer-logo" />
-          </div>
+          {/* ─── PARTNERS FOOTER ─── */}
+          <footer className="site-footer">
+            <div className="section">
+              <div className="footer-partners">
+                <div className="footer-partner-block">
+                  <p className="footer-partner-label">{locale === "th" ? "จัดทำโดย" : locale === "zh" ? "出品机构" : "Produced by"}</p>
+                  <p className="footer-partner-name">
+                    {locale === "th"
+                      ? "สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa)"
+                      : locale === "zh"
+                        ? "数字经济促进局（depa）"
+                        : "Digital Economy Promotion Agency (depa)"}
+                  </p>
+                  <p className="footer-partner-sub">
+                    {locale === "th"
+                      ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม"
+                      : locale === "zh"
+                        ? "泰国数字经济与社会部"
+                        : "Ministry of Digital Economy and Society"}
+                  </p>
+                </div>
+                <div className="footer-partner-block">
+                  <p className="footer-partner-label">{locale === "th" ? "วิธีการโดย" : locale === "zh" ? "方法论来源" : "Methodology by"}</p>
+                  <p className="footer-partner-name">SLIC — Smart Liveable Cities Index</p>
+                  <p className="footer-partner-sub">
+                    {locale === "th"
+                      ? "เปิดตัว SCSE 2026 ไทเป · 174 เมือง 53 ประเทศ"
+                      : locale === "zh"
+                        ? "于 2026 台北 SCSE 发布 · 53 个国家的 174 座城市"
+                        : "Launched at SCSE 2026 Taipei · 174 cities across 53 countries"}
+                  </p>
+                </div>
+                <div className="footer-partner-block">
+                  <p className="footer-partner-label">{locale === "th" ? "แหล่งข้อมูล" : locale === "zh" ? "数据来源" : "Data from"}</p>
+                  <p className="footer-partner-name">NSO · World Bank · Open-Meteo · GISTDA</p>
+                  <p className="footer-partner-sub">
+                    {locale === "th"
+                      ? "Copernicus Sentinel Hub · สำนักงานตำรวจแห่งชาติ · depa"
+                      : locale === "zh"
+                        ? "Copernicus Sentinel Hub · 泰国皇家警察 · depa"
+                        : "Copernicus Sentinel Hub · Royal Thai Police · depa"}
+                  </p>
+                </div>
+              </div>
 
-          <div className="footer-bottom">
-            <p className="footer-copy">
-              {locale === "th"
-                ? "ดัชนีเมืองอัจฉริยะประเทศไทย 2026 · วัดจากความเป็นจริง ไม่ใช่แผนบนกระดาษ"
-                : locale === "zh"
-                  ? "2026 泰国智慧城市指数 · 衡量现实，而非纸上规划"
-                : "Smart City Thailand Index 2026 · Measuring reality, not paper plans"}
-            </p>
-            <p className="footer-copy">
-              {locale === "th"
-                ? "สร้างด้วยวิธีการ SLIC · ข้อมูลเปิดเผย ตรวจสอบได้"
-                : locale === "zh"
-                  ? "基于 SLIC 方法论构建 · 开放数据，可追溯可审计"
-                : "Built on SLIC methodology · Open data, fully auditable"}
-            </p>
-          </div>
-        </div>
-      </footer>
+              <div className="footer-logos">
+                <img src="/mdes_logo.jpg" alt="MDES" className="footer-logo" />
+                <img src="/depa_logo.jpg" alt="depa" className="footer-logo" />
+                <img src="/smart_city_thailand_logo.jpg" alt="Smart City Thailand" className="footer-logo" />
+                <img src="/slic_logo.jpg" alt="SLIC Index" className="footer-logo" />
+              </div>
+
+              <div className="footer-bottom">
+                <p className="footer-copy">
+                  {locale === "th"
+                    ? "ดัชนีเมืองอัจฉริยะประเทศไทย 2026 · วัดจากความเป็นจริง ไม่ใช่แผนบนกระดาษ"
+                    : locale === "zh"
+                      ? "2026 泰国智慧城市指数 · 衡量现实，而非纸上规划"
+                      : "Smart City Thailand Index 2026 · Measuring reality, not paper plans"}
+                </p>
+                <p className="footer-copy">
+                  {locale === "th"
+                    ? "สร้างด้วยวิธีการ SLIC · ข้อมูลเปิดเผย ตรวจสอบได้"
+                    : locale === "zh"
+                      ? "基于 SLIC 方法论构建 · 开放数据，可追溯可审计"
+                      : "Built on SLIC methodology · Open data, fully auditable"}
+                </p>
+              </div>
+            </div>
+          </footer>
+        </>
+      )}
 
       {/* ─── GEMINI CHATBOT ─── */}
       <Suspense fallback={null}>
