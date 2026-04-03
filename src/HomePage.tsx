@@ -1,4 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, lazy, Suspense } from "react";
+
+const ThailandMap = lazy(() => import("./ThailandMap"));
 import { allCities, getCityById, promotionZoneCities } from "./cityData";
 import { filterCities, getSpotlightCities, sortCities, summarizeCities } from "./cityCollections";
 import {
@@ -564,54 +566,102 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="dashboard-panel dashboard-region-panel">
-        <div className="dashboard-panel-head">
+      {/* ═══ CONTROL TOWER ═══ */}
+      <section className="control-tower">
+        <div className="control-tower-header">
           <div>
-            <p className="dashboard-kicker">
-              {translate(locale, { en: "Regional spread", th: "ภาพรวมรายภูมิภาค", zh: "区域分布" })}
-            </p>
-            <h2>
+            <span className="control-tower-eyebrow">SCTI CONTROL TOWER</span>
+            <h2 className="control-tower-title">
               {translate(locale, { en: "Where the signal is strongest", th: "สัญญาณแรงสุดอยู่ตรงไหน", zh: "哪里信号最强" })}
             </h2>
           </div>
+          <span className="control-tower-live">
+            <span className="control-tower-dot" /> {translate(locale, { en: "Live data feeds", th: "ข้อมูลสด", zh: "实时数据" })}
+          </span>
         </div>
 
-        <div className="dashboard-map-layout">
-          {/* ─── COMPACT THAILAND MAP ─── */}
-          <div className="dashboard-map-wrap">
-            <svg viewBox={`0 0 ${MINI_MAP_W} ${MINI_MAP_H}`} className="dashboard-map-svg">
-              {allCities.map(city => {
-                const coords = mapCityCoords[city.id];
-                if (!coords) return null;
-                const { x, y } = miniProject(coords.lat, coords.lng);
-                const color = city.tier === "alpha" ? "var(--teal)" : city.tier === "beta" ? "var(--gold)" : "var(--gamma)";
-                return (
-                  <circle
-                    key={city.id}
-                    cx={x} cy={y} r={city.status === "certified" ? 4.5 : 3}
-                    fill={color}
-                    opacity={0.85}
-                    style={{ cursor: "pointer", transition: "r .15s" }}
-                    onClick={() => onNavigate(`/city/${city.id}`)}
-                  >
-                    <title>{getCityName(city, locale)} — {city.compositeScore.toFixed(1)}</title>
-                  </circle>
-                );
-              })}
-            </svg>
+        <div className="control-tower-layout">
+          {/* ─── ZONE 1: Full Thailand Map ─── */}
+          <div className="control-tower-map">
+            <Suspense fallback={null}>
+              <ThailandMap locale={locale} onNavigate={onNavigate} />
+            </Suspense>
           </div>
 
-          {/* ─── REGION SUMMARY ─── */}
-          <div className="dashboard-region-summary">
-            {regionPulse.map(region => (
-              <div key={region.region} className="dashboard-region-compact">
-                <strong>{REGION_LABELS[region.region][locale]}</strong>
-                <span className="dashboard-region-compact-score">{region.avgScore.toFixed(1)}</span>
-                <span className="dashboard-region-compact-meta">
-                  {region.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })} · {region.operational} {translate(locale, { en: "live", th: "จริง", zh: "运行" })}
-                </span>
-              </div>
-            ))}
+          {/* ─── ZONE 2 + 3: Feeds + Regional Breakdown ─── */}
+          <div className="control-tower-sidebar">
+            {/* Live Data Feeds */}
+            <div className="control-tower-feeds">
+              <a href="http://air4thai.pcd.go.th" target="_blank" rel="noopener noreferrer" className="ct-feed-card">
+                <span className="ct-feed-icon">🌬</span>
+                <div>
+                  <span className="ct-feed-label">Air4Thai · PCD</span>
+                  <span className="ct-feed-value">70+ {translate(locale, { en: "stations", th: "สถานี", zh: "站点" })}</span>
+                  <span className="ct-feed-freq">{translate(locale, { en: "Hourly", th: "ทุกชั่วโมง", zh: "每小时" })}</span>
+                </div>
+              </a>
+              <a href="https://www.citydata.in.th" target="_blank" rel="noopener noreferrer" className="ct-feed-card">
+                <span className="ct-feed-icon">🏙</span>
+                <div>
+                  <span className="ct-feed-label">City Data Platform</span>
+                  <span className="ct-feed-value">{stats.certified + 173}+ {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })}</span>
+                  <span className="ct-feed-freq">{translate(locale, { en: "Real-time", th: "เรียลไทม์", zh: "实时" })}</span>
+                </div>
+              </a>
+              <a href="https://sphere.gistda.or.th" target="_blank" rel="noopener noreferrer" className="ct-feed-card">
+                <span className="ct-feed-icon">🛰</span>
+                <div>
+                  <span className="ct-feed-label">GISTDA Sphere</span>
+                  <span className="ct-feed-value">{translate(locale, { en: "Satellite", th: "ดาวเทียม", zh: "卫星" })}</span>
+                  <span className="ct-feed-freq">{translate(locale, { en: "Quarterly", th: "รายไตรมาส", zh: "季度" })}</span>
+                </div>
+              </a>
+              <a href="https://iot.tmd.go.th" target="_blank" rel="noopener noreferrer" className="ct-feed-card">
+                <span className="ct-feed-icon">🌡</span>
+                <div>
+                  <span className="ct-feed-label">TMD IoT</span>
+                  <span className="ct-feed-value">{translate(locale, { en: "Weather", th: "อุตุนิยมวิทยา", zh: "气象" })}</span>
+                  <span className="ct-feed-freq">{translate(locale, { en: "Hourly", th: "ทุกชั่วโมง", zh: "每小时" })}</span>
+                </div>
+              </a>
+              <a href="https://data.go.th" target="_blank" rel="noopener noreferrer" className="ct-feed-card">
+                <span className="ct-feed-icon">📊</span>
+                <div>
+                  <span className="ct-feed-label">data.go.th</span>
+                  <span className="ct-feed-value">{translate(locale, { en: "Open Data API", th: "API ข้อมูลเปิด", zh: "开放数据API" })}</span>
+                  <span className="ct-feed-freq">CKAN REST</span>
+                </div>
+              </a>
+              <a href="https://www.nesdc.go.th" target="_blank" rel="noopener noreferrer" className="ct-feed-card">
+                <span className="ct-feed-icon">📈</span>
+                <div>
+                  <span className="ct-feed-label">NESDC GPP</span>
+                  <span className="ct-feed-value">{translate(locale, { en: "Provincial GDP", th: "GPP จังหวัด", zh: "省级GDP" })}</span>
+                  <span className="ct-feed-freq">{translate(locale, { en: "Annual", th: "รายปี", zh: "年度" })}</span>
+                </div>
+              </a>
+            </div>
+
+            {/* Regional Breakdown */}
+            <div className="control-tower-regions">
+              <span className="ct-region-header">{translate(locale, { en: "Regional signal", th: "สัญญาณรายภูมิภาค", zh: "区域信号" })}</span>
+              {regionPulse.map(region => {
+                const total = Math.max(region.total, 1);
+                const alphaCount = region.topCity.tier === "alpha" ? 1 : 0;
+                return (
+                  <div key={region.region} className="ct-region-row">
+                    <span className="ct-region-name">{REGION_LABELS[region.region][locale]}</span>
+                    <div className="ct-region-bar">
+                      <div className="ct-region-bar-fill ct-region-bar-alpha" style={{ width: `${(region.operational / total) * 100}%` }} />
+                    </div>
+                    <span className="ct-region-score">{region.avgScore.toFixed(1)}</span>
+                    <button type="button" className="ct-region-link" onClick={() => onNavigate(`/city/${region.topCity.id}`)}>
+                      {getCityName(region.topCity, locale)}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

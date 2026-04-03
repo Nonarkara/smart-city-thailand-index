@@ -2277,3 +2277,100 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 @media (max-width: 768px) {
   .program-concepts-grid, .program-257-grid { grid-template-columns: 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CONTROL TOWER — Smart City Mission Control Panel
+   Always dark. Regardless of site theme.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.control-tower {
+  background: #0F0E0C; color: #F0EDE8;
+  padding: 1.25rem 0; margin: 1rem 0;
+}
+.control-tower-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 0 min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
+  margin-bottom: .75rem;
+}
+.control-tower-eyebrow {
+  font: 600 .48rem var(--mono); letter-spacing: .14em;
+  color: #1A9A82; display: block; margin-bottom: .15rem;
+}
+.control-tower-title {
+  font-size: 1.1rem; font-weight: 700; letter-spacing: -.02em;
+  color: #F0EDE8;
+}
+.control-tower-live {
+  display: flex; align-items: center; gap: .3rem;
+  font: 500 .5rem var(--mono); color: #6E6C64; white-space: nowrap;
+}
+.control-tower-dot {
+  width: 6px; height: 6px; background: #1A9A82;
+  border-radius: 50%; animation: ctPulse 2s ease infinite;
+}
+@keyframes ctPulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+.control-tower-layout {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
+  padding: 0 min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
+  min-height: 420px;
+}
+
+/* Zone 1: Map */
+.control-tower-map {
+  border-right: 1px solid rgba(255,255,255,.06);
+  overflow: hidden; min-height: 400px;
+}
+.control-tower-map .map-section { margin: 0; }
+.control-tower-map svg { display: block; width: 100%; height: 100%; }
+
+/* Zone 2+3: Sidebar */
+.control-tower-sidebar {
+  display: flex; flex-direction: column; gap: .5rem;
+  padding-left: .75rem;
+}
+
+/* Live Data Feed Cards */
+.control-tower-feeds {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .35rem;
+}
+.ct-feed-card {
+  display: flex; gap: .45rem; align-items: flex-start;
+  padding: .55rem .5rem; background: rgba(255,255,255,.04);
+  text-decoration: none; color: #F0EDE8;
+  transition: background .15s;
+}
+.ct-feed-card:hover { background: rgba(255,255,255,.08); }
+.ct-feed-icon { font-size: 1rem; flex-shrink: 0; line-height: 1; }
+.ct-feed-label { display: block; font: 600 .55rem var(--mono); color: #1A9A82; letter-spacing: .02em; }
+.ct-feed-value { display: block; font-size: .68rem; font-weight: 600; }
+.ct-feed-freq { display: block; font: 500 .42rem var(--mono); color: #6E6C64; }
+
+/* Regional Signal Bars */
+.control-tower-regions { margin-top: auto; }
+.ct-region-header {
+  display: block; font: 600 .45rem var(--mono); letter-spacing: .1em;
+  text-transform: uppercase; color: #6E6C64; margin-bottom: .4rem;
+}
+.ct-region-row {
+  display: grid; grid-template-columns: 4.5rem 1fr 2rem auto; gap: .35rem;
+  align-items: center; padding: .25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.ct-region-name { font-size: .6rem; font-weight: 500; }
+.ct-region-bar { height: 6px; background: rgba(255,255,255,.06); overflow: hidden; }
+.ct-region-bar-fill { height: 100%; }
+.ct-region-bar-alpha { background: #1A9A82; }
+.ct-region-score { font: 700 .58rem var(--mono); color: #C49A2A; text-align: right; }
+.ct-region-link {
+  font: 500 .48rem var(--mono); color: #1A9A82; background: 0; border: 0;
+  cursor: pointer; white-space: nowrap; padding: 0;
+}
+.ct-region-link:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .control-tower-layout { grid-template-columns: 1fr; min-height: auto; }
+  .control-tower-map { border-right: 0; min-height: 300px; }
+  .control-tower-sidebar { padding-left: 0; padding-top: .5rem; }
+  .control-tower-feeds { grid-template-columns: 1fr; }
+}
