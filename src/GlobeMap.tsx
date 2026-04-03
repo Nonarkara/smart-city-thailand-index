@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { partners, type Partner } from "./partnerData";
 import type { Locale } from "./types";
 
@@ -6,151 +6,160 @@ interface Props {
   locale: Locale;
 }
 
-// Simple Mercator projection for world map
-// x: -180 to 180 → 0 to 800
-// y: -60 to 75 → 400 to 0 (inverted)
 function projectWorld(lat: number, lng: number) {
-  const x = ((lng + 180) / 360) * 800;
-  const y = ((75 - lat) / 135) * 400;
+  const x = ((lng + 180) / 360) * 960;
+  const y = ((75 - lat) / 135) * 480;
   return { x, y };
 }
 
-// Thailand position for the connection lines
 const THAILAND = projectWorld(15.0, 101.0);
 
 function typeColor(type: Partner["type"]): string {
   switch (type) {
-    case "government": return "var(--teal, #2BBAA0)";
-    case "multilateral": return "var(--gold, #D4A843)";
-    case "university": return "var(--silk-blue, #4A9AFF)";
-    case "corporate": return "var(--orchid, #B56AFF)";
-    case "ngo": return "var(--lime, #6BDB6B)";
-    case "event": return "var(--coral, #FF5252)";
-    default: return "var(--ink-muted)";
+    case "government": return "#1A9A82";
+    case "multilateral": return "#C49A2A";
+    case "university": return "#4A9AFF";
+    case "corporate": return "#B56AFF";
+    case "ngo": return "#6BDB6B";
+    case "event": return "#FF6B6B";
+    default: return "#888";
   }
 }
 
-// Simplified world coastline paths (key continents)
-const CONTINENTS = `
-M 120,85 L 135,80 150,82 160,90 165,105 170,120 175,135 168,145 155,150 140,155 125,150 115,140 110,125 112,105 Z
-M 200,55 L 210,50 230,48 260,50 280,55 295,60 310,65 320,75 325,90 330,110 340,130 335,150 320,155 310,145 295,140 280,145 265,155 250,160 235,165 220,158 210,145 200,130 195,110 198,90 195,75 Z
-M 340,55 L 360,50 390,52 420,55 450,58 480,62 510,60 530,55 550,58 560,65 570,80 580,95 575,110 565,125 555,140 545,155 535,150 520,135 510,120 500,110 490,105 480,115 470,130 460,145 450,160 440,170 430,175 420,180 405,175 395,165 390,150 380,135 370,120 360,105 350,90 345,75 Z
-M 620,80 L 645,75 670,78 695,82 710,90 720,105 715,120 705,135 690,145 675,150 660,148 645,140 635,128 625,115 620,100 618,90 Z
-M 590,250 L 610,240 640,235 660,240 680,250 690,265 685,280 670,295 650,305 630,310 610,305 595,290 590,275 588,260 Z
-`;
+// Better continent outlines — simplified but recognizable
+const NORTH_AMERICA = "M 40,100 L 55,80 80,72 110,68 140,72 165,80 180,95 185,110 190,130 178,148 165,155 150,165 130,170 115,168 105,175 90,180 80,172 70,160 55,152 42,145 38,130 35,115 Z";
+const SOUTH_AMERICA = "M 135,195 L 148,188 160,192 168,205 172,220 175,240 178,260 176,280 170,295 160,308 148,315 135,310 128,295 125,275 122,255 118,240 120,225 125,210 Z";
+const EUROPE = "M 380,55 L 395,48 415,50 435,52 450,58 455,65 460,52 470,48 485,55 490,68 488,80 480,88 470,85 460,78 445,80 435,75 425,78 410,82 398,78 388,72 382,62 Z";
+const AFRICA = "M 395,110 L 410,105 430,108 445,115 455,128 460,145 462,165 460,190 455,210 448,228 440,240 428,248 415,252 402,248 392,238 385,225 380,208 378,188 380,168 382,148 385,130 388,118 Z";
+const ASIA = "M 460,42 L 490,38 520,40 550,38 580,42 610,48 640,55 665,60 685,65 700,72 715,82 725,95 728,110 720,118 708,122 695,115 680,110 668,118 655,128 640,135 625,140 610,138 595,132 580,125 565,118 550,108 535,98 520,92 505,85 495,78 480,72 470,65 465,55 Z";
+const SOUTHEAST_ASIA = "M 640,140 L 660,135 680,138 695,145 705,155 700,168 688,172 672,175 655,170 645,158 Z M 710,155 L 725,148 740,152 748,165 742,178 728,182 715,175 Z M 750,165 L 770,160 785,168 788,182 778,192 762,188 752,178 Z";
+const OCEANIA = "M 720,225 L 745,218 775,215 800,218 820,225 835,240 840,258 832,275 818,285 798,290 775,288 755,280 742,268 735,252 730,238 Z M 870,248 L 885,242 895,248 892,258 882,262 872,258 Z";
 
 export default function GlobeMap({ locale }: Props) {
   const [hovered, setHovered] = useState<Partner | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Deduplicate by proximity (some partners share same city)
-  const dots = useMemo(() => {
-    const seen = new Set<string>();
-    return partners.filter(p => {
-      const key = `${Math.round(p.lat)}_${Math.round(p.lng)}`;
-      if (seen.has(key)) {
-        // Allow up to 3 per location with slight offset
-        return true;
-      }
-      seen.add(key);
-      return true;
-    });
-  }, []);
+  const dots = useMemo(() => partners, []);
+  const sameCountry = useMemo(() => {
+    if (!hovered) return new Set<string>();
+    return new Set(partners.filter(p => p.country === hovered.country).map(p => p.id));
+  }, [hovered]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (rect) {
+      setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    }
+  };
 
   return (
-    <div className="globe-container">
-      <svg viewBox="0 0 800 400" className="globe-svg">
-        <defs>
-          <radialGradient id="globe-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="var(--teal, #2BBAA0)" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="transparent" />
-          </radialGradient>
-        </defs>
+    <div className="globe-container" ref={containerRef} onMouseMove={handleMouseMove}>
+      <svg viewBox="0 0 960 480" className="globe-svg" preserveAspectRatio="xMidYMid meet">
+        {/* Ocean */}
+        <rect x="0" y="0" width="960" height="480" fill="#0F0E0C" />
 
-        {/* Ocean background */}
-        <rect x="0" y="0" width="800" height="400" fill="var(--bg, #0A1210)" />
-
-        {/* Grid lines */}
-        {[...Array(12)].map((_, i) => (
-          <line key={`vg${i}`} x1={(i + 1) * 66.6} y1="0" x2={(i + 1) * 66.6} y2="400"
-            stroke="var(--border, rgba(43,186,160,0.06))" strokeWidth="0.3" />
+        {/* Subtle grid */}
+        {[...Array(16)].map((_, i) => (
+          <line key={`v${i}`} x1={(i + 1) * 60} y1="0" x2={(i + 1) * 60} y2="480"
+            stroke="rgba(255,255,255,.03)" strokeWidth="0.5" />
         ))}
-        {[...Array(5)].map((_, i) => (
-          <line key={`hg${i}`} x1="0" y1={(i + 1) * 66.6} x2="800" y2={(i + 1) * 66.6}
-            stroke="var(--border, rgba(43,186,160,0.06))" strokeWidth="0.3" />
+        {[...Array(7)].map((_, i) => (
+          <line key={`h${i}`} x1="0" y1={(i + 1) * 60} x2="960" y2={(i + 1) * 60}
+            stroke="rgba(255,255,255,.03)" strokeWidth="0.5" />
         ))}
 
-        {/* Continents — simplified fills */}
-        <path d={CONTINENTS} fill="rgba(43, 186, 160, 0.06)" stroke="rgba(43, 186, 160, 0.12)" strokeWidth="0.5" />
+        {/* Continents */}
+        {[NORTH_AMERICA, SOUTH_AMERICA, EUROPE, AFRICA, ASIA, SOUTHEAST_ASIA, OCEANIA].map((d, i) => (
+          <path key={i} d={d} fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.08)" strokeWidth="0.8" />
+        ))}
 
-        {/* Thailand highlight */}
-        <circle cx={THAILAND.x} cy={THAILAND.y} r="30" fill="url(#globe-glow)" />
-        <circle cx={THAILAND.x} cy={THAILAND.y} r="4" fill="var(--gold, #D4A843)" stroke="var(--gold, #D4A843)" strokeWidth="1.5" opacity="0.9" />
-        <text x={THAILAND.x} y={THAILAND.y - 8} textAnchor="middle" fontSize="5" fontWeight="700"
-          fontFamily="var(--font-mono, monospace)" fill="var(--gold, #D4A843)" opacity="0.8">
-          THAILAND
-        </text>
+        {/* Thailand glow */}
+        <circle cx={THAILAND.x} cy={THAILAND.y} r="35" fill="rgba(26,154,130,.08)" />
+        <circle cx={THAILAND.x} cy={THAILAND.y} r="18" fill="rgba(26,154,130,.06)" />
 
-        {/* Connection lines from Thailand to each partner */}
+        {/* Curved connection lines */}
         {dots.map(p => {
           const pt = projectWorld(p.lat, p.lng);
-          const isActive = hovered?.id === p.id;
+          const isActive = hovered?.id === p.id || sameCountry.has(p.id);
+          const mx = (THAILAND.x + pt.x) / 2;
+          const my = Math.min(THAILAND.y, pt.y) - 30 - Math.abs(pt.x - THAILAND.x) * 0.08;
           return (
-            <line key={`line-${p.id}`}
-              x1={THAILAND.x} y1={THAILAND.y} x2={pt.x} y2={pt.y}
-              stroke={typeColor(p.type)} strokeWidth={isActive ? 1 : 0.3}
-              opacity={isActive ? 0.8 : hovered ? 0.05 : 0.15}
-              style={{ transition: "all 0.15s" }}
+            <path key={`arc-${p.id}`}
+              d={`M ${THAILAND.x},${THAILAND.y} Q ${mx},${my} ${pt.x},${pt.y}`}
+              fill="none"
+              stroke={typeColor(p.type)}
+              strokeWidth={isActive ? 1.5 : 0.4}
+              opacity={isActive ? 0.7 : hovered ? 0.03 : 0.12}
+              style={{ transition: "all .2s" }}
             />
           );
         })}
 
-        {/* Partner dots */}
+        {/* Thailand marker */}
+        <circle cx={THAILAND.x} cy={THAILAND.y} r="5" fill="#C49A2A" stroke="#C49A2A" strokeWidth="2" opacity="0.9" />
+        <text x={THAILAND.x} y={THAILAND.y - 10} textAnchor="middle" fontSize="7" fontWeight="700"
+          fontFamily="Helvetica Neue, sans-serif" fill="#C49A2A" opacity="0.8">THAILAND</text>
+
+        {/* Partner dots — bigger with invisible hit targets */}
         {dots.map((p, i) => {
           const pt = projectWorld(p.lat, p.lng);
           const isActive = hovered?.id === p.id;
-          // Slight offset for partners in same city
-          const offset = (i % 3) * 3;
+          const isSameCountry = sameCountry.has(p.id);
+          const offset = (i % 3) * 4;
           return (
             <g key={p.id}>
-              {isActive && (
-                <circle cx={pt.x + offset} cy={pt.y} r="8" fill={typeColor(p.type)} opacity="0.15" />
-              )}
+              {/* Invisible hit target */}
               <circle
-                cx={pt.x + offset} cy={pt.y} r={isActive ? 4 : 2.5}
-                fill={typeColor(p.type)}
-                opacity={isActive ? 1 : hovered ? 0.2 : 0.7}
-                style={{ cursor: "pointer", transition: "all 0.15s" }}
+                cx={pt.x + offset} cy={pt.y} r="14"
+                fill="transparent"
+                style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHovered(p)}
                 onMouseLeave={() => setHovered(null)}
+              />
+              {isActive && (
+                <circle cx={pt.x + offset} cy={pt.y} r="10" fill={typeColor(p.type)} opacity="0.12" />
+              )}
+              <circle
+                cx={pt.x + offset} cy={pt.y}
+                r={isActive ? 5 : isSameCountry ? 4 : 3.5}
+                fill={typeColor(p.type)}
+                opacity={isActive ? 1 : isSameCountry ? 0.9 : hovered ? 0.15 : 0.65}
+                style={{ transition: "all .2s", pointerEvents: "none" }}
               />
             </g>
           );
         })}
-
-        {/* Tooltip — large and obvious */}
-        {hovered && (() => {
-          const pt = projectWorld(hovered.lat, hovered.lng);
-          const tx = pt.x > 550 ? pt.x - 220 : pt.x + 15;
-          const ty = pt.y < 60 ? pt.y + 15 : pt.y - 55;
-          return (
-            <g transform={`translate(${tx}, ${ty})`}>
-              <rect x="0" y="0" width="210" height="52" fill="var(--ink, #1A1A1A)" rx="0" />
-              <rect x="0" y="0" width="3" height="52" fill={typeColor(hovered.type)} />
-              <text x="10" y="14" fontSize="9" fontWeight="700" fill="#fff" fontFamily="var(--font, sans-serif)">
-                {hovered.flag} {hovered.name}
-              </text>
-              <text x="10" y="27" fontSize="6.5" fill="var(--teal, #2BBAA0)" fontFamily="var(--mono, monospace)" fontWeight="600">
-                {hovered.country} · {hovered.type}
-              </text>
-              <text x="10" y="42" fontSize="6" fill="rgba(255,255,255,0.7)" fontFamily="var(--font, sans-serif)" fontWeight="500">
-                {(locale === "th" ? hovered.focusTh : hovered.focusEn).slice(0, 45)}
-              </text>
-            </g>
-          );
-        })()}
       </svg>
 
-      {/* Type legend */}
+      {/* HTML Tooltip — positioned outside SVG */}
+      {hovered && (
+        <div
+          className="globe-html-tooltip"
+          style={{
+            left: mousePos.x + 16,
+            top: mousePos.y - 10,
+            transform: mousePos.x > 600 ? "translateX(calc(-100% - 32px))" : "none",
+          }}
+        >
+          <div className="globe-tooltip-header">
+            <span className="globe-tooltip-flag">{hovered.flag}</span>
+            <span className="globe-tooltip-name">{hovered.name}</span>
+          </div>
+          <div className="globe-tooltip-meta">
+            <span className="globe-tooltip-country">{hovered.country}</span>
+            <span className="globe-tooltip-type" style={{ color: typeColor(hovered.type) }}>{hovered.type}</span>
+          </div>
+          <p className="globe-tooltip-focus">
+            {locale === "th" ? hovered.focusTh : hovered.focusEn}
+          </p>
+          {hovered.url && (
+            <span className="globe-tooltip-url">{hovered.url.replace(/^https?:\/\//, "").slice(0, 40)}</span>
+          )}
+        </div>
+      )}
+
+      {/* Legend */}
       <div className="globe-legend">
         {([
           ["government", "Government"],

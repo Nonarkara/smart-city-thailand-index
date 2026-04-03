@@ -2374,3 +2374,26 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
   .control-tower-sidebar { padding-left: 0; padding-top: .5rem; }
   .control-tower-feeds { grid-template-columns: 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   GLOBE MAP — Professional Overhaul
+   ═══════════════════════════════════════════════════════════════════════ */
+.globe-container { position: relative; margin: 1rem 0; }
+.globe-svg { width: 100%; display: block; }
+
+/* HTML Tooltip — outside SVG */
+.globe-html-tooltip {
+  position: absolute; z-index: 10; pointer-events: none;
+  background: #1A1814; color: #F0EDE8;
+  padding: .65rem .75rem; min-width: 220px; max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  border-left: 3px solid #1A9A82;
+}
+.globe-tooltip-header { display: flex; align-items: center; gap: .35rem; margin-bottom: .2rem; }
+.globe-tooltip-flag { font-size: .85rem; }
+.globe-tooltip-name { font-size: .72rem; font-weight: 700; }
+.globe-tooltip-meta { display: flex; gap: .4rem; align-items: center; margin-bottom: .3rem; }
+.globe-tooltip-country { font: 500 .55rem var(--mono); color: #A8A49C; }
+.globe-tooltip-type { font: 600 .48rem var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.globe-tooltip-focus { font-size: .6rem; color: #A8A49C; line-height: 1.45; margin-bottom: .2rem; }
+.globe-tooltip-url { font: 500 .45rem var(--mono); color: #1A9A82; }
