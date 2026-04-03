@@ -464,62 +464,88 @@ export default function HomePage({ locale, onNavigate }: Props) {
           ))}
         </div>
 
-        {/* ─── PODIUM: #1 hero + #2 #3 flanking ─── */}
-        {previewCities.length >= 3 && (() => {
-          const top3 = previewCities.slice(0, 3);
-          const leader = top3[0];
+        {/* ─── PODIUM: #1 hero + #2–#5 grid ─── */}
+        {previewCities.length >= 5 && (() => {
+          const top5 = previewCities.slice(0, 5);
+          const leader = top5[0];
+
+          // City hero photos + key stats
+          const cityPhotos: Record<string, string> = {
+            phuket: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=900&h=500&fit=crop&q=80",
+            samyan: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600&h=340&fit=crop&q=80",
+            "chiang-mai-old-town": "https://images.unsplash.com/photo-1598935898639-81586f7d2129?w=600&h=340&fit=crop&q=80",
+            "khon-kaen": "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&h=340&fit=crop&q=80",
+            "cmu-smart-city": "https://images.unsplash.com/photo-1537956965359-7573183d1f57?w=600&h=340&fit=crop&q=80",
+          };
+          const cityQuickStats: Record<string, string[]> = {
+            phuket: ["GPP ฿492K/capita", "PM2.5 18.2 μg/m³", "88% hospitality", "72% digital adoption"],
+            samyan: ["GPP ฿628K/capita", "200+ startups", "82% digital score", "5G testbed live"],
+            "chiang-mai-old-town": ["300+ temple sensors", "PM2.5 46.1 μg/m³", "92% hospitality", "50+ AQ stations"],
+            "khon-kaen": ["LRT under construction", "Smart bus running", "GPP ฿155K/capita", "6 hospital network"],
+            "cmu-smart-city": ["30% energy reduction", "12 AI intersections", "500+ open datasets", "80% digital"],
+          };
+
           return (
-            <div className="podium-layout">
-              {/* #1 — dominant card */}
+            <div className="podium-photo-layout">
+              {/* #1 — Phuket: large photo card */}
               <button
                 type="button"
-                className="podium-leader"
+                className="podium-photo-leader"
                 onClick={() => onNavigate(`/city/${leader.id}`)}
               >
-                <div className="podium-leader-top">
-                  <div>
-                    <div className="podium-rank">01</div>
-                    <h3 className="podium-leader-name">{getCityName(leader, locale)}</h3>
-                    <span className="podium-leader-province">{getProvinceName(leader, locale)}</span>
-                  </div>
-                  <div className="podium-leader-scoreblock">
-                    <div className="podium-leader-score">{leader.compositeScore.toFixed(1)}</div>
-                    <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${leader.reality}`}>
-                      {getCityVibe(leader, locale)}
-                    </span>
-                  </div>
-                </div>
-                <div className="podium-bars podium-leader-bars">
-                  {SCORING_PILLARS.map(p => (
-                    <div key={p} className="podium-bar-track">
-                      <div className="podium-bar-fill" style={{ width: `${leader.scores[p]}%`, background: PILLAR_COLORS[p] }} />
+                {cityPhotos[leader.id] && (
+                  <img src={cityPhotos[leader.id]} alt={getCityName(leader, locale)} className="podium-photo-img" loading="eager" />
+                )}
+                <div className="podium-photo-overlay">
+                  <div className="podium-photo-top">
+                    <div>
+                      <div className="podium-rank">01</div>
+                      <h3 className="podium-photo-name">{getCityName(leader, locale)}</h3>
                     </div>
-                  ))}
+                    <div className="podium-photo-scoreblock">
+                      <div className="podium-photo-score">{leader.compositeScore.toFixed(1)}</div>
+                    </div>
+                  </div>
+                  <div className="podium-photo-stats">
+                    {(cityQuickStats[leader.id] ?? []).map((stat, i) => (
+                      <span key={i} className="podium-photo-stat">{stat}</span>
+                    ))}
+                  </div>
+                  <div className="podium-photo-vibe">
+                    {getCityVibe(leader, locale)}
+                  </div>
+                  <div className="podium-bars">
+                    {SCORING_PILLARS.map(p => (
+                      <div key={p} className="podium-bar-track">
+                        <div className="podium-bar-fill" style={{ width: `${leader.scores[p]}%`, background: PILLAR_COLORS[p] }} />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </button>
 
-              {/* #2 and #3 — compact flanking cards */}
-              <div className="podium-runners">
-                {top3.slice(1).map((city, i) => (
+              {/* #2–#5 grid of smaller photo cards */}
+              <div className="podium-photo-grid">
+                {top5.slice(1).map((city, i) => (
                   <button
                     key={city.id}
                     type="button"
-                    className="podium-card"
+                    className="podium-photo-card"
                     onClick={() => onNavigate(`/city/${city.id}`)}
                   >
-                    <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
-                    <h3 className="podium-name">{getCityName(city, locale)}</h3>
-                    <div className="podium-score">{city.compositeScore.toFixed(1)}</div>
-                    <div className="podium-bars">
-                      {SCORING_PILLARS.map(p => (
-                        <div key={p} className="podium-bar-track">
-                          <div className="podium-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }} />
-                        </div>
-                      ))}
-                    </div>
-                    <div className="podium-meta">
-                      <span>{getProvinceName(city, locale)}</span>
-                      <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${city.reality}`}>
+                    {cityPhotos[city.id] && (
+                      <img src={cityPhotos[city.id]} alt={getCityName(city, locale)} className="podium-photo-card-img" loading="lazy" />
+                    )}
+                    <div className="podium-photo-card-overlay">
+                      <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
+                      <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
+                      <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
+                      <div className="podium-photo-card-stats">
+                        {(cityQuickStats[city.id] ?? []).slice(0, 2).map((stat, j) => (
+                          <span key={j} className="podium-photo-stat">{stat}</span>
+                        ))}
+                      </div>
+                      <span className={`podium-photo-card-vibe dashboard-ranking-vibe-${city.reality}`}>
                         {getCityVibe(city, locale)}
                       </span>
                     </div>
@@ -532,8 +558,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
         {/* ─── REST AS COMPACT ROWS ─── */}
         <div className="dashboard-ranking-list">
-          {previewCities.slice(3).map((city, index) => (
-            <RankingRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 4} />
+          {previewCities.slice(5).map((city, index) => (
+            <RankingRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 6} />
           ))}
         </div>
       </section>
