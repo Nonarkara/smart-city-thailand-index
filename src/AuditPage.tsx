@@ -289,6 +289,11 @@ export default function AuditPage({ locale, onNavigate }: Props) {
             zh: "对泰国智慧城市项目的诚实评估：8个领域的PR公告与可衡量结果对比。来自真实公共话语的社会情感分析。以及关于如何改进的具体建议。",
           })}
         </p>
+        <div style={{ display: "flex", gap: ".4rem", marginTop: ".75rem" }}>
+          <a href="/downloads/SCITI-2026-Audit.pdf" download className="cta-button">
+            {translate(locale, { en: "Download Audit PDF", th: "ดาวน์โหลด PDF ตรวจสอบ", zh: "下载审计PDF" })}
+          </a>
+        </div>
       </section>
 
       {/* ─── TIMELINE ─── */}

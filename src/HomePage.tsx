@@ -412,6 +412,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/methodology")}>
               {translate(locale, { en: "Methodology", th: "วิธีการ", zh: "方法论" })}
             </button>
+            <a href="/downloads/SCITI-2026-Report.pdf" download className="ghost-button cinematic-ghost">
+              {translate(locale, { en: "Download PDF", th: "ดาวน์โหลด PDF", zh: "下载PDF" })}
+            </a>
           </div>
         </div>
       </section>
