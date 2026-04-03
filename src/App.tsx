@@ -17,6 +17,7 @@ const AsusPage = lazy(() => import("./AsusPage"));
 const AuditPage = lazy(() => import("./AuditPage"));
 const ReferencesPage = lazy(() => import("./ReferencesPage"));
 const ProgramPage = lazy(() => import("./ProgramPage"));
+const KnowledgePage = lazy(() => import("./KnowledgePage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 const THEME_STORAGE_KEY = "smart-city-thailand-theme";
@@ -37,7 +38,7 @@ const NAV_ITEMS = [
   { kind: "showcase", path: "/showcase", label: { en: "NST", th: "ต้นแบบ", zh: "样板" } },
   { kind: "partners", path: "/partners", label: { en: "Partners", th: "พันธมิตร", zh: "伙伴" } },
   { kind: "audit", path: "/audit", label: { en: "Audit", th: "ตรวจสอบ", zh: "审计" } },
-  { kind: "references", path: "/references", label: { en: "Ref", th: "อ้างอิง", zh: "参考" } },
+  { kind: "knowledge", path: "/knowledge", label: { en: "KB", th: "คลังรู้", zh: "知识库" } },
 ] as const;
 
 const newsItems = [
@@ -241,6 +242,8 @@ export default function App() {
             <ReferencesPage locale={locale} onNavigate={navigate} />
           ) : route.kind === "program" ? (
             <ProgramPage locale={locale} onNavigate={navigate} />
+          ) : route.kind === "knowledge" ? (
+            <KnowledgePage locale={locale} onNavigate={navigate} />
           ) : route.kind === "city" ? (
             <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
           ) : (

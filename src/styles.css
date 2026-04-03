@@ -2474,3 +2474,52 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
   max-width: 520px; line-height: 1.55; margin-bottom: .6rem;
   letter-spacing: -.005em;
 }
+
+/* Partner Project Timeline */
+.partner-timeline { margin-top: .6rem; }
+.partner-tl-row {
+  display: grid; grid-template-columns: 3rem 2rem 1fr 7rem; gap: .4rem;
+  align-items: center; padding: .3rem 0;
+  border-bottom: 1px solid var(--5);
+  font-size: .62rem;
+}
+.partner-tl-row:hover { background: var(--surface); }
+.partner-tl-year { font: 700 .52rem var(--mono); color: var(--gold); }
+.partner-tl-flag { font-size: .75rem; text-align: center; }
+.partner-tl-project { font-weight: 500; }
+.partner-tl-country { font: 500 .48rem var(--mono); color: var(--3); text-align: right; }
+@media (max-width: 600px) {
+  .partner-tl-row { grid-template-columns: 2.5rem 1.5rem 1fr; }
+  .partner-tl-country { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   KNOWLEDGE BASE / FAQ
+   ═══════════════════════════════════════════════════════════════════════ */
+.kb-search {
+  width: 100%; padding: .6rem .75rem; font: 400 .78rem var(--font);
+  background: var(--surface); border: 0; color: var(--ink);
+  margin-bottom: .6rem; outline: none;
+}
+.kb-search:focus { box-shadow: inset 0 -2px 0 var(--teal); }
+.kb-categories { display: flex; flex-wrap: wrap; gap: .25rem; margin-bottom: .5rem; }
+.kb-count { font: 500 .5rem var(--mono); color: var(--3); margin-bottom: .5rem; }
+.kb-list { display: flex; flex-direction: column; }
+.kb-item { border-bottom: 1px solid var(--5); }
+.kb-question {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .55rem 0; font-size: .72rem; font-weight: 600;
+  cursor: pointer; list-style: none;
+}
+.kb-question::-webkit-details-marker { display: none; }
+.kb-question::before { content: "+"; font: 700 .85rem var(--mono); color: var(--gold); width: 1rem; text-align: center; flex-shrink: 0; }
+details[open] .kb-question::before { content: "−"; }
+.kb-cat-badge {
+  font: 600 .38rem var(--mono); color: var(--teal); background: var(--teal-glow);
+  padding: .1rem .3rem; text-transform: uppercase; letter-spacing: .06em;
+  flex-shrink: 0;
+}
+.kb-answer {
+  font-size: .68rem; color: var(--2); line-height: 1.6;
+  padding: 0 0 .65rem 1.5rem; max-width: 640px;
+}
