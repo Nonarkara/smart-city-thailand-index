@@ -473,9 +473,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
           const cityPhotos: Record<string, string> = {
             phuket: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=900&h=500&fit=crop&q=80",
             samyan: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600&h=340&fit=crop&q=80",
-            "chiang-mai-old-town": "https://images.unsplash.com/photo-1598935898639-81586f7d2129?w=600&h=340&fit=crop&q=80",
-            "khon-kaen": "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&h=340&fit=crop&q=80",
-            "cmu-smart-city": "https://images.unsplash.com/photo-1537956965359-7573183d1f57?w=600&h=340&fit=crop&q=80",
+            "chiang-mai-old-town": "/Chiang Mai/IMG_20251218_190749854.jpg",
+            "khon-kaen": "/Khon Kaen/IMG_4264.JPG",
+            "cmu-smart-city": "/CMU Smart City/P1210289.JPG",
           };
           const cityQuickStats: Record<string, string[]> = {
             phuket: ["GPP ฿492K/capita", "PM2.5 18.2 μg/m³", "88% hospitality", "72% digital adoption"],
