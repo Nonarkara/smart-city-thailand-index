@@ -2244,3 +2244,16 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 @media (max-width: 480px) {
   .podium-photo-grid { grid-template-columns: 1fr; }
 }
+
+/* ─── Score labels inside pillar bars ─── */
+.bar-score-label {
+  font: 700 .42rem var(--mono); color: #fff;
+  display: flex; align-items: center; justify-content: flex-end;
+  padding-right: .2rem; height: 100%;
+  text-shadow: 0 1px 2px rgba(0,0,0,.3);
+  white-space: nowrap; overflow: hidden;
+  min-width: 0;
+}
+/* Hide label if bar is too narrow (score < 30) */
+.dashboard-ranking-bar-fill:has(.bar-score-label) { display: flex; }
+.podium-bar-fill:has(.bar-score-label) { display: flex; }

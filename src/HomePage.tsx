@@ -151,7 +151,7 @@ function RankingRow({
       <div className="dashboard-ranking-bars">
         {(SCORING_PILLARS).map(p => (
           <div key={p} className="dashboard-ranking-bar-track" title={`${PILLAR_SHORT_LABELS[locale][p]}: ${city.scores[p]}`}>
-            <div className="dashboard-ranking-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }} />
+            <div className="dashboard-ranking-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }}><span className="bar-score-label">{city.scores[p]}</span></div>
           </div>
         ))}
       </div>
@@ -517,7 +517,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                   <div className="podium-bars">
                     {SCORING_PILLARS.map(p => (
                       <div key={p} className="podium-bar-track">
-                        <div className="podium-bar-fill" style={{ width: `${leader.scores[p]}%`, background: PILLAR_COLORS[p] }} />
+                        <div className="podium-bar-fill" style={{ width: `${leader.scores[p]}%`, background: PILLAR_COLORS[p] }}><span className="bar-score-label">{leader.scores[p]}</span></div>
                       </div>
                     ))}
                   </div>
