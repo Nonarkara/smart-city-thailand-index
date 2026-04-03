@@ -2257,3 +2257,23 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 /* Hide label if bar is too narrow (score < 30) */
 .dashboard-ranking-bar-fill:has(.bar-score-label) { display: flex; }
 .podium-bar-fill:has(.bar-score-label) { display: flex; }
+
+/* ─── PROGRAM PAGE: Three Concepts + Two-Five-Seven ─── */
+.program-concepts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-top: .6rem; }
+.program-concept-card { padding: .85rem .75rem; background: var(--surface); }
+.program-concept-num { font: 700 1.5rem var(--mono); color: var(--gold); display: block; margin-bottom: .25rem; }
+.program-concept-card h3 { font-size: .78rem; font-weight: 700; margin-bottom: .3rem; letter-spacing: -.01em; }
+.program-concept-card p { font-size: .6rem; color: var(--2); line-height: 1.55; }
+.program-source { font: 500 .48rem var(--mono); color: var(--3); margin-top: .5rem; }
+
+.program-257-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .5rem; margin-top: .6rem; }
+.program-257-card { padding: .85rem .75rem; background: var(--surface); }
+.program-257-num { font: 700 2rem var(--mono); color: var(--gold); display: block; margin-bottom: .2rem; line-height: 1; }
+.program-257-card h3 { font-size: .72rem; font-weight: 700; margin-bottom: .35rem; }
+.program-257-card p { font-size: .58rem; color: var(--2); line-height: 1.5; margin-bottom: .15rem; }
+.program-criteria-list { padding-left: 1rem; }
+.program-criteria-list li { font-size: .58rem; color: var(--2); line-height: 1.5; margin-bottom: .15rem; list-style: decimal; }
+
+@media (max-width: 768px) {
+  .program-concepts-grid, .program-257-grid { grid-template-columns: 1fr; }
+}
