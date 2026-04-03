@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { useInView } from "./useInView";
 import { allCities, getCityById, promotionZoneCities } from "./cityData";
 import { filterCities, getSpotlightCities, sortCities, summarizeCities } from "./cityCollections";
 import {
@@ -106,7 +107,7 @@ function BangkokClock() {
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
-  return <span className="ct-bar-clock">{time}</span>;
+  return <span className="ct-bar-clock" aria-label="Bangkok time (ICT)" role="timer">{time}</span>;
 }
 
 const REGION_LABELS: Record<SmartCity["region"], { en: string; th: string; zh: string }> = {
@@ -322,6 +323,7 @@ function CollageStrip() {
 export default function HomePage({ locale, onNavigate }: Props) {
   const [statusFilter, setStatusFilter] = useState<"all" | "certified" | "promotion">("all");
   const [tierFilter, setTierFilter] = useState<"all" | CityTier>("all");
+  const [barsRef, barsVisible] = useInView(0.1);
 
   const stats = useMemo(() => summarizeCities(allCities), []);
   const spotlightCities = useMemo(() => getSpotlightCities(allCities, 5), []);
@@ -483,7 +485,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </div>
         </div>
 
-        {/* ─── PILLAR LEGEND ─── */}
+        {/* ─── PILLAR LEGEND + BARS (animated) ─── */}
+        <div ref={barsRef} className={barsVisible ? "bar-animate" : ""}>
         <div className="pillar-legend">
           {SCORING_PILLARS.map(p => (
             <span key={p} className="legend-item">
@@ -597,6 +600,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <RankingRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 6} />
           ))}
         </div>
+        </div>{/* close bar-animate wrapper */}
       </section>
 
       {/* ═══ CONTROL TOWER — Dense, data-rich, every pixel earns its keep ═══ */}

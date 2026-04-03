@@ -245,8 +245,31 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const dataRow = getCityPlanningDatasetRow(cityId);
   const planningCsvHref = `data:text/csv;charset=utf-8,${encodeURIComponent(CITY_PLANNING_DATASET_CSV)}`;
 
+  const cityPhotoMap: Record<string, string> = {
+    phuket: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=1200&h=400&fit=crop&q=80",
+    samyan: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=1200&h=400&fit=crop&q=80",
+    "chiang-mai-old-town": "/Chiang Mai/IMG_20251218_190749854.jpg",
+    "khon-kaen": "/Khon Kaen/IMG_4264.JPG",
+    "cmu-smart-city": "/CMU Smart City/P1210289.JPG",
+    "nakhon-si-thammarat": "/photos/report-city-walkway.jpg",
+    "hat-yai": "/photos/report-city-night.jpg",
+    krabi: "/photos/slic-waterfront.jpg",
+  };
+  const cityPhoto = cityPhotoMap[cityId];
+
   return (
     <>
+      {/* ─── CITY HERO PHOTO ─── */}
+      {cityPhoto && (
+        <div className="city-hero-photo">
+          <img src={cityPhoto} alt={cityName} loading="eager" />
+          <div className="city-hero-photo-overlay">
+            <span className="city-hero-photo-title">{cityName}</span>
+            <span className="city-hero-photo-score">{city.compositeScore.toFixed(1)}</span>
+          </div>
+        </div>
+      )}
+
       {/* ─── HERO ─── */}
       <section className="section city-detail-hero">
         <button

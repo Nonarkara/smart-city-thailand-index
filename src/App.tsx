@@ -145,6 +145,7 @@ export default function App() {
   return (
     <div className={`page-shell ${isDashboardRoute ? "page-shell-dashboard" : ""}`}>
       {/* ─── INSTITUTIONAL BANNER ─── */}
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <div className="institutional-banner">
         <div className="institutional-logos">
           <img src="/mdes_logo.jpg" alt={locale === "th" ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม" : "Ministry of Digital Economy and Society"} className="institutional-logo" />
@@ -218,7 +219,7 @@ export default function App() {
       </nav>
 
       {/* ─── CONTENT ─── */}
-      <main className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""}`} key={getRouteKey(route)}>
+      <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""}`} key={getRouteKey(route)}>
         <Suspense fallback={<div className="loading">Loading...</div>}>
           {route.kind === "rankings" ? (
             <RankingsPage locale={locale} onNavigate={navigate} />
