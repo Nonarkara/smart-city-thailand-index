@@ -348,7 +348,7 @@ export default function App() {
               {/* ─── FINE PRINT: Standards, Compliance & Accessibility ─── */}
               <div className="footer-fineprint">
                 <p style={{ fontWeight: 600, color: "var(--3)", marginBottom: ".15rem", fontSize: ".44rem", letterSpacing: ".06em", textTransform: "uppercase" as const, fontFamily: "var(--mono)" }}>
-                  {locale === "th" ? "เอกสารอ้างอิง SCTI-2026-R1 · ปรับปรุงล่าสุด เมษายน 2026" : locale === "zh" ? "参考文件 SCTI-2026-R1 · 最后更新：2026 年 4 月" : "Document ref. SCTI-2026-R1 · Last updated April 2026"}
+                  {locale === "th" ? "เอกสารอ้างอิง SCITI-2026-R1 · ปรับปรุงล่าสุด เมษายน 2026" : locale === "zh" ? "参考文件 SCITI-2026-R1 · 最后更新：2026 年 4 月" : "Document ref. SCITI-2026-R1 · Last updated April 2026"}
                 </p>
                 <p>
                   {locale === "th"

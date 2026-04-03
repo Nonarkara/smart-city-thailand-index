@@ -2464,3 +2464,13 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
   .ct-grid { grid-template-columns: 1fr; }
   .ct-mid-col, .ct-right-col { border-right: 0; padding-left: 0; }
 }
+
+/* Bangkok clock */
+.ct-bar-clock { font: 600 .45rem var(--mono); color: #C49A2A; letter-spacing: .03em; }
+
+/* Hero why paragraph */
+.cinematic-hero-why {
+  font: 400 .75rem var(--font); color: rgba(255,255,255,.7);
+  max-width: 520px; line-height: 1.55; margin-bottom: .6rem;
+  letter-spacing: -.005em;
+}

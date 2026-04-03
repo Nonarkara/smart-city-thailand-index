@@ -2,7 +2,7 @@ import { getCityById } from "./cityData";
 import { parseRoute, type Route } from "./routing";
 import type { Locale } from "./types";
 
-const SITE_NAME = "Smart City Thailand Index (SCTI)";
+const SITE_NAME = "Smart City Thailand Index (SCITI)";
 const SHARE_IMAGE_PATH = "/smart_city_thailand_logo.jpg";
 
 const defaultDescriptions: Record<Locale, string> = {

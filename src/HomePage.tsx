@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { allCities, getCityById, promotionZoneCities } from "./cityData";
 import { filterCities, getSpotlightCities, sortCities, summarizeCities } from "./cityCollections";
 import {
@@ -86,6 +86,27 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
+}
+
+/** Bangkok atomic clock — ICT (Indochina Time, UTC+7) */
+function BangkokClock() {
+  const [time, setTime] = useState("");
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date();
+      const bkk = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
+      }).format(now);
+      const date = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Bangkok", day: "2-digit", month: "short", year: "numeric",
+      }).format(now);
+      setTime(`${bkk} ICT · ${date}`);
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <span className="ct-bar-clock">{time}</span>;
 }
 
 const REGION_LABELS: Record<SmartCity["region"], { en: string; th: string; zh: string }> = {
@@ -363,7 +384,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
           className="cinematic-hero-img"
         />
         <div className="cinematic-hero-overlay">
-          <p className="cinematic-hero-eyebrow">SCTI · 2026</p>
+          <p className="cinematic-hero-eyebrow">SCITI 2026 — {translate(locale, { en: "pronounced \"City\"", th: "อ่านว่า \"ซิตี้\"", zh: "读作 \"City\"" })}</p>
           <h1 className="cinematic-hero-title">
             {locale === "th"
               ? <>เอาความจริง<br />ไม่เอาพิธีตัดริบบิ้น</>
@@ -371,6 +392,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 ? <>看现实<br />不看剪彩</>
                 : <>Reality, not<br />ribbon&#8209;cutting.</>}
           </h1>
+          <p className="cinematic-hero-why">
+            {translate(locale, {
+              en: "Thailand has certified 37 smart cities. But how many of them actually work? This index exists because the gap between announcements and outcomes needed measuring. We score cities on what citizens experience — not what got presented on a slide deck.",
+              th: "ประเทศไทยรับรองเมืองอัจฉริยะ 37 เมือง แต่มีกี่เมืองที่ทำงานได้จริง? ดัชนีนี้มีอยู่เพราะช่องว่างระหว่างคำประกาศกับผลลัพธ์ต้องถูกวัด เราให้คะแนนเมืองจากสิ่งที่ประชาชนสัมผัสได้จริง ไม่ใช่สิ่งที่ถูกนำเสนอบนสไลด์",
+              zh: "泰国已认证37座智慧城市。但其中有多少真正在运转？这个指数的存在，是因为公告与结果之间的差距需要被衡量。我们根据市民的真实体验来评分——而不是幻灯片上展示的内容。",
+            })}
+          </p>
           <div className="cinematic-hero-stats">
             <span>{stats.total} {locale === "th" ? "เมือง" : "cities"}</span>
             <span>{stats.operational} {locale === "th" ? "ใช้งานจริง" : "operational"}</span>
@@ -566,12 +594,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
       {/* ═══ CONTROL TOWER — Dense, data-rich, every pixel earns its keep ═══ */}
       <section className="ct">
-        {/* Top bar */}
+        {/* Top bar with Bangkok clock */}
         <div className="ct-bar">
-          <span className="ct-bar-label">SCTI CONTROL TOWER</span>
+          <span className="ct-bar-label">SCITI CONTROL TOWER</span>
           <span className="ct-bar-stats">
             {stats.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })} · {stats.operational} {translate(locale, { en: "operational", th: "ใช้งานจริง", zh: "运行中" })} · {stats.alpha} Alpha
           </span>
+          <BangkokClock />
           <span className="ct-bar-live"><span className="ct-dot" /> LIVE</span>
         </div>
 
