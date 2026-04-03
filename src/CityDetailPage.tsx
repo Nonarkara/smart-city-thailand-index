@@ -25,7 +25,7 @@ import {
 } from "./cityPresentation";
 import { getEvidenceForCity, dataSources } from "./evidenceData";
 import { generateSWOT } from "./swotAnalysis";
-import { recommendInstruments } from "./financialToolkit";
+import { recommendInstruments, assessBankability, getASUSProject } from "./financialToolkit";
 import { getRelevantCaseStudies, generateImprovementPlan, analyzeTierUpgrade } from "./commandCenter";
 import type { Locale, ScoringPillar } from "./types";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
@@ -208,6 +208,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const evidence = useMemo(() => getEvidenceForCity(cityId), [cityId]);
   const swot = useMemo(() => city ? generateSWOT(city, locale) : { strengths: [], weaknesses: [], opportunities: [], threats: [] }, [city, locale]);
   const finRecs = useMemo(() => city ? recommendInstruments(city) : [], [city]);
+  const bankability = useMemo(() => city ? assessBankability(city) : null, [city]);
+  const asusProject = useMemo(() => getASUSProject(cityId), [cityId]);
   const caseStudies = useMemo(() => city ? getRelevantCaseStudies(city, 4) : [], [city]);
   const improvementPlan = useMemo(() => city ? generateImprovementPlan(city) : [], [city]);
   const tierUpgrade = useMemo(() => city ? analyzeTierUpgrade(city) : null, [city]);
@@ -945,6 +947,63 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* ═══ BANKABILITY ASSESSMENT ═══ */}
+      {bankability && (
+        <section className="section cc-section">
+          <p className="eyebrow">{translate(locale, { en: "Bankability", th: "ความพร้อมทางการเงิน", zh: "可融资性" })}</p>
+          <h2>{translate(locale, { en: "Can this city attract finance?", th: "เมืองนี้ดึงดูดการเงินได้หรือไม่?", zh: "这座城市能吸引融资吗？" })}</h2>
+          <div className="cc-bankability">
+            <div className="cc-bankability-score">
+              <span className="cc-bankability-number">{bankability.readinessScore}</span>
+              <span className="cc-bankability-label">/100</span>
+            </div>
+            <div className="cc-bankability-grid">
+              <div className="cc-bankability-item">
+                <span className="cc-bankability-item-label">{translate(locale, { en: "Revenue base", th: "ฐานรายได้", zh: "收入基础" })}</span>
+                <span className={`cc-bankability-item-value cc-bankability-${bankability.revenueBase}`}>{bankability.revenueBase}</span>
+              </div>
+              <div className="cc-bankability-item">
+                <span className="cc-bankability-item-label">{translate(locale, { en: "Institutional capacity", th: "ศักยภาพสถาบัน", zh: "机构能力" })}</span>
+                <span className={`cc-bankability-item-value cc-bankability-${bankability.institutionalCapacity}`}>{bankability.institutionalCapacity}</span>
+              </div>
+              <div className="cc-bankability-item">
+                <span className="cc-bankability-item-label">{translate(locale, { en: "Project pipeline", th: "สายโครงการ", zh: "项目管线" })}</span>
+                <span className={`cc-bankability-item-value cc-bankability-${bankability.projectPipeline}`}>{bankability.projectPipeline}</span>
+              </div>
+              <div className="cc-bankability-item">
+                <span className="cc-bankability-item-label">{translate(locale, { en: "Private interest", th: "ความสนใจเอกชน", zh: "私营兴趣" })}</span>
+                <span className={`cc-bankability-item-value cc-bankability-${bankability.privateInterest}`}>{bankability.privateInterest}</span>
+              </div>
+              <div className="cc-bankability-item">
+                <span className="cc-bankability-item-label">{translate(locale, { en: "Risk profile", th: "ความเสี่ยง", zh: "风险概况" })}</span>
+                <span className={`cc-bankability-item-value cc-bankability-${bankability.riskProfile}`}>{bankability.riskProfile}</span>
+              </div>
+            </div>
+            <p className="cc-bankability-rec">{locale === "th" ? bankability.recommendationTh : bankability.recommendation}</p>
+          </div>
+
+          {asusProject && (
+            <div className="cc-asus-project">
+              <h3 className="cc-asus-title">
+                {translate(locale, { en: "UN-Habitat ASUS Project", th: "โครงการ ASUS UN-Habitat", zh: "联合国人居署 ASUS 项目" })}
+              </h3>
+              <p className="cc-asus-area">
+                <strong>{translate(locale, { en: "Priority area", th: "พื้นที่สำคัญ", zh: "优先领域" })}:</strong> {asusProject.priorityArea}
+              </p>
+              <p className="cc-asus-status">
+                <strong>{translate(locale, { en: "Status", th: "สถานะ", zh: "状态" })}:</strong> {asusProject.status}
+              </p>
+              <div className="cc-asus-interventions">
+                {asusProject.keyInterventions.map((item, i) => (
+                  <span key={i} className="cc-asus-chip">{item}</span>
+                ))}
+              </div>
+              <p className="cc-asus-timeline">{asusProject.timeline}</p>
+            </div>
+          )}
         </section>
       )}
 

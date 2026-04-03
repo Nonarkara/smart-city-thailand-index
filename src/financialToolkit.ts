@@ -263,6 +263,220 @@ export const instruments: FinancialInstrument[] = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Thailand PPP Legal Framework — PPP Act BE 2562 (2019)
+// Source: SEPO / World Bank PPP Thailand / UNESCAP
+// ---------------------------------------------------------------------------
+
+export const THAILAND_PPP_FRAMEWORK = {
+  law: "Public-Private Partnership Act B.E. 2562 (2019)",
+  effectiveDate: "March 2019",
+  centralBody: "State Enterprise Policy Office (SEPO), Ministry of Finance",
+  policyCommission: "PPP Policy Commission (chaired by Prime Minister)",
+  investmentThreshold: "THB 5,000M+ (projects below may qualify if deemed important by the Board)",
+  eligibleSectors: [
+    "Roads & expressways", "Rail & mass transit", "Ports & airports",
+    "Energy & power", "Telecom & ICT", "Water & sanitation",
+    "Healthcare", "Education", "Social housing", "Smart city infrastructure",
+  ],
+  pppModels: ["BTO (Build-Transfer-Operate)", "BOT (Build-Operate-Transfer)", "BOO (Build-Own-Operate)", "DBFOM (Design-Build-Finance-Operate-Maintain)"],
+  concessionTerms: "Typically 15–50 years depending on project type and capital recovery period",
+  approvalProcess: [
+    "Project screening by responsible agency",
+    "SEPO review and PPP Committee endorsement",
+    "Cabinet approval for projects ≥ THB 5,000M",
+    "Private partner selection via competitive bidding",
+    "Contract negotiation and execution",
+  ],
+  recentProjects: [
+    { name: "Bangkok Orange Line MRT", value: "THB 140B", sector: "Mass transit", status: "Under construction" },
+    { name: "EECi Smart Park (Wangchan Valley)", value: "THB 74.5B", sector: "Smart infrastructure", status: "Planning" },
+    { name: "Motorway M6 (Bang Pa-in to Nakhon Ratchasima)", value: "THB 84B", sector: "Roads", status: "Operational" },
+    { name: "Don Mueang Airport Phase 3", value: "USD 1.1B", sector: "Aviation", status: "Pipeline (ASEAN Infrastructure)" },
+    { name: "Hat Yai-Sadao Motorway", value: "USD 903M", sector: "Roads", status: "Feasibility completed (ASEAN Pipeline)" },
+    { name: "Bangkok-Nong Khai HSR Phase 2", value: "THB 300B+", sector: "High-speed rail", status: "Cabinet approved Feb 2025" },
+    { name: "Thailand Landbridge", value: "USD 27B", sector: "Port/logistics", status: "Feasibility (ASEAN Pipeline)" },
+  ],
+  gdpPerCapitaPPP: "USD 21,100 (2024 est., World Bank)",
+  eecIncentives: "EEC Act B.E. 2561 (2018) — additional tax holidays (up to 15 years CIT exemption), 200% R&D deduction, fast-track permits, special visa programs",
+};
+
+// ---------------------------------------------------------------------------
+// ASUS Project — UN-Habitat ASEAN Sustainable Urbanisation Strategy
+// Source: ASUS Phase II Inception Reports (April 2025)
+// ---------------------------------------------------------------------------
+
+export interface ASUSCityProject {
+  cityId: string;
+  cityName: string;
+  country: string;
+  priorityArea: string;
+  phase: "phase1" | "phase2" | "both";
+  status: string;
+  keyInterventions: string[];
+  potentialFunding: string[];
+  timeline: string;
+}
+
+export const ASUS_PROJECTS: ASUSCityProject[] = [
+  // Phase I cities continuing in Phase II
+  {
+    cityId: "hat-yai", cityName: "Hat Yai", country: "Thailand",
+    priorityArea: "Safety & Security with Urban Resilience",
+    phase: "both", status: "CTP advancing — Climate Change Adaptation Roadmap under development",
+    keyInterventions: [
+      "AI-enabled CCTV integration with flood monitoring",
+      "Climate Change Adaptation Roadmap for U-Tapao watershed",
+      "Policy recommendations for cross-municipal flood management",
+      "THB 3.5M (USD 100K) municipal budget for 400 CCTV cameras already approved",
+    ],
+    potentialFunding: ["Municipal budget (approved)", "ACCCRN legacy framework", "Donor climate finance"],
+    timeline: "Policy workshop Feb 2026",
+  },
+  // Phase II new Thai cities
+  {
+    cityId: "nakhon-si-thammarat", cityName: "Nakhon Si Thammarat", country: "Thailand",
+    priorityArea: "Solid Waste Management",
+    phase: "phase2", status: "Inception phase — CTP under development",
+    keyInterventions: [
+      "Integrated solid waste management system",
+      "Community-based recycling and circular economy",
+      "Digital waste tracking and citizen reporting",
+    ],
+    potentialFunding: ["Korea Smart City Cooperation Fund", "National budget", "Municipal own-revenue"],
+    timeline: "CTP completion June 2026",
+  },
+  {
+    cityId: "chiang-mai-old-town", cityName: "Chiang Mai", country: "Thailand",
+    priorityArea: "Safety & Security",
+    phase: "phase2", status: "Inception phase — CTP under development",
+    keyInterventions: [
+      "Smart safety infrastructure for tourism zones",
+      "Traffic safety improvements at high-risk intersections",
+      "Digital safety reporting and monitoring systems",
+    ],
+    potentialFunding: ["Korea Smart City Cooperation Fund", "depa Smart City Fund", "Provincial budget"],
+    timeline: "CTP completion June 2026",
+  },
+  // ASEAN peers for comparison
+  {
+    cityId: "shah-alam", cityName: "Shah Alam", country: "Malaysia",
+    priorityArea: "Safety & Security (M&E focus)",
+    phase: "both", status: "M&E consultant being recruited Q4 2025",
+    keyInterventions: [
+      "74 CCTV units installed (25 MDES-funded, 50 Selangor-funded)",
+      "AI traffic lights deployed",
+      "Power BI dashboards for Community Transformation Programme",
+      "SDG 11 benchmarking and PDPA compliance training",
+    ],
+    potentialFunding: ["Selangor State", "Ministry of Economy", "Microsoft partnership"],
+    timeline: "KPI framework Jan 2026",
+  },
+  {
+    cityId: "general-santos", cityName: "General Santos", country: "Philippines",
+    priorityArea: "Mobility (Electric tricycle modernisation)",
+    phase: "both", status: "City Climate Gap Fund application in progress",
+    keyInterventions: [
+      "121 electric jeepneys + 72 Euro-IV units on 10 routes",
+      "Electric tricycle fleet modernisation",
+      "Special Support Fund for cooperative financing",
+      "IFC Apex Green Cities Programme loan discussions",
+    ],
+    potentialFunding: ["City Climate Gap Fund", "IFC Apex Green Cities", "Special Support Fund"],
+    timeline: "E-mobility assessment Feb 2026",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// ASEAN Infrastructure Pipeline — SMBC/LIB-SI (April 2025)
+// Thailand-specific projects in the Updated Pipeline
+// ---------------------------------------------------------------------------
+
+export const ASEAN_PIPELINE_THAILAND = [
+  { name: "Hat Yai–Sadao Motorway", cost: "USD 903M", status: "Feasibility/funding identified", sector: "Transport", impact: "High connectivity — links southern Thailand to Malaysia" },
+  { name: "Udon Thani–Bueng Kan Highway", cost: "USD 577M", status: "Funding identified", sector: "Transport", impact: "High connectivity — multilateral support being discussed" },
+  { name: "Don Mueang Airport Phase 3", cost: "USD 1.1B", status: "Funding identified", sector: "Aviation", impact: "High ASEAN connectivity — government supporting land acquisition" },
+  { name: "Thailand Landbridge", cost: "USD 27B", status: "Feasibility stage", sector: "Port/logistics", impact: "Highest-value project — strong private sector interest" },
+  { name: "ASEAN Digital Hub", cost: "N/A", status: "Completion by 2025", sector: "Digital", impact: "Regional digital infrastructure" },
+  { name: "Bangkok–Nong Khai HSR Phase 2", cost: "THB 300B+", status: "Cabinet approved Feb 2025", sector: "High-speed rail", impact: "Links to China-Laos railway" },
+];
+
+// ---------------------------------------------------------------------------
+// Bankability Assessment — per-city readiness scoring
+// ---------------------------------------------------------------------------
+
+export interface BankabilityAssessment {
+  revenueBase: "strong" | "moderate" | "weak";
+  institutionalCapacity: "high" | "medium" | "low";
+  projectPipeline: "active" | "emerging" | "nascent";
+  privateInterest: "high" | "medium" | "low";
+  riskProfile: "low" | "moderate" | "elevated";
+  readinessScore: number; // 0-100
+  recommendation: string;
+  recommendationTh: string;
+}
+
+export function assessBankability(city: SmartCity): BankabilityAssessment {
+  let score = 0;
+
+  // Revenue base (GPP per capita)
+  const gpp = city.metrics.gppPerCapita ?? 0;
+  const revenueBase: BankabilityAssessment["revenueBase"] =
+    gpp > 300000 ? "strong" : gpp > 150000 ? "moderate" : "weak";
+  score += revenueBase === "strong" ? 25 : revenueBase === "moderate" ? 15 : 5;
+
+  // Institutional capacity (composite score as proxy)
+  const institutionalCapacity: BankabilityAssessment["institutionalCapacity"] =
+    city.compositeScore >= 65 ? "high" : city.compositeScore >= 45 ? "medium" : "low";
+  score += institutionalCapacity === "high" ? 25 : institutionalCapacity === "medium" ? 15 : 5;
+
+  // Project pipeline (reality + digital score)
+  const projectPipeline: BankabilityAssessment["projectPipeline"] =
+    city.reality === "operational" && city.scores.digital >= 55 ? "active" :
+    city.reality !== "planned" ? "emerging" : "nascent";
+  score += projectPipeline === "active" ? 20 : projectPipeline === "emerging" ? 12 : 4;
+
+  // Private sector interest (economy score + EEC bonus)
+  let privateInterest: BankabilityAssessment["privateInterest"] = "low";
+  if (city.scores.economy >= 70 || city.region === "east") {
+    privateInterest = "high";
+    score += 20;
+  } else if (city.scores.economy >= 55) {
+    privateInterest = "medium";
+    score += 12;
+  } else {
+    score += 4;
+  }
+
+  // Risk profile (safety + crime rate)
+  const crime = city.metrics.crimeRatePer100k ?? 150;
+  const riskProfile: BankabilityAssessment["riskProfile"] =
+    crime > 200 ? "elevated" : crime > 150 ? "moderate" : "low";
+  score += riskProfile === "low" ? 10 : riskProfile === "moderate" ? 6 : 2;
+
+  // Generate recommendation
+  let recommendation = "";
+  let recommendationTh = "";
+
+  if (score >= 75) {
+    recommendation = `Strong bankability (${score}/100). This city can access commercial finance: PPP under the PPP Act B.E. 2562, municipal bonds, and green bonds. The revenue base supports debt service. Ready for THB 5B+ projects.`;
+    recommendationTh = `ความพร้อมทางการเงินสูง (${score}/100) เมืองนี้เข้าถึงการเงินเชิงพาณิชย์ได้: PPP ภายใต้ พ.ร.บ. PPP 2562, พันธบัตรเทศบาล, และพันธบัตรสีเขียว ฐานรายได้รองรับการชำระหนี้ได้ พร้อมสำหรับโครงการ 5 พันล้านบาท+`;
+  } else if (score >= 50) {
+    recommendation = `Moderate bankability (${score}/100). Blended finance recommended: combine concessional DFI lending (JICA/ADB) with BOI incentives and national government transfers. Build track record before approaching commercial markets.`;
+    recommendationTh = `ความพร้อมทางการเงินปานกลาง (${score}/100) แนะนำการเงินผสมผสาน: ผสม DFI lending ผ่อนปรน (JICA/ADB) กับสิทธิประโยชน์ BOI และเงินอุดหนุนจากรัฐบาลกลาง สร้างประวัติก่อนเข้าตลาดเชิงพาณิชย์`;
+  } else {
+    recommendation = `Early-stage bankability (${score}/100). Focus on grants and technical assistance first: depa Smart City Fund, USTDA, ASUS Project TA, Korea Smart City Cooperation Fund. Build institutional capacity before seeking repayable finance.`;
+    recommendationTh = `ความพร้อมทางการเงินระยะเริ่มต้น (${score}/100) เน้นเงินช่วยเหลือและ TA ก่อน: กองทุน depa, USTDA, ASUS Project TA, กองทุนความร่วมมือเมืองอัจฉริยะเกาหลี สร้างศักยภาพสถาบันก่อนการเงินที่ต้องชำระคืน`;
+  }
+
+  return { revenueBase, institutionalCapacity, projectPipeline, privateInterest, riskProfile, readinessScore: score, recommendation, recommendationTh };
+}
+
+/** Get ASUS project info for a specific city */
+export function getASUSProject(cityId: string): ASUSCityProject | undefined {
+  return ASUS_PROJECTS.find(p => p.cityId === cityId);
+}
+
 /** Recommend financial instruments for a specific city */
 export function recommendInstruments(city: SmartCity): FinancialRecommendation[] {
   const results: FinancialRecommendation[] = [];

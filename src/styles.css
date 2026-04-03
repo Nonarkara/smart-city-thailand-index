@@ -2021,3 +2021,55 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
   color: var(--3);
   font-size: .46rem;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BANKABILITY ASSESSMENT
+   ═══════════════════════════════════════════════════════════════════════ */
+.cc-bankability {
+  margin-top: .6rem;
+}
+.cc-bankability-score {
+  display: flex; align-items: baseline; gap: .15rem;
+  margin-bottom: .75rem;
+}
+.cc-bankability-number {
+  font: 700 2.5rem var(--mono); letter-spacing: -.04em; color: var(--gold);
+}
+.cc-bankability-label {
+  font: 500 .85rem var(--mono); color: var(--4);
+}
+.cc-bankability-grid {
+  display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem;
+}
+.cc-bankability-item {
+  display: flex; flex-direction: column; gap: .1rem;
+  padding: .5rem .6rem; background: var(--surface); flex: 1; min-width: 120px;
+}
+.cc-bankability-item-label {
+  font: 600 .42rem var(--mono); text-transform: uppercase;
+  letter-spacing: .08em; color: var(--3);
+}
+.cc-bankability-item-value {
+  font: 700 .72rem var(--font); text-transform: capitalize;
+}
+.cc-bankability-strong, .cc-bankability-high, .cc-bankability-active, .cc-bankability-low { color: var(--alpha); }
+.cc-bankability-moderate, .cc-bankability-medium, .cc-bankability-emerging { color: var(--gold); }
+.cc-bankability-weak, .cc-bankability-nascent, .cc-bankability-elevated { color: var(--gamma); }
+.cc-bankability-rec {
+  font-size: .72rem; color: var(--2); line-height: 1.6;
+  max-width: 640px;
+}
+
+/* ASUS Project Card */
+.cc-asus-project {
+  margin-top: 1rem; padding: 1rem; background: var(--surface);
+}
+.cc-asus-title { font-size: .78rem; font-weight: 700; margin-bottom: .35rem; color: var(--teal); }
+.cc-asus-area, .cc-asus-status { font-size: .65rem; color: var(--2); margin-bottom: .2rem; }
+.cc-asus-area strong, .cc-asus-status strong { color: var(--ink); }
+.cc-asus-interventions { display: flex; flex-wrap: wrap; gap: .25rem; margin: .4rem 0; }
+.cc-asus-chip {
+  font: 500 .52rem var(--font); padding: .2rem .45rem;
+  background: var(--teal-glow); color: var(--teal);
+}
+.cc-asus-timeline { font: 600 .5rem var(--mono); color: var(--3); margin-top: .3rem; }
