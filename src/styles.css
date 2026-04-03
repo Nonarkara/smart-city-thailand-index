@@ -2376,23 +2376,37 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   GLOBE MAP — Professional Overhaul
+   GLOBE MAP v3 — Proper coastlines, dark ocean, dense legend
    ═══════════════════════════════════════════════════════════════════════ */
+.globe-wrap { position: relative; margin: 1rem 0; }
 .globe-container { position: relative; margin: 1rem 0; }
 .globe-svg { width: 100%; display: block; }
 
-/* HTML Tooltip — outside SVG */
+/* Tooltip */
 .globe-html-tooltip {
   position: absolute; z-index: 10; pointer-events: none;
-  background: #1A1814; color: #F0EDE8;
-  padding: .65rem .75rem; min-width: 220px; max-width: 320px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  background: #14120F; color: #F0EDE8;
+  padding: .6rem .7rem; min-width: 200px; max-width: 300px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.5);
   border-left: 3px solid #1A9A82;
 }
-.globe-tooltip-header { display: flex; align-items: center; gap: .35rem; margin-bottom: .2rem; }
-.globe-tooltip-flag { font-size: .85rem; }
-.globe-tooltip-name { font-size: .72rem; font-weight: 700; }
-.globe-tooltip-meta { display: flex; gap: .4rem; align-items: center; margin-bottom: .3rem; }
+.globe-tt-head { display: flex; align-items: flex-start; gap: .4rem; margin-bottom: .25rem; }
+.globe-tt-flag { font-size: .9rem; line-height: 1; }
+.globe-tt-name { display: block; font-size: .7rem; font-weight: 700; }
+.globe-tt-meta { display: block; font: 500 .48rem var(--mono); color: #8A8780; }
+.globe-tt-focus { font-size: .58rem; color: #A8A49C; line-height: 1.45; margin-bottom: .15rem; }
+.globe-tt-url { font: 500 .42rem var(--mono); color: #1A9A82; }
+
+/* Dense legend bar */
+.globe-legend-bar {
+  display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+  padding: .35rem 0; font: 500 .42rem var(--mono); color: var(--3);
+}
+.globe-lg-item { display: flex; align-items: center; gap: .15rem; text-transform: capitalize; }
+.globe-lg-dot { width: 5px; height: 5px; flex-shrink: 0; }
+.globe-lg-stat { margin-left: auto; color: var(--gold); font-weight: 600; }
+
+/* Keep old class for backward compat */
 .globe-tooltip-country { font: 500 .55rem var(--mono); color: #A8A49C; }
 .globe-tooltip-type { font: 600 .48rem var(--mono); text-transform: uppercase; letter-spacing: .06em; }
 .globe-tooltip-focus { font-size: .6rem; color: #A8A49C; line-height: 1.45; margin-bottom: .2rem; }
