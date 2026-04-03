@@ -12,6 +12,16 @@ import {
 import type { CityTier, Locale, SmartCity } from "./types";
 import { TIER_LABELS, PILLAR_COLORS, PILLAR_SHORT_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
+import { cityCoords as mapCityCoords, BOUNDS as MAP_BOUNDS } from "./ThailandMap";
+
+// Mini map projection (compact version for homepage)
+const MINI_MAP_W = 240;
+const MINI_MAP_H = 320;
+function miniProject(lat: number, lng: number) {
+  const x = ((lng - MAP_BOUNDS.minLng) / (MAP_BOUNDS.maxLng - MAP_BOUNDS.minLng)) * (MINI_MAP_W - 20) + 10;
+  const y = ((MAP_BOUNDS.maxLat - lat) / (MAP_BOUNDS.maxLat - MAP_BOUNDS.minLat)) * (MINI_MAP_H - 20) + 10;
+  return { x, y };
+}
 
 /** Short, unique vibe phrase per city — keeps the reality color but says something memorable */
 function getCityVibe(city: SmartCity, locale: Locale): string {
@@ -540,27 +550,43 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </div>
         </div>
 
-        <div className="dashboard-region-list">
-          {regionPulse.map(region => (
-            <div key={region.region} className="dashboard-region-row">
-              <div className="dashboard-region-head">
+        <div className="dashboard-map-layout">
+          {/* ─── COMPACT THAILAND MAP ─── */}
+          <div className="dashboard-map-wrap">
+            <svg viewBox={`0 0 ${MINI_MAP_W} ${MINI_MAP_H}`} className="dashboard-map-svg">
+              {allCities.map(city => {
+                const coords = mapCityCoords[city.id];
+                if (!coords) return null;
+                const { x, y } = miniProject(coords.lat, coords.lng);
+                const color = city.tier === "alpha" ? "var(--teal)" : city.tier === "beta" ? "var(--gold)" : "var(--gamma)";
+                return (
+                  <circle
+                    key={city.id}
+                    cx={x} cy={y} r={city.status === "certified" ? 4.5 : 3}
+                    fill={color}
+                    opacity={0.85}
+                    style={{ cursor: "pointer", transition: "r .15s" }}
+                    onClick={() => onNavigate(`/city/${city.id}`)}
+                  >
+                    <title>{getCityName(city, locale)} — {city.compositeScore.toFixed(1)}</title>
+                  </circle>
+                );
+              })}
+            </svg>
+          </div>
+
+          {/* ─── REGION SUMMARY ─── */}
+          <div className="dashboard-region-summary">
+            {regionPulse.map(region => (
+              <div key={region.region} className="dashboard-region-compact">
                 <strong>{REGION_LABELS[region.region][locale]}</strong>
-                <span>{region.avgScore.toFixed(1)}</span>
-              </div>
-              <div className="dashboard-region-track">
-                <div className="dashboard-region-fill" style={{ width: `${region.avgScore}%` }} />
-              </div>
-              <div className="dashboard-region-meta">
-                <span>
-                  {region.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })} · {region.operational}{" "}
-                  {translate(locale, { en: "live", th: "ใช้งานจริง", zh: "真实运行" })}
+                <span className="dashboard-region-compact-score">{region.avgScore.toFixed(1)}</span>
+                <span className="dashboard-region-compact-meta">
+                  {region.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })} · {region.operational} {translate(locale, { en: "live", th: "จริง", zh: "运行" })}
                 </span>
-                <button type="button" className="dashboard-region-link" onClick={() => onNavigate(`/city/${region.topCity.id}`)}>
-                  {getCityName(region.topCity, locale)}
-                </button>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 

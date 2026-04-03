@@ -319,6 +319,43 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
+      {/* ─── CSCO PRINCIPLES ─── */}
+      <section className="section" style={{ marginBottom: "2rem" }}>
+        <p className="eyebrow">{t(locale, { en: "ASEAN CSCO", th: "ASEAN CSCO", zh: "ASEAN CSCO" })}</p>
+        <h2>{t(locale, { en: "What citizen-centric actually means", th: "ที่เน้นประชาชนจริงๆ หมายถึงอะไร", zh: "以市民为中心到底是什么意思" })}</h2>
+        <div className="showcase-csco-grid">
+          <div className="showcase-csco-card">
+            <h3>{t(locale, { en: "Start with the complaint, not the sensor.", th: "เริ่มจากข้อร้องเรียน ไม่ใช่เซ็นเซอร์", zh: "从投诉开始，不是从传感器。" })}</h3>
+            <p>{t(locale, {
+              en: "If you don't know what citizens are angry about, no amount of IoT will help. The complaint is the signal. The sensor is just the amplifier.",
+              th: "ถ้าคุณไม่รู้ว่าประชาชนโกรธเรื่องอะไร IoT มากแค่ไหนก็ไม่ช่วย ข้อร้องเรียนคือสัญญาณ เซ็นเซอร์แค่ขยายสัญญาณ",
+              zh: "如果你不知道市民在生什么气，再多物联网也没用。投诉是信号，传感器只是放大器。",
+            })}</p>
+          </div>
+          <div className="showcase-csco-card">
+            <h3>{t(locale, { en: "If the mayor can't explain it on LINE, it's not ready.", th: "ถ้านายกอธิบายบน LINE ไม่ได้ แปลว่ายังไม่พร้อม", zh: "如果市长在LINE上解释不清楚，就还没准备好。" })}</h3>
+            <p>{t(locale, {
+              en: "The test of a smart city system is not the spec sheet. It's whether a non-technical mayor can explain the benefit to a resident in 30 seconds on a chat app.",
+              th: "การทดสอบระบบเมืองอัจฉริยะไม่ใช่สเปกชีต แต่คือนายกที่ไม่ใช่สายเทคสามารถอธิบายประโยชน์ให้ชาวบ้านเข้าใจใน 30 วินาทีบนแอปแชทได้หรือเปล่า",
+              zh: "智慧城市系统的检验标准不是规格书，而是一个非技术背景的市长能不能在聊天应用上30秒内向居民解释清楚好处。",
+            })}</p>
+          </div>
+          <div className="showcase-csco-card">
+            <h3>{t(locale, { en: "A dashboard nobody checks is not a dashboard.", th: "แดชบอร์ดที่ไม่มีใครดู ไม่ใช่แดชบอร์ด", zh: "没人看的仪表板不是仪表板。" })}</h3>
+            <p>{t(locale, {
+              en: "Data is only useful when it changes a decision. If the dashboard exists but no staff member opens it before making a call, you built decoration, not intelligence.",
+              th: "ข้อมูลมีค่าก็ต่อเมื่อมันเปลี่ยนการตัดสินใจ ถ้าแดชบอร์ดมีอยู่แต่ไม่มีเจ้าหน้าที่เปิดดูก่อนตัดสินใจ คุณสร้างของตกแต่ง ไม่ใช่ความฉลาด",
+              zh: "数据只有改变决策时才有用。如果仪表板存在但没有工作人员在决策前打开它，你造的是装饰品，不是智能。",
+            })}</p>
+          </div>
+        </div>
+        <div style={{ marginTop: ".75rem" }}>
+          <a href="https://nonarkara.github.io/asean-csco-app/" target="_blank" rel="noopener noreferrer" className="cta-button">
+            {t(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开ASEAN CSCO手册" })}
+          </a>
+        </div>
+      </section>
+
       <section className="section showcase-proof-section">
         <div className="showcase-proof-grid">
           <article className="showcase-proof-card">

@@ -207,10 +207,38 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
         </Suspense>
       </section>
 
+      {/* ─── OUR PROJECTS: ASCN + SCL ─── */}
+      <section className="section" style={{ marginBottom: "2rem" }}>
+        <p className="eyebrow">{t(locale, "Built by this team", "ทีมนี้สร้าง", "本团队构建")}</p>
+        <h2>{t(locale, "Open tools we shipped for the network", "เครื่องมือเปิดที่เราส่งมอบให้เครือข่าย", "我们为网络交付的开放工具")}</h2>
+        <div className="partnerships-showcase-grid">
+          <a href="https://nonarkara.github.io/ascn-smart-cities-network/" target="_blank" rel="noopener noreferrer" className="partnerships-showcase-card">
+            <span className="partnerships-showcase-badge">ASCN</span>
+            <h3>{t(locale, "ASEAN Smart Cities Network Dashboard", "แดชบอร์ด ASEAN Smart Cities Network", "东盟智慧城市网络仪表板")}</h3>
+            <p>{t(locale,
+              "Interactive dashboard of all 26 ASCN pilot cities across 10 ASEAN member states. Built pro bono because the network needed it and no one else was making it.",
+              "แดชบอร์ดโต้ตอบของ 26 เมืองนำร่อง ASCN ใน 10 ประเทศอาเซียน สร้างให้ฟรีเพราะเครือข่ายต้องการและไม่มีใครทำ",
+              "26个ASCN试点城市的交互式仪表板，覆盖10个东盟成员国。义务建设，因为网络需要而没人做。"
+            )}</p>
+            <span className="partnerships-showcase-link">{t(locale, "Open dashboard", "เปิดแดชบอร์ด", "打开仪表板")} →</span>
+          </a>
+          <a href="https://nonarkara.github.io/scl-landing-page/" target="_blank" rel="noopener noreferrer" className="partnerships-showcase-card">
+            <span className="partnerships-showcase-badge">SCL</span>
+            <h3>{t(locale, "Smart City Leadership Programme", "โครงการ Smart City Leadership", "智慧城市领导力项目")}</h3>
+            <p>{t(locale,
+              "The training engine behind Thailand's cultural shift from tech-shopping to citizen-value. Co-developed by Dr. Passakon, Dr. Supakorn, and Dr. Non over years of iteration.",
+              "เครื่องยนต์ฝึกอบรมที่อยู่เบื้องหลังการเปลี่ยนผ่านวัฒนธรรมของไทยจากการซื้อเทคโนโลยีสู่คุณค่าพลเมือง พัฒนาร่วมโดย ดร.ภาสกร ดร.ศุภกร และ ดร.ณณ",
+              "推动泰国从技术采购到公民价值文化转型的培训引擎。由Passakon博士、Supakorn博士和Non博士历经多年迭代共同开发。"
+            )}</p>
+            <span className="partnerships-showcase-link">{t(locale, "Open SCL", "เปิด SCL", "打开SCL")} →</span>
+          </a>
+        </div>
+      </section>
+
       <section className="section partnerships-summary-section">
         <div className="partnerships-summary-grid">
           <div className="partnerships-summary-card">
-            <div className="partnerships-summary-value">5</div>
+            <div className="partnerships-summary-value">6</div>
             <div className="partnerships-summary-label">
               {t(locale, "Partnership tracks", "เส้นความร่วมมือ", "合作轨道")}
             </div>

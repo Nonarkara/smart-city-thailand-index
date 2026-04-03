@@ -144,7 +144,65 @@ export const cdpSources: CDPDataSource[] = [
     descEn: "National Economic and Social Development Council. Publishes Gross Provincial Product (GPP) per capita — the primary economic output metric for scoring. Also provides investment flow data and economic growth projections.",
     descTh: "สภาพัฒนาการเศรษฐกิจฯ เผยแพร่ GPP ต่อหัว — ตัวชี้วัดผลผลิตเศรษฐกิจหลักสำหรับการให้คะแนน ข้อมูลการลงทุนและประมาณการเติบโตทางเศรษฐกิจ",
   },
+  // ─── Extended Provincial Data Sources ───
+  {
+    id: "boi",
+    name: "BOI Investment Statistics",
+    nameEn: "BOI IPStat — FDI & Promoted Projects",
+    nameTh: "สำนักงาน BOI — สถิติ FDI และโครงการที่ได้รับส่งเสริม",
+    type: "dashboard",
+    url: "https://ipstat.boi.go.th/",
+    coverage: "Provincial-level investment data",
+    frequency: "Quarterly",
+    metrics: ["fdiInflow", "promotedProjects", "foreignOwnership", "investmentZones"],
+    descEn: "Board of Investment statistics portal. FDI approvals, promoted projects by province/sector, foreign ownership data, and investment zone mapping. Key source for business environment and competitiveness scoring.",
+    descTh: "พอร์ทัลสถิติ BOI ข้อมูลอนุมัติ FDI โครงการที่ส่งเสริมรายจังหวัด/รายภาค ข้อมูลความเป็นเจ้าของต่างชาติ และแผนผังเขตส่งเสริม",
+  },
+  {
+    id: "onep",
+    name: "ONEP Environmental Performance",
+    nameEn: "ONEP — Thailand Environmental Performance Index",
+    nameTh: "สผ. — ดัชนีสิ่งแวดล้อมประเทศไทย",
+    type: "download",
+    url: "https://www.onep.go.th/",
+    coverage: "National with provincial inputs",
+    frequency: "Annual",
+    metrics: ["environmentalPerformance", "waterQuality", "airQuality", "wasteManagement"],
+    descEn: "Office of Natural Resources and Environmental Policy and Planning. National EPI with provincial inputs covering air, water, waste, and forest indicators. Latest report 2023.",
+    descTh: "สำนักงานนโยบายและแผนทรัพยากรธรรมชาติและสิ่งแวดล้อม ดัชนีสิ่งแวดล้อมแห่งชาติ ครอบคลุมอากาศ น้ำ ขยะ และป่าไม้",
+  },
+  {
+    id: "rfd",
+    name: "Royal Forest Department",
+    nameEn: "Royal Forest Department — Forest Cover Data",
+    nameTh: "กรมป่าไม้ — ข้อมูลพื้นที่ป่า",
+    type: "download",
+    url: "https://www.forest.go.th/",
+    coverage: "Provincial forest coverage",
+    frequency: "Annual",
+    metrics: ["forestCoverage", "deforestation", "reforestation", "protectedAreas"],
+    descEn: "Thailand's official forest cover statistics by province. Tracks deforestation rates, reforestation programs, and protected area extent. Critical for environment pillar scoring.",
+    descTh: "สถิติพื้นที่ป่าไม้อย่างเป็นทางการรายจังหวัด อัตราการตัดไม้ทำลายป่า โครงการปลูกป่า และขอบเขตพื้นที่คุ้มครอง",
+  },
+  {
+    id: "hdx",
+    name: "HDX Thailand Admin Boundaries",
+    nameEn: "HDX — Thailand Administrative Boundaries (GeoJSON)",
+    nameTh: "HDX — ขอบเขตการปกครองประเทศไทย (GeoJSON)",
+    type: "download",
+    url: "https://data.humdata.org/dataset/cod-ab-tha",
+    coverage: "Province/district/sub-district shapefiles",
+    frequency: "As-needed",
+    metrics: ["adminBoundaries", "populationStats", "geoJSON"],
+    descEn: "Humanitarian Data Exchange. Thailand administrative boundaries at province, district, and sub-district levels with population statistics. Standard GeoJSON/Shapefile formats for mapping.",
+    descTh: "ขอบเขตการปกครองไทยระดับจังหวัด อำเภอ ตำบล พร้อมสถิติประชากร รูปแบบ GeoJSON/Shapefile สำหรับทำแผนที่",
+  },
 ];
+
+/** Get BOI investment statistics URL for a province */
+export function getBOIInvestmentUrl(provinceName: string): string {
+  return `https://ipstat.boi.go.th/report/province?province=${encodeURIComponent(provinceName)}`;
+}
 
 /** Get CDP profile URL for a city on citydata.in.th */
 export function getCityDataUrl(cityNameEn: string): string {

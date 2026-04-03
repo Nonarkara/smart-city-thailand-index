@@ -5,7 +5,7 @@
 // and improvement roadmaps for Thailand's Smart City Control Tower
 // ---------------------------------------------------------------------------
 
-import type { SmartCity, ScoringPillar, SmartDimension, Locale } from "./types";
+import type { SmartCity, ScoringPillar, SmartDimension } from "./types";
 
 // ---------------------------------------------------------------------------
 // 1. INTERNATIONAL CASE STUDIES — famous projects with similar contexts

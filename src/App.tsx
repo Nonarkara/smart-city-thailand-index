@@ -16,6 +16,7 @@ const MapDashboardPage = lazy(() => import("./MapDashboardPage"));
 const AsusPage = lazy(() => import("./AsusPage"));
 const AuditPage = lazy(() => import("./AuditPage"));
 const ReferencesPage = lazy(() => import("./ReferencesPage"));
+const ProgramPage = lazy(() => import("./ProgramPage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 const THEME_STORAGE_KEY = "smart-city-thailand-theme";
@@ -29,10 +30,10 @@ function getInitialTheme(): Theme {
 
 const NAV_ITEMS = [
   { kind: "home", path: "/", label: { en: "Home", th: "หน้าหลัก", zh: "首页" } },
-  { kind: "rankings", path: "/rankings", label: { en: "Rankings", th: "จัดอันดับ", zh: "排名" } },
-  { kind: "methodology", path: "/methodology", label: { en: "Methodology", th: "วิธีการ", zh: "方法论" } },
+  { kind: "rankings", path: "/rankings", label: { en: "Rankings", th: "อันดับ", zh: "排名" } },
+  { kind: "program", path: "/program", label: { en: "Program", th: "โครงการ", zh: "计划" } },
+  { kind: "methodology", path: "/methodology", label: { en: "Method", th: "วิธีการ", zh: "方法" } },
   { kind: "story", path: "/story", label: { en: "Story", th: "เรื่องราว", zh: "故事" } },
-  { kind: "why", path: "/why", label: { en: "Why", th: "ทำไม", zh: "为什么" } },
   { kind: "showcase", path: "/showcase", label: { en: "NST", th: "ต้นแบบ", zh: "样板" } },
   { kind: "partners", path: "/partners", label: { en: "Partners", th: "พันธมิตร", zh: "伙伴" } },
   { kind: "audit", path: "/audit", label: { en: "Audit", th: "ตรวจสอบ", zh: "审计" } },
@@ -238,6 +239,8 @@ export default function App() {
             <AuditPage locale={locale} onNavigate={navigate} />
           ) : route.kind === "references" ? (
             <ReferencesPage locale={locale} onNavigate={navigate} />
+          ) : route.kind === "program" ? (
+            <ProgramPage locale={locale} onNavigate={navigate} />
           ) : route.kind === "city" ? (
             <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
           ) : (

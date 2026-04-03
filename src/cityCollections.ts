@@ -50,3 +50,13 @@ export function getSpotlightCities(cities: SmartCity[], limit = 3): SmartCity[] 
   return sortCities(cities, "composite").slice(0, limit);
 }
 
+export function groupCitiesByProvince(cities: SmartCity[]): Record<string, SmartCity[]> {
+  const result: Record<string, SmartCity[]> = {};
+  for (const city of cities) {
+    const key = city.province;
+    if (!result[key]) result[key] = [];
+    result[key].push(city);
+  }
+  return result;
+}
+

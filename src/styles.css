@@ -2073,3 +2073,81 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
   background: var(--teal-glow); color: var(--teal);
 }
 .cc-asus-timeline { font: 600 .5rem var(--mono); color: var(--3); margin-top: .3rem; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NEW COMPONENTS — Phase 2-8
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── PROGRAM PAGE ─── */
+.program-dims-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .5rem; margin-top: .6rem; }
+.program-dim-card { padding: .75rem .65rem; background: var(--surface); }
+.program-dim-icon { font-size: 1.2rem; display: block; margin-bottom: .3rem; }
+.program-dim-name { font-size: .72rem; font-weight: 700; margin-bottom: .15rem; }
+.program-dim-desc { font-size: .55rem; color: var(--2); line-height: 1.45; }
+
+.program-cert-flow { display: flex; gap: .35rem; margin-top: .6rem; flex-wrap: wrap; }
+.program-cert-step { flex: 1; min-width: 140px; padding: .65rem .55rem; background: var(--surface); position: relative; }
+.program-cert-number { font: 700 1.2rem var(--mono); color: var(--gold); display: block; margin-bottom: .15rem; }
+.program-cert-label { font-size: .72rem; font-weight: 700; margin-bottom: .15rem; }
+.program-cert-desc { font-size: .52rem; color: var(--2); line-height: 1.45; }
+.program-cert-arrow { position: absolute; right: -.5rem; top: 50%; transform: translateY(-50%); font: 700 .85rem var(--mono); color: var(--4); }
+
+.program-batch-grid { display: flex; gap: .5rem; margin-top: .6rem; }
+.program-batch-card { flex: 1; padding: .65rem .55rem; background: var(--surface); text-align: center; }
+.program-batch-label { display: block; font: 700 .42rem var(--mono); color: var(--gold); letter-spacing: .06em; text-transform: uppercase; }
+.program-batch-year { display: block; font: 700 1.1rem var(--mono); margin: .1rem 0; }
+.program-batch-count { display: block; font-size: .72rem; font-weight: 600; }
+.program-batch-tag { display: block; font: 500 .48rem var(--mono); color: var(--3); margin-top: .1rem; }
+
+.program-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.program-stat { padding: .65rem .5rem; background: var(--surface); text-align: center; }
+.program-stat-value { display: block; font: 700 1.5rem var(--mono); color: var(--gold); }
+.program-stat-label { display: block; font: 500 .5rem var(--mono); color: var(--3); margin-top: .1rem; }
+
+/* ─── HOMEPAGE MAP ─── */
+.dashboard-map-layout { display: flex; gap: 1.5rem; align-items: flex-start; margin-top: .6rem; }
+.dashboard-map-wrap { flex: 0 0 240px; }
+.dashboard-map-svg { width: 100%; display: block; background: var(--surface); }
+.dashboard-region-summary { flex: 1; display: flex; flex-direction: column; gap: .35rem; }
+.dashboard-region-compact { display: flex; align-items: baseline; gap: .5rem; padding: .35rem 0; }
+.dashboard-region-compact strong { font-size: .72rem; min-width: 5rem; }
+.dashboard-region-compact-score { font: 700 .72rem var(--mono); color: var(--gold); }
+.dashboard-region-compact-meta { font: 500 .5rem var(--mono); color: var(--3); margin-left: auto; }
+@media (max-width: 768px) {
+  .dashboard-map-layout { flex-direction: column; }
+  .dashboard-map-wrap { flex: none; width: 100%; max-width: 240px; }
+  .program-cert-flow { flex-direction: column; }
+  .program-batch-grid { flex-wrap: wrap; }
+  .program-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── PARTNERSHIPS SHOWCASE ─── */
+.partnerships-showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .6rem; }
+.partnerships-showcase-card {
+  padding: 1rem; background: var(--surface); display: flex; flex-direction: column; gap: .3rem;
+  transition: all .25s var(--ease); text-decoration: none; color: inherit;
+}
+.partnerships-showcase-card:hover { background: var(--surface-hover); transform: translateY(-2px); }
+.partnerships-showcase-badge { font: 700 .45rem var(--mono); color: var(--teal); letter-spacing: .08em; text-transform: uppercase; }
+.partnerships-showcase-card h3 { font-size: .82rem; font-weight: 700; letter-spacing: -.02em; }
+.partnerships-showcase-card p { font-size: .6rem; color: var(--2); line-height: 1.5; }
+.partnerships-showcase-link { font: 600 .55rem var(--mono); color: var(--teal); margin-top: auto; }
+@media (max-width: 768px) { .partnerships-showcase-grid { grid-template-columns: 1fr; } }
+
+/* ─── STORY SCL CARD ─── */
+.story-scl-card {
+  display: flex; align-items: center; gap: .5rem; padding: .55rem .65rem;
+  background: var(--surface); margin-top: .5rem; text-decoration: none; color: inherit;
+  transition: all .2s var(--ease);
+  border-left: 3px solid var(--teal);
+}
+.story-scl-card:hover { background: var(--surface-hover); }
+.story-scl-badge { font: 700 .5rem var(--mono); color: var(--teal); padding: .12rem .35rem; background: var(--teal-glow); }
+.story-scl-text { font-size: .65rem; font-weight: 500; color: var(--2); }
+
+/* ─── SHOWCASE CSCO GRID ─── */
+.showcase-csco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-top: .6rem; }
+.showcase-csco-card { padding: .75rem .65rem; background: var(--surface); }
+.showcase-csco-card h3 { font-size: .72rem; font-weight: 700; margin-bottom: .25rem; letter-spacing: -.01em; }
+.showcase-csco-card p { font-size: .55rem; color: var(--2); line-height: 1.5; }
+@media (max-width: 768px) { .showcase-csco-grid { grid-template-columns: 1fr; } }

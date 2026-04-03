@@ -10,11 +10,11 @@ interface Props {
 }
 
 // Thailand bounding box
-const BOUNDS = { minLat: 5.4, maxLat: 20.6, minLng: 97.2, maxLng: 105.8 };
-const MAP_W = 480;
-const MAP_H = 640;
+export const BOUNDS = { minLat: 5.4, maxLat: 20.6, minLng: 97.2, maxLng: 105.8 };
+export const MAP_W = 480;
+export const MAP_H = 640;
 
-function project(lat: number, lng: number) {
+export function project(lat: number, lng: number) {
   const x = ((lng - BOUNDS.minLng) / (BOUNDS.maxLng - BOUNDS.minLng)) * (MAP_W - 40) + 20;
   const y = ((BOUNDS.maxLat - lat) / (BOUNDS.maxLat - BOUNDS.minLat)) * (MAP_H - 40) + 20;
   return { x, y };
@@ -66,7 +66,7 @@ function getTileUrl(layer: MapLayer): string {
   }
 }
 
-const cityCoords: Record<string, { lat: number; lng: number }> = {
+export const cityCoords: Record<string, { lat: number; lng: number }> = {
   "chiang-mai-old-town": { lat: 18.79, lng: 98.98 },
   "cmu-smart-city": { lat: 18.80, lng: 98.95 },
   "mae-moh": { lat: 18.31, lng: 99.72 },

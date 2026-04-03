@@ -131,7 +131,7 @@ const timeline: TimelineEvent[] = [
     titleEn: "The cultural turn: hackathons, SCL, CSCO, then COVID",
     titleTh: "จุดหักเหทางวัฒนธรรม: แฮกกาธอน SCL CSCO แล้วก็ COVID",
     titleZh: "文化转向：黑客松、SCL、CSCO，接着是疫情",
-    bodyEn: "This is the phase where the work stops being only about systems and starts being about people. Co-Founder Dating, the ASEAN Startup Hackathon, Smart City Leadership, and the Smart City Hamburger idea all push the same message: technology is only useful when it is attached to trust, service design, and citizen pain points. When COVID hits, that shift stops sounding theoretical. Cities need reporting systems, telemedicine, and practical digital channels that people can actually use.",
+    bodyEn: "This is the phase where the work stops being only about systems and starts being about people. Co-Founder Dating, the ASEAN Startup Hackathon, and the Smart City Hamburger idea all push the same message: technology is only useful when it is attached to trust, service design, and citizen pain points. The Smart City Leadership programme — built by Dr. Passakon, Dr. Supakorn, and Dr. Non over years of iteration — became the training engine that shifted city leaders from buying gadgets to designing services. CSCO workshops took this further, and case cities like Nakhon Si Thammarat proved the model worked on the ground. When COVID hits, that shift stops sounding theoretical. Cities need reporting systems, telemedicine, and practical digital channels that people can actually use.",
     bodyTh: "นี่คือช่วงที่งานหยุดเป็นเรื่องระบบอย่างเดียว แล้วเริ่มเป็นเรื่องคนจริงๆ Co-Founder Dating, ASEAN Startup Hackathon, Smart City Leadership และแนวคิด Smart City Hamburger ต่างผลักข้อความเดียวกัน: เทคโนโลยีมีค่าก็ต่อเมื่อมันผูกอยู่กับความไว้ใจ service design และปัญหาของประชาชน พอ COVID มา การเปลี่ยนนี้ก็ไม่ใช่ทฤษฎีอีกต่อไป เมืองต้องมีระบบรายงาน telemedicine และช่องทางดิจิทัลที่คนใช้ได้จริง",
     bodyZh: "这一阶段，工作不再只是系统工程，而是开始真正面向人。Co-Founder Dating、ASEAN Startup Hackathon、Smart City Leadership，以及“智慧城市汉堡”都在推同一个意思：技术只有绑定信任、服务设计与市民痛点时才有意义。等到 COVID 来临，这个转向也不再只是理论。城市需要报修系统、远程医疗，以及居民真的会用的数字渠道。",
     impactEn: "Impact: citizen-centric thinking moved from workshop language into operating logic.",
@@ -317,6 +317,19 @@ export default function StoryPage({ locale, onNavigate }: Props) {
                 <p className="timeline-caption">
                   {locale === "th" ? event.captionTh : locale === "zh" ? event.captionZh : event.captionEn}
                 </p>
+              )}
+              {/* SCL callout for the 2019-2020 period */}
+              {event.period === "2019–2020" && (
+                <a href="https://nonarkara.github.io/scl-landing-page/" target="_blank" rel="noopener noreferrer" className="story-scl-card">
+                  <span className="story-scl-badge">SCL</span>
+                  <span className="story-scl-text">
+                    {t(locale,
+                      "Smart City Leadership — the training engine behind the cultural shift →",
+                      "Smart City Leadership — เครื่องยนต์ฝึกอบรมที่อยู่เบื้องหลังจุดหักเหทางวัฒนธรรม →",
+                      "Smart City Leadership — 推动文化转型的培训引擎 →"
+                    )}
+                  </span>
+                </a>
               )}
             </div>
           </article>

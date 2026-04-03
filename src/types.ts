@@ -53,6 +53,15 @@ export interface CityMetrics {
   hospitalBedsPer10k?: number;
   crimeRatePer100k?: number;
   greenCoverage?: number;        // percentage
+  // Extended CDP fields — provincial data sources
+  gppGrowthRate?: number;        // percent YoY (NESDC)
+  laborForce?: number;           // thousands (NSO)
+  industryComposition?: string;  // e.g. "agriculture 12%, manufacturing 38%, services 50%"
+  pm25Trend?: "improving" | "stable" | "worsening"; // PCD historical
+  waterQuality?: number;         // 0-100 index (PCD/ONEP)
+  forestCoverage?: number;       // percentage (Royal Forest Dept)
+  fdiInflow?: number;            // million baht (BOI)
+  dataLastUpdated?: string;      // ISO date of most recent data sync
 }
 
 export interface SmartCity {
@@ -62,6 +71,7 @@ export interface SmartCity {
   province: string;
   provinceTh: string;
   region: "north" | "central" | "northeast" | "east" | "south" | "bangkok";
+  provinceId?: string;           // Thai province code for CDP linkage
   status: CityStatus;
   reality: CityReality;
   batch?: number;                // announcement batch (1-4) for certified cities

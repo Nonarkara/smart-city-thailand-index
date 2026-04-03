@@ -91,6 +91,9 @@ export const partners: Partner[] = [
   { id: "adb", name: "Asian Development Bank", country: "Philippines", countryTh: "ADB", flag: "🏦", lat: 14.58, lng: 121.06, type: "multilateral", focusEn: "ASEAN Australia Smart Cities Trust Fund, green finance", focusTh: "กองทุน ASEAN Australia Smart Cities การเงินสีเขียว" },
   { id: "world-bank", name: "World Bank / IFC", country: "USA", countryTh: "World Bank", flag: "🏦", lat: 38.90, lng: -77.04, type: "multilateral", focusEn: "Urban development finance, smart city toolkit", focusTh: "การเงินพัฒนาเมือง ชุดเครื่องมือเมืองอัจฉริยะ" },
   { id: "unido", name: "UNIDO", country: "Austria", countryTh: "UNIDO", flag: "🇺🇳", lat: 48.24, lng: 16.42, type: "multilateral", focusEn: "Industrial digitization, sustainable manufacturing", focusTh: "อุตสาหกรรมดิจิทัล การผลิตยั่งยืน" },
+
+  // ─── Pacific ───
+  { id: "solomon-islands-gov", name: "Solomon Islands Government", country: "Solomon Islands", countryTh: "หมู่เกาะโซโลมอน", flag: "🇸🇧", lat: -9.43, lng: 160.0, type: "government", focusEn: "Pacific smart city knowledge exchange, climate resilience, sustainable urbanisation partnership", focusTh: "แลกเปลี่ยนความรู้เมืองอัจฉริยะแปซิฟิก ความยืดหยุ่นทางภูมิอากาศ ความร่วมมือเมืองยั่งยืน" },
 ];
 
 // Group by country for display
