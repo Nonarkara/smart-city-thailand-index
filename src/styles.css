@@ -951,17 +951,21 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .dashboard-control-group { display: flex; }
 /* ─── GUIDE STRIP: How to read this ─── */
 .guide-strip {
-  padding: 1.25rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
+  padding: 1.1rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
   background: var(--surface);
 }
 .guide-strip-inner {
-  display: flex; flex-direction: column; gap: .35rem;
+  display: flex; gap: 2rem;
 }
 .guide-item {
-  font-size: .72rem; color: var(--2); line-height: 1.5; letter-spacing: -.005em;
+  font-size: .68rem; color: var(--2); line-height: 1.5; letter-spacing: -.005em;
+  flex: 1;
 }
 .guide-item strong {
   color: var(--ink); font-weight: 600;
+}
+@media (max-width: 768px) {
+  .guide-strip-inner { flex-direction: column; gap: .35rem; }
 }
 @media (max-width: 768px) {
   .guide-strip { padding: 1rem 1.25rem; }
