@@ -688,61 +688,37 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="dashboard-panel dashboard-signal-panel">
-        <div className="dashboard-panel-head">
-          <div>
-            <p className="dashboard-kicker">
-              {translate(locale, { en: "Reality checks", th: "เช็กความจริง", zh: "现实校验" })}
-            </p>
-            <h2>
-              {translate(locale, { en: "Three quick reads", th: "สามเรื่องที่ควรดู", zh: "三个快速判断" })}
-            </h2>
+      {/* ─── INSTITUTIONAL FINE PRINT ─── */}
+      <section className="dashboard-fineprint">
+        <div className="dashboard-fineprint-inner">
+          <div className="dashboard-fp-col">
+            <span className="dashboard-fp-label">{translate(locale, { en: "Standards", th: "มาตรฐาน", zh: "标准" })}</span>
+            <p>{translate(locale, {
+              en: "UN-Habitat CPI · ISO 37122:2019 · SDG 11 · ASEAN Smart Cities Framework 2018 · ASCAP 2021–2025 · New Urban Agenda 2016 · Thailand PPP Act B.E. 2562",
+              th: "UN-Habitat CPI · ISO 37122:2019 · SDG 11 · กรอบ ASCF 2018 · ASCAP 2021–2025 · New Urban Agenda 2016 · พ.ร.บ. PPP 2562",
+              zh: "UN-Habitat CPI · ISO 37122:2019 · SDG 11 · ASCF 2018 · ASCAP 2021–2025 · 新城市议程 2016",
+            })}</p>
           </div>
-        </div>
-
-        <div className="dashboard-signal-stack">
-          {operationalLeader && (
-            <SignalCard
-              title={translate(locale, { en: "Operational leader", th: "ผู้นำที่วิ่งจริง", zh: "真实运行领跑者" })}
-              city={operationalLeader}
-              locale={locale}
-              onNavigate={onNavigate}
-              tone="good"
-              note={translate(locale, {
-                en: getCityTagline(operationalLeader, locale),
-                th: getCityTagline(operationalLeader, locale),
-                zh: getCityTagline(operationalLeader, locale),
-              })}
-            />
-          )}
-          {promotionLeader && (
-            <SignalCard
-              title={translate(locale, { en: "Best promotion zone", th: "เขตส่งเสริมที่ดูดีที่สุด", zh: "最佳推广区" })}
-              city={promotionLeader}
-              locale={locale}
-              onNavigate={onNavigate}
-              tone="watch"
-              note={translate(locale, {
-                en: "The strongest thing still outside certification. Worth opening before anyone starts bragging.",
-                th: "ตัวที่แข็งสุดในกลุ่มนอกการรับรอง ควรเปิดดูก่อนที่ใครจะเริ่มโม้",
-                zh: "认证之外最强的一座。有人开始吹之前，先点开看。",
-              })}
-            />
-          )}
-          {realityGapCity && (
-            <SignalCard
-              title={translate(locale, { en: "Reality gap", th: "ช่องว่างระหว่างคำพูดกับของจริง", zh: "现实落差" })}
-              city={realityGapCity}
-              locale={locale}
-              onNavigate={onNavigate}
-              tone="risk"
-              note={translate(locale, {
-                en: "Big branding, weak street-level evidence. Exactly the kind of fake precision this index is meant to kill.",
-                th: "แบรนด์ใหญ่ แต่หลักฐานระดับถนนยังบาง นี่แหละของปลอมที่ดัชนีนี้ตั้งใจฆ่า",
-                zh: "品牌很大，街头证据很薄。这正是假精确最该被干掉的地方。",
-              })}
-            />
-          )}
+          <div className="dashboard-fp-col">
+            <span className="dashboard-fp-label">{translate(locale, { en: "Data sources", th: "แหล่งข้อมูล", zh: "数据来源" })}</span>
+            <p>NSO · NESDC · PCD · GISTDA · World Bank · ADB · Open-Meteo · Royal Thai Police · DOPA · depa · MOPH · BOI · ONEP</p>
+          </div>
+          <div className="dashboard-fp-col">
+            <span className="dashboard-fp-label">{translate(locale, { en: "Legal", th: "กฎหมาย", zh: "法律" })}</span>
+            <p>{translate(locale, {
+              en: "© 2026 depa, MDES, Kingdom of Thailand · SLIC methodology · CC BY 4.0 · Scores reflect conditions at time of assessment · Not investment advice · SCITI-2026-R1",
+              th: "© 2026 depa กระทรวง DE ราชอาณาจักรไทย · วิธีการ SLIC · CC BY 4.0 · คะแนนสะท้อนสภาพ ณ เวลาประเมิน · ไม่ใช่คำแนะนำการลงทุน · SCITI-2026-R1",
+              zh: "© 2026 depa MDES 泰王国 · SLIC方法论 · CC BY 4.0 · 评分反映评估时状况 · 非投资建议 · SCITI-2026-R1",
+            })}</p>
+          </div>
+          <div className="dashboard-fp-col">
+            <span className="dashboard-fp-label">{translate(locale, { en: "Accessibility", th: "การเข้าถึง", zh: "无障碍" })}</span>
+            <p>{translate(locale, {
+              en: "WCAG 2.1 AA · Keyboard navigable · Trilingual (EN/TH/ZH) · Screen reader compatible · Focus-visible indicators",
+              th: "WCAG 2.1 AA · นำทางด้วยคีย์บอร์ด · 3 ภาษา (EN/TH/ZH) · รองรับ screen reader · ตัวบ่งชี้ focus-visible",
+              zh: "WCAG 2.1 AA · 键盘导航 · 三语 (EN/TH/ZH) · 屏幕阅读器兼容 · 焦点指示器",
+            })}</p>
+          </div>
         </div>
       </section>
     </div>
