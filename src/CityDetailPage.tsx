@@ -219,7 +219,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     return (
       <section className="section" style={{ paddingTop: "7rem" }}>
         <h1>{translate(locale, { en: "City not found", th: "ไม่พบเมือง", zh: "未找到城市" })}</h1>
-        <button className="cta-button" onClick={() => onNavigate("/")}>
+        <button
+          className="cta-button"
+          role="link"
+          onClick={() => onNavigate("/")}
+          onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate("/"); } }}
+        >
           {translate(locale, { en: "Back to home", th: "กลับหน้าหลัก", zh: "返回首页" })}
         </button>
       </section>
@@ -242,7 +247,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     <>
       {/* ─── HERO ─── */}
       <section className="section city-detail-hero">
-        <button className="back-link" onClick={() => onNavigate("/rankings")}>
+        <button
+          className="back-link"
+          role="link"
+          onClick={() => onNavigate("/rankings")}
+          onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate("/rankings"); } }}
+        >
           ← {locale === "th" ? "กลับ" : locale === "zh" ? "返回" : "Back"}
         </button>
 

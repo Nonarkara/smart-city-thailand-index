@@ -12,7 +12,7 @@ import {
 import type { CityTier, Locale, SmartCity } from "./types";
 import { TIER_LABELS, PILLAR_COLORS, PILLAR_SHORT_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
-import { cityCoords as mapCityCoords, BOUNDS as MAP_BOUNDS } from "./ThailandMap";
+import { cityCoords as mapCityCoords, BOUNDS as MAP_BOUNDS } from "./ThailandMap.constants";
 
 // Mini map projection (compact version for homepage)
 const MINI_MAP_W = 240;
@@ -205,7 +205,10 @@ function SpotlightRow({
     <button
       type="button"
       className="dashboard-spotlight-row"
+      role="link"
+      aria-label={`${getCityName(city, locale)}, ${city.compositeScore.toFixed(1)}`}
       onClick={() => onNavigate(`/city/${city.id}`)}
+      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(`/city/${city.id}`); } }}
     >
       <span className="dashboard-spotlight-rank">{String(rank).padStart(2, "0")}</span>
       <div className="dashboard-spotlight-copy">
@@ -238,7 +241,10 @@ function SignalCard({
     <button
       type="button"
       className={`dashboard-signal-card dashboard-signal-card-${tone}`}
+      role="link"
+      aria-label={`${title}: ${getCityName(city, locale)}, ${city.compositeScore.toFixed(1)}`}
       onClick={() => onNavigate(`/city/${city.id}`)}
+      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(`/city/${city.id}`); } }}
     >
       <span className="dashboard-signal-kicker">{title}</span>
       <div className="dashboard-signal-head">
@@ -364,14 +370,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
   const realityGapCity = useMemo(() => {
     return getCityById("wangchan-valley") ?? sortCities(allCities.filter(city => city.reality === "planned"))[0];
-  }, []);
-
-  const realityCounts = useMemo(() => {
-    return {
-      operational: allCities.filter(city => city.reality === "operational").length,
-      partial: allCities.filter(city => city.reality === "partial").length,
-      planned: allCities.filter(city => city.reality === "planned").length,
-    };
   }, []);
 
   return (
@@ -522,7 +520,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <button
                 type="button"
                 className="podium-photo-leader"
+                role="link"
+                aria-label={`01: ${getCityName(leader, locale)}, ${leader.compositeScore.toFixed(1)}`}
                 onClick={() => onNavigate(`/city/${leader.id}`)}
+                onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(`/city/${leader.id}`); } }}
               >
                 {cityPhotos[leader.id] && (
                   <img src={cityPhotos[leader.id]} alt={getCityName(leader, locale)} className="podium-photo-img" loading="eager" />
@@ -562,7 +563,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
                     key={city.id}
                     type="button"
                     className="podium-photo-card"
+                    role="link"
+                    aria-label={`${String(i + 2).padStart(2, "0")}: ${getCityName(city, locale)}, ${city.compositeScore.toFixed(1)}`}
                     onClick={() => onNavigate(`/city/${city.id}`)}
+                    onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(`/city/${city.id}`); } }}
                   >
                     {cityPhotos[city.id] && (
                       <img src={cityPhotos[city.id]} alt={getCityName(city, locale)} className="podium-photo-card-img" loading="lazy" />

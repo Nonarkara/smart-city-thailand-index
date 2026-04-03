@@ -62,7 +62,14 @@ function CityCard({
   const cityName = getCityName(city, locale);
 
   return (
-    <button type="button" className="city-card" aria-label={cityName} onClick={() => onNavigate(path)}>
+    <button
+      type="button"
+      className="city-card"
+      role="link"
+      aria-label={`${cityName}, ${getProvinceName(city, locale)}`}
+      onClick={() => onNavigate(path)}
+      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(path); } }}
+    >
       <div className="city-card-top">
         <div className="city-card-name">{cityName}</div>
         <div className="city-card-province">{getProvinceName(city, locale)}</div>

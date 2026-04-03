@@ -162,7 +162,7 @@ export const PILLAR_COLORS: Record<ScoringPillar, string> = {
   safety: "#3D6BE8",        // Thai silk blue
   wellbeing: "#E84393",     // bougainvillea pink
   environment: "#5CBD5C",   // tropical green
-  hospitality: "#E8913A",   // marigold gold
+  hospitality: "#D4A843",   // marigold gold
   digital: "#9B5DE5",       // orchid purple
 };
 

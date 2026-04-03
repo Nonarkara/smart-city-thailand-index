@@ -137,7 +137,7 @@ const FAQS: FAQ[] = [
 
 const CATEGORIES = [...new Set(FAQS.map(f => f.category))];
 
-export default function KnowledgePage({ locale, onNavigate }: Props) {
+export default function KnowledgePage({ locale }: Props) {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
 
