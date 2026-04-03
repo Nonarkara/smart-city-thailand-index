@@ -29,6 +29,14 @@ function city(
   highlights: string[],
 ): SmartCity {
   const compositeScore = computeComposite(scores);
+
+  // Auto-assign dataConfidence based on metric completeness
+  const metricFields = [metrics.gppPerCapita, metrics.avgMonthlyIncome, metrics.pm25Annual,
+    metrics.hospitalBedsPer10k, metrics.crimeRatePer100k, metrics.greenCoverage];
+  const filledCount = metricFields.filter(v => v != null && v !== 0).length;
+  const dataConfidence: SmartCity["dataConfidence"] =
+    filledCount >= 5 ? "high" : filledCount >= 3 ? "medium" : "low";
+
   return {
     id,
     nameEn,
@@ -47,6 +55,7 @@ function city(
     tagline,
     taglineTh,
     highlights,
+    dataConfidence,
   };
 }
 

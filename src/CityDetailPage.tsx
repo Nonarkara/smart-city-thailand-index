@@ -26,6 +26,7 @@ import {
 import { getEvidenceForCity, dataSources } from "./evidenceData";
 import { generateSWOT } from "./swotAnalysis";
 import { recommendInstruments, assessBankability, getASUSProject } from "./financialToolkit";
+import { getCityContext } from "./cityContext";
 import { getRelevantCaseStudies, generateImprovementPlan, analyzeTierUpgrade } from "./commandCenter";
 import type { Locale, ScoringPillar } from "./types";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
@@ -207,6 +208,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const city = useMemo(() => getCityById(cityId), [cityId]);
   const evidence = useMemo(() => getEvidenceForCity(cityId), [cityId]);
   const swot = useMemo(() => city ? generateSWOT(city, locale) : { strengths: [], weaknesses: [], opportunities: [], threats: [] }, [city, locale]);
+  const context = useMemo(() => getCityContext(cityId), [cityId]);
   const finRecs = useMemo(() => city ? recommendInstruments(city) : [], [city]);
   const bankability = useMemo(() => city ? assessBankability(city) : null, [city]);
   const asusProject = useMemo(() => getASUSProject(cityId), [cityId]);
@@ -278,6 +280,54 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         </div>
 
         <p className="city-detail-tagline">{cityTagline}</p>
+
+        {/* ─── KEY METRICS + CONTEXT ─── */}
+        <div className="city-quick-facts">
+          <div className="city-quick-metrics">
+            {city.metrics.population > 0 && (
+              <div className="city-qm"><span className="city-qm-val">{city.metrics.population.toLocaleString()}K</span><span className="city-qm-lab">{translate(locale, { en: "Population", th: "ประชากร", zh: "人口" })}</span></div>
+            )}
+            {city.metrics.gppPerCapita && city.metrics.gppPerCapita > 0 && (
+              <div className="city-qm"><span className="city-qm-val">฿{(city.metrics.gppPerCapita / 1000).toFixed(0)}K</span><span className="city-qm-lab">GPP/{translate(locale, { en: "capita", th: "หัว", zh: "人均" })}</span></div>
+            )}
+            {city.metrics.pm25Annual && (
+              <div className="city-qm"><span className="city-qm-val" style={{ color: city.metrics.pm25Annual > 25 ? "var(--gamma)" : "var(--alpha)" }}>{city.metrics.pm25Annual}</span><span className="city-qm-lab">PM2.5 μg/m³</span></div>
+            )}
+            {city.metrics.crimeRatePer100k && (
+              <div className="city-qm"><span className="city-qm-val">{city.metrics.crimeRatePer100k}</span><span className="city-qm-lab">{translate(locale, { en: "Crime/100K", th: "อาชญากรรม/แสน", zh: "犯罪率/10万" })}</span></div>
+            )}
+            {city.metrics.hospitalBedsPer10k && (
+              <div className="city-qm"><span className="city-qm-val">{city.metrics.hospitalBedsPer10k}</span><span className="city-qm-lab">{translate(locale, { en: "Beds/10K", th: "เตียง/หมื่น", zh: "床位/万" })}</span></div>
+            )}
+            {city.metrics.greenCoverage && (
+              <div className="city-qm"><span className="city-qm-val">{city.metrics.greenCoverage}%</span><span className="city-qm-lab">{translate(locale, { en: "Green", th: "สีเขียว", zh: "绿化" })}</span></div>
+            )}
+            {city.dataConfidence && (
+              <div className="city-qm"><span className={`city-qm-val city-qm-conf-${city.dataConfidence}`}>{city.dataConfidence}</span><span className="city-qm-lab">{translate(locale, { en: "Data confidence", th: "ความเชื่อมั่นข้อมูล", zh: "数据置信度" })}</span></div>
+            )}
+          </div>
+
+          {context && (
+            <div className="city-context-grid">
+              <div className="city-ctx">
+                <span className="city-ctx-label">{translate(locale, { en: "Livelihood", th: "ชีวิตความเป็นอยู่", zh: "生计" })}</span>
+                <p className="city-ctx-body">{locale === "th" ? context.livelihood.th : context.livelihood.en}</p>
+              </div>
+              <div className="city-ctx">
+                <span className="city-ctx-label">{translate(locale, { en: "Famous for", th: "เป็นที่รู้จักจาก", zh: "闻名于" })}</span>
+                <p className="city-ctx-body">{locale === "th" ? context.famousFor.th : context.famousFor.en}</p>
+              </div>
+              <div className="city-ctx">
+                <span className="city-ctx-label">{translate(locale, { en: "Opportunity", th: "โอกาส", zh: "机遇" })}</span>
+                <p className="city-ctx-body">{locale === "th" ? context.opportunity.th : context.opportunity.en}</p>
+              </div>
+              <div className="city-ctx">
+                <span className="city-ctx-label">{translate(locale, { en: "The catch", th: "ข้อควรระวัง", zh: "隐患" })}</span>
+                <p className="city-ctx-body">{locale === "th" ? context.theCatch.th : context.theCatch.en}</p>
+              </div>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* ─── RPG STAT SHEET ─── */}

@@ -2537,3 +2537,34 @@ details[open] .kb-question::before { content: "−"; }
   font-size: .68rem; color: var(--2); line-height: 1.6;
   padding: 0 0 .65rem 1.5rem; max-width: 640px;
 }
+
+/* ─── City Quick Facts + Context ─── */
+.city-quick-facts { margin-top: 1.25rem; }
+.city-quick-metrics {
+  display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .75rem;
+}
+.city-qm {
+  display: flex; flex-direction: column; gap: .05rem;
+  padding: .4rem .5rem; background: var(--surface); min-width: 70px;
+}
+.city-qm-val { font: 700 .85rem var(--mono); color: var(--ink); }
+.city-qm-lab { font: 500 .38rem var(--mono); color: var(--3); text-transform: uppercase; letter-spacing: .06em; }
+.city-qm-conf-high { color: var(--alpha); }
+.city-qm-conf-medium { color: var(--gold); }
+.city-qm-conf-low { color: var(--gamma); }
+
+.city-context-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .4rem;
+}
+.city-ctx { padding: .55rem .6rem; background: var(--surface); }
+.city-ctx-label {
+  display: block; font: 700 .42rem var(--mono); color: var(--gold);
+  text-transform: uppercase; letter-spacing: .08em; margin-bottom: .2rem;
+}
+.city-ctx-body { font-size: .62rem; color: var(--2); line-height: 1.5; }
+
+@media (max-width: 768px) {
+  .city-context-grid { grid-template-columns: 1fr; }
+  .city-quick-metrics { gap: .25rem; }
+  .city-qm { min-width: 55px; }
+}
