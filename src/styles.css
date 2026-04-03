@@ -74,7 +74,7 @@
 [data-theme="dark"] .footer-logo { filter: grayscale(100%) invert(1); opacity: .3; }
 [data-theme="dark"] .footer-logo:hover { filter: invert(1); opacity: .7; }
 [data-theme="dark"] img { opacity: .92; }
-[data-theme="dark"] .cinematic-hero-overlay { background: linear-gradient(transparent 30%, rgba(12,13,15,.7)); }
+[data-theme="dark"] .cinematic-hero-overlay { background: linear-gradient(rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 50%); }
 [data-theme="dark"] .collage-strip { opacity: .5; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -690,7 +690,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   flex-direction: column;
   justify-content: flex-end;
   padding: 3rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
-  background: linear-gradient(transparent 40%, rgba(0,0,0,.55));
+  background: linear-gradient(rgba(0,0,0,.2) 0%, rgba(0,0,0,.85) 60%);
 }
 .cinematic-hero-title {
   font-size: clamp(2.4rem, 5.5vw, 4rem);
@@ -1292,7 +1292,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 2.5rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
-  background: linear-gradient(transparent 25%, rgba(26,24,20,.7));
+  background: linear-gradient(rgba(0,0,0,.15) 0%, rgba(0,0,0,.88) 55%);
 }
 .cinematic-hero-eyebrow {
   font: 600 .55rem var(--mono); letter-spacing: .12em;
@@ -1348,8 +1348,8 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 
 /* ─── CINEMATIC HERO (upgrade) ─── */
 .cinematic-hero { border-radius: 0 0 var(--radius) var(--radius); overflow: hidden; }
-.cinematic-hero-overlay { background: linear-gradient(transparent 20%, rgba(0,0,0,.65)); }
-.collage-hero .cinematic-hero-overlay { background: linear-gradient(transparent 10%, rgba(0,0,0,.7) 70%, rgba(0,0,0,.85)); }
+.cinematic-hero-overlay { background: linear-gradient(rgba(0,0,0,.1) 0%, rgba(0,0,0,.88) 50%); }
+.collage-hero .cinematic-hero-overlay { background: linear-gradient(rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 50%); }
 
 /* ─── NEW RESPONSIVE RULES ─── */
 @media (max-width: 768px) {
