@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { allCities } from "./cityData";
+import { useCitySummaries } from "./cityApi";
 import { getCityName } from "./cityPresentation";
 import type { Locale, SmartCity, CityTier } from "./types";
 import { TIER_LABELS } from "./types";
@@ -71,11 +71,12 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
   const [filter, setFilter] = useState<"all" | "certified" | "promotion">("all");
   const [hovered, setHovered] = useState<SmartCity | null>(null);
   const [hovPos, setHovPos] = useState({ x: 0, y: 0 });
+  const { data: cities } = useCitySummaries();
 
   const filtered = useMemo(() => {
-    if (filter === "all") return allCities;
-    return allCities.filter(c => c.status === filter);
-  }, [filter]);
+    if (filter === "all") return cities;
+    return cities.filter(c => c.status === filter);
+  }, [cities, filter]);
 
   // Regional stats
   const regionStats = useMemo(() => {

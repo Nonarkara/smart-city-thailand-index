@@ -6,10 +6,10 @@
 // A city where people actually live well scores high.
 // ---------------------------------------------------------------------------
 
-import { assignTier, computeComposite } from "./scoring";
-import type { SmartCity, CityScores } from "./types";
+import { assignTier, computeComposite } from "./scoring.ts";
+import type { SmartCity, CityScores } from "./types.ts";
 
-export { assignTier, computeComposite } from "./scoring";
+export { assignTier, computeComposite } from "./scoring.ts";
 
 function city(
   id: string,
@@ -627,7 +627,7 @@ export const promotionZoneCities: SmartCity[] = [
 // Combined and sorted
 // ---------------------------------------------------------------------------
 
-import { registeredCities } from "./registeredCityData";
+import { registeredCities } from "./registeredCityData.ts";
 
 export const allCities: SmartCity[] = [...certifiedCities, ...promotionZoneCities, ...registeredCities]
   .sort((a, b) => b.compositeScore - a.compositeScore);

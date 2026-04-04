@@ -2,6 +2,7 @@ import { useEffect, lazy, Suspense, useState } from "react";
 import { parseRoute, getRouteKey, type Route } from "./routing";
 import { syncDocumentMeta } from "./siteMeta";
 import type { Locale } from "./types";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 const HomePage = lazy(() => import("./HomePage"));
 const RankingsPage = lazy(() => import("./RankingsPage"));
@@ -220,37 +221,39 @@ export default function App() {
 
       {/* ─── CONTENT ─── */}
       <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""}`} key={getRouteKey(route)}>
-        <Suspense fallback={<div className="loading">Loading...</div>}>
-          {route.kind === "rankings" ? (
-            <RankingsPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "methodology" ? (
-            <MethodologyPage locale={locale} />
-          ) : route.kind === "story" ? (
-            <StoryPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "why" ? (
-            <WhyPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "showcase" ? (
-            <ShowcasePage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "partners" ? (
-            <PartnershipsPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "map" ? (
-            <MapDashboardPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "asus" ? (
-            <AsusPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "audit" ? (
-            <AuditPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "references" ? (
-            <ReferencesPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "program" ? (
-            <ProgramPage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "knowledge" ? (
-            <KnowledgePage locale={locale} onNavigate={navigate} />
-          ) : route.kind === "city" ? (
-            <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
-          ) : (
-            <HomePage locale={locale} onNavigate={navigate} />
-          )}
-        </Suspense>
+        <ErrorBoundary locale={locale}>
+          <Suspense fallback={<div className="loading">Loading...</div>}>
+            {route.kind === "rankings" ? (
+              <RankingsPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "methodology" ? (
+              <MethodologyPage locale={locale} />
+            ) : route.kind === "story" ? (
+              <StoryPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "why" ? (
+              <WhyPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "showcase" ? (
+              <ShowcasePage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "partners" ? (
+              <PartnershipsPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "map" ? (
+              <MapDashboardPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "asus" ? (
+              <AsusPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "audit" ? (
+              <AuditPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "references" ? (
+              <ReferencesPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "program" ? (
+              <ProgramPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "knowledge" ? (
+              <KnowledgePage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "city" ? (
+              <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
+            ) : (
+              <HomePage locale={locale} onNavigate={navigate} />
+            )}
+          </Suspense>
+        </ErrorBoundary>
       </main>
 
       {!isDashboardRoute && (

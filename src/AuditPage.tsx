@@ -1,5 +1,5 @@
 import { translate } from "./cityPresentation";
-import { allCities } from "./cityData";
+import { useCitySummaries } from "./cityApi";
 import type { Locale } from "./types";
 
 interface Props {
@@ -250,8 +250,7 @@ const RECOMMENDATIONS: AuditRecommendation[] = [
 // Computed stats from real city data
 // ---------------------------------------------------------------------------
 
-function computeAuditStats() {
-  const cities = allCities;
+function computeAuditStats(cities: { reality: string; tier: string; compositeScore: number; status: string }[]) {
   const total = cities.length;
   const operational = cities.filter((c: { reality: string }) => c.reality === "operational").length;
   const planned = cities.filter((c: { reality: string }) => c.reality === "planned").length;
@@ -265,7 +264,8 @@ function computeAuditStats() {
 }
 
 export default function AuditPage({ locale, onNavigate }: Props) {
-  const stats = computeAuditStats();
+  const { data: cities } = useCitySummaries();
+  const stats = computeAuditStats(cities);
 
   return (
     <>

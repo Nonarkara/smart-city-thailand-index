@@ -4,6 +4,12 @@
 
 PostgreSQL schema for Supabase powering the full City Data Platform (CDP).
 
+## Recommended production stack
+
+- `Supabase Postgres` as the source of truth. This backend now depends on relational joins, generated columns, indexes, row-level security, and a materialized export view. That is exactly Postgres territory.
+- `SQLite` or `Turso` only as edge cache or offline companion, not as the canonical CDP database. They are excellent for simple local apps, but this product now needs richer provenance joins, concurrent write handling, and refreshable research exports.
+- `Vercel Analytics` and `Vercel Speed Insights` in production so design quality is measured by real-world behavior, not taste alone.
+
 ## Tables
 
 | Table | Purpose | Rows (estimated) |
@@ -21,6 +27,14 @@ PostgreSQL schema for Supabase powering the full City Data Platform (CDP).
 | `page_views` | Analytics | growing |
 | `chat_messages` | Gemini chatbot conversation history | growing |
 | `smart_city_signals` | Incoming opinions, field notes, media scan, and trend signals | growing |
+| `finance_instruments` | Canonical finance mechanism catalog used by the CDP backend | 10-20 |
+| `city_metric_observations` | Verified line-item city metrics with timestamps and sources | growing |
+| `city_delivery_profiles` | Five-step delivery status per city/version | 100+ |
+| `city_finance_profiles` | Bankability/readiness profile per city/version | 100+ |
+| `city_finance_recommendations` | Tailored finance recommendations with rationale | 300+ |
+| `city_finance_recommendation_support` | Provenance rows backing every recommendation | 600+ |
+| `city_context_notes` | Curated opportunity/constraint/warning/lesson notes | 400+ |
+| `city_research_export_rows` | Materialized wide-open research export view | growing |
 
 ## Key Design Decisions
 
@@ -36,12 +50,23 @@ PostgreSQL schema for Supabase powering the full City Data Platform (CDP).
 
 6. **Trend intake**: `smart_city_signals` stores how people actually talk about smart city work: source, city, raw text, tone, themes, and timestamps. It supports direct Supabase reads, Vercel API proxying, and a Google Sheets fallback via Apps Script.
 
+7. **Idempotent signal ingestion**: signal writes now use content-stable IDs and a generated `fingerprint` index. Retries collapse into the same logical record instead of spraying duplicates all over the trend table.
+
+8. **Fail closed on writes**: the Vercel API will serve demo data for reads when remote storage is down, but it will not pretend a write succeeded unless it reached a durable backend. That keeps operator trust intact and lets the frontend decide whether to fall back to local-only drafts.
+
+9. **Tailored city dossiers**: the CDP backend now stores city-specific metrics, delivery logic, finance readiness, recommendation rationale, and context notes as first-class tables. The frontend should render these DTOs directly instead of inferring finance or process from tier alone.
+
+10. **Research exports by default**: `city_research_export_rows` is the backend spine for CSV exports. If a recommendation cannot be backed by support rows, it should not be published.
+
 ## Setup
 
 ```bash
 # 1. Create a Supabase project at supabase.com
 # 2. Run the schema:
 psql $DATABASE_URL < database/schema.sql
+
+# 2a. Export deterministic seed files from the repo snapshot
+node scripts/export-city-cdp-seeds.mjs
 
 # 3. Set environment variables for the frontend:
 VITE_SUPABASE_URL=https://your-project.supabase.co
@@ -54,6 +79,59 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 # Optional force-order:
 TREND_BACKEND=supabase
 ```
+
+The seed export writes:
+
+- `database/cdp-seeds/finance-instruments.json`
+- `database/cdp-seeds/city-research-export-rows.json`
+- `database/cdp-seeds/cities/<city-id>.json` for every city dossier
+- `database/cdp-seeds/manifest.json`
+
+Those files are the repo-managed seed layer for the CDP backend. They are deterministic: if the source code and city inputs do not change, the exported city files do not change either.
+
+If you already created the table before this backend hardening pass, add a migration for:
+
+- `fingerprint` generated column on `smart_city_signals`
+- unique index on `fingerprint`
+- non-blank and text-length check constraints
+- `metadata` object check and `themes` cardinality check
+
+If you are migrating to the city-specific CDP backend, also add:
+
+- `finance_instruments`
+- `city_metric_observations`
+- `city_delivery_profiles`
+- `city_finance_profiles`
+- `city_finance_recommendations`
+- `city_finance_recommendation_support`
+- `city_context_notes`
+- `city_research_export_rows` materialized view
+
+After loading seed data, run:
+
+```sql
+REFRESH MATERIALIZED VIEW city_research_export_rows;
+```
+
+## Backend API contract
+
+The frontend now expects these routes to exist:
+
+- `GET /api/cities`
+- `GET /api/cities/:cityId`
+- `GET /api/exports/cities-summary.csv`
+- `GET /api/exports/city-facts.csv`
+- `GET /api/cities/:cityId/export.csv`
+
+The list/detail routes expose:
+
+- freshness timestamps
+- provenance counts
+- delivery profile
+- finance profile
+- finance recommendations with support rows
+
+That means the UI can show not just "what tier is this city?" but "why did we say that, what metric backs it, and what financing logic actually fits this place?"
 
 ## Google Sheets fallback
 
@@ -74,7 +152,7 @@ GOOGLE_APPS_SCRIPT_SECRET=shared-secret
 VITE_GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/your-deployment/exec
 ```
 
-The frontend and `/api/smart-city-signals` both know how to use this endpoint.
+The frontend and `/api/smart-city-signals` both know how to use this endpoint. Apps Script is the emergency runway, not the flagship. Supabase remains the preferred path because it supports durable constraints, indexed reads, and idempotent upserts.
 
 ## Data Sources
 

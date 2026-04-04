@@ -39,6 +39,8 @@
   --radius-xs: 0;
   --w: 1060px;
   --ease: cubic-bezier(.4, 0, .2, 1);
+  --glass-bg: rgba(250, 250, 248, 0.82);
+  --glass-blur: 24px;
 }
 
 /* ─── DARK THEME ─── */
@@ -55,6 +57,7 @@
   --alpha-bg: rgba(26, 138, 114, .12);
   --beta-bg: rgba(154, 122, 26, .12);
   --gamma-bg: rgba(176, 48, 48, .12);
+  --glass-bg: rgba(15, 14, 12, 0.82);
   --card-shadow: 0 1px 2px rgba(0,0,0,.2), 0 4px 12px rgba(0,0,0,.15);
   --card-shadow-hover: 0 2px 8px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.2);
 }
@@ -78,7 +81,8 @@
 [data-theme="dark"] .collage-strip { opacity: .5; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { color-scheme: light; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+[data-theme="dark"] { color-scheme: dark; }
 
 body {
   font: 400 14px/1.6 var(--font);
@@ -113,13 +117,28 @@ ul, ol { list-style: none; }
 .loading::after { content: "Loading..."; font: 500 .65rem var(--mono); color: var(--3); letter-spacing: .06em; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ─── ENTRANCE ANIMATIONS ─── */
+.reveal { opacity: 0; transform: translateY(12px); transition: all .6s var(--ease); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.stagger-1 { transition-delay: .1s; }
+.stagger-2 { transition-delay: .2s; }
+.stagger-3 { transition-delay: .3s; }
+
+/* ─── ACCESSIBILITY ─── */
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+.skip-link {
+  position: absolute; top: -40px; left: 0; background: var(--teal); color: #fff;
+  padding: .5rem 1rem; z-index: 200; transition: top .2s;
+}
+.skip-link:focus { top: 0; }
+
 /* ─── TOPBAR ─── */
 .topbar {
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: .55rem min(calc((100% - var(--w)) / 2), 1.25rem);
-  background: rgba(250,250,248,.88); backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   box-shadow: 0 1px 0 rgba(0,0,0,.04);
   transition: background .3s var(--ease);
 }
@@ -451,6 +470,15 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .map-layer-btn.active { color: var(--teal); background: var(--alpha-bg); }
 .map-grid line { stroke-dasharray: 2 4; }
 
+/* ─── WIDE SCREEN ADJUSTMENTS ─── */
+@media (min-width: 1400px) {
+  :root { --w: 1280px; }
+}
+@media (min-width: 2000px) {
+  :root { --w: 1600px; }
+  body { font-size: 15px; }
+}
+
 /* ─── SPIDER ─── */
 .spider-section { margin-bottom: 2rem; }
 .spider-layout { display: grid; grid-template-columns: 220px 1fr; gap: 1.25rem; align-items: start; margin-top: .6rem; }
@@ -666,9 +694,24 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   0%   { transform: translateX(-50%); }
   100% { transform: translateX(0); }
 }
-/* Pause animation on reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .collage-row { animation: none !important; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .page-frame,
+  .loading::before,
+  .collage-row,
+  .ct-dot,
+  .ct-fd-freq,
+  .cinematic-hero-img,
+  .story-hero-bg,
+  .showcase-hero-image {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 /* Mobile: smaller thumbs, 3 rows instead of cropping */
 @media (max-width: 768px) {
@@ -2697,7 +2740,7 @@ details[open] .kb-question::before { content: "−"; }
   display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem;
   padding: 0 min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
 }
-.dashboard-fp-col {}
+.dashboard-fp-col { display: flex; flex-direction: column; gap: 0.15rem; }
 .dashboard-fp-label {
   display: block; font: 700 .38rem var(--mono); text-transform: uppercase;
   letter-spacing: .1em; color: var(--3); margin-bottom: .15rem;

@@ -6,8 +6,8 @@
 // scores and are shown as "registered" in the rankings.
 // ---------------------------------------------------------------------------
 
-import type { SmartCity, CityScores, SmartDimension } from "./types";
-import { computeComposite, assignTier } from "./cityData";
+import type { SmartCity, CityScores, SmartDimension } from "./types.ts";
+import { computeComposite, assignTier } from "./cityData.ts";
 
 const DEFAULT_SCORES: CityScores = {
   livability: 40, economy: 40, safety: 40, wellbeing: 40,

@@ -1,12 +1,9 @@
 import { useMemo, useState, useEffect } from "react";
 import { useInView } from "./useInView";
-import { allCities, getCityById, promotionZoneCities } from "./cityData";
-import { filterCities, getSpotlightCities, sortCities, summarizeCities } from "./cityCollections";
+import { useCitySummaries } from "./cityApi";
+import { filterCities, sortCities, summarizeCities } from "./cityCollections";
 import {
   getCityName,
-  getCityRealityLabel,
-  getCityStatusLabel,
-  getCityTagline,
   getProvinceName,
   translate,
 } from "./cityPresentation";
@@ -119,21 +116,6 @@ const REGION_LABELS: Record<SmartCity["region"], { en: string; th: string; zh: s
   south: { en: "South", th: "ภาคใต้", zh: "南部" },
 };
 
-function DashboardMetric({
-  label,
-  value,
-}: {
-  label: string;
-  value: string | number;
-}) {
-  return (
-    <div className="dashboard-metric-card">
-      <span className="dashboard-metric-value">{value}</span>
-      <span className="dashboard-metric-label">{label}</span>
-    </div>
-  );
-}
-
 function RankingRow({
   city,
   locale,
@@ -191,155 +173,32 @@ function RankingRow({
   );
 }
 
-function SpotlightRow({
-  city,
-  locale,
-  onNavigate,
-  rank,
-}: {
-  city: SmartCity;
-  locale: Locale;
-  onNavigate: (path: string) => void;
-  rank: number;
-}) {
-  return (
-    <button
-      type="button"
-      className="dashboard-spotlight-row"
-      role="link"
-      aria-label={`${getCityName(city, locale)}, ${city.compositeScore.toFixed(1)}`}
-      onClick={() => onNavigate(`/city/${city.id}`)}
-      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(`/city/${city.id}`); } }}
-    >
-      <span className="dashboard-spotlight-rank">{String(rank).padStart(2, "0")}</span>
-      <div className="dashboard-spotlight-copy">
-        <span className="dashboard-spotlight-name">{getCityName(city, locale)}</span>
-        <span className="dashboard-spotlight-meta">
-          {TIER_LABELS[locale][city.tier]} · {getCityRealityLabel(city.reality, locale)}
-        </span>
-      </div>
-      <span className="dashboard-spotlight-score">{city.compositeScore.toFixed(1)}</span>
-    </button>
-  );
-}
-
-function SignalCard({
-  title,
-  city,
-  locale,
-  onNavigate,
-  tone,
-  note,
-}: {
-  title: string;
-  city: SmartCity;
-  locale: Locale;
-  onNavigate: (path: string) => void;
-  tone: "good" | "watch" | "risk";
-  note: string;
-}) {
-  return (
-    <button
-      type="button"
-      className={`dashboard-signal-card dashboard-signal-card-${tone}`}
-      role="link"
-      aria-label={`${title}: ${getCityName(city, locale)}, ${city.compositeScore.toFixed(1)}`}
-      onClick={() => onNavigate(`/city/${city.id}`)}
-      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(`/city/${city.id}`); } }}
-    >
-      <span className="dashboard-signal-kicker">{title}</span>
-      <div className="dashboard-signal-head">
-        <strong>{getCityName(city, locale)}</strong>
-        <span>{city.compositeScore.toFixed(1)}</span>
-      </div>
-      <p className="dashboard-signal-meta">
-        {TIER_LABELS[locale][city.tier]} · {getCityRealityLabel(city.reality, locale)} · {getCityStatusLabel(city.status, locale)}
-      </p>
-      <p className="dashboard-signal-note">{note}</p>
-    </button>
-  );
-}
-
-/* ─── Photo collage data: all cityscape photos from /photos ─── */
-const COLLAGE_PHOTOS = [
-  "1-57.jpg", "318402.jpg", "350263.jpg", "350284.jpg",
-  "4A2A6179.JPG", "4A2A6250.JPG",
-  "578383385.557473.jpg", "593016939.296474.jpg",
-  "66438786_2265889173489652_6708326457757663232_o.jpg",
-  "72639510_2459479007664540_4785365931712839680_o.jpg",
-  "73513755_10157605754953794_5475140449704345600_n.jpg",
-  "IMG_0324.JPG", "IMG_0396.JPG", "IMG_0861.JPG", "IMG_0964.JPG",
-  "IMG_1089.JPG", "IMG_1382.JPG", "IMG_1447.JPG", "IMG_1457.JPG",
-  "IMG_1596.JPG", "IMG_3619.JPG", "IMG_4034.JPG", "IMG_4107.JPG",
-  "IMG_4175.JPG", "IMG_4207.JPG", "IMG_4797.JPG", "IMG_5304.JPG",
-  "IMG_5849.JPG", "IMG_6065.JPG", "IMG_6426.JPG", "IMG_6482.JPG",
-  "IMG_6508.JPG", "IMG_6654.JPG", "IMG_6691.JPG", "IMG_6692.JPG",
-  "IMG_7331.JPG", "IMG_7504.JPG", "IMG_7607.JPG", "IMG_7613.JPG",
-  "IMG_7649.JPG", "IMG_7760.JPG", "IMG_7761.JPG", "IMG_9995.JPG",
-  "OI000016.JPG", "P6204927.JPG", "P6205097.JPG", "SWP_8806.JPG",
-  "_K635402.jpg", "d49adab4-a786-4fcb-922c-39883728de7f.jpg",
-  "depa x korea SBAU2019.jpg",
-  "f40e0bd32c239122ed14b39d13bc3c53.jpg", "f4b929dc011fb96fba76c9618ca6b93e.jpg",
-];
-
-const SHUFFLED_ROWS = (() => {
-  const shuffled = [...COLLAGE_PHOTOS].sort(() => Math.random() - 0.5);
-  const perRow = Math.ceil(shuffled.length / 4);
-  return [
-    shuffled.slice(0, perRow),
-    shuffled.slice(perRow, perRow * 2),
-    shuffled.slice(perRow * 2, perRow * 3),
-    shuffled.slice(perRow * 3),
-  ];
-})();
-
-/** Infinite scrolling photo collage — 4 rows moving in alternating directions */
-function CollageStrip() {
-  const rows = SHUFFLED_ROWS;
-
-  return (
-    <div className="collage-strip" aria-hidden="true">
-      {rows.map((photos, i) => (
-        <div
-          key={i}
-          className={`collage-row collage-row-${i % 2 === 0 ? "left" : "right"}`}
-        >
-          {/* Duplicate for seamless loop */}
-          {[...photos, ...photos].map((p, j) => (
-            <img
-              key={`${i}-${j}`}
-              src={`/photos/${p}`}
-              alt=""
-              className="collage-thumb"
-              loading="lazy"
-            />
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export default function HomePage({ locale, onNavigate }: Props) {
   const [statusFilter, setStatusFilter] = useState<"all" | "certified" | "promotion">("all");
   const [tierFilter, setTierFilter] = useState<"all" | CityTier>("all");
-  const [barsRef, barsVisible] = useInView(0.1);
+  const [heroRef, heroVisible] = useInView(0.1);
+  const [guideRef, guideVisible] = useInView(0.1);
+  const [rankingRef, rankingVisible] = useInView(0.1);
+  const [ctRef, ctVisible] = useInView(0.1);
+  const [fineprintRef, fineprintVisible] = useInView(0.1);
 
-  const stats = useMemo(() => summarizeCities(allCities), []);
-  const spotlightCities = useMemo(() => getSpotlightCities(allCities, 5), []);
+  const [barsRef, barsVisible] = useInView(0.1);
+  const { data: cities } = useCitySummaries();
+
+  const stats = useMemo(() => summarizeCities(cities), [cities]);
   const previewCities = useMemo(() => {
     return sortCities(
-      filterCities(allCities, {
+      filterCities(cities, {
         status: statusFilter,
         tier: tierFilter,
       }),
     ).slice(0, 24);
-  }, [statusFilter, tierFilter]);
+  }, [cities, statusFilter, tierFilter]);
 
   const regionPulse = useMemo(() => {
     const grouped = new Map<SmartCity["region"], { cities: SmartCity[]; scoreSum: number; operational: number }>();
 
-    allCities.forEach(city => {
+    cities.forEach(city => {
       const current = grouped.get(city.region) ?? { cities: [], scoreSum: 0, operational: 0 };
       current.cities.push(city);
       current.scoreSum += city.compositeScore;
@@ -360,24 +219,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
         };
       })
       .sort((left, right) => right.avgScore - left.avgScore);
-  }, []);
-
-  const operationalLeader = useMemo(() => {
-    return sortCities(allCities.filter(city => city.reality === "operational"))[0];
-  }, []);
-
-  const promotionLeader = useMemo(() => {
-    return sortCities(promotionZoneCities)[0];
-  }, []);
-
-  const realityGapCity = useMemo(() => {
-    return getCityById("wangchan-valley") ?? sortCities(allCities.filter(city => city.reality === "planned"))[0];
-  }, []);
+  }, [cities]);
 
   return (
     <div className="dashboard-home">
       {/* ─── CINEMATIC HERO ─── */}
-      <section className="cinematic-hero">
+      <section ref={heroRef} className={`cinematic-hero reveal ${heroVisible ? "visible" : ""}`}>
         <img
           src="https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?w=1920&h=900&fit=crop&q=80"
           alt="Bangkok skyline aerial view at dusk"
@@ -420,7 +267,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── HOW TO READ THIS ─── */}
-      <section className="guide-strip">
+      <section ref={guideRef} className={`guide-strip reveal stagger-1 ${guideVisible ? "visible" : ""}`}>
         <div className="guide-strip-inner">
           <p className="guide-item">
             <strong>{translate(locale, { en: "Score 0\u2013100", th: "คะแนน 0\u2013100", zh: "0\u2013100 分" })}</strong>
@@ -447,7 +294,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="dashboard-panel dashboard-ranking-panel">
+
+      <section ref={rankingRef} className={`dashboard-panel dashboard-ranking-panel reveal stagger-2 ${rankingVisible ? "visible" : ""}`}>
         <div className="fieldboard-header">
           <h2 className="fieldboard-title">
             {translate(locale, { en: "Fieldboard", th: "กระดานสนามจริง", zh: "现场看板" })}
@@ -604,7 +452,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ═══ CONTROL TOWER — Dense, data-rich, every pixel earns its keep ═══ */}
-      <section className="ct">
+      <section ref={ctRef} className={`ct reveal stagger-3 ${ctVisible ? "visible" : ""}`}>
         {/* Top bar with Bangkok clock */}
         <div className="ct-bar">
           <span className="ct-bar-label">SCITI CONTROL TOWER</span>
@@ -624,7 +472,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 <line key={`g${i}`} x1="0" y1={(i + 1) * (MINI_MAP_H / 7)} x2={MINI_MAP_W} y2={(i + 1) * (MINI_MAP_H / 7)} stroke="rgba(255,255,255,.04)" strokeWidth="0.5" />
               ))}
               {/* Cities */}
-              {allCities.map(city => {
+              {cities.map(city => {
                 const coords = mapCityCoords[city.id];
                 if (!coords) return null;
                 const { x, y } = miniProject(coords.lat, coords.lng);
@@ -689,7 +537,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── INSTITUTIONAL FINE PRINT ─── */}
-      <section className="dashboard-fineprint">
+      <section ref={fineprintRef} className={`dashboard-fineprint reveal ${fineprintVisible ? "visible" : ""}`}>
         <div className="dashboard-fineprint-inner">
           <div className="dashboard-fp-col">
             <span className="dashboard-fp-label">{translate(locale, { en: "Standards", th: "มาตรฐาน", zh: "标准" })}</span>

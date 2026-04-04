@@ -1,5 +1,17 @@
-type BackendMode = "supabase" | "google-apps-script" | "local";
-type SignalSentiment = "positive" | "neutral" | "negative";
+import {
+  buildStableSignalId,
+  coerceSentimentScore,
+  normalizeLabel,
+  normalizeOptionalSlug,
+  normalizeSignalSentiment,
+  normalizeSignalText,
+  normalizeThemes,
+  normalizeTimestamp,
+  parseSignalLimit,
+  SignalValidationError,
+  type SignalBackendMode,
+  type SignalSentiment,
+} from "../src/signalContracts";
 
 type ApiRequest = {
   method?: string;
@@ -27,7 +39,38 @@ type SignalRecord = {
   ingested_at: string;
 };
 
+type BackendStatus = {
+  mode: SignalBackendMode;
+  healthy: boolean;
+  detail: string;
+};
+
+type ListResponse = {
+  backend: BackendStatus;
+  signals: SignalRecord[];
+  warnings?: string[];
+};
+
+type InsertResponse =
+  | {
+      ok: true;
+      statusCode: 201;
+      backend: BackendStatus;
+      signal: SignalRecord;
+      warnings: string[];
+    }
+  | {
+      ok: false;
+      statusCode: 503;
+      backend: BackendStatus;
+      signal: SignalRecord;
+      error: string;
+      warnings: string[];
+    };
+
 const TABLE_NAME = process.env.SUPABASE_SIGNALS_TABLE || "smart_city_signals";
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const BACKEND_TIMEOUT_MS = 8000;
 
 const DEMO_SIGNALS: SignalRecord[] = [
   {
@@ -56,16 +99,21 @@ const DEMO_SIGNALS: SignalRecord[] = [
   },
 ];
 
-function createId(): string {
+function createRequestId(): string {
   if (typeof globalThis.crypto?.randomUUID === "function") {
     return globalThis.crypto.randomUUID();
   }
-  return `signal-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+
+  return `req-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
 function parseJsonBody(body: unknown): Record<string, unknown> {
   if (typeof body === "string") {
-    return JSON.parse(body) as Record<string, unknown>;
+    try {
+      return JSON.parse(body) as Record<string, unknown>;
+    } catch {
+      throw new SignalValidationError("body", "Request body must be valid JSON.");
+    }
   }
 
   if (typeof body === "object" && body !== null) {
@@ -73,13 +121,6 @@ function parseJsonBody(body: unknown): Record<string, unknown> {
   }
 
   return {};
-}
-
-function parseLimit(queryValue: string | string[] | undefined): number {
-  const raw = Array.isArray(queryValue) ? queryValue[0] : queryValue;
-  const limit = Number(raw ?? 12);
-  if (!Number.isFinite(limit) || limit < 1) return 12;
-  return Math.min(limit, 50);
 }
 
 function getSupabaseConfig() {
@@ -116,85 +157,92 @@ function getAppsScriptConfig() {
 
 function withSecret(url: string, secret: string, params: Record<string, string>): string {
   const target = new URL(url);
+
   Object.entries(params).forEach(([key, value]) => {
     target.searchParams.set(key, value);
   });
+
   if (secret) {
     target.searchParams.set("secret", secret);
   }
+
   return target.toString();
 }
 
-function normalizeThemes(themes: unknown): string[] {
-  if (Array.isArray(themes)) {
-    return themes.map(theme => String(theme).trim()).filter(Boolean);
-  }
+async function fetchWithTimeout(input: string, init?: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), BACKEND_TIMEOUT_MS);
 
-  if (typeof themes === "string") {
-    return themes.split(/[|,]/).map(theme => theme.trim()).filter(Boolean);
-  }
+  try {
+    return await fetch(input, {
+      ...init,
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error(`Backend request timed out after ${BACKEND_TIMEOUT_MS}ms.`);
+    }
 
-  return [];
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
 
 function normalizeSignal(body: Record<string, unknown>): SignalRecord {
-  const sentimentCandidate = body.sentiment_label ?? body.sentiment ?? "neutral";
-  const sentiment: SignalSentiment =
-    sentimentCandidate === "positive" || sentimentCandidate === "negative"
-      ? sentimentCandidate
-      : "neutral";
-
   const now = new Date().toISOString();
+  const cityId = normalizeOptionalSlug(body.city_id ?? body.cityId);
+  const source = normalizeLabel(body.source, "unknown");
+  const channel = normalizeLabel(body.channel, "manual");
+  const textBody = normalizeSignalText(body.text_body ?? body.text);
+
+  if (!textBody) {
+    throw new SignalValidationError("text", "Signal text is required.");
+  }
+
+  const sentiment = normalizeSignalSentiment(body.sentiment_label ?? body.sentiment);
+  const observedAt = normalizeTimestamp(body.observed_at ?? body.observedAt, now, "observedAt");
+  const ingestedAt = normalizeTimestamp(body.ingested_at ?? body.createdAt, now, "createdAt");
+  const themes = normalizeThemes(body.themes);
+  const computedId = buildStableSignalId({
+    cityId,
+    source,
+    channel,
+    text: textBody,
+    sentiment,
+    themes,
+    observedAt,
+  });
+  const providedId = typeof body.id === "string" && UUID_PATTERN.test(body.id.trim())
+    ? body.id.trim()
+    : "";
 
   return {
-    id: typeof body.id === "string" ? body.id : createId(),
-    city_id:
-      typeof body.city_id === "string"
-        ? body.city_id
-        : typeof body.cityId === "string"
-          ? body.cityId
-          : null,
-    source: typeof body.source === "string" && body.source.trim() ? body.source.trim() : "unknown",
-    channel: typeof body.channel === "string" && body.channel.trim() ? body.channel.trim() : "manual",
-    text_body:
-      typeof body.text_body === "string"
-        ? body.text_body.trim()
-        : typeof body.text === "string"
-          ? body.text.trim()
-          : "",
+    id: providedId || computedId,
+    city_id: cityId,
+    source,
+    channel,
+    text_body: textBody,
     sentiment_label: sentiment,
-    sentiment_score:
-      typeof body.sentiment_score === "number"
-        ? body.sentiment_score
-        : sentiment === "positive"
-          ? 0.75
-          : sentiment === "negative"
-            ? -0.7
-            : 0,
-    themes: normalizeThemes(body.themes),
-    observed_at:
-      typeof body.observed_at === "string"
-        ? body.observed_at
-        : typeof body.observedAt === "string"
-          ? body.observedAt
-          : now,
-    ingested_at:
-      typeof body.ingested_at === "string"
-        ? body.ingested_at
-        : typeof body.createdAt === "string"
-          ? body.createdAt
-          : now,
+    sentiment_score: coerceSentimentScore(body.sentiment_score ?? body.sentimentScore, sentiment),
+    themes,
+    observed_at: observedAt,
+    ingested_at: ingestedAt,
   };
 }
 
-async function listFromSupabase(limit: number) {
+async function listFromSupabase(limit: number): Promise<ListResponse> {
   const { url, key } = getSupabaseConfig();
   const target = new URL(`${url}/rest/v1/${TABLE_NAME}`);
-  target.searchParams.set("select", "id,city_id,source,channel,text_body,sentiment_label,sentiment_score,themes,observed_at,ingested_at");
+
+  target.searchParams.set(
+    "select",
+    "id,city_id,source,channel,text_body,sentiment_label,sentiment_score,themes,observed_at,ingested_at",
+  );
   target.searchParams.set("order", "observed_at.desc");
   target.searchParams.set("limit", String(limit));
 
-  const response = await fetch(target.toString(), {
+  const response = await fetchWithTimeout(target.toString(), {
     headers: {
       apikey: key,
       Authorization: `Bearer ${key}`,
@@ -207,9 +255,10 @@ async function listFromSupabase(limit: number) {
   }
 
   const signals = await response.json() as SignalRecord[];
+
   return {
     backend: {
-      mode: "supabase" as const,
+      mode: "supabase",
       healthy: true,
       detail: "Vercel API is reading live data from Supabase.",
     },
@@ -217,15 +266,24 @@ async function listFromSupabase(limit: number) {
   };
 }
 
-async function insertIntoSupabase(signal: SignalRecord) {
+async function insertIntoSupabase(signal: SignalRecord): Promise<SignalRecord> {
   const { url, key } = getSupabaseConfig();
-  const response = await fetch(`${url}/rest/v1/${TABLE_NAME}`, {
+  const target = new URL(`${url}/rest/v1/${TABLE_NAME}`);
+
+  target.searchParams.set("on_conflict", "id");
+  target.searchParams.set(
+    "select",
+    "id,city_id,source,channel,text_body,sentiment_label,sentiment_score,themes,observed_at,ingested_at",
+  );
+
+  const response = await fetchWithTimeout(target.toString(), {
     method: "POST",
     headers: {
       apikey: key,
       Authorization: `Bearer ${key}`,
       "Content-Type": "application/json",
-      Prefer: "return=minimal",
+      Accept: "application/json",
+      Prefer: "resolution=merge-duplicates,return=representation",
     },
     body: JSON.stringify(signal),
   });
@@ -233,24 +291,31 @@ async function insertIntoSupabase(signal: SignalRecord) {
   if (!response.ok) {
     throw new Error(`Supabase ${response.status} ${response.statusText}`.trim());
   }
+
+  const payload = await response.json() as SignalRecord[];
+  return payload[0] ?? signal;
 }
 
-async function listFromAppsScript(limit: number) {
+async function listFromAppsScript(limit: number): Promise<ListResponse> {
   const { url, secret } = getAppsScriptConfig();
-  const response = await fetch(withSecret(url, secret, { action: "list", limit: String(limit) }), {
-    headers: {
-      Accept: "application/json",
+  const response = await fetchWithTimeout(
+    withSecret(url, secret, { action: "list", limit: String(limit) }),
+    {
+      headers: {
+        Accept: "application/json",
+      },
     },
-  });
+  );
 
   if (!response.ok) {
     throw new Error(`Apps Script ${response.status} ${response.statusText}`.trim());
   }
 
   const payload = await response.json() as { signals?: SignalRecord[] };
+
   return {
     backend: {
-      mode: "google-apps-script" as const,
+      mode: "google-apps-script",
       healthy: true,
       detail: "Vercel API is proxying Google Sheets through Apps Script.",
     },
@@ -258,9 +323,9 @@ async function listFromAppsScript(limit: number) {
   };
 }
 
-async function insertIntoAppsScript(signal: SignalRecord) {
+async function insertIntoAppsScript(signal: SignalRecord): Promise<SignalRecord> {
   const { url, secret } = getAppsScriptConfig();
-  const response = await fetch(withSecret(url, secret, {}), {
+  const response = await fetchWithTimeout(withSecret(url, secret, {}), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -272,17 +337,22 @@ async function insertIntoAppsScript(signal: SignalRecord) {
   if (!response.ok) {
     throw new Error(`Apps Script ${response.status} ${response.statusText}`.trim());
   }
+
+  const payload = await response.json() as { signal?: SignalRecord };
+  return payload.signal ?? signal;
 }
 
-function getRequestedOrder(): BackendMode[] {
+function getRequestedOrder(): SignalBackendMode[] {
   const forced = process.env.TREND_BACKEND || "";
+
   if (forced === "supabase") return ["supabase", "google-apps-script", "local"];
   if (forced === "google-apps-script") return ["google-apps-script", "supabase", "local"];
   if (forced === "local") return ["local"];
+
   return ["supabase", "google-apps-script", "local"];
 }
 
-async function handleList(limit: number) {
+async function handleList(limit: number): Promise<ListResponse> {
   const errors: string[] = [];
   const supabaseConfig = getSupabaseConfig();
   const appsScriptConfig = getAppsScriptConfig();
@@ -290,45 +360,53 @@ async function handleList(limit: number) {
   for (const mode of getRequestedOrder()) {
     if (mode === "supabase" && supabaseConfig.ready) {
       try {
-        return await listFromSupabase(limit);
+        const result = await listFromSupabase(limit);
+        return errors.length > 0
+          ? { ...result, warnings: errors }
+          : result;
       } catch (error) {
-        errors.push(error instanceof Error ? error.message : "Supabase request failed");
+        errors.push(error instanceof Error ? error.message : "Supabase request failed.");
       }
     }
 
     if (mode === "google-apps-script" && appsScriptConfig.ready) {
       try {
-        return await listFromAppsScript(limit);
+        const result = await listFromAppsScript(limit);
+        return errors.length > 0
+          ? { ...result, warnings: errors }
+          : result;
       } catch (error) {
-        errors.push(error instanceof Error ? error.message : "Apps Script request failed");
+        errors.push(error instanceof Error ? error.message : "Apps Script request failed.");
       }
     }
 
     if (mode === "local") {
       return {
         backend: {
-          mode: "local" as const,
+          mode: "local",
           healthy: false,
           detail: errors[0]
             ? `Remote backend unavailable. Serving local demo data. ${errors[0]}`
             : "No remote backend configured. Serving local demo data.",
         },
         signals: DEMO_SIGNALS.slice(0, limit),
+        warnings: errors,
       };
     }
   }
 
   return {
     backend: {
-      mode: "local" as const,
+      mode: "local",
       healthy: false,
       detail: "No backend path resolved. Serving local demo data.",
     },
     signals: DEMO_SIGNALS.slice(0, limit),
+    warnings: errors,
   };
 }
 
-async function handleInsert(signal: SignalRecord) {
+async function handleInsert(signal: SignalRecord): Promise<InsertResponse> {
   const errors: string[] = [];
   const supabaseConfig = getSupabaseConfig();
   const appsScriptConfig = getAppsScriptConfig();
@@ -336,83 +414,145 @@ async function handleInsert(signal: SignalRecord) {
   for (const mode of getRequestedOrder()) {
     if (mode === "supabase" && supabaseConfig.ready) {
       try {
-        await insertIntoSupabase(signal);
+        const stored = await insertIntoSupabase(signal);
         return {
+          ok: true,
+          statusCode: 201,
           backend: {
-            mode: "supabase" as const,
+            mode: "supabase",
             healthy: true,
-            detail: "Signal written to Supabase.",
+            detail: "Signal written to Supabase with idempotent upsert semantics.",
           },
+          signal: stored,
+          warnings: errors,
         };
       } catch (error) {
-        errors.push(error instanceof Error ? error.message : "Supabase request failed");
+        errors.push(error instanceof Error ? error.message : "Supabase request failed.");
       }
     }
 
     if (mode === "google-apps-script" && appsScriptConfig.ready) {
       try {
-        await insertIntoAppsScript(signal);
+        const stored = await insertIntoAppsScript(signal);
         return {
+          ok: true,
+          statusCode: 201,
           backend: {
-            mode: "google-apps-script" as const,
+            mode: "google-apps-script",
             healthy: true,
             detail: "Signal written to Google Sheets through Apps Script.",
           },
+          signal: stored,
+          warnings: errors,
         };
       } catch (error) {
-        errors.push(error instanceof Error ? error.message : "Apps Script request failed");
+        errors.push(error instanceof Error ? error.message : "Apps Script request failed.");
       }
     }
 
     if (mode === "local") {
       return {
+        ok: false,
+        statusCode: 503,
         backend: {
-          mode: "local" as const,
+          mode: "local",
           healthy: false,
           detail: errors[0]
-            ? `Signal stored only in demo memory. ${errors[0]}`
-            : "Signal stored only in demo memory.",
+            ? `No durable signal backend is available. ${errors[0]}`
+            : "No durable signal backend is configured.",
         },
+        signal,
+        error: "Signal was not persisted by the API because no durable backend is available.",
+        warnings: errors,
       };
     }
   }
 
   return {
+    ok: false,
+    statusCode: 503,
     backend: {
-      mode: "local" as const,
+      mode: "local",
       healthy: false,
-      detail: "Signal stored only in demo memory.",
+      detail: "No durable signal backend is configured.",
     },
+    signal,
+    error: "Signal was not persisted by the API because no durable backend is available.",
+    warnings: errors,
   };
 }
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
+  const requestId = createRequestId();
+
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("X-Request-Id", requestId);
+
   try {
     if (req.method === "GET") {
-      const limit = parseLimit(req.query?.limit);
+      const limit = parseSignalLimit(req.query?.limit);
       const payload = await handleList(limit);
-      res.status(200).json(payload);
+      res.status(200).json({
+        success: true,
+        data: payload.signals,
+        backend: payload.backend,
+        warnings: payload.warnings,
+        requestId,
+        timestamp: new Date().toISOString(),
+      });
       return;
     }
 
     if (req.method === "POST") {
       const signal = normalizeSignal(parseJsonBody(req.body));
+      const payload = await handleInsert(signal);
 
-      if (!signal.text_body) {
-        res.status(400).json({ error: "Signal text is required." });
+      if (payload.ok) {
+        res.status(payload.statusCode).json({
+          success: true,
+          data: payload.signal,
+          backend: payload.backend,
+          warnings: payload.warnings,
+          requestId,
+          timestamp: new Date().toISOString(),
+        });
         return;
       }
 
-      const payload = await handleInsert(signal);
-      res.status(200).json(payload);
+      res.status(payload.statusCode).json({
+        success: false,
+        error: payload.error,
+        data: payload.signal,
+        backend: payload.backend,
+        warnings: payload.warnings,
+        requestId,
+        timestamp: new Date().toISOString(),
+      });
       return;
     }
 
     res.setHeader("Allow", "GET, POST");
-    res.status(405).json({ error: "Method not allowed." });
+    res.status(405).json({
+      requestId,
+      error: "Method not allowed.",
+    });
   } catch (error) {
+    if (error instanceof SignalValidationError) {
+      res.status(400).json({
+        success: false,
+        field: error.field,
+        error: error.message,
+        requestId,
+        timestamp: new Date().toISOString(),
+      });
+      return;
+    }
+
     res.status(500).json({
+      success: false,
       error: error instanceof Error ? error.message : "Unexpected backend failure.",
+      requestId,
+      timestamp: new Date().toISOString(),
     });
   }
 }

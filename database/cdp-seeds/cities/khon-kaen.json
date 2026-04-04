@@ -1,0 +1,686 @@
+{
+  "summary": {
+    "id": "khon-kaen",
+    "nameEn": "Khon Kaen Smart City",
+    "nameTh": "ขอนแก่นสมาร์ทซิตี้",
+    "province": "Khon Kaen",
+    "provinceTh": "ขอนแก่น",
+    "region": "northeast",
+    "status": "certified",
+    "reality": "operational",
+    "batch": 1,
+    "smartDimensions": [
+      "economy",
+      "energy",
+      "environment",
+      "governance",
+      "living",
+      "mobility",
+      "people"
+    ],
+    "scores": {
+      "livability": 72,
+      "economy": 70,
+      "safety": 71,
+      "wellbeing": 72,
+      "environment": 58,
+      "hospitality": 74,
+      "digital": 70
+    },
+    "metrics": {
+      "population": 1800,
+      "gppPerCapita": 155000,
+      "avgMonthlyIncome": 22100,
+      "pm25Annual": 26.3,
+      "hospitalBedsPer10k": 28,
+      "crimeRatePer100k": 138,
+      "greenCoverage": 35
+    },
+    "compositeScore": 70.2,
+    "tier": "alpha",
+    "tagline": "Isan's economic capital. Genuinely smart — LRT under construction, smart bus system running, university-industry corridor active. The real deal in the northeast.",
+    "taglineTh": "เมืองหลวงเศรษฐกิจอีสาน อัจฉริยะจริง — LRT กำลังก่อสร้าง ระบบรถบัสอัจฉริยะวิ่งแล้ว ระเบียงมหาวิทยาลัย-อุตสาหกรรมทำงานจริง",
+    "highlights": [
+      "Smart bus rapid transit system operational",
+      "LRT construction underway with digital twin planning",
+      "Khon Kaen Innovation Center driving startup ecosystem",
+      "Smart healthcare network connecting 6 hospitals"
+    ],
+    "dataConfidence": "high",
+    "keyMetrics": [
+      {
+        "key": "gppPerCapita",
+        "label": {
+          "en": "GPP per capita",
+          "th": "GPP ต่อหัว",
+          "zh": "人均 GPP"
+        },
+        "value": "฿155,000",
+        "unit": "THB",
+        "confidence": "high",
+        "sourceId": "nesdc"
+      },
+      {
+        "key": "pm25Annual",
+        "label": {
+          "en": "Annual PM2.5",
+          "th": "PM2.5 เฉลี่ยรายปี",
+          "zh": "年均 PM2.5"
+        },
+        "value": "26.3",
+        "unit": "ug/m3",
+        "confidence": "high",
+        "sourceId": "pcd"
+      },
+      {
+        "key": "crimeRatePer100k",
+        "label": {
+          "en": "Crime / 100K",
+          "th": "อาชญากรรม / แสนคน",
+          "zh": "每十万人犯罪率"
+        },
+        "value": "138",
+        "unit": "incidents/100k",
+        "confidence": "high",
+        "sourceId": "rtp"
+      },
+      {
+        "key": "greenCoverage",
+        "label": {
+          "en": "Green coverage",
+          "th": "พื้นที่สีเขียว",
+          "zh": "绿化覆盖"
+        },
+        "value": "35",
+        "unit": "%",
+        "confidence": "high",
+        "sourceId": "gistda"
+      }
+    ],
+    "shortTailoredNote": {
+      "en": "Private-sector-led model (KKTS consortium) is unique in Thailand and could be exported. Smart bus is already running. High-speed rail connection to Bangkok and Nong Khai (Laos border) will transform logistics. Watch the constraint: LRT delayed 7+ years — the poster child for Thai infrastructure delays. Brain drain to Bangkok persists. GPP per capita (฿155K) is high for Isan but still half of Bangkok's.",
+      "th": "โมเดลที่นำโดยเอกชน (กลุ่ม KKTS) เป็นเอกลักษณ์ในไทยและส่งออกได้ รถบัสอัจฉริยะวิ่งแล้ว รถไฟความเร็วสูงเชื่อมกรุงเทพฯ-หนองคาย (ชายแดนลาว) จะเปลี่ยนโลจิสติกส์ แต่ต้องระวัง: LRT ล่าช้า 7+ ปี — ตัวอย่างของการล่าช้าโครงสร้างพื้นฐานไทย สมองไหลไปกรุงเทพฯ ยังคงอยู่ GPP ต่อหัว (฿155K) สูงสำหรับอีสานแต่ยังน้อยกว่ากรุงเทพฯ ครึ่งหนึ่ง",
+      "zh": "Private-sector-led model (KKTS consortium) is unique in Thailand and could be exported. Smart bus is already running. High-speed rail connection to Bangkok and Nong Khai (Laos border) will transform logistics. Watch the constraint: LRT delayed 7+ years — the poster child for Thai infrastructure delays. Brain drain to Bangkok persists. GPP per capita (฿155K) is high for Isan but still half of Bangkok's."
+    },
+    "financeSignal": {
+      "leadInstrumentId": "land-value-capture",
+      "leadInstrumentName": "Land Value Capture",
+      "line": {
+        "en": "Land Value Capture leads because Khon Kaen Smart City is advanced with a low risk profile.",
+        "th": "Land Value Capture นำ เพราะ ขอนแก่นสมาร์ทซิตี้ อยู่ในระดับ advanced และมีความเสี่ยงแบบ low",
+        "zh": "Land Value Capture leads because Khon Kaen Smart City is advanced with a low risk profile."
+      },
+      "readinessScore": 77
+    },
+    "exportReady": true,
+    "freshness": {
+      "latestObservedAt": "2026-04-01T00:00:00.000Z",
+      "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
+    },
+    "provenanceCount": 13
+  },
+  "contextNotes": [
+    {
+      "id": "khon-kaen-opportunity",
+      "kind": "opportunity",
+      "title": {
+        "en": "Tailored opportunity",
+        "th": "โอกาสเฉพาะเมือง",
+        "zh": "定制机会"
+      },
+      "body": {
+        "en": "Private-sector-led model (KKTS consortium) is unique in Thailand and could be exported. Smart bus is already running. High-speed rail connection to Bangkok and Nong Khai (Laos border) will transform logistics.",
+        "th": "โมเดลที่นำโดยเอกชน (กลุ่ม KKTS) เป็นเอกลักษณ์ในไทยและส่งออกได้ รถบัสอัจฉริยะวิ่งแล้ว รถไฟความเร็วสูงเชื่อมกรุงเทพฯ-หนองคาย (ชายแดนลาว) จะเปลี่ยนโลจิสติกส์",
+        "zh": "Private-sector-led model (KKTS consortium) is unique in Thailand and could be exported. Smart bus is already running. High-speed rail connection to Bangkok and Nong Khai (Laos border) will transform logistics."
+      }
+    },
+    {
+      "id": "khon-kaen-constraint",
+      "kind": "constraint",
+      "title": {
+        "en": "Constraint",
+        "th": "ข้อจำกัด",
+        "zh": "约束"
+      },
+      "body": {
+        "en": "LRT delayed 7+ years — the poster child for Thai infrastructure delays. Brain drain to Bangkok persists. GPP per capita (฿155K) is high for Isan but still half of Bangkok's.",
+        "th": "LRT ล่าช้า 7+ ปี — ตัวอย่างของการล่าช้าโครงสร้างพื้นฐานไทย สมองไหลไปกรุงเทพฯ ยังคงอยู่ GPP ต่อหัว (฿155K) สูงสำหรับอีสานแต่ยังน้อยกว่ากรุงเทพฯ ครึ่งหนึ่ง",
+        "zh": "LRT delayed 7+ years — the poster child for Thai infrastructure delays. Brain drain to Bangkok persists. GPP per capita (฿155K) is high for Isan but still half of Bangkok's."
+      }
+    },
+    {
+      "id": "khon-kaen-warning",
+      "kind": "implementation_warning",
+      "title": {
+        "en": "Implementation warning",
+        "th": "คำเตือนเชิงปฏิบัติ",
+        "zh": "实施警告"
+      },
+      "body": {
+        "en": "The failure mode is generic copy-paste. The city needs a delivery stack tied to its own metrics, not borrowed swagger from a different urban economy.",
+        "th": "โหมดล้มเหลวของเมืองนี้คือการ copy-paste แบบเหมารวม เมืองต้องมี delivery stack ที่ผูกกับตัวเลขของตัวเอง ไม่ใช่ยืม swagger จากเศรษฐกิจเมืองอื่น",
+        "zh": "The failure mode here is generic copy-paste. The delivery stack must tie back to local metrics, not borrowed swagger from another city."
+      }
+    },
+    {
+      "id": "khon-kaen-lesson",
+      "kind": "exportable_lesson",
+      "title": {
+        "en": "Exportable lesson",
+        "th": "บทเรียนที่ส่งออกได้",
+        "zh": "可输出经验"
+      },
+      "body": {
+        "en": "Private-sector-led model (KKTS consortium) is unique in Thailand and could be exported. Smart bus is already running. High-speed rail connection to Bangkok and Nong Khai (Laos border) will transform logistics.",
+        "th": "โมเดลที่นำโดยเอกชน (กลุ่ม KKTS) เป็นเอกลักษณ์ในไทยและส่งออกได้ รถบัสอัจฉริยะวิ่งแล้ว รถไฟความเร็วสูงเชื่อมกรุงเทพฯ-หนองคาย (ชายแดนลาว) จะเปลี่ยนโลจิสติกส์",
+        "zh": "Private-sector-led model (KKTS consortium) is unique in Thailand and could be exported. Smart bus is already running. High-speed rail connection to Bangkok and Nong Khai (Laos border) will transform logistics."
+      }
+    }
+  ],
+  "metricBlocks": [
+    {
+      "id": "economic-readiness",
+      "title": {
+        "en": "Economic readiness",
+        "th": "ฐานเศรษฐกิจ",
+        "zh": "经济基础"
+      },
+      "summary": {
+        "en": "What scale of capital this city can plausibly absorb without making up demand.",
+        "th": "เมืองนี้รับเงินลงทุนระดับไหนได้จริงโดยไม่ต้องแต่งดีมานด์",
+        "zh": "This block shows how much capital the city can plausibly absorb without inventing demand."
+      },
+      "observations": [
+        {
+          "cityId": "khon-kaen",
+          "metricKey": "population",
+          "label": {
+            "en": "Population",
+            "th": "ประชากร",
+            "zh": "人口"
+          },
+          "metricValueNum": 1800,
+          "metricValueText": "1,800K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Baseline city population from index input; used as scale proxy.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "khon-kaen",
+          "metricKey": "gppPerCapita",
+          "label": {
+            "en": "GPP per capita",
+            "th": "GPP ต่อหัว",
+            "zh": "人均 GPP"
+          },
+          "metricValueNum": 155000,
+          "metricValueText": "฿155,000",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Provincial economic productivity proxy; used for revenue and demand scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "khon-kaen",
+          "metricKey": "avgMonthlyIncome",
+          "label": {
+            "en": "Average monthly income",
+            "th": "รายได้เฉลี่ยต่อเดือน",
+            "zh": "月均收入"
+          },
+          "metricValueNum": 22100,
+          "metricValueText": "฿22,100",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Household earning proxy; used for affordability and fee tolerance.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "risk-and-resilience",
+      "title": {
+        "en": "Risk and resilience",
+        "th": "ความเสี่ยงและความยืดหยุ่น",
+        "zh": "风险与韧性"
+      },
+      "summary": {
+        "en": "The constraint stack that should shape finance structure, contract terms, and sequencing.",
+        "th": "ชุดข้อจำกัดที่ต้องกำหนดโครงสร้างการเงิน เงื่อนไขสัญญา และลำดับงาน",
+        "zh": "These constraints should shape financing structure, contract terms, and sequencing."
+      },
+      "observations": [
+        {
+          "cityId": "khon-kaen",
+          "metricKey": "pm25Annual",
+          "label": {
+            "en": "Annual PM2.5",
+            "th": "PM2.5 เฉลี่ยรายปี",
+            "zh": "年均 PM2.5"
+          },
+          "metricValueNum": 26.3,
+          "metricValueText": "26.3",
+          "unit": "ug/m3",
+          "periodLabel": "2025 annual average",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Environmental stress proxy; used for resilience and green finance scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "khon-kaen",
+          "metricKey": "crimeRatePer100k",
+          "label": {
+            "en": "Crime / 100K",
+            "th": "อาชญากรรม / แสนคน",
+            "zh": "每十万人犯罪率"
+          },
+          "metricValueNum": 138,
+          "metricValueText": "138",
+          "unit": "incidents/100k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rtp",
+          "sourceName": "Royal Thai Police",
+          "sourceUrl": "https://www.royalthaipolice.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Risk proxy; used for contractability and investor comfort.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "khon-kaen",
+          "metricKey": "greenCoverage",
+          "label": {
+            "en": "Green coverage",
+            "th": "พื้นที่สีเขียว",
+            "zh": "绿化覆盖"
+          },
+          "metricValueNum": 35,
+          "metricValueText": "35",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "gistda",
+          "sourceName": "GISTDA — Satellite Imagery",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Land/environment quality proxy; used for resilience and amenity value.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "service-capacity",
+      "title": {
+        "en": "Service capacity",
+        "th": "ศักยภาพบริการสาธารณะ",
+        "zh": "服务能力"
+      },
+      "summary": {
+        "en": "Signals for whether the city can operate systems after ribbon-cutting day.",
+        "th": "สัญญาณว่าเมืองจะเดินระบบต่อหลังวันตัดริบบิ้นได้หรือไม่",
+        "zh": "Signals of whether the city can run systems after ribbon-cutting day."
+      },
+      "observations": [
+        {
+          "cityId": "khon-kaen",
+          "metricKey": "hospitalBedsPer10k",
+          "label": {
+            "en": "Hospital beds / 10K",
+            "th": "เตียงโรงพยาบาล / หมื่นคน",
+            "zh": "每万人床位"
+          },
+          "metricValueNum": 28,
+          "metricValueText": "28",
+          "unit": "beds/10k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "moph",
+          "sourceName": "Ministry of Public Health",
+          "sourceUrl": "https://www.moph.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Public service capacity proxy; used for wellbeing and delivery maturity.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    }
+  ],
+  "deliveryProfile": {
+    "cityId": "khon-kaen",
+    "visionStatus": "ready",
+    "infrastructureStatus": "building",
+    "dataPlatformStatus": "building",
+    "businessModelStatus": "ready",
+    "partnershipStatus": "building",
+    "recommendedLeadStep": "infrastructure",
+    "deliveryNote": {
+      "en": "Alpha cities should invest forward: infrastructure-scale finance, corridor monetization, and contract discipline. This is not the tier for passive grant dependency.",
+      "th": "เมือง Alpha ต้องลงทุนเชิงรุก: การเงินระดับโครงสร้างพื้นฐาน การดึงมูลค่าจากระเบียงพัฒนา และวินัยสัญญา นี่ไม่ใช่ระดับที่ควรรอเงินอุดหนุนแบบรับชะตา",
+      "zh": "Alpha 城市应主动投资：做基础设施级融资、走廊变现和严密合同管理，而不是被动等补助。"
+    },
+    "publicRole": {
+      "en": "Set the corridor logic, hold the concession line, and protect public interest with measurable KPIs.",
+      "th": "รัฐต้องกำหนดตรรกะของ corridor คุมเส้นสัญญา และปกป้องประโยชน์สาธารณะด้วย KPI ที่วัดได้",
+      "zh": "Government should set corridor logic, hold the contract line, and protect public interest with measurable KPIs."
+    },
+    "privateRole": {
+      "en": "Bring capex, operating know-how, and revenue discipline where demand is already visible.",
+      "th": "เอกชนต้องเอา capex ความรู้เดินระบบ และวินัยรายได้เข้ามา ในจุดที่ดีมานด์เห็นชัดอยู่แล้ว",
+      "zh": "Private capital should bring capex, operating know-how, and revenue discipline where demand is already visible."
+    },
+    "riskAllocation": {
+      "en": "Construction and operating risk can move outward; policy and land assembly should stay public.",
+      "th": "ความเสี่ยงก่อสร้างและเดินระบบโยนออกไปได้ แต่ความเสี่ยงเชิงนโยบายและการจัดที่ดินควรอยู่ฝั่งรัฐ",
+      "zh": "Construction and operating risk can move outward, but policy and land assembly should stay public."
+    },
+    "contractLens": {
+      "en": "Tie payment to service availability, resilience, and maintenance handover.",
+      "th": "ผูกการจ่ายกับความพร้อมใช้งาน ความยืดหยุ่น และการส่งมอบงานบำรุงรักษา",
+      "zh": "Tie payment to service availability, resilience, and maintenance handover."
+    },
+    "version": "2026.04-cdp-v1"
+  },
+  "financeProfile": {
+    "cityId": "khon-kaen",
+    "revenueBase": "moderate",
+    "institutionalCapacity": "strong",
+    "projectPipeline": "strong",
+    "privateInterest": "moderate",
+    "riskProfile": "low",
+    "deliveryReadiness": "advanced",
+    "readinessScore": 77,
+    "segment": "alpha",
+    "assessedAt": "2026-04-04T00:00:00.000Z",
+    "version": "2026.04-cdp-v1"
+  },
+  "financeRecommendations": [
+    {
+      "id": "khon-kaen-land-value-capture",
+      "cityId": "khon-kaen",
+      "instrumentId": "land-value-capture",
+      "instrumentName": "Land Value Capture",
+      "priority": "lead",
+      "priorityScore": 80,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Land Value Capture fits Khon Kaen Smart City because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away.",
+        "th": "Land Value Capture fits Khon Kaen Smart City because its metrics and operating context create a credible use case. ถ้าเมืองเป็นคนสร้างมูลค่าเพิ่ม เมืองก็ควรเก็บบางส่วนกลับมา ไม่ใช่ปล่อยให้ไหลออกหมด",
+        "zh": "Land Value Capture fits Khon Kaen Smart City because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 77/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 77/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 77/100."
+      },
+      "nextStep": {
+        "en": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
+        "th": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
+        "zh": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "khon-kaen-gppPerCapita",
+          "supportType": "metric",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Strong urban demand makes value capture plausible."
+        },
+        {
+          "id": "khon-kaen-khon-kaen-smart-bus-system-operational-real-time-tracking-via-line-app",
+          "supportType": "evidence",
+          "sourceId": "khon-kaen-smart-city",
+          "sourceUrl": "",
+          "observedAt": "2024-01-01T00:00:00.000Z",
+          "confidence": 0.8,
+          "summary": "Khon Kaen smart bus system operational — real-time tracking via LINE app"
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "khon-kaen-asset-recycling",
+      "cityId": "khon-kaen",
+      "instrumentId": "asset-recycling",
+      "instrumentName": "Asset Recycling",
+      "priority": "secondary",
+      "priorityScore": 76,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Asset Recycling fits Khon Kaen Smart City because its metrics and operating context create a credible use case. Better than begging for new money while underused public assets sit there doing nothing.",
+        "th": "Asset Recycling fits Khon Kaen Smart City because its metrics and operating context create a credible use case. ดีกว่านั่งขอเงินใหม่ ทั้งที่สินทรัพย์รัฐที่ใช้ไม่คุ้มยังนอนนิ่งอยู่",
+        "zh": "Asset Recycling fits Khon Kaen Smart City because its metrics and operating context create a credible use case. Better than begging for new money while underused public assets sit there doing nothing."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 77/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 77/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 77/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "khon-kaen-gppPerCapita",
+          "supportType": "metric",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Strong urban value supports recycling mature public assets."
+        },
+        {
+          "id": "khon-kaen-khon-kaen-smart-bus-system-operational-real-time-tracking-via-line-app",
+          "supportType": "evidence",
+          "sourceId": "khon-kaen-smart-city",
+          "sourceUrl": "",
+          "observedAt": "2024-01-01T00:00:00.000Z",
+          "confidence": 0.8,
+          "summary": "Khon Kaen smart bus system operational — real-time tracking via LINE app"
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "khon-kaen-performance-contract",
+      "cityId": "khon-kaen",
+      "instrumentId": "performance-contract",
+      "instrumentName": "Performance Contract",
+      "priority": "watch",
+      "priorityScore": 72,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Performance Contract fits Khon Kaen Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes.",
+        "th": "Performance Contract fits Khon Kaen Smart City because its metrics and operating context create a credible use case. เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+        "zh": "Performance Contract fits Khon Kaen Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 77/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 77/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 77/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "khon-kaen-pm25Annual",
+          "supportType": "metric",
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Outcome-based contracts make sense where performance can be metered."
+        },
+        {
+          "id": "khon-kaen-greenCoverage",
+          "supportType": "metric",
+          "metricKey": "greenCoverage",
+          "metricLabel": "Green coverage",
+          "sourceId": "gistda",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Green coverage provides a resilience baseline for outcome measurement."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    }
+  ],
+  "evidenceItems": [
+    {
+      "cityId": "khon-kaen",
+      "pillar": "digital",
+      "type": "news",
+      "titleEn": "Khon Kaen smart bus system operational — real-time tracking via LINE app",
+      "titleTh": "ระบบรถบัสอัจฉริยะขอนแก่นเปิดให้บริการ — ติดตามเรียลไทม์ผ่านแอพ LINE",
+      "titleZh": "孔敬智慧公交已运行，可通过 LINE 实时追踪",
+      "source": "Khon Kaen Smart City",
+      "date": "2024"
+    },
+    {
+      "cityId": "khon-kaen",
+      "pillar": "economy",
+      "type": "data",
+      "titleEn": "Khon Kaen GPP per capita ฿155,000 — highest in Isan region",
+      "titleTh": "GPP ต่อหัวขอนแก่น ฿155,000 — สูงสุดในภาคอีสาน",
+      "titleZh": "孔敬人均 GPP 为 155,000 泰铢，在伊善地区最高",
+      "source": "NESDC",
+      "date": "2024",
+      "metric": "gpp",
+      "value": "155000"
+    },
+    {
+      "cityId": "khon-kaen",
+      "pillar": "livability",
+      "type": "news",
+      "titleEn": "LRT construction underway — digital twin used for urban planning",
+      "titleTh": "กำลังก่อสร้าง LRT — ใช้ digital twin สำหรับวางผังเมือง",
+      "titleZh": "LRT 正在建设中，并使用数字孪生进行城市规划",
+      "source": "MRTA / Khon Kaen Transit",
+      "date": "2025"
+    }
+  ],
+  "dataRails": [
+    {
+      "id": "local-ops",
+      "label": {
+        "en": "Local operations rail",
+        "th": "รางข้อมูลปฏิบัติการท้องถิ่น",
+        "zh": "本地运营数据轨"
+      },
+      "description": {
+        "en": "Khon Kaen Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them.",
+        "th": "ขอนแก่นสมาร์ทซิตี้ ต้องมีข้อมูลบริการสดจากงานเทศบาล สาธารณูปโภค และการรับเหตุหน้างาน ถ้าเมืองมองไม่เห็นการปฏิบัติการ เมืองก็เดินระบบไม่ได้",
+        "zh": "Khon Kaen Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them."
+      },
+      "sourceUrl": "https://www.citydata.in.th/en/smart-city-thailand/?city=Khon%20Kaen%20Smart%20City"
+    },
+    {
+      "id": "national-stack",
+      "label": {
+        "en": "National data stack",
+        "th": "รางข้อมูลระดับชาติ",
+        "zh": "国家数据栈"
+      },
+      "description": {
+        "en": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines.",
+        "th": "NSO, NESDC, PCD, BOI และรางข้อมูลระดับชาติอื่นต้องไหลเข้าโปรไฟล์เมือง เพื่อให้คำอ้างอิงท้องถิ่นตั้งอยู่บนฐานที่ตรวจสอบได้",
+        "zh": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines."
+      },
+      "sourceUrl": "https://data.go.th/dataset?q=Khon%20Kaen"
+    },
+    {
+      "id": "public-research",
+      "label": {
+        "en": "Public research rail",
+        "th": "รางข้อมูลสาธารณะเพื่อวิจัย",
+        "zh": "公共研究数据轨"
+      },
+      "description": {
+        "en": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access.",
+        "th": "การ export ต้อง flatten dossier ของเมืองออกเป็นแถวข้อมูลที่นักวิจัยดาวน์โหลด ตรวจ และโต้แย้งได้ โดยไม่ต้องขอสิทธิพิเศษ",
+        "zh": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access."
+      },
+      "sourceUrl": "/api/cities/khon-kaen/export.csv"
+    }
+  ],
+  "exportMetadata": {
+    "latestObservedAt": "2026-04-01T00:00:00.000Z",
+    "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
+    "provenanceCount": 13,
+    "summaryCsvUrl": "/api/exports/cities-summary.csv",
+    "factsCsvUrl": "/api/exports/city-facts.csv",
+    "cityCsvUrl": "/api/cities/khon-kaen/export.csv"
+  }
+}

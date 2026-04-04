@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { allCities } from "./cityData";
+import { useCitySummaries } from "./cityApi";
 import { getCityName, translate } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
 import { TIER_LABELS } from "./types";
@@ -71,6 +71,7 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const [layer, setLayer] = useState<MapLayer>("base");
   const [showGrid, setShowGrid] = useState(true);
+  const { data: cities } = useCitySummaries();
 
   const grid = useMemo(() => buildGridLines(), []);
   const tileUrl = useMemo(() => getTileUrl(layer), [layer]);
@@ -83,9 +84,9 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
       </p>
       <h2>
         {translate(locale, {
-          en: `${allCities.length} cities across Thailand`,
-          th: `${allCities.length} เมืองทั่วประเทศไทย`,
-          zh: `泰国全境 ${allCities.length} 座城市`,
+          en: `${cities.length} cities across Thailand`,
+          th: `${cities.length} เมืองทั่วประเทศไทย`,
+          zh: `泰国全境 ${cities.length} 座城市`,
         })}
       </h2>
 
@@ -136,7 +137,7 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
             )}
 
             {/* City markers */}
-            {allCities.map(city => {
+            {cities.map(city => {
               const coords = cityCoords[city.id];
               if (!coords) return null;
               const { x, y } = project(coords.lat, coords.lng);

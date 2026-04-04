@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { allCities } from "./cityData";
+import { useCitySummaries } from "./cityApi";
 import { summarizeCities } from "./cityCollections";
 import type { Locale, SmartDimension } from "./types";
 import { DIMENSION_LABELS } from "./types";
@@ -55,7 +55,8 @@ const PHOTOS_INTL = [
 ];
 
 export default function ProgramPage({ locale, onNavigate }: Props) {
-  const stats = useMemo(() => summarizeCities(allCities), []);
+  const { data: cities } = useCitySummaries();
+  const stats = useMemo(() => summarizeCities(cities), [cities]);
   const dimensions: SmartDimension[] = ["environment", "economy", "mobility", "energy", "people", "living", "governance"];
 
   return (

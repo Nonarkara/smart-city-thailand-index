@@ -1,0 +1,572 @@
+{
+  "summary": {
+    "id": "maesai",
+    "nameEn": "Mae Sai Smart City",
+    "nameTh": "แม่สายสมาร์ทซิตี้",
+    "province": "Chiang Rai",
+    "provinceTh": "เชียงราย",
+    "region": "north",
+    "status": "promotion",
+    "reality": "operational",
+    "smartDimensions": [
+      "energy",
+      "environment",
+      "governance",
+      "living",
+      "people"
+    ],
+    "scores": {
+      "livability": 54,
+      "economy": 50,
+      "safety": 58,
+      "wellbeing": 52,
+      "environment": 52,
+      "hospitality": 62,
+      "digital": 42
+    },
+    "metrics": {
+      "population": 85,
+      "gppPerCapita": 108000,
+      "avgMonthlyIncome": 16800,
+      "pm25Annual": 44.2,
+      "crimeRatePer100k": 165
+    },
+    "compositeScore": 53.5,
+    "tier": "beta",
+    "tagline": "Northernmost border town rebuilding after 2024 floods. Smart disaster management is now a real priority, not just a plan.",
+    "taglineTh": "เมืองชายแดนเหนือสุดที่กำลังสร้างใหม่หลังน้ำท่วม 2024 การจัดการภัยพิบัติอัจฉริยะเป็นความสำคัญจริงตอนนี้ ไม่ใช่แค่แผน",
+    "highlights": [
+      "Post-flood smart disaster management system",
+      "Border trade digitization",
+      "Air quality crisis monitoring"
+    ],
+    "dataConfidence": "medium",
+    "keyMetrics": [
+      {
+        "key": "gppPerCapita",
+        "label": {
+          "en": "GPP per capita",
+          "th": "GPP ต่อหัว",
+          "zh": "人均 GPP"
+        },
+        "value": "฿108,000",
+        "unit": "THB",
+        "confidence": "medium",
+        "sourceId": "nesdc"
+      },
+      {
+        "key": "pm25Annual",
+        "label": {
+          "en": "Annual PM2.5",
+          "th": "PM2.5 เฉลี่ยรายปี",
+          "zh": "年均 PM2.5"
+        },
+        "value": "44.2",
+        "unit": "ug/m3",
+        "confidence": "medium",
+        "sourceId": "pcd"
+      },
+      {
+        "key": "crimeRatePer100k",
+        "label": {
+          "en": "Crime / 100K",
+          "th": "อาชญากรรม / แสนคน",
+          "zh": "每十万人犯罪率"
+        },
+        "value": "165",
+        "unit": "incidents/100k",
+        "confidence": "medium",
+        "sourceId": "rtp"
+      },
+      {
+        "key": "population",
+        "label": {
+          "en": "Population",
+          "th": "ประชากร",
+          "zh": "人口"
+        },
+        "value": "85K",
+        "unit": "people",
+        "confidence": "medium",
+        "sourceId": "nso"
+      }
+    ],
+    "shortTailoredNote": {
+      "en": "Mae Sai Smart City leans on hospitality but still gets capped by digital. That's where the backend should keep drilling.",
+      "th": "แม่สายสมาร์ทซิตี้ มีแรงหลักอยู่ที่hospitality แต่ยังถูกกดเพดานโดยdigital ตรงนี้แหละที่ backend ต้องขุดต่อ",
+      "zh": "Mae Sai Smart City leans on hospitality but is still capped by digital. That's where the backend should keep drilling."
+    },
+    "financeSignal": {
+      "leadInstrumentId": "dfi-cofinance",
+      "leadInstrumentName": "DFI Co-finance",
+      "line": {
+        "en": "DFI Co-finance leads because Mae Sai Smart City is foundational with a medium risk profile.",
+        "th": "DFI Co-finance นำ เพราะ แม่สายสมาร์ทซิตี้ อยู่ในระดับ foundational และมีความเสี่ยงแบบ medium",
+        "zh": "DFI Co-finance leads because Mae Sai Smart City is foundational with a medium risk profile."
+      },
+      "readinessScore": 47
+    },
+    "exportReady": true,
+    "freshness": {
+      "latestObservedAt": "2026-04-01T00:00:00.000Z",
+      "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
+    },
+    "provenanceCount": 9
+  },
+  "contextNotes": [
+    {
+      "id": "maesai-opportunity",
+      "kind": "opportunity",
+      "title": {
+        "en": "Tailored opportunity",
+        "th": "โอกาสเฉพาะเมือง",
+        "zh": "定制机会"
+      },
+      "body": {
+        "en": "Mae Sai Smart City has room to turn its hospitality advantage into a city product instead of another presentation. The clearest wedge is energy delivery backed by hard metrics.",
+        "th": "แม่สายสมาร์ทซิตี้ มีโอกาสเปลี่ยนจุดแข็งด้านhospitality ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านenergy ที่ผูกกับตัวชี้วัดจริง",
+        "zh": "Mae Sai Smart City can turn its hospitality edge into a real city product. The clearest wedge is energy delivery tied to hard metrics."
+      }
+    },
+    {
+      "id": "maesai-constraint",
+      "kind": "constraint",
+      "title": {
+        "en": "Constraint",
+        "th": "ข้อจำกัด",
+        "zh": "约束"
+      },
+      "body": {
+        "en": "Air quality is not a side note here. PM2.5 at 44.2 means the city cannot claim livability leadership without a serious environmental pipeline.",
+        "th": "คุณภาพอากาศไม่ใช่เรื่องข้างเคียงของเมืองนี้ PM2.5 ที่ 44.2 แปลว่าเมืองจะอ้างความน่าอยู่ไม่ได้ ถ้าไม่มี pipeline ด้านสิ่งแวดล้อมที่จริงจัง",
+        "zh": "Air quality is not a side note. PM2.5 at 44.2 means the city cannot claim livability leadership without a serious environmental pipeline."
+      }
+    },
+    {
+      "id": "maesai-warning",
+      "kind": "implementation_warning",
+      "title": {
+        "en": "Implementation warning",
+        "th": "คำเตือนเชิงปฏิบัติ",
+        "zh": "实施警告"
+      },
+      "body": {
+        "en": "This city is small enough to prototype fast. That also means bad procurement choices get very visible, very quickly.",
+        "th": "เมืองนี้เล็กพอที่จะทดลองได้เร็ว แปลว่าถ้าจัดซื้อพลาด ความพลาดจะมองเห็นชัดและเร็วเหมือนกัน",
+        "zh": "This city is small enough to prototype fast. That also means bad procurement becomes visible very quickly."
+      }
+    },
+    {
+      "id": "maesai-lesson",
+      "kind": "exportable_lesson",
+      "title": {
+        "en": "Exportable lesson",
+        "th": "บทเรียนที่ส่งออกได้",
+        "zh": "可输出经验"
+      },
+      "body": {
+        "en": "Mae Sai Smart City is most exportable when it acts like itself. The reusable lesson is how it turns hospitality into something operational.",
+        "th": "แม่สายสมาร์ทซิตี้ ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนhospitality ให้เป็นระบบปฏิบัติการ",
+        "zh": "Mae Sai Smart City becomes exportable when it acts like itself. The reusable lesson is how it turns hospitality into operations."
+      }
+    }
+  ],
+  "metricBlocks": [
+    {
+      "id": "economic-readiness",
+      "title": {
+        "en": "Economic readiness",
+        "th": "ฐานเศรษฐกิจ",
+        "zh": "经济基础"
+      },
+      "summary": {
+        "en": "What scale of capital this city can plausibly absorb without making up demand.",
+        "th": "เมืองนี้รับเงินลงทุนระดับไหนได้จริงโดยไม่ต้องแต่งดีมานด์",
+        "zh": "This block shows how much capital the city can plausibly absorb without inventing demand."
+      },
+      "observations": [
+        {
+          "cityId": "maesai",
+          "metricKey": "population",
+          "label": {
+            "en": "Population",
+            "th": "ประชากร",
+            "zh": "人口"
+          },
+          "metricValueNum": 85,
+          "metricValueText": "85K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "methodNote": "Baseline city population from index input; used as scale proxy.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "maesai",
+          "metricKey": "gppPerCapita",
+          "label": {
+            "en": "GPP per capita",
+            "th": "GPP ต่อหัว",
+            "zh": "人均 GPP"
+          },
+          "metricValueNum": 108000,
+          "metricValueText": "฿108,000",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "methodNote": "Provincial economic productivity proxy; used for revenue and demand scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "maesai",
+          "metricKey": "avgMonthlyIncome",
+          "label": {
+            "en": "Average monthly income",
+            "th": "รายได้เฉลี่ยต่อเดือน",
+            "zh": "月均收入"
+          },
+          "metricValueNum": 16800,
+          "metricValueText": "฿16,800",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "methodNote": "Household earning proxy; used for affordability and fee tolerance.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "risk-and-resilience",
+      "title": {
+        "en": "Risk and resilience",
+        "th": "ความเสี่ยงและความยืดหยุ่น",
+        "zh": "风险与韧性"
+      },
+      "summary": {
+        "en": "The constraint stack that should shape finance structure, contract terms, and sequencing.",
+        "th": "ชุดข้อจำกัดที่ต้องกำหนดโครงสร้างการเงิน เงื่อนไขสัญญา และลำดับงาน",
+        "zh": "These constraints should shape financing structure, contract terms, and sequencing."
+      },
+      "observations": [
+        {
+          "cityId": "maesai",
+          "metricKey": "pm25Annual",
+          "label": {
+            "en": "Annual PM2.5",
+            "th": "PM2.5 เฉลี่ยรายปี",
+            "zh": "年均 PM2.5"
+          },
+          "metricValueNum": 44.2,
+          "metricValueText": "44.2",
+          "unit": "ug/m3",
+          "periodLabel": "2025 annual average",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "methodNote": "Environmental stress proxy; used for resilience and green finance scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "maesai",
+          "metricKey": "crimeRatePer100k",
+          "label": {
+            "en": "Crime / 100K",
+            "th": "อาชญากรรม / แสนคน",
+            "zh": "每十万人犯罪率"
+          },
+          "metricValueNum": 165,
+          "metricValueText": "165",
+          "unit": "incidents/100k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rtp",
+          "sourceName": "Royal Thai Police",
+          "sourceUrl": "https://www.royalthaipolice.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "methodNote": "Risk proxy; used for contractability and investor comfort.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    }
+  ],
+  "deliveryProfile": {
+    "cityId": "maesai",
+    "visionStatus": "building",
+    "infrastructureStatus": "building",
+    "dataPlatformStatus": "gap",
+    "businessModelStatus": "building",
+    "partnershipStatus": "building",
+    "recommendedLeadStep": "data_platform",
+    "deliveryNote": {
+      "en": "Beta cities need phased delivery: blended finance, performance contracts, and readiness-building before going full commercial.",
+      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: blended finance, performance contract และการสร้าง readiness ก่อนจะไปเชิงพาณิชย์เต็มตัว",
+      "zh": "Beta 城市需要分阶段交付：先做混合融资、绩效合同和准备度建设，再谈完全商业化。"
+    },
+    "publicRole": {
+      "en": "Anchor the pipeline, de-risk first-loss pieces, and keep the city from overpromising.",
+      "th": "รัฐต้องยึด pipeline ลดความเสี่ยงในชิ้น first-loss และกันไม่ให้เมืองขายฝันเกินจริง",
+      "zh": "Government should anchor the pipeline, de-risk first-loss pieces, and stop the city from overselling."
+    },
+    "privateRole": {
+      "en": "Co-invest in phased systems after the city proves the first operating metrics.",
+      "th": "เอกชนควรร่วมลงทุนแบบเป็นช่วง หลังเมืองพิสูจน์ตัวเลขปฏิบัติการชุดแรกได้แล้ว",
+      "zh": "Private capital should co-invest in phases once the city proves first operating metrics."
+    },
+    "riskAllocation": {
+      "en": "Keep demand risk partly public until usage data firms up. Push performance risk to operators.",
+      "th": "ความเสี่ยงดีมานด์ควรยังอยู่กับรัฐบางส่วนจนกว่าข้อมูลการใช้งานจะนิ่ง ส่วนความเสี่ยงผลงานให้ผู้เดินระบบรับ",
+      "zh": "Keep some demand risk public until usage data settles. Push performance risk to operators."
+    },
+    "contractLens": {
+      "en": "Contract for data standards, uptime, and interoperability. Not just dashboards and screenshots.",
+      "th": "ทำสัญญาเรื่องมาตรฐานข้อมูล uptime และ interoperability ไม่ใช่แค่ dashboard กับ screenshot",
+      "zh": "Contract for data standards, uptime, and interoperability. Not just dashboards and screenshots."
+    },
+    "version": "2026.04-cdp-v1"
+  },
+  "financeProfile": {
+    "cityId": "maesai",
+    "revenueBase": "thin",
+    "institutionalCapacity": "strong",
+    "projectPipeline": "moderate",
+    "privateInterest": "thin",
+    "riskProfile": "medium",
+    "deliveryReadiness": "foundational",
+    "readinessScore": 47,
+    "segment": "beta",
+    "assessedAt": "2026-04-04T00:00:00.000Z",
+    "version": "2026.04-cdp-v1"
+  },
+  "financeRecommendations": [
+    {
+      "id": "maesai-dfi-cofinance",
+      "cityId": "maesai",
+      "instrumentId": "dfi-cofinance",
+      "instrumentName": "DFI Co-finance",
+      "priority": "lead",
+      "priorityScore": 78,
+      "stage": "operational",
+      "segment": "beta",
+      "reasonSummary": {
+        "en": "DFI Co-finance fits Mae Sai Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money.",
+        "th": "DFI Co-finance fits Mae Sai Smart City because its metrics and operating context create a credible use case. ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
+        "zh": "DFI Co-finance fits Mae Sai Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 47/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 47/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 47/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
+        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "maesai-pm25Annual",
+          "supportType": "metric",
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "summary": "Measured environmental pressure supports concessional co-finance."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "maesai-technical-assistance-grant",
+      "cityId": "maesai",
+      "instrumentId": "technical-assistance-grant",
+      "instrumentName": "Technical Assistance Grant",
+      "priority": "secondary",
+      "priorityScore": 68,
+      "stage": "operational",
+      "segment": "beta",
+      "reasonSummary": {
+        "en": "Mae Sai Smart City needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess.",
+        "th": "Mae Sai Smart City needs sharper project definition and procurement readiness before bigger money. ถ้าเมืองยังนิยามโครงการไม่ชัด เอาเงินก้อนใหญ่ไปใส่ก็แค่ทำให้ความเละเทะแพงขึ้น",
+        "zh": "Mae Sai Smart City needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess."
+      },
+      "whyNow": {
+        "en": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 47/100.",
+        "th": "Because unreadiness is cheaper to fix now than after a failed capital program. คะแนน readiness: 47/100",
+        "zh": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 47/100."
+      },
+      "nextStep": {
+        "en": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
+        "th": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
+        "zh": "Write the feasibility package, data governance note, and procurement scope before applying for capital."
+      },
+      "publicFundingRole": {
+        "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
+        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "maesai-population",
+          "supportType": "metric",
+          "metricKey": "population",
+          "metricLabel": "Population",
+          "sourceId": "nso",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "summary": "City scale shapes the right size for first-phase technical support."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "maesai-government-budget",
+      "cityId": "maesai",
+      "instrumentId": "government-budget",
+      "instrumentName": "Government Budget / Grant",
+      "priority": "watch",
+      "priorityScore": 60,
+      "stage": "operational",
+      "segment": "beta",
+      "reasonSummary": {
+        "en": "Mae Sai Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated.",
+        "th": "Mae Sai Smart City still needs public risk-bearing for foundational delivery. บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
+        "zh": "Mae Sai Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 47/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 47/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 47/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
+        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "maesai-population",
+          "supportType": "metric",
+          "metricKey": "population",
+          "metricLabel": "Population",
+          "sourceId": "nso",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "summary": "Population scale affects the public-good case for grant funding."
+        },
+        {
+          "id": "maesai-pm25Annual",
+          "supportType": "metric",
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.75,
+          "summary": "Measured externalities justify public funding for core resilience."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    }
+  ],
+  "evidenceItems": [],
+  "dataRails": [
+    {
+      "id": "local-ops",
+      "label": {
+        "en": "Local operations rail",
+        "th": "รางข้อมูลปฏิบัติการท้องถิ่น",
+        "zh": "本地运营数据轨"
+      },
+      "description": {
+        "en": "Mae Sai Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them.",
+        "th": "แม่สายสมาร์ทซิตี้ ต้องมีข้อมูลบริการสดจากงานเทศบาล สาธารณูปโภค และการรับเหตุหน้างาน ถ้าเมืองมองไม่เห็นการปฏิบัติการ เมืองก็เดินระบบไม่ได้",
+        "zh": "Mae Sai Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them."
+      },
+      "sourceUrl": "https://www.citydata.in.th/en/smart-city-thailand/?city=Mae%20Sai%20Smart%20City"
+    },
+    {
+      "id": "national-stack",
+      "label": {
+        "en": "National data stack",
+        "th": "รางข้อมูลระดับชาติ",
+        "zh": "国家数据栈"
+      },
+      "description": {
+        "en": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines.",
+        "th": "NSO, NESDC, PCD, BOI และรางข้อมูลระดับชาติอื่นต้องไหลเข้าโปรไฟล์เมือง เพื่อให้คำอ้างอิงท้องถิ่นตั้งอยู่บนฐานที่ตรวจสอบได้",
+        "zh": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines."
+      },
+      "sourceUrl": "https://data.go.th/dataset?q=Chiang%20Rai"
+    },
+    {
+      "id": "public-research",
+      "label": {
+        "en": "Public research rail",
+        "th": "รางข้อมูลสาธารณะเพื่อวิจัย",
+        "zh": "公共研究数据轨"
+      },
+      "description": {
+        "en": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access.",
+        "th": "การ export ต้อง flatten dossier ของเมืองออกเป็นแถวข้อมูลที่นักวิจัยดาวน์โหลด ตรวจ และโต้แย้งได้ โดยไม่ต้องขอสิทธิพิเศษ",
+        "zh": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access."
+      },
+      "sourceUrl": "/api/cities/maesai/export.csv"
+    }
+  ],
+  "exportMetadata": {
+    "latestObservedAt": "2026-04-01T00:00:00.000Z",
+    "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
+    "provenanceCount": 9,
+    "summaryCsvUrl": "/api/exports/cities-summary.csv",
+    "factsCsvUrl": "/api/exports/city-facts.csv",
+    "cityCsvUrl": "/api/cities/maesai/export.csv"
+  }
+}

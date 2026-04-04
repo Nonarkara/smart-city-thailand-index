@@ -1,0 +1,643 @@
+{
+  "summary": {
+    "id": "nan",
+    "nameEn": "Nan Smart City",
+    "nameTh": "น่านสมาร์ทซิตี้",
+    "province": "Nan",
+    "provinceTh": "น่าน",
+    "region": "north",
+    "status": "certified",
+    "reality": "operational",
+    "batch": 2,
+    "smartDimensions": [
+      "energy",
+      "environment",
+      "governance",
+      "living",
+      "people"
+    ],
+    "scores": {
+      "livability": 68,
+      "economy": 48,
+      "safety": 78,
+      "wellbeing": 65,
+      "environment": 72,
+      "hospitality": 82,
+      "digital": 45
+    },
+    "metrics": {
+      "population": 478,
+      "gppPerCapita": 88000,
+      "avgMonthlyIncome": 16200,
+      "pm25Annual": 35.5,
+      "hospitalBedsPer10k": 20,
+      "crimeRatePer100k": 95,
+      "greenCoverage": 72
+    },
+    "compositeScore": 65.7,
+    "tier": "alpha",
+    "tagline": "Small northern city with genuine community-driven smart initiatives. Forest conservation tech and heritage preservation are authentic.",
+    "taglineTh": "เมืองเหนือเล็กๆ ที่มีโครงการอัจฉริยะจากชุมชนจริง เทคโนโลยีอนุรักษ์ป่าและมรดกเป็นของจริง",
+    "highlights": [
+      "Community-driven forest fire monitoring",
+      "Smart heritage preservation for Nan old town",
+      "Digital citizen governance platform"
+    ],
+    "dataConfidence": "high",
+    "keyMetrics": [
+      {
+        "key": "gppPerCapita",
+        "label": {
+          "en": "GPP per capita",
+          "th": "GPP ต่อหัว",
+          "zh": "人均 GPP"
+        },
+        "value": "฿88,000",
+        "unit": "THB",
+        "confidence": "high",
+        "sourceId": "nesdc"
+      },
+      {
+        "key": "pm25Annual",
+        "label": {
+          "en": "Annual PM2.5",
+          "th": "PM2.5 เฉลี่ยรายปี",
+          "zh": "年均 PM2.5"
+        },
+        "value": "35.5",
+        "unit": "ug/m3",
+        "confidence": "high",
+        "sourceId": "pcd"
+      },
+      {
+        "key": "crimeRatePer100k",
+        "label": {
+          "en": "Crime / 100K",
+          "th": "อาชญากรรม / แสนคน",
+          "zh": "每十万人犯罪率"
+        },
+        "value": "95",
+        "unit": "incidents/100k",
+        "confidence": "high",
+        "sourceId": "rtp"
+      },
+      {
+        "key": "greenCoverage",
+        "label": {
+          "en": "Green coverage",
+          "th": "พื้นที่สีเขียว",
+          "zh": "绿化覆盖"
+        },
+        "value": "72",
+        "unit": "%",
+        "confidence": "high",
+        "sourceId": "gistda"
+      }
+    ],
+    "shortTailoredNote": {
+      "en": "Nan Smart City leans on hospitality but still gets capped by digital. That's where the backend should keep drilling.",
+      "th": "น่านสมาร์ทซิตี้ มีแรงหลักอยู่ที่hospitality แต่ยังถูกกดเพดานโดยdigital ตรงนี้แหละที่ backend ต้องขุดต่อ",
+      "zh": "Nan Smart City leans on hospitality but is still capped by digital. That's where the backend should keep drilling."
+    },
+    "financeSignal": {
+      "leadInstrumentId": "performance-contract",
+      "leadInstrumentName": "Performance Contract",
+      "line": {
+        "en": "Performance Contract leads because Nan Smart City is building with a medium risk profile.",
+        "th": "Performance Contract นำ เพราะ น่านสมาร์ทซิตี้ อยู่ในระดับ building และมีความเสี่ยงแบบ medium",
+        "zh": "Performance Contract leads because Nan Smart City is building with a medium risk profile."
+      },
+      "readinessScore": 55
+    },
+    "exportReady": true,
+    "freshness": {
+      "latestObservedAt": "2026-04-01T00:00:00.000Z",
+      "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
+    },
+    "provenanceCount": 12
+  },
+  "contextNotes": [
+    {
+      "id": "nan-opportunity",
+      "kind": "opportunity",
+      "title": {
+        "en": "Tailored opportunity",
+        "th": "โอกาสเฉพาะเมือง",
+        "zh": "定制机会"
+      },
+      "body": {
+        "en": "Nan Smart City has room to turn its hospitality advantage into a city product instead of another presentation. The clearest wedge is energy delivery backed by hard metrics.",
+        "th": "น่านสมาร์ทซิตี้ มีโอกาสเปลี่ยนจุดแข็งด้านhospitality ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านenergy ที่ผูกกับตัวชี้วัดจริง",
+        "zh": "Nan Smart City can turn its hospitality edge into a real city product. The clearest wedge is energy delivery tied to hard metrics."
+      }
+    },
+    {
+      "id": "nan-constraint",
+      "kind": "constraint",
+      "title": {
+        "en": "Constraint",
+        "th": "ข้อจำกัด",
+        "zh": "约束"
+      },
+      "body": {
+        "en": "Air quality is not a side note here. PM2.5 at 35.5 means the city cannot claim livability leadership without a serious environmental pipeline.",
+        "th": "คุณภาพอากาศไม่ใช่เรื่องข้างเคียงของเมืองนี้ PM2.5 ที่ 35.5 แปลว่าเมืองจะอ้างความน่าอยู่ไม่ได้ ถ้าไม่มี pipeline ด้านสิ่งแวดล้อมที่จริงจัง",
+        "zh": "Air quality is not a side note. PM2.5 at 35.5 means the city cannot claim livability leadership without a serious environmental pipeline."
+      }
+    },
+    {
+      "id": "nan-warning",
+      "kind": "implementation_warning",
+      "title": {
+        "en": "Implementation warning",
+        "th": "คำเตือนเชิงปฏิบัติ",
+        "zh": "实施警告"
+      },
+      "body": {
+        "en": "The failure mode is generic copy-paste. The city needs a delivery stack tied to its own metrics, not borrowed swagger from a different urban economy.",
+        "th": "โหมดล้มเหลวของเมืองนี้คือการ copy-paste แบบเหมารวม เมืองต้องมี delivery stack ที่ผูกกับตัวเลขของตัวเอง ไม่ใช่ยืม swagger จากเศรษฐกิจเมืองอื่น",
+        "zh": "The failure mode here is generic copy-paste. The delivery stack must tie back to local metrics, not borrowed swagger from another city."
+      }
+    },
+    {
+      "id": "nan-lesson",
+      "kind": "exportable_lesson",
+      "title": {
+        "en": "Exportable lesson",
+        "th": "บทเรียนที่ส่งออกได้",
+        "zh": "可输出经验"
+      },
+      "body": {
+        "en": "Nan Smart City is most exportable when it acts like itself. The reusable lesson is how it turns hospitality into something operational.",
+        "th": "น่านสมาร์ทซิตี้ ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนhospitality ให้เป็นระบบปฏิบัติการ",
+        "zh": "Nan Smart City becomes exportable when it acts like itself. The reusable lesson is how it turns hospitality into operations."
+      }
+    }
+  ],
+  "metricBlocks": [
+    {
+      "id": "economic-readiness",
+      "title": {
+        "en": "Economic readiness",
+        "th": "ฐานเศรษฐกิจ",
+        "zh": "经济基础"
+      },
+      "summary": {
+        "en": "What scale of capital this city can plausibly absorb without making up demand.",
+        "th": "เมืองนี้รับเงินลงทุนระดับไหนได้จริงโดยไม่ต้องแต่งดีมานด์",
+        "zh": "This block shows how much capital the city can plausibly absorb without inventing demand."
+      },
+      "observations": [
+        {
+          "cityId": "nan",
+          "metricKey": "population",
+          "label": {
+            "en": "Population",
+            "th": "ประชากร",
+            "zh": "人口"
+          },
+          "metricValueNum": 478,
+          "metricValueText": "478K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Baseline city population from index input; used as scale proxy.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "nan",
+          "metricKey": "gppPerCapita",
+          "label": {
+            "en": "GPP per capita",
+            "th": "GPP ต่อหัว",
+            "zh": "人均 GPP"
+          },
+          "metricValueNum": 88000,
+          "metricValueText": "฿88,000",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Provincial economic productivity proxy; used for revenue and demand scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "nan",
+          "metricKey": "avgMonthlyIncome",
+          "label": {
+            "en": "Average monthly income",
+            "th": "รายได้เฉลี่ยต่อเดือน",
+            "zh": "月均收入"
+          },
+          "metricValueNum": 16200,
+          "metricValueText": "฿16,200",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Household earning proxy; used for affordability and fee tolerance.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "risk-and-resilience",
+      "title": {
+        "en": "Risk and resilience",
+        "th": "ความเสี่ยงและความยืดหยุ่น",
+        "zh": "风险与韧性"
+      },
+      "summary": {
+        "en": "The constraint stack that should shape finance structure, contract terms, and sequencing.",
+        "th": "ชุดข้อจำกัดที่ต้องกำหนดโครงสร้างการเงิน เงื่อนไขสัญญา และลำดับงาน",
+        "zh": "These constraints should shape financing structure, contract terms, and sequencing."
+      },
+      "observations": [
+        {
+          "cityId": "nan",
+          "metricKey": "pm25Annual",
+          "label": {
+            "en": "Annual PM2.5",
+            "th": "PM2.5 เฉลี่ยรายปี",
+            "zh": "年均 PM2.5"
+          },
+          "metricValueNum": 35.5,
+          "metricValueText": "35.5",
+          "unit": "ug/m3",
+          "periodLabel": "2025 annual average",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Environmental stress proxy; used for resilience and green finance scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "nan",
+          "metricKey": "crimeRatePer100k",
+          "label": {
+            "en": "Crime / 100K",
+            "th": "อาชญากรรม / แสนคน",
+            "zh": "每十万人犯罪率"
+          },
+          "metricValueNum": 95,
+          "metricValueText": "95",
+          "unit": "incidents/100k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rtp",
+          "sourceName": "Royal Thai Police",
+          "sourceUrl": "https://www.royalthaipolice.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Risk proxy; used for contractability and investor comfort.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "nan",
+          "metricKey": "greenCoverage",
+          "label": {
+            "en": "Green coverage",
+            "th": "พื้นที่สีเขียว",
+            "zh": "绿化覆盖"
+          },
+          "metricValueNum": 72,
+          "metricValueText": "72",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "gistda",
+          "sourceName": "GISTDA — Satellite Imagery",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Land/environment quality proxy; used for resilience and amenity value.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "service-capacity",
+      "title": {
+        "en": "Service capacity",
+        "th": "ศักยภาพบริการสาธารณะ",
+        "zh": "服务能力"
+      },
+      "summary": {
+        "en": "Signals for whether the city can operate systems after ribbon-cutting day.",
+        "th": "สัญญาณว่าเมืองจะเดินระบบต่อหลังวันตัดริบบิ้นได้หรือไม่",
+        "zh": "Signals of whether the city can run systems after ribbon-cutting day."
+      },
+      "observations": [
+        {
+          "cityId": "nan",
+          "metricKey": "hospitalBedsPer10k",
+          "label": {
+            "en": "Hospital beds / 10K",
+            "th": "เตียงโรงพยาบาล / หมื่นคน",
+            "zh": "每万人床位"
+          },
+          "metricValueNum": 20,
+          "metricValueText": "20",
+          "unit": "beds/10k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "moph",
+          "sourceName": "Ministry of Public Health",
+          "sourceUrl": "https://www.moph.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Public service capacity proxy; used for wellbeing and delivery maturity.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    }
+  ],
+  "deliveryProfile": {
+    "cityId": "nan",
+    "visionStatus": "ready",
+    "infrastructureStatus": "building",
+    "dataPlatformStatus": "gap",
+    "businessModelStatus": "building",
+    "partnershipStatus": "building",
+    "recommendedLeadStep": "data_platform",
+    "deliveryNote": {
+      "en": "Alpha cities should invest forward: infrastructure-scale finance, corridor monetization, and contract discipline. This is not the tier for passive grant dependency.",
+      "th": "เมือง Alpha ต้องลงทุนเชิงรุก: การเงินระดับโครงสร้างพื้นฐาน การดึงมูลค่าจากระเบียงพัฒนา และวินัยสัญญา นี่ไม่ใช่ระดับที่ควรรอเงินอุดหนุนแบบรับชะตา",
+      "zh": "Alpha 城市应主动投资：做基础设施级融资、走廊变现和严密合同管理，而不是被动等补助。"
+    },
+    "publicRole": {
+      "en": "Set the corridor logic, hold the concession line, and protect public interest with measurable KPIs.",
+      "th": "รัฐต้องกำหนดตรรกะของ corridor คุมเส้นสัญญา และปกป้องประโยชน์สาธารณะด้วย KPI ที่วัดได้",
+      "zh": "Government should set corridor logic, hold the contract line, and protect public interest with measurable KPIs."
+    },
+    "privateRole": {
+      "en": "Bring capex, operating know-how, and revenue discipline where demand is already visible.",
+      "th": "เอกชนต้องเอา capex ความรู้เดินระบบ และวินัยรายได้เข้ามา ในจุดที่ดีมานด์เห็นชัดอยู่แล้ว",
+      "zh": "Private capital should bring capex, operating know-how, and revenue discipline where demand is already visible."
+    },
+    "riskAllocation": {
+      "en": "Keep demand risk partly public until usage data firms up. Push performance risk to operators.",
+      "th": "ความเสี่ยงดีมานด์ควรยังอยู่กับรัฐบางส่วนจนกว่าข้อมูลการใช้งานจะนิ่ง ส่วนความเสี่ยงผลงานให้ผู้เดินระบบรับ",
+      "zh": "Keep some demand risk public until usage data settles. Push performance risk to operators."
+    },
+    "contractLens": {
+      "en": "Contract for data standards, uptime, and interoperability. Not just dashboards and screenshots.",
+      "th": "ทำสัญญาเรื่องมาตรฐานข้อมูล uptime และ interoperability ไม่ใช่แค่ dashboard กับ screenshot",
+      "zh": "Contract for data standards, uptime, and interoperability. Not just dashboards and screenshots."
+    },
+    "version": "2026.04-cdp-v1"
+  },
+  "financeProfile": {
+    "cityId": "nan",
+    "revenueBase": "thin",
+    "institutionalCapacity": "strong",
+    "projectPipeline": "moderate",
+    "privateInterest": "moderate",
+    "riskProfile": "medium",
+    "deliveryReadiness": "building",
+    "readinessScore": 55,
+    "segment": "alpha",
+    "assessedAt": "2026-04-04T00:00:00.000Z",
+    "version": "2026.04-cdp-v1"
+  },
+  "financeRecommendations": [
+    {
+      "id": "nan-performance-contract",
+      "cityId": "nan",
+      "instrumentId": "performance-contract",
+      "instrumentName": "Performance Contract",
+      "priority": "lead",
+      "priorityScore": 68,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Performance Contract fits Nan Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes.",
+        "th": "Performance Contract fits Nan Smart City because its metrics and operating context create a credible use case. เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+        "zh": "Performance Contract fits Nan Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 55/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 55/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 55/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "nan-pm25Annual",
+          "supportType": "metric",
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Outcome-based contracts make sense where performance can be metered."
+        },
+        {
+          "id": "nan-greenCoverage",
+          "supportType": "metric",
+          "metricKey": "greenCoverage",
+          "metricLabel": "Green coverage",
+          "sourceId": "gistda",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Green coverage provides a resilience baseline for outcome measurement."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "nan-government-budget",
+      "cityId": "nan",
+      "instrumentId": "government-budget",
+      "instrumentName": "Government Budget / Grant",
+      "priority": "secondary",
+      "priorityScore": 60,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Nan Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated.",
+        "th": "Nan Smart City still needs public risk-bearing for foundational delivery. บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
+        "zh": "Nan Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 55/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 55/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 55/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "nan-population",
+          "supportType": "metric",
+          "metricKey": "population",
+          "metricLabel": "Population",
+          "sourceId": "nso",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Population scale affects the public-good case for grant funding."
+        },
+        {
+          "id": "nan-pm25Annual",
+          "supportType": "metric",
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Measured externalities justify public funding for core resilience."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "nan-asset-recycling",
+      "cityId": "nan",
+      "instrumentId": "asset-recycling",
+      "instrumentName": "Asset Recycling",
+      "priority": "watch",
+      "priorityScore": 57,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Asset Recycling fits Nan Smart City because its metrics and operating context create a credible use case. Better than begging for new money while underused public assets sit there doing nothing.",
+        "th": "Asset Recycling fits Nan Smart City because its metrics and operating context create a credible use case. ดีกว่านั่งขอเงินใหม่ ทั้งที่สินทรัพย์รัฐที่ใช้ไม่คุ้มยังนอนนิ่งอยู่",
+        "zh": "Asset Recycling fits Nan Smart City because its metrics and operating context create a credible use case. Better than begging for new money while underused public assets sit there doing nothing."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 55/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 55/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 55/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "nan-gppPerCapita",
+          "supportType": "metric",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Strong urban value supports recycling mature public assets."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    }
+  ],
+  "evidenceItems": [],
+  "dataRails": [
+    {
+      "id": "local-ops",
+      "label": {
+        "en": "Local operations rail",
+        "th": "รางข้อมูลปฏิบัติการท้องถิ่น",
+        "zh": "本地运营数据轨"
+      },
+      "description": {
+        "en": "Nan Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them.",
+        "th": "น่านสมาร์ทซิตี้ ต้องมีข้อมูลบริการสดจากงานเทศบาล สาธารณูปโภค และการรับเหตุหน้างาน ถ้าเมืองมองไม่เห็นการปฏิบัติการ เมืองก็เดินระบบไม่ได้",
+        "zh": "Nan Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them."
+      },
+      "sourceUrl": "https://www.citydata.in.th/en/smart-city-thailand/?city=Nan%20Smart%20City"
+    },
+    {
+      "id": "national-stack",
+      "label": {
+        "en": "National data stack",
+        "th": "รางข้อมูลระดับชาติ",
+        "zh": "国家数据栈"
+      },
+      "description": {
+        "en": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines.",
+        "th": "NSO, NESDC, PCD, BOI และรางข้อมูลระดับชาติอื่นต้องไหลเข้าโปรไฟล์เมือง เพื่อให้คำอ้างอิงท้องถิ่นตั้งอยู่บนฐานที่ตรวจสอบได้",
+        "zh": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines."
+      },
+      "sourceUrl": "https://data.go.th/dataset?q=Nan"
+    },
+    {
+      "id": "public-research",
+      "label": {
+        "en": "Public research rail",
+        "th": "รางข้อมูลสาธารณะเพื่อวิจัย",
+        "zh": "公共研究数据轨"
+      },
+      "description": {
+        "en": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access.",
+        "th": "การ export ต้อง flatten dossier ของเมืองออกเป็นแถวข้อมูลที่นักวิจัยดาวน์โหลด ตรวจ และโต้แย้งได้ โดยไม่ต้องขอสิทธิพิเศษ",
+        "zh": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access."
+      },
+      "sourceUrl": "/api/cities/nan/export.csv"
+    }
+  ],
+  "exportMetadata": {
+    "latestObservedAt": "2026-04-01T00:00:00.000Z",
+    "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
+    "provenanceCount": 12,
+    "summaryCsvUrl": "/api/exports/cities-summary.csv",
+    "factsCsvUrl": "/api/exports/city-facts.csv",
+    "cityCsvUrl": "/api/cities/nan/export.csv"
+  }
+}

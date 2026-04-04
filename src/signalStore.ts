@@ -1,7 +1,19 @@
 import { supabase, hasSupabaseCredentials } from "./supabaseClient";
+import {
+  DEFAULT_SIGNAL_LIMIT,
+  buildStableSignalId,
+  coerceSentimentScore,
+  normalizeLabel,
+  normalizeOptionalSlug,
+  normalizeSignalSentiment,
+  normalizeSignalText,
+  normalizeThemes,
+  normalizeTimestamp,
+  type SignalBackendMode,
+  type SignalSentiment,
+} from "./signalContracts";
 
-export type SignalBackendMode = "supabase" | "google-apps-script" | "local";
-export type SignalSentiment = "positive" | "neutral" | "negative";
+export type { SignalBackendMode, SignalSentiment } from "./signalContracts";
 
 export interface SmartCitySignal {
   id: string;
@@ -54,14 +66,7 @@ interface ServerSignalPayload {
   signals?: unknown[];
 }
 
-const DEFAULT_LIMIT = 12;
 const GOOGLE_APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL?.trim() ?? "";
-
-const SENTIMENT_SCORES: Record<SignalSentiment, number> = {
-  positive: 0.75,
-  neutral: 0,
-  negative: -0.7,
-};
 
 const seedSignals: SmartCitySignal[] = [
   {
@@ -166,76 +171,73 @@ let localSignals = [...seedSignals].sort((left, right) => {
   return Date.parse(right.observedAt) - Date.parse(left.observedAt);
 });
 
-function createId(): string {
-  if (typeof globalThis.crypto?.randomUUID === "function") {
-    return globalThis.crypto.randomUUID();
-  }
-  return `signal-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
-}
-
 function isLocalRuntime(): boolean {
   if (typeof window === "undefined") return false;
   return window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 }
 
-function normalizeThemes(themes: unknown): string[] {
-  if (Array.isArray(themes)) {
-    return themes
-      .map(theme => String(theme).trim())
-      .filter(Boolean);
-  }
+function allowLocalWriteFallback(): boolean {
+  return isLocalRuntime() || import.meta.env.MODE === "test";
+}
 
-  if (typeof themes === "string") {
-    return themes
-      .split(/[|,]/)
-      .map(theme => theme.trim())
-      .filter(Boolean);
+function safeNormalizeTimestamp(value: unknown, fallbackIso: string, field: string): string {
+  try {
+    return normalizeTimestamp(value, fallbackIso, field);
+  } catch {
+    return fallbackIso;
   }
+}
 
-  return [];
+function safeNormalizeSignalText(value: unknown): string {
+  try {
+    return normalizeSignalText(value);
+  } catch {
+    return typeof value === "string"
+      ? value.trim().replace(/\s+/g, " ").slice(0, 5000)
+      : "";
+  }
 }
 
 function normalizeSignalRecord(record: unknown): SmartCitySignal {
   const item = typeof record === "object" && record !== null ? record as Record<string, unknown> : {};
-  const sentiment = item.sentiment_label ?? item.sentiment ?? "neutral";
-  const observedAt = typeof item.observed_at === "string"
-    ? item.observed_at
-    : typeof item.observedAt === "string"
-      ? item.observedAt
-      : new Date().toISOString();
-  const createdAt = typeof item.ingested_at === "string"
-    ? item.ingested_at
-    : typeof item.created_at === "string"
-      ? item.created_at
-      : typeof item.createdAt === "string"
-        ? item.createdAt
-        : observedAt;
-
-  const normalizedSentiment: SignalSentiment =
-    sentiment === "positive" || sentiment === "negative" ? sentiment : "neutral";
+  const fallbackIso = new Date().toISOString();
+  const normalizedSentiment = normalizeSignalSentiment(item.sentiment_label ?? item.sentiment);
+  const observedAt = safeNormalizeTimestamp(
+    item.observed_at ?? item.observedAt,
+    fallbackIso,
+    "observedAt",
+  );
+  const createdAt = safeNormalizeTimestamp(
+    item.ingested_at ?? item.created_at ?? item.createdAt,
+    observedAt,
+    "createdAt",
+  );
+  const cityId = normalizeOptionalSlug(item.city_id ?? item.cityId);
+  const source = normalizeLabel(item.source, "unknown");
+  const channel = normalizeLabel(item.channel, "manual");
+  const text = safeNormalizeSignalText(item.text_body ?? item.text);
+  const themes = normalizeThemes(item.themes);
 
   return {
-    id: String(item.id ?? createId()),
-    cityId: typeof item.city_id === "string"
-      ? item.city_id
-      : typeof item.cityId === "string"
-        ? item.cityId
-        : null,
-    source: typeof item.source === "string" ? item.source : "unknown",
-    channel: typeof item.channel === "string" ? item.channel : "manual",
-    text: typeof item.text_body === "string"
-      ? item.text_body
-      : typeof item.text === "string"
-        ? item.text
-        : "",
+    id: String(item.id ?? buildStableSignalId({
+      cityId,
+      source,
+      channel,
+      text,
+      sentiment: normalizedSentiment,
+      themes,
+      observedAt,
+    })),
+    cityId,
+    source,
+    channel,
+    text,
     sentiment: normalizedSentiment,
-    sentimentScore:
-      typeof item.sentiment_score === "number"
-        ? item.sentiment_score
-        : typeof item.sentimentScore === "number"
-          ? item.sentimentScore
-          : SENTIMENT_SCORES[normalizedSentiment],
-    themes: normalizeThemes(item.themes),
+    sentimentScore: coerceSentimentScore(
+      item.sentiment_score ?? item.sentimentScore,
+      normalizedSentiment,
+    ),
+    themes,
     observedAt,
     createdAt,
   };
@@ -244,7 +246,7 @@ function normalizeSignalRecord(record: unknown): SmartCitySignal {
 export function summarizeSignals(
   signals: SmartCitySignal[],
   backend: SignalBackendStatus,
-  limit = DEFAULT_LIMIT,
+  limit = DEFAULT_SIGNAL_LIMIT,
 ): SignalSnapshot {
   const recentSignals = [...signals]
     .sort((left, right) => Date.parse(right.observedAt) - Date.parse(left.observedAt))
@@ -287,20 +289,36 @@ export function summarizeSignals(
 }
 
 function normalizeInput(input: SignalInput): SmartCitySignal {
-  const observedAt = input.observedAt ?? new Date().toISOString();
-  const sentimentScore = SENTIMENT_SCORES[input.sentiment] ?? 0;
+  const fallbackIso = new Date().toISOString();
+  const observedAt = normalizeTimestamp(input.observedAt, fallbackIso, "observedAt");
+  const createdAt = fallbackIso;
+  const cityId = normalizeOptionalSlug(input.cityId);
+  const source = normalizeLabel(input.source, "unknown");
+  const channel = normalizeLabel(input.channel, "manual");
+  const text = normalizeSignalText(input.text);
+  const themes = normalizeThemes(input.themes ?? []);
+  const sentiment = normalizeSignalSentiment(input.sentiment);
+  const sentimentScore = coerceSentimentScore(undefined, sentiment);
 
   return {
-    id: createId(),
-    cityId: input.cityId?.trim() ? input.cityId.trim() : null,
-    source: input.source.trim(),
-    channel: input.channel?.trim() || "manual",
-    text: input.text.trim(),
-    sentiment: input.sentiment,
+    id: buildStableSignalId({
+      cityId,
+      source,
+      channel,
+      text,
+      sentiment,
+      themes,
+      observedAt,
+    }),
+    cityId,
+    source,
+    channel,
+    text,
+    sentiment,
     sentimentScore,
-    themes: normalizeThemes(input.themes ?? []),
+    themes,
     observedAt,
-    createdAt: new Date().toISOString(),
+    createdAt,
   };
 }
 
@@ -387,7 +405,7 @@ function buildLocalSnapshot(detail: string, limit: number, healthy = false): Sig
   }, limit);
 }
 
-export async function loadSignalSnapshot(limit = DEFAULT_LIMIT): Promise<SignalSnapshot> {
+export async function loadSignalSnapshot(limit = DEFAULT_SIGNAL_LIMIT): Promise<SignalSnapshot> {
   const errors: string[] = [];
 
   if (!isLocalRuntime()) {
@@ -484,13 +502,15 @@ export async function submitSignal(input: SignalInput): Promise<SmartCitySignal>
   const signal = normalizeInput(input);
   const errors: string[] = [];
 
-  if (!isLocalRuntime()) {
+  if (!allowLocalWriteFallback()) {
     try {
       await submitToSignalApi(signal);
       return signal;
     } catch (error) {
       errors.push(`API ${error instanceof Error ? error.message : "request failed"}`);
     }
+
+    throw new Error(errors.join(" | ") || "Signal submission failed.");
   }
 
   if (hasSupabaseCredentials) {

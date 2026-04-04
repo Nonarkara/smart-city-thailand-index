@@ -42,7 +42,7 @@ function doPost(e) {
     return jsonResponse_({ error: "Signal text is required" }, 400);
   }
 
-  appendSignal_(record);
+  upsertSignal_(record);
   return jsonResponse_({ ok: true, signal: record });
 }
 
@@ -71,10 +71,10 @@ function normalizeSignal_(payload) {
   };
 }
 
-function appendSignal_(record) {
+function upsertSignal_(record) {
   const sheet = getSheet_();
   ensureHeaders_(sheet);
-  sheet.appendRow([
+  const rowValues = [
     record.id,
     record.city_id,
     record.source,
@@ -85,7 +85,28 @@ function appendSignal_(record) {
     record.themes,
     record.observed_at,
     record.ingested_at,
-  ]);
+  ];
+  const existingRow = findSignalRow_(sheet, record.id);
+
+  if (existingRow > 0) {
+    sheet.getRange(existingRow, 1, 1, rowValues.length).setValues([rowValues]);
+    return;
+  }
+
+  sheet.appendRow(rowValues);
+}
+
+function findSignalRow_(sheet, id) {
+  if (!id || sheet.getLastRow() <= 1) return -1;
+
+  const ids = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues();
+  for (let i = 0; i < ids.length; i += 1) {
+    if (String(ids[i][0] || "") === String(id)) {
+      return i + 2;
+    }
+  }
+
+  return -1;
 }
 
 function listSignals_(limit) {

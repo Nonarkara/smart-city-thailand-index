@@ -1,0 +1,221 @@
+[
+  {
+    "id": "ppp-concession",
+    "name": "PPP / Concession",
+    "nameTh": "PPP / สัมปทาน",
+    "category": "equity",
+    "segmentFit": [
+      "alpha",
+      "beta"
+    ],
+    "desc": {
+      "en": "Best for infrastructure the city cannot fake: transport, utilities, district energy, and high-volume civic operations.",
+      "th": "เหมาะกับโครงสร้างพื้นฐานที่หลอกไม่ได้: ขนส่ง สาธารณูปโภค พลังงานระดับย่าน และบริการเมืองปริมาณสูง",
+      "zh": "适合不能靠PPT伪造的基础设施：交通、公用事业、区域能源和高频市政运营。"
+    },
+    "whyItFits": {
+      "en": "Works when there is enough demand, enough operating discipline, and a city government that can hold a contract line.",
+      "th": "ใช้ได้เมื่อมีดีมานด์พอ มีวินัยการเดินระบบพอ และภาครัฐคุมสัญญาได้",
+      "zh": "当需求、运营纪律和政府的合同管理能力都足够时才真正成立。"
+    }
+  },
+  {
+    "id": "municipal-revenue-bond",
+    "name": "Municipal Revenue Bond",
+    "nameTh": "พันธบัตรรายได้ท้องถิ่น",
+    "category": "debt",
+    "segmentFit": [
+      "alpha"
+    ],
+    "desc": {
+      "en": "Good for cities with visible cashflow from tourism, utilities, or recurring urban service fees.",
+      "th": "เหมาะกับเมืองที่มีกระแสเงินสดเห็นชัดจากการท่องเที่ยว สาธารณูปโภค หรือค่าบริการเมืองที่เก็บได้จริง",
+      "zh": "适合拥有旅游、公用事业或稳定城市服务费现金流的城市。"
+    },
+    "whyItFits": {
+      "en": "It converts strong operating revenue into upfront capex instead of waiting for Bangkok to drip-feed money.",
+      "th": "มันเปลี่ยนรายได้เดินระบบที่แข็งแรงให้เป็นเงินลงทุนก้อนหน้า แทนการรอเงินจากส่วนกลาง",
+      "zh": "它能把稳定运营收入提前转成资本开支，而不是等中央慢慢放款。"
+    }
+  },
+  {
+    "id": "land-value-capture",
+    "name": "Land Value Capture",
+    "nameTh": "จับมูลค่าที่ดิน",
+    "category": "innovative",
+    "segmentFit": [
+      "alpha",
+      "beta"
+    ],
+    "desc": {
+      "en": "Fits corridor cities where public investment visibly pushes up land value around stations, campuses, or waterfronts.",
+      "th": "เหมาะกับเมืองแนวระเบียงที่การลงทุนสาธารณะดันมูลค่าที่ดินรอบสถานี แคมปัส หรือริมน้ำขึ้นชัดเจน",
+      "zh": "适合公共投资能明显推高车站、校园或滨水片区土地价值的走廊型城市。"
+    },
+    "whyItFits": {
+      "en": "If the city creates the uplift, it should capture part of that uplift instead of gifting it away.",
+      "th": "ถ้าเมืองเป็นคนสร้างมูลค่าเพิ่ม เมืองก็ควรเก็บบางส่วนกลับมา ไม่ใช่ปล่อยให้ไหลออกหมด",
+      "zh": "如果增值由城市创造，城市就该拿回其中一部分。"
+    }
+  },
+  {
+    "id": "green-climate-bond",
+    "name": "Green / Climate Bond",
+    "nameTh": "พันธบัตรสีเขียว / ภูมิอากาศ",
+    "category": "debt",
+    "segmentFit": [
+      "alpha",
+      "beta"
+    ],
+    "desc": {
+      "en": "Best when the city has a real environmental problem and a real capex pipeline to solve it.",
+      "th": "เหมาะเมื่อเมืองมีปัญหาสิ่งแวดล้อมจริงและมีโครงการลงทุนจริงเพื่อแก้ปัญหานั้น",
+      "zh": "当城市存在真实环境问题且有真实资本项目去解决时最有意义。"
+    },
+    "whyItFits": {
+      "en": "The bond story only works if the pollutant, flood risk, or resilience gap is measurable and auditable.",
+      "th": "เรื่องเล่าของพันธบัตรจะใช้ได้ก็ต่อเมื่อมลพิษ ความเสี่ยงน้ำท่วม หรือช่องว่างด้านความยืดหยุ่น วัดและตรวจสอบได้",
+      "zh": "只有污染、洪水风险或韧性缺口可测且可审计时，这种工具才不是空话。"
+    }
+  },
+  {
+    "id": "blended-finance",
+    "name": "Blended Finance",
+    "nameTh": "การเงินผสมผสาน",
+    "category": "hybrid",
+    "segmentFit": [
+      "beta",
+      "gamma"
+    ],
+    "desc": {
+      "en": "Useful where a city has decent potential but still needs concessional capital to drag private money into the deal.",
+      "th": "ใช้ได้เมื่อเมืองมีศักยภาพพอสมควร แต่ยังต้องใช้เงินผ่อนปรนช่วยดึงทุนเอกชนเข้าดีล",
+      "zh": "适合有潜力但仍需优惠资本为商业资金垫底的城市。"
+    },
+    "whyItFits": {
+      "en": "This is the bridge between 'not bankable yet' and 'commercially believable'.",
+      "th": "นี่คือสะพานระหว่าง 'ยังไม่ bankable' กับ 'เริ่มเชื่อทางการค้าได้'",
+      "zh": "它是“尚不可融资”和“开始具备商业可信度”之间的桥。"
+    }
+  },
+  {
+    "id": "performance-contract",
+    "name": "Performance Contract",
+    "nameTh": "สัญญาอิงผลลัพธ์",
+    "category": "hybrid",
+    "segmentFit": [
+      "alpha",
+      "beta",
+      "gamma"
+    ],
+    "desc": {
+      "en": "Good for lighting, water, waste, and energy retrofits where savings or service outcomes can be measured.",
+      "th": "เหมาะกับไฟส่องสว่าง น้ำ ขยะ และการปรับปรุงพลังงานที่วัดผลประหยัดหรือผลบริการได้",
+      "zh": "适用于照明、供水、废弃物和节能改造等可量化节省或服务结果的场景。"
+    },
+    "whyItFits": {
+      "en": "Cities that cannot stomach big capex can still pay for verified outcomes.",
+      "th": "เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+      "zh": "即便扛不起大额前期投资，城市仍可为已验证结果付费。"
+    }
+  },
+  {
+    "id": "dfi-cofinance",
+    "name": "DFI Co-finance",
+    "nameTh": "เงินร่วมลงทุนจาก DFI",
+    "category": "grant",
+    "segmentFit": [
+      "beta",
+      "gamma"
+    ],
+    "desc": {
+      "en": "Works when cities need credibility, technical diligence, and patient capital before commercial debt is realistic.",
+      "th": "เหมาะเมื่อเมืองต้องการความน่าเชื่อถือ การตรวจสอบเชิงเทคนิค และทุนอดทน ก่อนที่หนี้พาณิชย์จะสมเหตุผล",
+      "zh": "当城市在走向商业债务前仍需要可信度、技术尽调和耐心资本时最好用。"
+    },
+    "whyItFits": {
+      "en": "ADB, JICA, and similar players often matter more as signal amplifiers than as raw money.",
+      "th": "ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
+      "zh": "ADB、JICA 等机构很多时候作为信誉放大器比单纯给钱更关键。"
+    }
+  },
+  {
+    "id": "technical-assistance-grant",
+    "name": "Technical Assistance Grant",
+    "nameTh": "ทุนช่วยเหลือทางเทคนิค",
+    "category": "grant",
+    "segmentFit": [
+      "beta",
+      "gamma"
+    ],
+    "desc": {
+      "en": "Right for cities that still need pipeline design, data governance, feasibility work, and procurement readiness.",
+      "th": "เหมาะกับเมืองที่ยังต้องปั้น pipeline ออกแบบธรรมาภิบาลข้อมูล ศึกษาความเป็นไปได้ และเตรียม procurement",
+      "zh": "适合仍需打磨项目管线、数据治理、可行性研究和采购准备的城市。"
+    },
+    "whyItFits": {
+      "en": "If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess.",
+      "th": "ถ้าเมืองยังนิยามโครงการไม่ชัด เอาเงินก้อนใหญ่ไปใส่ก็แค่ทำให้ความเละเทะแพงขึ้น",
+      "zh": "如果项目定义都还没站稳，往里砸更大的钱只是更贵的混乱。"
+    }
+  },
+  {
+    "id": "government-budget",
+    "name": "Government Budget / Grant",
+    "nameTh": "งบประมาณ / เงินอุดหนุนภาครัฐ",
+    "category": "grant",
+    "segmentFit": [
+      "alpha",
+      "beta",
+      "gamma"
+    ],
+    "desc": {
+      "en": "Still the right tool for public goods, data plumbing, resilience basics, and services with weak direct revenue.",
+      "th": "ยังเป็นเครื่องมือที่ถูกต้องสำหรับของสาธารณะ โครงข้อมูลพื้นฐาน พื้นฐานความยืดหยุ่น และบริการที่หารายได้ตรงยาก",
+      "zh": "对于公共品、数据底座、韧性基础和难以直接收费的服务，它依然是正确工具。"
+    },
+    "whyItFits": {
+      "en": "Some things should not be tortured into fake bankability just to sound sophisticated.",
+      "th": "บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
+      "zh": "有些项目不该为了显得高级而被硬拗成“可融资”。"
+    }
+  },
+  {
+    "id": "pooled-procurement",
+    "name": "Pooled Procurement",
+    "nameTh": "จัดซื้อรวม",
+    "category": "innovative",
+    "segmentFit": [
+      "gamma"
+    ],
+    "desc": {
+      "en": "Small cities can buy smarter by bundling commodity technology, maintenance, and support instead of pretending each city is a unicorn.",
+      "th": "เมืองเล็กซื้อให้ฉลาดขึ้นได้ด้วยการรวมความต้องการเทคโนโลยีพื้นฐาน บำรุงรักษา และซัพพอร์ต แทนการแกล้งทำว่าแต่ละเมืองเป็นยูนิคอร์น",
+      "zh": "小城市应把基础技术、维护和支持打包采购，而不是假装每座城都是独角兽。"
+    },
+    "whyItFits": {
+      "en": "For gamma cities, scale usually comes from the buying coalition, not from the city itself.",
+      "th": "สำหรับเมือง gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
+      "zh": "对 gamma 城市来说，规模通常来自联合采购，而不是单城本身。"
+    }
+  },
+  {
+    "id": "asset-recycling",
+    "name": "Asset Recycling",
+    "nameTh": "รีไซเคิลสินทรัพย์รัฐ",
+    "category": "equity",
+    "segmentFit": [
+      "alpha"
+    ],
+    "desc": {
+      "en": "Strong fit where a city owns valuable land or legacy assets and needs to free capital for new infrastructure.",
+      "th": "เหมาะมากเมื่อเมืองถือครองที่ดินหรือสินทรัพย์เดิมที่มีมูลค่า และต้องการปลดทุนไปลงโครงสร้างพื้นฐานใหม่",
+      "zh": "适合掌握高价值土地或存量资产、需要释放资本投向新基础设施的城市。"
+    },
+    "whyItFits": {
+      "en": "Better than begging for new money while underused public assets sit there doing nothing.",
+      "th": "ดีกว่านั่งขอเงินใหม่ ทั้งที่สินทรัพย์รัฐที่ใช้ไม่คุ้มยังนอนนิ่งอยู่",
+      "zh": "总比一边哭穷一边把闲置公共资产晾着强。"
+    }
+  }
+]

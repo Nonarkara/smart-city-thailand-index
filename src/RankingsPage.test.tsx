@@ -12,12 +12,12 @@ describe("RankingsPage", () => {
 
     const alphaSection = alphaHeadings[0].closest(".tier-section");
     expect(alphaSection).not.toBeNull();
-    const initialCards = within(alphaSection as HTMLElement).getAllByRole("button");
+    const initialCards = within(alphaSection as HTMLElement).getAllByRole("link");
     expect(initialCards[0]).toHaveTextContent("Phuket Smart City");
 
     await user.selectOptions(screen.getByRole("combobox"), "hospitality");
 
-    const sortedCards = within(alphaSection as HTMLElement).getAllByRole("button");
+    const sortedCards = within(alphaSection as HTMLElement).getAllByRole("link");
     expect(sortedCards[0]).toHaveTextContent("Chiang Mai Smart Old Town");
   });
 });

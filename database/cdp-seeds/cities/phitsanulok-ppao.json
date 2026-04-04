@@ -1,0 +1,478 @@
+{
+  "summary": {
+    "id": "phitsanulok-ppao",
+    "nameEn": "Phitsanulok PAO Smart City",
+    "nameTh": "อบจ.พิษณุโลกสมาร์ทซิตี้",
+    "province": "Phitsanulok",
+    "provinceTh": "พิษณุโลก",
+    "region": "north",
+    "status": "promotion",
+    "reality": "operational",
+    "smartDimensions": [
+      "economy",
+      "environment",
+      "governance",
+      "living",
+      "mobility"
+    ],
+    "scores": {
+      "livability": 62,
+      "economy": 56,
+      "safety": 70,
+      "wellbeing": 62,
+      "environment": 58,
+      "hospitality": 64,
+      "digital": 48
+    },
+    "metrics": {
+      "population": 340,
+      "gppPerCapita": 132000,
+      "avgMonthlyIncome": 20800
+    },
+    "compositeScore": 61.1,
+    "tier": "beta",
+    "tagline": "Provincial-level smart governance covering entire Phitsanulok province. Digital services reaching rural areas.",
+    "taglineTh": "การปกครองอัจฉริยะระดับจังหวัดครอบคลุมทั้งจังหวัดพิษณุโลก บริการดิจิทัลเข้าถึงพื้นที่ชนบท",
+    "highlights": [
+      "Province-wide digital governance platform",
+      "Smart agriculture extension services",
+      "Rural health telemedicine network"
+    ],
+    "dataConfidence": "low",
+    "keyMetrics": [
+      {
+        "key": "gppPerCapita",
+        "label": {
+          "en": "GPP per capita",
+          "th": "GPP ต่อหัว",
+          "zh": "人均 GPP"
+        },
+        "value": "฿132,000",
+        "unit": "THB",
+        "confidence": "low",
+        "sourceId": "nesdc"
+      },
+      {
+        "key": "population",
+        "label": {
+          "en": "Population",
+          "th": "ประชากร",
+          "zh": "人口"
+        },
+        "value": "340K",
+        "unit": "people",
+        "confidence": "low",
+        "sourceId": "nso"
+      }
+    ],
+    "shortTailoredNote": {
+      "en": "Phitsanulok PAO Smart City leans on safety but still gets capped by digital. That's where the backend should keep drilling.",
+      "th": "อบจ.พิษณุโลกสมาร์ทซิตี้ มีแรงหลักอยู่ที่safety แต่ยังถูกกดเพดานโดยdigital ตรงนี้แหละที่ backend ต้องขุดต่อ",
+      "zh": "Phitsanulok PAO Smart City leans on safety but is still capped by digital. That's where the backend should keep drilling."
+    },
+    "financeSignal": {
+      "leadInstrumentId": "dfi-cofinance",
+      "leadInstrumentName": "DFI Co-finance",
+      "line": {
+        "en": "DFI Co-finance leads because Phitsanulok PAO Smart City is building with a low risk profile.",
+        "th": "DFI Co-finance นำ เพราะ อบจ.พิษณุโลกสมาร์ทซิตี้ อยู่ในระดับ building และมีความเสี่ยงแบบ low",
+        "zh": "DFI Co-finance leads because Phitsanulok PAO Smart City is building with a low risk profile."
+      },
+      "readinessScore": 58
+    },
+    "exportReady": true,
+    "freshness": {
+      "latestObservedAt": "2026-04-01T00:00:00.000Z",
+      "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
+    },
+    "provenanceCount": 6
+  },
+  "contextNotes": [
+    {
+      "id": "phitsanulok-ppao-opportunity",
+      "kind": "opportunity",
+      "title": {
+        "en": "Tailored opportunity",
+        "th": "โอกาสเฉพาะเมือง",
+        "zh": "定制机会"
+      },
+      "body": {
+        "en": "Phitsanulok PAO Smart City has room to turn its safety advantage into a city product instead of another presentation. The clearest wedge is economy delivery backed by hard metrics.",
+        "th": "อบจ.พิษณุโลกสมาร์ทซิตี้ มีโอกาสเปลี่ยนจุดแข็งด้านsafety ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านeconomy ที่ผูกกับตัวชี้วัดจริง",
+        "zh": "Phitsanulok PAO Smart City can turn its safety edge into a real city product. The clearest wedge is economy delivery tied to hard metrics."
+      }
+    },
+    {
+      "id": "phitsanulok-ppao-constraint",
+      "kind": "constraint",
+      "title": {
+        "en": "Constraint",
+        "th": "ข้อจำกัด",
+        "zh": "约束"
+      },
+      "body": {
+        "en": "The weakest drag is digital. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.",
+        "th": "ตัวฉุดหลักคือด้านdigital ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม",
+        "zh": "The weakest drag is digital. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes."
+      }
+    },
+    {
+      "id": "phitsanulok-ppao-warning",
+      "kind": "implementation_warning",
+      "title": {
+        "en": "Implementation warning",
+        "th": "คำเตือนเชิงปฏิบัติ",
+        "zh": "实施警告"
+      },
+      "body": {
+        "en": "The failure mode is generic copy-paste. The city needs a delivery stack tied to its own metrics, not borrowed swagger from a different urban economy.",
+        "th": "โหมดล้มเหลวของเมืองนี้คือการ copy-paste แบบเหมารวม เมืองต้องมี delivery stack ที่ผูกกับตัวเลขของตัวเอง ไม่ใช่ยืม swagger จากเศรษฐกิจเมืองอื่น",
+        "zh": "The failure mode here is generic copy-paste. The delivery stack must tie back to local metrics, not borrowed swagger from another city."
+      }
+    },
+    {
+      "id": "phitsanulok-ppao-lesson",
+      "kind": "exportable_lesson",
+      "title": {
+        "en": "Exportable lesson",
+        "th": "บทเรียนที่ส่งออกได้",
+        "zh": "可输出经验"
+      },
+      "body": {
+        "en": "Phitsanulok PAO Smart City is most exportable when it acts like itself. The reusable lesson is how it turns safety into something operational.",
+        "th": "อบจ.พิษณุโลกสมาร์ทซิตี้ ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนsafety ให้เป็นระบบปฏิบัติการ",
+        "zh": "Phitsanulok PAO Smart City becomes exportable when it acts like itself. The reusable lesson is how it turns safety into operations."
+      }
+    }
+  ],
+  "metricBlocks": [
+    {
+      "id": "economic-readiness",
+      "title": {
+        "en": "Economic readiness",
+        "th": "ฐานเศรษฐกิจ",
+        "zh": "经济基础"
+      },
+      "summary": {
+        "en": "What scale of capital this city can plausibly absorb without making up demand.",
+        "th": "เมืองนี้รับเงินลงทุนระดับไหนได้จริงโดยไม่ต้องแต่งดีมานด์",
+        "zh": "This block shows how much capital the city can plausibly absorb without inventing demand."
+      },
+      "observations": [
+        {
+          "cityId": "phitsanulok-ppao",
+          "metricKey": "population",
+          "label": {
+            "en": "Population",
+            "th": "ประชากร",
+            "zh": "人口"
+          },
+          "metricValueNum": 340,
+          "metricValueText": "340K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "methodNote": "Baseline city population from index input; used as scale proxy.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phitsanulok-ppao",
+          "metricKey": "gppPerCapita",
+          "label": {
+            "en": "GPP per capita",
+            "th": "GPP ต่อหัว",
+            "zh": "人均 GPP"
+          },
+          "metricValueNum": 132000,
+          "metricValueText": "฿132,000",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "methodNote": "Provincial economic productivity proxy; used for revenue and demand scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phitsanulok-ppao",
+          "metricKey": "avgMonthlyIncome",
+          "label": {
+            "en": "Average monthly income",
+            "th": "รายได้เฉลี่ยต่อเดือน",
+            "zh": "月均收入"
+          },
+          "metricValueNum": 20800,
+          "metricValueText": "฿20,800",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "methodNote": "Household earning proxy; used for affordability and fee tolerance.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    }
+  ],
+  "deliveryProfile": {
+    "cityId": "phitsanulok-ppao",
+    "visionStatus": "building",
+    "infrastructureStatus": "building",
+    "dataPlatformStatus": "gap",
+    "businessModelStatus": "building",
+    "partnershipStatus": "gap",
+    "recommendedLeadStep": "data_platform",
+    "deliveryNote": {
+      "en": "Beta cities need phased delivery: blended finance, performance contracts, and readiness-building before going full commercial.",
+      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: blended finance, performance contract และการสร้าง readiness ก่อนจะไปเชิงพาณิชย์เต็มตัว",
+      "zh": "Beta 城市需要分阶段交付：先做混合融资、绩效合同和准备度建设，再谈完全商业化。"
+    },
+    "publicRole": {
+      "en": "Anchor the pipeline, de-risk first-loss pieces, and keep the city from overpromising.",
+      "th": "รัฐต้องยึด pipeline ลดความเสี่ยงในชิ้น first-loss และกันไม่ให้เมืองขายฝันเกินจริง",
+      "zh": "Government should anchor the pipeline, de-risk first-loss pieces, and stop the city from overselling."
+    },
+    "privateRole": {
+      "en": "Co-invest in phased systems after the city proves the first operating metrics.",
+      "th": "เอกชนควรร่วมลงทุนแบบเป็นช่วง หลังเมืองพิสูจน์ตัวเลขปฏิบัติการชุดแรกได้แล้ว",
+      "zh": "Private capital should co-invest in phases once the city proves first operating metrics."
+    },
+    "riskAllocation": {
+      "en": "Construction and operating risk can move outward; policy and land assembly should stay public.",
+      "th": "ความเสี่ยงก่อสร้างและเดินระบบโยนออกไปได้ แต่ความเสี่ยงเชิงนโยบายและการจัดที่ดินควรอยู่ฝั่งรัฐ",
+      "zh": "Construction and operating risk can move outward, but policy and land assembly should stay public."
+    },
+    "contractLens": {
+      "en": "Contract for data standards, uptime, and interoperability. Not just dashboards and screenshots.",
+      "th": "ทำสัญญาเรื่องมาตรฐานข้อมูล uptime และ interoperability ไม่ใช่แค่ dashboard กับ screenshot",
+      "zh": "Contract for data standards, uptime, and interoperability. Not just dashboards and screenshots."
+    },
+    "version": "2026.04-cdp-v1"
+  },
+  "financeProfile": {
+    "cityId": "phitsanulok-ppao",
+    "revenueBase": "thin",
+    "institutionalCapacity": "strong",
+    "projectPipeline": "moderate",
+    "privateInterest": "moderate",
+    "riskProfile": "low",
+    "deliveryReadiness": "building",
+    "readinessScore": 58,
+    "segment": "beta",
+    "assessedAt": "2026-04-04T00:00:00.000Z",
+    "version": "2026.04-cdp-v1"
+  },
+  "financeRecommendations": [
+    {
+      "id": "phitsanulok-ppao-dfi-cofinance",
+      "cityId": "phitsanulok-ppao",
+      "instrumentId": "dfi-cofinance",
+      "instrumentName": "DFI Co-finance",
+      "priority": "lead",
+      "priorityScore": 62,
+      "stage": "operational",
+      "segment": "beta",
+      "reasonSummary": {
+        "en": "DFI Co-finance fits Phitsanulok PAO Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money.",
+        "th": "DFI Co-finance fits Phitsanulok PAO Smart City because its metrics and operating context create a credible use case. ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
+        "zh": "DFI Co-finance fits Phitsanulok PAO Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 58/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
+        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "phitsanulok-ppao-gppPerCapita",
+          "supportType": "metric",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "summary": "Economic productivity is the baseline support row."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "phitsanulok-ppao-government-budget",
+      "cityId": "phitsanulok-ppao",
+      "instrumentId": "government-budget",
+      "instrumentName": "Government Budget / Grant",
+      "priority": "secondary",
+      "priorityScore": 60,
+      "stage": "operational",
+      "segment": "beta",
+      "reasonSummary": {
+        "en": "Phitsanulok PAO Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated.",
+        "th": "Phitsanulok PAO Smart City still needs public risk-bearing for foundational delivery. บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
+        "zh": "Phitsanulok PAO Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 58/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
+        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "phitsanulok-ppao-population",
+          "supportType": "metric",
+          "metricKey": "population",
+          "metricLabel": "Population",
+          "sourceId": "nso",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "summary": "Population scale affects the public-good case for grant funding."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "phitsanulok-ppao-blended-finance",
+      "cityId": "phitsanulok-ppao",
+      "instrumentId": "blended-finance",
+      "instrumentName": "Blended Finance",
+      "priority": "watch",
+      "priorityScore": 59,
+      "stage": "operational",
+      "segment": "beta",
+      "reasonSummary": {
+        "en": "Blended Finance fits Phitsanulok PAO Smart City because its metrics and operating context create a credible use case. This is the bridge between 'not bankable yet' and 'commercially believable'.",
+        "th": "Blended Finance fits Phitsanulok PAO Smart City because its metrics and operating context create a credible use case. นี่คือสะพานระหว่าง 'ยังไม่ bankable' กับ 'เริ่มเชื่อทางการค้าได้'",
+        "zh": "Blended Finance fits Phitsanulok PAO Smart City because its metrics and operating context create a credible use case. This is the bridge between 'not bankable yet' and 'commercially believable'."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 58/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
+        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "phitsanulok-ppao-gppPerCapita",
+          "supportType": "metric",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "summary": "The city has enough demand to justify blended rather than pure grant finance."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    }
+  ],
+  "evidenceItems": [],
+  "dataRails": [
+    {
+      "id": "local-ops",
+      "label": {
+        "en": "Local operations rail",
+        "th": "รางข้อมูลปฏิบัติการท้องถิ่น",
+        "zh": "本地运营数据轨"
+      },
+      "description": {
+        "en": "Phitsanulok PAO Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them.",
+        "th": "อบจ.พิษณุโลกสมาร์ทซิตี้ ต้องมีข้อมูลบริการสดจากงานเทศบาล สาธารณูปโภค และการรับเหตุหน้างาน ถ้าเมืองมองไม่เห็นการปฏิบัติการ เมืองก็เดินระบบไม่ได้",
+        "zh": "Phitsanulok PAO Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them."
+      },
+      "sourceUrl": "https://www.citydata.in.th/en/smart-city-thailand/?city=Phitsanulok%20PAO%20Smart%20City"
+    },
+    {
+      "id": "national-stack",
+      "label": {
+        "en": "National data stack",
+        "th": "รางข้อมูลระดับชาติ",
+        "zh": "国家数据栈"
+      },
+      "description": {
+        "en": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines.",
+        "th": "NSO, NESDC, PCD, BOI และรางข้อมูลระดับชาติอื่นต้องไหลเข้าโปรไฟล์เมือง เพื่อให้คำอ้างอิงท้องถิ่นตั้งอยู่บนฐานที่ตรวจสอบได้",
+        "zh": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines."
+      },
+      "sourceUrl": "https://data.go.th/dataset?q=Phitsanulok"
+    },
+    {
+      "id": "public-research",
+      "label": {
+        "en": "Public research rail",
+        "th": "รางข้อมูลสาธารณะเพื่อวิจัย",
+        "zh": "公共研究数据轨"
+      },
+      "description": {
+        "en": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access.",
+        "th": "การ export ต้อง flatten dossier ของเมืองออกเป็นแถวข้อมูลที่นักวิจัยดาวน์โหลด ตรวจ และโต้แย้งได้ โดยไม่ต้องขอสิทธิพิเศษ",
+        "zh": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access."
+      },
+      "sourceUrl": "/api/cities/phitsanulok-ppao/export.csv"
+    }
+  ],
+  "exportMetadata": {
+    "latestObservedAt": "2026-04-01T00:00:00.000Z",
+    "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
+    "provenanceCount": 6,
+    "summaryCsvUrl": "/api/exports/cities-summary.csv",
+    "factsCsvUrl": "/api/exports/city-facts.csv",
+    "cityCsvUrl": "/api/cities/phitsanulok-ppao/export.csv"
+  }
+}

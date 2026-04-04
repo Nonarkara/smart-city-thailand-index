@@ -1,0 +1,612 @@
+{
+  "summary": {
+    "id": "cmu-smart-city",
+    "nameEn": "CMU Smart City",
+    "nameTh": "มหาวิทยาลัยเชียงใหม่ สมาร์ทซิตี้",
+    "province": "Chiang Mai",
+    "provinceTh": "เชียงใหม่",
+    "region": "north",
+    "status": "certified",
+    "reality": "operational",
+    "batch": 1,
+    "smartDimensions": [
+      "economy",
+      "energy",
+      "environment",
+      "governance",
+      "living",
+      "mobility",
+      "people"
+    ],
+    "scores": {
+      "livability": 72,
+      "economy": 62,
+      "safety": 78,
+      "wellbeing": 75,
+      "environment": 58,
+      "hospitality": 70,
+      "digital": 80
+    },
+    "metrics": {
+      "population": 45,
+      "gppPerCapita": 168000,
+      "avgMonthlyIncome": 18000,
+      "pm25Annual": 46.1,
+      "hospitalBedsPer10k": 32,
+      "greenCoverage": 72
+    },
+    "compositeScore": 70.1,
+    "tier": "alpha",
+    "tagline": "University campus as living lab. Genuine R&D engine with smart energy grid, AI traffic, and open data platform.",
+    "taglineTh": "มหาวิทยาลัยเป็นห้องทดลองจริง เครื่องยนต์ R&D ด้วยระบบพลังงานอัจฉริยะ AI จราจร และแพลตฟอร์มข้อมูลเปิด",
+    "highlights": [
+      "Smart energy grid reducing campus power consumption 30%",
+      "AI-powered traffic management at 12 intersections",
+      "Open data platform with 500+ datasets"
+    ],
+    "dataConfidence": "high",
+    "keyMetrics": [
+      {
+        "key": "gppPerCapita",
+        "label": {
+          "en": "GPP per capita",
+          "th": "GPP ต่อหัว",
+          "zh": "人均 GPP"
+        },
+        "value": "฿168,000",
+        "unit": "THB",
+        "confidence": "high",
+        "sourceId": "nesdc"
+      },
+      {
+        "key": "pm25Annual",
+        "label": {
+          "en": "Annual PM2.5",
+          "th": "PM2.5 เฉลี่ยรายปี",
+          "zh": "年均 PM2.5"
+        },
+        "value": "46.1",
+        "unit": "ug/m3",
+        "confidence": "high",
+        "sourceId": "pcd"
+      },
+      {
+        "key": "greenCoverage",
+        "label": {
+          "en": "Green coverage",
+          "th": "พื้นที่สีเขียว",
+          "zh": "绿化覆盖"
+        },
+        "value": "72",
+        "unit": "%",
+        "confidence": "high",
+        "sourceId": "gistda"
+      },
+      {
+        "key": "population",
+        "label": {
+          "en": "Population",
+          "th": "ประชากร",
+          "zh": "人口"
+        },
+        "value": "45K",
+        "unit": "people",
+        "confidence": "high",
+        "sourceId": "nso"
+      }
+    ],
+    "shortTailoredNote": {
+      "en": "The campus is a living lab — every innovation can be tested, measured, and iterated before scaling to a city. The open data platform (500+ datasets) is the most complete of any Thai smart city. Watch the constraint: It's a campus, not a city. Population 45K. What works for university students may not scale to a diverse urban population. Same PM2.5 crisis as Chiang Mai.",
+      "th": "แคมปัสเป็นห้องทดลองจริง — ทุกนวัตกรรมทดสอบ วัดผล และปรับปรุงได้ก่อนขยายสู่เมือง แพลตฟอร์มข้อมูลเปิด (500+ ชุดข้อมูล) สมบูรณ์ที่สุดของเมืองอัจฉริยะไทย แต่ต้องระวัง: เป็นแคมปัส ไม่ใช่เมือง ประชากร 45K สิ่งที่ใช้ได้กับนักศึกษาอาจไม่ขยายไปสู่ประชากรเมืองที่หลากหลาย วิกฤต PM2.5 เดียวกับเชียงใหม่",
+      "zh": "The campus is a living lab — every innovation can be tested, measured, and iterated before scaling to a city. The open data platform (500+ datasets) is the most complete of any Thai smart city. Watch the constraint: It's a campus, not a city. Population 45K. What works for university students may not scale to a diverse urban population. Same PM2.5 crisis as Chiang Mai."
+    },
+    "financeSignal": {
+      "leadInstrumentId": "land-value-capture",
+      "leadInstrumentName": "Land Value Capture",
+      "line": {
+        "en": "Land Value Capture leads because CMU Smart City is building with a high risk profile.",
+        "th": "Land Value Capture นำ เพราะ มหาวิทยาลัยเชียงใหม่ สมาร์ทซิตี้ อยู่ในระดับ building และมีความเสี่ยงแบบ high",
+        "zh": "Land Value Capture leads because CMU Smart City is building with a high risk profile."
+      },
+      "readinessScore": 58
+    },
+    "exportReady": true,
+    "freshness": {
+      "latestObservedAt": "2026-04-01T00:00:00.000Z",
+      "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
+    },
+    "provenanceCount": 10
+  },
+  "contextNotes": [
+    {
+      "id": "cmu-smart-city-opportunity",
+      "kind": "opportunity",
+      "title": {
+        "en": "Tailored opportunity",
+        "th": "โอกาสเฉพาะเมือง",
+        "zh": "定制机会"
+      },
+      "body": {
+        "en": "The campus is a living lab — every innovation can be tested, measured, and iterated before scaling to a city. The open data platform (500+ datasets) is the most complete of any Thai smart city.",
+        "th": "แคมปัสเป็นห้องทดลองจริง — ทุกนวัตกรรมทดสอบ วัดผล และปรับปรุงได้ก่อนขยายสู่เมือง แพลตฟอร์มข้อมูลเปิด (500+ ชุดข้อมูล) สมบูรณ์ที่สุดของเมืองอัจฉริยะไทย",
+        "zh": "The campus is a living lab — every innovation can be tested, measured, and iterated before scaling to a city. The open data platform (500+ datasets) is the most complete of any Thai smart city."
+      }
+    },
+    {
+      "id": "cmu-smart-city-constraint",
+      "kind": "constraint",
+      "title": {
+        "en": "Constraint",
+        "th": "ข้อจำกัด",
+        "zh": "约束"
+      },
+      "body": {
+        "en": "It's a campus, not a city. Population 45K. What works for university students may not scale to a diverse urban population. Same PM2.5 crisis as Chiang Mai.",
+        "th": "เป็นแคมปัส ไม่ใช่เมือง ประชากร 45K สิ่งที่ใช้ได้กับนักศึกษาอาจไม่ขยายไปสู่ประชากรเมืองที่หลากหลาย วิกฤต PM2.5 เดียวกับเชียงใหม่",
+        "zh": "It's a campus, not a city. Population 45K. What works for university students may not scale to a diverse urban population. Same PM2.5 crisis as Chiang Mai."
+      }
+    },
+    {
+      "id": "cmu-smart-city-warning",
+      "kind": "implementation_warning",
+      "title": {
+        "en": "Implementation warning",
+        "th": "คำเตือนเชิงปฏิบัติ",
+        "zh": "实施警告"
+      },
+      "body": {
+        "en": "This city is small enough to prototype fast. That also means bad procurement choices get very visible, very quickly.",
+        "th": "เมืองนี้เล็กพอที่จะทดลองได้เร็ว แปลว่าถ้าจัดซื้อพลาด ความพลาดจะมองเห็นชัดและเร็วเหมือนกัน",
+        "zh": "This city is small enough to prototype fast. That also means bad procurement becomes visible very quickly."
+      }
+    },
+    {
+      "id": "cmu-smart-city-lesson",
+      "kind": "exportable_lesson",
+      "title": {
+        "en": "Exportable lesson",
+        "th": "บทเรียนที่ส่งออกได้",
+        "zh": "可输出经验"
+      },
+      "body": {
+        "en": "The campus is a living lab — every innovation can be tested, measured, and iterated before scaling to a city. The open data platform (500+ datasets) is the most complete of any Thai smart city.",
+        "th": "แคมปัสเป็นห้องทดลองจริง — ทุกนวัตกรรมทดสอบ วัดผล และปรับปรุงได้ก่อนขยายสู่เมือง แพลตฟอร์มข้อมูลเปิด (500+ ชุดข้อมูล) สมบูรณ์ที่สุดของเมืองอัจฉริยะไทย",
+        "zh": "The campus is a living lab — every innovation can be tested, measured, and iterated before scaling to a city. The open data platform (500+ datasets) is the most complete of any Thai smart city."
+      }
+    }
+  ],
+  "metricBlocks": [
+    {
+      "id": "economic-readiness",
+      "title": {
+        "en": "Economic readiness",
+        "th": "ฐานเศรษฐกิจ",
+        "zh": "经济基础"
+      },
+      "summary": {
+        "en": "What scale of capital this city can plausibly absorb without making up demand.",
+        "th": "เมืองนี้รับเงินลงทุนระดับไหนได้จริงโดยไม่ต้องแต่งดีมานด์",
+        "zh": "This block shows how much capital the city can plausibly absorb without inventing demand."
+      },
+      "observations": [
+        {
+          "cityId": "cmu-smart-city",
+          "metricKey": "population",
+          "label": {
+            "en": "Population",
+            "th": "ประชากร",
+            "zh": "人口"
+          },
+          "metricValueNum": 45,
+          "metricValueText": "45K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Baseline city population from index input; used as scale proxy.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "cmu-smart-city",
+          "metricKey": "gppPerCapita",
+          "label": {
+            "en": "GPP per capita",
+            "th": "GPP ต่อหัว",
+            "zh": "人均 GPP"
+          },
+          "metricValueNum": 168000,
+          "metricValueText": "฿168,000",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Provincial economic productivity proxy; used for revenue and demand scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "cmu-smart-city",
+          "metricKey": "avgMonthlyIncome",
+          "label": {
+            "en": "Average monthly income",
+            "th": "รายได้เฉลี่ยต่อเดือน",
+            "zh": "月均收入"
+          },
+          "metricValueNum": 18000,
+          "metricValueText": "฿18,000",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Household earning proxy; used for affordability and fee tolerance.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "risk-and-resilience",
+      "title": {
+        "en": "Risk and resilience",
+        "th": "ความเสี่ยงและความยืดหยุ่น",
+        "zh": "风险与韧性"
+      },
+      "summary": {
+        "en": "The constraint stack that should shape finance structure, contract terms, and sequencing.",
+        "th": "ชุดข้อจำกัดที่ต้องกำหนดโครงสร้างการเงิน เงื่อนไขสัญญา และลำดับงาน",
+        "zh": "These constraints should shape financing structure, contract terms, and sequencing."
+      },
+      "observations": [
+        {
+          "cityId": "cmu-smart-city",
+          "metricKey": "pm25Annual",
+          "label": {
+            "en": "Annual PM2.5",
+            "th": "PM2.5 เฉลี่ยรายปี",
+            "zh": "年均 PM2.5"
+          },
+          "metricValueNum": 46.1,
+          "metricValueText": "46.1",
+          "unit": "ug/m3",
+          "periodLabel": "2025 annual average",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Environmental stress proxy; used for resilience and green finance scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "cmu-smart-city",
+          "metricKey": "greenCoverage",
+          "label": {
+            "en": "Green coverage",
+            "th": "พื้นที่สีเขียว",
+            "zh": "绿化覆盖"
+          },
+          "metricValueNum": 72,
+          "metricValueText": "72",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "gistda",
+          "sourceName": "GISTDA — Satellite Imagery",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Land/environment quality proxy; used for resilience and amenity value.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "service-capacity",
+      "title": {
+        "en": "Service capacity",
+        "th": "ศักยภาพบริการสาธารณะ",
+        "zh": "服务能力"
+      },
+      "summary": {
+        "en": "Signals for whether the city can operate systems after ribbon-cutting day.",
+        "th": "สัญญาณว่าเมืองจะเดินระบบต่อหลังวันตัดริบบิ้นได้หรือไม่",
+        "zh": "Signals of whether the city can run systems after ribbon-cutting day."
+      },
+      "observations": [
+        {
+          "cityId": "cmu-smart-city",
+          "metricKey": "hospitalBedsPer10k",
+          "label": {
+            "en": "Hospital beds / 10K",
+            "th": "เตียงโรงพยาบาล / หมื่นคน",
+            "zh": "每万人床位"
+          },
+          "metricValueNum": 32,
+          "metricValueText": "32",
+          "unit": "beds/10k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "moph",
+          "sourceName": "Ministry of Public Health",
+          "sourceUrl": "https://www.moph.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Public service capacity proxy; used for wellbeing and delivery maturity.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    }
+  ],
+  "deliveryProfile": {
+    "cityId": "cmu-smart-city",
+    "visionStatus": "ready",
+    "infrastructureStatus": "building",
+    "dataPlatformStatus": "building",
+    "businessModelStatus": "building",
+    "partnershipStatus": "building",
+    "recommendedLeadStep": "infrastructure",
+    "deliveryNote": {
+      "en": "Alpha cities should invest forward: infrastructure-scale finance, corridor monetization, and contract discipline. This is not the tier for passive grant dependency.",
+      "th": "เมือง Alpha ต้องลงทุนเชิงรุก: การเงินระดับโครงสร้างพื้นฐาน การดึงมูลค่าจากระเบียงพัฒนา และวินัยสัญญา นี่ไม่ใช่ระดับที่ควรรอเงินอุดหนุนแบบรับชะตา",
+      "zh": "Alpha 城市应主动投资：做基础设施级融资、走廊变现和严密合同管理，而不是被动等补助。"
+    },
+    "publicRole": {
+      "en": "Set the corridor logic, hold the concession line, and protect public interest with measurable KPIs.",
+      "th": "รัฐต้องกำหนดตรรกะของ corridor คุมเส้นสัญญา และปกป้องประโยชน์สาธารณะด้วย KPI ที่วัดได้",
+      "zh": "Government should set corridor logic, hold the contract line, and protect public interest with measurable KPIs."
+    },
+    "privateRole": {
+      "en": "Bring capex, operating know-how, and revenue discipline where demand is already visible.",
+      "th": "เอกชนต้องเอา capex ความรู้เดินระบบ และวินัยรายได้เข้ามา ในจุดที่ดีมานด์เห็นชัดอยู่แล้ว",
+      "zh": "Private capital should bring capex, operating know-how, and revenue discipline where demand is already visible."
+    },
+    "riskAllocation": {
+      "en": "Do not dump core demand risk on the private side. Stage the project until the city earns trust with data.",
+      "th": "อย่าโยนความเสี่ยงดีมานด์หลักไปฝั่งเอกชน ให้แบ่งเป็นช่วงจนเมืองสร้างความเชื่อมั่นจากข้อมูลได้ก่อน",
+      "zh": "Do not dump core demand risk on the private side. Stage the project until the city earns trust with data."
+    },
+    "contractLens": {
+      "en": "Tie payment to service availability, resilience, and maintenance handover.",
+      "th": "ผูกการจ่ายกับความพร้อมใช้งาน ความยืดหยุ่น และการส่งมอบงานบำรุงรักษา",
+      "zh": "Tie payment to service availability, resilience, and maintenance handover."
+    },
+    "version": "2026.04-cdp-v1"
+  },
+  "financeProfile": {
+    "cityId": "cmu-smart-city",
+    "revenueBase": "thin",
+    "institutionalCapacity": "strong",
+    "projectPipeline": "strong",
+    "privateInterest": "moderate",
+    "riskProfile": "high",
+    "deliveryReadiness": "building",
+    "readinessScore": 58,
+    "segment": "alpha",
+    "assessedAt": "2026-04-04T00:00:00.000Z",
+    "version": "2026.04-cdp-v1"
+  },
+  "financeRecommendations": [
+    {
+      "id": "cmu-smart-city-land-value-capture",
+      "cityId": "cmu-smart-city",
+      "instrumentId": "land-value-capture",
+      "instrumentName": "Land Value Capture",
+      "priority": "lead",
+      "priorityScore": 76,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Land Value Capture fits CMU Smart City because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away.",
+        "th": "Land Value Capture fits CMU Smart City because its metrics and operating context create a credible use case. ถ้าเมืองเป็นคนสร้างมูลค่าเพิ่ม เมืองก็ควรเก็บบางส่วนกลับมา ไม่ใช่ปล่อยให้ไหลออกหมด",
+        "zh": "Land Value Capture fits CMU Smart City because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 58/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100."
+      },
+      "nextStep": {
+        "en": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
+        "th": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
+        "zh": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "cmu-smart-city-gppPerCapita",
+          "supportType": "metric",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Strong urban demand makes value capture plausible."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "cmu-smart-city-asset-recycling",
+      "cityId": "cmu-smart-city",
+      "instrumentId": "asset-recycling",
+      "instrumentName": "Asset Recycling",
+      "priority": "secondary",
+      "priorityScore": 72,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Asset Recycling fits CMU Smart City because its metrics and operating context create a credible use case. Better than begging for new money while underused public assets sit there doing nothing.",
+        "th": "Asset Recycling fits CMU Smart City because its metrics and operating context create a credible use case. ดีกว่านั่งขอเงินใหม่ ทั้งที่สินทรัพย์รัฐที่ใช้ไม่คุ้มยังนอนนิ่งอยู่",
+        "zh": "Asset Recycling fits CMU Smart City because its metrics and operating context create a credible use case. Better than begging for new money while underused public assets sit there doing nothing."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 58/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "cmu-smart-city-gppPerCapita",
+          "supportType": "metric",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Strong urban value supports recycling mature public assets."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "cmu-smart-city-performance-contract",
+      "cityId": "cmu-smart-city",
+      "instrumentId": "performance-contract",
+      "instrumentName": "Performance Contract",
+      "priority": "watch",
+      "priorityScore": 69,
+      "stage": "operational",
+      "segment": "alpha",
+      "reasonSummary": {
+        "en": "Performance Contract fits CMU Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes.",
+        "th": "Performance Contract fits CMU Smart City because its metrics and operating context create a credible use case. เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+        "zh": "Performance Contract fits CMU Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 58/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 58/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should hold land, standards, permits, and the policy floor.",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "zh": "Government should hold land, standards, permits, and the policy floor."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "cmu-smart-city-pm25Annual",
+          "supportType": "metric",
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Outcome-based contracts make sense where performance can be metered."
+        },
+        {
+          "id": "cmu-smart-city-greenCoverage",
+          "supportType": "metric",
+          "metricKey": "greenCoverage",
+          "metricLabel": "Green coverage",
+          "sourceId": "gistda",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Green coverage provides a resilience baseline for outcome measurement."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    }
+  ],
+  "evidenceItems": [],
+  "dataRails": [
+    {
+      "id": "local-ops",
+      "label": {
+        "en": "Local operations rail",
+        "th": "รางข้อมูลปฏิบัติการท้องถิ่น",
+        "zh": "本地运营数据轨"
+      },
+      "description": {
+        "en": "CMU Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them.",
+        "th": "มหาวิทยาลัยเชียงใหม่ สมาร์ทซิตี้ ต้องมีข้อมูลบริการสดจากงานเทศบาล สาธารณูปโภค และการรับเหตุหน้างาน ถ้าเมืองมองไม่เห็นการปฏิบัติการ เมืองก็เดินระบบไม่ได้",
+        "zh": "CMU Smart City needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them."
+      },
+      "sourceUrl": "https://www.citydata.in.th/en/smart-city-thailand/?city=CMU%20Smart%20City"
+    },
+    {
+      "id": "national-stack",
+      "label": {
+        "en": "National data stack",
+        "th": "รางข้อมูลระดับชาติ",
+        "zh": "国家数据栈"
+      },
+      "description": {
+        "en": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines.",
+        "th": "NSO, NESDC, PCD, BOI และรางข้อมูลระดับชาติอื่นต้องไหลเข้าโปรไฟล์เมือง เพื่อให้คำอ้างอิงท้องถิ่นตั้งอยู่บนฐานที่ตรวจสอบได้",
+        "zh": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines."
+      },
+      "sourceUrl": "https://data.go.th/dataset?q=Chiang%20Mai"
+    },
+    {
+      "id": "public-research",
+      "label": {
+        "en": "Public research rail",
+        "th": "รางข้อมูลสาธารณะเพื่อวิจัย",
+        "zh": "公共研究数据轨"
+      },
+      "description": {
+        "en": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access.",
+        "th": "การ export ต้อง flatten dossier ของเมืองออกเป็นแถวข้อมูลที่นักวิจัยดาวน์โหลด ตรวจ และโต้แย้งได้ โดยไม่ต้องขอสิทธิพิเศษ",
+        "zh": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access."
+      },
+      "sourceUrl": "/api/cities/cmu-smart-city/export.csv"
+    }
+  ],
+  "exportMetadata": {
+    "latestObservedAt": "2026-04-01T00:00:00.000Z",
+    "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
+    "provenanceCount": 10,
+    "summaryCsvUrl": "/api/exports/cities-summary.csv",
+    "factsCsvUrl": "/api/exports/city-facts.csv",
+    "cityCsvUrl": "/api/cities/cmu-smart-city/export.csv"
+  }
+}

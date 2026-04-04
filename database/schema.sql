@@ -228,16 +228,40 @@ CREATE TABLE smart_city_signals (
   text_body TEXT NOT NULL,
   sentiment_label signal_sentiment NOT NULL DEFAULT 'neutral',
   sentiment_score DECIMAL(4, 2) NOT NULL DEFAULT 0 CHECK (sentiment_score BETWEEN -1 AND 1),
-  themes TEXT[] NOT NULL DEFAULT '{}',
-  metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+  themes TEXT[] NOT NULL DEFAULT '{}' CHECK (cardinality(themes) <= 8),
+  metadata JSONB NOT NULL DEFAULT '{}'::jsonb CHECK (jsonb_typeof(metadata) = 'object'),
   observed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  ingested_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  ingested_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  fingerprint TEXT GENERATED ALWAYS AS (
+    encode(
+      digest(
+        concat_ws(
+          '|',
+          coalesce(city_id, ''),
+          btrim(source),
+          btrim(channel),
+          btrim(text_body),
+          sentiment_label::TEXT,
+          observed_at::TEXT,
+          array_to_string(themes, '||')
+        ),
+        'sha256'
+      ),
+      'hex'
+    )
+  ) STORED,
+  CONSTRAINT smart_city_signals_source_not_blank CHECK (length(btrim(source)) > 0),
+  CONSTRAINT smart_city_signals_channel_not_blank CHECK (length(btrim(channel)) > 0),
+  CONSTRAINT smart_city_signals_text_not_blank CHECK (length(btrim(text_body)) > 0),
+  CONSTRAINT smart_city_signals_text_reasonable_length CHECK (length(text_body) <= 5000)
 );
 
 CREATE INDEX idx_smart_city_signals_observed ON smart_city_signals(observed_at DESC);
 CREATE INDEX idx_smart_city_signals_city ON smart_city_signals(city_id);
 CREATE INDEX idx_smart_city_signals_sentiment ON smart_city_signals(sentiment_label);
 CREATE INDEX idx_smart_city_signals_themes ON smart_city_signals USING GIN(themes);
+CREATE INDEX idx_smart_city_signals_channel ON smart_city_signals(channel);
+CREATE UNIQUE INDEX idx_smart_city_signals_fingerprint ON smart_city_signals(fingerprint);
 
 CREATE OR REPLACE VIEW smart_city_signal_daily_trends AS
 SELECT
@@ -247,6 +271,197 @@ SELECT
   AVG(sentiment_score) AS avg_sentiment
 FROM smart_city_signals
 GROUP BY 1, 2;
+
+-- ─── 14. CITY CDP CORE — Tailored delivery / finance dossiers ───
+
+CREATE TABLE finance_instruments (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  name_th TEXT NOT NULL,
+  category TEXT NOT NULL CHECK (category IN ('debt', 'equity', 'grant', 'hybrid', 'innovative')),
+  segment_fit city_tier[] NOT NULL DEFAULT '{}',
+  description JSONB NOT NULL CHECK (jsonb_typeof(description) = 'object'),
+  why_it_fits JSONB NOT NULL CHECK (jsonb_typeof(why_it_fits) = 'object'),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE city_metric_observations (
+  id BIGSERIAL PRIMARY KEY,
+  city_id TEXT NOT NULL REFERENCES cities(id) ON DELETE CASCADE,
+  metric_key TEXT NOT NULL,
+  metric_value_num DECIMAL(14, 2),
+  metric_value_text TEXT,
+  unit TEXT,
+  period_label TEXT NOT NULL,
+  source_id TEXT REFERENCES data_sources(id) ON DELETE SET NULL,
+  source_url TEXT,
+  observed_at TIMESTAMPTZ NOT NULL,
+  confidence DECIMAL(4, 2) NOT NULL DEFAULT 0.75 CHECK (confidence BETWEEN 0 AND 1),
+  method_note TEXT NOT NULL DEFAULT '',
+  verified_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  version TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  CONSTRAINT city_metric_observations_value_present CHECK (
+    metric_value_num IS NOT NULL OR
+    (metric_value_text IS NOT NULL AND length(btrim(metric_value_text)) > 0)
+  )
+);
+
+CREATE UNIQUE INDEX idx_city_metric_observations_unique
+  ON city_metric_observations(city_id, metric_key, period_label, observed_at, version);
+CREATE INDEX idx_city_metric_observations_city ON city_metric_observations(city_id);
+CREATE INDEX idx_city_metric_observations_metric ON city_metric_observations(metric_key);
+
+CREATE TABLE city_delivery_profiles (
+  id BIGSERIAL PRIMARY KEY,
+  city_id TEXT NOT NULL REFERENCES cities(id) ON DELETE CASCADE,
+  vision_status TEXT NOT NULL CHECK (vision_status IN ('ready', 'building', 'gap')),
+  infrastructure_status TEXT NOT NULL CHECK (infrastructure_status IN ('ready', 'building', 'gap')),
+  data_platform_status TEXT NOT NULL CHECK (data_platform_status IN ('ready', 'building', 'gap')),
+  business_model_status TEXT NOT NULL CHECK (business_model_status IN ('ready', 'building', 'gap')),
+  partnership_status TEXT NOT NULL CHECK (partnership_status IN ('ready', 'building', 'gap')),
+  recommended_lead_step TEXT NOT NULL CHECK (recommended_lead_step IN ('vision', 'infrastructure', 'data_platform', 'business_model', 'partnerships')),
+  delivery_note JSONB NOT NULL CHECK (jsonb_typeof(delivery_note) = 'object'),
+  public_role JSONB NOT NULL CHECK (jsonb_typeof(public_role) = 'object'),
+  private_role JSONB NOT NULL CHECK (jsonb_typeof(private_role) = 'object'),
+  risk_allocation JSONB NOT NULL CHECK (jsonb_typeof(risk_allocation) = 'object'),
+  contract_lens JSONB NOT NULL CHECK (jsonb_typeof(contract_lens) = 'object'),
+  version TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(city_id, version)
+);
+
+CREATE TABLE city_finance_profiles (
+  id BIGSERIAL PRIMARY KEY,
+  city_id TEXT NOT NULL REFERENCES cities(id) ON DELETE CASCADE,
+  revenue_base TEXT NOT NULL CHECK (revenue_base IN ('strong', 'moderate', 'thin')),
+  institutional_capacity TEXT NOT NULL CHECK (institutional_capacity IN ('strong', 'moderate', 'thin')),
+  project_pipeline TEXT NOT NULL CHECK (project_pipeline IN ('strong', 'moderate', 'thin')),
+  private_interest TEXT NOT NULL CHECK (private_interest IN ('strong', 'moderate', 'thin')),
+  risk_profile TEXT NOT NULL CHECK (risk_profile IN ('low', 'medium', 'high', 'acute')),
+  delivery_readiness TEXT NOT NULL CHECK (delivery_readiness IN ('advanced', 'building', 'foundational')),
+  readiness_score INT NOT NULL CHECK (readiness_score BETWEEN 0 AND 100),
+  segment city_tier NOT NULL,
+  assessed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  version TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(city_id, version)
+);
+
+CREATE TABLE city_finance_recommendations (
+  id TEXT PRIMARY KEY,
+  city_id TEXT NOT NULL REFERENCES cities(id) ON DELETE CASCADE,
+  instrument_id TEXT NOT NULL REFERENCES finance_instruments(id) ON DELETE RESTRICT,
+  priority TEXT NOT NULL CHECK (priority IN ('lead', 'secondary', 'watch')),
+  priority_score INT NOT NULL CHECK (priority_score BETWEEN 0 AND 100),
+  stage city_reality NOT NULL,
+  segment city_tier NOT NULL,
+  reason_summary JSONB NOT NULL CHECK (jsonb_typeof(reason_summary) = 'object'),
+  next_step JSONB NOT NULL CHECK (jsonb_typeof(next_step) = 'object'),
+  why_now JSONB NOT NULL CHECK (jsonb_typeof(why_now) = 'object'),
+  public_funding_role JSONB NOT NULL CHECK (jsonb_typeof(public_funding_role) = 'object'),
+  private_capital_role JSONB NOT NULL CHECK (jsonb_typeof(private_capital_role) = 'object'),
+  version TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_city_finance_recommendations_city ON city_finance_recommendations(city_id);
+CREATE INDEX idx_city_finance_recommendations_priority ON city_finance_recommendations(priority);
+
+CREATE TABLE city_finance_recommendation_support (
+  id BIGSERIAL PRIMARY KEY,
+  recommendation_id TEXT NOT NULL REFERENCES city_finance_recommendations(id) ON DELETE CASCADE,
+  metric_observation_id BIGINT REFERENCES city_metric_observations(id) ON DELETE CASCADE,
+  evidence_id BIGINT REFERENCES evidence(id) ON DELETE CASCADE,
+  support_type TEXT NOT NULL CHECK (support_type IN ('metric', 'evidence')),
+  summary TEXT NOT NULL,
+  source_id TEXT,
+  source_url TEXT,
+  observed_at TIMESTAMPTZ NOT NULL,
+  confidence DECIMAL(4, 2) NOT NULL DEFAULT 0.75 CHECK (confidence BETWEEN 0 AND 1),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  CONSTRAINT city_finance_support_reference_present CHECK (
+    metric_observation_id IS NOT NULL OR evidence_id IS NOT NULL
+  )
+);
+
+CREATE INDEX idx_city_finance_support_recommendation ON city_finance_recommendation_support(recommendation_id);
+
+CREATE TABLE city_context_notes (
+  id BIGSERIAL PRIMARY KEY,
+  city_id TEXT NOT NULL REFERENCES cities(id) ON DELETE CASCADE,
+  note_kind TEXT NOT NULL CHECK (note_kind IN ('opportunity', 'constraint', 'implementation_warning', 'exportable_lesson')),
+  title JSONB NOT NULL CHECK (jsonb_typeof(title) = 'object'),
+  body JSONB NOT NULL CHECK (jsonb_typeof(body) = 'object'),
+  version TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(city_id, note_kind, version)
+);
+
+CREATE MATERIALIZED VIEW city_research_export_rows AS
+SELECT
+  c.id AS city_id,
+  c.name_en AS city_name_en,
+  c.name_th AS city_name_th,
+  c.province AS province,
+  'metric'::TEXT AS fact_type,
+  o.metric_key AS metric_key_or_recommendation_key,
+  COALESCE(o.metric_value_text, o.metric_value_num::TEXT, '') AS value,
+  COALESCE(o.unit, '') AS unit,
+  COALESCE(o.source_id, '') AS source_id,
+  COALESCE(o.source_url, '') AS source_url,
+  o.observed_at AS observed_at,
+  o.confidence::TEXT AS confidence,
+  o.version AS version
+FROM city_metric_observations o
+JOIN cities c ON c.id = o.city_id
+
+UNION ALL
+
+SELECT
+  c.id AS city_id,
+  c.name_en AS city_name_en,
+  c.name_th AS city_name_th,
+  c.province AS province,
+  'recommendation'::TEXT AS fact_type,
+  r.instrument_id AS metric_key_or_recommendation_key,
+  s.summary AS value,
+  '' AS unit,
+  COALESCE(s.source_id, '') AS source_id,
+  COALESCE(s.source_url, '') AS source_url,
+  s.observed_at AS observed_at,
+  s.confidence::TEXT AS confidence,
+  r.version AS version
+FROM city_finance_recommendations r
+JOIN city_finance_recommendation_support s ON s.recommendation_id = r.id
+JOIN cities c ON c.id = r.city_id
+
+UNION ALL
+
+SELECT
+  c.id AS city_id,
+  c.name_en AS city_name_en,
+  c.name_th AS city_name_th,
+  c.province AS province,
+  'context'::TEXT AS fact_type,
+  n.note_kind AS metric_key_or_recommendation_key,
+  COALESCE(n.body ->> 'en', '') AS value,
+  '' AS unit,
+  'sciti-curation' AS source_id,
+  '' AS source_url,
+  n.created_at AS observed_at,
+  '0.8' AS confidence,
+  n.version AS version
+FROM city_context_notes n
+JOIN cities c ON c.id = n.city_id
+WITH NO DATA;
+
+CREATE INDEX idx_city_research_export_rows_city ON city_research_export_rows(city_id);
+CREATE INDEX idx_city_research_export_rows_fact_type ON city_research_export_rows(fact_type);
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- ROW-LEVEL SECURITY
@@ -265,6 +480,13 @@ ALTER TABLE city_highlights ENABLE ROW LEVEL SECURITY;
 ALTER TABLE page_views ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE smart_city_signals ENABLE ROW LEVEL SECURITY;
+ALTER TABLE finance_instruments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE city_metric_observations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE city_delivery_profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE city_finance_profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE city_finance_recommendations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE city_finance_recommendation_support ENABLE ROW LEVEL SECURITY;
+ALTER TABLE city_context_notes ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for all content tables
 CREATE POLICY "Public read" ON cities FOR SELECT USING (true);
@@ -278,6 +500,13 @@ CREATE POLICY "Public read" ON partnerships FOR SELECT USING (true);
 CREATE POLICY "Public read" ON partnership_cities FOR SELECT USING (true);
 CREATE POLICY "Public read" ON city_highlights FOR SELECT USING (true);
 CREATE POLICY "Public read" ON smart_city_signals FOR SELECT USING (true);
+CREATE POLICY "Public read" ON finance_instruments FOR SELECT USING (true);
+CREATE POLICY "Public read" ON city_metric_observations FOR SELECT USING (true);
+CREATE POLICY "Public read" ON city_delivery_profiles FOR SELECT USING (true);
+CREATE POLICY "Public read" ON city_finance_profiles FOR SELECT USING (true);
+CREATE POLICY "Public read" ON city_finance_recommendations FOR SELECT USING (true);
+CREATE POLICY "Public read" ON city_finance_recommendation_support FOR SELECT USING (true);
+CREATE POLICY "Public read" ON city_context_notes FOR SELECT USING (true);
 
 -- Analytics: anyone can insert (anonymous writes)
 CREATE POLICY "Anyone can insert" ON page_views FOR INSERT WITH CHECK (true);

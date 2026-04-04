@@ -1,0 +1,415 @@
+{
+  "summary": {
+    "id": "reg-lampang-pao",
+    "nameEn": "Lampang PAO",
+    "nameTh": "อบจ.ลำปาง",
+    "province": "Lampang",
+    "provinceTh": "ลำปาง",
+    "region": "north",
+    "status": "registered",
+    "reality": "planned",
+    "smartDimensions": [
+      "living",
+      "governance"
+    ],
+    "scores": {
+      "livability": 40,
+      "economy": 40,
+      "safety": 40,
+      "wellbeing": 40,
+      "environment": 40,
+      "hospitality": 40,
+      "digital": 30
+    },
+    "metrics": {
+      "population": 0
+    },
+    "compositeScore": 39.5,
+    "tier": "gamma",
+    "tagline": "Promotion zone — awaiting sufficient data for full assessment.",
+    "taglineTh": "เขตส่งเสริม — รอข้อมูลเพียงพอสำหรับการประเมินเต็มรูปแบบ",
+    "highlights": [],
+    "dataConfidence": "low",
+    "keyMetrics": [
+      {
+        "key": "population",
+        "label": {
+          "en": "Population",
+          "th": "ประชากร",
+          "zh": "人口"
+        },
+        "value": "0K",
+        "unit": "people",
+        "confidence": "low",
+        "sourceId": "nso"
+      }
+    ],
+    "shortTailoredNote": {
+      "en": "Lampang PAO leans on livability but still gets capped by digital. That's where the backend should keep drilling.",
+      "th": "อบจ.ลำปาง มีแรงหลักอยู่ที่livability แต่ยังถูกกดเพดานโดยdigital ตรงนี้แหละที่ backend ต้องขุดต่อ",
+      "zh": "Lampang PAO leans on livability but is still capped by digital. That's where the backend should keep drilling."
+    },
+    "financeSignal": {
+      "leadInstrumentId": "pooled-procurement",
+      "leadInstrumentName": "Pooled Procurement",
+      "line": {
+        "en": "Pooled Procurement leads because Lampang PAO is foundational with a acute risk profile.",
+        "th": "Pooled Procurement นำ เพราะ อบจ.ลำปาง อยู่ในระดับ foundational และมีความเสี่ยงแบบ acute",
+        "zh": "Pooled Procurement leads because Lampang PAO is foundational with a acute risk profile."
+      },
+      "readinessScore": 3
+    },
+    "exportReady": true,
+    "freshness": {
+      "latestObservedAt": "2026-04-01T00:00:00.000Z",
+      "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
+    },
+    "provenanceCount": 4
+  },
+  "contextNotes": [
+    {
+      "id": "reg-lampang-pao-opportunity",
+      "kind": "opportunity",
+      "title": {
+        "en": "Tailored opportunity",
+        "th": "โอกาสเฉพาะเมือง",
+        "zh": "定制机会"
+      },
+      "body": {
+        "en": "Lampang PAO has room to turn its livability advantage into a city product instead of another presentation. The clearest wedge is living delivery backed by hard metrics.",
+        "th": "อบจ.ลำปาง มีโอกาสเปลี่ยนจุดแข็งด้านlivability ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านliving ที่ผูกกับตัวชี้วัดจริง",
+        "zh": "Lampang PAO can turn its livability edge into a real city product. The clearest wedge is living delivery tied to hard metrics."
+      }
+    },
+    {
+      "id": "reg-lampang-pao-constraint",
+      "kind": "constraint",
+      "title": {
+        "en": "Constraint",
+        "th": "ข้อจำกัด",
+        "zh": "约束"
+      },
+      "body": {
+        "en": "The weakest drag is digital. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.",
+        "th": "ตัวฉุดหลักคือด้านdigital ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม",
+        "zh": "The weakest drag is digital. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes."
+      }
+    },
+    {
+      "id": "reg-lampang-pao-warning",
+      "kind": "implementation_warning",
+      "title": {
+        "en": "Implementation warning",
+        "th": "คำเตือนเชิงปฏิบัติ",
+        "zh": "实施警告"
+      },
+      "body": {
+        "en": "Do not finance dashboard theatre before the physical city exists. Pipe, wire, rights-of-way, and service operators come first.",
+        "th": "อย่าไปลงเงินกับ dashboard theatre ก่อนที่เมืองทางกายภาพจะมีจริง ท่อ สาย สิทธิทาง และผู้เดินระบบ ต้องมาก่อน",
+        "zh": "Do not fund dashboard theatre before the physical city exists. Pipes, wires, rights-of-way, and operators come first."
+      }
+    },
+    {
+      "id": "reg-lampang-pao-lesson",
+      "kind": "exportable_lesson",
+      "title": {
+        "en": "Exportable lesson",
+        "th": "บทเรียนที่ส่งออกได้",
+        "zh": "可输出经验"
+      },
+      "body": {
+        "en": "Lampang PAO is most exportable when it acts like itself. The reusable lesson is how it turns livability into something operational.",
+        "th": "อบจ.ลำปาง ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนlivability ให้เป็นระบบปฏิบัติการ",
+        "zh": "Lampang PAO becomes exportable when it acts like itself. The reusable lesson is how it turns livability into operations."
+      }
+    }
+  ],
+  "metricBlocks": [
+    {
+      "id": "economic-readiness",
+      "title": {
+        "en": "Economic readiness",
+        "th": "ฐานเศรษฐกิจ",
+        "zh": "经济基础"
+      },
+      "summary": {
+        "en": "What scale of capital this city can plausibly absorb without making up demand.",
+        "th": "เมืองนี้รับเงินลงทุนระดับไหนได้จริงโดยไม่ต้องแต่งดีมานด์",
+        "zh": "This block shows how much capital the city can plausibly absorb without inventing demand."
+      },
+      "observations": [
+        {
+          "cityId": "reg-lampang-pao",
+          "metricKey": "population",
+          "label": {
+            "en": "Population",
+            "th": "ประชากร",
+            "zh": "人口"
+          },
+          "metricValueNum": 0,
+          "metricValueText": "0K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "methodNote": "Baseline city population from index input; used as scale proxy.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    }
+  ],
+  "deliveryProfile": {
+    "cityId": "reg-lampang-pao",
+    "visionStatus": "building",
+    "infrastructureStatus": "gap",
+    "dataPlatformStatus": "gap",
+    "businessModelStatus": "gap",
+    "partnershipStatus": "gap",
+    "recommendedLeadStep": "infrastructure",
+    "deliveryNote": {
+      "en": "Gamma cities should build the boring essentials first: grants, pooled procurement, data plumbing, and civic-scale pilots before dashboard theatre.",
+      "th": "เมือง Gamma ต้องสร้างของจำเป็นที่น่าเบื่อก่อน: เงินอุดหนุน การจัดซื้อรวม ระบบข้อมูลพื้นฐาน และ pilot ขนาดชุมชน ก่อนจะเล่นละครแดชบอร์ด",
+      "zh": "Gamma 城市应先把那些“无聊但必要”的底座搭好：补助、联合采购、数据底座和社区级试点，然后再谈仪表板表演。"
+    },
+    "publicRole": {
+      "en": "Fund the boring baseline, standardize procurement, and protect service continuity.",
+      "th": "รัฐต้องจ่ายของพื้นฐานที่น่าเบื่อ มาตรฐาน procurement และคุ้มครองความต่อเนื่องของบริการ",
+      "zh": "Government should fund the boring baseline, standardize procurement, and protect service continuity."
+    },
+    "privateRole": {
+      "en": "Supply practical service packages and maintenance, not vanity tech stacks.",
+      "th": "เอกชนควรขายชุดบริการใช้งานจริงพร้อมบำรุงรักษา ไม่ใช่สแต็กเทคโชว์",
+      "zh": "Private providers should supply practical service packages and maintenance, not vanity tech stacks."
+    },
+    "riskAllocation": {
+      "en": "Do not dump core demand risk on the private side. Stage the project until the city earns trust with data.",
+      "th": "อย่าโยนความเสี่ยงดีมานด์หลักไปฝั่งเอกชน ให้แบ่งเป็นช่วงจนเมืองสร้างความเชื่อมั่นจากข้อมูลได้ก่อน",
+      "zh": "Do not dump core demand risk on the private side. Stage the project until the city earns trust with data."
+    },
+    "contractLens": {
+      "en": "Tie payment to service availability, resilience, and maintenance handover.",
+      "th": "ผูกการจ่ายกับความพร้อมใช้งาน ความยืดหยุ่น และการส่งมอบงานบำรุงรักษา",
+      "zh": "Tie payment to service availability, resilience, and maintenance handover."
+    },
+    "version": "2026.04-cdp-v1"
+  },
+  "financeProfile": {
+    "cityId": "reg-lampang-pao",
+    "revenueBase": "thin",
+    "institutionalCapacity": "thin",
+    "projectPipeline": "thin",
+    "privateInterest": "thin",
+    "riskProfile": "acute",
+    "deliveryReadiness": "foundational",
+    "readinessScore": 3,
+    "segment": "gamma",
+    "assessedAt": "2026-04-04T00:00:00.000Z",
+    "version": "2026.04-cdp-v1"
+  },
+  "financeRecommendations": [
+    {
+      "id": "reg-lampang-pao-pooled-procurement",
+      "cityId": "reg-lampang-pao",
+      "instrumentId": "pooled-procurement",
+      "instrumentName": "Pooled Procurement",
+      "priority": "lead",
+      "priorityScore": 94,
+      "stage": "planned",
+      "segment": "gamma",
+      "reasonSummary": {
+        "en": "Pooled Procurement fits Lampang PAO because its metrics and operating context create a credible use case. For gamma cities, scale usually comes from the buying coalition, not from the city itself.",
+        "th": "Pooled Procurement fits Lampang PAO because its metrics and operating context create a credible use case. สำหรับเมือง gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
+        "zh": "Pooled Procurement fits Lampang PAO because its metrics and operating context create a credible use case. For gamma cities, scale usually comes from the buying coalition, not from the city itself."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 3/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 3/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 3/100."
+      },
+      "nextStep": {
+        "en": "Bundle the commodity stack with peer cities and buy maintenance with the hardware.",
+        "th": "Bundle the commodity stack with peer cities and buy maintenance with the hardware.",
+        "zh": "Bundle the commodity stack with peer cities and buy maintenance with the hardware."
+      },
+      "publicFundingRole": {
+        "en": "Government should pay for baseline readiness and civic safeguards.",
+        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
+        "zh": "Government should pay for baseline readiness and civic safeguards."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "reg-lampang-pao-population",
+          "supportType": "metric",
+          "metricKey": "population",
+          "metricLabel": "Population",
+          "sourceId": "nso",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "summary": "Small scale supports pooled rather than bespoke procurement."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "reg-lampang-pao-government-budget",
+      "cityId": "reg-lampang-pao",
+      "instrumentId": "government-budget",
+      "instrumentName": "Government Budget / Grant",
+      "priority": "secondary",
+      "priorityScore": 90,
+      "stage": "planned",
+      "segment": "gamma",
+      "reasonSummary": {
+        "en": "Lampang PAO still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated.",
+        "th": "Lampang PAO still needs public risk-bearing for foundational delivery. บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
+        "zh": "Lampang PAO still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated."
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 3/100.",
+        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 3/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 3/100."
+      },
+      "nextStep": {
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
+      },
+      "publicFundingRole": {
+        "en": "Government should pay for baseline readiness and civic safeguards.",
+        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
+        "zh": "Government should pay for baseline readiness and civic safeguards."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "reg-lampang-pao-population",
+          "supportType": "metric",
+          "metricKey": "population",
+          "metricLabel": "Population",
+          "sourceId": "nso",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "summary": "Population scale affects the public-good case for grant funding."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "reg-lampang-pao-technical-assistance-grant",
+      "cityId": "reg-lampang-pao",
+      "instrumentId": "technical-assistance-grant",
+      "instrumentName": "Technical Assistance Grant",
+      "priority": "watch",
+      "priorityScore": 86,
+      "stage": "planned",
+      "segment": "gamma",
+      "reasonSummary": {
+        "en": "Lampang PAO needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess.",
+        "th": "Lampang PAO needs sharper project definition and procurement readiness before bigger money. ถ้าเมืองยังนิยามโครงการไม่ชัด เอาเงินก้อนใหญ่ไปใส่ก็แค่ทำให้ความเละเทะแพงขึ้น",
+        "zh": "Lampang PAO needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess."
+      },
+      "whyNow": {
+        "en": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 3/100.",
+        "th": "Because unreadiness is cheaper to fix now than after a failed capital program. คะแนน readiness: 3/100",
+        "zh": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 3/100."
+      },
+      "nextStep": {
+        "en": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
+        "th": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
+        "zh": "Write the feasibility package, data governance note, and procurement scope before applying for capital."
+      },
+      "publicFundingRole": {
+        "en": "Government should pay for baseline readiness and civic safeguards.",
+        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
+        "zh": "Government should pay for baseline readiness and civic safeguards."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "reg-lampang-pao-population",
+          "supportType": "metric",
+          "metricKey": "population",
+          "metricLabel": "Population",
+          "sourceId": "nso",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.6,
+          "summary": "City scale shapes the right size for first-phase technical support."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    }
+  ],
+  "evidenceItems": [],
+  "dataRails": [
+    {
+      "id": "local-ops",
+      "label": {
+        "en": "Local operations rail",
+        "th": "รางข้อมูลปฏิบัติการท้องถิ่น",
+        "zh": "本地运营数据轨"
+      },
+      "description": {
+        "en": "Lampang PAO needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them.",
+        "th": "อบจ.ลำปาง ต้องมีข้อมูลบริการสดจากงานเทศบาล สาธารณูปโภค และการรับเหตุหน้างาน ถ้าเมืองมองไม่เห็นการปฏิบัติการ เมืองก็เดินระบบไม่ได้",
+        "zh": "Lampang PAO needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them."
+      },
+      "sourceUrl": "https://www.citydata.in.th/en/smart-city-thailand/?city=Lampang%20PAO"
+    },
+    {
+      "id": "national-stack",
+      "label": {
+        "en": "National data stack",
+        "th": "รางข้อมูลระดับชาติ",
+        "zh": "国家数据栈"
+      },
+      "description": {
+        "en": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines.",
+        "th": "NSO, NESDC, PCD, BOI และรางข้อมูลระดับชาติอื่นต้องไหลเข้าโปรไฟล์เมือง เพื่อให้คำอ้างอิงท้องถิ่นตั้งอยู่บนฐานที่ตรวจสอบได้",
+        "zh": "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines."
+      },
+      "sourceUrl": "https://data.go.th/dataset?q=Lampang"
+    },
+    {
+      "id": "public-research",
+      "label": {
+        "en": "Public research rail",
+        "th": "รางข้อมูลสาธารณะเพื่อวิจัย",
+        "zh": "公共研究数据轨"
+      },
+      "description": {
+        "en": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access.",
+        "th": "การ export ต้อง flatten dossier ของเมืองออกเป็นแถวข้อมูลที่นักวิจัยดาวน์โหลด ตรวจ และโต้แย้งได้ โดยไม่ต้องขอสิทธิพิเศษ",
+        "zh": "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access."
+      },
+      "sourceUrl": "/api/cities/reg-lampang-pao/export.csv"
+    }
+  ],
+  "exportMetadata": {
+    "latestObservedAt": "2026-04-01T00:00:00.000Z",
+    "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
+    "provenanceCount": 4,
+    "summaryCsvUrl": "/api/exports/cities-summary.csv",
+    "factsCsvUrl": "/api/exports/city-facts.csv",
+    "cityCsvUrl": "/api/cities/reg-lampang-pao/export.csv"
+  }
+}

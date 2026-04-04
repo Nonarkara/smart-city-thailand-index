@@ -1,6 +1,11 @@
 import { loadSignalSnapshot, submitSignal, summarizeSignals, type SmartCitySignal } from "./signalStore";
 
 describe("signalStore", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
   it("summarizes recent signals into trend metrics", () => {
     const signals: SmartCitySignal[] = [
       {
@@ -55,5 +60,57 @@ describe("signalStore", () => {
     const snapshot = await loadSignalSnapshot();
 
     expect(snapshot.recentSignals.some(signal => signal.text === uniqueText)).toBe(true);
+  });
+
+  it("normalizes malformed remote rows without crashing the snapshot", async () => {
+    const originalLocation = window.location;
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: new URL("https://example.com/") as unknown as Location,
+    });
+
+    try {
+      vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          backend: {
+            mode: "supabase",
+            healthy: true,
+            detail: "test backend",
+          },
+          signals: [
+            {
+              source: "  media scan  ",
+              channel: " press ",
+              text_body: `${"x".repeat(6000)} keep the first 5000 chars only`,
+              sentiment_label: "positive",
+              themes: ["mobility", " Mobility ", "trust"],
+              observed_at: "not-a-date",
+              ingested_at: "also-bad",
+            },
+          ],
+        }),
+      }));
+
+      const snapshot = await loadSignalSnapshot(5);
+
+      expect(snapshot.backend).toMatchObject({
+        mode: "supabase",
+        healthy: true,
+      });
+      expect(snapshot.recentSignals).toHaveLength(1);
+      expect(snapshot.recentSignals[0]).toMatchObject({
+        source: "media scan",
+        channel: "press",
+        themes: ["mobility", "trust"],
+        sentiment: "positive",
+      });
+      expect(snapshot.recentSignals[0].text.length).toBe(5000);
+    } finally {
+      Object.defineProperty(window, "location", {
+        configurable: true,
+        value: originalLocation,
+      });
+    }
   });
 });

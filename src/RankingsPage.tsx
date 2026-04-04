@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { allCities, certifiedCities, promotionZoneCities } from "./cityData";
+import { useCitySummaries } from "./cityApi";
 import { groupCitiesByTier, sortCities } from "./cityCollections";
 import {
   getCityName,
@@ -112,10 +112,13 @@ function CityCard({
 export default function RankingsPage({ locale, onNavigate }: Props) {
   const [tab, setTab] = useState<"all" | "certified" | "promotion">("all");
   const [sortPillar, setSortPillar] = useState<ScoringPillar | "composite">("composite");
+  const { data: cities } = useCitySummaries();
+  const certifiedCities = useMemo(() => cities.filter(city => city.status === "certified"), [cities]);
+  const promotionZoneCities = useMemo(() => cities.filter(city => city.status === "promotion"), [cities]);
 
   const groupedCities = useMemo(() => {
     const sourceCities =
-      tab === "certified" ? certifiedCities : tab === "promotion" ? promotionZoneCities : allCities;
+      tab === "certified" ? certifiedCities : tab === "promotion" ? promotionZoneCities : cities;
     const grouped = groupCitiesByTier(sourceCities);
 
     return {
@@ -123,7 +126,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
       beta: sortCities(grouped.beta, sortPillar),
       gamma: sortCities(grouped.gamma, sortPillar),
     };
-  }, [sortPillar, tab]);
+  }, [certifiedCities, cities, promotionZoneCities, sortPillar, tab]);
 
   return (
     <>
@@ -151,7 +154,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
         <div className="filter-row">
           <div className="filter-group">
             <button className={`filter-btn ${tab === "all" ? "active" : ""}`} onClick={() => setTab("all")}>
-              {translate(locale, { en: "All", th: "ทั้งหมด", zh: "全部" })} ({allCities.length})
+              {translate(locale, { en: "All", th: "ทั้งหมด", zh: "全部" })} ({cities.length})
             </button>
             <button className={`filter-btn ${tab === "certified" ? "active" : ""}`} onClick={() => setTab("certified")}>
               {translate(locale, { en: "Certified", th: "รับรองแล้ว", zh: "已认证" })} ({certifiedCities.length})

@@ -1,4 +1,4 @@
-import { getCityById } from "./cityData";
+import { getCitySummaryById } from "./cityCdp";
 import { parseRoute, type Route } from "./routing";
 import type { Locale } from "./types";
 
@@ -84,6 +84,22 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
   },
 };
 
+export type ApiResponse = {
+  setHeader: (name: string, value: string) => void;
+  status: (code: number) => {
+    json: (body: ApiEnvelope<unknown>) => void;
+    send?: (body: string) => void;
+  };
+};
+
+export type ApiEnvelope<T = unknown> = {
+  success: boolean;
+  data?: T;
+  error?: string;
+  requestId: string;
+  timestamp: string;
+};
+
 function ensureMeta(selector: string, create: () => HTMLElement): HTMLElement {
   let element = document.head.querySelector<HTMLElement>(selector);
   if (!element) {
@@ -139,7 +155,7 @@ function buildMeta(route: Route, locale: Locale) {
     return { title, description, canonicalUrl };
   }
 
-  const city = getCityById(route.cityId);
+  const city = getCitySummaryById(route.cityId);
   if (!city) {
     return { title, description, canonicalUrl };
   }
@@ -157,6 +173,19 @@ function buildMeta(route: Route, locale: Locale) {
     description: cityDescription,
     canonicalUrl,
   };
+}
+
+
+function setJsonLd(data: object) {
+  const scriptId = "json-ld-data";
+  let script = document.getElementById(scriptId) as HTMLScriptElement;
+  if (!script) {
+    script = document.createElement("script");
+    script.id = scriptId;
+    script.type = "application/ld+json";
+    document.head.appendChild(script);
+  }
+  script.text = JSON.stringify(data);
 }
 
 export function syncDocumentMeta(pathname: string, locale: Locale) {
@@ -178,4 +207,31 @@ export function syncDocumentMeta(pathname: string, locale: Locale) {
   setMetaByName("twitter:title", title);
   setMetaByName("twitter:description", description);
   setMetaByName("twitter:image", imageUrl);
+
+  // JSON-LD Structured Data
+  const jsonLd: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": SITE_NAME,
+    "alternateName": ["SCITI", "Smart City Thailand Index"],
+    "url": getSiteUrl(),
+    "description": description,
+    "inLanguage": [locale]
+  };
+
+  if (route.kind === "city") {
+    const city = getCitySummaryById(route.cityId);
+    if (city) {
+      jsonLd["@type"] = "Place";
+      jsonLd["name"] = locale === "th" ? city.nameTh : city.nameEn;
+      jsonLd["description"] = description;
+      jsonLd["address"] = {
+        "@type": "PostalAddress",
+        "addressLocality": locale === "th" ? city.provinceTh : city.province,
+        "addressCountry": "TH"
+      };
+    }
+  }
+
+  setJsonLd(jsonLd);
 }

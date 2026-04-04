@@ -10,10 +10,13 @@
     "lint": "eslint .",
     "test": "vitest",
     "test:run": "vitest run",
+    "cdp:export-seeds": "node scripts/export-city-cdp-seeds.mjs",
     "check": "npm run lint && npm run test:run && npm run build"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

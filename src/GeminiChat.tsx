@@ -1,7 +1,7 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import type { Locale } from "./types";
-import { allCities } from "./cityData";
-import { instruments } from "./financialToolkit";
+import { useCitySummaries } from "./cityApi";
+import { getCityContextSummaryPrompt, getCityDataRailReferenceText, getCityFinanceInstrumentCatalog } from "./cityCdp";
 import { dataSources } from "./evidenceData";
 
 interface Props {
@@ -17,13 +17,9 @@ const GEMINI_KEY = "AIzaSyA9R-CL2hEyXKr1ppc6ahGY9jKa3mYE5hU";
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
 
 /** Build the RAG context from our data */
-function buildContext(): string {
-  const citySummaries = allCities.slice(0, 20).map(c =>
-    `${c.nameEn} (${c.nameTh}): ${c.province}, Tier ${c.tier}, Score ${c.compositeScore}, Status: ${c.reality}, Dimensions: ${c.smartDimensions.join(", ")}. ${c.tagline}`
-  ).join("\n");
-
-  const instrumentSummaries = instruments.slice(0, 8).map(i =>
-    `${i.name}: ${i.category}, Tiers: ${i.applicableTiers.join("/")}, Typical: ${i.typicalSize}. ${i.thaiRelevance}`
+function buildContext(citySummaryPrompt: string, locale: Locale): string {
+  const instrumentSummaries = getCityFinanceInstrumentCatalog().slice(0, 8).map(i =>
+    `${i.name}: ${i.category}, Segments: ${i.segmentFit.join("/")}. ${i.whyItFits.en}`
   ).join("\n");
 
   const sourceSummaries = dataSources.map(s =>
@@ -42,13 +38,16 @@ KEY FACTS:
 - Led by Dr. Non Arkaraprasertkul (Senior Expert, Smart City Promotion)
 
 TOP CITIES:
-${citySummaries}
+${citySummaryPrompt}
 
-FINANCIAL INSTRUMENTS (from ASEAN Smart City Toolkit):
+FINANCIAL INSTRUMENTS (tailored CDP backend):
 ${instrumentSummaries}
 
 DATA SOURCES:
 ${sourceSummaries}
+
+BACKEND CITY DATA RAILS:
+${getCityDataRailReferenceText(locale)}
 
 Nakhon Si Thammarat is the model city: 112,000 app users, <48h issue resolution, 10-hour flood warning, 0 flood fatalities since 2021. Mayor Kanop's citizen-centric approach.
 
@@ -63,8 +62,25 @@ export default function GeminiChat({ locale }: Props) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { data: cities } = useCitySummaries();
+  const systemPrompt = useRef("");
 
-  const systemPrompt = useRef(buildContext());
+  const citySummaryPrompt = useMemo(() => {
+    if (cities.length) {
+      return cities
+        .slice(0, 20)
+        .map(city =>
+          `${city.nameEn} (${city.nameTh}): ${city.province}, Tier ${city.tier}, Score ${city.compositeScore}, Status: ${city.reality}, Dimensions: ${city.smartDimensions.join(", ")}. ${city.shortTailoredNote.en}`,
+        )
+        .join("\n");
+    }
+
+    return getCityContextSummaryPrompt();
+  }, [cities]);
+
+  useEffect(() => {
+    systemPrompt.current = buildContext(citySummaryPrompt, locale);
+  }, [citySummaryPrompt, locale]);
 
   const send = useCallback(async () => {
     if (!input.trim() || loading) return;
