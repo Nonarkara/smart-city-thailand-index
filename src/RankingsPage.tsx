@@ -32,7 +32,7 @@ function TierSection({
   const symbol = tier === "alpha" ? "α" : tier === "beta" ? "β" : "γ";
 
   return (
-    <div className={`tier-section tier-section-${tier}`}>
+    <div className={`tier-section tier-section-${tier} reveal visible`}>
       <div className="tier-section-header">
         <span className="tier-section-symbol">{symbol}</span>
         <h2>{TIER_LABELS[locale][tier]}</h2>

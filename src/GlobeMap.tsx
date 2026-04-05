@@ -37,7 +37,9 @@ export default function GlobeMap({ locale }: Props) {
 
   return (
     <div className="globe-wrap" ref={containerRef} onMouseMove={onMove}>
-      <svg viewBox="0 0 960 480" className="globe-svg" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox="0 0 960 480" className="globe-svg" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="globe-title globe-desc">
+        <title id="globe-title">SCITI Partner Network</title>
+        <desc id="globe-desc">{partners.length} partner organizations across {countryCount} countries connected to Thailand&apos;s smart city program</desc>
         {/* Real map tiles from ESRI — dark gray basemap */}
         <image
           href="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/export?bbox=-180,-60,180,75&size=1920,960&format=png&f=image&transparent=false"
@@ -84,7 +86,9 @@ export default function GlobeMap({ locale }: Props) {
           const same = sameCountry.has(p.id);
           const off = (i % 3) * 4;
           return (
-            <g key={p.id}>
+            <g key={p.id} tabIndex={0} role="button"
+              aria-label={`${p.name}, ${p.country} — ${p.type}`}
+              onFocus={() => setHovered(p)} onBlur={() => setHovered(null)}>
               <circle cx={pt.x + off} cy={pt.y} r="12" fill="transparent" style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHovered(p)} onMouseLeave={() => setHovered(null)} />
               {active && <circle cx={pt.x + off} cy={pt.y} r="9" fill={TYPE_COLORS[p.type]} opacity="0.15" />}

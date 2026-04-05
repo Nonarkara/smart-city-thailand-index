@@ -346,10 +346,34 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
             </div>
 
             <p className="partnership-body">{bodyLabel(locale, partnership)}</p>
+            
+            {/* LESSON LEARNED BOX */}
+            <div style={{ margin: '1rem 0', padding: '1rem', background: 'var(--alpha-bg)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid var(--alpha)' }}>
+              <p style={{ font: '700 .55rem var(--mono)', color: 'var(--alpha)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: '.35rem' }}>
+                {t(locale, "Strategic Lesson", "บทเรียนเชิงกลยุทธ์", "战略启示")}
+              </p>
+              <p style={{ fontSize: '.68rem', color: 'var(--2)', lineHeight: 1.5, margin: 0 }}>
+                {partnership.country === "Japan" 
+                  ? t(locale, "Cameras vs Asphalt: The Fujitsu/Smart JAMP project in Phuket proves that AI-driven traffic management is 1/10th the cost of road expansion with better long-term outcomes.", "กล้อง vs ยางมะตอย: โปรเจกต์ Fujitsu ในภูเก็ตพิสูจน์ว่า AI จัดการจราจรประหยัดกว่าสร้างถนน 10 เท่า และยั่งยืนกว่า", "摄像头 vs 沥青：普吉的富士通项目证明，AI 驱动的交通管理成本仅为道路扩建的 1/10，且长期效果更好。")
+                  : partnership.country === "United Kingdom"
+                  ? t(locale, "Standardization is Infrastructure: The UK Handbook taught us that a common vocabulary is as important as fiber optic cables for interoperability.", "มาตรฐานคือโครงสร้างพื้นฐาน: คู่มือของสหราชอาณาจักรย้ำเน้นว่า 'ศัพท์เทคนิคที่ตรงกัน' สำคัญเท่ากับสายไฟเบอร์ในการทำงานข้ามระบบ", "标准即基础设施：英国手册教会我们，统一的话语体系与光缆对互操作性同样重要。")
+                  : t(locale, "Blueprints Require Ownership: Technical assistence from Singapore or the US only sticks when local municipal capacity matches the project complexity.", "พิมพ์เขียวต้องการเจ้าของ: ความช่วยเหลือทางเทคนิคจากต่างประเทศจะยั่งยืนก็ต่อเมื่อศักยภาพท้องถิ่นโตทันความซับซ้อนของโครงการ", "蓝图需要所有权：只有当本地市政能力与项目复杂度匹配时，来自国外的技术援助才能落地。")
+                }
+              </p>
+            </div>
+
             <p className="partnership-status-note">{statusNotes[partnership.status][locale]}</p>
-            <a href={partnership.sourceUrl} target="_blank" rel="noopener noreferrer" className="partnership-source-link">
-              {partnership.sourceLabel} →
-            </a>
+            
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+              <a href={partnership.sourceUrl} target="_blank" rel="noopener noreferrer" className="partnership-source-link">
+                {partnership.sourceLabel} →
+              </a>
+              {partnership.country === "Japan" && (
+                <button onClick={() => onNavigate("/city/phuket")} className="endpoint-link" style={{ fontSize: '.6rem' }}>
+                  {t(locale, "View Phuket Case Study", "ดูเคสภูเก็ต", "查看普吉案例")} →
+                </button>
+              )}
+            </div>
           </article>
         ))}
       </section>

@@ -1,6 +1,7 @@
 import { SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_LABELS, PILLAR_COLORS, PILLAR_WEIGHTS } from "./types";
+import { translate } from "./cityPresentation";
 
 interface Props {
   locale: Locale;
@@ -165,23 +166,49 @@ export default function MethodologyPage({ locale }: Props) {
         </div>
       </section>
 
-      {/* ─── AUDIT TRAIL CTA ─── */}
-      <section className="section reveal stagger-4 visible">
-        <div className="audit-cta glass-card shadow-premium">
-          <div className="audit-cta-content">
-            <h3>{locale === "th" ? "ความโปร่งใสแบบโอเพนซอร์ส" : locale === "zh" ? "开源透明性" : "Open Source Transparency"}</h3>
-            <p>
-              {locale === "th" 
-                ? "เราไม่เก็บซ่อนสูตรลับ ทุกการคำนวณตรวจสอบได้ผ่านหน้า Audit และ API Reference" 
-                : locale === "zh" 
-                ? "我们不隐藏秘密配方。所有计算都可通过 Audit 页面和 API 参考进行验证。" 
-                : "No black boxes. Every calculation is auditable through our Audit logs and API references."}
+      {/* ─── WEIGHTING & LIMITATIONS ─── */}
+      <section className="reveal stagger-4 visible" style={{ marginTop: '3rem', borderTop: '1px solid var(--5)', paddingTop: '2rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+          <div>
+            <h3>{translate(locale, { en: "Citizen-Centric Weighting", th: "การถ่วงน้ำหนักโดยยึดพลเมือง", zh: "以公民为中心的权重分配" })}</h3>
+            <p style={{ fontSize: '.75rem', color: 'var(--2)', lineHeight: 1.6 }}>
+              {translate(locale, {
+                en: "Unlike traditional indices that weight 'Planning' or 'Investment Volume' highly, SCITI prioritizes 'Lived Experience'. Livability and Wellbeing account for 35% of the score because a smart city that doesn't improve daily life is just an expensive server room.",
+                th: "ต่างจากดัชนีทั่วไปที่ให้น้ำหนัก 'การวางแผน' หรือ 'งบประมาณ' สูง SCITI ให้ความสำคัญกับ 'ประสบการณ์จริง' Livability และ Wellbeing คิดเป็น 35% ของคะแนน เพราะเมืองที่ฉลาดแต่ไม่ทำให้ชีวิตดีขึ้น ก็เป็นเพียงห้องเซิร์ฟเวอร์ราคาแพง",
+                zh: "与传统指数高度评价“规划”或“投资额”不同，SCITI 优先考虑“生活体验”。宜居性和福祉占得分的 35%，因为不改善日常生活的智慧城市只不过是一个昂贵的服务器机房。"
+              })}
             </p>
           </div>
-          <div className="audit-cta-actions">
-            <a href="/audit" className="cta-button shadow-premium">View Audit Logs</a>
-            <a href="/references" className="ghost-button">API Specs</a>
+          <div>
+            <h3>{translate(locale, { en: "Data Limitations", th: "ข้อจำกัดของข้อมูล", zh: "数据局限性" })}</h3>
+            <p style={{ fontSize: '.75rem', color: 'var(--2)', lineHeight: 1.6 }}>
+              {translate(locale, {
+                en: "We only measure what is falsifiable. Digital metrics rely on depa-certified API nodes. If a city has a project but no data rail, it scores 0. This is a feature, not a bug—it forces cities to prioritize interoperability over PR.",
+                th: "เราวัดเฉพาะสิ่งที่พิสูจน์ได้เท่านั้น ตัวชี้วัดดิจิทัลอ้างอิงจาก API ที่ depa รับรอง หากเมืองมีโปรเจกต์แต่ไม่มีรางข้อมูล (Data Rail) จะได้ 0 คะแนน นี่คือ 'คุณลักษณะ' ไม่ใช่ 'ข้อผิดพลาด' เพื่อบีบให้เมืองเลิกทำ PR แล้วหันมาทำระบบข้อมูลที่เชื่อมต่อได้จริง",
+                zh: "我们只测量可证伪的内容。数字指标依赖于 depa 认证的 API 节点。如果一个城市有项目但没有数据轨道（Data Rail），它将得到 0 分。这是一个“特性”而非“错误”——它迫使城市优先考虑互操作性而非公关。"
+              })}
+            </p>
           </div>
+        </div>
+      </section>
+
+      {/* ─── EXTERNAL SOURCES ─── */}
+      <section className="section reveal visible" style={{ marginTop: '2rem' }}>
+        <p className="eyebrow">{translate(locale, { en: "Data Sovereignty", th: "แหล่งข้อมูลอ้างอิง", zh: "数据主权" })}</p>
+        <h2>{translate(locale, { en: "Primary Evidence Nodes", th: "โหนดหลักฐานหลัก", zh: "原始证据节点" })}</h2>
+        <div className="sources-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+          {[
+            { name: "NSO Thailand", url: "http://www.nso.go.th/", label: "Socio-economic Stats" },
+            { name: "GISTDA", url: "https://www.gistda.or.th/", label: "Satellite/Environ Reality" },
+            { name: "Air4Thai", url: "http://air4thai.pcd.go.th/", label: "Real-time Air Quality" },
+            { name: "depa City Platform", url: "https://smartcitythailand.com", label: "Certified Project API" }
+          ].map(s => (
+            <div key={s.name} className="source-card glass-card">
+              <div className="source-card-name" style={{ fontSize: '.7rem', fontWeight: 800 }}>{s.name}</div>
+              <div className="source-card-desc" style={{ fontSize: '.6rem', marginBottom: '.5rem' }}>{s.label}</div>
+              <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '.55rem', color: 'var(--teal)' }}>{s.url} →</a>
+            </div>
+          ))}
         </div>
       </section>
     </div>

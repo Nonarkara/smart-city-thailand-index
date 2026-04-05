@@ -175,44 +175,53 @@ export default function App() {
       <a href="#main-content" className="skip-link">Skip to content</a>
       <div className="institutional-banner">
         <div className="institutional-logos">
-          <ResponsiveImage
-            src={MDES_LOGO.src}
-            alt={locale === "th" ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม" : "Ministry of Digital Economy and Society"}
-            className="institutional-logo"
-            width={MDES_LOGO.width}
-            height={MDES_LOGO.height}
-            loading="eager"
-          />
-          <ResponsiveImage
-            src={DEPA_LOGO.src}
-            alt={locale === "th" ? "สำนักงานส่งเสริมเศรษฐกิจดิจิทัล" : "Digital Economy Promotion Agency (depa)"}
-            className="institutional-logo"
-            width={DEPA_LOGO.width}
-            height={DEPA_LOGO.height}
-            loading="eager"
-          />
-          <ResponsiveImage
-            src={SMART_CITY_LOGO.src}
-            alt={locale === "th" ? "สำนักงานเมืองอัจฉริยะประเทศไทย" : "Smart City Thailand Office"}
-            className="institutional-logo"
-            width={SMART_CITY_LOGO.width}
-            height={SMART_CITY_LOGO.height}
-            loading="eager"
-          />
+          <div className="institutional-logo-container">
+            <ResponsiveImage
+              src={MDES_LOGO.src}
+              alt={locale === "th" ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม" : "Ministry of Digital Economy and Society"}
+              className="institutional-logo"
+              width={MDES_LOGO.width}
+              height={MDES_LOGO.height}
+              loading="eager"
+            />
+          </div>
+          <div className="institutional-logo-container">
+            <ResponsiveImage
+              src={DEPA_LOGO.src}
+              alt={locale === "th" ? "สำนักงานส่งเสริมเศรษฐกิจดิจิทัล" : "Digital Economy Promotion Agency (depa)"}
+              className="institutional-logo"
+              width={DEPA_LOGO.width}
+              height={DEPA_LOGO.height}
+              loading="eager"
+            />
+          </div>
+          <div className="institutional-logo-container">
+            <ResponsiveImage
+              src={SMART_CITY_LOGO.src}
+              alt={locale === "th" ? "สำนักงานเมืองอัจฉริยะประเทศไทย" : "Smart City Thailand Office"}
+              className="institutional-logo"
+              width={SMART_CITY_LOGO.width}
+              height={SMART_CITY_LOGO.height}
+              loading="eager"
+            />
+          </div>
         </div>
       </div>
 
       {/* ─── TOPBAR ─── */}
       <nav className="topbar">
         <button type="button" className="brand-lockup" onClick={() => navigate("/")}>
-          <ResponsiveImage
-            src={SMART_CITY_LOGO.src}
-            alt="Smart City Thailand"
-            className="brand-logo"
-            width={SMART_CITY_LOGO.width}
-            height={SMART_CITY_LOGO.height}
-            loading="eager"
-          />
+          <div className="institutional-logo-container" style={{ padding: '2px', marginRight: '8px' }}>
+            <ResponsiveImage
+              src={SMART_CITY_LOGO.src}
+              alt="Smart City Thailand"
+              className="brand-logo"
+              width={SMART_CITY_LOGO.width}
+              height={SMART_CITY_LOGO.height}
+              loading="eager"
+              style={{ width: '24px', height: '24px' }}
+            />
+          </div>
           <span className="brand-name">
             {locale === "th" ? "ดัชนีเมืองอัจฉริยะไทย" : locale === "zh" ? "泰国智慧城市指数" : "Smart City Thailand Index"}
           </span>
@@ -375,10 +384,10 @@ export default function App() {
               </div>
 
               <div className="footer-logos">
-                <ResponsiveImage src={MDES_LOGO.src} alt="MDES" className="footer-logo" width={MDES_LOGO.width} height={MDES_LOGO.height} />
-                <ResponsiveImage src={DEPA_LOGO.src} alt="depa" className="footer-logo" width={DEPA_LOGO.width} height={DEPA_LOGO.height} />
-                <ResponsiveImage src={SMART_CITY_LOGO.src} alt="Smart City Thailand" className="footer-logo" width={SMART_CITY_LOGO.width} height={SMART_CITY_LOGO.height} />
-                <ResponsiveImage src={SLIC_LOGO.src} alt="SLIC Index" className="footer-logo" width={SLIC_LOGO.width} height={SLIC_LOGO.height} />
+                <div className="institutional-logo-container"><ResponsiveImage src={MDES_LOGO.src} alt="MDES" className="footer-logo" width={MDES_LOGO.width} height={MDES_LOGO.height} /></div>
+                <div className="institutional-logo-container"><ResponsiveImage src={DEPA_LOGO.src} alt="depa" className="footer-logo" width={DEPA_LOGO.width} height={DEPA_LOGO.height} /></div>
+                <div className="institutional-logo-container"><ResponsiveImage src={SMART_CITY_LOGO.src} alt="Smart City Thailand" className="footer-logo" width={SMART_CITY_LOGO.width} height={SMART_CITY_LOGO.height} /></div>
+                <div className="institutional-logo-container"><ResponsiveImage src={SLIC_LOGO.src} alt="SLIC Index" className="footer-logo" width={SLIC_LOGO.width} height={SLIC_LOGO.height} /></div>
               </div>
 
               <div className="footer-bottom">

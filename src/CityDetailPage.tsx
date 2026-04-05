@@ -105,11 +105,12 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
   const dataPath = dataPoints.map((pt, index) => `${index === 0 ? "M" : "L"} ${pt.x},${pt.y}`).join(" ") + " Z";
 
   return (
-    <svg viewBox="0 0 280 280" className="radar-chart">
+    <svg viewBox="0 0 280 280" className="radar-chart" role="img" aria-labelledby="radar-title">
+      <title id="radar-title">{pillars.map(p => `${PILLAR_SHORT_LABELS[locale][p]}: ${scores[p]}/100`).join(", ")}</title>
       {rings.map(ring => {
         const points = pillars.map((_, index) => getPoint(index, ring));
         const path = points.map((pt, index) => `${index === 0 ? "M" : "L"} ${pt.x},${pt.y}`).join(" ") + " Z";
-        return <path key={ring} d={path} fill="none" stroke="#E8E8EC" strokeWidth="0.5" opacity="0.5" />;
+        return <path key={ring} d={path} fill="none" stroke="var(--5, #E8E8EC)" strokeWidth="0.5" opacity="0.5" />;
       })}
 
       {pillars.map((_, index) => {
@@ -164,6 +165,64 @@ function StatBar({ pillar, value, locale }: { pillar: ScoringPillar; value: numb
       <div className="rpg-stat-grade" style={{ color: gradeColor(grade) }}>{grade}</div>
     </div>
   );
+}
+
+function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
+  if (cityId === "phuket") {
+    return (
+      <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--teal)', marginTop: '2rem' }}>
+        <p className="eyebrow" style={{ color: 'var(--teal)' }}>{translate(locale, { en: "Institutional Spotlight", th: "จุดเด่นเชิงสถาบัน", zh: "机构亮点" })}</p>
+        <h3 style={{ fontSize: '1.2rem', marginBottom: '.5rem' }}>{translate(locale, { en: "Japan / Fujitsu Smart JAMP Case", th: "กรณีศึกษา Fujitsu Smart JAMP (ญี่ปุ่น)", zh: "日本 / 富士通 Smart JAMP 案例" })}</h3>
+        <p style={{ fontSize: '.75rem', lineHeight: 1.6, color: 'var(--2)' }}>
+          {translate(locale, {
+            en: "Phuket isn't just installing cameras; it's proving the 'AI vs Asphalt' philosophy. By using Fujitsu's traffic AI, the city reduced congestion at major roundabouts by 15% without widening a single road. This is the definition of a high-maturity digital outcome.",
+            th: "ภูเก็ตไม่ได้แค่ติดกล้อง แต่กำลังพิสูจน์ปรัชญา 'AI vs ยางมะตอย' ด้วยการใช้ AI จาก Fujitsu บริหารจราจร เมืองสามารถลดความหนาแน่นที่วงเวียนหลักได้ 15% โดยไม่ต้องขยายถนนแม้แต่นิ้วเดียว นี่คือคำนิยามของผลลัพธ์ดิจิทัลระดับสูง",
+            zh: "普吉不仅是在安装摄像头；它正在证明“AI 对抗沥青”的哲学。通过使用富士通的交通 AI，该市在没有拓宽任何道路的情况下，将主要环岛的拥堵减少了 15%。这就是高成熟度数字成果的定义。"
+          })}
+        </p>
+        <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--teal)' }}>
+          RESULT: -15% CONGESTION | 0km NEW ASPHALT
+        </div>
+      </div>
+    );
+  }
+  if (cityId === "khon-kaen") {
+    return (
+      <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--alpha)', marginTop: '2rem' }}>
+        <p className="eyebrow" style={{ color: 'var(--alpha)' }}>{translate(locale, { en: "Community Grit", th: "ใจสู้คนท้องถิ่น", zh: "社区韧性" })}</p>
+        <h3 style={{ fontSize: '1.2rem', marginBottom: '.5rem' }}>{translate(locale, { en: "KKTS: The Local Consortium", th: "KKTS: คอนซอร์เทียมท้องถิ่น", zh: "KKTS：地方财团" })}</h3>
+        <p style={{ fontSize: '.75rem', lineHeight: 1.6, color: 'var(--2)' }}>
+          {translate(locale, {
+            en: "Khon Kaen's success isn't about central budget—it's about local grit. Through KKTS (Khon Kaen Transit System), the city's private sectors and 5 municipalities funded their own Smart Bus and are pushing for LRT. This bottom-up ownership makes Khon Kaen the most resilient smart city in the index.",
+            th: "ความสำเร็จของขอนแก่นไม่ใช่เรื่องงบส่วนกลาง แต่คือความใจสู้ของท้องถิ่น ผ่าน KKTS (บริษัท ขอนแก่น ทรานซิท ซิสเต็ม) ภาคเอกชนและ 5 เทศบาลร่วมกันลงขันสร้าง Smart Bus และผลักดัน LRT การเป็นเจ้าของจากฐานรากทำให้ขอนแก่นเป็นเมืองอัจฉริยะที่ยืดหยุ่นที่สุด",
+            zh: "孔敬的成功不在于中央预算，而在于地方韧性。通过 KKTS，该市的私营部门和 5 个市政当局资助了自己的智慧巴士，并正在推动轻轨建设。这种自下而上的所有权使孔敬成为指数中最具韧性的智慧城市。"
+          })}
+        </p>
+        <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--alpha)' }}>
+          MODEL: PPP 2.0 | OWNERSHIP: 100% LOCAL
+        </div>
+      </div>
+    );
+  }
+  if (cityId === "wangchan-valley") {
+    return (
+      <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--gamma)', marginTop: '2rem' }}>
+        <p className="eyebrow" style={{ color: 'var(--gamma)' }}>{translate(locale, { en: "Reality Audit", th: "ตรวจสอบความจริง", zh: "现实审计" })}</p>
+        <h3 style={{ fontSize: '1.2rem', marginBottom: '.5rem' }}>{translate(locale, { en: "The Laboratory Gap", th: "ช่องว่างห้องทดลอง", zh: "实验室差距" })}</h3>
+        <p style={{ fontSize: '.75rem', lineHeight: 1.6, color: 'var(--2)' }}>
+          {translate(locale, {
+            en: "Wangchan Valley has the highest infrastructure score in the country. However, our index ranks it Gamma. Why? Because a smart city without residents is a lab, not a city. Until the 'Live' component matches the 'Digital' hardware, it remains a brilliant prototype.",
+            th: "วังจันทร์วัลเลย์มีคะแนนโครงสร้างพื้นฐานสูงที่สุดในประเทศ แต่ดัชนีของเราจัดให้อยู่ Gamma ทำไม? เพราะเมืองอัจฉริยะที่ไม่มีคนอยู่คือห้องทดลอง ไม่ใช่เมือง จนกว่าส่วนประกอบ 'Live' จะโตทันฮาร์ดแวร์ 'Digital' ที่นี่ก็ยังเป็นเพียงต้นแบบที่ยอดเยี่ยม",
+            zh: "旺参谷拥有全国最高的基础设施得分。然而，我们的指数将其评为 Gamma。为什么？因为没有居民的智慧城市只是实验室，而不是城市。在“生活”维度赶上“数字”硬件之前，它仍然只是一个出色的原型。"
+          })}
+        </p>
+        <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--gamma)' }}>
+          STATUS: PLANNED GAMMA | GAP: 0 RESIDENTS
+        </div>
+      </div>
+    );
+  }
+  return null;
 }
 
 function ScoreBreakdown({
@@ -274,7 +333,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
   return (
     <>
-      {cityPhoto && (
+      {cityPhoto ? (
         <div className="city-hero-photo">
           <ResponsiveImage
             src={cityPhoto}
@@ -287,6 +346,11 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
             <span className="city-hero-photo-title">{cityName}</span>
             <span className="city-hero-photo-score">{city.compositeScore.toFixed(1)}</span>
           </div>
+        </div>
+      ) : (
+        <div className={`city-hero-gradient city-hero-gradient-${city.tier}`}>
+          <span className="city-hero-gradient-title">{cityName}</span>
+          <span className="city-hero-gradient-score">{city.compositeScore.toFixed(1)}</span>
         </div>
       )}
 
@@ -328,6 +392,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
         <p className="city-detail-tagline">{cityTagline}</p>
         <p className="section-intro">{city.shortTailoredNote[locale]}</p>
+
+        {/* City-specific handcrafted spotlight */}
+        <CitySpotlight cityId={cityId} locale={locale} />
 
         <div className="city-quick-facts">
           <div className="city-quick-metrics">

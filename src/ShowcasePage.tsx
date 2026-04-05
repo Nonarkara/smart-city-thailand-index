@@ -1,32 +1,28 @@
+import { translate } from "./cityPresentation";
 import type { Locale } from "./types";
 import { ResponsiveImage } from "./mediaAssets";
+import { useInView } from "./useInView";
 
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
 }
 
-interface LocalizedItem {
-  en: string;
-  th: string;
-  zh: string;
-}
-
 interface ShowcaseMetric {
   value: string;
-  label: LocalizedItem;
+  label: { en: string; th: string; zh: string };
 }
 
 interface ShowcaseIdea {
   id: string;
   icon: string;
-  title: LocalizedItem;
-  desc: LocalizedItem;
+  title: { en: string; th: string; zh: string };
+  desc: { en: string; th: string; zh: string };
 }
 
 interface ShowcaseSource {
   title: string;
-  note: LocalizedItem;
+  note: { en: string; th: string; zh: string };
 }
 
 const metrics: ShowcaseMetric[] = [
@@ -176,24 +172,29 @@ const beforeAfterRows = [
   },
 ];
 
-function t(locale: Locale, copy: LocalizedItem): string {
-  return locale === "th" ? copy.th : locale === "zh" ? copy.zh : copy.en;
-}
-
 export default function ShowcasePage({ locale, onNavigate }: Props) {
+  const [heroRef, heroVisible] = useInView(0.1);
+  const [metricRef, metricVisible] = useInView(0.1);
+  const [summaryRef, summaryVisible] = useInView(0.1);
+  const [practiceRef, practiceVisible] = useInView(0.1);
+  const [cscoRef, cscoVisible] = useInView(0.1);
+  const [proofRef, proofVisible] = useInView(0.1);
+  const [sourceRef, sourceVisible] = useInView(0.1);
+  const [closingRef, closingVisible] = useInView(0.1);
+
   return (
-    <>
-      <section className="section showcase-hero">
-        <p className="eyebrow">{t(locale, { en: "Case study", th: "กรณีศึกษา", zh: "案例研究" })}</p>
+    <div className="showcase-page">
+      <section ref={heroRef} className={`section showcase-hero reveal ${heroVisible ? "visible" : ""}`}>
+        <p className="eyebrow">{translate(locale, { en: "Case study", th: "กรณีศึกษา", zh: "案例研究" })}</p>
         <h1 className="hero-title showcase-title">
-          {locale === "th"
-            ? <>นครศรีธรรมราช:<br />เมืองที่ฟังประชาชน</>
-            : locale === "zh"
-              ? <>那空是贪玛叻：<br />一座学会倾听的城市。</>
-              : <>Nakhon Si Thammarat:<br />the city that listened.</>}
+          {translate(locale, {
+            en: "Nakhon Si Thammarat: the city that listened.",
+            th: "นครศรีธรรมราช: เมืองที่ฟังประชาชน",
+            zh: "那空是贪玛叻：一座学会倾听的城市。",
+          })}
         </h1>
         <p className="hero-strapline showcase-strapline">
-          {t(locale, {
+          {translate(locale, {
             en: "This page is here to answer one question cleanly: what does a citizen-centric smart city look like when the work leaves the slide deck and hits the street?",
             th: "หน้านี้มีไว้ตอบคำถามเดียวให้ชัด: เมืองอัจฉริยะที่เน้นประชาชนหน้าตาเป็นอย่างไร เมื่อมันออกจากสไลด์แล้วลงไปอยู่บนถนนจริง",
             zh: "这一页只想干净地回答一个问题：当智慧城市离开 PPT、真正落到街头以后，以市民为中心到底长什么样？",
@@ -201,10 +202,10 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         </p>
         <div className="showcase-hero-actions">
           <button type="button" className="cta-button" onClick={() => onNavigate("/city/nakhon-si-thammarat")}>
-            {t(locale, { en: "View city profile", th: "ดูข้อมูลเมือง", zh: "查看城市档案" })}
+            {translate(locale, { en: "View city profile", th: "ดูข้อมูลเมือง", zh: "查看城市档案" })}
           </button>
           <a href="https://nonarkara.github.io/asean-csco-app/#manifesto" target="_blank" rel="noopener noreferrer" className="ghost-button">
-            {t(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开 ASEAN CSCO 手册" })}
+            {translate(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开 ASEAN CSCO 手册" })}
           </a>
         </div>
         {/* NST Photo Strip */}
@@ -231,7 +232,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           </div>
         </div>
         <p className="showcase-source-note">
-          {t(locale, {
+          {translate(locale, {
             en: "Outcome figures below are reported in municipal case materials, nomination files, and the ASEAN CSCO case-study stack. They are presented here as documented case evidence, not as live telemetry.",
             th: "ตัวเลขผลลัพธ์ด้านล่างมาจากเอกสารกรณีศึกษาของเทศบาล เอกสารเสนอรับรอง และชุดกรณีศึกษา ASEAN CSCO เรานำเสนอในฐานะหลักฐานจากเอกสาร ไม่ใช่ telemetry แบบสด",
             zh: "下方结果数据来自市政案例材料、提名文件与 ASEAN CSCO 案例资料。这里把它们当作文档化证据呈现，而不是实时遥测数据。",
@@ -239,31 +240,31 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         </p>
       </section>
 
-      <section className="section showcase-metric-section">
+      <section ref={metricRef} className={`section showcase-metric-section reveal stagger-1 ${metricVisible ? "visible" : ""}`}>
         <div className="showcase-metric-grid">
           {metrics.map(metric => (
             <div key={metric.value + metric.label.en} className="showcase-metric-card">
               <div className="showcase-metric-value">{metric.value}</div>
-              <div className="showcase-metric-label">{t(locale, metric.label)}</div>
+              <div className="showcase-metric-label">{translate(locale, metric.label)}</div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="section showcase-summary-section">
+      <section ref={summaryRef} className={`section showcase-summary-section reveal stagger-2 ${summaryVisible ? "visible" : ""}`}>
         <div className="showcase-summary-grid">
           <article className="showcase-summary-card">
-            <p className="showcase-card-kicker">{t(locale, { en: "Leadership", th: "ภาวะผู้นำ", zh: "领导力" })}</p>
-            <h2>{t(locale, { en: "Mayor Kanop Ketchart", th: "นายกคานป เกชาติ", zh: "Kanop Ketchart 市长" })}</h2>
+            <p className="showcase-card-kicker">{translate(locale, { en: "Leadership", th: "ภาวะผู้นำ", zh: "领导力" })}</p>
+            <h2>{translate(locale, { en: "Mayor Kanop Ketchart", th: "นายกคานป เกชาติ", zh: "Kanop Ketchart 市长" })}</h2>
             <p>
-              {t(locale, {
+              {translate(locale, {
                 en: "The city story only makes sense if leadership is understood as a listening system. The mayor's role here is not technological heroism. It is repeated contact, direct explanation, and willingness to make the service loop visible.",
                 th: "เรื่องของเมืองนี้จะเข้าใจไม่ได้เลย ถ้าไม่มองผู้นำเป็นระบบการฟัง บทบาทของนายกที่นี่ไม่ใช่วีรกรรมทางเทคโนโลยี แต่คือการลงไปสัมผัสซ้ำๆ อธิบายตรงๆ และยอมให้วงจรบริการถูกมองเห็น",
                 zh: "如果不把领导力理解成一种“倾听系统”，这座城市的故事就讲不通。这里的市长角色不是技术英雄，而是反复接触、直接解释，并愿意把服务闭环摆到明面上。",
               })}
             </p>
             <blockquote className="showcase-quote">
-              {t(locale, {
+              {translate(locale, {
                 en: "\"You don't push high technology to people. Show them the benefit. They decide.\"",
                 th: "\"คุณไม่ผลักเทคโนโลยีสูงให้คน แสดงประโยชน์ให้เขาเห็น แล้วให้เขาตัดสินใจ\"",
                 zh: "\"你不能把高科技硬塞给人。先让他们看到好处，再由他们自己决定。\"",
@@ -272,10 +273,10 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           </article>
 
           <article className="showcase-summary-card">
-            <p className="showcase-card-kicker">{t(locale, { en: "Why it works", th: "ทำไมมันเวิร์ก", zh: "为什么有效" })}</p>
-            <h2>{t(locale, { en: "The system closes the loop", th: "ระบบมันปิดลูปได้", zh: "这套系统能闭环" })}</h2>
+            <p className="showcase-card-kicker">{translate(locale, { en: "Why it works", th: "ทำไมมันเวิร์ก", zh: "为什么有效" })}</p>
+            <h2>{translate(locale, { en: "The system closes the loop", th: "ระบบมันปิดลูปได้", zh: "这套系统能闭环" })}</h2>
             <p>
-              {t(locale, {
+              {translate(locale, {
                 en: "The interesting part is not that the city has an app. Plenty of cities have apps. The interesting part is that reports, ratings, flood alerts, service teams, and public communication are tied together tightly enough to change behavior.",
                 th: "จุดที่น่าสนใจไม่ใช่ว่าเมืองนี้มีแอป เพราะหลายเมืองก็มีแอป จุดที่น่าสนใจคือการที่รายงาน คะแนน เตือนน้ำท่วม ทีมปฏิบัติงาน และการสื่อสารสาธารณะ ถูกมัดเข้าด้วยกันแน่นพอที่จะเปลี่ยนพฤติกรรมได้",
                 zh: "真正有意思的不是这座城市“有一个应用”，因为很多城市都有。关键在于报修、评分、洪水预警、执行团队与公共沟通被绑得足够紧，足以改变行为。",
@@ -284,10 +285,10 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           </article>
 
           <article className="showcase-summary-card">
-            <p className="showcase-card-kicker">{t(locale, { en: "Why it matters", th: "ทำไมมันสำคัญ", zh: "为什么重要" })}</p>
-            <h2>{t(locale, { en: "This is a copyable model", th: "นี่คือโมเดลที่ลอกได้", zh: "这是一个可复制模型" })}</h2>
+            <p className="showcase-card-kicker">{translate(locale, { en: "Why it matters", th: "ทำไมมันสำคัญ", zh: "为什么重要" })}</p>
+            <h2>{translate(locale, { en: "This is a copyable model", th: "นี่คือโมเดลที่ลอกได้", zh: "这是一个可复制模型" })}</h2>
             <p>
-              {t(locale, {
+              {translate(locale, {
                 en: "Nothing on this page depends on being Bangkok, being rich, or buying exotic infrastructure first. That is why this city shows up as a showcase: the logic is modular, local-government scale, and teachable.",
                 th: "ไม่มีอะไรบนหน้านี้ที่ต้องอาศัยการเป็นกรุงเทพฯ การมีเงินหนา หรือการซื้อโครงสร้างพื้นฐานแปลกๆ ก่อน นี่แหละเหตุผลที่เมืองนี้ถูกยกเป็นต้นแบบ: ตรรกะมันเป็นโมดูล ขนาดเหมาะกับท้องถิ่น และสอนต่อได้",
                 zh: "本页没有任何一件事要求你必须是曼谷、必须很有钱，或必须先买一堆稀奇基础设施。这正是它成为样板的原因：逻辑是模块化的，适合地方政府规模，而且可以教、可以学、可以复制。",
@@ -297,14 +298,14 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="section showcase-practice-section">
+      <section ref={practiceRef} className={`section showcase-practice-section reveal stagger-3 ${practiceVisible ? "visible" : ""}`}>
         <div className="story-section-head">
           <div>
-            <p className="eyebrow">{t(locale, { en: "Steal this playbook", th: "ขโมย playbook นี้", zh: "把这套打法拿去用" })}</p>
-            <h2>{t(locale, { en: "Six ideas other cities can copy", th: "หกไอเดียที่เมืองอื่นลอกได้", zh: "其他城市能复制的六个点子" })}</h2>
+            <p className="eyebrow">{translate(locale, { en: "Steal this playbook", th: "ขโมย playbook นี้", zh: "把这套打法拿去用" })}</p>
+            <h2>{translate(locale, { en: "Six ideas other cities can copy", th: "หกไอเดียที่เมืองอื่นลอกได้", zh: "其他城市能复制的六个点子" })}</h2>
           </div>
           <p className="section-intro story-section-intro">
-            {t(locale, {
+            {translate(locale, {
               en: "The point is not to admire the case. The point is to steal the mechanics that travel well.",
               th: "ประเด็นไม่ใช่การชื่นชมกรณีศึกษา แต่คือการขโมยกลไกที่เอาไปใช้ที่อื่นได้",
               zh: "重点不是欣赏这个案例，而是把那些可迁移的机制直接拿走。",
@@ -316,8 +317,8 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <article key={idea.id} className="showcase-idea-card">
               <div className="showcase-idea-icon">{idea.icon}</div>
               <div>
-                <h3 className="showcase-idea-title">{t(locale, idea.title)}</h3>
-                <p className="showcase-idea-body">{t(locale, idea.desc)}</p>
+                <h3 className="showcase-idea-title">{translate(locale, idea.title)}</h3>
+                <p className="showcase-idea-body">{translate(locale, idea.desc)}</p>
               </div>
             </article>
           ))}
@@ -325,29 +326,29 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── CSCO PRINCIPLES ─── */}
-      <section className="section" style={{ marginBottom: "2rem" }}>
-        <p className="eyebrow">{t(locale, { en: "ASEAN CSCO", th: "ASEAN CSCO", zh: "ASEAN CSCO" })}</p>
-        <h2>{t(locale, { en: "What citizen-centric actually means", th: "ที่เน้นประชาชนจริงๆ หมายถึงอะไร", zh: "以市民为中心到底是什么意思" })}</h2>
+      <section ref={cscoRef} className={`section reveal stagger-4 ${cscoVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+        <p className="eyebrow">{translate(locale, { en: "ASEAN CSCO", th: "ASEAN CSCO", zh: "ASEAN CSCO" })}</p>
+        <h2>{translate(locale, { en: "What citizen-centric actually means", th: "ที่เน้นประชาชนจริงๆ หมายถึงอะไร", zh: "以市民为中心到底是什么意思" })}</h2>
         <div className="showcase-csco-grid">
           <div className="showcase-csco-card">
-            <h3>{t(locale, { en: "Start with the complaint, not the sensor.", th: "เริ่มจากข้อร้องเรียน ไม่ใช่เซ็นเซอร์", zh: "从投诉开始，不是从传感器。" })}</h3>
-            <p>{t(locale, {
+            <h3>{translate(locale, { en: "Start with the complaint, not the sensor.", th: "เริ่มจากข้อร้องเรียน ไม่ใช่เซ็นเซอร์", zh: "从投诉开始，不是从传感器。" })}</h3>
+            <p>{translate(locale, {
               en: "If you don't know what citizens are angry about, no amount of IoT will help. The complaint is the signal. The sensor is just the amplifier.",
               th: "ถ้าคุณไม่รู้ว่าประชาชนโกรธเรื่องอะไร IoT มากแค่ไหนก็ไม่ช่วย ข้อร้องเรียนคือสัญญาณ เซ็นเซอร์แค่ขยายสัญญาณ",
               zh: "如果你不知道市民在生什么气，再多物联网也没用。投诉是信号，传感器只是放大器。",
             })}</p>
           </div>
           <div className="showcase-csco-card">
-            <h3>{t(locale, { en: "If the mayor can't explain it on LINE, it's not ready.", th: "ถ้านายกอธิบายบน LINE ไม่ได้ แปลว่ายังไม่พร้อม", zh: "如果市长在LINE上解释不清楚，就还没准备好。" })}</h3>
-            <p>{t(locale, {
+            <h3>{translate(locale, { en: "If the mayor can't explain it on LINE, it's not ready.", th: "ถ้านายกอธิบายบน LINE ไม่ได้ แปลว่ายังไม่พร้อม", zh: "如果市长在LINE上解释不清楚，就还没准备好。" })}</h3>
+            <p>{translate(locale, {
               en: "The test of a smart city system is not the spec sheet. It's whether a non-technical mayor can explain the benefit to a resident in 30 seconds on a chat app.",
               th: "การทดสอบระบบเมืองอัจฉริยะไม่ใช่สเปกชีต แต่คือนายกที่ไม่ใช่สายเทคสามารถอธิบายประโยชน์ให้ชาวบ้านเข้าใจใน 30 วินาทีบนแอปแชทได้หรือเปล่า",
               zh: "智慧城市系统的检验标准不是规格书，而是一个非技术背景的市长能不能在聊天应用上30秒内向居民解释清楚好处。",
             })}</p>
           </div>
           <div className="showcase-csco-card">
-            <h3>{t(locale, { en: "A dashboard nobody checks is not a dashboard.", th: "แดชบอร์ดที่ไม่มีใครดู ไม่ใช่แดชบอร์ด", zh: "没人看的仪表板不是仪表板。" })}</h3>
-            <p>{t(locale, {
+            <h3>{translate(locale, { en: "A dashboard nobody checks is not a dashboard.", th: "แดชบอร์ดที่ไม่มีใครดู ไม่ใช่แดชบอร์ด", zh: "没人看的仪表板不是仪表板。" })}</h3>
+            <p>{translate(locale, {
               en: "Data is only useful when it changes a decision. If the dashboard exists but no staff member opens it before making a call, you built decoration, not intelligence.",
               th: "ข้อมูลมีค่าก็ต่อเมื่อมันเปลี่ยนการตัดสินใจ ถ้าแดชบอร์ดมีอยู่แต่ไม่มีเจ้าหน้าที่เปิดดูก่อนตัดสินใจ คุณสร้างของตกแต่ง ไม่ใช่ความฉลาด",
               zh: "数据只有改变决策时才有用。如果仪表板存在但没有工作人员在决策前打开它，你造的是装饰品，不是智能。",
@@ -356,35 +357,35 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         </div>
         <div style={{ marginTop: ".75rem" }}>
           <a href="https://nonarkara.github.io/asean-csco-app/" target="_blank" rel="noopener noreferrer" className="cta-button">
-            {t(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开ASEAN CSCO手册" })}
+            {translate(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开 ASEAN CSCO 手册" })}
           </a>
         </div>
       </section>
 
-      <section className="section showcase-proof-section">
+      <section ref={proofRef} className={`section showcase-proof-section reveal stagger-3 ${proofVisible ? "visible" : ""}`}>
         <div className="showcase-proof-grid">
-          <article className="showcase-proof-card">
-            <p className="showcase-card-kicker">{t(locale, { en: "Recognition", th: "การยอมรับ", zh: "认可" })}</p>
-            <h2>{t(locale, { en: "Awards and public validation", th: "รางวัลและการยืนยันสาธารณะ", zh: "奖项与公共验证" })}</h2>
+          <article className="showcase-proof-card shadow-premium glass-card">
+            <p className="showcase-card-kicker">{translate(locale, { en: "Recognition", th: "การยอมรับ", zh: "认可" })}</p>
+            <h2>{translate(locale, { en: "Awards and public validation", th: "รางวัลและการยืนยันสาธารณะ", zh: "奖项与公共验证" })}</h2>
             <div className="showcase-award-list">
               {awards.map(award => (
                 <div key={award.year + award.title.en} className="showcase-award-row">
                   <span className="showcase-award-year">{award.year}</span>
-                  <span className="showcase-award-title">{t(locale, award.title)}</span>
+                  <span className="showcase-award-title">{translate(locale, award.title)}</span>
                 </div>
               ))}
             </div>
           </article>
 
-          <article className="showcase-proof-card">
-            <p className="showcase-card-kicker">{t(locale, { en: "Before vs after", th: "ก่อน vs หลัง", zh: "前后对比" })}</p>
-            <h2>{t(locale, { en: "What changed operationally", th: "อะไรเปลี่ยนในเชิงปฏิบัติการ", zh: "运行层面改变了什么" })}</h2>
+          <article className="showcase-proof-card shadow-premium glass-card">
+            <p className="showcase-card-kicker">{translate(locale, { en: "Before vs after", th: "ก่อน vs หลัง", zh: "前后对比" })}</p>
+            <h2>{translate(locale, { en: "What changed operationally", th: "อะไรเปลี่ยนในเชิงปฏิบัติการ", zh: "运行层面改变了什么" })}</h2>
             <div className="showcase-delta-list">
               {beforeAfterRows.map(row => (
                 <div key={row.metric.en} className="showcase-delta-row">
-                  <span className="showcase-delta-metric">{t(locale, row.metric)}</span>
-                  <span className="showcase-delta-before">{t(locale, row.before)}</span>
-                  <span className="showcase-delta-after">{t(locale, row.after)}</span>
+                  <span className="showcase-delta-metric">{translate(locale, row.metric)}</span>
+                  <span className="showcase-delta-before">{translate(locale, row.before)}</span>
+                  <span className="showcase-delta-after">{translate(locale, row.after)}</span>
                 </div>
               ))}
             </div>
@@ -392,24 +393,24 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="section showcase-sources-section">
-        <p className="eyebrow">{t(locale, { en: "Source stack", th: "ชุดเอกสารอ้างอิง", zh: "来源堆栈" })}</p>
-        <h2>{t(locale, { en: "What this profile is built from", th: "โปรไฟล์นี้สร้างจากอะไร", zh: "这份画像建立在什么材料上" })}</h2>
+      <section ref={sourceRef} className={`section showcase-sources-section reveal stagger-4 ${sourceVisible ? "visible" : ""}`}>
+        <p className="eyebrow">{translate(locale, { en: "Source stack", th: "ชุดเอกสารอ้างอิง", zh: "来源堆栈" })}</p>
+        <h2>{translate(locale, { en: "What this profile is built from", th: "โปรไฟล์นี้สร้างจากอะไร", zh: "这份画像建立在什么材料上" })}</h2>
         <div className="showcase-source-grid">
           {sourceFiles.map(source => (
             <article key={source.title} className="showcase-source-card">
               <h3 className="showcase-source-title">{source.title}</h3>
-              <p className="showcase-source-body">{t(locale, source.note)}</p>
+              <p className="showcase-source-body">{translate(locale, source.note)}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section showcase-closing-section">
-        <div className="callout-card story-closing-card">
-          <h2>{t(locale, { en: "Every city in this index can learn from Nakhon.", th: "ทุกเมืองในดัชนีนี้เรียนรู้จากนครฯ ได้", zh: "本指数里的每座城市都能从那空学到东西。" })}</h2>
+      <section ref={closingRef} className={`section showcase-closing-section reveal stagger-3 ${closingVisible ? "visible" : ""}`}>
+        <div className="callout-card glass-card shadow-heavy">
+          <h2>{translate(locale, { en: "Every city in this index can learn from Nakhon.", th: "ทุกเมืองในดัชนีนี้เรียนรู้จากนครฯ ได้", zh: "本指数里的每座城市都能从那空学到东西。" })}</h2>
           <p>
-            {t(locale, {
+            {translate(locale, {
               en: "The value of this page is not hero worship. It is operational clarity. A city that listens, measures, responds, and reports back will usually beat a city that buys shinier hardware and calls it innovation.",
               th: "คุณค่าของหน้านี้ไม่ใช่การบูชาวีรบุรุษ แต่คือความชัดเชิงปฏิบัติการ เมืองที่ฟัง วัด ตอบสนอง และรายงานกลับ มักชนะเมืองที่ซื้อฮาร์ดแวร์วิบวับกว่าแล้วเรียกว่านวัตกรรม",
               zh: "本页的价值不在于造神，而在于操作上的清晰。一个会倾听、测量、响应并反馈的城市，通常会胜过那个买了更闪设备就自称创新的城市。",
@@ -417,14 +418,14 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           </p>
           <div className="story-closing-actions">
             <a href="https://nonarkara.github.io/asean-csco-app/" target="_blank" rel="noopener noreferrer" className="cta-button">
-              {t(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开 ASEAN CSCO 手册" })}
+              {translate(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开 ASEAN CSCO 手册" })}
             </a>
             <button type="button" className="ghost-button" onClick={() => onNavigate("/rankings")}>
-              {t(locale, { en: "Back to rankings", th: "กลับไปอันดับ", zh: "返回排名" })}
+              {translate(locale, { en: "Back to rankings", th: "กลับไปอันดับ", zh: "返回排名" })}
             </button>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
