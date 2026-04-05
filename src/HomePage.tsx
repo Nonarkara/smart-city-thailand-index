@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import ActionAtlas from "./ActionAtlas";
-import ComparisonGrid from "./ComparisonGrid";
 import { useInView } from "./useInView";
 import { useCitySummaries } from "./cityApi";
 import { filterCities, sortCities, summarizeCities } from "./cityCollections";
@@ -9,7 +8,6 @@ import {
   getProvinceName,
   translate,
 } from "./cityPresentation";
-import { ResponsiveImage } from "./mediaAssets";
 import type { CityTier, Locale, SmartCity } from "./types";
 import { TIER_LABELS, PILLAR_COLORS, PILLAR_SHORT_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
@@ -26,7 +24,7 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
     "phuket": { en: "Tourism engine, real tech", th: "เครื่องยนต์ท่องเที่ยว เทคจริง", zh: "旅游引擎，真技术" },
     "samyan": { en: "Innovation district, alive", th: "ย่านนวัตกรรม มีชีวิต", zh: "创新区，活的" },
     "chiang-mai-old-town": { en: "Heritage meets sensors", th: "มรดกพบเซ็นเซอร์", zh: "遗产遇上传感器" },
-    "khon-kaen": { en: "Isan's real deal", th: "ของจริงอีสาน", zh: "伊善的真货" },
+    "khon-kaen": { en: "Isan's real deal", th: "ของจริงอีสาน", zh: "伊善การเมือง", },
     "saensuk": { en: "Beach town, clean data", th: "เมืองชายหาด ข้อมูลสะอาด", zh: "海滩小城，干净数据" },
     "yala": { en: "Cleanest city, real grit", th: "เมืองสะอาดสุด ใจสู้", zh: "最干净城市，真韧性" },
     "wangchan-valley": { en: "Empty land, bold pitch", th: "ที่ดินว่าง pitch กล้า", zh: "空地一片，愿景很大" },
@@ -110,7 +108,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
   const [statusFilter, setStatusFilter] = useState<"all" | "certified" | "promotion">("all");
   const [tierFilter, setTierFilter] = useState<"all" | CityTier>("all");
   const [heroRef, heroVisible] = useInView(0.1);
-  const [comparisonRef, comparisonVisible] = useInView(0.1);
   const [guideRef, guideVisible] = useInView(0.1);
   const [atlasRef, atlasVisible] = useInView(0.1);
   const [rankingRef, rankingVisible] = useInView(0.1);
@@ -164,13 +161,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      {/* ─── REALITY GAP COMPARISON ─── */}
-      <section ref={comparisonRef} className={`reveal stagger-1 ${comparisonVisible ? "visible" : ""}`}>
-        <ComparisonGrid locale={locale} onNavigate={onNavigate} />
-      </section>
-
       {/* ─── HOW TO READ THIS ─── */}
-      <section ref={guideRef} className={`guide-strip reveal stagger-2 ${guideVisible ? "visible" : ""}`}>
+      <section ref={guideRef} className={`guide-strip reveal stagger-1 ${guideVisible ? "visible" : ""}`}>
         <div className="guide-strip-inner">
           <p className="guide-item">
             <strong>{translate(locale, { en: "Score 0\u2013100", th: "คะแนน 0\u2013100", zh: "0\u2013100 分" })}</strong>
@@ -180,12 +172,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── ACTION ATLAS ─── */}
-      <section ref={atlasRef} className={`reveal stagger-3 ${atlasVisible ? "visible" : ""}`}>
+      <section ref={atlasRef} className={`reveal stagger-2 ${atlasVisible ? "visible" : ""}`}>
         <ActionAtlas cities={previewCities} locale={locale} onNavigate={onNavigate} />
       </section>
 
       {/* ─── FIELDboard ─── */}
-      <section ref={rankingRef} className={`dashboard-panel reveal stagger-4 ${rankingVisible ? "visible" : ""}`}>
+      <section ref={rankingRef} className={`dashboard-panel reveal stagger-3 ${rankingVisible ? "visible" : ""}`}>
         <div className="dashboard-controls">
           <button className={`filter-btn ${statusFilter === "all" ? "active" : ""}`} onClick={() => setStatusFilter("all")}>All</button>
           <button className={`filter-btn ${statusFilter === "certified" ? "active" : ""}`} onClick={() => setStatusFilter("certified")}>Certified</button>
@@ -198,7 +190,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── FEEDBACK & CONTRIBUTIONS ─── */}
-      <section ref={feedbackRef} className={`section reveal stagger-5 ${feedbackVisible ? "visible" : ""}`}>
+      <section ref={feedbackRef} className={`section reveal stagger-4 ${feedbackVisible ? "visible" : ""}`}>
         <div className="feedback-cta glass-card shadow-premium">
           <h2>{translate(locale, { en: "Is your city missing?", th: "เมืองของคุณหายไปใช่ไหม?", zh: "您的城市不在名单上？" })}</h2>
           <p>{translate(locale, { en: "We only rank cities with enough verifiable data.", th: "เราจัดอันดับเฉพาะเมืองที่มีข้อมูลตรวจสอบได้เพียงพอ", zh: "我们仅对拥有足够可验证数据的城市进行排名。" })}</p>
