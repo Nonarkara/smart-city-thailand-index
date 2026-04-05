@@ -8,6 +8,7 @@ import {
   getProvinceName,
   translate,
 } from "./cityPresentation";
+import { ResponsiveImage } from "./mediaAssets";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
 import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS, TIER_LABELS } from "./types";
@@ -275,7 +276,13 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     <>
       {cityPhoto && (
         <div className="city-hero-photo">
-          <img src={cityPhoto} alt={cityName} loading="eager" />
+          <ResponsiveImage
+            src={cityPhoto}
+            alt={cityName}
+            loading="eager"
+            fetchPriority="high"
+            sizes="100vw"
+          />
           <div className="city-hero-photo-overlay">
             <span className="city-hero-photo-title">{cityName}</span>
             <span className="city-hero-photo-score">{city.compositeScore.toFixed(1)}</span>

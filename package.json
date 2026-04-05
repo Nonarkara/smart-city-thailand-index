@@ -12,6 +12,8 @@
     "test:run": "vitest run",
     "cdp:export-seeds": "node scripts/export-city-cdp-seeds.mjs",
     "assets:prune-public": "node scripts/prune-public-assets.mjs",
+    "assets:build-responsive": "node scripts/build-responsive-images.mjs",
+    "perf:lighthouse": "lhci autorun --config=./lighthouserc.json",
     "check": "npm run lint && npm run test:run && npm run build"
   },
   "dependencies": {
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@lhci/cli": "^0.15.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -34,6 +37,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "jsdom": "^29.0.1",
+    "sharp": "^0.34.5",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.58.0",
     "vite": "^6.2.0",

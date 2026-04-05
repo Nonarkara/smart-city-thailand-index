@@ -8,6 +8,7 @@ type LoadState<T> = {
 };
 
 const isTestMode = import.meta.env.MODE === "test";
+const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "0.0.0.0"]);
 
 let citySummariesCache = getCitySummaries();
 const cityDetailCache = new Map<string, CityDetailDTO>();
@@ -20,6 +21,14 @@ citySummariesCache.forEach(city => {
     cityDetailCache.set(city.id, detail);
   }
 });
+
+function shouldFetchFromApi(): boolean {
+  if (isTestMode || typeof window === "undefined") {
+    return false;
+  }
+
+  return !LOCAL_HOSTNAMES.has(window.location.hostname);
+}
 
 async function fetchJson<T>(url: string, retries = 2, backoff = 300): Promise<T> {
   try {
@@ -53,7 +62,7 @@ async function fetchJson<T>(url: string, retries = 2, backoff = 300): Promise<T>
 }
 
 async function loadCitySummaries(): Promise<CitySummaryDTO[]> {
-  if (isTestMode) {
+  if (!shouldFetchFromApi()) {
     return citySummariesCache;
   }
 
@@ -74,6 +83,14 @@ async function loadCitySummaries(): Promise<CitySummaryDTO[]> {
 }
 
 async function loadCityDetail(cityId: string): Promise<CityDetailDTO> {
+  if (!shouldFetchFromApi()) {
+    const localDetail = cityDetailCache.get(cityId) ?? getCityDetail(cityId);
+    if (!localDetail) {
+      throw new Error(`City detail not found for ${cityId}`);
+    }
+    return localDetail;
+  }
+
   const pending = cityDetailRequests.get(cityId);
   if (pending) {
     return pending;
@@ -108,7 +125,7 @@ export function useCitySummaries(): LoadState<CitySummaryDTO[]> {
   });
 
   useEffect(() => {
-    if (isTestMode) return;
+    if (!shouldFetchFromApi()) return;
 
     let cancelled = false;
 
@@ -145,7 +162,7 @@ export function useCityDetail(cityId: string): LoadState<CityDetailDTO | undefin
   });
 
   useEffect(() => {
-    if (!cityId || isTestMode) return;
+    if (!cityId || !shouldFetchFromApi()) return;
 
     let cancelled = false;
 

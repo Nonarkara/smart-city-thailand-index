@@ -1,4 +1,5 @@
 import type { Locale } from "./types";
+import { ResponsiveImage } from "./mediaAssets";
 
 interface Props {
   locale: Locale;
@@ -221,7 +222,11 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <span className="photo-strip-label">Gulf of Thailand</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
-            <img src="/Photos international/459288254_924132223081934_9217219278417242092_n.jpg" alt="CSCO Workshop" />
+            <ResponsiveImage
+              src="/Photos international/459288254_924132223081934_9217219278417242092_n.jpg"
+              alt="CSCO Workshop"
+              sizes="240px"
+            />
             <span className="photo-strip-label">CSCO Workshop</span>
           </div>
         </div>

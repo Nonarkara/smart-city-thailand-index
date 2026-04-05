@@ -35,7 +35,7 @@ function TierSection({
     <div className={`tier-section tier-section-${tier}`}>
       <div className="tier-section-header">
         <span className="tier-section-symbol">{symbol}</span>
-        <h3>{TIER_LABELS[locale][tier]}</h3>
+        <h2>{TIER_LABELS[locale][tier]}</h2>
         <span className="tier-section-count">
           {cities.length} {translate(locale, { en: "cities", th: "เมือง", zh: "城" })}
         </span>
@@ -66,7 +66,6 @@ function CityCard({
       type="button"
       className="city-card"
       role="link"
-      aria-label={`${cityName}, ${getProvinceName(city, locale)}`}
       onClick={() => onNavigate(path)}
       onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(path); } }}
     >
@@ -112,6 +111,7 @@ function CityCard({
 export default function RankingsPage({ locale, onNavigate }: Props) {
   const [tab, setTab] = useState<"all" | "certified" | "promotion">("all");
   const [sortPillar, setSortPillar] = useState<ScoringPillar | "composite">("composite");
+  const sortSelectId = "rankings-sort";
   const { data: cities } = useCitySummaries();
   const certifiedCities = useMemo(() => cities.filter(city => city.status === "certified"), [cities]);
   const promotionZoneCities = useMemo(() => cities.filter(city => city.status === "promotion"), [cities]);
@@ -164,10 +164,11 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             </button>
           </div>
           <div className="filter-group">
-            <label className="sort-label">
+            <label className="sort-label" htmlFor={sortSelectId}>
               {translate(locale, { en: "Sort by", th: "เรียงตาม", zh: "排序依据" })}
             </label>
             <select
+              id={sortSelectId}
               className="sort-select"
               value={sortPillar}
               onChange={event => setSortPillar(event.target.value as ScoringPillar | "composite")}
