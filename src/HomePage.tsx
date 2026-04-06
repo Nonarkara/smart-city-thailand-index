@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import ActionAtlas from "./ActionAtlas";
+// ActionAtlas removed — map was ugly, data speaks for itself
 import { useInView } from "./useInView";
 import { useCitySummaries } from "./cityApi";
 import { filterCities, sortCities, summarizeCities } from "./cityCollections";
@@ -111,7 +111,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
   const [tierFilter, setTierFilter] = useState<"all" | CityTier>("all");
   const [heroRef, heroVisible] = useInView(0.1);
   const [guideRef, guideVisible] = useInView(0.1);
-  const [atlasRef, atlasVisible] = useInView(0.1);
+  // atlasRef removed with ActionAtlas
   const [rankingRef, rankingVisible] = useInView(0.1);
   const [feedbackRef, feedbackVisible] = useInView(0.1);
   const [fineprintRef, fineprintVisible] = useInView(0.1);
@@ -171,11 +171,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
             {translate(locale, { en: " \u2014 Outcomes, not plans.", th: " \u2014 ผลลัพธ์ ไม่ใช่แผน", zh: " \u2014 结果，而非计划。" })}
           </p>
         </div>
-      </section>
-
-      {/* ─── ACTION ATLAS ─── */}
-      <section ref={atlasRef} className={`reveal stagger-2 ${atlasVisible ? "visible" : ""}`}>
-        <ActionAtlas cities={previewCities} locale={locale} onNavigate={onNavigate} />
       </section>
 
       {/* ─── FIELDboard ─── */}
