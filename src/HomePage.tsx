@@ -132,7 +132,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ─── CINEMATIC HERO ─── */}
       <section ref={heroRef} className={`cinematic-hero reveal ${heroVisible ? "visible" : ""}`}>
         <img
-          src="/Khon Kaen/IMG_4264.JPG"
+          src="/photos/khonkaen-aerial.jpg"
           alt="Thai smart city aerial view"
           className="cinematic-hero-img"
           width={1920}

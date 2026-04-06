@@ -17,9 +17,9 @@ const MAP_H = 316;
 
 // Only use verified local field photos — no Unsplash, no conference photos
 const CITY_STAGE_MEDIA: Record<string, string> = {
-  "chiang-mai-old-town": "/Chiang Mai/IMG_20251218_190749854.jpg",
-  "khon-kaen": "/Khon Kaen/IMG_4264.JPG",
-  "cmu-smart-city": "/CMU Smart City/P1210289.JPG",
+  "chiang-mai-old-town": "/photos/chiangmai-night.jpg",
+  "khon-kaen": "/photos/khonkaen-aerial.jpg",
+  "cmu-smart-city": "/photos/cmu-doiSuthep.jpg",
   "nakhon-si-thammarat": "/photos/report-city-walkway.jpg",
   "hat-yai": "/photos/report-city-night.jpg",
   krabi: "/photos/slic-waterfront.jpg",
