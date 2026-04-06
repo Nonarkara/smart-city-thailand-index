@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly VITE_SUPABASE_URL?: string;
   readonly VITE_SUPABASE_ANON_KEY?: string;
   readonly VITE_GOOGLE_APPS_SCRIPT_URL?: string;
+  readonly VITE_SCITI_TRACKING_URL?: string;
 }
 
 interface ImportMeta {

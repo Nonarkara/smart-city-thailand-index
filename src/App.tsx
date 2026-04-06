@@ -3,6 +3,7 @@ import { parseRoute, getRouteKey, type Route } from "./routing";
 import { syncDocumentMeta } from "./siteMeta";
 import { ResponsiveImage } from "./mediaAssets";
 import type { Locale } from "./types";
+import { trackVisitor } from "./visitorTracking";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 import HomePage from "./HomePage";
@@ -156,6 +157,9 @@ export default function App() {
   useEffect(() => {
     syncDocumentMeta(route.path, locale);
   }, [locale, route]);
+
+  // Track visitor once per session (fire-and-forget to Google Sheets)
+  useEffect(() => { trackVisitor(route.path); }, []);
 
   const navigate = (path: string) => {
     if (window.location.pathname !== path) {
