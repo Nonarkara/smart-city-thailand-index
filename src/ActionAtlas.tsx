@@ -105,6 +105,12 @@ export default function ActionAtlas({ cities, locale, onNavigate }: Props) {
         <div className="action-atlas-map-panel">
           <span className="action-atlas-panel-label">{translate(locale, { en: "Thailand signal map", th: "แผนที่สัญญาณประเทศไทย", zh: "泰国信号地图" })}</span>
           <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} className="action-atlas-map" aria-hidden="true">
+            {/* Real ESRI map tile as background */}
+            <image
+              href={`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/export?bbox=${MAP_BOUNDS.minLng},${MAP_BOUNDS.minLat},${MAP_BOUNDS.maxLng},${MAP_BOUNDS.maxLat}&size=${MAP_W * 2},${MAP_H * 2}&format=png&f=image`}
+              x="0" y="0" width={MAP_W} height={MAP_H}
+              preserveAspectRatio="none" opacity="0.9"
+            />
             {cities.map(city => {
               const coords = mapCityCoords[city.id];
               if (!coords) return null;
@@ -114,7 +120,7 @@ export default function ActionAtlas({ cities, locale, onNavigate }: Props) {
                   key={city.id}
                   cx={point.x}
                   cy={point.y}
-                  r={city.id === selectedCity.id ? 3.6 : 1.7}
+                  r={city.id === selectedCity.id ? 4.5 : 2.5}
                   className={`action-atlas-dot action-atlas-dot-${city.tier} ${city.id === selectedCity.id ? "is-selected" : ""}`}
                 />
               );

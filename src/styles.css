@@ -2420,11 +2420,9 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 .action-atlas-map-panel { padding: .95rem; display: flex; flex-direction: column; }
 .action-atlas-map {
   width: 100%; height: auto; flex: 1;
-  background:
-    radial-gradient(circle at 20% 12%, rgba(26, 154, 130, .08), transparent 40%),
-    linear-gradient(180deg, rgba(26, 24, 20, .02), rgba(26, 24, 20, .08));
+  background: #0A0E12;
 }
-.action-atlas-dot { opacity: .2; }
+.action-atlas-dot { opacity: .45; }
 .action-atlas-dot-alpha { fill: var(--alpha); }
 .action-atlas-dot-beta { fill: var(--beta); }
 .action-atlas-dot-gamma { fill: var(--gamma); }
