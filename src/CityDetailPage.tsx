@@ -278,9 +278,8 @@ function ScoreBreakdown({
 export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const { data: city, loading } = useCityDetail(cityId);
 
+  // Only verified local field photos — no Unsplash, no conference shots
   const cityPhotoMap: Record<string, string> = {
-    phuket: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=1200&h=400&fit=crop&q=80",
-    samyan: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=1200&h=400&fit=crop&q=80",
     "chiang-mai-old-town": "/Chiang Mai/IMG_20251218_190749854.jpg",
     "khon-kaen": "/Khon Kaen/IMG_4264.JPG",
     "cmu-smart-city": "/CMU Smart City/P1210289.JPG",

@@ -15,17 +15,14 @@ interface Props {
 const MAP_W = 252;
 const MAP_H = 316;
 
+// Only use verified local field photos — no Unsplash, no conference photos
 const CITY_STAGE_MEDIA: Record<string, string> = {
-  phuket: "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=1600&h=900&fit=crop&q=80&auto=format",
-  samyan: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=1600&h=900&fit=crop&q=80&auto=format",
   "chiang-mai-old-town": "/Chiang Mai/IMG_20251218_190749854.jpg",
   "khon-kaen": "/Khon Kaen/IMG_4264.JPG",
   "cmu-smart-city": "/CMU Smart City/P1210289.JPG",
   "nakhon-si-thammarat": "/photos/report-city-walkway.jpg",
   "hat-yai": "/photos/report-city-night.jpg",
   krabi: "/photos/slic-waterfront.jpg",
-  "wangchan-valley": "/Photos international/20260317092525-_DON6841.jpg",
-  "saensuk": "/Photos international/20260317093438-_DON6939.jpg",
 };
 
 function project(lat: number, lng: number) {
