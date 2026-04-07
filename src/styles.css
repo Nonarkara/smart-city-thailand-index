@@ -3407,3 +3407,29 @@ details[open] .kb-question::before { content: "−"; }
   .transparency-steps { grid-template-columns: 1fr; }
   .investor-grid { grid-template-columns: 1fr; }
 }
+
+/* ─── GRADIENT HERO (no photo dependency) ─── */
+.hero-gradient {
+  position: relative; width: 100%;
+  min-height: 420px; overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 75% 70%, rgba(26,154,130,.15), transparent),
+    radial-gradient(ellipse 60% 50% at 15% 30%, rgba(196,154,42,.08), transparent),
+    linear-gradient(160deg, #0F0E0C 0%, #1A1814 50%, #0F0E0C 100%);
+}
+.hero-gradient-inner {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 420px;
+  padding: 3rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
+}
+.hero-gradient .cinematic-hero-eyebrow { color: #C49A2A; }
+.hero-gradient .cinematic-hero-title { color: #F0EDE8; }
+.hero-gradient .cinematic-hero-why { color: rgba(240,237,232,.6); }
+.hero-gradient .cinematic-hero-stats { color: rgba(240,237,232,.45); }
+.hero-gradient .cinematic-ghost { border-color: rgba(240,237,232,.2); color: rgba(240,237,232,.7); }
+.hero-gradient .cinematic-ghost:hover { border-color: #F0EDE8; color: #F0EDE8; }
+@media (max-width: 480px) {
+  .hero-gradient { min-height: 340px; }
+  .hero-gradient-inner { min-height: 340px; padding-top: 2rem; }
+}

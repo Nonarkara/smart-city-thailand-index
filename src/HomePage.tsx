@@ -131,16 +131,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
   return (
     <div className="dashboard-home">
       {/* ─── CINEMATIC HERO ─── */}
-      <section ref={heroRef} className={`cinematic-hero reveal ${heroVisible ? "visible" : ""}`}>
-        <img
-          src={assetUrl("/photos/khonkaen-aerial.jpg")}
-          alt="Thai smart city aerial view"
-          className="cinematic-hero-img"
-          width={1920}
-          height={900}
-          loading="eager"
-        />
-        <div className="cinematic-hero-overlay">
+      <section ref={heroRef} className={`hero-gradient reveal ${heroVisible ? "visible" : ""}`}>
+        <div className="hero-gradient-inner">
           <p className="cinematic-hero-eyebrow">SCITI 2026 — {translate(locale, { en: "pronounced \"City\"", th: "อ่านว่า \"ซิตี้\"", zh: "读作 \"City\"" })}</p>
           <h1 className="cinematic-hero-title">
             {locale === "th" ? <>เอาความจริง<br />ไม่เอาพิธีตัดริบบิ้น</> : locale === "zh" ? <>看现实<br />不看剪彩</> : <>Reality, not<br />ribbon&#8209;cutting.</>}
