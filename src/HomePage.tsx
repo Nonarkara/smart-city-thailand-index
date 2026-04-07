@@ -12,6 +12,7 @@ import type { CityTier, Locale, SmartCity } from "./types";
 import { TIER_LABELS, PILLAR_COLORS, PILLAR_SHORT_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
 import { getCitySummariesCsv, getCityFactsCsv } from "./cityCdp";
+import { assetUrl } from "./mediaAssets";
 import { PILLAR_WEIGHTS } from "./types";
 
 /** Short, unique vibe phrase per city — keeps the reality color but says something memorable */
@@ -132,7 +133,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ─── CINEMATIC HERO ─── */}
       <section ref={heroRef} className={`cinematic-hero reveal ${heroVisible ? "visible" : ""}`}>
         <img
-          src="/photos/khonkaen-aerial.jpg"
+          src={assetUrl("/photos/khonkaen-aerial.jpg")}
           alt="Thai smart city aerial view"
           className="cinematic-hero-img"
           width={1920}
@@ -236,10 +237,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
               </span>
             </button>
             <div className="export-docs">
-              <a href="/downloads/SCITI-2026-Executive-Summary.pdf" download className="export-doc-link">Executive Summary (PDF)</a>
-              <a href="/downloads/SCITI-2026-Methodology.pdf" download className="export-doc-link">Methodology Paper (PDF)</a>
-              <a href="/downloads/SCITI-2026-Report.pdf" download className="export-doc-link">Full Report (PDF)</a>
-              <a href="/downloads/SCITI-2026-Audit.pdf" download className="export-doc-link">Performance Audit (PDF)</a>
+              <a href={assetUrl("/downloads/SCITI-2026-Executive-Summary.pdf")} download className="export-doc-link">Executive Summary (PDF)</a>
+              <a href={assetUrl("/downloads/SCITI-2026-Methodology.pdf")} download className="export-doc-link">Methodology Paper (PDF)</a>
+              <a href={assetUrl("/downloads/SCITI-2026-Report.pdf")} download className="export-doc-link">Full Report (PDF)</a>
+              <a href={assetUrl("/downloads/SCITI-2026-Audit.pdf")} download className="export-doc-link">Performance Audit (PDF)</a>
             </div>
           </div>
         </div>
