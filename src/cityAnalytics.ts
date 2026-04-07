@@ -57,7 +57,7 @@ export interface GlobalComparison {
 }
 
 const COMPARISONS: Record<string, GlobalComparison> = {
-  phuket: { worldCity: "Bali (Denpasar)", country: "Indonesia", population: "900K", why: "Island tourism economy, similar beach-resort infrastructure pressure, marine conservation needs", whyTh: "เศรษฐกิจท่องเที่ยวเกาะ แรงกดดันโครงสร้างรีสอร์ทชายหาดคล้ายกัน ความต้องการอนุรักษ์ทะเล" },
+  phuket: { worldCity: "Bali (Denpasar)", country: "Indonesia", population: "~430K (Denpasar metro)", why: "Island tourism economy, similar beach-resort infrastructure pressure, marine conservation needs", whyTh: "เศรษฐกิจท่องเที่ยวเกาะ แรงกดดันโครงสร้างรีสอร์ทชายหาดคล้ายกัน ความต้องการอนุรักษ์ทะเล" },
   samyan: { worldCity: "Gangnam, Seoul", country: "South Korea", population: "~500K district", why: "University-anchored innovation district in capital city, startup density, high property values", whyTh: "ย่านนวัตกรรมยึดโยงมหาวิทยาลัยในเมืองหลวง ความหนาแน่นสตาร์ทอัพ ราคาอสังหาฯ สูง" },
   "chiang-mai-old-town": { worldCity: "Kyoto", country: "Japan", population: "1.5M", why: "Ancient temple city balancing heritage preservation with modern tourism and tech", whyTh: "เมืองวัดโบราณที่สมดุลอนุรักษ์มรดกกับท่องเที่ยวสมัยใหม่และเทคโนโลยี" },
   "khon-kaen": { worldCity: "Medellín", country: "Colombia", population: "2.5M", why: "Regional capital driving innovation from outside the primary city, private-sector-led transit investment", whyTh: "เมืองหลวงภูมิภาคที่ขับเคลื่อนนวัตกรรมจากนอกเมืองหลัก เอกชนนำการลงทุนขนส่ง" },

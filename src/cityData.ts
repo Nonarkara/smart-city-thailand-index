@@ -73,7 +73,7 @@ export const certifiedCities: SmartCity[] = [
     "chiang-mai-old-town", "Chiang Mai Smart Old Town", "เชียงใหม่สมาร์ทโอลด์ทาวน์",
     "Chiang Mai", "เชียงใหม่", "north", "certified", "operational", 1,
     ["economy", "environment", "living", "mobility", "people"],
-    { livability: 74, economy: 68, safety: 72, wellbeing: 70, environment: 52, hospitality: 92, digital: 65 },
+    { livability: 74, economy: 68, safety: 72, wellbeing: 70, environment: 38, hospitality: 92, digital: 65 },
     { population: 130, gppPerCapita: 168000, avgMonthlyIncome: 24800, pm25Annual: 46.1, hospitalBedsPer10k: 32, crimeRatePer100k: 142, greenCoverage: 68 },
     "Cultural heart of the north. Real smart city with heritage preservation tech and digital tourism, held back by seasonal burning haze.",
     "หัวใจวัฒนธรรมแห่งภาคเหนือ เมืองอัจฉริยะจริงที่ใช้เทคโนโลยีอนุรักษ์มรดกและท่องเที่ยวดิจิทัล แต่ถูกจำกัดด้วยหมอกควันตามฤดู",

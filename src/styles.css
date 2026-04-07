@@ -3466,3 +3466,12 @@ details[open] .kb-question::before { content: "−"; }
   .dev-score-grid { flex-direction: column; align-items: flex-start; }
   .dev-score-breakdown { flex-wrap: wrap; }
 }
+
+/* Edition stamp */
+.edition-stamp {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .3rem;
+  padding: .4rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
+  font: 500 .42rem var(--mono); color: var(--3); letter-spacing: .02em;
+  border-bottom: 1px solid var(--5);
+}
+@media (max-width: 640px) { .edition-stamp { flex-direction: column; align-items: flex-start; } }

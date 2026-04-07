@@ -173,6 +173,36 @@ export const cityContexts: Record<string, CityContext> = {
     theCatch: { en: "PM2.5 32.4 — brutal air quality. Crime rate 285/100K — Bangkok-level. Congestion and air quality remain unsolved despite smart traffic. Green coverage only 12%.", th: "PM2.5 32.4 — คุณภาพอากาศแย่มาก อาชญากรรม 285/100K ระดับกรุงเทพฯ จราจรติดขัดและคุณภาพอากาศยังแก้ไม่ได้แม้มีจราจรอัจฉริยะ พื้นที่สีเขียวเพียง 12%" },
     landArea: 8.5,
   },
+  makkasan: {
+    livelihood: { en: "Nobody lives here yet. Planned as a mega transit hub connecting Airport Rail Link, MRT, and intercity rail — but construction hasn't started.", th: "ยังไม่มีใครอาศัยอยู่ วางแผนเป็นศูนย์กลางขนส่งขนาดใหญ่เชื่อม Airport Rail Link, MRT, และรถไฟระหว่างเมือง — แต่ยังไม่เริ่มก่อสร้าง" },
+    famousFor: { en: "Being certified as a smart city despite having zero residents and zero operational infrastructure. The masterplan looks impressive. The reality is empty.", th: "ได้รับรองเป็นเมืองอัจฉริยะทั้งที่ไม่มีผู้อยู่อาศัยและไม่มีโครงสร้างพื้นฐานปฏิบัติการ แผนแม่บทดูน่าประทับใจ ความจริงว่างเปล่า" },
+    opportunity: { en: "If the transit hub is built, the location (central Bangkok, next to Airport Rail Link) is genuinely world-class. The land value alone justifies smart infrastructure.", th: "ถ้าศูนย์กลางขนส่งถูกสร้าง ทำเล (กลางกรุงเทพฯ ติด Airport Rail Link) เป็นระดับโลกจริง มูลค่าที่ดินเพียงอย่างเดียวก็คุ้มค่าโครงสร้างพื้นฐานอัจฉริยะ" },
+    theCatch: { en: "Zero residents. Zero infrastructure. Zero timeline. The logo was awarded to a concept. This is exactly why this index measures reality.", th: "ผู้อยู่อาศัย ศูนย์ โครงสร้างพื้นฐาน ศูนย์ ไทม์ไลน์ ศูนย์ ตราสัญลักษณ์มอบให้กับแนวคิด นี่คือเหตุผลที่ดัชนีนี้วัดความจริง" },
+  },
+  "klong-phadung": {
+    livelihood: { en: "Historic canal community — small traders, food vendors, government workers. A living heritage district being revitalized with smart water management and connected public spaces.", th: "ชุมชนคลองประวัติศาสตร์ — พ่อค้ารายย่อย ร้านอาหาร ข้าราชการ ย่านมรดกมีชีวิตที่ฟื้นฟูด้วยการจัดการน้ำอัจฉริยะและพื้นที่สาธารณะเชื่อมต่อ" },
+    famousFor: { en: "Smart water quality monitoring in the canal system. AR cultural heritage walk. A genuine urban renewal project in old Bangkok.", th: "เฝ้าระวังคุณภาพน้ำอัจฉริยะในระบบคลอง เดินเที่ยวมรดกวัฒนธรรม AR โครงการฟื้นฟูเมืองจริงในย่านเก่ากรุงเทพฯ" },
+    opportunity: { en: "Canal-based smart cities are globally rare. If this works, it's an exportable model for Venice, Amsterdam, Suzhou — any city with historic waterways.", th: "เมืองอัจฉริยะริมคลองหายากระดับโลก ถ้าสำเร็จ มันเป็นโมเดลส่งออกสำหรับเวนิส อัมสเตอร์ดัม ซูโจว — เมืองใดก็ตามที่มีทางน้ำประวัติศาสตร์" },
+    theCatch: { en: "Bangkok-level PM2.5 (32.4) and crime (285/100K). The smart canal project is small-scale. Scaling beyond the pilot area requires political will that comes and goes.", th: "PM2.5 ระดับกรุงเทพฯ (32.4) และอาชญากรรม (285/100K) โครงการคลองอัจฉริยะขนาดเล็ก ขยายเกินพื้นที่นำร่องต้องใช้เจตจำนงทางการเมืองที่มาๆ ไปๆ" },
+  },
+  phangnga: {
+    livelihood: { en: "Tourism (Similan Islands, Khao Lak), fishing, rubber/palm oil. Defined by the 2004 tsunami — disaster preparedness is in this city's DNA.", th: "ท่องเที่ยว (หมู่เกาะสิมิลัน เขาหลัก) ประมง ยาง/ปาล์ม นิยามโดยสึนามิ 2547 — การเตรียมพร้อมรับภัยพิบัติอยู่ใน DNA ของเมือง" },
+    famousFor: { en: "Tsunami early warning system with IoT sensors. Smart mangrove conservation monitoring. The only Thai smart city where disaster tech isn't a nice-to-have but a survival necessity.", th: "ระบบเตือนสึนามีด้วยเซ็นเซอร์ IoT เฝ้าระวังอนุรักษ์ป่าชายเลน เมืองอัจฉริยะไทยเมืองเดียวที่เทคภัยพิบัติไม่ใช่ของดี แต่เป็นความจำเป็นเพื่ออยู่รอด" },
+    opportunity: { en: "Disaster-resilient smart city tech is a growing global market. Phang Nga's lived experience with tsunami response makes it a credible exporter of resilience tech.", th: "เทคเมืองอัจฉริยะทนภัยพิบัติเป็นตลาดโลกที่เติบโต ประสบการณ์จริงของพังงากับการตอบสนองสึนามิทำให้เป็นผู้ส่งออกเทคทนทานที่น่าเชื่อถือ" },
+    theCatch: { en: "Low GPP (฿158K). Small population (264K). Young people leave for Phuket or Bangkok. The smart city tech is genuine but the economic base to sustain it is thin.", th: "GPP ต่ำ (฿158K) ประชากรน้อย (264K) คนหนุ่มสาวออกไปภูเก็ตหรือกรุงเทพฯ เทคเมืองอัจฉริยะจริงแต่ฐานเศรษฐกิจที่จะรักษาไว้บาง" },
+  },
+  satun: {
+    livelihood: { en: "Fishing, rubber, UNESCO Global Geopark tourism. Thailand's quietest smart city — low population, low crime, high environmental quality.", th: "ประมง ยาง ท่องเที่ยว UNESCO Global Geopark เมืองอัจฉริยะที่เงียบที่สุดของไทย — ประชากรน้อย อาชญากรรมต่ำ คุณภาพสิ่งแวดล้อมสูง" },
+    famousFor: { en: "UNESCO Geopark monitoring technology. Tarutao marine conservation. Cleanest air in the index (PM2.5 11.5). The anti-Bangkok.", th: "เทคโนโลยีเฝ้าระวัง UNESCO Geopark อนุรักษ์ทะเลตะรุเตา อากาศสะอาดสุดในดัชนี (PM2.5 11.5) ตรงข้ามกรุงเทพฯ" },
+    opportunity: { en: "Geopark + marine conservation = a unique sustainable tourism brand that no other Thai city has. Low cost of operations means even small grants create big impact.", th: "Geopark + อนุรักษ์ทะเล = แบรนด์ท่องเที่ยวยั่งยืนที่ไม่มีเมืองไทยอื่น ต้นทุนดำเนินการต่ำหมายความว่าแม้เงินช่วยเหลือเล็กๆ ก็สร้างผลกระทบใหญ่" },
+    theCatch: { en: "Lowest GPP in the south (฿82K). Remote location. Digital infrastructure minimal. The smart city tech works but the economic model to sustain it long-term is uncertain.", th: "GPP ต่ำสุดในใต้ (฿82K) ทำเลห่างไกล โครงสร้างพื้นฐานดิจิทัลน้อย เทคเมืองอัจฉริยะใช้ได้แต่โมเดลเศรษฐกิจรักษาระยะยาวไม่แน่นอน" },
+  },
+  "samut-prakan": {
+    livelihood: { en: "Manufacturing (auto parts, electronics, packaging), industrial labor, warehouse logistics. Bangkok's overflow suburb — dense, industrial, and increasingly smart.", th: "การผลิต (ชิ้นส่วนรถยนต์ อิเล็กทรอนิกส์ บรรจุภัณฑ์) แรงงานอุตสาหกรรม โลจิสติกส์คลังสินค้า ชานเมืองล้นจากกรุงเทพฯ — หนาแน่น อุตสาหกรรม และอัจฉริยะมากขึ้น" },
+    famousFor: { en: "Industry 4.0 smart factory zones. Flood management IoT for low-lying areas. GPP ฿385K — high output but livability struggles.", th: "เขตโรงงานอัจฉริยะ Industry 4.0 IoT จัดการน้ำท่วมสำหรับพื้นที่ลุ่ม GPP ฿385K — ผลผลิตสูงแต่ความน่าอยู่ยังดิ้นรน" },
+    opportunity: { en: "Largest manufacturing base near Bangkok. Industry 4.0 adoption is real and measurable. New airport connectivity (Suvarnabhumi) creates logistics advantage.", th: "ฐานการผลิตใหญ่สุดใกล้กรุงเทพฯ Industry 4.0 จริงและวัดได้ เชื่อมต่อสนามบินใหม่ (สุวรรณภูมิ) สร้างข้อได้เปรียบโลจิสติกส์" },
+    theCatch: { en: "PM2.5 30.8. Crime 195/100K. Green coverage only 18% — the lowest in the index. Flooding is chronic in low-lying areas. Livability trails far behind economic output.", th: "PM2.5 30.8 อาชญากรรม 195/100K พื้นที่สีเขียวเพียง 18% — ต่ำสุดในดัชนี น้ำท่วมเรื้อรังในพื้นที่ลุ่ม ความน่าอยู่ตามหลังผลผลิตเศรษฐกิจมาก" },
+  },
 };
 
 /** Get city context — returns undefined if no context exists for that city */

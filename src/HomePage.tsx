@@ -156,6 +156,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
+      {/* ─── EDITION STAMP ─── */}
+      <div className="edition-stamp">
+        <span>SCITI 2026 Edition · {stats.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })} · 15+ {translate(locale, { en: "data sources", th: "แหล่งข้อมูล", zh: "数据来源" })} · {translate(locale, { en: "Released April 2026", th: "เผยแพร่เมษายน 2569", zh: "2026年4月发布" })}</span>
+        <span>{translate(locale, { en: "Research by Dr. Non A · depa · SLIC Methodology · Peer-reviewed at SCSE Taipei 2026", th: "วิจัยโดย ดร.ณณ · depa · วิธีการ SLIC · ตรวจสอบโดยผู้ทรงคุณวุฒิที่ SCSE ไทเป 2026", zh: "研究：Non A博士 · depa · SLIC方法论 · 2026台北SCSE同行评审" })}</span>
+      </div>
+
       {/* ─── HOW TO READ THIS ─── */}
       <section ref={guideRef} className={`guide-strip reveal stagger-1 ${guideVisible ? "visible" : ""}`}>
         <div className="guide-strip-inner">
