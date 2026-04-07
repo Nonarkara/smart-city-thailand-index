@@ -22,6 +22,7 @@ const AuditPage = lazy(() => import("./AuditPage"));
 const ReferencesPage = lazy(() => import("./ReferencesPage"));
 const ProgramPage = lazy(() => import("./ProgramPage"));
 const KnowledgePage = lazy(() => import("./KnowledgePage"));
+const DiscoverPage = lazy(() => import("./DiscoverPage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 const THEME_STORAGE_KEY = "smart-city-thailand-theme";
@@ -36,6 +37,7 @@ function getInitialTheme(): Theme {
 const NAV_ITEMS = [
   { kind: "home", path: "/", label: { en: "Home", th: "หน้าหลัก", zh: "首页" } },
   { kind: "rankings", path: "/rankings", label: { en: "Rankings", th: "อันดับ", zh: "排名" } },
+  { kind: "discover", path: "/discover", label: { en: "Your City", th: "เมืองคุณ", zh: "你的城市" } },
   { kind: "program", path: "/program", label: { en: "Program", th: "โครงการ", zh: "计划" } },
   { kind: "methodology", path: "/methodology", label: { en: "Method", th: "วิธีการ", zh: "方法" } },
   { kind: "story", path: "/story", label: { en: "Story", th: "เรื่องราว", zh: "故事" } },
@@ -314,6 +316,8 @@ export default function App() {
               <ProgramPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "knowledge" ? (
               <KnowledgePage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "discover" ? (
+              <DiscoverPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "city" ? (
               <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
             ) : (

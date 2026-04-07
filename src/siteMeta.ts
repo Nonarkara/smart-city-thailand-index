@@ -72,6 +72,11 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | คลังความรู้`,
     zh: `${SITE_NAME} | 知识库`,
   },
+  discover: {
+    en: `${SITE_NAME} | What Is Your City?`,
+    th: `${SITE_NAME} | เมืองของคุณคือเมืองไหน?`,
+    zh: `${SITE_NAME} | 你的城市是哪座？`,
+  },
   references: {
     en: `${SITE_NAME} | APIs, Data Sources & Standards`,
     th: `${SITE_NAME} | API แหล่งข้อมูล และมาตรฐาน`,
