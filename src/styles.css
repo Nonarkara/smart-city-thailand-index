@@ -3433,3 +3433,36 @@ details[open] .kb-question::before { content: "−"; }
   .hero-gradient { min-height: 340px; }
   .hero-gradient-inner { min-height: 340px; padding-top: 2rem; }
 }
+
+/* ─── City Analytics: Developability + Global Comparison + Steps + Financing ─── */
+.dev-score-grid { display: flex; gap: 1.5rem; align-items: center; margin-top: .6rem; margin-bottom: .75rem; }
+.dev-score-main { text-align: center; }
+.dev-score-pct { display: block; font: 700 2.5rem var(--mono); color: var(--teal); line-height: 1; }
+.dev-score-label { font: 600 .52rem var(--mono); color: var(--3); text-transform: uppercase; letter-spacing: .06em; }
+.dev-score-breakdown { display: flex; gap: .5rem; }
+.dev-metric { display: flex; flex-direction: column; gap: .05rem; padding: .4rem .5rem; background: var(--surface); }
+.dev-metric-val { font: 700 .85rem var(--mono); }
+.dev-metric-lab { font: 500 .38rem var(--mono); color: var(--3); text-transform: uppercase; letter-spacing: .06em; }
+
+.global-comparison { padding: .55rem .65rem; background: var(--surface); margin-bottom: .5rem; }
+.gc-label { display: block; font: 700 .38rem var(--mono); color: var(--gold-text, var(--gold)); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .15rem; }
+.gc-why { font-size: .6rem; color: var(--2); line-height: 1.5; margin-top: .15rem; }
+
+.action-steps-list { display: flex; flex-direction: column; gap: .4rem; margin-top: .6rem; }
+.action-step-card { display: flex; gap: .5rem; padding: .6rem; background: var(--surface); }
+.action-step-num { font: 700 1.2rem var(--mono); color: var(--teal); flex-shrink: 0; width: 1.5rem; }
+.action-step-card strong { display: block; font-size: .68rem; margin-bottom: .2rem; }
+.action-step-example { font-size: .58rem; color: var(--2); line-height: 1.5; margin: 0 0 .15rem; }
+.action-step-source { font: 500 .42rem var(--mono); color: var(--3); }
+
+.finance-advice-card { padding: .65rem; background: var(--surface); margin-top: .6rem; }
+.fa-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .3rem; }
+.fa-header strong { font-size: .72rem; }
+.fa-size { font: 700 .55rem var(--mono); color: var(--teal); }
+.fa-rationale { font-size: .6rem; color: var(--2); line-height: 1.5; margin-bottom: .2rem; }
+.fa-advantage { font-size: .55rem; color: var(--teal); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .dev-score-grid { flex-direction: column; align-items: flex-start; }
+  .dev-score-breakdown { flex-wrap: wrap; }
+}

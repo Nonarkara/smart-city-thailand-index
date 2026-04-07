@@ -5,6 +5,7 @@ import { translate } from "./cityPresentation";
 import type { Locale, SmartDimension } from "./types";
 import { DIMENSION_LABELS } from "./types";
 import { useInView } from "./useInView";
+import { assetUrl } from "./mediaAssets";
 
 interface Props {
   locale: Locale;
@@ -192,7 +193,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       <div className="photo-strip">
         {PHOTOS_WORKSHOP.map(p => (
           <div key={p} className="photo-strip-item" style={{ width: "220px", height: "140px" }}>
-            <img src={p} alt="" loading="lazy" />
+            <img src={assetUrl(p)} alt="" loading="lazy" />
           </div>
         ))}
       </div>
@@ -239,7 +240,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       <div className="photo-strip">
         {PHOTOS_INTL.map(p => (
           <div key={p} className="photo-strip-item" style={{ width: "280px", height: "170px" }}>
-            <img src={p} alt="" loading="lazy" />
+            <img src={assetUrl(p)} alt="" loading="lazy" />
           </div>
         ))}
       </div>
