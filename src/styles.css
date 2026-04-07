@@ -73,7 +73,7 @@
   opacity: 1;
 }
 [data-theme="dark"] img { opacity: 0.9; }
-[data-theme="dark"] .cinematic-hero-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.95) 70%); }
+[data-theme="dark"] .cinematic-hero-overlay { background: linear-gradient(transparent 0%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.85) 100%); }
 [data-theme="dark"] .collage-strip { opacity: .5; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -769,7 +769,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   flex-direction: column;
   justify-content: flex-end;
   padding: 3rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
-  background: linear-gradient(rgba(0,0,0,.2) 0%, rgba(0,0,0,.85) 60%);
+  background: linear-gradient(transparent 0%, rgba(0,0,0,.55) 60%, rgba(0,0,0,.8) 100%);
 }
 .cinematic-hero-title {
   font-size: clamp(2.4rem, 5.5vw, 4rem);
@@ -1371,7 +1371,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 2.5rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
-  background: linear-gradient(rgba(0,0,0,.15) 0%, rgba(0,0,0,.88) 55%);
+  background: linear-gradient(transparent 0%, rgba(0,0,0,.55) 60%, rgba(0,0,0,.8) 100%);
 }
 .cinematic-hero-eyebrow {
   font: 600 .55rem var(--mono); letter-spacing: .12em;
@@ -1491,8 +1491,8 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 
 /* ─── CINEMATIC HERO (upgrade) ─── */
 .cinematic-hero { border-radius: 0 0 var(--radius) var(--radius); overflow: hidden; }
-.cinematic-hero-overlay { background: linear-gradient(rgba(0,0,0,.1) 0%, rgba(0,0,0,.88) 50%); }
-.collage-hero .cinematic-hero-overlay { background: linear-gradient(rgba(0,0,0,.2) 0%, rgba(0,0,0,.9) 50%); }
+.cinematic-hero-overlay { background: linear-gradient(transparent 0%, rgba(0,0,0,.55) 60%, rgba(0,0,0,.8) 100%); }
+.collage-hero .cinematic-hero-overlay { background: linear-gradient(transparent 0%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.85) 100%); }
 
 /* ─── NEW RESPONSIVE RULES ─── */
 @media (max-width: 768px) {
