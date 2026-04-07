@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>SCITI 2026</title>
   <script>
-    // GitHub Pages SPA redirect — preserves the path for client-side routing
-    var pathSegmentsToKeep = 0;
+    // GitHub Pages SPA redirect — pathSegmentsToKeep = 1 for /repo-name/
+    var pathSegmentsToKeep = 1;
     var l = window.location;
     l.replace(
       l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +

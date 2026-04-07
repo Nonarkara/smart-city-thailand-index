@@ -23,7 +23,12 @@
     <title>Smart City Thailand Index</title>
   </head>
   <body>
-    <script>try{const t=localStorage.getItem("smart-city-thailand-theme");if(t==="dark")document.documentElement.dataset.theme="dark";}catch(e){}</script>
+    <script>
+      // Dark mode flash prevention
+      try{const t=localStorage.getItem("smart-city-thailand-theme");if(t==="dark")document.documentElement.dataset.theme="dark";}catch(e){}
+      // GitHub Pages SPA: restore path from 404 redirect
+      (function(){var r=window.location.search.match(/\?\/(.*)/);if(r){var p=r[1].replace(/~and~/g,'&');window.history.replaceState(null,null,window.location.pathname.replace(/\/$/,'')+'/'+p+window.location.hash);}})();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
