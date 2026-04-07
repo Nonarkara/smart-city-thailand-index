@@ -43,18 +43,20 @@ export async function trackVisitor(page = "/") {
   const geo = await fetchGeo();
   sessionStorage.setItem("sciti_tracked", "true");
 
-  fetch(TRACKING_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify({
-      ...geo,
-      userAgent: navigator.userAgent,
-      referrer: document.referrer || "Direct",
-      page: window.location.href,
-      version: "sciti-2026",
-    }),
-  }).catch(() => {});
+  // Use GET with query params — more reliable than POST for Apps Script
+  const params = new URLSearchParams({
+    action: "track",
+    ip: geo.ip,
+    country: geo.country,
+    region: geo.region,
+    city: geo.city,
+    ua: navigator.userAgent.slice(0, 150),
+    ref: (document.referrer || "Direct").slice(0, 150),
+    page: window.location.pathname,
+    v: "sciti-2026",
+  });
+  const sep = TRACKING_URL.includes("?") ? "&" : "?";
+  fetch(`${TRACKING_URL}${sep}${params.toString()}`, { mode: "no-cors" }).catch(() => {});
 }
 
 /** Visitor count + country breakdown from Google Sheets. */
