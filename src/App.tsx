@@ -164,11 +164,13 @@ export default function App() {
   useEffect(() => { trackVisitor(route.path); }, []);
 
   const navigate = (path: string) => {
-    if (window.location.pathname !== path) {
-      window.history.pushState({}, "", path);
+    const base = import.meta.env.BASE_URL || "/";
+    const fullPath = path.startsWith(base) ? path : base.replace(/\/$/, "") + path;
+    if (window.location.pathname !== fullPath) {
+      window.history.pushState({}, "", fullPath);
     }
     window.scrollTo({ top: 0, behavior: "auto" });
-    setRoute(parseRoute(path));
+    setRoute(parseRoute(fullPath));
     setMobileMenuOpen(false);
   };
 
