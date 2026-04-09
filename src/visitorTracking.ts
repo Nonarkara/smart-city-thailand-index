@@ -10,6 +10,9 @@
 
 const TRACKING_URL = import.meta.env.VITE_SCITI_TRACKING_URL?.trim() ?? "";
 
+// Also log to the SLIC Index shared visitor sheet for consolidated analytics
+const SLIC_TRACKING_URL = "https://script.google.com/macros/s/AKfycbxvOCOjlsYHF7qwWEXEYyDM8CeoLfT2asWRwaa171evuRoa-HubOkliqG3GPNyshUE4mw/exec";
+
 interface GeoData {
   ip: string;
   country: string;
@@ -57,6 +60,14 @@ export async function trackVisitor(page = "/") {
   });
   const sep = TRACKING_URL.includes("?") ? "&" : "?";
   fetch(`${TRACKING_URL}${sep}${params.toString()}`, { mode: "no-cors" }).catch(() => {});
+
+  // Dual-write to SLIC shared sheet (POST, same format as SLIC index)
+  fetch(SLIC_TRACKING_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ ...geo, userAgent: navigator.userAgent, referrer: document.referrer || "Direct", page: window.location.href, version: "sciti-2026" }),
+  }).catch(() => {});
 }
 
 /** Visitor count + country breakdown from Google Sheets. */
