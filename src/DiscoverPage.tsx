@@ -159,6 +159,28 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
           ))}
         </div>
       </section>
+
+      {/* ─── MISSING CITY CTA ─── */}
+      <section className="section" style={{ marginBottom: "2rem", textAlign: "center" }}>
+        <p style={{ font: "500 .72rem var(--font)", color: "var(--2)", marginBottom: ".4rem" }}>
+          {translate(locale, {
+            en: "Is your city missing?",
+            th: "เมืองของคุณไม่อยู่ในนี้?",
+            zh: "找不到你的城市？",
+          })}
+        </p>
+        <a
+          href="mailto:non.ar@depa.or.th?subject=SCITI%202026%20-%20City%20Submission"
+          className="cta-button"
+          style={{ display: "inline-flex" }}
+        >
+          {translate(locale, {
+            en: "Email non.ar@depa.or.th",
+            th: "ส่งอีเมลถึง non.ar@depa.or.th",
+            zh: "发送邮件至 non.ar@depa.or.th",
+          })}
+        </a>
+      </section>
     </div>
   );
 }
