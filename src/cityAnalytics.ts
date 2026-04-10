@@ -275,3 +275,103 @@ export function getFinancingAdvice(city: SmartCity): FinancingAdvice {
     competitiveAdvantageTh: "แข็งแกร่งพอสำหรับเอกชนสนใจ เร็วพอสำหรับอัตราผ่อนปรน ดีที่สุดจากทั้งสองโลก",
   };
 }
+
+// ─── MONEYBALL INVESTMENT PROFILE ───
+// Why an investor should look at THIS city instead of Bangkok/Phuket/Chiang Mai
+
+export interface MoneyballEdge {
+  label: string;
+  labelTh: string;
+  value: string;
+  advantage: boolean; // true = beats the Big 3 average
+}
+
+export interface MoneyballProfile {
+  edges: MoneyballEdge[];
+  headline: string;
+  headlineTh: string;
+}
+
+// Big 3 benchmarks (Bangkok/Phuket/Chiang Mai averages)
+const BIG3_AVG = { gpp: 429000, pm25: 32.2, crime: 208, beds: 33, green: 41 };
+
+export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
+  const gpp = city.metrics.gppPerCapita ?? 0;
+  const pm = city.metrics.pm25Annual ?? 25;
+  const crime = city.metrics.crimeRatePer100k ?? 150;
+  const beds = city.metrics.hospitalBedsPer10k ?? 20;
+  const green = city.metrics.greenCoverage ?? 30;
+  const isEEC = city.region === "east";
+  const hasBOI = city.scores.economy >= 50;
+
+  const edges: MoneyballEdge[] = [];
+
+  // Air quality edge
+  if (pm < BIG3_AVG.pm25) {
+    edges.push({ label: "Cleaner air", labelTh: "อากาศสะอาดกว่า", value: `PM2.5 ${pm} vs Big 3 avg ${BIG3_AVG.pm25}`, advantage: true });
+  }
+
+  // Safety edge
+  if (crime < BIG3_AVG.crime) {
+    edges.push({ label: "Lower crime", labelTh: "อาชญากรรมต่ำกว่า", value: `${crime}/100K vs Big 3 avg ${BIG3_AVG.crime}`, advantage: true });
+  }
+
+  // Green coverage edge
+  if (green > BIG3_AVG.green) {
+    edges.push({ label: "More green space", labelTh: "พื้นที่สีเขียวมากกว่า", value: `${green}% vs Big 3 avg ${BIG3_AVG.green}%`, advantage: true });
+  }
+
+  // Healthcare edge
+  if (beds > 20) {
+    edges.push({ label: "Healthcare access", labelTh: "เข้าถึงสาธารณสุข", value: `${beds} beds/10K`, advantage: beds >= BIG3_AVG.beds });
+  }
+
+  // BOI incentive edge
+  if (hasBOI) {
+    const boiYears = isEEC ? "8-15 year CIT exemption (EEC zone)" : "3-8 year CIT exemption (S-Curve)";
+    const boiYearsTh = isEEC ? "ยกเว้น CIT 8-15 ปี (เขต EEC)" : "ยกเว้น CIT 3-8 ปี (S-Curve)";
+    edges.push({ label: "BOI tax incentive", labelTh: "สิทธิประโยชน์ภาษี BOI", value: boiYears, advantage: true });
+  }
+
+  // Cost advantage (lower GPP = lower labor/rent costs)
+  if (gpp > 0 && gpp < 200000) {
+    edges.push({ label: "Lower operating costs", labelTh: "ต้นทุนดำเนินการต่ำกว่า", value: `GPP ฿${(gpp/1000).toFixed(0)}K — labor and rent 2-4x cheaper than Bangkok`, advantage: true });
+  }
+
+  // University pipeline
+  const hasUni = city.id.includes("cmu") || city.id.includes("phitsanulok") || city.id === "khon-kaen" || city.id === "korat" || city.id === "samyan" || city.id === "chiang-rai" || city.id === "ubon";
+  if (hasUni) {
+    edges.push({ label: "University talent pipeline", labelTh: "สายพานบุคลากรจากมหาวิทยาลัย", value: "Local university provides graduate recruitment pool", advantage: true });
+  }
+
+  // Digital readiness
+  if (city.scores.digital >= 55) {
+    edges.push({ label: "Digital infrastructure ready", labelTh: "โครงสร้างพื้นฐานดิจิทัลพร้อม", value: `Digital score ${city.scores.digital}/100 — IoT, data platforms operational`, advantage: true });
+  }
+
+  // Hospitality/tourism edge
+  if (city.scores.hospitality >= 75 && city.id !== "phuket" && city.id !== "chiang-mai-old-town") {
+    edges.push({ label: "Tourism economy without Big 3 competition", labelTh: "เศรษฐกิจท่องเที่ยวโดยไม่แข่งกับ Big 3", value: `Hospitality ${city.scores.hospitality}/100 — strong but less saturated market`, advantage: true });
+  }
+
+  // Generate headline
+  const edgeCount = edges.filter(e => e.advantage).length;
+  let headline = "";
+  let headlineTh = "";
+
+  if (edgeCount >= 5) {
+    headline = `${edgeCount} advantages over Bangkok/Phuket/Chiang Mai. This is a moneyball city — undervalued by the market, strong on fundamentals.`;
+    headlineTh = `${edgeCount} ข้อได้เปรียบเหนือกรุงเทพฯ/ภูเก็ต/เชียงใหม่ นี่คือเมือง moneyball — ตลาดประเมินต่ำ แต่พื้นฐานแข็ง`;
+  } else if (edgeCount >= 3) {
+    headline = `${edgeCount} clear edges. Not the obvious choice, but the smart one — lower cost, less competition, real infrastructure.`;
+    headlineTh = `${edgeCount} จุดแข็งชัด ไม่ใช่ตัวเลือกที่เห็นชัด แต่เป็นตัวเลือกที่ฉลาด — ต้นทุนต่ำ แข่งขันน้อย โครงสร้างพื้นฐานจริง`;
+  } else if (edgeCount >= 1) {
+    headline = `Niche opportunity. Specific advantages in ${edges.filter(e => e.advantage).map(e => e.label.toLowerCase()).join(", ")}. Not for every investor, but right for the right one.`;
+    headlineTh = `โอกาสเฉพาะทาง จุดแข็งเฉพาะด้าน ไม่ใช่สำหรับทุกนักลงทุน แต่ใช่สำหรับคนที่ใช่`;
+  } else {
+    headline = `Early-stage opportunity. Fundamentals still building. Best suited for impact investors and development finance, not commercial returns yet.`;
+    headlineTh = `โอกาสระยะเริ่มต้น พื้นฐานยังอยู่ระหว่างสร้าง เหมาะกับนักลงทุนเพื่อผลกระทบและการเงินเพื่อพัฒนา ยังไม่ใช่ผลตอบแทนเชิงพาณิชย์`;
+  }
+
+  return { edges, headline, headlineTh };
+}

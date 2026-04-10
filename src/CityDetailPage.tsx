@@ -12,7 +12,7 @@ import { ResponsiveImage } from "./mediaAssets";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
 import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS, TIER_LABELS } from "./types";
-import { computeDevelopability, getGlobalComparison, getTailoredSteps, getFinancingAdvice } from "./cityAnalytics";
+import { computeDevelopability, getGlobalComparison, getTailoredSteps, getFinancingAdvice, getMoneyballProfile } from "./cityAnalytics";
 
 interface Props {
   cityId: string;
