@@ -38,13 +38,12 @@ export function ResponsiveImage({
 }: ResponsiveImageProps) {
   const asset = getResponsiveMediaAsset(src);
 
-  if (!asset.avif && !asset.webp) {
+  if (!asset.webp) {
     return <img src={asset.src} alt={alt} loading={loading} decoding={decoding} {...imgProps} />;
   }
 
   return (
     <picture>
-      {asset.avif ? <source srcSet={asset.avif} type="image/avif" /> : null}
       {asset.webp ? <source srcSet={asset.webp} type="image/webp" /> : null}
       <img src={asset.src} alt={alt} loading={loading} decoding={decoding} {...imgProps} />
     </picture>
