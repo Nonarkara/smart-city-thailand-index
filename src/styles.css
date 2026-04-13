@@ -1301,6 +1301,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .dashboard-ranking-bottomline {
   display: flex; align-items: center; justify-content: space-between; gap: .5rem;
 }
+/* Legacy 7-bar layout (kept for other pages) */
 .dashboard-ranking-bars {
   display: flex; gap: 2px; width: 100%;
 }
@@ -1312,8 +1313,39 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   height: 100%; transition: width .4s var(--ease, ease); min-width: 1px;
   border-radius: 0 2px 2px 0;
 }
+
+/* ─── New: Composite score bar (horizontal, pillar-segmented) ─── */
+.ranking-composite-track {
+  width: 100%; height: 28px;
+  background: var(--5, #F4F4F5);
+  border-radius: 4px; overflow: hidden;
+  position: relative;
+}
+.ranking-composite-fill {
+  height: 100%; display: flex;
+  transition: width .6s var(--ease, ease);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ranking-pillar-segment {
+  height: 100%;
+  transition: opacity .3s ease;
+}
+
+/* Pillar strength chips */
+.ranking-pillar-chips {
+  display: flex; gap: .35rem; flex-wrap: wrap;
+}
+.ranking-pillar-chip {
+  font: 600 var(--text-xs) var(--mono);
+  padding: .15rem .4rem;
+  border: 1px solid;
+  border-radius: 3px;
+  line-height: 1.2;
+}
+
 .dashboard-ranking-vibe {
-  font: 600 .5rem var(--mono, monospace); letter-spacing: .02em;
+  font: 600 var(--text-xs) var(--mono, monospace); letter-spacing: .02em;
   white-space: nowrap;
 }
 .dashboard-ranking-vibe-operational { color: var(--alpha, #1A8A72); }

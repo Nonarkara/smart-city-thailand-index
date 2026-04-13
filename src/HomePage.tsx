@@ -58,6 +58,14 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
   return pillarVibes[strongest]?.[locale] ?? (locale === "th" ? "ทำงานจริง" : locale === "zh" ? "运行中" : "Running");
 }
 
+/** Sort pillars by score descending, return top N */
+function getTopPillars(city: SmartCity, n: number) {
+  return [...SCORING_PILLARS]
+    .map(p => ({ key: p, score: city.scores[p], color: PILLAR_COLORS[p] }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, n);
+}
+
 function RankingRow({
   city,
   locale,
@@ -71,6 +79,7 @@ function RankingRow({
 }) {
   const cityName = getCityName(city, locale);
   const cityPath = `/city/${city.id}`;
+  const topPillars = getTopPillars(city, 3);
 
   return (
     <button
@@ -85,22 +94,50 @@ function RankingRow({
         }
       }}
     >
+      {/* Header: rank, name, tier badge, score */}
       <div className="dashboard-ranking-topline">
         <span className="dashboard-ranking-rank">{String(rank).padStart(2, "0")}</span>
         <span className="dashboard-ranking-name">{cityName}</span>
+        <span className="dashboard-ranking-meta">
+          {getProvinceName(city, locale)}
+        </span>
         <span className="dashboard-ranking-score">{city.compositeScore.toFixed(1)}</span>
       </div>
-      <div className="dashboard-ranking-bars">
-        {(SCORING_PILLARS).map(p => (
-          <div key={p} className="dashboard-ranking-bar-track" title={`${PILLAR_SHORT_LABELS[locale][p]}: ${city.scores[p]}`}>
-            <div className="dashboard-ranking-bar-fill" style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }} />
-          </div>
-        ))}
+
+      {/* Composite score bar — full-width horizontal with pillar segments */}
+      <div className="ranking-composite-track">
+        <div
+          className="ranking-composite-fill"
+          style={{ width: `${city.compositeScore}%` }}
+        >
+          {SCORING_PILLARS.map(p => (
+            <div
+              key={p}
+              className="ranking-pillar-segment"
+              style={{
+                flex: PILLAR_WEIGHTS[p],
+                background: PILLAR_COLORS[p],
+                opacity: 0.35 + (city.scores[p] / 100) * 0.65,
+              }}
+              title={`${PILLAR_SHORT_LABELS[locale][p]}: ${city.scores[p]}`}
+            />
+          ))}
+        </div>
       </div>
+
+      {/* Footer: top 3 pillar chips + vibe */}
       <div className="dashboard-ranking-bottomline">
-        <span className="dashboard-ranking-meta">
-          {getProvinceName(city, locale)} · {TIER_LABELS[locale][city.tier]}
-        </span>
+        <div className="ranking-pillar-chips">
+          {topPillars.map(p => (
+            <span
+              key={p.key}
+              className="ranking-pillar-chip"
+              style={{ borderColor: p.color, color: p.color }}
+            >
+              {PILLAR_SHORT_LABELS[locale][p.key]} {p.score}
+            </span>
+          ))}
+        </div>
         <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${city.reality}`}>
           {getCityVibe(city, locale)}
         </span>
