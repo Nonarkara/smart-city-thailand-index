@@ -18,4 +18,17 @@ describe("HomePage", () => {
       expect(onNavigate).toHaveBeenCalled();
     }
   });
+
+  it("renders imagery for every podium slot", () => {
+    const { container } = render(<HomePage locale="en" onNavigate={vi.fn()} />);
+
+    const heroImage = container.querySelector(".cinematic-hero img");
+    const podiumImages = container.querySelectorAll(".podium-photo-layout img");
+
+    expect(heroImage).not.toBeNull();
+    expect(podiumImages).toHaveLength(5);
+    podiumImages.forEach(image => {
+      expect(image.getAttribute("src")).toBeTruthy();
+    });
+  });
 });

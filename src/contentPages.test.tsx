@@ -13,7 +13,7 @@ describe("content page mechanics", () => {
 
     expect(screen.getByRole("heading", { name: /from sensors.*to citizens/i })).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "See the rankings" }));
+    await user.click(screen.getByRole("button", { name: /see the rankings/i }));
     expect(onNavigate).toHaveBeenCalledWith("/rankings");
   });
 

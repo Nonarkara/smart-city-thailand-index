@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
 import { useCitySummaries } from "./cityApi";
 import { getCityName } from "./cityPresentation";
-import type { Locale, SmartCity, CityTier } from "./types";
+import { THAILAND_BOUNDS, CITY_COORDS as coords, projectTo, esriTileUrl, tierColor } from "./mapUtils";
+import type { Locale, SmartCity } from "./types";
 import { TIER_LABELS } from "./types";
 
 interface Props {
@@ -9,57 +10,20 @@ interface Props {
   onNavigate: (path: string) => void;
 }
 
-// Thailand bounding box for projection
-const B = { minLat: 5.4, maxLat: 20.6, minLng: 97.2, maxLng: 105.8 };
+const B = THAILAND_BOUNDS;
 const W = 560, H = 740;
 
 function project(lat: number, lng: number) {
-  return {
-    x: ((lng - B.minLng) / (B.maxLng - B.minLng)) * (W - 40) + 20,
-    y: ((B.maxLat - lat) / (B.maxLat - B.minLat)) * (H - 40) + 20,
-  };
+  return projectTo(lat, lng, B, W, H, 20);
 }
-
-// City coordinates (reused from ThailandMap)
-const coords: Record<string, [number, number]> = {
-  "chiang-mai-old-town": [18.79, 98.98], "cmu-smart-city": [18.80, 98.95],
-  "mae-moh": [18.31, 99.72], "nakhonsawan": [15.70, 100.12],
-  "khon-kaen": [16.43, 102.83], "samyan": [13.73, 100.53],
-  "phra-ram-4": [13.72, 100.54], "klong-phadung": [13.75, 100.50],
-  "makkasan": [13.75, 100.56], "chachoengsao": [13.69, 101.07],
-  "saensuk": [13.28, 100.92], "wangchan-valley": [12.88, 101.20],
-  "phuket": [7.88, 98.39], "sritrang": [7.56, 99.61],
-  "yala": [6.54, 101.28], "rayong": [12.68, 101.27],
-  "khao-khun-song": [12.75, 101.30], "phitsanulok-muni": [16.82, 100.26],
-  "phitsanulok-nu": [16.74, 100.20], "chiang-rai": [19.91, 99.83],
-  "nan": [18.78, 100.77], "korat": [14.97, 102.10],
-  "ubon": [15.25, 104.85], "krabi": [8.09, 98.91],
-  "phangnga": [8.45, 98.52], "satun": [6.62, 100.07],
-  "samui": [9.51, 100.06], "hat-yai": [7.00, 100.47],
-  "pattani": [6.87, 101.25], "narathiwat": [6.43, 101.82],
-  "lampang": [18.29, 99.49], "samut-prakan": [13.60, 100.60],
-  "thep-paraj": [13.65, 101.10], "nikhom-phatthana": [12.75, 101.15],
-  "nakhon-si-thammarat": [8.43, 99.96], "tai-yong": [8.40, 99.90],
-  "phuket-tinicon": [7.85, 98.35], "songkhla-city": [7.19, 100.59],
-  "rattanakosin": [13.76, 100.49], "nonthaburi": [13.86, 100.51],
-  "chanthaburi": [12.61, 102.10], "tak": [16.88, 99.13],
-  "phichit": [16.44, 100.35], "umong": [18.57, 98.98],
-  "maesai": [20.43, 99.88], "bang-saray": [12.78, 100.92],
-  "phitsanulok-ppao": [16.80, 100.28], "ubon-muni": [15.23, 104.87],
-  "phlapphla": [12.58, 102.12],
-};
 
 type MapLayer = "base" | "satellite" | "terrain";
 
 const layerUrls: Record<MapLayer, string> = {
-  base: `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/export?bbox=${B.minLng},${B.minLat},${B.maxLng},${B.maxLat}&bboxSR=4326&size=${W},${H}&f=image&format=png`,
-  satellite: `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${B.minLng},${B.minLat},${B.maxLng},${B.maxLat}&bboxSR=4326&size=${W},${H}&f=image&format=png`,
-  terrain: `https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/export?bbox=${B.minLng},${B.minLat},${B.maxLng},${B.maxLat}&bboxSR=4326&size=${W},${H}&f=image&format=png`,
+  base: esriTileUrl(B, W, H, "light"),
+  satellite: esriTileUrl(B, W, H, "satellite"),
+  terrain: esriTileUrl(B, W, H, "topo"),
 };
-
-function tierColor(tier: CityTier) {
-  return tier === "alpha" ? "var(--alpha, #1A8A72)" : tier === "beta" ? "var(--beta, #9A7A1A)" : "var(--gamma, #B03030)";
-}
 
 const REGIONS: SmartCity["region"][] = ["north", "central", "northeast", "east", "south", "bangkok"];
 const REGION_LABELS: Record<SmartCity["region"], string> = {

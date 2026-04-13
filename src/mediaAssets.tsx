@@ -21,7 +21,6 @@ function getResponsiveMediaAsset(src: string) {
   const base = resolved.replace(/\.(png|jpe?g)$/i, "");
   return {
     src: resolved,
-    avif: `${base}.avif`,
     webp: `${base}.webp`,
   };
 }

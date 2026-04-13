@@ -23,9 +23,13 @@ export function getCityTagline(city: SmartCity, locale: Locale): string {
 }
 
 export function getCityStatusLabel(status: CityStatus, locale: Locale): string {
-  return status === "certified"
-    ? translate(locale, { en: "Certified", th: "รับรอง", zh: "认证" })
-    : translate(locale, { en: "Promotion", th: "ส่งเสริม", zh: "推广" });
+  if (status === "certified") {
+    return translate(locale, { en: "Certified", th: "รับรอง", zh: "认证" });
+  }
+  if (status === "registered") {
+    return translate(locale, { en: "Registered", th: "ขึ้นทะเบียน", zh: "登记中" });
+  }
+  return translate(locale, { en: "Promotion", th: "ส่งเสริม", zh: "推广" });
 }
 
 export function getCityRealityLabel(reality: CityReality, locale: Locale): string {

@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { getLocalCityDetail } from "./cityApi";
+import { getCityPhotoAsset } from "./cityMedia";
 import { getCityName, getCityRealityLabel, getProvinceName, translate } from "./cityPresentation";
 import { ResponsiveImage } from "./mediaAssets";
 import { cityCoords as mapCityCoords, BOUNDS as MAP_BOUNDS } from "./ThailandMap.constants";
@@ -14,16 +15,6 @@ interface Props {
 
 const MAP_W = 252;
 const MAP_H = 316;
-
-// Only use verified local field photos — no Unsplash, no conference photos
-const CITY_STAGE_MEDIA: Record<string, string> = {
-  "chiang-mai-old-town": "/photos/chiangmai-night.jpg",
-  "khon-kaen": "/photos/khonkaen-aerial.jpg",
-  "cmu-smart-city": "/photos/cmu-doiSuthep.jpg",
-  "nakhon-si-thammarat": "/photos/report-city-walkway.jpg",
-  "hat-yai": "/photos/report-city-night.jpg",
-  krabi: "/photos/slic-waterfront.jpg",
-};
 
 function project(lat: number, lng: number) {
   const x = ((lng - MAP_BOUNDS.minLng) / (MAP_BOUNDS.maxLng - MAP_BOUNDS.minLng)) * (MAP_W - 28) + 14;
@@ -79,7 +70,7 @@ export default function ActionAtlas({ cities, locale, onNavigate }: Props) {
   const provinceLabel = getProvinceName(selectedCity, locale);
   const selectedCoords = mapCityCoords[selectedCity.id];
   const selectedPoint = selectedCoords ? project(selectedCoords.lat, selectedCoords.lng) : null;
-  const stageMedia = CITY_STAGE_MEDIA[selectedCity.id];
+  const stageMedia = getCityPhotoAsset(selectedCity);
 
   return (
     <section className="action-atlas">
@@ -144,12 +135,13 @@ export default function ActionAtlas({ cities, locale, onNavigate }: Props) {
         <div className={`action-atlas-stage action-atlas-stage-${selectedCity.tier}`}>
           {stageMedia ? (
             <ResponsiveImage
-              src={stageMedia}
+              src={stageMedia.src}
               alt={cityLabel}
               className="action-atlas-stage-media"
               loading="eager"
               fetchPriority="high"
               sizes="(max-width: 900px) 100vw, 46vw"
+              style={{ objectPosition: stageMedia.objectPosition }}
             />
           ) : null}
           <div key={selectedCity.id} className="action-atlas-stage-overlay action-atlas-stage-swap">

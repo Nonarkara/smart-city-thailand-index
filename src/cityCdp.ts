@@ -505,6 +505,12 @@ function formatMetricValue(metricKey: string, value: number | string | undefined
   if (metricKey === "crimeRatePer100k") {
     return { text: `${value}`, unit: "incidents/100k" };
   }
+  if (metricKey === "waterQuality") {
+    return { text: `${value}`, unit: "/100" };
+  }
+  if (metricKey === "laborForce") {
+    return { text: `${value.toLocaleString()}K`, unit: "people" };
+  }
   return { text: `${value}`, unit: "" };
 }
 
@@ -630,6 +636,20 @@ function metricLabel(metricKey: string): LocalizedText {
       return localized("Crime / 100K", "อาชญากรรม / แสนคน", "每十万人犯罪率");
     case "greenCoverage":
       return localized("Green coverage", "พื้นที่สีเขียว", "绿化覆盖");
+    case "gppGrowthRate":
+      return localized("GPP growth rate", "อัตราเติบโต GPP", "GPP 增长率");
+    case "pm25Trend":
+      return localized("PM2.5 trend", "แนวโน้ม PM2.5", "PM2.5 趋势");
+    case "waterQuality":
+      return localized("Water quality index", "ดัชนีคุณภาพน้ำ", "水质指数");
+    case "forestCoverage":
+      return localized("Forest coverage", "พื้นที่ป่าไม้", "森林覆盖率");
+    case "fdiInflow":
+      return localized("FDI inflow", "เงินลงทุนจากต่างประเทศ", "外资流入");
+    case "industryComposition":
+      return localized("Industry mix", "สัดส่วนอุตสาหกรรม", "产业结构");
+    case "laborForce":
+      return localized("Labor force", "กำลังแรงงาน", "劳动力");
     default:
       return localized(metricKey, metricKey, metricKey);
   }
@@ -651,6 +671,20 @@ function metricMethod(metricKey: string): string {
       return "Risk proxy; used for contractability and investor comfort.";
     case "greenCoverage":
       return "Land/environment quality proxy; used for resilience and amenity value.";
+    case "gppGrowthRate":
+      return "Year-on-year provincial GPP growth (NESDC); shows economic trajectory, not snapshot.";
+    case "pm25Trend":
+      return "3-year PM2.5 direction from PCD monitoring; reveals whether air is improving or deteriorating.";
+    case "waterQuality":
+      return "PCD/ONEP composite water quality index (0-100); livability signal most indices ignore.";
+    case "forestCoverage":
+      return "Royal Forest Department provincial forest percentage; ground-truth environmental baseline.";
+    case "fdiInflow":
+      return "BOI-promoted foreign direct investment (million baht); real money, not memoranda of understanding.";
+    case "industryComposition":
+      return "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.";
+    case "laborForce":
+      return "NSO provincial employed population (thousands); human-scale economic capacity measure.";
     default:
       return "Derived from the city baseline dataset.";
   }
@@ -667,6 +701,14 @@ function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
     ["hospitalBedsPer10k", metrics.hospitalBedsPer10k],
     ["crimeRatePer100k", metrics.crimeRatePer100k],
     ["greenCoverage", metrics.greenCoverage],
+    // Extended indicators
+    ["gppGrowthRate", metrics.gppGrowthRate],
+    ["pm25Trend", metrics.pm25Trend],
+    ["waterQuality", metrics.waterQuality],
+    ["forestCoverage", metrics.forestCoverage],
+    ["fdiInflow", metrics.fdiInflow],
+    ["industryComposition", metrics.industryComposition],
+    ["laborForce", metrics.laborForce],
   ];
 
   return entries
@@ -732,6 +774,18 @@ function buildMetricBlocks(city: SmartCity, observations: CityMetricObservation[
         "Signals of whether the city can run systems after ribbon-cutting day.",
       ),
       observations: service,
+    },
+    {
+      id: "extended-indicators",
+      title: localized("Extended indicators", "ตัวชี้วัดเชิงลึก", "扩展指标"),
+      summary: localized(
+        "Ground-truth trajectory data most indices ignore: growth direction, environmental trends, real investment flows.",
+        "ข้อมูลทิศทางจากพื้นจริงที่ดัชนีส่วนใหญ่ละเลย: ทิศทางการเติบโต แนวโน้มสิ่งแวดล้อม กระแสการลงทุนจริง",
+        "大多数指数忽略的实地趋势数据：增长方向、环境走势、真实投资流向。",
+      ),
+      observations: observations.filter(item =>
+        ["gppGrowthRate", "pm25Trend", "waterQuality", "forestCoverage", "fdiInflow", "industryComposition", "laborForce"].includes(item.metricKey),
+      ),
     },
   ].filter(block => block.observations.length > 0);
 }
@@ -1278,7 +1332,7 @@ function buildShortTailoredNote(city: SmartCity, context?: CityContext): Localiz
 }
 
 function buildKeyMetrics(city: SmartCity, observations: CityMetricObservation[]): CityKeyMetric[] {
-  const preferred = ["gppPerCapita", "pm25Annual", "crimeRatePer100k", "greenCoverage", "population"];
+  const preferred = ["gppPerCapita", "pm25Annual", "waterQuality", "gppGrowthRate", "crimeRatePer100k", "greenCoverage", "population"];
 
   return preferred
     .map(metricKey => observations.find(item => item.metricKey === metricKey))

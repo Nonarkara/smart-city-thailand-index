@@ -211,16 +211,28 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         {/* NST Photo Strip */}
         <div className="photo-strip" style={{ marginTop: "1.25rem" }}>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
-            <img src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=500&h=300&fit=crop" alt="Thai southern temple" />
-            <span className="photo-strip-label">Wat Phra Mahathat</span>
+            <ResponsiveImage
+              src="/photos/report-city-walkway.jpg"
+              alt="Thai smart city walkway"
+              sizes="240px"
+            />
+            <span className="photo-strip-label">Smart city walkway</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
-            <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=500&h=300&fit=crop" alt="Thai local market" />
-            <span className="photo-strip-label">Local market</span>
+            <ResponsiveImage
+              src="/Photos international/JSCF2025-2495.jpg"
+              alt="JSCF Smart City Forum"
+              sizes="240px"
+            />
+            <span className="photo-strip-label">JSCF Forum</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
-            <img src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=500&h=300&fit=crop" alt="Southern Thailand coast" />
-            <span className="photo-strip-label">Gulf of Thailand</span>
+            <ResponsiveImage
+              src="/photos/slic-waterfront.jpg"
+              alt="Thai waterfront development"
+              sizes="240px"
+            />
+            <span className="photo-strip-label">Waterfront development</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage

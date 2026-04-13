@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { useInView } from "./useInView";
 import { useCitySummaries } from "./cityApi";
 import { filterCities, sortCities, summarizeCities } from "./cityCollections";
+import { getCityPhotoAsset, HOME_HERO_ASSET } from "./cityMedia";
 import {
   getCityName,
   getProvinceName,
@@ -12,7 +13,7 @@ import type { CityTier, Locale, SmartCity } from "./types";
 import { TIER_LABELS, PILLAR_COLORS, PILLAR_SHORT_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
 import { getCitySummariesCsv, getCityFactsCsv } from "./cityCdp";
-import { assetUrl } from "./mediaAssets";
+import { ResponsiveImage, assetUrl } from "./mediaAssets";
 import { PILLAR_WEIGHTS } from "./types";
 
 /** Short, unique vibe phrase per city — keeps the reality color but says something memorable */
@@ -27,7 +28,7 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
     "phuket": { en: "Tourism engine, real tech", th: "เครื่องยนต์ท่องเที่ยว เทคจริง", zh: "旅游引擎，真技术" },
     "samyan": { en: "Innovation district, alive", th: "ย่านนวัตกรรม มีชีวิต", zh: "创新区，活的" },
     "chiang-mai-old-town": { en: "Heritage meets sensors", th: "มรดกพบเซ็นเซอร์", zh: "遗产遇上传感器" },
-    "khon-kaen": { en: "Isan's real deal", th: "ของจริงอีสาน", zh: "伊善การเมือง", },
+    "khon-kaen": { en: "Isan's real deal", th: "ของจริงอีสาน", zh: "伊桑真货" },
     "saensuk": { en: "Beach town, clean data", th: "เมืองชายหาด ข้อมูลสะอาด", zh: "海滩小城，干净数据" },
     "yala": { en: "Cleanest city, real grit", th: "เมืองสะอาดสุด ใจสู้", zh: "最干净城市，真韧性" },
     "wangchan-valley": { en: "Empty land, bold pitch", th: "ที่ดินว่าง pitch กล้า", zh: "空地一片，愿景很大" },
@@ -77,6 +78,12 @@ function RankingRow({
       className="dashboard-ranking-row"
       role="link"
       onClick={() => onNavigate(cityPath)}
+      onKeyDown={event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onNavigate(cityPath);
+        }
+      }}
     >
       <div className="dashboard-ranking-topline">
         <span className="dashboard-ranking-rank">{String(rank).padStart(2, "0")}</span>
@@ -109,13 +116,13 @@ interface Props {
 
 export default function HomePage({ locale, onNavigate }: Props) {
   const [statusFilter, setStatusFilter] = useState<"all" | "certified" | "promotion">("all");
-  const [tierFilter, setTierFilter] = useState<"all" | CityTier>("all");
+  const [tierFilter] = useState<"all" | CityTier>("all");
   const [heroRef, heroVisible] = useInView(0.1);
   const [guideRef, guideVisible] = useInView(0.1);
   // atlasRef removed with ActionAtlas
   const [rankingRef, rankingVisible] = useInView(0.1);
   const [feedbackRef, feedbackVisible] = useInView(0.1);
-  const [fineprintRef, fineprintVisible] = useInView(0.1);
+  const [fineprintRef] = useInView(0.1);
 
   const { data: cities } = useCitySummaries();
   const stats = useMemo(() => summarizeCities(cities), [cities]);
@@ -132,11 +139,16 @@ export default function HomePage({ locale, onNavigate }: Props) {
     <div className="dashboard-home">
       {/* ─── CINEMATIC HERO ─── */}
       <section ref={heroRef} className={`cinematic-hero reveal ${heroVisible ? "visible" : ""}`}>
-        <img
-          src={assetUrl("/photos/khonkaen-aerial.jpg")}
+        <ResponsiveImage
+          src={HOME_HERO_ASSET.src}
           alt="Thai smart city aerial view"
           className="cinematic-hero-img"
-          width={1920} height={900} loading="eager"
+          width={1920}
+          height={900}
+          loading="eager"
+          fetchPriority="high"
+          sizes="100vw"
+          style={{ objectPosition: HOME_HERO_ASSET.objectPosition }}
         />
         <div className="cinematic-hero-overlay">
           <p className="cinematic-hero-eyebrow">SCITI 2026 — {translate(locale, { en: "pronounced \"City\"", th: "อ่านว่า \"ซิตี้\"", zh: "读作 \"City\"" })}</p>
@@ -188,14 +200,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
         {previewCities.length >= 5 && (() => {
           const top5 = previewCities.slice(0, 5);
           const leader = top5[0];
-          const cityPhotos: Record<string, string> = {
-            "chiang-mai-old-town": assetUrl("/photos/chiangmai-night.jpg"),
-            "khon-kaen": assetUrl("/photos/khonkaen-aerial.jpg"),
-            "cmu-smart-city": assetUrl("/photos/cmu-doiSuthep.jpg"),
-            "nakhon-si-thammarat": assetUrl("/photos/report-city-walkway.jpg"),
-            "hat-yai": assetUrl("/photos/report-city-night.jpg"),
-            krabi: assetUrl("/photos/slic-waterfront.jpg"),
-          };
           const cityQuickStats: Record<string, string[]> = {
             phuket: ["GPP ฿492K/capita", "PM2.5 18.2 μg/m³", "88% hospitality", "72% digital adoption"],
             samyan: ["GPP ฿628K/capita", "200+ startups", "82% digital score", "5G testbed live"],
@@ -203,10 +207,19 @@ export default function HomePage({ locale, onNavigate }: Props) {
             "khon-kaen": ["LRT under construction", "Smart bus running", "GPP ฿155K/capita", "6 hospital network"],
             "cmu-smart-city": ["30% energy reduction", "12 AI intersections", "500+ open datasets", "80% digital"],
           };
+          const leaderPhoto = getCityPhotoAsset(leader);
           return (
             <div className="podium-photo-layout">
               <button type="button" className="podium-photo-leader" onClick={() => onNavigate(`/city/${leader.id}`)}>
-                {cityPhotos[leader.id] && <img src={cityPhotos[leader.id]} alt={getCityName(leader, locale)} className="podium-photo-img" loading="eager" />}
+                <ResponsiveImage
+                  src={leaderPhoto.src}
+                  alt={getCityName(leader, locale)}
+                  className="podium-photo-img"
+                  loading="eager"
+                  fetchPriority="high"
+                  sizes="(max-width: 768px) 100vw, 58vw"
+                  style={{ objectPosition: leaderPhoto.objectPosition }}
+                />
                 <div className="podium-photo-overlay">
                   <div className="podium-photo-top">
                     <div>
@@ -226,22 +239,33 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 </div>
               </button>
               <div className="podium-photo-grid">
-                {top5.slice(1).map((city, i) => (
-                  <button key={city.id} type="button" className="podium-photo-card" onClick={() => onNavigate(`/city/${city.id}`)}>
-                    {cityPhotos[city.id] && <img src={cityPhotos[city.id]} alt={getCityName(city, locale)} className="podium-photo-card-img" loading="lazy" />}
-                    <div className="podium-photo-card-overlay">
-                      <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
-                      <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
-                      <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
-                      <div className="podium-photo-card-stats">
-                        {(cityQuickStats[city.id] ?? []).slice(0, 2).map((stat, j) => (
-                          <span key={j} className="podium-photo-stat">{stat}</span>
-                        ))}
+                {top5.slice(1).map((city, i) => {
+                  const photo = getCityPhotoAsset(city);
+
+                  return (
+                    <button key={city.id} type="button" className="podium-photo-card" onClick={() => onNavigate(`/city/${city.id}`)}>
+                      <ResponsiveImage
+                        src={photo.src}
+                        alt={getCityName(city, locale)}
+                        className="podium-photo-card-img"
+                        loading="lazy"
+                        sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
+                        style={{ objectPosition: photo.objectPosition }}
+                      />
+                      <div className="podium-photo-card-overlay">
+                        <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
+                        <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
+                        <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
+                        <div className="podium-photo-card-stats">
+                          {(cityQuickStats[city.id] ?? []).slice(0, 2).map((stat, j) => (
+                            <span key={j} className="podium-photo-stat">{stat}</span>
+                          ))}
+                        </div>
+                        <span className={`podium-photo-card-vibe dashboard-ranking-vibe-${city.reality}`}>{getCityVibe(city, locale)}</span>
                       </div>
-                      <span className={`podium-photo-card-vibe dashboard-ranking-vibe-${city.reality}`}>{getCityVibe(city, locale)}</span>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           );

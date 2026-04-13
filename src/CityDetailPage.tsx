@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { getCityExternalResearchLinks } from "./cityCdp";
 import { useCityDetail } from "./cityApi";
+import { getCityPhotoAsset } from "./cityMedia";
+import { getCityResearchSources, getLocalizedList, getLocalizedText, resolveCityResearch } from "./cityResearch";
 import {
   getCityName,
   getCityRealityLabel,
@@ -12,7 +14,7 @@ import { ResponsiveImage } from "./mediaAssets";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
 import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS, TIER_LABELS } from "./types";
-import { computeDevelopability, getGlobalComparison, getTailoredSteps, getFinancingAdvice, getMoneyballProfile } from "./cityAnalytics";
+import { computeDevelopability, getGlobalComparison, getTailoredSteps, getFinancingAdvice } from "./cityAnalytics";
 
 interface Props {
   cityId: string;
@@ -279,16 +281,6 @@ function ScoreBreakdown({
 export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const { data: city, loading } = useCityDetail(cityId);
 
-  // Only verified local field photos — no Unsplash, no conference shots
-  const cityPhotoMap: Record<string, string> = {
-    "chiang-mai-old-town": "/photos/chiangmai-night.jpg",
-    "khon-kaen": "/photos/khonkaen-aerial.jpg",
-    "cmu-smart-city": "/photos/cmu-doiSuthep.jpg",
-    "nakhon-si-thammarat": "/photos/report-city-walkway.jpg",
-    "hat-yai": "/photos/report-city-night.jpg",
-    krabi: "/photos/slic-waterfront.jpg",
-  };
-
   const instrumentLookup = useMemo(
     () => new Map(city?.financeInstrumentCatalog.map(item => [item.id, item]) ?? []),
     [city],
@@ -328,19 +320,24 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const cityTagline = getCityTagline(city, locale);
   const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
   const overallGrade = statGrade(city.compositeScore);
-  const cityPhoto = cityPhotoMap[city.id];
-  const researchLinks = getCityExternalResearchLinks(city);
+  const cityPhoto = getCityPhotoAsset(city);
+  const research = resolveCityResearch(city);
+  const researchLinks = [
+    ...getCityResearchSources(city).map(link => ({ label: getLocalizedText(locale, link.label), url: link.url })),
+    ...getCityExternalResearchLinks(city),
+  ].filter((link, index, list) => list.findIndex(item => item.url === link.url) === index);
 
   return (
     <>
       {cityPhoto ? (
         <div className="city-hero-photo">
           <ResponsiveImage
-            src={cityPhoto}
+            src={cityPhoto.src}
             alt={cityName}
             loading="eager"
             fetchPriority="high"
             sizes="100vw"
+            style={{ objectPosition: cityPhoto.objectPosition }}
           />
           <div className="city-hero-photo-overlay">
             <span className="city-hero-photo-title">{cityName}</span>
@@ -421,6 +418,34 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 <p className="city-ctx-body">{note.body[locale]}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section city-research-section">
+        <p className="eyebrow">{translate(locale, { en: "City texture", th: "เนื้อเมือง", zh: "城市肌理" })}</p>
+        <h2>{translate(locale, { en: "What the place is really made of", th: "เมืองนี้จริงๆ ทำมาจากอะไร", zh: "这座城市真正由什么构成" })}</h2>
+        <div className="city-research-grid">
+          <div className="city-research-card city-research-card-wide">
+            <span className="city-research-label">{translate(locale, { en: "Major industries", th: "อุตสาหกรรมหลัก", zh: "主要产业" })}</span>
+            <div className="city-research-chip-row">
+              {getLocalizedList(locale, research.industries).map(industry => (
+                <span key={`${city.id}-${industry}`} className="city-research-chip">{industry}</span>
+              ))}
+            </div>
+            <p className="city-research-body">{getLocalizedText(locale, research.compareNote)}</p>
+          </div>
+          <div className="city-research-card">
+            <span className="city-research-label">{translate(locale, { en: "How people live", th: "คนใช้ชีวิตอย่างไร", zh: "人们如何生活" })}</span>
+            <p className="city-research-body">{getLocalizedText(locale, research.dailyLife)}</p>
+          </div>
+          <div className="city-research-card">
+            <span className="city-research-label">{translate(locale, { en: "Signature story", th: "เรื่องเล่าหลัก", zh: "代表故事" })}</span>
+            <p className="city-research-body">{getLocalizedText(locale, research.signatureStory)}</p>
+          </div>
+          <div className="city-research-card">
+            <span className="city-research-label">{translate(locale, { en: "Fun fact", th: "เกร็ดสนุก", zh: "趣味事实" })}</span>
+            <p className="city-research-body">{getLocalizedText(locale, research.funFact)}</p>
           </div>
         </div>
       </section>
