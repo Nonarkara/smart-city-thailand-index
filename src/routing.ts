@@ -1,4 +1,4 @@
-export type StaticRoutePath = "/" | "/rankings" | "/methodology" | "/story" | "/why" | "/showcase" | "/partners" | "/map" | "/asus" | "/audit" | "/references" | "/program" | "/knowledge" | "/discover";
+export type StaticRoutePath = "/" | "/rankings" | "/methodology" | "/story" | "/why" | "/showcase" | "/partners" | "/map" | "/asus" | "/audit" | "/references" | "/program" | "/knowledge" | "/discover" | "/invest";
 
 export type Route =
   | { kind: "home"; path: "/" }
@@ -15,6 +15,7 @@ export type Route =
   | { kind: "program"; path: "/program" }
   | { kind: "knowledge"; path: "/knowledge" }
   | { kind: "discover"; path: "/discover" }
+  | { kind: "invest"; path: "/invest" }
   | { kind: "city"; path: `/city/${string}`; cityId: string };
 
 export function parseRoute(rawPathname: string): Route {
@@ -34,6 +35,7 @@ export function parseRoute(rawPathname: string): Route {
   if (pathname === "/program") return { kind: "program", path: "/program" };
   if (pathname === "/knowledge") return { kind: "knowledge", path: "/knowledge" };
   if (pathname === "/discover") return { kind: "discover", path: "/discover" };
+  if (pathname === "/invest") return { kind: "invest", path: "/invest" };
   if (pathname.startsWith("/city/")) {
     const cityId = pathname.slice("/city/".length).trim();
     if (cityId) {

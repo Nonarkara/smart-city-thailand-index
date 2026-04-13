@@ -23,6 +23,7 @@ const ReferencesPage = lazy(() => import("./ReferencesPage"));
 const ProgramPage = lazy(() => import("./ProgramPage"));
 const KnowledgePage = lazy(() => import("./KnowledgePage"));
 const DiscoverPage = lazy(() => import("./DiscoverPage"));
+const InvestPage = lazy(() => import("./InvestPage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 const THEME_STORAGE_KEY = "smart-city-thailand-theme";
@@ -45,6 +46,7 @@ const NAV_ITEMS = [
   { kind: "partners", path: "/partners", label: { en: "Partners", th: "พันธมิตร", zh: "伙伴" } },
   { kind: "audit", path: "/audit", label: { en: "Audit", th: "ตรวจสอบ", zh: "审计" } },
   { kind: "knowledge", path: "/knowledge", label: { en: "KB", th: "คลังรู้", zh: "知识库" } },
+  { kind: "invest", path: "/invest", label: { en: "Invest", th: "ลงทุน", zh: "投资" } },
 ] as const;
 
 const MDES_LOGO = {
@@ -284,7 +286,7 @@ export default function App() {
               aria-label={locale === "en" ? "Switch language to Thai" : locale === "th" ? "Switch language to Chinese" : "Switch language to English"}
               onClick={cycleLocale}
             >
-              {locale === "en" ? "TH" : locale === "th" ? "中" : "EN"}
+              {locale === "en" ? "TH" : locale === "th" ? "CN" : "EN"}
             </button>
           </div>
         </div>
@@ -320,6 +322,8 @@ export default function App() {
               <KnowledgePage locale={locale} onNavigate={navigate} />
             ) : route.kind === "discover" ? (
               <DiscoverPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "invest" ? (
+              <InvestPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "city" ? (
               <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
             ) : (
@@ -453,10 +457,10 @@ export default function App() {
                 </p>
                 <p>
                   {locale === "th"
-                    ? "การเข้าถึง: ออกแบบตาม WCAG 2.1 AA · รองรับคีย์บอร์ด · ภาพมี alt text · ตารางใช้ semantic HTML · รองรับ 3 ภาษา (EN/TH/ZH) · Focus visible สำหรับ keyboard navigation"
+                    ? "การเข้าถึง: ออกแบบตาม WCAG 2.1 AA · รองรับคีย์บอร์ด · ภาพมี alt text · ตารางใช้ semantic HTML · รองรับ 3 ภาษา (EN/TH/CN) · Focus visible สำหรับ keyboard navigation"
                     : locale === "zh"
-                      ? "无障碍：遵循 WCAG 2.1 AA · 支持键盘导航 · 图片含 alt 文本 · 语义化表格 · 三语支持 (EN/TH/ZH)"
-                      : "Accessibility: WCAG 2.1 AA compliant · Keyboard navigable · Alt text on images · Semantic HTML tables · Trilingual (EN/TH/ZH) · Focus-visible indicators for assistive technology."}
+                      ? "无障碍：遵循 WCAG 2.1 AA · 支持键盘导航 · 图片含 alt 文本 · 语义化表格 · 三语支持 (EN/TH/CN)"
+                      : "Accessibility: WCAG 2.1 AA compliant · Keyboard navigable · Alt text on images · Semantic HTML tables · Trilingual (EN/TH/CN) · Focus-visible indicators for assistive technology."}
                 </p>
                 <p style={{ borderTop: "1px solid var(--5)", paddingTop: ".35rem", marginTop: ".25rem" }}>
                   {locale === "th"

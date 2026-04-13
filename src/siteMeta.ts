@@ -82,6 +82,11 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | API แหล่งข้อมูล และมาตรฐาน`,
     zh: `${SITE_NAME} | API、数据来源与标准`,
   },
+  invest: {
+    en: `${SITE_NAME} | Invest Thailand`,
+    th: `${SITE_NAME} | ลงทุนประเทศไทย`,
+    zh: `${SITE_NAME} | 投资泰国`,
+  },
   city: {
     en: `${SITE_NAME} | City Profile`,
     th: `${SITE_NAME} | โปรไฟล์เมือง`,

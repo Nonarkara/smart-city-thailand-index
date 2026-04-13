@@ -6,8 +6,8 @@ export type CityPhotoAsset = {
 };
 
 export const HOME_HERO_ASSET: CityPhotoAsset = {
-  src: "/photos/khonkaen-aerial.jpg",
-  objectPosition: "center 52%",
+  src: "/photos/phuket-smart-city.jpg",
+  objectPosition: "center 48%",
 };
 
 const REGION_FALLBACKS: Record<SmartCity["region"], CityPhotoAsset> = {
@@ -21,11 +21,11 @@ const REGION_FALLBACKS: Record<SmartCity["region"], CityPhotoAsset> = {
 
 const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "chiang-mai-old-town": { src: "/photos/chiangmai-night.jpg", objectPosition: "center 58%" },
-  "cmu-smart-city": { src: "/photos/cmu-doiSuthep.jpg", objectPosition: "center 44%" },
-  "khon-kaen": { src: "/photos/khonkaen-aerial.jpg", objectPosition: "center 52%" },
-  "samyan": { src: "/photos/report-city-night.jpg", objectPosition: "center 42%" },
-  "phra-ram-4": { src: "/photos/report-city-night.jpg", objectPosition: "center 42%" },
-  "phuket": { src: "/photos/slic-waterfront.jpg", objectPosition: "center 48%" },
+  "cmu-smart-city": { src: "/photos/cmu-smart-city.jpg", objectPosition: "center 40%" },
+  "khon-kaen": { src: "/photos/khonkaen-smart-city.jpg", objectPosition: "center 50%" },
+  "samyan": { src: "/photos/samyan-smart-city.jpg", objectPosition: "center 45%" },
+  "phra-ram-4": { src: "/photos/samyan-smart-city.jpg", objectPosition: "center 45%" },
+  "phuket": { src: "/photos/phuket-smart-city.jpg", objectPosition: "center 48%" },
   "saensuk": { src: "/photos/slic-waterfront.jpg", objectPosition: "center 48%" },
   "rayong": { src: "/photos/slic-waterfront.jpg", objectPosition: "center 48%" },
   "krabi": { src: "/photos/slic-waterfront.jpg", objectPosition: "center 48%" },
