@@ -55,6 +55,33 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "chachoengsao": { src: "/photos/wp-chachoengsao.jpg", objectPosition: "center 45%" },
   "chanthaburi": { src: "/photos/wp-chanthaburi.jpg", objectPosition: "center 45%" },
 
+  // Bangkok
+  "rattanakosin": { src: "/photos/wp-rattanakosin.jpg", objectPosition: "center 55%" },
+  "klong-phadung": { src: "/photos/wp-klong-phadung.jpg", objectPosition: "center 50%" },
+  "makkasan": { src: "/photos/wp-makkasan.jpg", objectPosition: "center 50%" },
+
+  // Central / metro
+  "nonthaburi": { src: "/photos/wp-nonthaburi.jpg", objectPosition: "center 50%" },
+  "samut-prakan": { src: "/photos/wp-samut-prakan.jpg", objectPosition: "center 50%" },
+
+  // North (additional)
+  "maesai": { src: "/photos/wp-maesai.jpg", objectPosition: "center 50%" },
+  "umong": { src: "/photos/wp-umong.jpg", objectPosition: "center 50%" },
+  "tak": { src: "/photos/wp-tak.jpg", objectPosition: "center 50%" },
+  "phichit": { src: "/photos/wp-phichit.jpg", objectPosition: "center 50%" },
+  "mae-moh": { src: "/photos/wp-lampang.jpg", objectPosition: "center 50%" },
+
+  // East — tiny/obscure smart zones use nearest regional photo
+  "nikhom-phatthana": { src: "/photos/wp-rayong.jpg", objectPosition: "center 50%" },
+  "wangchan-valley": { src: "/photos/wp-rayong.jpg", objectPosition: "center 50%" },
+  "phlapphla": { src: "/photos/wp-chanthaburi.jpg", objectPosition: "center 50%" },
+  "thep-paraj": { src: "/photos/wp-chachoengsao.jpg", objectPosition: "center 50%" },
+
+  // South — tiny/obscure smart zones
+  "phuket-tinicon": { src: "/photos/wp-phangnga.jpg", objectPosition: "center 50%" },
+  "tai-yong": { src: "/photos/wp-sritrang.jpg", objectPosition: "center 50%" },
+  "khao-khun-song": { src: "/photos/wp-satun.jpg", objectPosition: "center 50%" },
+
   // South
   "krabi": { src: "/photos/wp-krabi.jpg", objectPosition: "center 45%" },
   "phangnga": { src: "/photos/wp-phangnga.jpg", objectPosition: "center 50%" },

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 // ActionAtlas removed — map was ugly, data speaks for itself
 import { useInView } from "./useInView";
+import NewsStrip from "./NewsStrip";
 import { useCitySummaries } from "./cityApi";
 import { filterCities, sortCities, summarizeCities } from "./cityCollections";
 import { getCityPhotoAsset, HOME_HERO_ASSET } from "./cityMedia";
@@ -421,6 +422,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </p>
         </div>
       </section>
+
+      {/* ─── NEWS + DATA DENSITY + LEGAL ─── */}
+      <NewsStrip locale={locale} />
 
       {/* ─── FINE PRINT ─── */}
       <section ref={fineprintRef} className={`dashboard-fineprint reveal visible`}>

@@ -196,9 +196,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 18, economy: 22, safety: 65, wellbeing: 15, environment: 50, hospitality: 10, digital: 55 },
     { population: 0, gppPerCapita: 1020000, avgMonthlyIncome: 32400, pm25Annual: 26.5, hospitalBedsPer10k: 18, crimeRatePer100k: 155, greenCoverage: 38, gppGrowthRate: 2.5, pm25Trend: "stable", waterQuality: 55, forestCoverage: 25, fdiInflow: 5800, industryComposition: "petrochemical/manufacturing 55%, services 30%, agriculture 15%", laborForce: 420 },
-    "Ranked #1 smart city in Thailand by the old index. In reality: not even 10% built. When you go there, you see empty land. The emperor has no clothes.",
-    "ถูกจัดอันดับ #1 เมืองอัจฉริยะไทยจากดัชนีเก่า ในความเป็นจริง: สร้างไม่ถึง 10% ไปดูเห็นแต่ที่ดินว่าง จักรพรรดิไม่มีเสื้อผ้า",
-    ["PTT innovation campus planned but mostly unbuilt", "Smart energy pilot on small test area", "Masterplan exists with all 7 dimensions — on paper"],
+    "DEPA 2023 ranked it Thailand's #1 city-based smart city (83.55%) — on governance vision metrics, not delivery. The PTT-owned campus covers 3,454 rai in Rayong's EEC zone. VISTEC university and KVIS science high school are operational. The biorefinery was 'almost 50% complete' in 2024, two years past its promised date. Zero residential occupancy data has ever been published.",
+    "depa 2566 จัดอันดับเป็นเมืองอัจฉริยะ #1 ระดับเมือง (83.55%) — บนตัวชี้วัดวิสัยทัศน์การกำกับดูแล ไม่ใช่การส่งมอบจริง วิทยาเขต PTT ครอบคลุม 3,454 ไร่ในเขต EEC ระยอง VISTEC และ KVIS เปิดดำเนินการแล้ว โรงกลั่นชีวภาพ 'เกือบ 50%' เสร็จในปี 2567 ช้ากว่าที่กำหนดสองปี ไม่เคยมีข้อมูลการอยู่อาศัยจริงถูกเปิดเผย",
+    ["VISTEC research university + KVIS science high school operational", "Biorefinery ~50% complete as of 2024 (promised 2022)", "PTT invested ฿4.5B Phase 1 — oil price crash 2020 slowed momentum"],
   ),
 
   city(
