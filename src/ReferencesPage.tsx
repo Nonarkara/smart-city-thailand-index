@@ -2,6 +2,7 @@ import { dataSources } from "./evidenceData";
 import { instruments } from "./financialToolkit";
 import { SCORING_PILLARS, computeComposite, assignTier, roundScore } from "./scoring";
 import { PILLAR_LABELS, PILLAR_WEIGHTS, PILLAR_COLORS } from "./types";
+import { WIKIMEDIA_PHOTO_CREDITS } from "./photoCredits";
 import type { Locale, CityScores } from "./types";
 
 interface Props {
@@ -135,6 +136,31 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─── PHOTO CREDITS (CC BY / CC BY-SA attribution) ─── */}
+      <section className="section reveal stagger-3 visible">
+        <p className="eyebrow">{t(locale, { en: "Photo Credits", th: "เครดิตภาพ", zh: "图片致谢" })}</p>
+        <h2>{t(locale, { en: "Wikimedia Commons Attribution", th: "การอ้างอิงภาพจาก Wikimedia Commons", zh: "Wikimedia Commons 图片致谢" })}</h2>
+        <p style={{ fontSize: ".75rem", color: "var(--2)", lineHeight: 1.6, maxWidth: "620px", marginBottom: "1rem" }}>
+          {t(locale, {
+            en: "City photos on this site are sourced from Wikimedia Commons under Creative Commons licenses. Each requires attribution to the original photographer. The full list is below, with direct links to the source file on Wikimedia.",
+            th: "ภาพเมืองบนเว็บไซต์นี้มาจาก Wikimedia Commons ภายใต้สัญญาอนุญาต Creative Commons ซึ่งกำหนดให้ต้องอ้างอิงช่างภาพต้นฉบับ รายการทั้งหมดอยู่ด้านล่าง พร้อมลิงก์ไปยังไฟล์ต้นฉบับบน Wikimedia",
+            zh: "本站的城市照片来自 Wikimedia Commons，使用 Creative Commons 许可证。每张都需要注明原作者。完整列表如下，并附有指向 Wikimedia 原始文件的链接。",
+          })}
+        </p>
+        <div className="photo-credits-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: ".5rem" }}>
+          {WIKIMEDIA_PHOTO_CREDITS.map(credit => (
+            <div key={credit.cityId} className="photo-credit-card glass-card" style={{ padding: ".7rem", fontSize: ".65rem", lineHeight: 1.5 }}>
+              <div style={{ font: "700 .6rem var(--mono)", color: "var(--teal)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: ".2rem" }}>{credit.cityId}</div>
+              <div style={{ fontWeight: 600, marginBottom: ".15rem" }}>{credit.author}</div>
+              <div style={{ color: "var(--3)", marginBottom: ".3rem" }}>{credit.license}</div>
+              <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: ".6rem", color: "var(--teal)" }}>
+                {t(locale, { en: "Source on Wikimedia", th: "แหล่งที่มา Wikimedia", zh: "Wikimedia 原文件" })} →
+              </a>
+            </div>
+          ))}
         </div>
       </section>
 

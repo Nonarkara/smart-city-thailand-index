@@ -110,7 +110,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
                 <div className="mixer-pillar-bar" style={{ background: PILLAR_COLORS[p] }} />
                 <span className="mixer-pillar-name">{PILLAR_LABELS[locale][p]}</span>
                 <span className="mixer-pillar-grade" style={{ color: gradeColor(grade) }}>{grade}</span>
-                <span className="mixer-pillar-desc">{locale === "th" ? GRADE_LABELS[grade].th : GRADE_LABELS[grade].en}</span>
+                <span className="mixer-pillar-desc">{translate(locale, { en: GRADE_LABELS[grade].en, th: GRADE_LABELS[grade].th, zh: GRADE_LABELS[grade].zh })}</span>
               </button>
             );
           })}
