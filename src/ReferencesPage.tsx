@@ -84,7 +84,7 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
     <div className="references-page">
       <section className="section rankings-hero reveal visible">
         <p className="eyebrow">{t(locale, { en: "Transparency", th: "ความโปร่งใส", zh: "透明度" })}</p>
-        <h1 className="hero-title">Audit Trail & References</h1>
+        <h1 className="hero-title">{t(locale, { en: "Audit Trail & References", th: "ร่องรอยการตรวจสอบและแหล่งอ้างอิง", zh: "审计轨迹与参考资料" })}</h1>
         <p className="hero-strapline">
           {t(locale, {
             en: "Every decimal in the Smart City Thailand Index is anchored in verifiable evidence. We provide full traceability for every signal used in our calculation engine.",
@@ -105,10 +105,10 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
                   <div key={i} className="endpoint-item">
                     <div className="endpoint-meta">
                       <span className="endpoint-name">{api.name}</span>
-                      <span className="endpoint-audit">Audit Trail: {api.auditTrail}</span>
+                      <span className="endpoint-audit">{t(locale, { en: "Audit Trail", th: "ร่องรอยการตรวจสอบ", zh: "审计轨迹" })}: {api.auditTrail}</span>
                     </div>
                     <p className="endpoint-usage">{t(locale, api.usage)}</p>
-                    <a href={api.url} target="_blank" rel="noopener noreferrer" className="endpoint-link">Source →</a>
+                    <a href={api.url} target="_blank" rel="noopener noreferrer" className="endpoint-link">{t(locale, { en: "Source", th: "แหล่งข้อมูล", zh: "来源" })} →</a>
                   </div>
                 ))}
               </div>
@@ -120,7 +120,7 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
       {/* ─── SCORING ENGINE AUDIT ─── */}
       <section className="section reveal stagger-2 visible">
         <p className="eyebrow">{t(locale, { en: "Method", th: "วิธีการ", zh: "方法" })}</p>
-        <h2>The Scoring Engine</h2>
+        <h2>{t(locale, { en: "The Scoring Engine", th: "เครื่องมือคำนวณคะแนน", zh: "评分引擎" })}</h2>
         <div className="engine-audit glass-card shadow-heavy">
           <div className="formula-box">
              <code>Composite = Σ (Pillar_n * Weight_n) / 100</code>
@@ -143,20 +143,20 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
         <div className="compliance-hud glass-card shadow-premium">
           <div className="hud-header">
             <span className="hud-dot" />
-            <h3>Institutional & Compliance Standards</h3>
+            <h3>{t(locale, { en: "Institutional & Compliance Standards", th: "มาตรฐานเชิงสถาบันและการกำกับดูแล", zh: "机构与合规标准" })}</h3>
           </div>
           <div className="compliance-grid">
             <div className="compliance-item">
-              <span className="c-label">License</span>
+              <span className="c-label">{t(locale, { en: "License", th: "ใบอนุญาต", zh: "许可" })}</span>
               <span className="c-value">Creative Commons Attribution 4.0 (CC BY 4.0)</span>
             </div>
             <div className="compliance-item">
-              <span className="c-label">Alignment</span>
+              <span className="c-label">{t(locale, { en: "Alignment", th: "ความสอดคล้อง", zh: "对齐标准" })}</span>
               <span className="c-value">UN-Habitat CPI · ISO 37122:2019 · ASEAN ASCF</span>
             </div>
             <div className="compliance-item">
-              <span className="c-label">Verification</span>
-              <span className="c-value">Manual Field Audit + Automated API Poll</span>
+              <span className="c-label">{t(locale, { en: "Verification", th: "การยืนยัน", zh: "验证方式" })}</span>
+              <span className="c-value">{t(locale, { en: "Manual Field Audit + Automated API Poll", th: "ตรวจภาคสนามด้วยตนเอง + ดึงข้อมูล API อัตโนมัติ", zh: "人工实地审核 + 自动 API 采集" })}</span>
             </div>
           </div>
         </div>

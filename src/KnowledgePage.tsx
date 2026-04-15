@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import type { Locale } from "./types";
+import { translate } from "./cityPresentation";
 import { useInView } from "./useInView";
 
 interface Props {
@@ -11,6 +12,26 @@ interface FAQ {
   category: string;
   q: { en: string; th: string; zh: string };
   a: { en: string; th: string; zh: string };
+}
+
+const CATEGORY_LABELS: Record<string, { en: string; th: string; zh: string }> = {
+  "Reality Check": { en: "Reality Check", th: "ความจริงที่ต้องรู้", zh: "现实检验" },
+  "About Smart City Thailand": { en: "About Smart City Thailand", th: "เกี่ยวกับเมืองอัจฉริยะไทย", zh: "关于泰国智慧城市" },
+  "The 7 Smarts": { en: "The 7 Smarts", th: "7 เสาหลักอัจฉริยะ", zh: "7 大智慧支柱" },
+  "Certification & Process": { en: "Certification & Process", th: "การรับรองและกระบวนการ", zh: "认证与流程" },
+  "International": { en: "International", th: "ระหว่างประเทศ", zh: "国际合作" },
+  "Methodology": { en: "Methodology", th: "วิธีการ", zh: "方法论" },
+  "Governance": { en: "Governance", th: "ธรรมาภิบาล", zh: "治理" },
+  "Accountability": { en: "Accountability", th: "ความรับผิดชอบ", zh: "问责" },
+  "Investment & Economics": { en: "Investment & Economics", th: "การลงทุนและเศรษฐกิจ", zh: "投资与经济" },
+  "Politics": { en: "Politics", th: "การเมือง", zh: "政治" },
+  "Success": { en: "Success Stories", th: "กรณีสำเร็จ", zh: "成功案例" },
+  "About SCITI": { en: "About SCITI", th: "เกี่ยวกับ SCITI", zh: "关于 SCITI" },
+};
+
+function localiseCategory(category: string, locale: Locale): string {
+  const label = CATEGORY_LABELS[category];
+  return label ? translate(locale, label) : category;
 }
 
 const FAQS: FAQ[] = [
@@ -361,7 +382,7 @@ export default function KnowledgePage({ locale }: Props) {
   return (
     <div className="knowledge-page">
       <section ref={heroRef} className={`section rankings-hero reveal ${heroVisible ? "visible" : ""}`}>
-        <p className="eyebrow">SCITI Knowledge Base</p>
+        <p className="eyebrow">{translate(locale, { en: "SCITI Knowledge Base", th: "คลังความรู้ SCITI", zh: "SCITI 知识库" })}</p>
         <h1 className="hero-title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)" }}>
           {locale === "th" ? "คลังความรู้เมืองอัจฉริยะ" : locale === "zh" ? "智慧城市知识库" : "Smart City Knowledge Base"}
         </h1>
@@ -384,33 +405,33 @@ export default function KnowledgePage({ locale }: Props) {
         />
 
         <div className="kb-categories">
-          <button 
-            className={`filter-btn ${activeCategory === "all" ? "active" : ""}`} 
+          <button
+            className={`filter-btn ${activeCategory === "all" ? "active" : ""}`}
             onClick={() => setActiveCategory("all")}
           >
-            All ({FAQS.length})
+            {translate(locale, { en: "All", th: "ทั้งหมด", zh: "全部" })} ({FAQS.length})
           </button>
           {CATEGORIES.map(cat => {
             const count = FAQS.filter(f => f.category === cat).length;
             return (
-              <button 
-                key={cat} 
-                className={`filter-btn ${activeCategory === cat ? "active" : ""}`} 
+              <button
+                key={cat}
+                className={`filter-btn ${activeCategory === cat ? "active" : ""}`}
                 onClick={() => setActiveCategory(cat)}
               >
-                {cat} ({count})
+                {localiseCategory(cat, locale)} ({count})
               </button>
             );
           })}
         </div>
 
-        <p className="kb-count">{filtered.length} {locale === "th" ? "ผลลัพธ์" : locale === "zh" ? "项结果" : "results"}</p>
+        <p className="kb-count">{filtered.length} {translate(locale, { en: "results", th: "ผลลัพธ์", zh: "项结果" })}</p>
 
         <div className="kb-list">
           {filtered.map((faq, i) => (
             <details key={i} className="kb-item glass-card shadow-premium">
               <summary className="kb-question">
-                <span className="kb-cat-badge">{faq.category}</span>
+                <span className="kb-cat-badge">{localiseCategory(faq.category, locale)}</span>
                 {faq.q[locale]}
               </summary>
               <p className="kb-answer">{faq.a[locale]}</p>

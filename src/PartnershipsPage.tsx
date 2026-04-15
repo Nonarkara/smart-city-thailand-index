@@ -156,6 +156,34 @@ const statusNotes: Record<Partnership["status"], Record<Locale, string>> = {
   },
 };
 
+type Tri = { en: string; th: string; zh: string };
+
+const TIMELINE: Array<{ year: string; flag: string; project: Tri; country: Tri }> = [
+  { year: "2017", flag: "🇹🇭", project: { en: "depa established, Smart City Thailand Office created", th: "ก่อตั้ง depa และสำนักงานเมืองอัจฉริยะแห่งประเทศไทย", zh: "depa 成立，泰国智慧城市办公室设立" }, country: { en: "Thailand", th: "ไทย", zh: "泰国" } },
+  { year: "2018", flag: "🇺🇸", project: { en: "U.S.-ASEAN Smart Cities Partnership launched ($10M)", th: "เปิดตัวความร่วมมือเมืองอัจฉริยะสหรัฐฯ-อาเซียน (10 ล้านดอลลาร์)", zh: "美国-东盟智慧城市伙伴关系启动（1,000 万美元）" }, country: { en: "USA", th: "สหรัฐฯ", zh: "美国" } },
+  { year: "2018", flag: "🇹🇭", project: { en: "ASCN pilot cities: Bangkok, Chiang Mai, Phuket selected", th: "เมืองนำร่อง ASCN: กรุงเทพฯ เชียงใหม่ ภูเก็ต", zh: "ASCN 试点城市选出：曼谷、清迈、普吉" }, country: { en: "Thailand/ASEAN", th: "ไทย/อาเซียน", zh: "泰国 / 东盟" } },
+  { year: "2019", flag: "🇰🇷", project: { en: "Korea K-City collaboration — Khon Kaen LRT planning", th: "ความร่วมมือ K-City กับเกาหลี — วางแผน LRT ขอนแก่น", zh: "韩国 K-City 合作——孔敬轻轨规划" }, country: { en: "South Korea", th: "เกาหลีใต้", zh: "韩国" } },
+  { year: "2019", flag: "🇯🇵", project: { en: "JICA technical cooperation with depa begins", th: "JICA เริ่มความร่วมมือทางเทคนิคกับ depa", zh: "JICA 与 depa 启动技术合作" }, country: { en: "Japan", th: "ญี่ปุ่น", zh: "日本" } },
+  { year: "2019", flag: "🇹🇭", project: { en: "Batch 1: 15 cities certified as Smart City Local", th: "รุ่นที่ 1: 15 เมืองได้รับการรับรองเมืองอัจฉริยะท้องถิ่น", zh: "第 1 批：15 座城市获得智慧城市本地认证" }, country: { en: "Thailand", th: "ไทย", zh: "泰国" } },
+  { year: "2020", flag: "🇯🇵", project: { en: "JASCA Smart JAMP fund launched (250B yen ASEAN-wide)", th: "เปิดตัวกองทุน JASCA Smart JAMP (2.5 แสนล้านเยนระดับอาเซียน)", zh: "JASCA Smart JAMP 基金启动（东盟范围 2,500 亿日元）" }, country: { en: "Japan", th: "ญี่ปุ่น", zh: "日本" } },
+  { year: "2020", flag: "🇬🇧", project: { en: "UK Prosperity Fund — Smart City Handbook for Thailand", th: "UK Prosperity Fund — คู่มือเมืองอัจฉริยะสำหรับประเทศไทย", zh: "英国繁荣基金——泰国智慧城市手册" }, country: { en: "UK", th: "สหราชอาณาจักร", zh: "英国" } },
+  { year: "2020", flag: "🇦🇹", project: { en: "Austria Advantage Austria MOU signed", th: "ลงนาม MOU Advantage Austria", zh: "签署 Advantage Austria 备忘录" }, country: { en: "Austria", th: "ออสเตรีย", zh: "奥地利" } },
+  { year: "2020", flag: "🇺🇸", project: { en: "USTDA grant for Phuket data platform", th: "ทุน USTDA สำหรับแพลตฟอร์มข้อมูลภูเก็ต", zh: "USTDA 资助普吉数据平台" }, country: { en: "USA", th: "สหรัฐฯ", zh: "美国" } },
+  { year: "2021", flag: "🇹🇭", project: { en: "Batch 2: 15 more cities certified", th: "รุ่นที่ 2: รับรองเพิ่มอีก 15 เมือง", zh: "第 2 批：再认证 15 座城市" }, country: { en: "Thailand", th: "ไทย", zh: "泰国" } },
+  { year: "2021", flag: "🇺🇸🇹🇭", project: { en: "YSEALI Smart Cities Workshop — Smart City Primer published", th: "Workshop YSEALI เมืองอัจฉริยะ — เผยแพร่ Smart City Primer", zh: "YSEALI 智慧城市工作坊——发布《智慧城市入门》" }, country: { en: "USA/Thailand", th: "สหรัฐฯ/ไทย", zh: "美国 / 泰国" } },
+  { year: "2021", flag: "🇯🇵", project: { en: "Hitachi Review article: Smart City Initiatives in Thailand", th: "บทความ Hitachi Review: โครงการเมืองอัจฉริยะในประเทศไทย", zh: "日立评论文章：泰国智慧城市倡议" }, country: { en: "Japan", th: "ญี่ปุ่น", zh: "日本" } },
+  { year: "2022", flag: "🇰🇷", project: { en: "Best Partnership Award — World Smart City Expo Korea", th: "รางวัล Best Partnership — World Smart City Expo เกาหลี", zh: "最佳合作奖——韩国世界智慧城市博览会" }, country: { en: "South Korea", th: "เกาหลีใต้", zh: "韩国" } },
+  { year: "2023", flag: "🇹🇭", project: { en: "Batch 3: 6 cities certified. Master Plan 2 launched", th: "รุ่นที่ 3: รับรอง 6 เมือง เปิดตัวแผนแม่บทฉบับที่ 2", zh: "第 3 批：6 座城市获认证，第二期总体规划启动" }, country: { en: "Thailand", th: "ไทย", zh: "泰国" } },
+  { year: "2023", flag: "🇺🇳", project: { en: "UN-Habitat ASUS Project Phase II begins (15 ASEAN cities)", th: "UN-Habitat เริ่ม ASUS Project ระยะที่ 2 (15 เมืองอาเซียน)", zh: "UN-Habitat ASUS 项目第二阶段启动（15 座东盟城市）" }, country: { en: "UN/Australia", th: "UN/ออสเตรเลีย", zh: "联合国 / 澳大利亚" } },
+  { year: "2024", flag: "🇳🇿", project: { en: "New Zealand ALGIM / Smart Christchurch exchange", th: "แลกเปลี่ยน New Zealand ALGIM / Smart Christchurch", zh: "新西兰 ALGIM / Smart Christchurch 交流" }, country: { en: "New Zealand", th: "นิวซีแลนด์", zh: "新西兰" } },
+  { year: "2024", flag: "🇸🇬", project: { en: "Singapore Polytechnic Digital Twin Lab partnership", th: "ความร่วมมือห้องแล็บ Digital Twin กับ Singapore Polytechnic", zh: "新加坡理工学院数字孪生实验室合作" }, country: { en: "Singapore", th: "สิงคโปร์", zh: "新加坡" } },
+  { year: "2025", flag: "🇹🇭", project: { en: "Batch 4: Phuket Tinicon Valley certified", th: "รุ่นที่ 4: Phuket Tinicon Valley ได้รับการรับรอง", zh: "第 4 批：普吉 Tinicon Valley 获认证" }, country: { en: "Thailand", th: "ไทย", zh: "泰国" } },
+  { year: "2025", flag: "🇸🇧", project: { en: "Solomon Islands — Pacific smart city knowledge exchange", th: "หมู่เกาะโซโลมอน — แลกเปลี่ยนความรู้เมืองอัจฉริยะแปซิฟิก", zh: "所罗门群岛——太平洋智慧城市知识交流" }, country: { en: "Solomon Islands", th: "หมู่เกาะโซโลมอน", zh: "所罗门群岛" } },
+  { year: "2025", flag: "🇹🇭", project: { en: "ASEAN CSCO Handbook — NST as model-city case study", th: "คู่มือ ASEAN CSCO — นครศรีธรรมราชเป็นกรณีศึกษาต้นแบบ", zh: "东盟 CSCO 手册——将洛坤府作为示范城市案例" }, country: { en: "ASEAN", th: "อาเซียน", zh: "东盟" } },
+  { year: "2026", flag: "🇹🇼", project: { en: "SLIC V2 launched at Smart City Summit & Expo Taipei", th: "เปิดตัว SLIC V2 ที่ Smart City Summit & Expo ไทเป", zh: "SLIC V2 在台北智慧城市峰会启动" }, country: { en: "Taiwan", th: "ไต้หวัน", zh: "台湾" } },
+  { year: "2026", flag: "🇹🇭", project: { en: "SCITI 2026 — first transparent outcome-based assessment", th: "SCITI 2026 — การประเมินโปร่งใสที่เน้นผลลัพธ์ครั้งแรก", zh: "SCITI 2026——首个透明的结果导向评估" }, country: { en: "Thailand", th: "ไทย", zh: "泰国" } },
+];
+
 function t(locale: Locale, en: string, th: string, zh: string): string {
   return locale === "th" ? th : locale === "zh" ? zh : en;
 }
@@ -240,36 +268,12 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
         <p className="eyebrow">{t(locale, "Project timeline", "ไทม์ไลน์โครงการ", "项目时间线")}</p>
         <h2>{t(locale, "Every collaboration, every year", "ทุกความร่วมมือ ทุกปี", "每项合作，每一年")}</h2>
         <div className="partner-timeline">
-          {[
-            { year: "2017", flag: "🇹🇭", project: "depa established, Smart City Thailand Office created", country: "Thailand" },
-            { year: "2018", flag: "🇺🇸", project: "U.S.-ASEAN Smart Cities Partnership launched ($10M)", country: "USA" },
-            { year: "2018", flag: "🇹🇭", project: "ASCN pilot cities: Bangkok, Chiang Mai, Phuket selected", country: "Thailand/ASEAN" },
-            { year: "2019", flag: "🇰🇷", project: "Korea K-City collaboration — Khon Kaen LRT planning", country: "South Korea" },
-            { year: "2019", flag: "🇯🇵", project: "JICA technical cooperation with depa begins", country: "Japan" },
-            { year: "2019", flag: "🇹🇭", project: "Batch 1: 15 cities certified as Smart City Local", country: "Thailand" },
-            { year: "2020", flag: "🇯🇵", project: "JASCA Smart JAMP fund launched (250B yen ASEAN-wide)", country: "Japan" },
-            { year: "2020", flag: "🇬🇧", project: "UK Prosperity Fund — Smart City Handbook for Thailand", country: "UK" },
-            { year: "2020", flag: "🇦🇹", project: "Austria Advantage Austria MOU signed", country: "Austria" },
-            { year: "2020", flag: "🇺🇸", project: "USTDA grant for Phuket data platform", country: "USA" },
-            { year: "2021", flag: "🇹🇭", project: "Batch 2: 15 more cities certified", country: "Thailand" },
-            { year: "2021", flag: "🇺🇸🇹🇭", project: "YSEALI Smart Cities Workshop — Smart City Primer published", country: "USA/Thailand" },
-            { year: "2021", flag: "🇯🇵", project: "Hitachi Review article: Smart City Initiatives in Thailand", country: "Japan" },
-            { year: "2022", flag: "🇰🇷", project: "Best Partnership Award — World Smart City Expo Korea", country: "South Korea" },
-            { year: "2023", flag: "🇹🇭", project: "Batch 3: 6 cities certified. Master Plan 2 launched", country: "Thailand" },
-            { year: "2023", flag: "🇺🇳", project: "UN-Habitat ASUS Project Phase II begins (15 ASEAN cities)", country: "UN/Australia" },
-            { year: "2024", flag: "🇳🇿", project: "New Zealand ALGIM / Smart Christchurch exchange", country: "New Zealand" },
-            { year: "2024", flag: "🇸🇬", project: "Singapore Polytechnic Digital Twin Lab partnership", country: "Singapore" },
-            { year: "2025", flag: "🇹🇭", project: "Batch 4: Phuket Tinicon Valley certified", country: "Thailand" },
-            { year: "2025", flag: "🇸🇧", project: "Solomon Islands — Pacific smart city knowledge exchange", country: "Solomon Islands" },
-            { year: "2025", flag: "🇹🇭", project: "ASEAN CSCO Handbook — NST as model-city case study", country: "ASEAN" },
-            { year: "2026", flag: "🇹🇼", project: "SLIC V2 launched at Smart City Summit & Expo Taipei", country: "Taiwan" },
-            { year: "2026", flag: "🇹🇭", project: "SCITI 2026 — first transparent outcome-based assessment", country: "Thailand" },
-          ].map((item, i) => (
+          {TIMELINE.map((item, i) => (
             <div key={i} className="partner-tl-row">
               <span className="partner-tl-year">{item.year}</span>
               <span className="partner-tl-flag">{item.flag}</span>
-              <span className="partner-tl-project">{item.project}</span>
-              <span className="partner-tl-country">{item.country}</span>
+              <span className="partner-tl-project">{t(locale, item.project.en, item.project.th, item.project.zh)}</span>
+              <span className="partner-tl-country">{t(locale, item.country.en, item.country.th, item.country.zh)}</span>
             </div>
           ))}
         </div>

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useCitySummaries } from "./cityApi";
-import { getCityName } from "./cityPresentation";
+import { getCityName, translate } from "./cityPresentation";
 import { THAILAND_BOUNDS, CITY_COORDS as coords, projectTo, esriTileUrl, tierColor } from "./mapUtils";
 import type { Locale, SmartCity } from "./types";
 import { TIER_LABELS } from "./types";
@@ -26,8 +26,25 @@ const layerUrls: Record<MapLayer, string> = {
 };
 
 const REGIONS: SmartCity["region"][] = ["north", "central", "northeast", "east", "south", "bangkok"];
-const REGION_LABELS: Record<SmartCity["region"], string> = {
-  north: "North", central: "Central", northeast: "Isan", east: "East", south: "South", bangkok: "BKK",
+const REGION_LABELS: Record<SmartCity["region"], { en: string; th: string; zh: string }> = {
+  north: { en: "North", th: "ภาคเหนือ", zh: "北部" },
+  central: { en: "Central", th: "ภาคกลาง", zh: "中部" },
+  northeast: { en: "Isan", th: "อีสาน", zh: "东北部" },
+  east: { en: "East", th: "ภาคตะวันออก", zh: "东部" },
+  south: { en: "South", th: "ภาคใต้", zh: "南部" },
+  bangkok: { en: "BKK", th: "กรุงเทพฯ", zh: "曼谷" },
+};
+
+const LAYER_LABELS: Record<MapLayer, { en: string; th: string; zh: string }> = {
+  base: { en: "Base", th: "แผนที่พื้นฐาน", zh: "基础" },
+  satellite: { en: "Satellite", th: "ดาวเทียม", zh: "卫星" },
+  terrain: { en: "Terrain", th: "ภูมิประเทศ", zh: "地形" },
+};
+
+const FILTER_LABELS: Record<"all" | "certified" | "promotion", { en: string; th: string; zh: string }> = {
+  all: { en: "All", th: "ทั้งหมด", zh: "全部" },
+  certified: { en: "Certified", th: "ได้รับการรับรอง", zh: "已认证" },
+  promotion: { en: "Promotion", th: "ส่งเสริม", zh: "推广中" },
 };
 
 export default function MapDashboardPage({ locale, onNavigate }: Props) {
@@ -46,13 +63,13 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
   const regionStats = useMemo(() => {
     return REGIONS.map(r => ({
       region: r,
-      label: REGION_LABELS[r],
+      label: translate(locale, REGION_LABELS[r]),
       total: filtered.filter(c => c.region === r).length,
       alpha: filtered.filter(c => c.region === r && c.tier === "alpha").length,
       beta: filtered.filter(c => c.region === r && c.tier === "beta").length,
       gamma: filtered.filter(c => c.region === r && c.tier === "gamma").length,
     }));
-  }, [filtered]);
+  }, [filtered, locale]);
 
   const maxRegion = Math.max(...regionStats.map(r => r.total), 1);
   const isDark = layer === "satellite";
@@ -62,9 +79,13 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
       {/* ─── HEADER ─── */}
       <div className="map-dash-header">
         <div>
-          <p className="eyebrow">{locale === "th" ? "แผนที่เมืองอัจฉริยะ" : "Smart City Map"}</p>
+          <p className="eyebrow">{translate(locale, { en: "Smart City Map", th: "แผนที่เมืองอัจฉริยะ", zh: "智慧城市地图" })}</p>
           <h1 style={{ fontSize: "clamp(1.3rem, 3vw, 2rem)", fontWeight: 800, letterSpacing: "-.03em" }}>
-            {locale === "th" ? `${filtered.length} เมืองทั่วประเทศ` : `${filtered.length} cities across Thailand`}
+            {translate(locale, {
+              en: `${filtered.length} cities across Thailand`,
+              th: `${filtered.length} เมืองทั่วประเทศ`,
+              zh: `泰国全境 ${filtered.length} 座城市`,
+            })}
           </h1>
         </div>
         <div className="map-dash-controls">
@@ -72,7 +93,7 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
             {(["all", "certified", "promotion"] as const).map(f => (
               <button key={f} className={`filter-btn ${filter === f ? "active" : ""}`}
                 onClick={() => setFilter(f)}>
-                {f === "all" ? "All" : f === "certified" ? "Certified" : "Promotion"}
+                {translate(locale, FILTER_LABELS[f])}
               </button>
             ))}
           </div>
@@ -80,7 +101,7 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
             {(["base", "satellite", "terrain"] as const).map(l => (
               <button key={l} className={`map-layer-btn ${layer === l ? "active" : ""}`}
                 onClick={() => setLayer(l)}>
-                {l.charAt(0).toUpperCase() + l.slice(1)}
+                {translate(locale, LAYER_LABELS[l])}
               </button>
             ))}
           </div>
@@ -159,7 +180,7 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
         {/* ─── SIDEBAR: Regional breakdown ─── */}
         <div className="map-dash-sidebar">
           <div className="map-dash-sidebar-title">
-            {locale === "th" ? "ภูมิภาค" : "By region"}
+            {translate(locale, { en: "By region", th: "แยกตามภูมิภาค", zh: "按地区" })}
           </div>
           {regionStats.map(r => (
             <div key={r.region} className="map-dash-region">
@@ -183,10 +204,10 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
 
           {/* Legend */}
           <div className="map-dash-legend">
-            <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="4.5" fill="var(--alpha)" stroke="#111" strokeWidth=".6" /></svg> Alpha certified</div>
+            <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="4.5" fill="var(--alpha)" stroke="#111" strokeWidth=".6" /></svg> {translate(locale, { en: "Alpha certified", th: "Alpha ได้รับการรับรอง", zh: "Alpha 已认证" })}</div>
             <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="3.5" fill="var(--beta)" /></svg> Beta</div>
             <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="3" fill="var(--gamma)" /></svg> Gamma</div>
-            <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="4.5" fill="none" stroke="var(--alpha)" strokeWidth=".5" /><circle cx="5" cy="5" r="2.5" fill="var(--alpha)" /></svg> Alpha glow</div>
+            <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="4.5" fill="none" stroke="var(--alpha)" strokeWidth=".5" /><circle cx="5" cy="5" r="2.5" fill="var(--alpha)" /></svg> {translate(locale, { en: "Alpha glow", th: "รัศมี Alpha", zh: "Alpha 光环" })}</div>
           </div>
         </div>
       </div>
