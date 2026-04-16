@@ -177,13 +177,17 @@ export default function HomePage({ locale, onNavigate }: Props) {
             })}
           </p>
           <div className="cinematic-hero-stats">
-            <span>{stats.total} {locale === "th" ? "เมือง" : "cities"}</span>
-            <span>{stats.operational} {locale === "th" ? "ใช้งานจริง" : "operational"}</span>
-            <span>{stats.certified} {locale === "th" ? "รับรอง" : "certified"}</span>
+            <span>{stats.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })}</span>
+            <span>{stats.operational} {translate(locale, { en: "operational", th: "ใช้งานจริง", zh: "运营中" })}</span>
+            <span>{stats.certified} {translate(locale, { en: "certified", th: "รับรอง", zh: "已认证" })}</span>
           </div>
           <div className="cinematic-hero-actions">
-            <button className="cta-button" onClick={() => onNavigate("/rankings")}>Get Rankings</button>
-            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/methodology")}>Methodology</button>
+            <button className="cta-button" onClick={() => onNavigate("/rankings")}>
+              {translate(locale, { en: "Get Rankings", th: "ดูอันดับ", zh: "查看排名" })}
+            </button>
+            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/methodology")}>
+              {translate(locale, { en: "Methodology", th: "วิธีการ", zh: "方法论" })}
+            </button>
           </div>
         </div>
       </section>

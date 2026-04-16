@@ -495,7 +495,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
               <div className="dev-score-grid">
                 <div className="dev-score-main">
                   <span className="dev-score-pct">{dev.total}%</span>
-                  <span className="dev-score-label">{locale === "th" ? dev.labelTh : dev.label}</span>
+                  <span className="dev-score-label">{locale === "zh" ? dev.labelZh : locale === "th" ? dev.labelTh : dev.label}</span>
                 </div>
                 <div className="dev-score-breakdown">
                   <div className="dev-metric"><span className="dev-metric-val">{dev.growthCapacity}%</span><span className="dev-metric-lab">{translate(locale, { en: "Growth capacity", th: "ศักยภาพเติบโต", zh: "增长能力" })}</span></div>
@@ -507,7 +507,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 <div className="global-comparison">
                   <span className="gc-label">{translate(locale, { en: "Global comparable", th: "เทียบระดับโลก", zh: "全球对标" })}</span>
                   <strong>{comparison.worldCity}, {comparison.country}</strong> ({comparison.population})
-                  <p className="gc-why">{locale === "th" ? comparison.whyTh : comparison.why}</p>
+                  <p className="gc-why">{locale === "zh" ? comparison.whyZh : locale === "th" ? comparison.whyTh : comparison.why}</p>
                 </div>
               )}
             </section>
@@ -520,8 +520,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                   <div key={i} className="action-step-card">
                     <div className="action-step-num">{i + 1}</div>
                     <div>
-                      <strong>{locale === "th" ? s.stepTh : s.step}</strong>
-                      <p className="action-step-example">{locale === "th" ? s.worldExampleTh : s.worldExample}</p>
+                      <strong>{locale === "zh" ? s.stepZh : locale === "th" ? s.stepTh : s.step}</strong>
+                      <p className="action-step-example">{locale === "zh" ? s.worldExampleZh : locale === "th" ? s.worldExampleTh : s.worldExample}</p>
                       <span className="action-step-source">{s.source}</span>
                     </div>
                   </div>
@@ -534,11 +534,11 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
               <h2>{translate(locale, { en: "Competitive financing advice", th: "คำแนะนำทางการเงินเชิงแข่งขัน", zh: "竞争性融资建议" })}</h2>
               <div className="finance-advice-card">
                 <div className="fa-header">
-                  <strong>{locale === "th" ? financing.primaryInstrumentTh : financing.primaryInstrument}</strong>
+                  <strong>{locale === "zh" ? financing.primaryInstrumentZh : locale === "th" ? financing.primaryInstrumentTh : financing.primaryInstrument}</strong>
                   <span className="fa-size">{financing.typicalSize}</span>
                 </div>
-                <p className="fa-rationale">{locale === "th" ? financing.rationaleTh : financing.rationale}</p>
-                <p className="fa-advantage">{locale === "th" ? financing.competitiveAdvantageTh : financing.competitiveAdvantage}</p>
+                <p className="fa-rationale">{locale === "zh" ? financing.rationaleZh : locale === "th" ? financing.rationaleTh : financing.rationale}</p>
+                <p className="fa-advantage">{locale === "zh" ? financing.competitiveAdvantageZh : locale === "th" ? financing.competitiveAdvantageTh : financing.competitiveAdvantage}</p>
               </div>
             </section>
           </>
