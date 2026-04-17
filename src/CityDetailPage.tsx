@@ -603,30 +603,50 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       <section className="section">
         <p className="eyebrow">{translate(locale, { en: "Tailored finance", th: "การเงินเฉพาะเมือง", zh: "定制融资" })}</p>
         <h2>{translate(locale, { en: "Which mechanism actually fits this city", th: "กลไกไหนที่เข้ากับเมืองนี้จริง", zh: "什么机制真的适合这座城市" })}</h2>
-        <div className="finance-blueprint-grid">
-          <div className="finance-blueprint-card">
-            <div className="finance-blueprint-label">{translate(locale, { en: "Revenue base", th: "ฐานรายได้", zh: "收入基础" })}</div>
-            <p className="finance-blueprint-body">{city.financeProfile.revenueBase}</p>
-          </div>
-          <div className="finance-blueprint-card">
-            <div className="finance-blueprint-label">{translate(locale, { en: "Institutional capacity", th: "ศักยภาพสถาบัน", zh: "机构能力" })}</div>
-            <p className="finance-blueprint-body">{city.financeProfile.institutionalCapacity}</p>
-          </div>
-          <div className="finance-blueprint-card">
-            <div className="finance-blueprint-label">{translate(locale, { en: "Project pipeline", th: "ท่อโครงการ", zh: "项目管线" })}</div>
-            <p className="finance-blueprint-body">{city.financeProfile.projectPipeline}</p>
-          </div>
-          <div className="finance-blueprint-card">
-            <div className="finance-blueprint-label">{translate(locale, { en: "Private interest", th: "ความสนใจเอกชน", zh: "私营兴趣" })}</div>
-            <p className="finance-blueprint-body">{city.financeProfile.privateInterest}</p>
-          </div>
-          <div className="finance-blueprint-card finance-blueprint-card-wide">
-            <div className="finance-blueprint-label">{translate(locale, { en: "Risk profile", th: "โปรไฟล์ความเสี่ยง", zh: "风险画像" })}</div>
-            <p className="finance-blueprint-body">
-              {city.financeProfile.riskProfile} · {city.financeProfile.deliveryReadiness} · {city.financeProfile.readinessScore}/100
-            </p>
-          </div>
-        </div>
+        {(() => {
+          const STRENGTH_LABEL: Record<"strong" | "moderate" | "thin", Record<Locale, string>> = {
+            strong:   { en: "Strong",   th: "แข็งแกร่ง", zh: "强" },
+            moderate: { en: "Moderate", th: "ปานกลาง",   zh: "中等" },
+            thin:     { en: "Thin",     th: "บาง",       zh: "弱" },
+          };
+          const RISK_LABEL: Record<"low" | "medium" | "high" | "acute", Record<Locale, string>> = {
+            low:    { en: "Low",    th: "ต่ำ",     zh: "低" },
+            medium: { en: "Medium", th: "ปานกลาง", zh: "中" },
+            high:   { en: "High",   th: "สูง",     zh: "高" },
+            acute:  { en: "Acute",  th: "วิกฤต",   zh: "严峻" },
+          };
+          const READINESS_LABEL: Record<"advanced" | "building" | "foundational", Record<Locale, string>> = {
+            advanced:     { en: "Advanced",     th: "ขั้นสูง",     zh: "先进" },
+            building:     { en: "Building",     th: "กำลังสร้าง", zh: "建设中" },
+            foundational: { en: "Foundational", th: "รากฐาน",     zh: "基础阶段" },
+          };
+          return (
+            <div className="finance-blueprint-grid">
+              <div className="finance-blueprint-card">
+                <div className="finance-blueprint-label">{translate(locale, { en: "Revenue base", th: "ฐานรายได้", zh: "收入基础" })}</div>
+                <p className="finance-blueprint-body">{STRENGTH_LABEL[city.financeProfile.revenueBase][locale]}</p>
+              </div>
+              <div className="finance-blueprint-card">
+                <div className="finance-blueprint-label">{translate(locale, { en: "Institutional capacity", th: "ศักยภาพสถาบัน", zh: "机构能力" })}</div>
+                <p className="finance-blueprint-body">{STRENGTH_LABEL[city.financeProfile.institutionalCapacity][locale]}</p>
+              </div>
+              <div className="finance-blueprint-card">
+                <div className="finance-blueprint-label">{translate(locale, { en: "Project pipeline", th: "ท่อโครงการ", zh: "项目管线" })}</div>
+                <p className="finance-blueprint-body">{STRENGTH_LABEL[city.financeProfile.projectPipeline][locale]}</p>
+              </div>
+              <div className="finance-blueprint-card">
+                <div className="finance-blueprint-label">{translate(locale, { en: "Private interest", th: "ความสนใจเอกชน", zh: "私营兴趣" })}</div>
+                <p className="finance-blueprint-body">{STRENGTH_LABEL[city.financeProfile.privateInterest][locale]}</p>
+              </div>
+              <div className="finance-blueprint-card finance-blueprint-card-wide">
+                <div className="finance-blueprint-label">{translate(locale, { en: "Risk profile", th: "โปรไฟล์ความเสี่ยง", zh: "风险画像" })}</div>
+                <p className="finance-blueprint-body">
+                  {RISK_LABEL[city.financeProfile.riskProfile][locale]} · {READINESS_LABEL[city.financeProfile.deliveryReadiness][locale]} · {city.financeProfile.readinessScore}/100
+                </p>
+              </div>
+            </div>
+          );
+        })()}
 
         <div className="finance-grid">
           {city.financeRecommendations.map(recommendation => {
@@ -643,7 +663,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                       ? translate(locale, { en: "Secondary mechanism", th: "กลไกรอง", zh: "次机制" })
                       : translate(locale, { en: "Watchlist", th: "เฝ้าดู", zh: "观察名单" })}
                 </div>
-                <h3 className="finance-card-title">{recommendation.instrumentName}</h3>
+                <h3 className="finance-card-title">{locale === "th" ? (instrument?.nameTh ?? recommendation.instrumentName) : recommendation.instrumentName}</h3>
                 <p className="finance-card-body">{instrument?.desc[locale] ?? recommendation.reasonSummary[locale]}</p>
                 <p className="finance-card-body finance-card-consideration">{recommendation.reasonSummary[locale]}</p>
                 <div className="finance-card-meta">
@@ -657,7 +677,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 <div className="record-grid" style={{ marginTop: "1rem" }}>
                   {recommendation.supports.map(support => (
                     <div key={support.id} className="record-item">
-                      <span className="record-label">{support.supportType === "metric" ? support.metricLabel ?? support.metricKey : "Evidence"}</span>
+                      <span className="record-label">{support.supportType === "metric" ? (support.metricLabel ?? support.metricKey) : translate(locale, { en: "Evidence", th: "หลักฐาน", zh: "证据" })}</span>
                       <span className="record-value">{support.summary}</span>
                     </div>
                   ))}

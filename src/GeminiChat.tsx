@@ -122,11 +122,11 @@ export default function GeminiChat({ locale }: Props) {
     }
   }, [input, loading, messages]);
 
-  const t = (en: string, th: string) => locale === "th" ? th : en;
+  const t = (en: string, th: string, zh?: string) => locale === "zh" ? (zh ?? en) : locale === "th" ? th : en;
 
   if (!open) {
     return (
-      <button className="chat-fab" onClick={() => setOpen(true)} title={t("Ask about Thai smart cities", "ถามเกี่ยวกับเมืองอัจฉริยะไทย")}>
+      <button className="chat-fab" onClick={() => setOpen(true)} title={t("Ask about Thai smart cities", "ถามเกี่ยวกับเมืองอัจฉริยะไทย", "询问泰国智慧城市")}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
@@ -137,7 +137,7 @@ export default function GeminiChat({ locale }: Props) {
   return (
     <div className="chat-panel">
       <div className="chat-header">
-        <span className="chat-title">{t("Smart City Assistant", "ผู้ช่วยเมืองอัจฉริยะ")}</span>
+        <span className="chat-title">{t("Smart City Assistant", "ผู้ช่วยเมืองอัจฉริยะ", "智慧城市助手")}</span>
         <span className="chat-powered">Gemini</span>
         <button className="chat-close" onClick={() => setOpen(false)}>×</button>
       </div>
@@ -147,14 +147,15 @@ export default function GeminiChat({ locale }: Props) {
           <div className="chat-welcome">
             <p>{t(
               "Ask me about Thai smart cities, rankings, financial mechanisms, or data sources.",
-              "ถามเกี่ยวกับเมืองอัจฉริยะไทย อันดับ กลไกการเงิน หรือแหล่งข้อมูล"
+              "ถามเกี่ยวกับเมืองอัจฉริยะไทย อันดับ กลไกการเงิน หรือแหล่งข้อมูล",
+              "询问泰国智慧城市、排名、融资机制或数据来源。"
             )}</p>
             <div className="chat-suggestions">
               {[
-                t("Which cities are Alpha tier?", "เมืองไหนเป็น Alpha?"),
-                t("Why is Wangchan Valley Gamma?", "ทำไมวังจันทร์วัลเลย์เป็น Gamma?"),
-                t("What financing fits Khon Kaen?", "กลไกการเงินอะไรเหมาะกับขอนแก่น?"),
-                t("How does Nakhon Si Thammarat work?", "นครศรีธรรมราชทำอะไร?"),
+                t("Which cities are Alpha tier?", "เมืองไหนเป็น Alpha?", "哪些城市是Alpha级？"),
+                t("Why is Wangchan Valley Gamma?", "ทำไมวังจันทร์วัลเลย์เป็น Gamma?", "为什么Wangchan Valley是Gamma级？"),
+                t("What financing fits Khon Kaen?", "กลไกการเงินอะไรเหมาะกับขอนแก่น?", "什么融资机制适合孔敬？"),
+                t("How does Nakhon Si Thammarat work?", "นครศรีธรรมราชทำอะไร?", "那空是贪玛叻如何运作？"),
               ].map((q, i) => (
                 <button key={i} className="chat-suggestion" onClick={() => { setInput(q); }}>
                   {q}
@@ -181,7 +182,7 @@ export default function GeminiChat({ locale }: Props) {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === "Enter" && send()}
-          placeholder={t("Ask about any city...", "ถามเกี่ยวกับเมืองใดก็ได้...")}
+          placeholder={t("Ask about any city...", "ถามเกี่ยวกับเมืองใดก็ได้...", "询问任何城市...")}
           disabled={loading}
         />
         <button className="chat-send" onClick={send} disabled={loading || !input.trim()}>
