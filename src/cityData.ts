@@ -119,7 +119,7 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 72, economy: 70, safety: 71, wellbeing: 72, environment: 58, hospitality: 74, digital: 70 },
     { population: 1800, gppPerCapita: 155000, avgMonthlyIncome: 22100, pm25Annual: 26.3, hospitalBedsPer10k: 28, crimeRatePer100k: 138, greenCoverage: 35, gppGrowthRate: 3.5, pm25Trend: "improving", waterQuality: 70, forestCoverage: 15, fdiInflow: 2800, industryComposition: "services 48%, manufacturing 28%, agriculture 24%", laborForce: 980 },
-    "Isan's economic capital. Genuinely smart — LRT under construction, smart bus system running, university-industry corridor active. The real deal in the northeast.",
+    "Isan's economic capital. Operating genuinely smart initiatives — LRT under construction, smart bus system running, university-industry corridor active. A compelling model in the northeast.",
     "เมืองหลวงเศรษฐกิจอีสาน อัจฉริยะจริง — LRT กำลังก่อสร้าง ระบบรถบัสอัจฉริยะวิ่งแล้ว ระเบียงมหาวิทยาลัย-อุตสาหกรรมทำงานจริง",
     ["Smart bus rapid transit system operational", "LRT construction underway with digital twin planning", "Khon Kaen Innovation Center driving startup ecosystem", "Smart healthcare network connecting 6 hospitals"],
   ),
@@ -484,7 +484,7 @@ export const certifiedCities: SmartCity[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// PROMOTION ZONES — Selected cities from the 165+ เขตส่งเสริมเมืองอัจฉริยะ
+// PROMOTION ZONES — Selected cities from depa's 190 promotion cities (January 2026 registry)
 // These are cities that have submitted plans and are working toward certification.
 // ---------------------------------------------------------------------------
 

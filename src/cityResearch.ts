@@ -290,9 +290,9 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
       zh: "这座海岛按轮班节奏生活：清晨市场、白天的酒店与船队、午后的老城咖啡馆，以及深夜仍在运转的芭东服务经济。",
     },
     signatureStory: {
-      en: "Phuket is where Thailand's smart-tourism pitch actually meets operations: multilingual safety systems, traffic control, and marine monitoring all matter because visitor trust is the economy.",
-      th: "ภูเก็ตคือจุดที่คำพูดเรื่องสมาร์ททัวริซึมของไทยไปเจอกับของจริง: ระบบความปลอดภัยหลายภาษา การควบคุมจราจร และการเฝ้าระวังทะเลมีความหมาย เพราะความเชื่อมั่นของนักท่องเที่ยวคือเศรษฐกิจทั้งเมือง",
-      zh: "普吉是泰国“智慧旅游”真正落地的地方：多语言安全系统、交通调度与海洋监测之所以重要，是因为游客信任本身就是这里的经济命脉。",
+      en: "Phuket is where Thailand's smart-tourism vision translates into operations: multilingual safety systems, traffic control, and marine monitoring all matter because visitor trust is the economy.",
+      th: "ภูเก็ตคือจุดที่วิสัยทัศน์สมาร์ททัวริซึมของไทยถูกนำมาปฏิบัติจริง: ระบบความปลอดภัยหลายภาษา การควบคุมจราจร และการเฝ้าระวังทะเลมีความหมาย เพราะความเชื่อมั่นของนักท่องเที่ยวคือเศรษฐกิจ",
+      zh: "普吉是泰国智慧旅游愿景转化为实际行动的地方：多语言安全系统、交通调度与海洋监测之所以重要，是因为游客信任就是经济。",
     },
     funFact: {
       en: "Phuket is a UNESCO Creative City of Gastronomy, so the island sells beaches by day and Baba-Nyonya food culture by night.",
@@ -649,7 +649,7 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
   "songkhla-city": {
     industries: CITY_INDUSTRY_TAGS["songkhla-city"],
     dailyLife: { en: "Songkhla Lake defines the city — fishermen cast nets at dawn, PSU researchers study the lake ecology, and the old town's Chinese-Thai shophouses host a growing cafe and gallery scene.", th: "ทะเลสาบสงขลานิยามเมือง — ชาวประมงทอดแหตอนเช้า นักวิจัย มอ.ศึกษาระบบนิเวศทะเลสาบ และตึกแถวไทย-จีนเมืองเก่ารองรับคาเฟ่และแกลเลอรี่ที่เติบโต", zh: "宋卡湖定义了这座城市——渔民清晨撒网、宋卡大学研究人员研究湖泊生态、老城的中泰骑楼承载着日益增长的咖啡馆和画廊文化。" },
-    signatureStory: { en: "Songkhla's lake monitoring system is the real deal — IoT sensors tracking water quality, fish population, and sediment levels. It's the kind of environmental smart city that works because the data matters to people's livelihoods.", th: "ระบบเฝ้าระวังทะเลสาบสงขลาเป็นของจริง — เซ็นเซอร์ IoT ติดตามคุณภาพน้ำ ประชากรปลา และระดับตะกอน เป็นเมืองอัจฉริยะสิ่งแวดล้อมที่ใช้ได้เพราะข้อมูลสำคัญต่อชีวิตความเป็นอยู่ของคน", zh: "宋卡的湖泊监测系统是真货——物联网传感器追踪水质、鱼群数量和沉积物水平。这是那种因为数据关系到人们生计而真正有效的环境智慧城市。" },
+    signatureStory: { en: "Songkhla's lake monitoring system is highly effective — IoT sensors tracking water quality, fish population, and sediment levels. It exemplifies a functional environmental smart city where data directly supports people's livelihoods.", th: "ระบบเฝ้าระวังทะเลสาบสงขลามีประสิทธิภาพสูง — เซ็นเซอร์ IoT ติดตามคุณภาพน้ำ ประชากรปลา และระดับตะกอน เป็นตัวอย่างที่ชัดเจนของเมืองอัจฉริยะสิ่งแวดล้อมที่ใช้ได้เพราะข้อมูลสนับสนุนความเป็นอยู่ของคนโดยตรง", zh: "宋卡的湖泊监测系统非常高效——物联网传感器追踪水质、鱼群数量和沉积物水平。这是环境智慧城市的典范，其数据直接支持人们的生计。" },
     funFact: { en: "Songkhla Lake is Thailand's largest natural lake and the only one that mixes fresh and saltwater — making its IoT monitoring uniquely complex.", th: "ทะเลสาบสงขลาเป็นทะเลสาบธรรมชาติใหญ่สุดของไทยและเป็นแห่งเดียวที่ผสมน้ำจืดและน้ำเค็ม — ทำให้ IoT เฝ้าระวังซับซ้อนเป็นเอกลักษณ์", zh: "宋卡湖是泰国最大的天然湖泊，也是唯一淡咸水混合的——使其物联网监测独特地复杂。" },
     compareNote: { en: "Lake city with genuine environmental IoT, strong university base, and cultural identity — if it can resist Hat Yai's commercial gravity.", th: "เมืองทะเลสาบที่มี IoT สิ่งแวดล้อมจริง ฐานมหาวิทยาลัยแข็ง และอัตลักษณ์วัฒนธรรม — หากต้านแรงดึงดูดเชิงพาณิชย์ของหาดใหญ่ได้", zh: "湖泊城市拥有真正的环境物联网、强大的大学基础和文化认同——如果能抵抗合艾的商业引力。" },
   },
@@ -671,7 +671,7 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
   },
   "wangchan-valley": {
     industries: CITY_INDUSTRY_TAGS["wangchan-valley"],
-    dailyLife: { en: "The only people here are VISTEC doctoral students on full scholarships and KVIS high-schoolers selected from 7,000 applicants. Both are PTT-funded institutions. There are no shops, no market stalls, no commuters — just research labs, construction equipment, and empty land earmarked for a future that keeps being deferred.", th: "คนที่อยู่ที่นี่มีเพียงนักศึกษาปริญญาเอก VISTEC ทุนเต็มจำนวน และนักเรียน KVIS ที่คัดเลือกจาก 7,000 คน ทั้งสองแห่งได้รับทุนจาก ปตท. ไม่มีร้านค้า ไม่มีตลาด ไม่มีผู้เดินทาง มีแต่ห้องวิจัย เครื่องจักรก่อสร้าง และที่ดินว่างที่จัดไว้สำหรับอนาคตที่ถูกเลื่อนออกไปเรื่อยๆ", zh: "这里唯一的人是VISTEC全奖博士生和从7000名申请者中选出的KVIS高中生——两者都由PTT资助。没有商店、没有市集、没有通勤者——只有实验室、施工机械和不断被推迟的空地。" },
+    dailyLife: { en: "Current activity centers on VISTEC doctoral students and KVIS high-schoolers in PTT-funded institutions. Surrounding areas are predominantly undeveloped parcels earmarked for future expansion phases.", th: "กิจกรรมปัจจุบันเน้นที่นักศึกษาปริญญาเอก VISTEC และนักเรียนมัธยมปลาย KVIS ในสถาบันที่ได้รับทุนจาก ปตท. พื้นที่โดยรอบยังคงเป็นพื้นที่เตรียมไว้สำหรับการขยายตัวในอนาคต", zh: "目前的活动集中在由PTT资助的机构中的VISTEC博士生和KVIS高中生。周围地区主要是为未来扩展阶段预留的未开发地块。" },
     signatureStory: { en: "DEPA's 2023 Smart City Index gave Wangchan Valley 83.55%, ranking it #1 in the 'city-based' category — while Phuket scored 83.6% as #1 in the 'province-based' category. Both scored nearly identically. Both were declared winners. The index measured governance vision, infrastructure investment commitment, and planning documentation — not completed buildings, not residents served, not services operational. Bangkok Post warned as early as 2019: 'No state-run science park in Thailand has yet met these requirements.' PTT faced an oil price collapse of 78.9% in April 2020 ($64→$13/barrel), forcing a 57-billion-baht emergency debenture. Wangchan Valley's biorefinery, promised operational by 2022, was 'almost 50% complete' two years later. SCITI measures outcomes, not plans. That is why this ranking looks different.", th: "ดัชนีเมืองอัจฉริยะ 2566 ของ depa ให้คะแนนวังจันทร์วัลเลย์ 83.55% — อันดับ 1 ประเภท 'เมือง' ขณะที่ภูเก็ตได้ 83.6% อันดับ 1 ประเภท 'จังหวัด' คะแนนใกล้เคียงกันมาก ทั้งสองได้รับการประกาศว่าชนะ ดัชนีวัดวิสัยทัศน์การกำกับดูแล พันธะการลงทุนโครงสร้างพื้นฐาน และเอกสารการวางแผน — ไม่ใช่อาคารสร้างเสร็จ ไม่ใช่ผู้อยู่อาศัยที่ได้รับบริการ ไม่ใช่บริการที่เปิดดำเนินการ Bangkok Post เตือนตั้งแต่ปี 2562 ว่า 'ยังไม่มีสวนวิทยาศาสตร์ที่รัฐบาลดำเนินการในไทยบรรลุเงื่อนไขเหล่านี้ได้' ปตท. ต้องเผชิญราคาน้ำมันร่วง 78.9% ในเดือนเมษายน 2563 จนต้องออกหุ้นกู้ฉุกเฉิน 57,000 ล้านบาท โรงกลั่นชีวภาพที่สัญญาว่าจะเสร็จปี 2565 'เกือบ 50%' ในปีต่อมาสองปี SCITI วัดผลลัพธ์ ไม่ใช่แผน นั่นคือเหตุผลที่อันดับนี้ดูต่างออกไป", zh: "depa 2023智慧城市指数给旺婵谷83.55分，在'城市类别'排名第一——而普吉岛以83.6分获'省级类别'第一。分数几乎相同，两者都被宣布获胜。指数衡量治理愿景、基础设施投资承诺和规划文件——而非建成的建筑、服务的居民或运营中的服务。《曼谷邮报》早在2019年就警告：'泰国没有任何国营科学园区达到过这些要求。' PTT在2020年4月面临油价崩溃78.9%（64→13美元/桶），被迫紧急发行570亿铢债券。承诺2022年投入运营的生物炼油厂，两年后'接近完成50%'。SCITI衡量成果而非计划。这就是为什么这个排名看起来不同。" },
     funFact: { en: "VISTEC accepts around 150 graduate students per year. KVIS accepts 72 students per year, selected from approximately 5,000–7,000 applicants nationally. These are genuinely world-class institutions — PTT's educational investment is real. What doesn't exist: the smart city around them.", th: "VISTEC รับนักศึกษาบัณฑิตราว 150 คนต่อปี KVIS รับ 72 คนต่อปี คัดเลือกจากผู้สมัคร 5,000–7,000 คนทั่วประเทศ สถาบันเหล่านี้ระดับโลกจริง — การลงทุนด้านการศึกษาของ ปตท. เป็นของจริง สิ่งที่ไม่มีอยู่จริง: เมืองอัจฉริยะที่ล้อมรอบสถาบันเหล่านั้น", zh: "VISTEC每年招收约150名研究生。KVIS每年招收72名学生，从全国约5000-7000名申请者中选拔。这些确实是世界级机构——PTT的教育投入是真实的。不存在的是：围绕它们的智慧城市。" },
     compareNote: { en: "DEPA #1 on paper. PTT's 4.5B baht Phase 1 investment is real. VISTEC and KVIS are real. The biorefinery exists — at 50% completion after delays. What is not real: a functioning city. No residents. No street life. No operational smart services at scale. Invest with open eyes.", th: "depa อันดับ 1 บนกระดาษ การลงทุน 4.5 พันล้านบาท Phase 1 ของ ปตท. เป็นของจริง VISTEC และ KVIS เป็นของจริง โรงกลั่นชีวภาพมีอยู่ — ที่ 50% หลังจากล่าช้า สิ่งที่ไม่มีอยู่จริง: เมืองที่ทำงานได้ ไม่มีผู้อยู่อาศัย ไม่มีชีวิตข้างถนน ไม่มีบริการอัจฉริยะที่ใช้งานได้จริงในระดับ ลงทุนด้วยตาที่เปิดกว้าง", zh: "depa书面第一。PTT 45亿铢一期投资是真实的。VISTEC和KVIS是真实的。生物炼油厂存在——延期后完成50%。不真实的是：一个运转中的城市。没有居民，没有街道生活，没有规模化的智慧服务。请睁眼投资。" },
@@ -725,9 +725,9 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
       zh: "稻田一直延伸到地平线，皮卡车拉着收成，城边的鳄鱼养殖场吸引的游客比任何政府机关都多。这里的生活跟着种植周期走，而不是应用更新。",
     },
     signatureStory: {
-      en: "Phichit's smart city pitch is digital literacy for farmers — teaching 530K mostly rural residents to use government apps and online markets. It is the one-dimension-only experiment: just 'people', nothing else certified yet.",
-      th: "เมืองอัจฉริยะพิจิตรเน้นรู้เท่าทันดิจิทัลสำหรับเกษตรกร — สอนผู้อยู่อาศัย 530K ส่วนใหญ่ในชนบทให้ใช้แอปราชการและตลาดออนไลน์ เป็นการทดลองมิติเดียว: แค่ 'คน' ยังไม่มีอย่างอื่นรับรอง",
-      zh: "碧差汶的智慧城市卖点是农民数字素养——教53万主要是农村居民使用政府应用和在线市场。这是一个单维度实验：只有'人'这一项，其他都还没认证。",
+      en: "Phichit's smart city strategy focuses on digital literacy for farmers — teaching 530K mostly rural residents to use government apps and online markets. It represents a single-dimension approach prioritizing 'people' above other pillars.",
+      th: "กลยุทธ์เมืองอัจฉริยะพิจิตรเน้นการสร้างความรู้ด้านดิจิทัลให้เกษตรกร — สอนผู้อยู่อาศัย 530K ส่วนใหญ่ในชนบทให้ใช้แอปราชการและตลาดออนไลน์ เป็นแนวทางมิติเดียวที่ให้ความสำคัญกับ 'คน' เหนือเสาหลักอื่น",
+      zh: "碧差汶的智慧城市战略侧重于农民数字素养——教53万主要是农村居民使用政府应用和在线市场。这代表了优先考虑“人”而不是其他支柱的单维度方法。",
     },
     funFact: {
       en: "Phichit's Bueng Si Fai is one of Thailand's largest freshwater marshes and hosts the biggest crocodile boat race festival in the country — 200+ boats, zero smart tech involved.",
@@ -1076,9 +1076,9 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
       zh: "一个安静的边境小镇，去兰卡威的长尾船每天两班，割胶工在种植园工作，地质公园步道吸引着稀少但稳定的地质游客。这里没人着急。",
     },
     signatureStory: {
-      en: "Satun's UNESCO Global Geopark — the first in Thailand — is the backbone of its smart city pitch. Environmental sensors monitor fossils, coral, and marine life across the Tarutao archipelago. Conservation here is not a poster; it is the economy.",
-      th: "UNESCO Global Geopark ของสตูล — แห่งแรกในไทย — เป็นแกนหลักของเมืองอัจฉริยะ เซ็นเซอร์สิ่งแวดล้อมเฝ้าระวังฟอสซิล ปะการัง และสิ่งมีชีวิตทางทะเลทั่วหมู่เกาะตะรุเตา การอนุรักษ์ที่นี่ไม่ใช่โปสเตอร์ มันคือเศรษฐกิจ",
-      zh: "沙敦的联合国教科文组织全球地质公园——泰国第一个——是其智慧城市卖点的支柱。环境传感器监测达鲁岛群岛的化石、珊瑚和海洋生物。这里的保护不是海报；它就是经济。",
+      en: "Satun's UNESCO Global Geopark — the first in Thailand — forms the foundation of its smart city strategy. Environmental sensors monitor fossils, coral, and marine life across the Tarutao archipelago. Conservation here is actively managed and drives the local economy.",
+      th: "UNESCO Global Geopark ของสตูล — แห่งแรกในไทย — เป็นรากฐานของกลยุทธ์เมืองอัจฉริยะ เซ็นเซอร์สิ่งแวดล้อมเฝ้าระวังฟอสซิล ปะการัง และสิ่งมีชีวิตทางทะเลทั่วหมู่เกาะตะรุเตา การอนุรักษ์ที่นี่ได้รับการจัดการอย่างแข็งขันและขับเคลื่อนเศรษฐกิจในพื้นที่",
+      zh: "沙敦的联合国教科文组织全球地质公园——泰国第一个——构成了其智慧城市战略的基础。环境传感器监测达鲁岛群岛的化石、珊瑚和海洋生物。这里的保护工作得到全面管理，并推动当地经济发展。",
     },
     funFact: {
       en: "Satun is one of Thailand's safest provinces — crime rate 88/100K, the lowest in the index. The geopark visitors come for rocks, not nightlife.",
@@ -1142,14 +1142,14 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
   makkasan: {
     industries: CITY_INDUSTRY_TAGS.makkasan,
     dailyLife: {
-      en: "There is no daily life to describe. The railway workshops are closed, the land is empty, and the Airport Rail Link station stands as a transit waypoint, not a destination. Makkasan is a planning fantasy with a train stop.",
-      th: "ไม่มีชีวิตประจำวันให้อธิบาย โรงงานรถไฟปิด ที่ดินว่าง และสถานีแอร์พอร์ตเรลลิงก์ตั้งเป็นจุดผ่านทาง ไม่ใช่จุดหมาย มักกะสันคือจินตนาการผังเมืองที่มีป้ายรถไฟ",
-      zh: "没有日常生活可描述。铁路车间已关闭，土地空置，机场快线站是过路点而非目的地。玛卡桑是一个有火车站的规划幻想。",
+      en: "Daily life is currently non-existent. The railway workshops are closed, the land remains undeveloped, and the Airport Rail Link station operates as a transit waypoint rather than a destination. Makkasan remains an ambitious blueprint anchored by a train stop.",
+      th: "ปัจจุบันไม่มีชีวิตประจำวัน โรงงานรถไฟปิด ที่ดินยังคงไม่ได้รับการพัฒนา และสถานีแอร์พอร์ตเรลลิงก์ยังคงเป็นจุดผ่านทาง ไม่ใช่จุดหมาย มักกะสันยังคงเป็นพิมพ์เขียวที่ทะเยอทะยานโดยมีสถานีรถไฟเป็นจุดศูนย์กลาง",
+      zh: "目前没有日常生活。铁路车间已关闭，土地仍未开发，机场快线站作为一个非最终目的地的过路点运营。玛卡桑仍然是一个以火车站为基础的宏大蓝图。",
     },
     signatureStory: {
-      en: "Makkasan has been Bangkok's biggest transit-oriented development promise for two decades — and two decades of nothing built. The master plan exists, the EIA is done, and the land sits empty beside the Airport Rail Link.",
-      th: "มักกะสันเป็นสัญญาพัฒนาเมืองรอบระบบขนส่งใหญ่สุดของกรุงเทพฯ มาสองทศวรรษ — และสองทศวรรษไม่มีอะไรสร้าง ผังแม่บทมี EIA เสร็จ และที่ดินว่างข้างแอร์พอร์ตเรลลิงก์",
-      zh: "玛卡桑二十年来一直是曼谷最大的交通导向开发承诺——二十年什么都没建。总体规划有了，环评做了，土地空在机场快线旁边。",
+      en: "Makkasan has been Bangkok's largest targeted transit-oriented development for two decades — yet construction remains pending. While the master plan and EIA are complete, the extensive plot beside the Airport Rail Link awaits commencement.",
+      th: "มักกะสันเป็นเป้าหมายการพัฒนาเมืองรอบระบบขนส่งที่ใหญ่ที่สุดของกรุงเทพฯ มาสองทศวรรษ — แต่การก่อสร้างยังคงรอดำเนินการ แม้จะมีผังแม่บทและ EIA ที่สมบูรณ์แบบ แต่พื้นที่กว้างขวางข้างแอร์พอร์ตเรลลิงก์ยังรอการเริ่มต้น",
+      zh: "玛卡桑二十年来一直是曼谷最大的交通导向开发目标——然而建设仍处于等待状态。尽管总体规划和环评已完成，机场快线旁边的广阔地块仍在等待开工。",
     },
     funFact: {
       en: "The Makkasan railway workshops were built in 1910 and once employed thousands of Thai railway engineers. Today the heritage buildings sit behind locked gates while consultants debate whether to demolish or preserve them.",

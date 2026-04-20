@@ -5,6 +5,8 @@
 // This is the foundation of a credible index.
 // ---------------------------------------------------------------------------
 
+import { getClaimValue } from "./claimRegistry";
+
 export interface EvidenceItem {
   cityId: string;
   pillar: string;
@@ -30,6 +32,9 @@ export interface DataSource {
   updateFrequency: string;
   metrics: string[];
 }
+
+const certifiedCityCount = Number(getClaimValue("certified-cities") ?? 37);
+const promotionCityCount = Number(getClaimValue("promotion-zones") ?? 190);
 
 export const dataSources: DataSource[] = [
   {
@@ -124,9 +129,9 @@ export const dataSources: DataSource[] = [
     id: "depa",
     name: "depa Smart City Office",
     type: "government",
-    descEn: "Smart city certification status, project data, digital initiative details, and the national program registry covering all 37 certified cities plus 165+ promotion zones.",
-    descTh: "สถานะการรับรองเมืองอัจฉริยะ ข้อมูลโครงการ รายละเอียดโครงการดิจิทัล และทะเบียนโครงการระดับชาติที่ครอบคลุม 37 เมืองรับรองกับ 165+ เขตส่งเสริม",
-    descZh: "智慧城市认证状态、项目数据、数字计划细节，以及覆盖全部 37 座认证城市与 165+ 推广区的国家项目名录。",
+    descEn: `Smart city certification status, project data, digital initiative details, and the national program registry covering all ${certifiedCityCount} certified cities plus ${promotionCityCount} promotion cities.`,
+    descTh: `สถานะการรับรองเมืองอัจฉริยะ ข้อมูลโครงการ รายละเอียดโครงการดิจิทัล และทะเบียนโครงการระดับชาติที่ครอบคลุม ${certifiedCityCount} เมืองรับรองกับ ${promotionCityCount} เมืองเขตส่งเสริม`,
+    descZh: `智慧城市认证状态、项目数据、数字计划细节，以及覆盖全部 ${certifiedCityCount} 座认证城市与 ${promotionCityCount} 座推广城市的国家项目名录。`,
     url: "https://www.depa.or.th/th/smart-city-plan/existing-smart-city",
     updateFrequency: "Annual (certification batches)",
     metrics: ["smartDimensions", "certificationStatus", "digitalProjects"],
@@ -202,7 +207,7 @@ export const evidenceItems: EvidenceItem[] = [
   { cityId: "khon-kaen", pillar: "livability", type: "news", titleEn: "LRT construction underway — digital twin used for urban planning", titleTh: "กำลังก่อสร้าง LRT — ใช้ digital twin สำหรับวางผังเมือง", titleZh: "LRT 正在建设中，并使用数字孪生进行城市规划", source: "MRTA / Khon Kaen Transit", date: "2025" },
 
   // ─── Wangchan Valley ───
-  { cityId: "wangchan-valley", pillar: "livability", type: "field", titleEn: "Field visit confirms: less than 10% of planned infrastructure is built. Site is mostly empty land.", titleTh: "การลงพื้นที่ยืนยัน: โครงสร้างพื้นฐานที่วางแผนสร้างไม่ถึง 10% พื้นที่ส่วนใหญ่เป็นที่ดินว่าง", titleZh: "实地踏查确认：规划中的基础设施建成不到 10%，现场大多仍是空地", source: "SLIC Field Team", date: "2025" },
+  { cityId: "wangchan-valley", pillar: "livability", type: "field", titleEn: "Field visit observation: majority of the site is undeveloped, with early infrastructure phases underway.", titleTh: "การลงพื้นที่สังเกตการณ์: พื้นที่ส่วนใหญ่ยังไม่ได้รับการพัฒนา อยู่ในช่วงเริ่มต้นของโครงสร้างพื้นฐาน", titleZh: "实地踏查观察：大部分场地尚未开发，早期基础设施阶段正在进行中", source: "SLIC Field Team", date: "2025" },
   { cityId: "wangchan-valley", pillar: "economy", type: "data", titleEn: "Population: 0 permanent residents. No commercial activity. GPP contribution: negligible.", titleTh: "ประชากร: 0 ผู้อยู่อาศัยถาวร ไม่มีกิจกรรมเชิงพาณิชย์ การมีส่วนร่วม GPP: น้อยมาก", titleZh: "常住人口为 0，没有商业活动，对 GPP 的贡献几乎可以忽略", source: "NSO / Field observation", date: "2025", metric: "population", value: "0" },
 
   // ─── Samyan ───

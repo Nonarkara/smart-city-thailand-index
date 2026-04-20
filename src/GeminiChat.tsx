@@ -3,6 +3,7 @@ import type { Locale } from "./types";
 import { useCitySummaries } from "./cityApi";
 import { getCityContextSummaryPrompt, getCityDataRailReferenceText, getCityFinanceInstrumentCatalog } from "./cityCdp";
 import { dataSources } from "./evidenceData";
+import { getClaimValue } from "./claimRegistry";
 
 interface Props {
   locale: Locale;
@@ -13,8 +14,35 @@ interface Message {
   content: string;
 }
 
-const GEMINI_KEY = "AIzaSyA9R-CL2hEyXKr1ppc6ahGY9jKa3mYE5hU";
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+const GEMINI_KEY_STORAGE_KEY = "smart-city-thailand-gemini-key";
+const certifiedCityCount = Number(getClaimValue("certified-cities") ?? 37);
+const promotionCityCount = Number(getClaimValue("promotion-zones") ?? 190);
+const proposalCount = Number(getClaimValue("proposals") ?? 227);
+const smartCityTarget = Number(getClaimValue("target-smart-cities-2024-2027") ?? 105);
+
+function getStoredGeminiKey(): string {
+  try {
+    return window.localStorage.getItem(GEMINI_KEY_STORAGE_KEY)?.trim() ?? "";
+  } catch {
+    return "";
+  }
+}
+
+function saveStoredGeminiKey(apiKey: string) {
+  try {
+    if (apiKey.trim()) {
+      window.localStorage.setItem(GEMINI_KEY_STORAGE_KEY, apiKey.trim());
+      return;
+    }
+    window.localStorage.removeItem(GEMINI_KEY_STORAGE_KEY);
+  } catch {
+    // Best-effort browser storage only.
+  }
+}
+
+function buildGeminiUrl(apiKey: string): string {
+  return `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+}
 
 /** Build the RAG context from our data */
 function buildContext(citySummaryPrompt: string, locale: Locale): string {
@@ -29,11 +57,12 @@ function buildContext(citySummaryPrompt: string, locale: Locale): string {
   return `You are the Smart City Thailand Index assistant. You help users understand Thailand's smart city program, city rankings, financial mechanisms, and data sources.
 
 KEY FACTS:
-- 49 cities tracked: 37 certified Smart City Local + 12 profiled promotion zones
+- depa official registry as of January 2026: ${proposalCount} submitted proposals, ${certifiedCityCount} certified smart cities, ${promotionCityCount} promotion cities
+- 49 cities tracked inside this assistant: ${certifiedCityCount} certified Smart City Local + 12 profiled promotion cities
 - Alpha/Beta/Gamma tier system (not numerical rankings)
 - 7 scoring pillars: Livability (25%), Economy (20%), Safety (15%), Wellbeing (15%), Environment (10%), Hospitality (10%), Digital (5%)
 - Run by depa (Digital Economy Promotion Agency) under MDES
-- Target: 105 smart cities by 2027
+- depa's current plan target: at least ${smartCityTarget} livable smart cities during the 2024-2027 period
 - SLIC Index V2 launched at SCSE Taipei March 2026
 - Led by Dr. Non Arkaraprasertkul (Senior Expert, Smart City Promotion)
 
@@ -51,7 +80,7 @@ ${getCityDataRailReferenceText(locale)}
 
 Nakhon Si Thammarat is the model city: 112,000 app users, <48h issue resolution, 10-hour flood warning, 0 flood fatalities since 2021. Mayor Kanop's citizen-centric approach.
 
-Wangchan Valley is Gamma tier despite being "certified" — less than 10% built, essentially empty land.
+Wangchan Valley is Gamma tier — it is a masterplanned area that is still in early development phases.
 
 Answer concisely. Use data from the index. If asked about a specific city, reference its scores and tier. If asked about financing, recommend from the 15 ASEAN instruments based on city tier and characteristics. Respond in the same language the user writes in.`;
 }
@@ -61,9 +90,12 @@ export default function GeminiChat({ locale }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [apiKey, setApiKey] = useState<string>(getStoredGeminiKey);
+  const [apiKeyDraft, setApiKeyDraft] = useState<string>(getStoredGeminiKey);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { data: cities } = useCitySummaries();
   const systemPrompt = useRef("");
+  const hasApiKey = apiKey.trim().length > 0;
 
   const citySummaryPrompt = useMemo(() => {
     if (cities.length) {
@@ -82,8 +114,22 @@ export default function GeminiChat({ locale }: Props) {
     systemPrompt.current = buildContext(citySummaryPrompt, locale);
   }, [citySummaryPrompt, locale]);
 
+  const persistApiKey = useCallback(() => {
+    const nextKey = apiKeyDraft.trim();
+    saveStoredGeminiKey(nextKey);
+    setApiKey(nextKey);
+  }, [apiKeyDraft]);
+
+  const clearApiKey = useCallback(() => {
+    saveStoredGeminiKey("");
+    setApiKey("");
+    setApiKeyDraft("");
+    setMessages([]);
+    setInput("");
+  }, []);
+
   const send = useCallback(async () => {
-    if (!input.trim() || loading) return;
+    if (!input.trim() || loading || !hasApiKey) return;
     const userMsg = input.trim();
     setInput("");
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
@@ -95,7 +141,7 @@ export default function GeminiChat({ locale }: Props) {
         parts: [{ text: m.content }],
       }));
 
-      const res = await fetch(GEMINI_URL, {
+      const res = await fetch(buildGeminiUrl(apiKey), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -112,15 +158,19 @@ export default function GeminiChat({ locale }: Props) {
       });
 
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.error?.message ?? "Gemini request failed.");
+      }
       const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "Sorry, I couldn't generate a response.";
       setMessages(prev => [...prev, { role: "assistant", content: reply }]);
-    } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "Connection error. Please try again." }]);
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "Connection error.";
+      setMessages(prev => [...prev, { role: "assistant", content: `Gemini request failed. ${detail}` }]);
     } finally {
       setLoading(false);
       setTimeout(() => scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" }), 50);
     }
-  }, [input, loading, messages]);
+  }, [apiKey, hasApiKey, input, loading, messages]);
 
   const t = (en: string, th: string, zh?: string) => locale === "zh" ? (zh ?? en) : locale === "th" ? th : en;
 
@@ -138,12 +188,34 @@ export default function GeminiChat({ locale }: Props) {
     <div className="chat-panel">
       <div className="chat-header">
         <span className="chat-title">{t("Smart City Assistant", "ผู้ช่วยเมืองอัจฉริยะ", "智慧城市助手")}</span>
-        <span className="chat-powered">Gemini</span>
+        <span className="chat-powered">{hasApiKey ? "Gemini" : "BYO key"}</span>
         <button className="chat-close" onClick={() => setOpen(false)}>×</button>
       </div>
 
       <div className="chat-messages" ref={scrollRef}>
-        {messages.length === 0 && (
+        {!hasApiKey && (
+          <div className="chat-welcome">
+            <p>{t(
+              "For security, this optional assistant only runs with your own Gemini API key stored in this browser. No project key is bundled into the site.",
+              "เพื่อความปลอดภัย ผู้ช่วยตัวเลือกนี้จะทำงานด้วย Gemini API key ของคุณเองที่เก็บไว้ในเบราว์เซอร์นี้เท่านั้น ไม่มี key ของโครงการถูกฝังมากับเว็บไซต์",
+              "出于安全考虑，这个可选助手只会使用你自己的 Gemini API key，并仅保存在当前浏览器中。站点本身不再内置项目密钥。"
+            )}</p>
+            <input
+              className="chat-input"
+              type="password"
+              value={apiKeyDraft}
+              onChange={e => setApiKeyDraft(e.target.value)}
+              placeholder={t("Paste Gemini API key", "วาง Gemini API key", "粘贴 Gemini API key")}
+              style={{ marginBottom: ".6rem" }}
+            />
+            <div className="chat-suggestions">
+              <button className="chat-suggestion" onClick={persistApiKey} disabled={!apiKeyDraft.trim()}>
+                {t("Save key", "บันทึก key", "保存 key")}
+              </button>
+            </div>
+          </div>
+        )}
+        {hasApiKey && messages.length === 0 && (
           <div className="chat-welcome">
             <p>{t(
               "Ask me about Thai smart cities, rankings, financial mechanisms, or data sources.",
@@ -182,13 +254,24 @@ export default function GeminiChat({ locale }: Props) {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === "Enter" && send()}
-          placeholder={t("Ask about any city...", "ถามเกี่ยวกับเมืองใดก็ได้...", "询问任何城市...")}
-          disabled={loading}
+          placeholder={hasApiKey ? t("Ask about any city...", "ถามเกี่ยวกับเมืองใดก็ได้...", "询问任何城市...") : t("Add your Gemini key above to use the assistant", "เพิ่ม Gemini key ด้านบนเพื่อใช้งานผู้ช่วย", "先在上方添加 Gemini key 再使用助手")}
+          disabled={loading || !hasApiKey}
         />
-        <button className="chat-send" onClick={send} disabled={loading || !input.trim()}>
+        <button className="chat-send" onClick={send} disabled={loading || !input.trim() || !hasApiKey}>
           →
         </button>
       </div>
+      {hasApiKey && (
+        <div style={{ padding: "0 .9rem .75rem", fontSize: ".58rem", color: "var(--3)" }}>
+          <button
+            type="button"
+            onClick={clearApiKey}
+            style={{ border: 0, background: "transparent", color: "var(--teal)", padding: 0, cursor: "pointer" }}
+          >
+            {t("Remove stored key", "ลบ key ที่บันทึกไว้", "移除已保存 key")}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

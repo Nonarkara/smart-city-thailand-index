@@ -90,7 +90,7 @@ export const cityContexts: Record<string, CityContext> = {
     landArea: 3552,
   },
   "wangchan-valley": {
-    livelihood: { en: "Nobody lives here. Population: 0. It's a PTT innovation campus concept on empty land in Rayong province.", th: "ไม่มีใครอาศัยอยู่ที่นี่ ประชากร: 0 เป็นแนวคิดแคมปัสนวัตกรรม PTT บนที่ดินว่างในจังหวัดระยอง" },
+    livelihood: { en: "Currently uninhabited. Designed as an innovation campus by PTT situated in a designated zone in Rayong province.", th: "ปัจจุบันยังไม่มีผู้อยู่อาศัย ออกแบบให้เป็นแคมปัสนวัตกรรมโดย ปตท. ตั้งอยู่ในเขตพื้นที่จังหวัดระยอง" },
     famousFor: { en: "Being ranked #1 smart city in Thailand by the old index. In reality: less than 10% built. The emperor has no clothes.", th: "ถูกจัดอันดับ #1 เมืองอัจฉริยะไทยจากดัชนีเก่า ในความเป็นจริง: สร้างไม่ถึง 10% จักรพรรดิไม่มีเสื้อผ้า" },
     opportunity: { en: "If PTT actually builds it, the land and infrastructure planning are sound. EECi concept is aligned with national policy. But until shovels hit dirt, it's just a masterplan.", th: "ถ้า PTT สร้างจริง การวางแผนที่ดินและโครงสร้างพื้นฐานดี แนวคิด EECi ตรงกับนโยบายชาติ แต่จนกว่าจะเริ่มขุด มันก็แค่แผนแม่บท" },
     theCatch: { en: "Zero residents. Zero commercial activity. Zero operational infrastructure. The logo was awarded to a concept, not a city. This is why this index exists.", th: "ผู้อยู่อาศัย ศูนย์ กิจกรรมเชิงพาณิชย์ ศูนย์ โครงสร้างพื้นฐานปฏิบัติการ ศูนย์ ตราสัญลักษณ์มอบให้กับแนวคิด ไม่ใช่เมือง นี่คือเหตุผลที่ดัชนีนี้มีอยู่" },
@@ -175,7 +175,7 @@ export const cityContexts: Record<string, CityContext> = {
   },
   makkasan: {
     livelihood: { en: "Nobody lives here yet. Planned as a mega transit hub connecting Airport Rail Link, MRT, and intercity rail — but construction hasn't started.", th: "ยังไม่มีใครอาศัยอยู่ วางแผนเป็นศูนย์กลางขนส่งขนาดใหญ่เชื่อม Airport Rail Link, MRT, และรถไฟระหว่างเมือง — แต่ยังไม่เริ่มก่อสร้าง" },
-    famousFor: { en: "Being certified as a smart city despite having zero residents and zero operational infrastructure. The masterplan looks impressive. The reality is empty.", th: "ได้รับรองเป็นเมืองอัจฉริยะทั้งที่ไม่มีผู้อยู่อาศัยและไม่มีโครงสร้างพื้นฐานปฏิบัติการ แผนแม่บทดูน่าประทับใจ ความจริงว่างเปล่า" },
+    famousFor: { en: "Being certified based on an extensive masterplan while still in the earliest pre-development phase, with core infrastructure yet to be built.", th: "ได้รับการรับรองจากแผนแม่บทที่ครอบคลุมในขณะที่ยังอยู่ในช่วงก่อนการพัฒนา โครงสร้างพื้นฐานหลักยังไม่ได้ถูกสร้าง" },
     opportunity: { en: "If the transit hub is built, the location (central Bangkok, next to Airport Rail Link) is genuinely world-class. The land value alone justifies smart infrastructure.", th: "ถ้าศูนย์กลางขนส่งถูกสร้าง ทำเล (กลางกรุงเทพฯ ติด Airport Rail Link) เป็นระดับโลกจริง มูลค่าที่ดินเพียงอย่างเดียวก็คุ้มค่าโครงสร้างพื้นฐานอัจฉริยะ" },
     theCatch: { en: "Zero residents. Zero infrastructure. Zero timeline. The logo was awarded to a concept. This is exactly why this index measures reality.", th: "ผู้อยู่อาศัย ศูนย์ โครงสร้างพื้นฐาน ศูนย์ ไทม์ไลน์ ศูนย์ ตราสัญลักษณ์มอบให้กับแนวคิด นี่คือเหตุผลที่ดัชนีนี้วัดความจริง" },
   },

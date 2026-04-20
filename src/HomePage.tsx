@@ -29,10 +29,10 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
     "phuket": { en: "Tourism engine, real tech", th: "เครื่องยนต์ท่องเที่ยว เทคจริง", zh: "旅游引擎，真技术" },
     "samyan": { en: "Innovation district, alive", th: "ย่านนวัตกรรม มีชีวิต", zh: "创新区，活的" },
     "chiang-mai-old-town": { en: "Heritage meets sensors", th: "มรดกพบเซ็นเซอร์", zh: "遗产遇上传感器" },
-    "khon-kaen": { en: "Isan's real deal", th: "ของจริงอีสาน", zh: "伊桑真货" },
+    "khon-kaen": { en: "Isan's economic engine", th: "เครื่องยนต์เศรษฐกิจอีสาน", zh: "伊桑经济引擎" },
     "saensuk": { en: "Beach town, clean data", th: "เมืองชายหาด ข้อมูลสะอาด", zh: "海滩小城，干净数据" },
     "yala": { en: "Cleanest city, real grit", th: "เมืองสะอาดสุด ใจสู้", zh: "最干净城市，真韧性" },
-    "wangchan-valley": { en: "Empty land, bold pitch", th: "ที่ดินว่าง pitch กล้า", zh: "空地一片，愿景很大" },
+    "wangchan-valley": { en: "Innovation hub, in development", th: "ศูนย์กลางนวัตกรรม กำลังพัฒนา", zh: "创新中心，开发中" },
   };
 
   if (vibes[city.id]) {
@@ -50,7 +50,7 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
   };
 
   if (city.reality === "planned") {
-    return locale === "th" ? "แผนบนกระดาษ" : locale === "zh" ? "纸上规划" : "Paper plan, unbuilt";
+    return locale === "th" ? "กำลังวางแผนงาน" : locale === "zh" ? "处于规划阶段" : "In planning phase";
   }
   if (city.reality === "partial") {
     return locale === "th" ? "กำลังสร้าง มีช่องว่าง" : locale === "zh" ? "建设中，有缺口" : "Building, gaps remain";

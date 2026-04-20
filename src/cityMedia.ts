@@ -6,7 +6,7 @@ export type CityPhotoAsset = {
 };
 
 export const HOME_HERO_ASSET: CityPhotoAsset = {
-  src: "/photos/phuket-smart-city.jpg",
+  src: "/photos/report-city-night.jpg",
   objectPosition: "center 48%",
 };
 
