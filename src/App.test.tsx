@@ -5,6 +5,7 @@ import App from "./App";
 describe("App", () => {
   beforeEach(() => {
     localStorage.clear();
+    sessionStorage.clear();
     window.history.pushState({}, "", "/");
   });
 
@@ -13,7 +14,7 @@ describe("App", () => {
 
     render(<App />);
 
-    await screen.findByText("泰国智慧城市指数");
+    await screen.findByText(/2026 泰国智慧城市指数/i);
     expect(document.documentElement.lang).toBe("zh");
   });
 
@@ -25,6 +26,7 @@ describe("App", () => {
       await vi.dynamicImportSettled();
     });
     await screen.findByRole("heading", { name: "Phuket Smart City" });
+    await screen.findByRole("button", { name: "Export city CSV" });
 
     await act(async () => {
       window.history.pushState({}, "", "/city/chiang-mai-old-town");
@@ -46,20 +48,19 @@ describe("App", () => {
     });
   });
 
-  it("opens the responsive nav and closes it after navigating", async () => {
+  it("uses link-based primary and secondary navigation", async () => {
     const user = userEvent.setup();
-    const { container } = render(<App />);
+    render(<App />);
 
-    const navToggle = screen.getByRole("button", { name: "Open navigation menu" });
-    await user.click(navToggle);
+    expect(screen.getByRole("link", { name: "Home" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Rankings" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Your City" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "NST" })).toBeInTheDocument();
 
-    const navLinks = container.querySelector(".nav-links");
-    expect(navLinks).toHaveClass("nav-links-open");
-
-    await user.click(screen.getByRole("button", { name: "Rankings" }));
+    await user.click(screen.getByRole("link", { name: "Rankings" }));
     await vi.dynamicImportSettled();
-    await screen.findByRole("heading", { name: /who delivers, who just talks/i });
 
-    expect(navLinks).not.toHaveClass("nav-links-open");
+    await screen.findByRole("heading", { name: /national leaderboard and comparison matrix/i });
+    expect(screen.getByRole("link", { name: "Rankings" })).toHaveAttribute("aria-current", "page");
   });
 });
