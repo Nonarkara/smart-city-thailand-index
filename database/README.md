@@ -40,7 +40,7 @@ PostgreSQL schema for Supabase powering the full City Data Platform (CDP).
 
 1. **Versioned scores**: `city_scores` has a `version` column. Each re-scoring creates a new version, preserving history. Latest score = highest version per city.
 
-2. **Three city statuses**: `certified` (37 with depa logo), `promotion` (173 promotion zones), `registered` (submitted plans, minimal data).
+2. **Three city statuses**: `certified` (37 with depa logo as of January 2026), `promotion` (190 promotion cities), `registered` (submitted plans, minimal data).
 
 3. **Data confidence**: Every city has a `data_confidence` level (`high`/`medium`/`low`). Cities with `low` confidence show a warning badge and are excluded from tier rankings.
 

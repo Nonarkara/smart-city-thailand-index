@@ -1,6 +1,7 @@
 import { translate } from "./cityPresentation";
 import type { Locale } from "./types";
 import { useInView } from "./useInView";
+import { getClaim, confidenceLabel, confidenceClass } from "./claimRegistry";
 
 interface Props {
   locale: Locale;
@@ -11,27 +12,27 @@ const timelineEvents = [
   { year: "2018", type: "pos", text: { en: "National Smart City Committee formed. Vision of 100+ cities.", th: "จัดตั้งคณะกรรมการเมืองอัจฉริยะแห่งชาติ วางวิสัยทัศน์ 100+ เมือง", zh: "国家智慧城市委员会成立。愿景 100+ 城市。" } },
   { year: "2019", type: "pos", text: { en: "Smart City Thailand Office (depa) formally opens.", th: "เปิดสำนักงานเมืองอัจฉริยะประเทศไทย (depa) อย่างเป็นทางการ", zh: "泰国智慧城市办公室 (depa) 正式启用。" } },
   { year: "2020", type: "neu", text: { en: "Pandemic shifts focus to health-tech and contact tracing.", th: "โรคระบาดเปลี่ยนโฟกัสไปที่ health-tech และการติดตามผู้สัมผัส", zh: "疫情使重点转向健康科技和接触者追踪。" } },
-  { year: "2021", type: "neg", text: { en: "First wave of certification. Criticism over 'marketing-first' approach.", th: "การรับรองระลอกแรก เริ่มมีข้อวิจารณ์เรื่อง 'การตลาดนำ'", zh: "第一波认证。对“营销优先”模式ของ批评。" } },
+  { year: "2021", type: "neg", text: { en: "First wave of certification. Criticism over 'marketing-first' approach.", th: "การรับรองระลอกแรก เริ่มมีข้อวิจารณ์เรื่อง 'การตลาดนำ'", zh: "第一波认证。对“营销优先”模式的批评。" } },
   { year: "2023", type: "neu", text: { en: "Integration with ASEAN Smart Cities Network. Standards tightening.", th: "บูรณาการกับ ASEAN Smart Cities Network เริ่มคุมมาตรฐานเข้มขึ้น", zh: "融入东盟智慧城市网络。标准收紧。" } },
   { year: "2025", type: "neg", text: { en: "Audit phase begins. High delta found between plans and reality.", th: "เริ่มเฟสการตรวจสอบ พบช่องว่างขนาดใหญ่ระหว่างแผนกับความจริง", zh: "审计阶段开始。发现规划与现实之间存在巨大差距。" } },
 ];
 
-const kpis = [
-  { value: "37", label: { en: "Certified Cities", th: "เมืองที่ได้รับการรับรอง", zh: "认证城市" }, sub: { en: "Official count", th: "จำนวนทางการ", zh: "官方统计" } },
-  { value: "4", label: { en: "Alpha Tier", th: "ระดับ Alpha", zh: "Alpha 层级" }, sub: { en: "Operational reality", th: "ความจริงเชิงปฏิบัติการ", zh: "运维现实" } },
-  { value: "21", label: { en: "Dead Links", th: "ลิงก์เสีย", zh: "失效链接" }, sub: { en: "Open Data targets", th: "เป้าหมาย Open Data", zh: "开放数据目标" } },
-  { value: "12%", label: { en: "Citizen Usage", th: "การใช้งานจริงโดยคน", zh: "市民使用率" }, sub: { en: "Average adoption", th: "ค่าเฉลี่ยการใช้งาน", zh: "平均采用率" } },
-];
+const kpiClaimIds = ["certified-cities", "alpha-tier", "dead-links", "citizen-usage"];
 
 const domains = [
   { name: { en: "Smart Environment", th: "สิ่งแวดล้อมอัจฉริยะ", zh: "智慧环境" }, pr: 95, real: 42 },
-  { name: { en: "Smart Economy", th: "เศรษฐกิจอัจฉริยะ", zh: "智慧经济" }, real: 38, pr: 88 },
-  { name: { en: "Smart Governance", th: "การปกครองอัจฉริยะ", zh: "智慧治理" }, real: 55, pr: 92 },
-  { name: { en: "Smart Living", th: "การใช้ชีวิตอัจฉริยะ", zh: "智慧生活" }, real: 61, pr: 85 },
-  { name: { en: "Smart Mobility", th: "การขนส่งอัจฉริยะ", zh: "智慧出行" }, real: 49, pr: 90 },
-  { name: { en: "Smart People", th: "พลเมืองอัจฉริยะ", zh: "智慧人文" }, real: 28, pr: 82 },
-  { name: { en: "Smart Energy", th: "พลังงานอัจฉริยะ", zh: "智慧能源" }, real: 44, pr: 87 },
+  { name: { en: "Smart Economy", th: "เศรษฐกิจอัจฉริยะ", zh: "智慧经济" }, pr: 88, real: 38 },
+  { name: { en: "Smart Governance", th: "การปกครองอัจฉริยะ", zh: "智慧治理" }, pr: 92, real: 55 },
+  { name: { en: "Smart Living", th: "การใช้ชีวิตอัจฉริยะ", zh: "智慧生活" }, pr: 85, real: 61 },
+  { name: { en: "Smart Mobility", th: "การขนส่งอัจฉริยะ", zh: "智慧出行" }, pr: 90, real: 49 },
+  { name: { en: "Smart People", th: "พลเมืองอัจฉริยะ", zh: "智慧人文" }, pr: 82, real: 28 },
+  { name: { en: "Smart Energy", th: "พลังงานอัจฉริยะ", zh: "智慧能源" }, pr: 87, real: 44 },
 ];
+
+function computeDelta(): number {
+  const total = domains.reduce((sum, d) => sum + (d.pr - d.real), 0);
+  return Math.round(total / domains.length);
+}
 
 export default function AuditPage({ locale, onNavigate }: Props) {
   const [heroRef, heroVisible] = useInView(0.1);
@@ -40,6 +41,8 @@ export default function AuditPage({ locale, onNavigate }: Props) {
   const [domainRef, domainVisible] = useInView(0.1);
   const [socialRef, socialVisible] = useInView(0.1);
   const [recRef, recVisible] = useInView(0.1);
+
+  const delta = computeDelta();
 
   return (
     <div className="audit-page">
@@ -83,13 +86,32 @@ export default function AuditPage({ locale, onNavigate }: Props) {
       <section ref={kpiRef} className={`section audit-section reveal stagger-2 ${kpiVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Macro KPI", th: "ตัวชี้วัดมหาภาค", zh: "宏观 KPI" })}</p>
         <div className="audit-kpi-grid">
-          {kpis.map((k, i) => (
-            <div key={i} className="audit-kpi shadow-premium">
-              <div className="audit-kpi-value">{k.value}</div>
-              <div className="audit-kpi-label">{translate(locale, k.label)}</div>
-              <div className="audit-kpi-sub">{translate(locale, k.sub)}</div>
-            </div>
-          ))}
+          {kpiClaimIds.map((id) => {
+            const claim = getClaim(id);
+            if (!claim) return null;
+            return (
+              <div key={id} className="audit-kpi shadow-premium">
+                <div className="audit-kpi-value">{claim.value}</div>
+                <div className="audit-kpi-label">{translate(locale, claim.label)}</div>
+                <div className={`audit-kpi-badge ${confidenceClass(claim.confidence)}`}>
+                  {confidenceLabel(claim.confidence)}
+                </div>
+                {claim.sourceUrl ? (
+                  <a
+                    className="audit-kpi-source"
+                    href={claim.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={claim.source}
+                  >
+                    {claim.observedAt}
+                  </a>
+                ) : (
+                  <span className="audit-kpi-source" title={claim.source}>{claim.observedAt}</span>
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -150,7 +172,7 @@ export default function AuditPage({ locale, onNavigate }: Props) {
             <span className="audit-trace-msg">Compiling Reality Tiers based on operational uptime...</span>
             <span className="audit-trace-status status-pass">PASS</span>
           </div>
-          <div style={{ color: '#555', marginTop: '0.4rem' }}>&gt; Audit complete. Delta 44.2% identified. System integrity compromised.</div>
+          <div style={{ color: '#555', marginTop: '0.4rem' }}>&gt; Audit complete. Delta {delta}% identified. System integrity compromised.</div>
         </div>
       </section>
 
@@ -161,17 +183,17 @@ export default function AuditPage({ locale, onNavigate }: Props) {
         <div className="audit-sentiment-grid">
           <div className="audit-sentiment-card">
             <p className="audit-sentiment-label" style={{ color: 'var(--gamma)' }}>{translate(locale, { en: "Frustration", th: "ความหงุดหงิด", zh: "沮丧" })}</p>
-            <div className="audit-sentiment-pct">68%</div>
+            <div className="audit-sentiment-pct">{getClaim("sentiment-frustration")?.value}</div>
             <p className="audit-sentiment-desc">{translate(locale, { en: "Mentions of 'apps that don't work' or 'broken links' in social scraping.", th: "การพูดถึง 'แอปที่ใช้งานไม่ได้' หรือ 'ลิงก์เสีย' ในการขุดข้อมูลโซเชียล", zh: "社交媒体抓取中提到的“运行不灵的应用”或“死链”。" })}</p>
           </div>
           <div className="audit-sentiment-card">
             <p className="audit-sentiment-label" style={{ color: 'var(--alpha)' }}>{translate(locale, { en: "Hope", th: "ความหวัง", zh: "希望" })}</p>
-            <div className="audit-sentiment-pct">22%</div>
+            <div className="audit-sentiment-pct">{getClaim("sentiment-hope")?.value}</div>
             <p className="audit-sentiment-desc">{translate(locale, { en: "Positive mentions of specific local services (Traffy Fondue, Smart Bus).", th: "การพูดถึงเชิงบวกต่อบริการท้องถิ่นเฉพาะทาง (Traffy Fondue, Smart Bus)", zh: "对特定地方服务（Traffy Fondue, Smart Bus）的正向提及。" })}</p>
           </div>
           <div className="audit-sentiment-card">
             <p className="audit-sentiment-label" style={{ color: 'var(--3)' }}>{translate(locale, { en: "Indifference", th: "ความเฉยเมย", zh: "漠不关心" })}</p>
-            <div className="audit-sentiment-pct">10%</div>
+            <div className="audit-sentiment-pct">{getClaim("sentiment-indifference")?.value}</div>
             <p className="audit-sentiment-desc">{translate(locale, { en: "Citizens unaware their city is officially 'smart'.", th: "พลเมืองไม่รู้ว่าเมืองของเขานั้นเป็น 'เมืองอัจฉริยะ' อย่างเป็นทางการ", zh: "市民甚至不知道他们的城市已被正式认证为“智慧”城市。" })}</p>
           </div>
         </div>
