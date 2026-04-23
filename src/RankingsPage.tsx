@@ -19,7 +19,6 @@ import {
 import type { CityTier, Locale, ScoringPillar, SmartCity } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LABELS, LEAGUE_LABELS } from "./types";
 import { REGION_LABELS } from "./regions";
-import { PillarLegend } from "./PillarLegend";
 
 interface Props {
   locale: Locale;
@@ -309,7 +308,6 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
 
         <section className="section reveal visible">
           <p className="eyebrow">{t({ en: "Lenses", th: "เลนส์", zh: "镜头" })}</p>
-          <PillarLegend locale={locale} />
           <div className="lens-chip-row" role="tablist" aria-label={t({ en: "Preset lenses", th: "เลนส์สำเร็จรูป", zh: "预设镜头" })}>
             {PRESET_LENSES.map(preset => (
               <button

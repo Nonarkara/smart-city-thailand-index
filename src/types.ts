@@ -167,36 +167,6 @@ export const LEAGUE_LABELS: Record<Locale, Record<CityLeague, string>> = {
   },
 };
 
-export const PILLAR_SHORT_LABELS: Record<Locale, Record<ScoringPillar, string>> = {
-  en: {
-    livability: "LIV",
-    economy: "ECO",
-    safety: "SAF",
-    wellbeing: "WLB",
-    environment: "ENV",
-    hospitality: "HOS",
-    digital: "DIG",
-  },
-  th: {
-    livability: "อยู่",
-    economy: "ศก",
-    safety: "ปล",
-    wellbeing: "ชีว",
-    environment: "สิ่ง",
-    hospitality: "คน",
-    digital: "ดิจ",
-  },
-  zh: {
-    livability: "居",
-    economy: "经",
-    safety: "安",
-    wellbeing: "福",
-    environment: "环",
-    hospitality: "文",
-    digital: "数",
-  },
-};
-
 export const PILLAR_COLORS: Record<ScoringPillar, string> = {
   livability: "#2BA89C",    // Andaman teal
   economy: "#E8913A",       // temple saffron

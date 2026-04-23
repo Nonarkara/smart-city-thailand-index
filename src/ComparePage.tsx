@@ -15,13 +15,11 @@ import {
 } from "./cityPresentation";
 import { getCityPhotoAsset } from "./cityMedia";
 import { ResponsiveImage } from "./mediaAssets";
-import { PillarLegend } from "./PillarLegend";
 import { SCORING_PILLARS } from "./scoring";
 import {
   LEAGUE_LABELS,
   PILLAR_COLORS,
   PILLAR_LABELS,
-  PILLAR_SHORT_LABELS,
   PILLAR_WEIGHTS,
   TIER_LABELS,
   type Locale,
@@ -67,7 +65,7 @@ function CityRadar({ city, locale }: { city: SmartCity; locale: Locale }) {
   const CY = SIZE / 2;
   const R = 54;
   const n = SCORING_PILLARS.length;
-  const short = PILLAR_SHORT_LABELS[locale];
+  const label = PILLAR_LABELS[locale];
 
   const points = SCORING_PILLARS.map((pillar, i) => {
     const angle = -Math.PI / 2 + (i / n) * Math.PI * 2;
@@ -123,7 +121,7 @@ function CityRadar({ city, locale }: { city: SmartCity; locale: Locale }) {
           textAnchor="middle"
           dominantBaseline="middle"
         >
-          {short[p.pillar as ScoringPillar]}
+          {label[p.pillar as ScoringPillar]}
         </text>
       ))}
     </svg>
@@ -196,7 +194,6 @@ export default function ComparePage({ locale, onNavigate }: Props) {
       <h1 className="compare-title">{heading}</h1>
       <p className="compare-subtitle">{subhead}</p>
 
-      <PillarLegend locale={locale} />
 
       {/* ─── Basket chips ─── */}
       <div className="compare-basket">

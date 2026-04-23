@@ -11,7 +11,7 @@ import {
   translate,
 } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
-import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS } from "./types";
+import { PILLAR_COLORS, PILLAR_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
 import { getCitySummariesCsv, getCityFactsCsv } from "./cityCdp";
 import { ResponsiveImage, assetUrl } from "./mediaAssets";
@@ -20,7 +20,6 @@ import { HOME_COLLECTIONS } from "./homeCollections";
 import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_METHOD_CODE } from "./methodologySpec";
 import { WEEKLY_DIGEST, formatWeeklyStamp } from "./weeklyDigest";
 import { REGIONS_ORDERED, REGION_LABELS, type Region } from "./regions";
-import { PillarLegend } from "./PillarLegend";
 
 /** Short, unique vibe phrase per city — used by the top-5 podium. */
 function getCityVibe(city: SmartCity, locale: Locale): string {
@@ -232,15 +231,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
                     style={{ background: PILLAR_COLORS[pillar] }}
                     aria-hidden="true"
                   />
-                  <span className="pillar-champion-label">{PILLAR_SHORT_LABELS[locale][pillar]}</span>
+                  <span className="pillar-champion-label">{PILLAR_LABELS[locale][pillar]}</span>
                   <span className="pillar-champion-city">{getCityName(city, locale)}</span>
                   <span className="pillar-champion-score">{city.scores[pillar]}</span>
-                  <span className="pillar-champion-full" aria-hidden="true">{PILLAR_LABELS[locale][pillar]}</span>
                 </button>
               </li>
             ))}
           </ul>
-          <PillarLegend locale={locale} />
         </section>
 
         {/* ─── REGIONAL CHAMPIONS (Phase 14) ─── */}
@@ -505,7 +502,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
         <div className="transparency-inner">
           <h2>{t({ en: "How the numbers work", th: "เบื้องหลังตัวเลขทั้งหมดนี้", zh: "数字如何运作" })}</h2>
           <div className="transparency-formula">
-            <code>Composite = ({SCORING_PILLARS.map(p => `${PILLAR_SHORT_LABELS[locale][p]}×${PILLAR_WEIGHTS[p]}`).join(" + ")}) / 100</code>
+            <code>Composite = ({SCORING_PILLARS.map(p => `${PILLAR_LABELS[locale][p]}×${PILLAR_WEIGHTS[p]}`).join(" + ")}) / 100</code>
           </div>
           <div className="transparency-steps">
             <div className="transparency-step">

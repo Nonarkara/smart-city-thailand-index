@@ -16,7 +16,7 @@ import {
 } from "./methodologySpec";
 import { SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
-import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS } from "./types";
+import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS } from "./types";
 import { translate } from "./cityPresentation";
 import { assetUrl } from "./mediaAssets";
 
@@ -269,9 +269,9 @@ export default function MethodologyPage({ locale }: Props) {
               <span className="threshold-name">{translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}</span>
               <span className="threshold-desc">
                 {translate(locale, {
-                  en: `Composite = (${SCORING_PILLARS.map(pillar => `${PILLAR_SHORT_LABELS.en[pillar]} x ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
-                  th: `คะแนนรวม = (${SCORING_PILLARS.map(pillar => `${PILLAR_SHORT_LABELS.th[pillar]} x ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
-                  zh: `综合分 = (${SCORING_PILLARS.map(pillar => `${PILLAR_SHORT_LABELS.zh[pillar]} x ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
+                  en: `Composite = (${SCORING_PILLARS.map(pillar => `${PILLAR_LABELS.en[pillar]} × ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
+                  th: `คะแนนรวม = (${SCORING_PILLARS.map(pillar => `${PILLAR_LABELS.th[pillar]} × ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
+                  zh: `综合分 = (${SCORING_PILLARS.map(pillar => `${PILLAR_LABELS.zh[pillar]} × ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
                 })}
               </span>
             </div>

@@ -16,8 +16,7 @@ import {
 import { ResponsiveImage } from "./mediaAssets";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar, SmartCity } from "./types";
-import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS, TIER_LABELS, LEAGUE_LABELS } from "./types";
-import { PillarLegend } from "./PillarLegend";
+import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LABELS, LEAGUE_LABELS } from "./types";
 import { computeDevelopability, getGlobalComparison, getMoneyballProfile, getTailoredSteps, getFinancingAdvice } from "./cityAnalytics";
 import { allCities } from "./cityData";
 import { getCityFacts } from "./cityFacts";
@@ -362,7 +361,7 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
 
   return (
     <svg viewBox="0 0 280 280" className="radar-chart" role="img" aria-labelledby="radar-title">
-      <title id="radar-title">{pillars.map(p => `${PILLAR_SHORT_LABELS[locale][p]}: ${scores[p]}/100`).join(", ")}</title>
+      <title id="radar-title">{pillars.map(p => `${PILLAR_LABELS[locale][p]}: ${scores[p]}/100`).join(", ")}</title>
       {rings.map(ring => {
         const points = pillars.map((_, index) => getPoint(index, ring));
         const path = points.map((pt, index) => `${index === 0 ? "M" : "L"} ${pt.x},${pt.y}`).join(" ") + " Z";
@@ -381,7 +380,7 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
       ))}
 
       {pillars.map((pillar, index) => {
-        const labelPt = getPoint(index, 125);
+        const labelPt = getPoint(index, 128);
         return (
           <text
             key={pillar}
@@ -389,12 +388,12 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
             y={labelPt.y}
             textAnchor="middle"
             dominantBaseline="middle"
-            fontSize="8"
-            fontFamily="var(--font-mono)"
+            fontSize="9"
+            fontFamily="var(--font)"
             fontWeight="600"
-            fill="#888"
+            fill="var(--3, #888)"
           >
-            {PILLAR_SHORT_LABELS[locale][pillar]}
+            {PILLAR_LABELS[locale][pillar]}
           </text>
         );
       })}
@@ -1545,7 +1544,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       <section className="section performance-triptych city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "Performance", th: "ประสิทธิภาพ", zh: "表现" })}</p>
         <h2>{translate(locale, { en: "Pillar scores, score math, and developability", th: "คะแนนรายเสาหลัก วิธีคำนวณ และความสามารถในการพัฒนา", zh: "七大支柱、计算方式与可开发性" })}</h2>
-        <PillarLegend locale={locale} />
 
         <div className="rpg-layout">
           <div className="rpg-radar-panel">
