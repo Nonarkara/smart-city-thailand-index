@@ -1136,6 +1136,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
   return (
     <>
+      {/* ─── CHAPTER 1 · WHO ─── City identity: hero photo, tier/score/rank, tagline, decision strip, at-a-glance facts. */}
+      <div id="who" className="city-chapter city-chapter-who">
       {cityPhoto ? (
         <div className="city-hero-photo">
           <ResponsiveImage
@@ -1366,11 +1368,11 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         if (rows.length === 0) return null;
         return (
           <section className="section at-a-glance">
-            <p className="eyebrow">{translate(locale, { en: "At a glance", th: "มองผ่านๆ", zh: "一览" })}</p>
+            <p className="eyebrow">{translate(locale, { en: "At a glance", th: "ภาพรวมโดยย่อ", zh: "一览" })}</p>
             <h2 className="at-a-glance-title">
               {translate(locale, {
                 en: "The basics before the dossier",
-                th: "ข้อมูลพื้นฐานก่อนเข้าสู่ dossier",
+                th: "ข้อมูลพื้นฐานก่อนเข้าสู่แฟ้มเมือง",
                 zh: "档案之前的基本事实",
               })}
             </h2>
@@ -1385,10 +1387,13 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </section>
         );
       })()}
+      </div>
 
+      {/* ─── CHAPTER 2 · WHAT ─── The substance: reality-gap dossier, Moneyball band, performance triptych, analog comparison, factbook, city research. */}
+      <div id="what" className="city-chapter city-chapter-what">
       {dossier && (
         <section className="section city-dossier-section">
-          <p className="eyebrow">{translate(locale, { en: "Reality gap dossier", th: "dossier ช่องว่างความจริง", zh: "现实缺口档案" })}</p>
+          <p className="eyebrow">{translate(locale, { en: "Reality gap dossier", th: "แฟ้มช่องว่างระหว่างแผนกับความจริง", zh: "现实缺口档案" })}</p>
           <h2>{translate(locale, {
             en: "What is real now, what is missing, and what unlocks the next step",
             th: "อะไรจริงแล้ว อะไรยังขาด และอะไรจะปลดล็อกก้าวถัดไป",
@@ -1772,7 +1777,10 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </div>
         </div>
       </section>
+      </div>
 
+      {/* ─── CHAPTER 3 · HOW ─── Execution path: delivery profile (five steps from logo to operating city) and tailored finance stack. */}
+      <div id="how" className="city-chapter city-chapter-how">
       <section className="section city-print-hide">
         <div className="planning-section-header">
           <div>
@@ -1920,24 +1928,10 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           })}
         </div>
       </section>
+      </div>
 
-      <section className="section city-print-hide">
-        <p className="eyebrow">{translate(locale, { en: "What to do next", th: "ทำอะไรต่อ", zh: "下一步行动" })}</p>
-        <h2>{translate(locale, { en: "Tailored action steps", th: "ขั้นตอนปฏิบัติเฉพาะเมือง", zh: "定制行动步骤" })}</h2>
-        <div className="action-steps-list">
-          {steps.map((s, i) => (
-            <div key={i} className="action-step-card">
-              <div className="action-step-num">{i + 1}</div>
-              <div>
-                <strong>{locale === "zh" ? s.stepZh : locale === "th" ? s.stepTh : s.step}</strong>
-                <p className="action-step-example">{locale === "zh" ? s.worldExampleZh : locale === "th" ? s.worldExampleTh : s.worldExample}</p>
-                <span className="action-step-source">{s.source}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
+      {/* ─── CHAPTER 4 · WHY ─── The evidence backbone: metric blocks, data rails, proof points, and the source trail that makes every claim audit-ready. */}
+      <div id="why" className="city-chapter city-chapter-why">
       <section className="section city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "Metric blocks", th: "ชุดตัวชี้วัด", zh: "指标模块" })}</p>
         <h2>{translate(locale, { en: "The evidence backbone", th: "โครงหลักฐานของเมือง", zh: "证据骨架" })}</h2>
@@ -1966,7 +1960,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
       <section className="section city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "Data rails", th: "รางข้อมูล", zh: "数据轨道" })}</p>
-        <h2>{translate(locale, { en: "How this city becomes research-grade", th: "ทำอย่างไรให้เมืองนี้เป็น research-grade", zh: "这座城市如何达到研究级" })}</h2>
+        <h2>{translate(locale, { en: "How this city becomes research-grade", th: "ทำอย่างไรให้เมืองนี้ถึงเกณฑ์คุณภาพระดับงานวิจัย", zh: "这座城市如何达到研究级" })}</h2>
         <div className="data-rail-grid">
           {city.dataRails.map(rail => (
             <div key={rail.id} className="data-rail-card">
@@ -1984,14 +1978,14 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
             className="cta-button"
             onClick={() => downloadCsv("sciti-2026-city-summaries.csv", getCitySummariesCsv())}
           >
-            {translate(locale, { en: "Export summary CSV", th: "ส่งออก summary CSV", zh: "导出 summary CSV" })}
+            {translate(locale, { en: "Export summary CSV", th: "ส่งออกไฟล์สรุป CSV", zh: "导出 summary CSV" })}
           </button>
           <button
             type="button"
             className="ghost-button"
             onClick={() => downloadCsv("sciti-2026-city-facts.csv", getCityFactsCsv())}
           >
-            {translate(locale, { en: "Export fact rows CSV", th: "ส่งออกแถวข้อมูล CSV", zh: "导出事实行 CSV" })}
+            {translate(locale, { en: "Export fact rows CSV", th: "ส่งออกข้อมูลรายแถว CSV", zh: "导出事实行 CSV" })}
           </button>
         </div>
       </section>
@@ -2008,7 +2002,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 <li className="highlight-item highlight-item-empty">
                   {translate(locale, {
                     en: "No verified implementation highlights are curated yet. Treat this page as a discovery lead until evidence rows are added.",
-                    th: "ยังไม่มีจุดเด่นการดำเนินงานที่ยืนยันแล้ว โปรดอ่านหน้านี้เป็น lead สำหรับสำรวจต่อจนกว่าจะเพิ่มแถวหลักฐาน",
+                    th: "ยังไม่มีจุดเด่นการดำเนินงานที่ได้รับการยืนยัน ขอให้ใช้หน้านี้เป็นเบาะแสเบื้องต้นสำหรับค้นคว้าเพิ่มเติม จนกว่าจะมีการเพิ่มหลักฐาน",
                     zh: "尚未整理出已核验的实施亮点。在补充证据行之前，请把此页视为发现线索。",
                   })}
                 </li>
@@ -2046,9 +2040,29 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </div>
         </section>
       )}
+      </div>
+
+      {/* ─── CHAPTER 5 · NEXT ─── The move: tailored action steps, research links for deeper work, and the depa dimensions in scope. */}
+      <div id="next" className="city-chapter city-chapter-next">
+      <section className="section city-print-hide">
+        <p className="eyebrow">{translate(locale, { en: "What to do next", th: "ก้าวต่อไป", zh: "下一步行动" })}</p>
+        <h2>{translate(locale, { en: "Tailored action steps", th: "ขั้นตอนปฏิบัติเฉพาะเมืองนี้", zh: "定制行动步骤" })}</h2>
+        <div className="action-steps-list">
+          {steps.map((s, i) => (
+            <div key={i} className="action-step-card">
+              <div className="action-step-num">{i + 1}</div>
+              <div>
+                <strong>{locale === "zh" ? s.stepZh : locale === "th" ? s.stepTh : s.step}</strong>
+                <p className="action-step-example">{locale === "zh" ? s.worldExampleZh : locale === "th" ? s.worldExampleTh : s.worldExample}</p>
+                <span className="action-step-source">{s.source}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section className="section">
-        <p className="eyebrow">{translate(locale, { en: "Research links", th: "ลิงก์วิจัย", zh: "研究链接" })}</p>
+        <p className="eyebrow">{translate(locale, { en: "Research links", th: "ลิงก์งานวิจัย", zh: "研究链接" })}</p>
         <h2>{translate(locale, { en: "Go deeper without hallucinating", th: "ขุดต่อได้โดยไม่ต้องเดา", zh: "继续深挖而不靠幻觉" })}</h2>
         <div className="sources-grid">
           {researchLinks.map(link => (
@@ -2078,6 +2092,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           ))}
         </div>
       </section>
+      </div>
     </>
   );
 }

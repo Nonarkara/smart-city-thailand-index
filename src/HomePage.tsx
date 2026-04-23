@@ -29,35 +29,35 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
   const strongest = sorted[0];
 
   const vibes: Record<string, { en: string; th: string; zh: string }> = {
-    "phuket": { en: "Tourism engine, real tech", th: "เครื่องยนต์ท่องเที่ยว เทคจริง", zh: "旅游引擎，真技术" },
-    "samyan": { en: "Innovation district, alive", th: "ย่านนวัตกรรม มีชีวิต", zh: "创新区，活的" },
-    "chiang-mai-old-town": { en: "Heritage meets sensors", th: "มรดกพบเซ็นเซอร์", zh: "遗产遇上传感器" },
-    "khon-kaen": { en: "Isan's economic engine", th: "เครื่องยนต์เศรษฐกิจอีสาน", zh: "伊桑经济引擎" },
-    "saensuk": { en: "Beach town, clean data", th: "เมืองชายหาด ข้อมูลสะอาด", zh: "海滩小城，干净数据" },
-    "yala": { en: "Cleanest city, real grit", th: "เมืองสะอาดสุด ใจสู้", zh: "最干净城市，真韧性" },
-    "wangchan-valley": { en: "Innovation hub, in development", th: "ศูนย์กลางนวัตกรรม กำลังพัฒนา", zh: "创新中心，开发中" },
+    "phuket": { en: "Tourism engine, real tech", th: "เครื่องยนต์ท่องเที่ยวที่ใช้เทคโนโลยีจริง", zh: "旅游引擎，真技术" },
+    "samyan": { en: "Innovation district, alive", th: "ย่านนวัตกรรมที่มีชีวิต", zh: "创新区，活的" },
+    "chiang-mai-old-town": { en: "Heritage meets sensors", th: "มรดกเมืองเก่าคู่เซ็นเซอร์อัจฉริยะ", zh: "遗产遇上传感器" },
+    "khon-kaen": { en: "Isan's economic engine", th: "เครื่องยนต์เศรษฐกิจของอีสาน", zh: "伊桑经济引擎" },
+    "saensuk": { en: "Beach town, clean data", th: "เมืองชายหาดที่ข้อมูลไว้ใจได้", zh: "海滩小城，干净数据" },
+    "yala": { en: "Cleanest city, real grit", th: "เมืองสะอาดที่สุด ด้วยความมุ่งมั่นของคนในพื้นที่", zh: "最干净城市，真韧性" },
+    "wangchan-valley": { en: "Innovation hub, in development", th: "ศูนย์กลางนวัตกรรมที่ยังอยู่ระหว่างพัฒนา", zh: "创新中心，开发中" },
   };
 
   if (vibes[city.id]) return vibes[city.id][locale];
 
   const pillarVibes: Record<string, { en: string; th: string; zh: string }> = {
-    livability: { en: "Built for living", th: "สร้างเพื่ออยู่", zh: "为生活而建" },
-    economy: { en: "Money moves here", th: "เงินไหลที่นี่", zh: "资金流动之地" },
-    safety: { en: "Quiet streets, real data", th: "ถนนสงบ ข้อมูลจริง", zh: "安静街道，真实数据" },
-    wellbeing: { en: "People-first signal", th: "สัญญาณคนมาก่อน", zh: "以人为先信号" },
-    environment: { en: "Green signal, verified", th: "สัญญาณเขียว ยืนยันแล้ว", zh: "绿色信号，已验证" },
-    hospitality: { en: "Warm city, open doors", th: "เมืองอบอุ่น เปิดประตู", zh: "温暖城市，敞开大门" },
-    digital: { en: "Wired and running", th: "เชื่อมต่อและวิ่ง", zh: "已联网，运行中" },
+    livability: { en: "Built for living", th: "สร้างมาเพื่อการอยู่อาศัย", zh: "为生活而建" },
+    economy: { en: "Money moves here", th: "เม็ดเงินหมุนเวียนที่นี่", zh: "资金流动之地" },
+    safety: { en: "Quiet streets, real data", th: "ถนนสงบ ข้อมูลยืนยันได้", zh: "安静街道，真实数据" },
+    wellbeing: { en: "People-first signal", th: "เมืองที่ให้คนมาก่อน", zh: "以人为先信号" },
+    environment: { en: "Green signal, verified", th: "สัญญาณสีเขียวที่ตรวจสอบแล้ว", zh: "绿色信号，已验证" },
+    hospitality: { en: "Warm city, open doors", th: "เมืองอบอุ่นที่เปิดรับทุกคน", zh: "温暖城市，敞开大门" },
+    digital: { en: "Wired and running", th: "เชื่อมต่อและเดินระบบแล้ว", zh: "已联网，运行中" },
   };
 
   if (city.reality === "planned") {
-    return locale === "th" ? "กำลังวางแผนงาน" : locale === "zh" ? "处于规划阶段" : "In planning phase";
+    return locale === "th" ? "ยังอยู่ในขั้นวางแผน" : locale === "zh" ? "处于规划阶段" : "In planning phase";
   }
   if (city.reality === "partial") {
-    return locale === "th" ? "กำลังสร้าง มีช่องว่าง" : locale === "zh" ? "建设中，有缺口" : "Building, gaps remain";
+    return locale === "th" ? "กำลังก่อร่าง ยังมีช่องว่างอยู่" : locale === "zh" ? "建设中，有缺口" : "Building, gaps remain";
   }
 
-  return pillarVibes[strongest]?.[locale] ?? (locale === "th" ? "ทำงานจริง" : locale === "zh" ? "运行中" : "Running");
+  return pillarVibes[strongest]?.[locale] ?? (locale === "th" ? "เดินระบบจริงแล้ว" : locale === "zh" ? "运行中" : "Running");
 }
 
 interface Props {
@@ -143,21 +143,21 @@ export default function HomePage({ locale, onNavigate }: Props) {
           <p className="cinematic-hero-why">
             {t({
               en: "Thailand has certified 37 smart cities. But how many of them actually work? This index exists because the gap between announcements and outcomes needed measuring.",
-              th: "ประเทศไทยรับรองเมืองอัจฉริยะ 37 เมือง แต่มีกี่เมืองที่ทำงานได้จริง? ดัชนีนี้มีอยู่เพราะช่องว่างระหว่างคำประกาศกับผลลัพธ์ต้องถูกวัด",
+              th: "ประเทศไทยรับรองเมืองอัจฉริยะไปแล้ว 37 เมือง แต่มีกี่เมืองที่เดินระบบได้จริง? ดัชนีนี้เกิดขึ้นเพราะช่องว่างระหว่างคำประกาศกับผลลัพธ์ที่จับต้องได้ ต้องมีใครสักคนลงมือวัด",
               zh: "泰国已认证37座智慧城市。但其中有多少真正在运转？这个指数的存在，是因为公告与结果之间的差距需要被衡量。",
             })}
           </p>
           <div className="cinematic-hero-stats">
             <span>{stats.total} {t({ en: "cities", th: "เมือง", zh: "城市" })}</span>
-            <span>{stats.operational} {t({ en: "operational", th: "ใช้งานจริง", zh: "运营中" })}</span>
-            <span>{stats.certified} {t({ en: "certified", th: "รับรอง", zh: "已认证" })}</span>
+            <span>{stats.operational} {t({ en: "operational", th: "เดินระบบแล้ว", zh: "运营中" })}</span>
+            <span>{stats.certified} {t({ en: "certified", th: "ได้รับการรับรอง", zh: "已认证" })}</span>
           </div>
           <div className="cinematic-hero-actions">
             <button className="cta-button" onClick={() => onNavigate("/rankings")}>
               {t({ en: "Get Rankings", th: "ดูอันดับ", zh: "查看排名" })}
             </button>
             <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/methodology")}>
-              {t({ en: "Methodology", th: "วิธีการ", zh: "方法论" })}
+              {t({ en: "Methodology", th: "ระเบียบวิธี", zh: "方法论" })}
             </button>
           </div>
         </div>
@@ -174,7 +174,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="home-stat-value">{stats.total}</span>
           </div>
           <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "depa-certified", th: "รับรองโดย depa", zh: "depa 认证" })}</span>
+            <span className="home-stat-label">{t({ en: "depa-certified", th: "ได้รับการรับรองจาก depa", zh: "depa 认证" })}</span>
             <span className="home-stat-value">{stats.certified}</span>
           </div>
           <div className="home-stat-cell">
@@ -182,7 +182,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="home-stat-value">{provinceCount}</span>
           </div>
           <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Pillars measured", th: "เสาหลักที่วัด", zh: "衡量支柱" })}</span>
+            <span className="home-stat-label">{t({ en: "Pillars measured", th: "เสาหลักที่ประเมิน", zh: "衡量支柱" })}</span>
             <span className="home-stat-value">{SCORING_PILLARS.length}</span>
           </div>
           <div className="home-stat-cell">
@@ -201,7 +201,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
         <span>
           {`SCITI 2026 Edition · ${stats.total} ${t({ en: "cities", th: "เมือง", zh: "城市" })} · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源族群" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}
         </span>
-        <span>{t({ en: "Research by Dr. Non A · depa · SLIC Methodology · Peer-reviewed at SCSE Taipei 2026", th: "วิจัยโดย ดร.ณณ · depa · วิธีการ SLIC · ตรวจสอบโดยผู้ทรงคุณวุฒิที่ SCSE ไทเป 2026", zh: "研究：Non A博士 · depa · SLIC方法论 · 2026台北SCSE同行评审" })}</span>
+        <span>{t({ en: "Research by Dr. Non A · depa · SLIC Methodology · Peer-reviewed at SCSE Taipei 2026", th: "งานวิจัยโดย ดร.ณณ · depa · ระเบียบวิธี SLIC · ผ่านการพิจารณาของผู้ทรงคุณวุฒิที่ SCSE ไทเป 2026", zh: "研究：Non A博士 · depa · SLIC方法论 · 2026台北SCSE同行评审" })}</span>
       </div>
 
       <div className="home-column">
@@ -209,13 +209,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
         <section
           ref={championsRef}
           className={`section reveal stagger-1 ${championsVisible ? "visible" : ""}`}
-          aria-label={t({ en: "Pillar champions", th: "เมืองผู้นำแต่ละเสาหลัก", zh: "各支柱冠军" })}
+          aria-label={t({ en: "Pillar champions", th: "เมืองผู้นำรายเสาหลัก", zh: "各支柱冠军" })}
         >
-          <p className="eyebrow">{t({ en: "The seven pillars, by champion", th: "เจ็ดเสาหลัก ผ่านเมืองผู้นำ", zh: "七支柱，冠军演绎" })}</p>
+          <p className="eyebrow">{t({ en: "The seven pillars, by champion", th: "เจ็ดเสาหลัก ดูผ่านเมืองผู้นำ", zh: "七支柱，冠军演绎" })}</p>
           <h2 className="home-section-title">
             {t({
               en: "One city that wins each axis",
-              th: "หนึ่งเมืองผู้นำต่อหนึ่งแกน",
+              th: "หนึ่งเมืองผู้นำ ต่อหนึ่งแกน",
               zh: "每条主轴的头名城市",
             })}
           </h2>
@@ -253,7 +253,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <h2 className="home-section-title">
               {t({
                 en: "The champion of each Thai region",
-                th: "ผู้นำของแต่ละภูมิภาคในไทย",
+                th: "เมืองผู้นำของแต่ละภูมิภาคในประเทศไทย",
                 zh: "泰国各区域的头名城市",
               })}
             </h2>
@@ -359,11 +359,11 @@ export default function HomePage({ locale, onNavigate }: Props) {
           ref={collectionsRef}
           className={`section reveal stagger-3 ${collectionsVisible ? "visible" : ""}`}
         >
-          <p className="eyebrow">{t({ en: "The shortlists", th: "รายการคัดสรร", zh: "精选榜单" })}</p>
+          <p className="eyebrow">{t({ en: "The shortlists", th: "ชุดเมืองคัดสรร", zh: "精选榜单" })}</p>
           <h2 className="home-section-title">
             {t({
               en: "Thailand, grouped by what each city is doing",
-              th: "เมืองไทย จัดกลุ่มตามสิ่งที่แต่ละเมืองกำลังทำ",
+              th: "เมืองไทย จัดกลุ่มตามสิ่งที่แต่ละเมืองลงมือทำ",
               zh: "泰国城市，按其正在做的事分组",
             })}
           </h2>
@@ -443,8 +443,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
         {/* ─── FEEDBACK & CONTRIBUTIONS ─── */}
         <section ref={feedbackRef} className={`section reveal stagger-4 ${feedbackVisible ? "visible" : ""}`}>
           <div className="feedback-cta glass-card shadow-premium">
-            <h2>{t({ en: "Is your city missing?", th: "เมืองของคุณหายไปใช่ไหม?", zh: "您的城市不在名单上？" })}</h2>
-            <p>{t({ en: "We only rank cities with enough verifiable data.", th: "เราจัดอันดับเฉพาะเมืองที่มีข้อมูลตรวจสอบได้เพียงพอ", zh: "我们仅对拥有足够可验证数据的城市进行排名。" })}</p>
+            <h2>{t({ en: "Is your city missing?", th: "เมืองของคุณยังไม่อยู่ในดัชนี?", zh: "您的城市不在名单上？" })}</h2>
+            <p>{t({ en: "We only rank cities with enough verifiable data.", th: "เราจัดอันดับเฉพาะเมืองที่มีข้อมูลซึ่งตรวจสอบได้เพียงพอ", zh: "我们仅对拥有足够可验证数据的城市进行排名。" })}</p>
             <button className="cta-button" onClick={() => window.open("mailto:data@slic-index.org")}>Submit Data</button>
           </div>
         </section>
@@ -455,12 +455,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
         <div className="open-data-inner">
           <div className="open-data-text">
             <h2 className="open-data-title">
-              {t({ en: "Open data. No gatekeeping.", th: "ข้อมูลเปิด ไม่มีกั้น", zh: "开放数据，不设门槛。" })}
+              {t({ en: "Open data. No gatekeeping.", th: "ข้อมูลเปิด ไม่มีการกั้นใคร", zh: "开放数据，不设门槛。" })}
             </h2>
             <p className="open-data-body">
               {t({
                 en: `Every score, every metric, every source row — downloadable. No city lobbied for a higher rank. No investor paid for placement. SCITI publishes the research layer, the deterministic equation, and the provenance exports under CC BY 4.0. Take the data. Audit the method. Build on it.`,
-                th: "ทุกคะแนน ทุกตัวชี้วัด ทุกแถวแหล่งข้อมูล — ดาวน์โหลดได้ ไม่มีเมืองไหนล็อบบี้เพื่อขึ้นอันดับ ไม่มีนักลงทุนจ่ายเพื่อตำแหน่ง SCITI เผยแพร่ทั้งชั้นวิจัย สมการที่กำหนดแน่นอน และไฟล์พิสูจน์ที่มา ภายใต้ CC BY 4.0 เอาข้อมูลไปใช้ ตรวจวิธีวิจัย แล้วต่อยอดได้เลย",
+                th: "ทุกคะแนน ทุกตัวชี้วัด ทุกแถวของแหล่งข้อมูล — ดาวน์โหลดได้ทั้งหมด ไม่มีเมืองใดวิ่งเต้นขอขึ้นอันดับ ไม่มีนักลงทุนจ่ายเงินซื้อตำแหน่ง SCITI เผยแพร่ทั้งชั้นงานวิจัย สมการที่คำนวณตายตัว และไฟล์แสดงที่มาของข้อมูล ภายใต้สัญญาอนุญาต CC BY 4.0 นำข้อมูลไปใช้ ตรวจสอบระเบียบวิธี แล้วต่อยอดได้ทันที",
                 zh: "每个分数、每项指标、每一行来源记录都可下载。没有城市游说更高排名，也没有投资者付费买位置。SCITI 公开研究层、确定性公式和溯源导出文件，并采用 CC BY 4.0 许可。",
               })}
             </p>
@@ -475,7 +475,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <span className="export-btn-icon">↓</span>
               <span className="export-btn-text">
                 <strong>{t({ en: "Export All Cities (CSV)", th: "ส่งออกทุกเมือง (CSV)", zh: "导出所有城市 (CSV)" })}</strong>
-                <span>{t({ en: "Scores, tiers, finance signals, confidence", th: "คะแนน ระดับ สัญญาณการเงิน ความเชื่อมั่น", zh: "分数、层级、金融信号、置信度" })}</span>
+                <span>{t({ en: "Scores, tiers, finance signals, confidence", th: "คะแนน ระดับเมือง สัญญาณทางการเงิน ค่าความเชื่อมั่น", zh: "分数、层级、金融信号、置信度" })}</span>
               </span>
             </button>
             <button className="export-btn" onClick={() => {
@@ -487,7 +487,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <span className="export-btn-icon">↓</span>
               <span className="export-btn-text">
                 <strong>{t({ en: "Export Detailed Facts (CSV)", th: "ส่งออกข้อมูลละเอียด (CSV)", zh: "导出详细事实 (CSV)" })}</strong>
-                <span>{t({ en: "Every metric, every source, every timestamp", th: "ทุกตัวชี้วัด ทุกแหล่ง ทุก timestamp", zh: "每项指标、每个来源、每个时间戳" })}</span>
+                <span>{t({ en: "Every metric, every source, every timestamp", th: "ทุกตัวชี้วัด ทุกแหล่งข้อมูล ทุกวันที่บันทึก", zh: "每项指标、每个来源、每个时间戳" })}</span>
               </span>
             </button>
             <div className="export-docs">
@@ -503,7 +503,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ═══ TRANSPARENCY: How the numbers work ═══ */}
       <section className="transparency-section">
         <div className="transparency-inner">
-          <h2>{t({ en: "How the numbers work", th: "ตัวเลขทำงานอย่างไร", zh: "数字如何运作" })}</h2>
+          <h2>{t({ en: "How the numbers work", th: "เบื้องหลังตัวเลขทั้งหมดนี้", zh: "数字如何运作" })}</h2>
           <div className="transparency-formula">
             <code>Composite = ({SCORING_PILLARS.map(p => `${PILLAR_SHORT_LABELS[locale][p]}×${PILLAR_WEIGHTS[p]}`).join(" + ")}) / 100</code>
           </div>
@@ -511,10 +511,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <div className="transparency-step">
               <span className="transparency-step-num">1</span>
               <div>
-                <strong>{t({ en: "Raw data in", th: "ข้อมูลดิบเข้ามา", zh: "原始数据输入" })}</strong>
+                <strong>{t({ en: "Raw data in", th: "ข้อมูลดิบต้นทาง", zh: "原始数据输入" })}</strong>
                 <p>{t({
                   en: `${EVIDENCE_SOURCE_FAMILY_COUNT} evidence source families plus ${CDP_PLATFORM_COUNT} mapped public endpoints. Public indicators, platform registries, and field verification feed the research layer.`,
-                  th: `${EVIDENCE_SOURCE_FAMILY_COUNT} ตระกูลแหล่งหลักฐาน และ ${CDP_PLATFORM_COUNT} ปลายทางสาธารณะที่แม็ปไว้ ตัวชี้วัดสาธารณะ ทะเบียนแพลตฟอร์ม และการยืนยันภาคสนาม ป้อนเข้าสู่ชั้นวิจัย`,
+                  th: `แหล่งหลักฐาน ${EVIDENCE_SOURCE_FAMILY_COUNT} ตระกูล และปลายทางสาธารณะที่เชื่อมโยงไว้ ${CDP_PLATFORM_COUNT} จุด ตัวชี้วัดสาธารณะ ทะเบียนแพลตฟอร์ม และการตรวจสอบภาคสนามทั้งหมด ป้อนเข้าสู่ชั้นงานวิจัย`,
                   zh: `${EVIDENCE_SOURCE_FAMILY_COUNT} 个证据来源族群，加上 ${CDP_PLATFORM_COUNT} 个已映射公开端点。公共指标、平台名录和实地核验共同进入研究层。`,
                 })}</p>
               </div>
@@ -522,10 +522,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <div className="transparency-step">
               <span className="transparency-step-num">2</span>
               <div>
-                <strong>{t({ en: "7 pillars assessed 0-100", th: "7 เสาหลักประเมิน 0-100", zh: "7个支柱评估为0-100" })}</strong>
+                <strong>{t({ en: "7 pillars assessed 0-100", th: "ประเมิน 7 เสาหลัก ในช่วง 0-100", zh: "7个支柱评估为0-100" })}</strong>
                 <p>{t({
                   en: "Each pillar is a structured research assessment anchored in observed indicators and evidence items. The repo does not pretend one API feed can explain a whole city.",
-                  th: "แต่ละเสาหลักเป็นการประเมินเชิงวิจัยแบบมีโครงสร้าง ยึดกับตัวชี้วัดที่สังเกตได้และหลักฐานจริง รีโปนี้ไม่ได้แสร้งว่า API เส้นเดียวจะอธิบายเมืองทั้งเมืองได้",
+                  th: "แต่ละเสาหลักคือการประเมินเชิงวิจัยอย่างเป็นระบบ ยึดกับตัวชี้วัดที่สังเกตได้จริงและหลักฐานที่ตรวจสอบได้ ดัชนีนี้ไม่แกล้งทำว่า API เพียงเส้นเดียวจะอธิบายเมืองทั้งเมืองได้",
                   zh: "每个支柱都是以可观察指标和证据项为锚点的结构化研究评估。本仓库并不假装单一 API 就能解释整座城市。",
                 })}</p>
               </div>
@@ -533,10 +533,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <div className="transparency-step">
               <span className="transparency-step-num">3</span>
               <div>
-                <strong>{t({ en: "Weighted composite", th: "ถ่วงน้ำหนักรวม", zh: "加权综合" })}</strong>
+                <strong>{t({ en: "Weighted composite", th: "คะแนนรวมแบบถ่วงน้ำหนัก", zh: "加权综合" })}</strong>
                 <p>{t({
                   en: "Weights sum to 100%. Livability carries 25% because daily function matters most; digital carries 5% because technology is an enabler, not the objective. No hidden adjustments.",
-                  th: "น้ำหนักรวม 100% ความน่าอยู่มี 25% เพราะการใช้ชีวิตประจำวันสำคัญที่สุด ดิจิทัลมี 5% เพราะเทคโนโลยีเป็นตัวเปิดทาง ไม่ใช่เป้าหมาย ไม่มีการปรับที่ซ่อนอยู่",
+                  th: "น้ำหนักรวมกันเป็น 100% ความน่าอยู่ได้ 25% เพราะการใช้ชีวิตประจำวันสำคัญที่สุด ดิจิทัลได้ 5% เพราะเทคโนโลยีเป็นเครื่องมือสนับสนุน ไม่ใช่เป้าหมายในตัวเอง ไม่มีการปรับแต่งที่ซ่อนไว้",
                   zh: "权重总和为100%。宜居占25%，因为日常运转最重要；数字占5%，因为技术是赋能工具而不是目的。没有隐藏调整。",
                 })}</p>
               </div>
@@ -544,10 +544,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <div className="transparency-step">
               <span className="transparency-step-num">4</span>
               <div>
-                <strong>{t({ en: "Tier + confidence", th: "ระดับ + ความเชื่อมั่น", zh: "层级 + 置信度" })}</strong>
+                <strong>{t({ en: "Tier + confidence", th: "ระดับเมือง + ค่าความเชื่อมั่น", zh: "层级 + 置信度" })}</strong>
                 <p>{t({
                   en: `Tier assignment is automatic once the composite is known. Confidence is reported separately so uncertainty stays visible instead of being hidden inside the score. Full method: ${SCITI_METHOD_CODE}.`,
-                  th: `เมื่อทราบคะแนนรวมแล้ว การจัดระดับเป็นอัตโนมัติ ส่วนความเชื่อมั่นจะรายงานแยก เพื่อให้ความไม่แน่นอนมองเห็นได้ ไม่ถูกซ่อนในคะแนน วิธีเต็ม: ${SCITI_METHOD_CODE}`,
+                  th: `เมื่อได้คะแนนรวมแล้ว การจัดระดับเมืองจะคำนวณโดยอัตโนมัติ ส่วนค่าความเชื่อมั่นรายงานแยกต่างหาก เพื่อให้ความไม่แน่นอนปรากฏชัด แทนที่จะซ่อนไว้ในคะแนน ระเบียบวิธีฉบับเต็ม: ${SCITI_METHOD_CODE}`,
                   zh: `一旦综合分确定，层级分配即自动完成。置信度单独报告，让不确定性保持可见，而不是藏进分数里。完整方法：${SCITI_METHOD_CODE}。`,
                 })}</p>
               </div>
@@ -559,11 +559,11 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ═══ INVESTOR: Secondary city opportunities ═══ */}
       <section className="investor-section">
         <div className="investor-inner">
-          <h2>{t({ en: "Beyond Bangkok: where the real opportunity is", th: "เหนือกรุงเทพฯ: โอกาสจริงอยู่ตรงไหน", zh: "超越曼谷：真正的机会在哪里" })}</h2>
+          <h2>{t({ en: "Beyond Bangkok: where the real opportunity is", th: "ไกลกว่ากรุงเทพฯ: โอกาสจริงอยู่ที่ไหน", zh: "超越曼谷：真正的机会在哪里" })}</h2>
           <p className="investor-lead">
             {t({
               en: "Not every investor needs to pile into Bangkok or Phuket. Thailand's secondary cities offer BOI incentives, lower costs, better air, and less competition — with the same legal protections and digital infrastructure. This index helps match the right capital with the right city.",
-              th: "นักลงทุนทุกคนไม่จำเป็นต้องกระจุกในกรุงเทพฯ หรือภูเก็ต เมืองรองของไทยมีสิทธิประโยชน์ BOI ต้นทุนต่ำกว่า อากาศดีกว่า แข่งขันน้อยกว่า — ด้วยการคุ้มครองทางกฎหมายและโครงสร้างพื้นฐานดิจิทัลเท่ากัน ดัชนีนี้ช่วยจับคู่ทุนที่ใช่กับเมืองที่ใช่",
+              th: "นักลงทุนไม่จำเป็นต้องกระจุกอยู่แค่กรุงเทพฯ หรือภูเก็ต เมืองรองของไทยมีสิทธิประโยชน์ BOI ต้นทุนต่ำกว่า อากาศดีกว่า และการแข่งขันน้อยกว่า — โดยได้รับการคุ้มครองทางกฎหมายและโครงสร้างพื้นฐานดิจิทัลในระดับเดียวกัน ดัชนีนี้ช่วยจับคู่ทุนที่เหมาะสมกับเมืองที่ใช่",
               zh: "不是每个投资者都需要挤进曼谷或普吉。泰国二线城市提供BOI激励、更低成本、更好空气和更少竞争——享有同样的法律保护和数字基础设施。这个指数帮助将合适的资本匹配到合适的城市。",
             })}
           </p>
@@ -580,7 +580,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
           <p className="investor-cta-text">
             {t({
               en: "These are cities with real infrastructure, working governance, and room to grow — not yet Alpha, but building fast. BOI S-Curve incentives apply. EEC adjacency benefits included. Every city profile shows bankability score, financial toolkit, and specific opportunities.",
-              th: "เหล่านี้คือเมืองที่มีโครงสร้างพื้นฐานจริง ปกครองใช้ได้ และมีพื้นที่เติบโต — ยังไม่ Alpha แต่สร้างเร็ว สิทธิประโยชน์ BOI S-Curve ใช้ได้ ประโยชน์ EEC ใกล้เคียงรวม โปรไฟล์ทุกเมืองแสดงคะแนนความพร้อมทางการเงิน ชุดเครื่องมือการเงิน และโอกาสเฉพาะ",
+              th: "เมืองเหล่านี้มีโครงสร้างพื้นฐานจริง มีการบริหารที่เดินได้ และยังมีพื้นที่เหลือให้เติบโต — ยังไม่ถึงระดับ Alpha แต่กำลังขยายตัวเร็ว ใช้สิทธิประโยชน์ BOI S-Curve ได้ รวมถึงอานิสงส์จากพื้นที่ติดกับ EEC โปรไฟล์ของทุกเมืองจะแสดงคะแนนความพร้อมทางการเงิน ชุดเครื่องมือทางการเงิน และโอกาสเฉพาะของเมืองนั้น",
               zh: "这些城市拥有真实基础设施、运转中的治理体系和增长空间——尚未达到Alpha但建设迅速。BOI S-Curve激励适用。EEC邻近利益包含在内。",
             })}
           </p>

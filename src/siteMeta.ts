@@ -7,7 +7,7 @@ const SHARE_IMAGE_PATH = "/smart_city_thailand_logo.jpg";
 
 const defaultDescriptions: Record<Locale, string> = {
   en: "Thailand's smart city index focused on real outcomes, not paper plans. Explore rankings, methodology, and detailed city profiles.",
-  th: "ดัชนีเมืองอัจฉริยะไทยที่วัดจากผลลัพธ์จริง ไม่ใช่แผนบนกระดาษ สำรวจอันดับ วิธีการ และโปรไฟล์เมืองแบบละเอียด",
+  th: "ดัชนีเมืองอัจฉริยะของไทยที่วัดจากผลลัพธ์จริง ไม่ใช่แผนบนกระดาษ สำรวจอันดับเมือง ระเบียบวิธี และโปรไฟล์รายเมืองอย่างละเอียด",
   zh: "以真实结果而非纸上规划为核心的泰国智慧城市指数。查看排名、方法论与城市详情。",
 };
 
@@ -24,7 +24,7 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
   },
   methodology: {
     en: `${SITE_NAME} | Methodology`,
-    th: `${SITE_NAME} | วิธีการ`,
+    th: `${SITE_NAME} | ระเบียบวิธี`,
     zh: `${SITE_NAME} | 方法论`,
   },
   story: {
@@ -54,7 +54,7 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
   },
   audit: {
     en: `${SITE_NAME} | depa Performance Audit`,
-    th: `${SITE_NAME} | ตรวจสอบผลงาน depa`,
+    th: `${SITE_NAME} | ตรวจสอบผลการดำเนินงาน depa`,
     zh: `${SITE_NAME} | depa绩效审计`,
   },
   partners: {
@@ -91,6 +91,11 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     en: `${SITE_NAME} | City Profile`,
     th: `${SITE_NAME} | โปรไฟล์เมือง`,
     zh: `${SITE_NAME} | 城市档案`,
+  },
+  compare: {
+    en: `${SITE_NAME} | Compare Cities`,
+    th: `${SITE_NAME} | เปรียบเทียบเมือง`,
+    zh: `${SITE_NAME} | 城市对比`,
   },
 };
 
@@ -173,7 +178,7 @@ function buildMeta(route: Route, locale: Locale) {
   const cityName = locale === "th" ? city.nameTh : city.nameEn;
   const cityDescription =
     locale === "th"
-      ? `โปรไฟล์ ${city.nameTh} พร้อมคะแนน เสาหลัก ข้อมูลอ้างอิง และหลักฐานที่ตรวจสอบได้`
+      ? `โปรไฟล์ ${city.nameTh} พร้อมคะแนน เสาหลัก ข้อมูลตั้งต้น และหลักฐานที่ตรวจสอบย้อนกลับได้`
       : locale === "zh"
         ? `${city.nameEn} 城市档案，含评分、维度、原始数据与可追溯证据。`
         : `${city.nameEn} city profile with scores, pillar breakdown, raw metrics, and traceable evidence.`;

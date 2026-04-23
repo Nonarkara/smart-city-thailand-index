@@ -37,27 +37,27 @@ export const PRESET_LENSES: PresetLens[] = [
     label: { en: "Balanced", th: "สมดุล", zh: "均衡" },
     tagline: {
       en: "The default composite — livability first, then economy.",
-      th: "คะแนนรวมมาตรฐาน — น่าอยู่มาก่อน เศรษฐกิจตามมา",
+      th: "คะแนนรวมมาตรฐาน — ความน่าอยู่มาก่อน เศรษฐกิจตามมา",
       zh: "默认综合——宜居为先，经济次之。",
     },
     flavour: {
       en: "No axe to grind. Just the index as designed.",
-      th: "ไม่เอนเอียง ใช้ดัชนีตามที่ออกแบบไว้",
+      th: "ไม่มีธงประจำใจ ใช้ดัชนีตามที่ออกแบบไว้",
       zh: "不偏不倚，按索引原样呈现。",
     },
     weights: { livability: 25, economy: 20, safety: 15, wellbeing: 15, environment: 10, hospitality: 10, digital: 5 },
   },
   {
     id: "growth",
-    label: { en: "Growth, growth, growth", th: "เติบโตอย่างเดียว", zh: "只看增长" },
+    label: { en: "Growth, growth, growth", th: "โตอย่างเดียว", zh: "只看增长" },
     tagline: {
       en: "Jobs, GPP, digital — the rest is noise.",
-      th: "งาน GPP ดิจิทัล — ที่เหลือคือเสียงรบกวน",
+      th: "การจ้างงาน GPP ดิจิทัล — ที่เหลือเป็นเพียงเสียงรบกวน",
       zh: "就业、GPP、数字——其余皆为噪声。",
     },
     flavour: {
       en: "You came for returns. Safety and sunsets don't move the needle.",
-      th: "คุณมาเพื่อผลตอบแทน ความปลอดภัยกับพระอาทิตย์ตกไม่ใช่ประเด็น",
+      th: "คุณมาเพื่อผลตอบแทน ความปลอดภัยกับทิวทัศน์ไม่ขยับเข็ม",
       zh: "你为回报而来。安全与晚霞撼动不了指针。",
     },
     weights: { livability: 5, economy: 35, safety: 5, wellbeing: 5, environment: 5, hospitality: 5, digital: 40 },
@@ -69,15 +69,15 @@ export const PRESET_LENSES: PresetLens[] = [
   },
   {
     id: "affordability",
-    label: { en: "Thriving on affordability", th: "ใช้ชีวิตคุ้มค่า", zh: "高性价比宜居" },
+    label: { en: "Thriving on affordability", th: "อยู่ดีในงบที่จับต้องได้", zh: "高性价比宜居" },
     tagline: {
       en: "Livable, decent wages — but nothing Bangkok-priced.",
-      th: "น่าอยู่ รายได้พอดี — แต่ไม่แพงแบบกรุงเทพ",
+      th: "น่าอยู่ รายได้พอตัว — ค่าครองชีพไม่แพงเท่ากรุงเทพฯ",
       zh: "宜居、收入体面——但价格远低于曼谷。",
     },
     flavour: {
       en: "Middle-class life without the Bangkok overhead.",
-      th: "ชีวิตชนชั้นกลางโดยไม่ต้องแบกค่าใช้จ่ายเมืองหลวง",
+      th: "ใช้ชีวิตชนชั้นกลางได้ โดยไม่ต้องแบกภาระเมืองหลวง",
       zh: "中产生活，免除首都级开销。",
     },
     weights: { livability: 35, economy: 5, safety: 15, wellbeing: 25, environment: 10, hospitality: 10, digital: 0 },
@@ -92,15 +92,15 @@ export const PRESET_LENSES: PresetLens[] = [
   },
   {
     id: "startup",
-    label: { en: "Startup town", th: "เมืองสตาร์ทอัพ", zh: "创业之城" },
+    label: { en: "Startup town", th: "เมืองสำหรับสตาร์ทอัพ", zh: "创业之城" },
     tagline: {
       en: "Digital infra, university pipeline, investor-friendly tax.",
-      th: "โครงสร้างดิจิทัล สายป่านมหาวิทยาลัย ภาษีเป็นมิตร",
+      th: "โครงสร้างพื้นฐานดิจิทัล ท่อคนจากมหาวิทยาลัย สิทธิประโยชน์ทางภาษีเอื้อ",
       zh: "数字基础设施、高校人才链、税制友好。",
     },
     flavour: {
       en: "You need bandwidth, talent, and BOI paperwork that works.",
-      th: "คุณต้องการแบนด์วิดท์ คน และเอกสาร BOI ที่ใช้งานจริง",
+      th: "ต้องการอินเทอร์เน็ตเสถียร คนเก่ง และเอกสาร BOI ที่เดินได้จริง",
       zh: "你需要带宽、人才，以及真正好用的 BOI 文件。",
     },
     weights: { livability: 10, economy: 25, safety: 10, wellbeing: 10, environment: 5, hospitality: 5, digital: 35 },
@@ -112,15 +112,15 @@ export const PRESET_LENSES: PresetLens[] = [
   },
   {
     id: "nomad",
-    label: { en: "Digital nomad dream", th: "ฝันนักเดินทางดิจิทัล", zh: "数字游民梦想" },
+    label: { en: "Digital nomad dream", th: "เมืองในฝันของดิจิทัลโนแมด", zh: "数字游民梦想" },
     tagline: {
       en: "Good air, good wifi, good coffee, no drama.",
-      th: "อากาศดี เน็ตดี กาแฟดี ไม่มีดราม่า",
+      th: "อากาศดี เน็ตเสถียร กาแฟใช้ได้ ไม่มีเรื่องให้ปวดหัว",
       zh: "空气清新、网速稳、咖啡好、无事发生。",
     },
     flavour: {
       en: "Two-week stays that become two-year stays.",
-      th: "มาพักสองสัปดาห์ แต่อยู่ยาวสองปี",
+      th: "ตั้งใจมาพักสองสัปดาห์ แล้วอยู่ยาวสองปี",
       zh: "说好的两周，住成两年。",
     },
     weights: { livability: 15, economy: 10, safety: 15, wellbeing: 10, environment: 20, hospitality: 15, digital: 15 },
@@ -135,15 +135,15 @@ export const PRESET_LENSES: PresetLens[] = [
   },
   {
     id: "retirement",
-    label: { en: "Retirement paradise", th: "สวรรค์วัยเกษียณ", zh: "退休天堂" },
+    label: { en: "Retirement paradise", th: "เมืองสำหรับวัยเกษียณ", zh: "退休天堂" },
     tagline: {
       en: "Healthcare nearby, safe streets, warm community.",
-      th: "โรงพยาบาลใกล้ ถนนปลอดภัย ชุมชนอบอุ่น",
+      th: "สถานพยาบาลเข้าถึงง่าย ถนนปลอดภัย ชุมชนอบอุ่น",
       zh: "医疗在旁、街巷安全、社区温暖。",
     },
     flavour: {
       en: "Your knees and your bank account both get to relax.",
-      th: "เข่าและบัญชีธนาคารได้พักทั้งคู่",
+      th: "ทั้งเข่าและบัญชีธนาคารได้พักผ่อนพร้อมกัน",
       zh: "膝盖与账户都能松一口气。",
     },
     weights: { livability: 20, economy: 5, safety: 20, wellbeing: 30, environment: 15, hospitality: 10, digital: 0 },
@@ -157,15 +157,15 @@ export const PRESET_LENSES: PresetLens[] = [
   },
   {
     id: "climate",
-    label: { en: "Climate refuge", th: "ที่พักพิงภูมิอากาศ", zh: "气候避风港" },
+    label: { en: "Climate refuge", th: "ที่หลบภัยภูมิอากาศ", zh: "气候避风港" },
     tagline: {
       en: "Green cover, clean air, resilient to the hot decade ahead.",
-      th: "พื้นที่สีเขียว อากาศสะอาด ทนต่อทศวรรษที่ร้อนขึ้น",
+      th: "พื้นที่สีเขียวหนา อากาศสะอาด ทนต่อทศวรรษที่ร้อนขึ้นข้างหน้า",
       zh: "绿意浓、空气净、能扛住下一个炎热十年。",
     },
     flavour: {
       en: "Bangkok will keep heating. These cities already have the trees.",
-      th: "กรุงเทพจะร้อนขึ้นเรื่อยๆ เมืองเหล่านี้มีต้นไม้อยู่แล้ว",
+      th: "กรุงเทพฯ จะร้อนขึ้นเรื่อย ๆ ส่วนเมืองกลุ่มนี้มีต้นไม้รองรับไว้แล้ว",
       zh: "曼谷只会更热。这些城市已经有了树。",
     },
     weights: { livability: 10, economy: 5, safety: 10, wellbeing: 10, environment: 40, hospitality: 15, digital: 10 },

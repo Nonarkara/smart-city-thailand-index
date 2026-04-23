@@ -24,6 +24,7 @@ const ProgramPage = lazy(() => import("./ProgramPage"));
 const KnowledgePage = lazy(() => import("./KnowledgePage"));
 const DiscoverPage = lazy(() => import("./DiscoverPage"));
 const InvestPage = lazy(() => import("./InvestPage"));
+const ComparePage = lazy(() => import("./ComparePage"));
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 const THEME_STORAGE_KEY = "smart-city-thailand-theme";
@@ -47,6 +48,7 @@ const NAV_ITEMS = [
   { kind: "audit", path: "/audit", label: { en: "Audit", th: "ตรวจสอบ", zh: "审计" } },
   { kind: "knowledge", path: "/knowledge", label: { en: "KB", th: "คลังรู้", zh: "知识库" } },
   { kind: "invest", path: "/invest", label: { en: "Invest", th: "ลงทุน", zh: "投资" } },
+  { kind: "compare", path: "/compare", label: { en: "Compare", th: "เทียบ", zh: "对比" } },
 ] as const;
 
 const MDES_LOGO = {
@@ -324,6 +326,8 @@ export default function App() {
               <DiscoverPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "invest" ? (
               <InvestPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "compare" ? (
+              <ComparePage locale={locale} onNavigate={navigate} />
             ) : route.kind === "city" ? (
               <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
             ) : (

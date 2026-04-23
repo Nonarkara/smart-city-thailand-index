@@ -1,9 +1,42 @@
 import type { SmartCity } from "./types";
 
+// ---------------------------------------------------------------------------
+// Photo sourcing status (Phase 16 — 2026-04-24)
+// ---------------------------------------------------------------------------
+// REAL city photos (authored / curated, not stock) live in capitalised folders
+// under public/:
+//   - public/Nakhon Si Thammarat/  — 9 NST shots (Phase 16 hero Z03A4010)
+//   - public/CMU Smart City/       — P1210289 (campus)
+//   - public/Chiang Mai/           — IMG_20251218_190749854 (night skyline)
+//   - public/Khon Kaen/            — IMG_4264 (aerial LRT corridor)
+//
+// Every other city still references either:
+//   - public/photos/wp-*.jpg       — Wikimedia Commons CC BY-SA (legitimate)
+//   - public/photos/*-smart-city.jpg, *-night.jpg, *-aerial.jpg
+//     (founder placeholder snaps; acceptable until replaced)
+//
+// TODO (photo sourcing backlog) — cities that still lean on wp-*.jpg and
+// should get a dedicated folder + real photo when available:
+//   bangkok, chiang-rai, lampang, nan, phitsanulok-*, korat, ubon,
+//   nakhonsawan, rayong, saensuk, bang-saray, chachoengsao, chanthaburi,
+//   rattanakosin, klong-phadung, makkasan, nonthaburi, samut-prakan,
+//   maesai, umong, tak, phichit, mae-moh, samui, krabi, phangnga, satun,
+//   sritrang, songkhla-city, hat-yai, yala, pattani, narathiwat,
+//   phuket-tinicon, tai-yong, khao-khun-song, samyan, phra-ram-4, phuket.
+//
+// NST .webp siblings still to be generated (cwebp -q 82) — the <picture>
+// source will 404-fall-through to the JPG until then. See ResponsiveImage.
+// ---------------------------------------------------------------------------
+
 export type CityPhotoAsset = {
   src: string;
   objectPosition?: string;
 };
+
+/** Encode a path segment containing spaces so browsers get %20, not raw " ". */
+function enc(path: string): string {
+  return encodeURI(path);
+}
 
 // Phase 13 — Wikimedia Commons, Bangkok night expressway above Makkasan.
 // Chosen over the founder's own photo because SCITI's subject is urban
@@ -27,10 +60,10 @@ const REGION_FALLBACKS: Record<SmartCity["region"], CityPhotoAsset> = {
 };
 
 const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
-  // ─── Explicit per-city photos (existing) ───
-  "chiang-mai-old-town": { src: "/photos/chiangmai-night.jpg", objectPosition: "center 58%" },
-  "cmu-smart-city": { src: "/photos/cmu-smart-city.jpg", objectPosition: "center 40%" },
-  "khon-kaen": { src: "/photos/khonkaen-smart-city.jpg", objectPosition: "center 50%" },
+  // ─── Real, authored city photos in capitalised folders (Phase 16) ───
+  "chiang-mai-old-town": { src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"), objectPosition: "center 58%" },
+  "cmu-smart-city": { src: enc("/CMU Smart City/P1210289.JPG"), objectPosition: "center 45%" },
+  "khon-kaen": { src: enc("/Khon Kaen/IMG_4264.JPG"), objectPosition: "center 50%" },
   "samyan": { src: "/photos/samyan-smart-city.jpg", objectPosition: "center 45%" },
   "phra-ram-4": { src: "/photos/samyan-smart-city.jpg", objectPosition: "center 45%" },
   "phuket": { src: "/photos/phuket-smart-city.jpg", objectPosition: "center 48%" },
@@ -97,7 +130,7 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "yala": { src: "/photos/wp-yala.jpg", objectPosition: "center 50%" },
   "pattani": { src: "/photos/wp-pattani.jpg", objectPosition: "center 45%" },
   "narathiwat": { src: "/photos/wp-narathiwat.jpg", objectPosition: "center 50%" },
-  "nakhon-si-thammarat": { src: "/photos/wp-nakhon-si-thammarat.jpg", objectPosition: "center 50%" },
+  "nakhon-si-thammarat": { src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"), objectPosition: "center 50%" },
 };
 
 export function getCityPhotoAsset(city: Pick<SmartCity, "id" | "region">): CityPhotoAsset {
