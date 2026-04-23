@@ -1,24 +1,89 @@
 import { useMemo, useState } from "react";
-import { useCitySummaries } from "./cityApi";
-import { groupCitiesByTier, sortCities } from "./cityCollections";
 import ComparisonGrid from "./ComparisonGrid";
 import ThailandMiniMap from "./ThailandMiniMap";
-import { getLocalizedList, getLocalizedText, resolveCityResearch } from "./cityResearch";
+import { useCitySummaries } from "./cityApi";
+import { groupCitiesByTier, sortCities } from "./cityCollections";
 import {
   getCityName,
   getCityRealityLabel,
-  getCityTagline,
-  getDimensionChipLabel,
+  getCityStatusLabel,
   getProvinceName,
   translate,
 } from "./cityPresentation";
 import { SCORING_PILLARS } from "./scoring";
 import type { CityTier, Locale, ScoringPillar, SmartCity } from "./types";
-import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, TIER_LABELS } from "./types";
+import { PILLAR_COLORS, PILLAR_SHORT_LABELS, TIER_LABELS } from "./types";
 
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
+}
+
+function toAppPath(path: string): string {
+  const base = import.meta.env.BASE_URL || "/";
+  const prefix = base === "/" ? "" : base.replace(/\/$/, "");
+  return path === "/" ? `${prefix}/` || "/" : `${prefix}${path}`;
+}
+
+function RankingLedgerRow({
+  city,
+  locale,
+  onNavigate,
+  onHover,
+}: {
+  city: SmartCity;
+  locale: Locale;
+  onNavigate: (path: string) => void;
+  onHover?: (city: SmartCity | null) => void;
+}) {
+  const cityPath = `/city/${city.id}`;
+
+  return (
+    <a
+      href={toAppPath(cityPath)}
+      className="dashboard-ranking-row tier-ranking-row"
+      onClick={event => {
+        event.preventDefault();
+        onNavigate(cityPath);
+      }}
+      onMouseEnter={() => onHover?.(city)}
+      onMouseLeave={() => onHover?.(null)}
+      onFocus={() => onHover?.(city)}
+      onBlur={() => onHover?.(null)}
+    >
+      <div className="dashboard-ranking-summary">
+        <span className="dashboard-ranking-name">{getCityName(city, locale)}</span>
+        <span className="dashboard-ranking-caption">
+          {getProvinceName(city, locale)} · {getCityStatusLabel(city.status, locale)} ·{" "}
+          {getCityRealityLabel(city.reality, locale)}
+        </span>
+      </div>
+
+      <div className="ranking-pillar-grid" aria-hidden="true">
+        {SCORING_PILLARS.map(pillar => (
+          <span key={pillar} className="ranking-pillar-cell">
+            <span className="ranking-pillar-code">{PILLAR_SHORT_LABELS[locale][pillar]}</span>
+            <span className="ranking-pillar-track">
+              <span
+                className="ranking-pillar-fill"
+                style={{
+                  width: `${city.scores[pillar]}%`,
+                  backgroundColor: PILLAR_COLORS[pillar],
+                }}
+              />
+            </span>
+          </span>
+        ))}
+      </div>
+
+      <div className="dashboard-ranking-score">
+        <span className="data-label">
+          {translate(locale, { en: "Composite", th: "รวม", zh: "综合" })}
+        </span>
+        <strong>{city.compositeScore.toFixed(1)}</strong>
+      </div>
+    </a>
+  );
 }
 
 function TierSection({
@@ -34,140 +99,30 @@ function TierSection({
   onNavigate: (path: string) => void;
   onHover?: (city: SmartCity | null) => void;
 }) {
-  const symbol = tier === "alpha" ? "α" : tier === "beta" ? "β" : "γ";
-
   return (
-    <div className={`tier-section tier-section-${tier} reveal visible`}>
+    <section className="tier-section">
       <div className="tier-section-header">
-        <span className="tier-section-symbol">{symbol}</span>
-        <h2>{TIER_LABELS[locale][tier]}</h2>
-        <span className="tier-section-count">
-          {cities.length} {translate(locale, { en: "cities", th: "เมือง", zh: "城" })}
-        </span>
-      </div>
-      <div className="city-grid">
-        {cities.map(city => (
-          <CityCard key={city.id} city={city} locale={locale} onNavigate={onNavigate} onHover={onHover} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function CityCard({
-  city,
-  locale,
-  onNavigate,
-  onHover,
-}: {
-  city: SmartCity;
-  locale: Locale;
-  onNavigate: (path: string) => void;
-  onHover?: (city: SmartCity | null) => void;
-}) {
-  const path = `/city/${city.id}`;
-  const cityName = getCityName(city, locale);
-
-  return (
-    <button
-      type="button"
-      className={`city-card city-card-${city.tier}`}
-      role="link"
-      onClick={() => onNavigate(path)}
-      onMouseEnter={() => onHover?.(city)}
-      onMouseLeave={() => onHover?.(null)}
-      onFocus={() => onHover?.(city)}
-      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNavigate(path); } }}
-    >
-      <div className="city-card-top">
-        <div className="city-card-name">{cityName}</div>
-        <div className="city-card-province">{getProvinceName(city, locale)}</div>
-      </div>
-
-      <div className="city-card-score-row">
-        <span className="city-card-composite">{city.compositeScore.toFixed(1)}</span>
-        <span className={`city-card-status status-${city.reality}`}>
-          {getCityRealityLabel(city.reality, locale)}
-        </span>
-      </div>
-
-      <div className="city-card-bars">
-        {SCORING_PILLARS.map(pillar => {
-          const score = city.scores[pillar];
-          return (
-            <div key={pillar} className="hbar-row">
-              <span className="hbar-label">{PILLAR_SHORT_LABELS[locale][pillar]}</span>
-              <div className="hbar-track">
-                <div
-                  className="hbar-fill"
-                  style={{ width: `${score}%`, background: PILLAR_COLORS[pillar] }}
-                />
-              </div>
-              <span className="hbar-value">{score}</span>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="city-card-dims">
-        {city.smartDimensions.map(dimension => (
-          <span key={dimension} className="dim-chip">
-            {getDimensionChipLabel(dimension, locale)}
-          </span>
-        ))}
-      </div>
-
-      <p className="city-card-tagline">{getCityTagline(city, locale)}</p>
-    </button>
-  );
-}
-
-function EditorialStoryCard({
-  city,
-  locale,
-  onNavigate,
-  rank,
-}: {
-  city: SmartCity;
-  locale: Locale;
-  onNavigate: (path: string) => void;
-  rank: number;
-}) {
-  const research = resolveCityResearch(city);
-
-  return (
-    <button
-      type="button"
-      className="editorial-story-card"
-      role="link"
-      onClick={() => onNavigate(`/city/${city.id}`)}
-    >
-      <div className="editorial-story-head">
-        <span className="editorial-story-rank">#{rank}</span>
-        <span className={`editorial-story-tier editorial-story-tier-${city.tier}`}>{TIER_LABELS[locale][city.tier]}</span>
-      </div>
-      <div className="editorial-story-title-row">
         <div>
-          <h3>{getCityName(city, locale)}</h3>
-          <p>{getProvinceName(city, locale)}</p>
+          <p className="eyebrow">
+            {translate(locale, { en: "Tier", th: "ระดับ", zh: "层级" })}
+          </p>
+          <h2>{TIER_LABELS[locale][tier]}</h2>
         </div>
-        <strong>{city.compositeScore.toFixed(1)}</strong>
+        <span className="tier-section-count">{cities.length}</span>
       </div>
-      <div className="editorial-chip-row">
-        {getLocalizedList(locale, research.industries).slice(0, 4).map(industry => (
-          <span key={`${city.id}-${industry}`} className="editorial-chip">{industry}</span>
+
+      <div className="dashboard-ranking-list">
+        {cities.map(city => (
+          <RankingLedgerRow
+            key={city.id}
+            city={city}
+            locale={locale}
+            onNavigate={onNavigate}
+            onHover={onHover}
+          />
         ))}
       </div>
-      <p className="editorial-story-copy">{getLocalizedText(locale, research.compareNote)}</p>
-      <div className="editorial-story-meta">
-        <span>{translate(locale, { en: "Live", th: "ชีวิต", zh: "生活" })}</span>
-        <p>{getLocalizedText(locale, research.dailyLife)}</p>
-      </div>
-      <div className="editorial-story-meta">
-        <span>{translate(locale, { en: "Fun fact", th: "เกร็ดสนุก", zh: "趣闻" })}</span>
-        <p>{getLocalizedText(locale, research.funFact)}</p>
-      </div>
-    </button>
+    </section>
   );
 }
 
@@ -176,156 +131,175 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   const [tab, setTab] = useState<"all" | "certified" | "promotion">("all");
   const [sortPillar, setSortPillar] = useState<ScoringPillar | "composite">("composite");
   const [selectedCity, setSelectedCity] = useState<SmartCity | null>(null);
-  const sortSelectId = "rankings-sort";
   const { data: cities } = useCitySummaries();
-  const certifiedCities = useMemo(() => cities.filter(city => city.status === "certified"), [cities]);
-  const promotionZoneCities = useMemo(() => cities.filter(city => city.status === "promotion"), [cities]);
-  const featuredCities = useMemo(() => sortCities(cities, "composite").slice(0, 5), [cities]);
+
+  const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
+
+  const filteredCities = useMemo(
+    () => (tab === "all" ? cities : cities.filter(city => city.status === tab)),
+    [cities, tab],
+  );
 
   const groupedCities = useMemo(() => {
-    const sourceCities =
-      tab === "certified" ? certifiedCities : tab === "promotion" ? promotionZoneCities : cities;
-    const grouped = groupCitiesByTier(sourceCities);
-
+    const grouped = groupCitiesByTier(filteredCities);
     return {
       alpha: sortCities(grouped.alpha, sortPillar),
       beta: sortCities(grouped.beta, sortPillar),
       gamma: sortCities(grouped.gamma, sortPillar),
     };
-  }, [certifiedCities, cities, promotionZoneCities, sortPillar, tab]);
+  }, [filteredCities, sortPillar]);
 
   return (
-    <>
-      <section className="section rankings-hero">
+    <div className="rankings-page">
+      <section className="section hero-signage reveal visible">
         <p className="eyebrow">
-          {translate(locale, { en: "Full rankings", th: "การจัดอันดับเต็มรูปแบบ", zh: "完整排名" })}
+          {t({
+            en: "Comparison surface",
+            th: "พื้นผิวการเปรียบเทียบ",
+            zh: "比较界面",
+          })}
         </p>
-        <h1>
-          {translate(locale, {
-            en: "Thai Smart Cities: Who delivers, who just talks",
-            th: "เมืองอัจฉริยะไทย: ใครจริง ใครแค่พูด",
-            zh: "泰国智慧城市：谁真做，谁只会说",
+        <h1 className="hero-title">
+          {t({
+            en: "National leaderboard and comparison matrix",
+            th: "กระดานอันดับและเมทริกซ์เปรียบเทียบระดับประเทศ",
+            zh: "全国排行榜与对比矩阵",
           })}
         </h1>
         <p className="hero-strapline">
-          {translate(locale, {
-            en: "Cities stay inside Alpha, Beta, or Gamma based on outcomes. The sort only reorders cities within each tier, because fake precision is still fake even when it looks scientific.",
-            th: "เมืองจะอยู่ใน Alpha, Beta หรือ Gamma ตามผลลัพธ์จริง การเรียงลำดับจะเกิดขึ้นแค่ภายในแต่ละกลุ่ม เพราะความแม่นยำปลอมก็ยังเป็นของปลอม ถึงหน้าตาจะดูวิทยาศาสตร์ก็ตาม",
-            zh: "城市先按结果归入 Alpha、Beta 或 Gamma。排序只会在各自层级内部重排，因为假精确就算披上科学外衣，也还是假精确。",
+          {t({
+            en: "Tier sections keep the hierarchy readable. Sorting changes the order inside each tier without touching the data model.",
+            th: "การแบ่งตามระดับช่วยให้ลำดับชั้นอ่านง่าย การเรียงใหม่จะเปลี่ยนลำดับภายในแต่ละระดับโดยไม่แตะโมเดลข้อมูล",
+            zh: "分层区块让层级更易扫描。排序只改变层级内顺序，不改动数据模型。",
           })}
         </p>
       </section>
 
-      <section className="section">
-        <div className="rankings-editorial-head">
-          <div>
-            <p className="eyebrow">{translate(locale, { en: "Beyond the score", th: "เกินกว่าคะแนน", zh: "超越分数" })}</p>
-            <h2>{translate(locale, {
-              en: "What these top cities actually feel like on the ground",
-              th: "เมืองหัวตารางเหล่านี้มีชีวิตจริงแบบไหน",
-              zh: "这些头部城市在现实里到底是什么样子",
-            })}</h2>
-          </div>
-          <div className="rankings-view-toggle" role="tablist" aria-label={translate(locale, { en: "Ranking views", th: "มุมมองการจัดอันดับ", zh: "排名视图" })}>
+      <section className="section reveal visible">
+        <div className="rankings-toolbar">
+          <div className="filter-group">
             <button
               type="button"
+              className={`btn-tab ${tab === "all" ? "active" : ""}`}
+              onClick={() => setTab("all")}
+            >
+              {t({ en: "All", th: "ทั้งหมด", zh: "全部" })}
+            </button>
+            <button
+              type="button"
+              className={`btn-tab ${tab === "certified" ? "active" : ""}`}
+              onClick={() => setTab("certified")}
+            >
+              {t({ en: "Certified", th: "รับรอง", zh: "认证" })}
+            </button>
+            <button
+              type="button"
+              className={`btn-tab ${tab === "promotion" ? "active" : ""}`}
+              onClick={() => setTab("promotion")}
+            >
+              {t({ en: "Promotion", th: "ส่งเสริม", zh: "推广" })}
+            </button>
+          </div>
+
+          <label className="select-field">
+            <span className="data-label">
+              {t({ en: "Sort by", th: "เรียงตาม", zh: "排序依据" })}
+            </span>
+            <select
+              value={sortPillar}
+              onChange={event => setSortPillar(event.target.value as ScoringPillar | "composite")}
+              aria-label={t({ en: "Sort by pillar", th: "เรียงตามเสาหลัก", zh: "按支柱排序" })}
+            >
+              <option value="composite">
+                {t({ en: "Composite", th: "คะแนนรวม", zh: "综合分" })}
+              </option>
+              {SCORING_PILLARS.map(pillar => (
+                <option key={pillar} value={pillar}>
+                  {pillar}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <div className="view-toggle" role="tablist" aria-label="View mode">
+            <button
+              id="leaderboard-tab"
+              type="button"
               role="tab"
+              className={`btn-tab ${viewMode === "leaderboard" ? "active" : ""}`}
               aria-selected={viewMode === "leaderboard"}
-              className={`rankings-view-btn ${viewMode === "leaderboard" ? "active" : ""}`}
+              aria-controls="leaderboard-panel"
               onClick={() => setViewMode("leaderboard")}
             >
-              {translate(locale, { en: "Leaderboard", th: "ตารางหลัก", zh: "排行榜" })}
+              {t({ en: "Leaderboard", th: "อันดับ", zh: "排行榜" })}
             </button>
             <button
+              id="compare-tab"
               type="button"
               role="tab"
+              className={`btn-tab ${viewMode === "compare" ? "active" : ""}`}
               aria-selected={viewMode === "compare"}
-              className={`rankings-view-btn ${viewMode === "compare" ? "active" : ""}`}
+              aria-controls="compare-panel"
               onClick={() => setViewMode("compare")}
             >
-              {translate(locale, { en: "Side-by-side", th: "เทียบกัน", zh: "并排对比" })}
+              {t({ en: "Side-by-side", th: "เทียบกันตรงๆ", zh: "并排对比" })}
             </button>
           </div>
         </div>
-        <div className="editorial-story-grid">
-          {featuredCities.map((city, index) => (
-            <EditorialStoryCard
-              key={city.id}
-              city={city}
-              locale={locale}
-              onNavigate={onNavigate}
-              rank={index + 1}
-            />
-          ))}
-        </div>
-      </section>
 
-      {viewMode === "leaderboard" ? (
-        <>
-          <section className="section">
-            <div className="filter-row">
-              <div className="filter-group">
-                <button className={`filter-btn ${tab === "all" ? "active" : ""}`} onClick={() => setTab("all")}>
-                  {translate(locale, { en: "All", th: "ทั้งหมด", zh: "全部" })} ({cities.length})
-                </button>
-                <button className={`filter-btn ${tab === "certified" ? "active" : ""}`} onClick={() => setTab("certified")}>
-                  {translate(locale, { en: "Certified", th: "รับรองแล้ว", zh: "已认证" })} ({certifiedCities.length})
-                </button>
-                <button className={`filter-btn ${tab === "promotion" ? "active" : ""}`} onClick={() => setTab("promotion")}>
-                  {translate(locale, { en: "Promotion", th: "เขตส่งเสริม", zh: "推广区" })} ({promotionZoneCities.length})
-                </button>
-              </div>
-              <div className="filter-group">
-                <label className="sort-label" htmlFor={sortSelectId}>
-                  {translate(locale, { en: "Sort by", th: "เรียงตาม", zh: "排序依据" })}
-                </label>
-                <select
-                  id={sortSelectId}
-                  className="sort-select"
-                  value={sortPillar}
-                  onChange={event => setSortPillar(event.target.value as ScoringPillar | "composite")}
-                >
-                  <option value="composite">
-                    {translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合分" })}
-                  </option>
-                  {SCORING_PILLARS.map(pillar => (
-                    <option key={pillar} value={pillar}>
-                      {PILLAR_LABELS[locale][pillar]}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </section>
-
-          <section className="section rankings-main-layout">
-            <div className="rankings-cards-col">
+        {viewMode === "leaderboard" ? (
+          <div
+            id="leaderboard-panel"
+            role="tabpanel"
+            aria-labelledby="leaderboard-tab"
+            className="matrix-layout"
+          >
+            <div className="matrix-content">
               {groupedCities.alpha.length > 0 && (
-                <TierSection tier="alpha" cities={groupedCities.alpha} locale={locale} onNavigate={onNavigate} onHover={setSelectedCity} />
+                <TierSection
+                  tier="alpha"
+                  cities={groupedCities.alpha}
+                  locale={locale}
+                  onNavigate={onNavigate}
+                  onHover={setSelectedCity}
+                />
               )}
               {groupedCities.beta.length > 0 && (
-                <TierSection tier="beta" cities={groupedCities.beta} locale={locale} onNavigate={onNavigate} onHover={setSelectedCity} />
+                <TierSection
+                  tier="beta"
+                  cities={groupedCities.beta}
+                  locale={locale}
+                  onNavigate={onNavigate}
+                  onHover={setSelectedCity}
+                />
               )}
               {groupedCities.gamma.length > 0 && (
-                <TierSection tier="gamma" cities={groupedCities.gamma} locale={locale} onNavigate={onNavigate} onHover={setSelectedCity} />
+                <TierSection
+                  tier="gamma"
+                  cities={groupedCities.gamma}
+                  locale={locale}
+                  onNavigate={onNavigate}
+                  onHover={setSelectedCity}
+                />
               )}
             </div>
-            <aside className="rankings-map-col">
+
+            <aside className="matrix-rail">
               <ThailandMiniMap
-                cities={cities}
+                cities={filteredCities}
                 selectedCity={selectedCity}
                 locale={locale}
                 onSelect={setSelectedCity}
                 onNavigate={onNavigate}
               />
             </aside>
-          </section>
-        </>
-      ) : (
-        <section className="section">
-          <ComparisonGrid locale={locale} onNavigate={onNavigate} />
-        </section>
-      )}
-    </>
+          </div>
+        ) : (
+          <div id="compare-panel" role="tabpanel" aria-labelledby="compare-tab">
+            <ComparisonGrid locale={locale} onNavigate={onNavigate} />
+          </div>
+        )}
+      </section>
+    </div>
   );
 }

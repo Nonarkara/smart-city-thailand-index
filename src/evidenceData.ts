@@ -49,6 +49,17 @@ export const dataSources: DataSource[] = [
     metrics: ["avgMonthlyIncome", "population", "employment"],
   },
   {
+    id: "admin-boundaries",
+    name: "Administrative boundary baselines",
+    type: "government",
+    descEn: "Administrative population, land-area, and density baselines used when proposal-level smart-city boundaries are not yet published.",
+    descTh: "ฐานข้อมูลประชากร พื้นที่ และความหนาแน่นทางปกครอง ใช้เมื่อยังไม่มีขอบเขตเมืองอัจฉริยะระดับข้อเสนอที่เผยแพร่แล้ว",
+    descZh: "行政人口、土地面积与密度基线；当智慧城市提案尚未公布明确边界时使用。",
+    url: "https://en.wikipedia.org/wiki/Provinces_of_Thailand",
+    updateFrequency: "Annual / as published",
+    metrics: ["population", "landAreaKm2", "populationDensityPerKm2"],
+  },
+  {
     id: "nesdc",
     name: "NESDC — GPP Data",
     type: "government",

@@ -1,441 +1,403 @@
 import { useMemo, useState } from "react";
-// ActionAtlas removed — map was ugly, data speaks for itself
-import { useInView } from "./useInView";
 import NewsStrip from "./NewsStrip";
 import { useCitySummaries } from "./cityApi";
 import { filterCities, sortCities, summarizeCities } from "./cityCollections";
-import { getCityPhotoAsset, HOME_HERO_ASSET } from "./cityMedia";
 import {
   getCityName,
+  getCityStatusLabel,
   getProvinceName,
   translate,
 } from "./cityPresentation";
-import type { CityTier, Locale, SmartCity } from "./types";
-import { TIER_LABELS, PILLAR_COLORS, PILLAR_SHORT_LABELS } from "./types";
+import { downloadCsv } from "./csvDownload";
+import { getCitySummariesCsv } from "./cityCdp";
 import { SCORING_PILLARS } from "./scoring";
-import { getCitySummariesCsv, getCityFactsCsv } from "./cityCdp";
-import { ResponsiveImage, assetUrl } from "./mediaAssets";
-import { PILLAR_WEIGHTS } from "./types";
-
-/** Short, unique vibe phrase per city — keeps the reality color but says something memorable */
-function getCityVibe(city: SmartCity, locale: Locale): string {
-  // Find the city's strongest and weakest pillars
-  const pillars = SCORING_PILLARS;
-  const sorted = [...pillars].sort((a, b) => city.scores[b] - city.scores[a]);
-  const strongest = sorted[0];
-
-  // City-specific vibes for well-known cities
-  const vibes: Record<string, { en: string; th: string; zh: string }> = {
-    "phuket": { en: "Tourism engine, real tech", th: "เครื่องยนต์ท่องเที่ยว เทคจริง", zh: "旅游引擎，真技术" },
-    "samyan": { en: "Innovation district, alive", th: "ย่านนวัตกรรม มีชีวิต", zh: "创新区，活的" },
-    "chiang-mai-old-town": { en: "Heritage meets sensors", th: "มรดกพบเซ็นเซอร์", zh: "遗产遇上传感器" },
-    "khon-kaen": { en: "Isan's economic engine", th: "เครื่องยนต์เศรษฐกิจอีสาน", zh: "伊桑经济引擎" },
-    "saensuk": { en: "Beach town, clean data", th: "เมืองชายหาด ข้อมูลสะอาด", zh: "海滩小城，干净数据" },
-    "yala": { en: "Cleanest city, real grit", th: "เมืองสะอาดสุด ใจสู้", zh: "最干净城市，真韧性" },
-    "wangchan-valley": { en: "Innovation hub, in development", th: "ศูนย์กลางนวัตกรรม กำลังพัฒนา", zh: "创新中心，开发中" },
-  };
-
-  if (vibes[city.id]) {
-    return vibes[city.id][locale];
-  }
-
-  const pillarVibes: Record<string, { en: string; th: string; zh: string }> = {
-    livability: { en: "Built for living", th: "สร้างเพื่ออยู่", zh: "为生活而建" },
-    economy: { en: "Money moves here", th: "เงินไหลที่นี่", zh: "资金流动之地" },
-    safety: { en: "Quiet streets, real data", th: "ถนนสงบ ข้อมูลจริง", zh: "安静街道，真实数据" },
-    wellbeing: { en: "People-first signal", th: "สัญญาณคนมาก่อน", zh: "以人为先信号" },
-    environment: { en: "Green signal, verified", th: "สัญญาณเขียว ยืนยันแล้ว", zh: "绿色信号，已验证" },
-    hospitality: { en: "Warm city, open doors", th: "เมืองอบอุ่น เปิดประตู", zh: "温暖城市，敞开大门" },
-    digital: { en: "Wired and running", th: "เชื่อมต่อและวิ่ง", zh: "已联网，运行中" },
-  };
-
-  if (city.reality === "planned") {
-    return locale === "th" ? "กำลังวางแผนงาน" : locale === "zh" ? "处于规划阶段" : "In planning phase";
-  }
-  if (city.reality === "partial") {
-    return locale === "th" ? "กำลังสร้าง มีช่องว่าง" : locale === "zh" ? "建设中，有缺口" : "Building, gaps remain";
-  }
-
-  return pillarVibes[strongest]?.[locale] ?? (locale === "th" ? "ทำงานจริง" : locale === "zh" ? "运行中" : "Running");
-}
-
-function RankingRow({
-  city,
-  locale,
-  onNavigate,
-  rank,
-}: {
-  city: SmartCity;
-  locale: Locale;
-  onNavigate: (path: string) => void;
-  rank: number;
-}) {
-  const cityName = getCityName(city, locale);
-  const cityPath = `/city/${city.id}`;
-  const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
-
-  return (
-    <button
-      type="button"
-      className="dashboard-ranking-row"
-      role="link"
-      onClick={() => onNavigate(cityPath)}
-      onKeyDown={event => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          onNavigate(cityPath);
-        }
-      }}
-    >
-      <div className="dashboard-ranking-topline">
-        <span className="dashboard-ranking-rank">{String(rank).padStart(2, "0")}</span>
-        <span className="dashboard-ranking-name">{cityName}</span>
-        <span className="dashboard-ranking-meta">
-          {getProvinceName(city, locale)}
-        </span>
-        <span className={`dashboard-ranking-tier tier-${city.tier}`}>{tierSymbol}</span>
-        <span className="dashboard-ranking-score">{city.compositeScore.toFixed(1)}</span>
-      </div>
-
-      <div className="ranking-pillar-grid">
-        {SCORING_PILLARS.map(p => (
-          <div key={p} className="ranking-pillar-row">
-            <span className="ranking-pillar-label" style={{ color: PILLAR_COLORS[p] }}>
-              {PILLAR_SHORT_LABELS[locale][p]}
-            </span>
-            <div className="ranking-pillar-track">
-              <div
-                className="ranking-pillar-fill"
-                style={{ width: `${city.scores[p]}%`, background: PILLAR_COLORS[p] }}
-              />
-            </div>
-            <span className="ranking-pillar-value">{city.scores[p]}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="dashboard-ranking-bottomline">
-        <span className={`dashboard-ranking-vibe dashboard-ranking-vibe-${city.reality}`}>
-          {getCityVibe(city, locale)}
-        </span>
-      </div>
-    </button>
-  );
-}
+import type { Locale, SmartCity } from "./types";
+import { PILLAR_COLORS, PILLAR_SHORT_LABELS, TIER_LABELS } from "./types";
+import { useInView } from "./useInView";
 
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
 }
 
-export default function HomePage({ locale, onNavigate }: Props) {
-  const [statusFilter, setStatusFilter] = useState<"all" | "certified" | "promotion">("all");
-  const [tierFilter] = useState<"all" | CityTier>("all");
-  const [heroRef, heroVisible] = useInView(0.1);
-  const [guideRef, guideVisible] = useInView(0.1);
-  // atlasRef removed with ActionAtlas
-  const [rankingRef, rankingVisible] = useInView(0.1);
-  const [feedbackRef, feedbackVisible] = useInView(0.1);
-  const [fineprintRef] = useInView(0.1);
+function toAppPath(path: string): string {
+  const base = import.meta.env.BASE_URL || "/";
+  const prefix = base === "/" ? "" : base.replace(/\/$/, "");
+  return path === "/" ? `${prefix}/` || "/" : `${prefix}${path}`;
+}
 
-  const { data: cities } = useCitySummaries();
-  const stats = useMemo(() => summarizeCities(cities), [cities]);
-  const previewCities = useMemo(() => {
-    return sortCities(
-      filterCities(cities, {
-        status: statusFilter,
-        tier: tierFilter,
-      }),
-    ).slice(0, 24);
-  }, [cities, statusFilter, tierFilter]);
+function RankingRow({
+  city,
+  index,
+  locale,
+  onNavigate,
+}: {
+  city: SmartCity;
+  index: number;
+  locale: Locale;
+  onNavigate: (path: string) => void;
+}) {
+  const cityPath = `/city/${city.id}`;
 
   return (
-    <div className="dashboard-home">
-      {/* ─── CINEMATIC HERO ─── */}
-      <section ref={heroRef} className={`cinematic-hero reveal ${heroVisible ? "visible" : ""}`}>
-        <ResponsiveImage
-          src={HOME_HERO_ASSET.src}
-          alt="Thai smart city aerial view"
-          className="cinematic-hero-img"
-          width={1920}
-          height={900}
-          loading="eager"
-          fetchPriority="high"
-          sizes="100vw"
-          style={{ objectPosition: HOME_HERO_ASSET.objectPosition }}
-        />
-        <div className="cinematic-hero-overlay">
-          <p className="cinematic-hero-eyebrow">SCITI 2026 — {translate(locale, { en: "pronounced \"City\"", th: "อ่านว่า \"ซิตี้\"", zh: "读作 \"City\"" })}</p>
-          <h1 className="cinematic-hero-title">
-            {locale === "th" ? <>เอาความจริง<br />ไม่เอาพิธีตัดริบบิ้น</> : locale === "zh" ? <>看现实<br />不看剪彩</> : <>Reality, not<br />ribbon&#8209;cutting.</>}
-          </h1>
-          <p className="cinematic-hero-why">
-             {translate(locale, {
-              en: "Thailand has certified 37 smart cities. But how many of them actually work? This index exists because the gap between announcements and outcomes needed measuring.",
-              th: "ประเทศไทยรับรองเมืองอัจฉริยะ 37 เมือง แต่มีกี่เมืองที่ทำงานได้จริง? ดัชนีนี้มีอยู่เพราะช่องว่างระหว่างคำประกาศกับผลลัพธ์ต้องถูกวัด",
-              zh: "泰国已认证37座智慧城市。但其中有多少真正在运转？这个指数的存在，是因为公告与结果之间的差距需要被衡量。",
-            })}
-          </p>
-          <div className="cinematic-hero-stats">
-            <span>{stats.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })}</span>
-            <span>{stats.operational} {translate(locale, { en: "operational", th: "ใช้งานจริง", zh: "运营中" })}</span>
-            <span>{stats.certified} {translate(locale, { en: "certified", th: "รับรอง", zh: "已认证" })}</span>
-          </div>
-          <div className="cinematic-hero-actions">
-            <button className="cta-button" onClick={() => onNavigate("/rankings")}>
-              {translate(locale, { en: "Get Rankings", th: "ดูอันดับ", zh: "查看排名" })}
-            </button>
-            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/methodology")}>
-              {translate(locale, { en: "Methodology", th: "วิธีการ", zh: "方法论" })}
-            </button>
-          </div>
-        </div>
-      </section>
+    <a
+      href={toAppPath(cityPath)}
+      className="dashboard-ranking-row"
+      onClick={event => {
+        event.preventDefault();
+        onNavigate(cityPath);
+      }}
+    >
+      <span className="dashboard-ranking-position">#{String(index + 1).padStart(2, "0")}</span>
 
-      {/* ─── EDITION STAMP ─── */}
-      <div className="edition-stamp">
-        <span>SCITI 2026 Edition · {stats.total} {translate(locale, { en: "cities", th: "เมือง", zh: "城市" })} · 15+ {translate(locale, { en: "data sources", th: "แหล่งข้อมูล", zh: "数据来源" })} · {translate(locale, { en: "Released April 2026", th: "เผยแพร่เมษายน 2569", zh: "2026年4月发布" })}</span>
-        <span>{translate(locale, { en: "Research by Dr. Non A · depa · SLIC Methodology · Peer-reviewed at SCSE Taipei 2026", th: "วิจัยโดย ดร.ณณ · depa · วิธีการ SLIC · ตรวจสอบโดยผู้ทรงคุณวุฒิที่ SCSE ไทเป 2026", zh: "研究：Non A博士 · depa · SLIC方法论 · 2026台北SCSE同行评审" })}</span>
+      <div className="dashboard-ranking-summary">
+        <span className="dashboard-ranking-name">{getCityName(city, locale)}</span>
+        <span className="dashboard-ranking-caption">
+          {getProvinceName(city, locale)} · {TIER_LABELS[locale][city.tier]} · {getCityStatusLabel(city.status, locale)}
+        </span>
       </div>
 
-      {/* ─── HOW TO READ THIS ─── */}
-      <section ref={guideRef} className={`guide-strip reveal stagger-1 ${guideVisible ? "visible" : ""}`}>
-        <div className="guide-strip-inner">
-          <p className="guide-item">
-            <strong>{translate(locale, { en: "Score 0\u2013100", th: "คะแนน 0\u2013100", zh: "0\u2013100 分" })}</strong>
-            {translate(locale, { en: " \u2014 Outcomes, not plans.", th: " \u2014 ผลลัพธ์ ไม่ใช่แผน", zh: " \u2014 结果，而非计划。" })}
-          </p>
-        </div>
-      </section>
+      <div className="ranking-pillar-grid" aria-hidden="true">
+        {SCORING_PILLARS.map(pillar => (
+          <span key={pillar} className="ranking-pillar-cell">
+            <span className="ranking-pillar-code">{PILLAR_SHORT_LABELS[locale][pillar]}</span>
+            <span className="ranking-pillar-track">
+              <span
+                className="ranking-pillar-fill"
+                style={{
+                  width: `${city.scores[pillar]}%`,
+                  backgroundColor: PILLAR_COLORS[pillar],
+                }}
+              />
+            </span>
+          </span>
+        ))}
+      </div>
 
-      {/* ─── FIELDboard ─── */}
-      <section ref={rankingRef} className={`dashboard-panel reveal stagger-3 ${rankingVisible ? "visible" : ""}`}>
-        <div className="dashboard-controls">
-          <button className={`filter-btn ${statusFilter === "all" ? "active" : ""}`} onClick={() => setStatusFilter("all")}>All</button>
-          <button className={`filter-btn ${statusFilter === "certified" ? "active" : ""}`} onClick={() => setStatusFilter("certified")}>Certified</button>
-        </div>
-        {/* ─── TOP 5 PODIUM WITH PHOTOS ─── */}
-        {previewCities.length >= 5 && (() => {
-          const top5 = previewCities.slice(0, 5);
-          const leader = top5[0];
-          const cityQuickStats: Record<string, string[]> = {
-            phuket: ["GPP ฿492K/capita", "PM2.5 18.2 μg/m³", "88% hospitality", "72% digital adoption"],
-            samyan: ["GPP ฿628K/capita", "200+ startups", "82% digital score", "5G testbed live"],
-            "chiang-mai-old-town": ["300+ temple sensors", "PM2.5 46.1 μg/m³", "92% hospitality", "50+ AQ stations"],
-            "khon-kaen": ["LRT under construction", "Smart bus running", "GPP ฿155K/capita", "6 hospital network"],
-            "cmu-smart-city": ["30% energy reduction", "12 AI intersections", "500+ open datasets", "80% digital"],
-          };
-          const leaderPhoto = getCityPhotoAsset(leader);
-          return (
-            <div className="podium-photo-layout">
-              <button type="button" className="podium-photo-leader" onClick={() => onNavigate(`/city/${leader.id}`)}>
-                <ResponsiveImage
-                  src={leaderPhoto.src}
-                  alt={getCityName(leader, locale)}
-                  className="podium-photo-img"
-                  loading="eager"
-                  fetchPriority="high"
-                  sizes="(max-width: 768px) 100vw, 58vw"
-                  style={{ objectPosition: leaderPhoto.objectPosition }}
-                />
-                <div className="podium-photo-overlay">
-                  <div className="podium-photo-top">
-                    <div>
-                      <div className="podium-rank">01</div>
-                      <h3 className="podium-photo-name">{getCityName(leader, locale)}</h3>
-                    </div>
-                    <div className="podium-photo-scoreblock">
-                      <div className="podium-photo-score">{leader.compositeScore.toFixed(1)}</div>
-                    </div>
-                  </div>
-                  <div className="podium-photo-stats">
-                    {(cityQuickStats[leader.id] ?? []).map((stat, i) => (
-                      <span key={i} className="podium-photo-stat">{stat}</span>
-                    ))}
-                  </div>
-                  <div className="podium-photo-vibe">{getCityVibe(leader, locale)}</div>
-                </div>
-              </button>
-              <div className="podium-photo-grid">
-                {top5.slice(1).map((city, i) => {
-                  const photo = getCityPhotoAsset(city);
+      <div className="dashboard-ranking-score">
+        <span className="data-label">
+          {translate(locale, { en: "Composite", th: "รวม", zh: "综合" })}
+        </span>
+        <strong>{city.compositeScore.toFixed(1)}</strong>
+      </div>
+    </a>
+  );
+}
 
-                  return (
-                    <button key={city.id} type="button" className="podium-photo-card" onClick={() => onNavigate(`/city/${city.id}`)}>
-                      <ResponsiveImage
-                        src={photo.src}
-                        alt={getCityName(city, locale)}
-                        className="podium-photo-card-img"
-                        loading="lazy"
-                        sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
-                        style={{ objectPosition: photo.objectPosition }}
-                      />
-                      <div className="podium-photo-card-overlay">
-                        <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
-                        <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
-                        <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
-                        <div className="podium-photo-card-stats">
-                          {(cityQuickStats[city.id] ?? []).slice(0, 2).map((stat, j) => (
-                            <span key={j} className="podium-photo-stat">{stat}</span>
-                          ))}
-                        </div>
-                        <span className={`podium-photo-card-vibe dashboard-ranking-vibe-${city.reality}`}>{getCityVibe(city, locale)}</span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })()}
+export default function HomePage({ locale, onNavigate }: Props) {
+  const [statusFilter, setStatusFilter] = useState<"all" | "certified" | "promotion">("all");
+  const [heroRef, heroVisible] = useInView(0.1);
+  const [rankingRef, rankingVisible] = useInView(0.1);
+  const [transparencyRef, transparencyVisible] = useInView(0.1);
+  const { data: cities } = useCitySummaries();
 
-        {/* ─── REST AS COMPACT ROWS (starting from #6) ─── */}
-        <div className="dashboard-ranking-list">
-          {previewCities.slice(5).map((city, index) => (
-            <RankingRow key={city.id} city={city} locale={locale} onNavigate={onNavigate} rank={index + 6} />
-          ))}
-        </div>
-      </section>
+  const stats = useMemo(() => summarizeCities(cities), [cities]);
+  const previewCities = useMemo(
+    () =>
+      sortCities(
+        filterCities(cities, {
+          status: statusFilter,
+          tier: "all",
+        }),
+      ).slice(0, 12),
+    [cities, statusFilter],
+  );
 
-      {/* ─── FEEDBACK & CONTRIBUTIONS ─── */}
-      <section ref={feedbackRef} className={`section reveal stagger-4 ${feedbackVisible ? "visible" : ""}`}>
-        <div className="feedback-cta glass-card shadow-premium">
-          <h2>{translate(locale, { en: "Is your city missing?", th: "เมืองของคุณหายไปใช่ไหม?", zh: "您的城市不在名单上？" })}</h2>
-          <p>{translate(locale, { en: "We only rank cities with enough verifiable data.", th: "เราจัดอันดับเฉพาะเมืองที่มีข้อมูลตรวจสอบได้เพียงพอ", zh: "我们仅对拥有足够可验证数据的城市进行排名。" })}</p>
-          <button className="cta-button" onClick={() => window.open("mailto:data@slic-index.org")}>Submit Data</button>
-        </div>
-      </section>
+  const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
 
-      {/* ═══ OPEN DATA: Big CSV Export Buttons ═══ */}
-      <section className="open-data-section">
-        <div className="open-data-inner">
-          <div className="open-data-text">
-            <h2 className="open-data-title">
-              {translate(locale, { en: "Open data. No gatekeeping.", th: "ข้อมูลเปิด ไม่มีกั้น", zh: "开放数据，不设门槛。" })}
-            </h2>
-            <p className="open-data-body">
-              {translate(locale, {
-                en: "Every score, every metric, every source — downloadable. No city lobbied for a higher rank. No investor paid for placement. This is just facts that came in, processed through transparent equations, published under CC BY 4.0. Take the data. Challenge the methodology. Build on it.",
-                th: "ทุกคะแนน ทุกตัวชี้วัด ทุกแหล่งข้อมูล — ดาวน์โหลดได้ ไม่มีเมืองไหนล็อบบี้เพื่อขึ้นอันดับ ไม่มีนักลงทุนจ่ายเพื่อตำแหน่ง นี่คือข้อเท็จจริงที่เข้ามา ประมวลผลผ่านสมการที่โปร่งใส เผยแพร่ภายใต้ CC BY 4.0 เอาข้อมูลไปใช้ ท้าทายวิธีการ ต่อยอดได้เลย",
-                zh: "每个分数、每项指标、每个来源——都可下载。没有城市游说获取更高排名。没有投资者付费获取位置。这只是事实输入，通过透明方程处理，以CC BY 4.0发布。",
+  return (
+    <div className="home-dashboard">
+      <section
+        ref={heroRef}
+        className={`section hero-signage reveal ${heroVisible ? "visible" : ""}`}
+      >
+        <div className="hero-signage-grid">
+          <div>
+            <p className="eyebrow">
+              {t({
+                en: "Release ledger / April 2026",
+                th: "บันทึกการเผยแพร่ / เมษายน 2569",
+                zh: "发布记录 / 2026 年 4 月",
+              })}
+            </p>
+            <h1 className="hero-title">
+              {t({
+                en: "Smart City Thailand Index 2026",
+                th: "ดัชนีเมืองอัจฉริยะประเทศไทย 2569",
+                zh: "2026 泰国智慧城市指数",
+              })}
+            </h1>
+            <p className="hero-strapline">
+              {t({
+                en: "An evidence-first index of certified and promoted smart-city zones. The opening surface is the record itself: coverage, method, and comparative performance.",
+                th: "ดัชนีที่ยึดหลักฐานเป็นฐานสำหรับเมืองอัจฉริยะที่ได้รับการรับรองและเขตส่งเสริม พื้นที่แรกของหน้าแสดงบันทึกจริง: ขอบเขต วิธีการ และผลการเปรียบเทียบ",
+                zh: "以证据为优先的智慧城市指数，覆盖认证城市与推广区域。首页首先展示记录本身：覆盖范围、方法与对比表现。",
               })}
             </p>
           </div>
-          <div className="open-data-buttons">
-            <button className="export-btn export-btn-primary" onClick={() => {
-              const blob = new Blob([getCitySummariesCsv()], { type: "text/csv" });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a"); a.href = url; a.download = "sciti-2026-city-summaries.csv"; a.click();
-              URL.revokeObjectURL(url);
-            }}>
-              <span className="export-btn-icon">↓</span>
-              <span className="export-btn-text">
-                <strong>{translate(locale, { en: "Export All Cities (CSV)", th: "ส่งออกทุกเมือง (CSV)", zh: "导出所有城市 (CSV)" })}</strong>
-                <span>{translate(locale, { en: "Scores, tiers, finance signals, confidence", th: "คะแนน ระดับ สัญญาณการเงิน ความเชื่อมั่น", zh: "分数、层级、金融信号、置信度" })}</span>
-              </span>
+
+          <div className="hero-ledger-grid">
+            <div className="data-sheet">
+              <div className="data-sheet-title">
+                {t({ en: "Release status", th: "สถานะการเผยแพร่", zh: "发布状态" })}
+              </div>
+              <div className="data-row">
+                <span className="data-label">
+                  {t({ en: "Edition", th: "ฉบับ", zh: "版本" })}
+                </span>
+                <span className="data-value">SCITI 2026 / IND</span>
+              </div>
+              <div className="data-row">
+                <span className="data-label">
+                  {t({ en: "Coverage", th: "ขอบเขต", zh: "覆盖范围" })}
+                </span>
+                <span className="data-value">{stats.total} nodes</span>
+              </div>
+              <div className="data-row">
+                <span className="data-label">
+                  {t({ en: "Method", th: "วิธีการ", zh: "方法" })}
+                </span>
+                <span className="data-value">
+                  {t({
+                    en: "Weighted seven-pillar audit",
+                    th: "การตรวจสอบถ่วงน้ำหนัก 7 เสาหลัก",
+                    zh: "七支柱加权审计",
+                  })}
+                </span>
+              </div>
+            </div>
+
+            <div className="data-sheet">
+              <div className="data-sheet-title">
+                {t({ en: "Direct access", th: "ทางลัด", zh: "直达入口" })}
+              </div>
+              <div className="cta-actions cta-actions-inline">
+                <button className="btn btn-secondary" onClick={() => onNavigate("/methodology")}>
+                  {t({ en: "Methodology", th: "ระเบียบวิธี", zh: "方法论" })}
+                </button>
+                <button className="btn btn-secondary" onClick={() => onNavigate("/audit")}>
+                  {t({ en: "Audit file", th: "แฟ้มตรวจสอบ", zh: "审计档案" })}
+                </button>
+                <button className="btn btn-secondary" onClick={() => onNavigate("/references")}>
+                  {t({ en: "Sources", th: "แหล่งข้อมูล", zh: "来源" })}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="index-summary-grid">
+          <div className="data-sheet summary-cell">
+            <div className="data-label">{t({ en: "Total cities", th: "เมืองทั้งหมด", zh: "城市总数" })}</div>
+            <div className="summary-value">{stats.total}</div>
+          </div>
+          <div className="data-sheet summary-cell">
+            <div className="data-label">{t({ en: "Certified", th: "รับรองแล้ว", zh: "已认证" })}</div>
+            <div className="summary-value">{stats.certified}</div>
+          </div>
+          <div className="data-sheet summary-cell">
+            <div className="data-label">
+              {t({ en: "Operational", th: "ใช้งานจริง", zh: "已运行" })}
+            </div>
+            <div className="summary-value">{stats.operational}</div>
+          </div>
+          <div className="data-sheet summary-cell">
+            <div className="data-label">{t({ en: "Alpha tier", th: "ระดับ Alpha", zh: "Alpha 层级" })}</div>
+            <div className="summary-value">{stats.alpha}</div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        ref={rankingRef}
+        className={`section reveal ${rankingVisible ? "visible" : ""}`}
+      >
+        <div className="section-heading-row">
+          <div>
+            <p className="eyebrow">
+              {t({
+                en: "Comparative record",
+                th: "บันทึกการเปรียบเทียบ",
+                zh: "对比记录",
+              })}
+            </p>
+            <h2 className="section-title">
+              {t({
+                en: "Operational leaderboard",
+                th: "กระดานอันดับเชิงปฏิบัติการ",
+                zh: "运营排行榜",
+              })}
+            </h2>
+          </div>
+
+          <div className="filter-group">
+            <button
+              type="button"
+              className={`btn-tab ${statusFilter === "all" ? "active" : ""}`}
+              onClick={() => setStatusFilter("all")}
+            >
+              {t({ en: "All", th: "ทั้งหมด", zh: "全部" })}
             </button>
-            <button className="export-btn" onClick={() => {
-              const blob = new Blob([getCityFactsCsv()], { type: "text/csv" });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a"); a.href = url; a.download = "sciti-2026-city-facts.csv"; a.click();
-              URL.revokeObjectURL(url);
-            }}>
-              <span className="export-btn-icon">↓</span>
-              <span className="export-btn-text">
-                <strong>{translate(locale, { en: "Export Detailed Facts (CSV)", th: "ส่งออกข้อมูลละเอียด (CSV)", zh: "导出详细事实 (CSV)" })}</strong>
-                <span>{translate(locale, { en: "Every metric, every source, every timestamp", th: "ทุกตัวชี้วัด ทุกแหล่ง ทุก timestamp", zh: "每项指标、每个来源、每个时间戳" })}</span>
-              </span>
+            <button
+              type="button"
+              className={`btn-tab ${statusFilter === "certified" ? "active" : ""}`}
+              onClick={() => setStatusFilter("certified")}
+            >
+              {t({ en: "Certified", th: "รับรอง", zh: "认证" })}
             </button>
-            <div className="export-docs">
-              <a href={assetUrl("/downloads/SCITI-2026-Executive-Summary.pdf")} download className="export-doc-link">Executive Summary (PDF)</a>
-              <a href={assetUrl("/downloads/SCITI-2026-Methodology.pdf")} download className="export-doc-link">Methodology Paper (PDF)</a>
-              <a href={assetUrl("/downloads/SCITI-2026-Report.pdf")} download className="export-doc-link">Full Report (PDF)</a>
-              <a href={assetUrl("/downloads/SCITI-2026-Audit.pdf")} download className="export-doc-link">Performance Audit (PDF)</a>
+            <button
+              type="button"
+              className={`btn-tab ${statusFilter === "promotion" ? "active" : ""}`}
+              onClick={() => setStatusFilter("promotion")}
+            >
+              {t({ en: "Promotion", th: "ส่งเสริม", zh: "推广" })}
+            </button>
+          </div>
+        </div>
+
+        <div className="dashboard-ranking-list">
+          {previewCities.map((city, index) => (
+            <RankingRow
+              key={city.id}
+              city={city}
+              index={index}
+              locale={locale}
+              onNavigate={onNavigate}
+            />
+          ))}
+        </div>
+
+        <div className="cta-actions">
+          <button className="btn btn-primary" onClick={() => onNavigate("/rankings")}>
+            {t({
+              en: "Open full rankings",
+              th: "เปิดอันดับทั้งหมด",
+              zh: "打开完整排名",
+            })}
+          </button>
+        </div>
+      </section>
+
+      <section
+        ref={transparencyRef}
+        className={`section reveal ${transparencyVisible ? "visible" : ""}`}
+      >
+        <p className="eyebrow">
+          {t({
+            en: "Methodological transparency",
+            th: "ความโปร่งใสของระเบียบวิธี",
+            zh: "方法透明度",
+          })}
+        </p>
+
+        <div className="data-sheet">
+          <div className="data-sheet-title">
+            {t({
+              en: "How the score is assembled",
+              th: "คะแนนประกอบอย่างไร",
+              zh: "分数如何构成",
+            })}
+          </div>
+
+          <div className="formula-strip">
+            Composite = {SCORING_PILLARS.map(pillar => PILLAR_SHORT_LABELS[locale][pillar]).join(" + ")}
+          </div>
+
+          <div className="transparency-grid">
+            <div>
+              <div className="data-label">{t({ en: "Step 01", th: "ขั้น 01", zh: "步骤 01" })}</div>
+              <div className="data-value">
+                {t({
+                  en: "Institutional sources",
+                  th: "แหล่งข้อมูลสถาบัน",
+                  zh: "机构来源",
+                })}
+              </div>
+              <p className="data-note">
+                {t({
+                  en: "Government, field, and open data rails. No self-scored survey theater.",
+                  th: "รางข้อมูลจากรัฐ ภาคสนาม และข้อมูลเปิด ไม่มีการให้คะแนนตัวเองแบบโชว์",
+                  zh: "政府、田野与开放数据轨道。不做自我评分式表演。",
+                })}
+              </p>
+            </div>
+            <div>
+              <div className="data-label">{t({ en: "Step 02", th: "ขั้น 02", zh: "步骤 02" })}</div>
+              <div className="data-value">
+                {t({
+                  en: "Weighted pillars",
+                  th: "เสาหลักถ่วงน้ำหนัก",
+                  zh: "加权支柱",
+                })}
+              </div>
+              <p className="data-note">
+                {t({
+                  en: "Livability and economy lead the weighting. Digital remains a supporting pillar, not the headline.",
+                  th: "ความน่าอยู่และเศรษฐกิจนำค่าน้ำหนัก ดิจิทัลเป็นเสารอง ไม่ใช่พาดหัว",
+                  zh: "宜居与经济权重最高。数字化是支撑项，不是头条。",
+                })}
+              </p>
+            </div>
+            <div>
+              <div className="data-label">{t({ en: "Step 03", th: "ขั้น 03", zh: "步骤 03" })}</div>
+              <div className="data-value">
+                {t({
+                  en: "Public auditability",
+                  th: "ตรวจสอบสาธารณะได้",
+                  zh: "可公开审计",
+                })}
+              </div>
+              <p className="data-note">
+                {t({
+                  en: "Scores, exports, and sources stay available so the index can be challenged and improved.",
+                  th: "คะแนน ไฟล์ส่งออก และแหล่งข้อมูลเปิดไว้เพื่อให้ตรวจสอบและพัฒนาต่อได้",
+                  zh: "分数、导出与来源保持开放，方便质疑与改进。",
+                })}
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══ TRANSPARENCY: How the numbers work ═══ */}
-      <section className="transparency-section">
-        <div className="transparency-inner">
-          <h2>{translate(locale, { en: "How the numbers work", th: "ตัวเลขทำงานอย่างไร", zh: "数字如何运作" })}</h2>
-          <div className="transparency-formula">
-            <code>Composite = ({SCORING_PILLARS.map(p => `${PILLAR_SHORT_LABELS[locale][p]}×${PILLAR_WEIGHTS[p]}`).join(" + ")}) / 100</code>
-          </div>
-          <div className="transparency-steps">
-            <div className="transparency-step">
-              <span className="transparency-step-num">1</span>
-              <div>
-                <strong>{translate(locale, { en: "Raw data in", th: "ข้อมูลดิบเข้ามา", zh: "原始数据输入" })}</strong>
-                <p>{translate(locale, { en: "15+ government sources: NSO, NESDC, PCD, GISTDA, Royal Thai Police, BOI, MOPH. No surveys, no self-reporting. Verifiable public data only.", th: "15+ แหล่งราชการ: NSO, NESDC, PCD, GISTDA, สำนักงานตำรวจแห่งชาติ, BOI, สธ. ไม่มีแบบสอบถาม ไม่มีการรายงานตนเอง ข้อมูลสาธารณะที่ตรวจสอบได้เท่านั้น", zh: "15+政府来源。无问卷，无自我报告。仅可验证的公开数据。" })}</p>
-              </div>
-            </div>
-            <div className="transparency-step">
-              <span className="transparency-step-num">2</span>
-              <div>
-                <strong>{translate(locale, { en: "7 pillars scored 0-100", th: "7 เสาหลัก ให้คะแนน 0-100", zh: "7个支柱评分0-100" })}</strong>
-                <p>{translate(locale, { en: "Each pillar converts raw metrics (PM2.5 μg/m³, crime/100K, GPP/capita, beds/10K) into a normalized 0-100 score. Higher = better for citizens.", th: "เสาหลักแต่ละอันแปลงตัวชี้วัดดิบ (PM2.5 μg/m³, อาชญากรรม/100K, GPP/หัว, เตียง/10K) เป็นคะแนน 0-100 ที่ปรับมาตรฐาน สูง = ดีกว่าสำหรับประชาชน", zh: "每个支柱将原始指标转换为标准化的0-100分。越高=对市民越好。" })}</p>
-              </div>
-            </div>
-            <div className="transparency-step">
-              <span className="transparency-step-num">3</span>
-              <div>
-                <strong>{translate(locale, { en: "Weighted composite", th: "ถ่วงน้ำหนักรวม", zh: "加权综合" })}</strong>
-                <p>{translate(locale, { en: "Livability 25% because housing and transit matter most. Digital only 5% because tech is a tool, not the goal. Weights sum to 100%. No hidden adjustments.", th: "ความน่าอยู่ 25% เพราะที่อยู่และขนส่งสำคัญที่สุด ดิจิทัลเพียง 5% เพราะเทคเป็นเครื่องมือ ไม่ใช่เป้าหมาย น้ำหนักรวม 100% ไม่มีการปรับที่ซ่อนอยู่", zh: "宜居25%因为住房和交通最重要。数字仅5%因为技术是工具不是目标。权重总和100%。无隐藏调整。" })}</p>
-              </div>
-            </div>
-            <div className="transparency-step">
-              <span className="transparency-step-num">4</span>
-              <div>
-                <strong>{translate(locale, { en: "Tier assignment", th: "จัดระดับ", zh: "层级分配" })}</strong>
-                <p>{translate(locale, { en: "Alpha ≥ 65 (operational, citizens feel it). Beta 45-64 (building, gaps remain). Gamma < 45 (mostly plans). Automatic — no committee picks winners.", th: "Alpha ≥ 65 (ใช้งานจริง ประชาชนรู้สึกได้) Beta 45-64 (กำลังสร้าง ยังมีช่องว่าง) Gamma < 45 (ส่วนใหญ่เป็นแผน) อัตโนมัติ — ไม่มีคณะกรรมการเลือกผู้ชนะ", zh: "Alpha≥65(运营中)。Beta 45-64(建设中)。Gamma<45(规划中)。自动分配——无委员会挑选赢家。" })}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ INVESTOR: Secondary city opportunities ═══ */}
-      <section className="investor-section">
-        <div className="investor-inner">
-          <h2>{translate(locale, { en: "Beyond Bangkok: where the real opportunity is", th: "เหนือกรุงเทพฯ: โอกาสจริงอยู่ตรงไหน", zh: "超越曼谷：真正的机会在哪里" })}</h2>
-          <p className="investor-lead">
-            {translate(locale, {
-              en: "Not every investor needs to pile into Bangkok or Phuket. Thailand's secondary cities offer BOI incentives, lower costs, better air, and less competition — with the same legal protections and digital infrastructure. This index helps match the right capital with the right city.",
-              th: "นักลงทุนทุกคนไม่จำเป็นต้องกระจุกในกรุงเทพฯ หรือภูเก็ต เมืองรองของไทยมีสิทธิประโยชน์ BOI ต้นทุนต่ำกว่า อากาศดีกว่า แข่งขันน้อยกว่า — ด้วยการคุ้มครองทางกฎหมายและโครงสร้างพื้นฐานดิจิทัลเท่ากัน ดัชนีนี้ช่วยจับคู่ทุนที่ใช่กับเมืองที่ใช่",
-              zh: "不是每个投资者都需要挤进曼谷或普吉。泰国二线城市提供BOI激励、更低成本、更好空气和更少竞争——享有同样的法律保护和数字基础设施。这个指数帮助将合适的资本匹配到合适的城市。",
+      <section className="section reveal visible">
+        <div className="cta-block">
+          <h2 className="cta-title">
+            {t({
+              en: "Open data. Direct download.",
+              th: "ข้อมูลเปิด ดาวน์โหลดได้ทันที",
+              zh: "开放数据，直接下载。",
+            })}
+          </h2>
+          <p className="cta-text">
+            {t({
+              en: "Every city summary is exportable from the client-side dataset. The point is traceability, not gating.",
+              th: "สรุปข้อมูลทุกเมืองส่งออกได้จากชุดข้อมูลฝั่งไคลเอนต์ จุดสำคัญคือการตรวจสอบย้อนกลับ ไม่ใช่การกั้นสิทธิ์",
+              zh: "每座城市摘要都可直接从前端数据集导出。重点是可追溯，而不是设门槛。",
             })}
           </p>
-          <div className="investor-grid">
-            {cities.filter(c => c.tier === "beta" && c.reality === "operational" && c.scores.economy >= 55).slice(0, 6).map(city => (
-              <button key={city.id} className="investor-card" onClick={() => onNavigate(`/city/${city.id}`)}>
-                <span className="investor-card-name">{getCityName(city, locale)}</span>
-                <span className="investor-card-score">{city.compositeScore.toFixed(1)}</span>
-                <span className="investor-card-province">{getProvinceName(city, locale)}</span>
-                <span className="investor-card-vibe">{getCityVibe(city, locale)}</span>
-              </button>
-            ))}
+          <div className="cta-actions">
+            <button
+              className="btn btn-primary"
+              onClick={() => downloadCsv("sciti-2026-summary.csv", getCitySummariesCsv())}
+            >
+              {t({
+                en: "Download summary CSV",
+                th: "ดาวน์โหลดสรุป CSV",
+                zh: "下载摘要 CSV",
+              })}
+            </button>
+            <button className="btn btn-secondary" onClick={() => onNavigate("/methodology")}>
+              {t({
+                en: "Read methodology",
+                th: "อ่านระเบียบวิธี",
+                zh: "阅读方法论",
+              })}
+            </button>
           </div>
-          <p className="investor-cta-text">
-            {translate(locale, {
-              en: "These are cities with real infrastructure, working governance, and room to grow — not yet Alpha, but building fast. BOI S-Curve incentives apply. EEC adjacency benefits included. Every city profile shows bankability score, financial toolkit, and specific opportunities.",
-              th: "เหล่านี้คือเมืองที่มีโครงสร้างพื้นฐานจริง ปกครองใช้ได้ และมีพื้นที่เติบโต — ยังไม่ Alpha แต่สร้างเร็ว สิทธิประโยชน์ BOI S-Curve ใช้ได้ ประโยชน์ EEC ใกล้เคียงรวม โปรไฟล์ทุกเมืองแสดงคะแนนความพร้อมทางการเงิน ชุดเครื่องมือการเงิน และโอกาสเฉพาะ",
-              zh: "这些城市拥有真实基础设施、运转中的治理体系和增长空间——尚未达到Alpha但建设迅速。BOI S-Curve激励适用。EEC邻近利益包含在内。",
-            })}
-          </p>
         </div>
       </section>
 
-      {/* ─── NEWS + DATA DENSITY + LEGAL ─── */}
       <NewsStrip locale={locale} />
-
-      {/* ─── FINE PRINT ─── */}
-      <section ref={fineprintRef} className={`dashboard-fineprint reveal visible`}>
-        <div className="dashboard-fineprint-inner">
-           <p>© 2026 depa, MDES, Kingdom of Thailand · SLIC Methodology · CC BY 4.0 · No city lobbied for rank · No investor paid for placement · SCITI-2026-R1</p>
-        </div>
-      </section>
     </div>
   );
 }

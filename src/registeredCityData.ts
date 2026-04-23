@@ -8,6 +8,7 @@
 
 import type { SmartCity, CityScores, SmartDimension } from "./types.ts";
 import { computeComposite, assignTier } from "./cityData.ts";
+import { getAdminBaselineForCity } from "./adminBaselines.ts";
 
 const DEFAULT_SCORES: CityScores = {
   livability: 40, economy: 40, safety: 40, wellbeing: 40,
@@ -29,6 +30,7 @@ interface RegCity {
 function reg(c: RegCity): SmartCity {
   const scores = { ...DEFAULT_SCORES };
   const composite = computeComposite(scores);
+  const baseline = getAdminBaselineForCity(c);
   return {
     id: c.id,
     nameEn: c.nameEn,
@@ -40,7 +42,11 @@ function reg(c: RegCity): SmartCity {
     reality: "planned",
     smartDimensions: c.dims ?? ["living", "governance"],
     scores,
-    metrics: { population: 0 },
+    metrics: {
+      population: baseline?.populationThousand ?? 0,
+      landAreaKm2: baseline?.landAreaKm2,
+      dataLastUpdated: baseline?.observedAt.slice(0, 10),
+    },
     compositeScore: composite,
     tier: assignTier(composite),
     tagline: "Promotion zone — awaiting sufficient data for full assessment.",
@@ -50,7 +56,7 @@ function reg(c: RegCity): SmartCity {
   };
 }
 
-// Provinces that have submitted smart city plans (from depa 173 promotion zones)
+// Provinces that have submitted smart city plans (aligned with depa's January 2026 registry of 190 promotion cities)
 const registeredEntries: RegCity[] = [
   // ─── NORTH ───
   { id: "reg-chiang-mai-pao", nameEn: "Chiang Mai PAO", nameTh: "อบจ.เชียงใหม่", province: "Chiang Mai", provinceTh: "เชียงใหม่", region: "north", lat: 18.78, lng: 98.99 },

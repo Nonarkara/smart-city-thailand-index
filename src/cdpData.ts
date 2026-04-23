@@ -9,6 +9,8 @@
 // - GISTDA — satellite/geospatial data
 // ---------------------------------------------------------------------------
 
+import { getClaimValue } from "./claimRegistry.ts";
+
 /** Data source registry — what's available and how to access it */
 export interface CDPDataSource {
   id: string;
@@ -36,6 +38,9 @@ export interface CDPLiveMetric {
   url?: string;
 }
 
+const certifiedCityCount = Number(getClaimValue("certified-cities") ?? 37);
+const promotionCityCount = Number(getClaimValue("promotion-zones") ?? 190);
+
 export const cdpSources: CDPDataSource[] = [
   {
     id: "data-go-th",
@@ -58,7 +63,7 @@ export const cdpSources: CDPDataSource[] = [
     nameTh: "citydata.in.th — แพลตฟอร์มข้อมูลเมืองอัจฉริยะ",
     type: "dashboard",
     url: "https://www.citydata.in.th/en/smart-city-thailand/",
-    coverage: "37 certified + 173 promotion zones",
+    coverage: `${certifiedCityCount} certified + ${promotionCityCount} promotion cities`,
     frequency: "Real-time for participating cities",
     metrics: ["smartDimensions", "projects", "iotSensors", "citizenEngagement"],
     descEn: "depa's central smart city data hub. ArcGIS-powered. Each city has a dedicated page showing projects across all 7 smart city dimensions, IoT sensor data, COVID case maps, and social listening/sentiment analysis. Free to join for any city.",
