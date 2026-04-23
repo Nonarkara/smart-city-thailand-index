@@ -5921,3 +5921,301 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
 }
+
+/* =========================================================================
+   PHASE 11 — Rankings column, lens panel, dense rank rows, at-a-glance band
+   ========================================================================= */
+
+/* One centered column threading every block on the Rankings page. */
+.rankings-column {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+.rankings-column > .section {
+  padding-inline: 0;
+  max-width: none;
+}
+
+/* --- Lens chip row --- */
+.lens-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.5rem 0 1rem;
+  padding: 0.35rem;
+  background: var(--surface);
+  border: 1px solid var(--5);
+}
+.lens-chip {
+  flex: 0 1 auto;
+  padding: 0.5rem 0.85rem;
+  font: 700 0.62rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--2);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s var(--ease, ease);
+  white-space: nowrap;
+}
+.lens-chip:hover { color: var(--ink); border-color: var(--5); }
+.lens-chip.active {
+  color: var(--bg);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* --- Lens panel (three cells: copy · radar · top-per-tier) --- */
+.lens-panel {
+  display: grid;
+  grid-template-columns: 1.2fr 160px 1fr;
+  gap: 1.5rem;
+  padding: 1.15rem 1.25rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+.lens-panel-copy { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+.lens-panel-label {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.lens-panel-tagline {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--2);
+}
+.lens-panel-flavour {
+  margin: 0;
+  font: italic 400 0.72rem/1.55 var(--font);
+  color: var(--3);
+}
+.lens-panel-radar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lens-radar-grid { fill: none; stroke: var(--5); stroke-width: 1; }
+.lens-radar-grid-inner { fill: none; stroke: var(--5); stroke-width: 1; opacity: 0.55; }
+.lens-radar-shape {
+  fill: var(--teal);
+  fill-opacity: 0.14;
+  stroke: var(--teal);
+  stroke-width: 1.5;
+}
+.lens-radar-label {
+  font: 700 0.48rem var(--mono);
+  letter-spacing: 0.06em;
+  fill: var(--3);
+}
+
+.lens-panel-top { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.lens-panel-top-label {
+  margin: 0 0 0.1rem;
+  font: 700 0.52rem var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+.lens-panel-top-row {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.4rem 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--5);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.15s var(--ease, ease);
+}
+.lens-panel-top-row:hover { background: var(--surface-hover); }
+.lens-panel-top-tier {
+  font: 700 0.58rem var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--teal);
+}
+.lens-panel-top-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lens-panel-top-score {
+  font: 700 0.78rem var(--mono);
+  color: var(--ink);
+}
+
+@media (max-width: 880px) {
+  .lens-panel {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* --- Dense rank rows (replaces the 10-column table) --- */
+.rank-list-wrap {
+  border: 1px solid var(--5);
+  background: var(--bg);
+}
+.rank-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.rank-row {
+  border-bottom: 1px solid var(--5);
+  transition: background 0.15s var(--ease, ease);
+}
+.rank-row:last-child { border-bottom: none; }
+.rank-row:hover { background: var(--surface); }
+.rank-row.is-selected {
+  background: var(--teal-glow);
+  box-shadow: inset 3px 0 0 var(--teal);
+}
+
+.rank-row-link {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  color: var(--ink);
+  text-decoration: none;
+  min-height: 64px;
+}
+.rank-row-num {
+  font: 700 0.95rem var(--mono);
+  letter-spacing: 0.02em;
+  color: var(--3);
+  text-align: right;
+}
+.rank-row-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+.rank-row-head { display: flex; align-items: baseline; gap: 0.5rem; }
+.rank-row-name {
+  font-size: 0.92rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.rank-row-tier {
+  font: 600 0.72rem var(--mono);
+  color: var(--teal);
+}
+.rank-row-caption {
+  font: 500 0.58rem var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+.rank-row-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.18rem;
+  white-space: nowrap;
+}
+.rank-row-score {
+  font: 700 1.05rem var(--mono);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.rank-row-pct {
+  font: 700 0.56rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+.rank-row-edges {
+  font: 500 0.56rem var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+.rank-row-edges.is-strong { color: var(--teal); }
+
+.rank-row-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--3);
+  font-size: 0.78rem;
+}
+
+/* --- Pillar strip (inline 5px coloured segments, fixed 220px total) --- */
+.pillar-strip {
+  display: flex;
+  gap: 2px;
+  width: 220px;
+  max-width: 100%;
+  height: 5px;
+  background: var(--5);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pillar-strip-seg {
+  display: block;
+  height: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .rank-row-link {
+    grid-template-columns: 32px 1fr auto;
+    gap: 0.65rem;
+    padding: 0.75rem 0.75rem;
+  }
+  .pillar-strip { width: 180px; }
+  .rank-row-score { font-size: 0.92rem; }
+}
+
+/* --- At-a-glance band on CityDetailPage --- */
+.at-a-glance {
+  margin-bottom: 2rem;
+}
+.at-a-glance-title {
+  margin: 0.25rem 0 0.9rem;
+  font-size: 1.25rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.at-a-glance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.35rem 1.25rem;
+  margin: 0;
+  padding: 0;
+}
+.at-a-glance-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 140px) 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed var(--5);
+}
+.at-a-glance-row dt {
+  margin: 0;
+  font: 700 0.58rem var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+.at-a-glance-row dd {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink);
+}

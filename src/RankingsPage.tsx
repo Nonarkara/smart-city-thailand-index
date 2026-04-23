@@ -10,35 +10,31 @@ import {
   translate,
 } from "./cityPresentation";
 import { MONEYBALL_PICKS } from "./moneyballPicks";
+import {
+  PRESET_LENSES,
+  computePresetScore,
+  getPresetById,
+  type PresetLens,
+} from "./presetLenses";
 import type { CityTier, Locale, ScoringPillar, SmartCity } from "./types";
-import { PILLAR_COLORS, TIER_LABELS } from "./types";
+import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LABELS } from "./types";
 
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
 }
 
-type SortKey =
-  | "composite"
-  | "gpp"
-  | "pm25"
-  | "readiness"
-  | "edges"
-  | "livability"
-  | "safety"
-  | "environment"
-  | "wellbeing"
-  | "digital";
-
 type RegionFilter = SmartCity["region"] | "all";
 type TierFilter = CityTier | "all";
 type StatusFilter = SmartCity["status"] | "all";
 
-const SCALE_PILLARS: ScoringPillar[] = [
+const PILLAR_ORDER: ScoringPillar[] = [
   "livability",
+  "economy",
   "safety",
-  "environment",
   "wellbeing",
+  "environment",
+  "hospitality",
   "digital",
 ];
 
@@ -78,31 +74,107 @@ function toAppPath(path: string): string {
   return path === "/" ? `${prefix}/` || "/" : `${prefix}${path}`;
 }
 
-function formatCompactBaht(value?: number): string {
-  if (!value) return "—";
-  if (value >= 1_000_000) return `฿${(value / 1_000_000).toFixed(2)}M`;
-  if (value >= 1_000) return `฿${(value / 1_000).toFixed(0)}K`;
-  return `฿${value}`;
-}
-
-function ScaleBar({ value, color }: { value: number; color: string }) {
-  return (
-    <span className="scale-bar" aria-hidden="true">
-      <span className="scale-bar-tick" />
-      <span
-        className="scale-bar-fill"
-        style={{ width: `${Math.max(0, Math.min(100, value))}%`, background: color }}
-      />
-    </span>
-  );
-}
-
 function percentile(value: number, all: number[]): number {
   if (all.length <= 1) return 100;
   const below = all.filter(v => v < value).length;
   return Math.round((below / (all.length - 1)) * 100);
 }
 
+function tierSymbol(tier: CityTier): string {
+  return tier === "alpha" ? "α" : tier === "beta" ? "β" : "γ";
+}
+
+// ---------------------------------------------------------------------------
+// PillarStrip — fixed 220px, 7 segments, width ∝ pillar contribution to score
+// ---------------------------------------------------------------------------
+function PillarStrip({
+  city,
+  weights,
+}: {
+  city: SmartCity;
+  weights: Record<ScoringPillar, number>;
+}) {
+  const TOTAL = 220;
+  return (
+    <span className="pillar-strip" aria-hidden="true">
+      {PILLAR_ORDER.map(pillar => {
+        const contribution = (city.scores[pillar] * weights[pillar]) / 10000;
+        const width = Math.max(0, TOTAL * contribution);
+        return (
+          <span
+            key={pillar}
+            className="pillar-strip-seg"
+            style={{ width: `${width}px`, background: PILLAR_COLORS[pillar] }}
+            title={`${pillar} ${city.scores[pillar]}`}
+          />
+        );
+      })}
+    </span>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// LensRadar — 140×140 heptagon spider visualising lens weights
+// ---------------------------------------------------------------------------
+function LensRadar({ lens, locale }: { lens: PresetLens; locale: Locale }) {
+  const SIZE = 140;
+  const CX = SIZE / 2;
+  const CY = SIZE / 2;
+  const R = 52;
+  const MAX_WEIGHT = 40; // scale: max plausible lens weight
+  const n = PILLAR_ORDER.length;
+
+  const points = PILLAR_ORDER.map((pillar, i) => {
+    const angle = -Math.PI / 2 + (i / n) * Math.PI * 2;
+    const v = Math.min(1, lens.weights[pillar] / MAX_WEIGHT);
+    return {
+      pillar,
+      x: CX + Math.cos(angle) * R * v,
+      y: CY + Math.sin(angle) * R * v,
+      lx: CX + Math.cos(angle) * (R + 10),
+      ly: CY + Math.sin(angle) * (R + 10),
+    };
+  });
+  const outer = PILLAR_ORDER.map((_, i) => {
+    const angle = -Math.PI / 2 + (i / n) * Math.PI * 2;
+    return `${CX + Math.cos(angle) * R},${CY + Math.sin(angle) * R}`;
+  }).join(" ");
+  const poly = points.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+
+  return (
+    <svg
+      className="lens-radar"
+      width={SIZE}
+      height={SIZE}
+      viewBox={`0 0 ${SIZE} ${SIZE}`}
+      role="img"
+      aria-label={translate(locale, lens.label)}
+    >
+      <polygon className="lens-radar-grid" points={outer} />
+      <polygon className="lens-radar-grid-inner" points={outer} style={{ transform: `scale(0.5) translate(${CX}px, ${CY}px)`, transformOrigin: `${CX}px ${CY}px` }} />
+      <polygon className="lens-radar-shape" points={poly} />
+      {points.map(p => (
+        <circle key={p.pillar} cx={p.x} cy={p.y} r={2} fill={PILLAR_COLORS[p.pillar]} />
+      ))}
+      {points.map(p => (
+        <text
+          key={p.pillar}
+          x={p.lx}
+          y={p.ly}
+          className="lens-radar-label"
+          textAnchor="middle"
+          dominantBaseline="middle"
+        >
+          {PILLAR_LABELS[locale][p.pillar].slice(0, 3).toUpperCase()}
+        </text>
+      ))}
+    </svg>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// MoneyballPicksStrip — preserved from Phase 10
+// ---------------------------------------------------------------------------
 function MoneyballPicksStrip({
   locale,
   onNavigate,
@@ -124,7 +196,7 @@ function MoneyballPicksStrip({
           <a
             key={pick.cityId}
             href={toAppPath(cityPath)}
-            className="pick-card"
+            className="pick-card glass-card"
             onClick={event => {
               event.preventDefault();
               onNavigate(cityPath);
@@ -133,14 +205,7 @@ function MoneyballPicksStrip({
             <p className="pick-kicker">{translate(locale, pick.kicker)}</p>
             <h3 className="pick-name">
               {getCityName(city, locale)}{" "}
-              <span className="pick-tier" aria-hidden="true">
-                ·{" "}
-                {city.tier === "alpha"
-                  ? "α"
-                  : city.tier === "beta"
-                  ? "β"
-                  : "γ"}
-              </span>
+              <span className="pick-tier" aria-hidden="true">· {tierSymbol(city.tier)}</span>
             </h3>
             <p className="pick-why">{translate(locale, pick.why)}</p>
             <div className="pick-chips">
@@ -162,7 +227,7 @@ function MoneyballPicksStrip({
 export default function RankingsPage({ locale, onNavigate }: Props) {
   const { data: cities } = useCitySummaries();
   const [viewMode, setViewMode] = useState<"directory" | "compare">("directory");
-  const [sortKey, setSortKey] = useState<SortKey>("composite");
+  const [lensId, setLensId] = useState<string>("balanced");
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
@@ -171,23 +236,25 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
+  const lens = getPresetById(lensId);
+  const isBalanced = lens.id === "balanced";
+  const activeWeights = isBalanced ? PILLAR_WEIGHTS : lens.weights;
 
-  // Pre-compute per-city enrichment once
   const enriched = useMemo(
     () =>
       cities.map(city => {
         const profile = getMoneyballProfile(city);
         const readiness = computeDevelopability(city).total;
         const edgeCount = profile.edges.filter(e => e.advantage).length;
-        return { city, readiness, edgeCount };
+        const lensScore = isBalanced
+          ? city.compositeScore
+          : computePresetScore(city, lens);
+        return { city, readiness, edgeCount, lensScore };
       }),
-    [cities],
+    [cities, lens, isBalanced],
   );
 
-  const compositeValues = useMemo(
-    () => enriched.map(e => e.city.compositeScore),
-    [enriched],
-  );
+  const lensScoreValues = useMemo(() => enriched.map(e => e.lensScore), [enriched]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -196,13 +263,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
       if (statusFilter !== "all" && city.status !== statusFilter) return false;
       if (regionFilter !== "all" && city.region !== regionFilter) return false;
       if (q.length > 0) {
-        const hay = [
-          city.nameEn,
-          city.nameTh,
-          city.province,
-          city.provinceTh,
-          city.id,
-        ]
+        const hay = [city.nameEn, city.nameTh, city.province, city.provinceTh, city.id]
           .join(" ")
           .toLowerCase();
         if (!hay.includes(q)) return false;
@@ -212,25 +273,25 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   }, [enriched, tierFilter, statusFilter, regionFilter, query]);
 
   const sorted = useMemo(() => {
-    const rows = [...filtered];
-    rows.sort((a, b) => {
-      switch (sortKey) {
-        case "composite":
-          return b.city.compositeScore - a.city.compositeScore;
-        case "gpp":
-          return (b.city.metrics.gppPerCapita ?? 0) - (a.city.metrics.gppPerCapita ?? 0);
-        case "pm25":
-          return (a.city.metrics.pm25Annual ?? 999) - (b.city.metrics.pm25Annual ?? 999);
-        case "readiness":
-          return b.readiness - a.readiness;
-        case "edges":
-          return b.edgeCount - a.edgeCount;
-        default:
-          return b.city.scores[sortKey] - a.city.scores[sortKey];
+    return [...filtered].sort((a, b) => b.lensScore - a.lensScore);
+  }, [filtered]);
+
+  // Top-1 per tier under the active lens (full unfiltered set, so the panel
+  // is stable regardless of filters)
+  const topByTier = useMemo(() => {
+    const byTier: Record<CityTier, { city: SmartCity; lensScore: number } | undefined> = {
+      alpha: undefined,
+      beta: undefined,
+      gamma: undefined,
+    };
+    for (const entry of enriched) {
+      const t = entry.city.tier;
+      if (!byTier[t] || entry.lensScore > byTier[t]!.lensScore) {
+        byTier[t] = { city: entry.city, lensScore: entry.lensScore };
       }
-    });
-    return rows;
-  }, [filtered, sortKey]);
+    }
+    return byTier;
+  }, [enriched]);
 
   const toggleSelect = (id: string) => {
     setSelectedIds(current => {
@@ -240,319 +301,236 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
     });
   };
 
-  const handleLaunchCompare = () => {
-    setViewMode("compare");
-  };
-
   return (
     <div className="rankings-page">
-      <section className="section reveal visible">
-        <p className="eyebrow">
-          {t({ en: "Directory", th: "สารบบ", zh: "名录" })}
-        </p>
-        <h1 className="hero-title">
-          {t({
-            en: "The Moneyball of Thai city investment",
-            th: "มันนี่บอลของการลงทุนในเมืองไทย",
-            zh: "泰国城市投资的点球成金",
-          })}
-        </h1>
-        <p className="hero-strapline">
-          {t({
-            en: "You already know Bangkok, Chiang Mai, and Phuket. This is the directory that helps you find the next three — the cities that outperform on specific axes the market hasn't priced in yet.",
-            th: "คุณรู้จักกรุงเทพ เชียงใหม่ และภูเก็ตอยู่แล้ว นี่คือสารบบที่จะพาคุณเจออีกสามเมือง — เมืองที่ทำได้ดีในแกนเฉพาะซึ่งตลาดยังไม่ได้ตีราคา",
-            zh: "你已熟悉曼谷、清迈、普吉。这份名录带你发现下一组三城——在市场尚未定价的特定维度上表现卓越的城市。",
-          })}
-        </p>
-      </section>
-
-      <section className="section reveal visible">
-        <div className="picks-section-header">
-          <p className="eyebrow">
+      <div className="rankings-column">
+        <section className="section reveal visible">
+          <p className="eyebrow">{t({ en: "Directory", th: "สารบบ", zh: "名录" })}</p>
+          <h1 className="hero-title">
             {t({
-              en: "Editor's picks",
-              th: "คัดสรรโดยบรรณาธิการ",
-              zh: "编辑精选",
+              en: "The Moneyball of Thai city investment",
+              th: "มันนี่บอลของการลงทุนในเมืองไทย",
+              zh: "泰国城市投资的点球成金",
+            })}
+          </h1>
+          <p className="hero-strapline">
+            {t({
+              en: "You already know Bangkok, Chiang Mai, and Phuket. Pick a lens and the directory re-ranks under that worldview — growth at all costs, retirement paradise, climate refuge. The spider shows the shape of each lens.",
+              th: "คุณรู้จักกรุงเทพ เชียงใหม่ และภูเก็ตอยู่แล้ว เลือกเลนส์ แล้วสารบบจะจัดอันดับใหม่ตามมุมมองนั้น — เติบโตล้วนๆ สวรรค์วัยเกษียณ ที่พักพิงภูมิอากาศ ใยแมงมุมแสดงรูปร่างของแต่ละเลนส์",
+              zh: "你已熟悉曼谷、清迈、普吉。选一副镜头，名录便按那套世界观重排——只看增长、退休天堂、气候避风港。蛛网呈现每副镜头的形状。",
             })}
           </p>
-          <h2 className="picks-section-title">
-            {t({
-              en: "Seven cities worth a second look",
-              th: "เจ็ดเมืองที่ควรมองครั้งที่สอง",
-              zh: "七座值得重新审视的城市",
-            })}
-          </h2>
-        </div>
-        <MoneyballPicksStrip locale={locale} onNavigate={onNavigate} cities={cities} />
-      </section>
+        </section>
 
-      <section className="section reveal visible">
-        <div className="directory-toolbar">
-          <input
-            type="search"
-            className="directory-search"
-            value={query}
-            onChange={event => setQuery(event.target.value)}
-            placeholder={t({
-              en: "Search city or province",
-              th: "ค้นหาเมืองหรือจังหวัด",
-              zh: "搜索城市或府",
-            })}
-            aria-label={t({ en: "Search", th: "ค้นหา", zh: "搜索" })}
-          />
+        <section className="section reveal visible">
+          <div className="picks-section-header">
+            <p className="eyebrow">{t({ en: "Editor's picks", th: "คัดสรรโดยบรรณาธิการ", zh: "编辑精选" })}</p>
+            <h2 className="picks-section-title">
+              {t({ en: "Seven cities worth a second look", th: "เจ็ดเมืองที่ควรมองครั้งที่สอง", zh: "七座值得重新审视的城市" })}
+            </h2>
+          </div>
+          <MoneyballPicksStrip locale={locale} onNavigate={onNavigate} cities={cities} />
+        </section>
 
-          <label className="select-field">
-            <span className="data-label">
-              {t({ en: "Sort by", th: "เรียงตาม", zh: "排序" })}
-            </span>
-            <select
-              value={sortKey}
-              onChange={event => setSortKey(event.target.value as SortKey)}
+        <section className="section reveal visible">
+          <p className="eyebrow">{t({ en: "Lenses", th: "เลนส์", zh: "镜头" })}</p>
+          <div className="lens-chip-row" role="tablist" aria-label={t({ en: "Preset lenses", th: "เลนส์สำเร็จรูป", zh: "预设镜头" })}>
+            {PRESET_LENSES.map(preset => (
+              <button
+                key={preset.id}
+                type="button"
+                role="tab"
+                aria-selected={lensId === preset.id}
+                className={`lens-chip ${lensId === preset.id ? "active" : ""}`}
+                onClick={() => setLensId(preset.id)}
+              >
+                {translate(locale, preset.label)}
+              </button>
+            ))}
+          </div>
+
+          <div className="lens-panel glass-card">
+            <div className="lens-panel-copy">
+              <p className="lens-panel-label">{translate(locale, lens.label)}</p>
+              <p className="lens-panel-tagline">{translate(locale, lens.tagline)}</p>
+              <p className="lens-panel-flavour">{translate(locale, lens.flavour)}</p>
+            </div>
+            <div className="lens-panel-radar">
+              <LensRadar lens={lens} locale={locale} />
+            </div>
+            <div className="lens-panel-top">
+              <p className="lens-panel-top-label">
+                {t({ en: "Top under this lens", th: "อันดับหนึ่งของเลนส์นี้", zh: "此镜头下的第一" })}
+              </p>
+              {(["alpha", "beta", "gamma"] as CityTier[]).map(tier => {
+                const entry = topByTier[tier];
+                if (!entry) return null;
+                const cityPath = `/city/${entry.city.id}`;
+                return (
+                  <a
+                    key={tier}
+                    href={toAppPath(cityPath)}
+                    className="lens-panel-top-row"
+                    onClick={event => {
+                      event.preventDefault();
+                      onNavigate(cityPath);
+                    }}
+                  >
+                    <span className="lens-panel-top-tier">{tierSymbol(tier)} {TIER_LABELS[locale][tier]}</span>
+                    <span className="lens-panel-top-name">{getCityName(entry.city, locale)}</span>
+                    <span className="lens-panel-top-score">{entry.lensScore.toFixed(1)}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="section reveal visible">
+          <div className="directory-toolbar">
+            <input
+              type="search"
+              className="directory-search"
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+              placeholder={t({ en: "Search city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })}
+              aria-label={t({ en: "Search", th: "ค้นหา", zh: "搜索" })}
+            />
+
+            <div className="filter-chip-row" role="group" aria-label={t({ en: "Tier filter", th: "ตัวกรองระดับ", zh: "层级筛选" })}>
+              {(["all", "alpha", "beta", "gamma"] as const).map(key => (
+                <button
+                  key={key}
+                  type="button"
+                  className={`filter-chip ${tierFilter === key ? "active" : ""}`}
+                  onClick={() => setTierFilter(key)}
+                >
+                  {key === "all" ? t({ en: "All", th: "ทั้งหมด", zh: "全部" }) : TIER_LABELS[locale][key]}
+                </button>
+              ))}
+            </div>
+
+            <div className="filter-chip-row" role="group" aria-label={t({ en: "Status filter", th: "ตัวกรองสถานะ", zh: "状态筛选" })}>
+              {(["all", "certified", "promotion"] as const).map(key => (
+                <button
+                  key={key}
+                  type="button"
+                  className={`filter-chip ${statusFilter === key ? "active" : ""}`}
+                  onClick={() => setStatusFilter(key)}
+                >
+                  {key === "all" ? t({ en: "Any status", th: "ทุกสถานะ", zh: "任意状态" }) : getCityStatusLabel(key, locale)}
+                </button>
+              ))}
+            </div>
+
+            <div className="filter-chip-row" role="group" aria-label={t({ en: "Region filter", th: "ตัวกรองภาค", zh: "区域筛选" })}>
+              {(["all", "bangkok", "north", "northeast", "central", "east", "south"] as const).map(key => (
+                <button
+                  key={key}
+                  type="button"
+                  className={`filter-chip ${regionFilter === key ? "active" : ""}`}
+                  onClick={() => setRegionFilter(key)}
+                >
+                  {REGION_LABELS[locale][key]}
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className={`btn-tab ${compareMode ? "active" : ""}`}
+              onClick={() => {
+                setCompareMode(current => !current);
+                if (compareMode) setSelectedIds([]);
+              }}
+              aria-pressed={compareMode}
             >
-              <option value="composite">{t({ en: "Composite", th: "คะแนนรวม", zh: "综合" })}</option>
-              <option value="edges">{t({ en: "Moneyball edges", th: "ข้อได้เปรียบ", zh: "优势数" })}</option>
-              <option value="readiness">{t({ en: "Finance readiness", th: "ความพร้อมการเงิน", zh: "融资准备度" })}</option>
-              <option value="gpp">{t({ en: "GPP per capita", th: "GPP ต่อหัว", zh: "人均 GPP" })}</option>
-              <option value="pm25">{t({ en: "PM₂.₅ (lower is better)", th: "PM₂.₅ (น้อย = ดี)", zh: "PM₂.₅（越低越好）" })}</option>
-              <option value="livability">{t({ en: "Livability", th: "น่าอยู่", zh: "宜居" })}</option>
-              <option value="safety">{t({ en: "Safety", th: "ปลอดภัย", zh: "安全" })}</option>
-              <option value="environment">{t({ en: "Environment", th: "สิ่งแวดล้อม", zh: "环境" })}</option>
-              <option value="wellbeing">{t({ en: "Wellbeing", th: "คุณภาพชีวิต", zh: "福祉" })}</option>
-              <option value="digital">{t({ en: "Digital", th: "ดิจิทัล", zh: "数字" })}</option>
-            </select>
-          </label>
-
-          <div className="filter-chip-row" role="group" aria-label={t({ en: "Tier filter", th: "ตัวกรองระดับ", zh: "层级筛选" })}>
-            {(["all", "alpha", "beta", "gamma"] as const).map(key => (
-              <button
-                key={key}
-                type="button"
-                className={`filter-chip ${tierFilter === key ? "active" : ""}`}
-                onClick={() => setTierFilter(key)}
-              >
-                {key === "all"
-                  ? t({ en: "All", th: "ทั้งหมด", zh: "全部" })
-                  : TIER_LABELS[locale][key]}
-              </button>
-            ))}
+              {compareMode
+                ? t({ en: "Exit compare", th: "ออกจากโหมดเทียบ", zh: "退出对比" })
+                : t({ en: "Compare mode", th: "โหมดเปรียบเทียบ", zh: "对比模式" })}
+            </button>
           </div>
 
-          <div className="filter-chip-row" role="group" aria-label={t({ en: "Status filter", th: "ตัวกรองสถานะ", zh: "状态筛选" })}>
-            {(["all", "certified", "promotion"] as const).map(key => (
-              <button
-                key={key}
-                type="button"
-                className={`filter-chip ${statusFilter === key ? "active" : ""}`}
-                onClick={() => setStatusFilter(key)}
-              >
-                {key === "all"
-                  ? t({ en: "Any status", th: "ทุกสถานะ", zh: "任意状态" })
-                  : getCityStatusLabel(key, locale)}
-              </button>
-            ))}
-          </div>
-
-          <div className="filter-chip-row" role="group" aria-label={t({ en: "Region filter", th: "ตัวกรองภาค", zh: "区域筛选" })}>
-            {(["all", "bangkok", "north", "northeast", "central", "east", "south"] as const).map(key => (
-              <button
-                key={key}
-                type="button"
-                className={`filter-chip ${regionFilter === key ? "active" : ""}`}
-                onClick={() => setRegionFilter(key)}
-              >
-                {REGION_LABELS[locale][key]}
-              </button>
-            ))}
-          </div>
-
-          <button
-            type="button"
-            className={`btn-tab ${compareMode ? "active" : ""}`}
-            onClick={() => {
-              setCompareMode(current => !current);
-              if (compareMode) setSelectedIds([]);
-            }}
-            aria-pressed={compareMode}
-          >
-            {compareMode
-              ? t({ en: "Exit compare", th: "ออกจากโหมดเทียบ", zh: "退出对比" })
-              : t({ en: "Compare mode", th: "โหมดเปรียบเทียบ", zh: "对比模式" })}
-          </button>
-        </div>
-
-        {viewMode === "directory" ? (
-          <div className="directory-table-wrap">
-            <table className="directory-table">
-              <thead>
-                <tr>
-                  <th scope="col" className="col-city">
-                    {t({ en: "City", th: "เมือง", zh: "城市" })}
-                  </th>
-                  <th scope="col" className="col-num">COMP</th>
-                  <th scope="col" className="col-num">GPP/CAP</th>
-                  <th scope="col" className="col-num">PM₂.₅</th>
-                  <th scope="col" className="col-bar">LIV</th>
-                  <th scope="col" className="col-bar">SAF</th>
-                  <th scope="col" className="col-bar">ENV</th>
-                  <th scope="col" className="col-bar">WLB</th>
-                  <th scope="col" className="col-bar">DIG</th>
-                  <th scope="col" className="col-num">READY</th>
-                  <th scope="col" className="col-num">EDGE</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sorted.map(({ city, readiness, edgeCount }) => {
-                  const pct = percentile(city.compositeScore, compositeValues);
+          {viewMode === "directory" ? (
+            <div className="rank-list-wrap">
+              <ol className="rank-list">
+                {sorted.map(({ city, edgeCount, lensScore }, idx) => {
+                  const pct = percentile(lensScore, lensScoreValues);
                   const isSelected = selectedIds.includes(city.id);
                   const cityPath = `/city/${city.id}`;
                   const handleClick = (event: React.MouseEvent) => {
-                    if (compareMode) {
-                      event.preventDefault();
-                      toggleSelect(city.id);
-                    } else {
-                      event.preventDefault();
-                      onNavigate(cityPath);
-                    }
+                    event.preventDefault();
+                    if (compareMode) toggleSelect(city.id);
+                    else onNavigate(cityPath);
                   };
                   return (
-                    <tr
+                    <li
                       key={city.id}
-                      className={`directory-row ${isSelected ? "is-selected" : ""}`}
+                      className={`rank-row ${isSelected ? "is-selected" : ""}`}
                     >
-                      <td className="col-city">
-                        <a
-                          href={toAppPath(cityPath)}
-                          className="directory-city-link"
-                          onClick={handleClick}
-                        >
-                          <span className="directory-city-name">
-                            {getCityName(city, locale)}
+                      <a
+                        href={toAppPath(cityPath)}
+                        className="rank-row-link"
+                        onClick={handleClick}
+                      >
+                        <span className="rank-row-num">{String(idx + 1).padStart(2, "0")}</span>
+                        <span className="rank-row-body">
+                          <span className="rank-row-head">
+                            <span className="rank-row-name">
+                              {getCityName(city, locale)}
+                              <span className="rank-row-tier" aria-hidden="true">
+                                {" "}· {tierSymbol(city.tier)}
+                              </span>
+                            </span>
                           </span>
-                          <span className="directory-city-caption">
-                            {getProvinceName(city, locale)} ·{" "}
-                            {getCityStatusLabel(city.status, locale)} ·{" "}
-                            {getCityRealityLabel(city.reality, locale)}
+                          <span className="rank-row-caption">
+                            {getProvinceName(city, locale)} · {getCityStatusLabel(city.status, locale)} · {getCityRealityLabel(city.reality, locale)}
                           </span>
-                          <span className="directory-city-tagline">
-                            {locale === "th" ? city.taglineTh : city.tagline}
-                          </span>
-                        </a>
-                      </td>
-                      <td className="col-num">
-                        <span className="num-primary">{city.compositeScore.toFixed(1)}</span>
-                        <span className="num-chip">p{pct}</span>
-                      </td>
-                      <td className="col-num">
-                        <span className="num-primary">
-                          {formatCompactBaht(city.metrics.gppPerCapita)}
+                          <PillarStrip city={city} weights={activeWeights} />
                         </span>
-                        {city.metrics.gppGrowthRate != null && (
-                          <span
-                            className={`num-chip ${
-                              city.metrics.gppGrowthRate >= 2.5 ? "is-pos" : "is-neutral"
-                            }`}
-                          >
-                            {city.metrics.gppGrowthRate >= 0 ? "+" : ""}
-                            {city.metrics.gppGrowthRate.toFixed(1)}%
+                        <span className="rank-row-meta">
+                          <span className="rank-row-score">{lensScore.toFixed(1)}</span>
+                          <span className="rank-row-pct">p{pct}</span>
+                          <span className={`rank-row-edges ${edgeCount >= 3 ? "is-strong" : ""}`}>
+                            {edgeCount} {t({ en: "edges", th: "จุดเด่น", zh: "优势" })}
                           </span>
-                        )}
-                      </td>
-                      <td className="col-num">
-                        <span className="num-primary">
-                          {city.metrics.pm25Annual != null
-                            ? city.metrics.pm25Annual.toFixed(1)
-                            : "—"}
                         </span>
-                        {city.metrics.pm25Annual != null && (
-                          <span
-                            className={`num-chip ${
-                              city.metrics.pm25Annual < 25
-                                ? "is-pos"
-                                : city.metrics.pm25Annual > 35
-                                ? "is-neg"
-                                : "is-neutral"
-                            }`}
-                          >
-                            {city.metrics.pm25Annual < 25
-                              ? t({ en: "clean", th: "สะอาด", zh: "洁净" })
-                              : city.metrics.pm25Annual > 35
-                              ? t({ en: "high", th: "สูง", zh: "偏高" })
-                              : t({ en: "avg", th: "ค่ากลาง", zh: "一般" })}
-                          </span>
-                        )}
-                      </td>
-                      {SCALE_PILLARS.map(pillar => (
-                        <td key={pillar} className="col-bar">
-                          <ScaleBar
-                            value={city.scores[pillar]}
-                            color={PILLAR_COLORS[pillar]}
-                          />
-                          <span className="bar-value">{city.scores[pillar]}</span>
-                        </td>
-                      ))}
-                      <td className="col-num">
-                        <span className="num-primary">{readiness}</span>
-                      </td>
-                      <td className="col-num">
-                        <span
-                          className={`num-primary ${edgeCount >= 3 ? "is-strong" : ""}`}
-                        >
-                          {edgeCount}
-                        </span>
-                      </td>
-                    </tr>
+                      </a>
+                    </li>
                   );
                 })}
                 {sorted.length === 0 && (
-                  <tr>
-                    <td colSpan={11} className="directory-empty">
-                      {t({
-                        en: "No cities match these filters.",
-                        th: "ไม่มีเมืองตรงกับตัวกรอง",
-                        zh: "无城市符合当前筛选。",
-                      })}
-                    </td>
-                  </tr>
+                  <li className="rank-row-empty">
+                    {t({ en: "No cities match these filters.", th: "ไม่มีเมืองตรงกับตัวกรอง", zh: "无城市符合当前筛选。" })}
+                  </li>
                 )}
-              </tbody>
-            </table>
+              </ol>
 
-            {compareMode && selectedIds.length >= 2 && (
-              <div className="compare-launch-bar">
-                <span className="compare-launch-count">
-                  {t({
-                    en: `${selectedIds.length} selected`,
-                    th: `เลือกแล้ว ${selectedIds.length}`,
-                    zh: `已选 ${selectedIds.length}`,
-                  })}
-                </span>
-                <button
-                  type="button"
-                  className="btn-primary"
-                  onClick={handleLaunchCompare}
-                >
-                  {t({ en: "Compare →", th: "เปรียบเทียบ →", zh: "对比 →" })}
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="compare-view-wrap">
-            <button
-              type="button"
-              className="btn-tab"
-              onClick={() => setViewMode("directory")}
-            >
-              {t({ en: "← Back to directory", th: "← กลับสู่สารบบ", zh: "← 返回名录" })}
-            </button>
-            <ComparisonGrid
-              locale={locale}
-              onNavigate={onNavigate}
-              preselectedIds={selectedIds}
-            />
-          </div>
-        )}
-      </section>
+              {compareMode && selectedIds.length >= 2 && (
+                <div className="compare-launch-bar">
+                  <span className="compare-launch-count">
+                    {t({
+                      en: `${selectedIds.length} selected`,
+                      th: `เลือกแล้ว ${selectedIds.length}`,
+                      zh: `已选 ${selectedIds.length}`,
+                    })}
+                  </span>
+                  <button type="button" className="btn-primary" onClick={() => setViewMode("compare")}>
+                    {t({ en: "Compare →", th: "เปรียบเทียบ →", zh: "对比 →" })}
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="compare-view-wrap">
+              <button type="button" className="btn-tab" onClick={() => setViewMode("directory")}>
+                {t({ en: "← Back to directory", th: "← กลับสู่สารบบ", zh: "← 返回名录" })}
+              </button>
+              <ComparisonGrid locale={locale} onNavigate={onNavigate} preselectedIds={selectedIds} />
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }

@@ -19,6 +19,7 @@ import type { Locale, ScoringPillar, SmartCity } from "./types";
 import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS, TIER_LABELS } from "./types";
 import { computeDevelopability, getGlobalComparison, getMoneyballProfile, getTailoredSteps, getFinancingAdvice } from "./cityAnalytics";
 import { allCities } from "./cityData";
+import { getCityFacts } from "./cityFacts";
 
 interface Props {
   cityId: string;
@@ -1289,6 +1290,95 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </div>
         </div>
       </section>
+
+      {(() => {
+        const facts = getCityFacts(cityId);
+        if (!facts) return null;
+        const rows: { label: string; value: string }[] = [];
+        if (facts.nativeName) {
+          rows.push({
+            label: translate(locale, { en: "Native name", th: "ชื่อพื้นถิ่น", zh: "本地名称" }),
+            value: facts.nativeName,
+          });
+        }
+        if (facts.geography) {
+          rows.push({
+            label: translate(locale, { en: "Geography", th: "ภูมิประเทศ", zh: "地理" }),
+            value: translate(locale, facts.geography),
+          });
+        }
+        if (facts.elevationM != null) {
+          rows.push({
+            label: translate(locale, { en: "Elevation", th: "ความสูง", zh: "海拔" }),
+            value: `${facts.elevationM} m`,
+          });
+        }
+        if (facts.distanceFromBangkokKm != null) {
+          const km = facts.distanceFromBangkokKm;
+          rows.push({
+            label: translate(locale, { en: "From Bangkok", th: "จากกรุงเทพ", zh: "距曼谷" }),
+            value: km === 0
+              ? translate(locale, { en: "In Bangkok", th: "ในกรุงเทพ", zh: "位于曼谷" })
+              : `${km} km${facts.driveTimeFromBangkok ? " · " + translate(locale, facts.driveTimeFromBangkok) : ""}`,
+          });
+        } else if (facts.driveTimeFromBangkok) {
+          rows.push({
+            label: translate(locale, { en: "From Bangkok", th: "จากกรุงเทพ", zh: "距曼谷" }),
+            value: translate(locale, facts.driveTimeFromBangkok),
+          });
+        }
+        if (facts.iata) {
+          rows.push({
+            label: translate(locale, { en: "Airport (IATA)", th: "สนามบิน (IATA)", zh: "机场 (IATA)" }),
+            value: facts.iata,
+          });
+        }
+        if (facts.postalPrefix) {
+          rows.push({
+            label: translate(locale, { en: "Postal", th: "รหัสไปรษณีย์", zh: "邮编" }),
+            value: facts.postalPrefix,
+          });
+        }
+        if (facts.foundedEra) {
+          rows.push({
+            label: translate(locale, { en: "Era / founded", th: "ยุค / ก่อตั้ง", zh: "历史 / 建制" }),
+            value: translate(locale, facts.foundedEra),
+          });
+        }
+        if (facts.notableInstitution) {
+          rows.push({
+            label: translate(locale, { en: "Notable institution", th: "สถาบันสำคัญ", zh: "重要机构" }),
+            value: translate(locale, facts.notableInstitution),
+          });
+        }
+        if (facts.dialect) {
+          rows.push({
+            label: translate(locale, { en: "Language / dialect", th: "ภาษา / สำเนียง", zh: "语言 / 方言" }),
+            value: translate(locale, facts.dialect),
+          });
+        }
+        if (rows.length === 0) return null;
+        return (
+          <section className="section at-a-glance">
+            <p className="eyebrow">{translate(locale, { en: "At a glance", th: "มองผ่านๆ", zh: "一览" })}</p>
+            <h2 className="at-a-glance-title">
+              {translate(locale, {
+                en: "The basics before the dossier",
+                th: "ข้อมูลพื้นฐานก่อนเข้าสู่ dossier",
+                zh: "档案之前的基本事实",
+              })}
+            </h2>
+            <dl className="at-a-glance-grid">
+              {rows.map(row => (
+                <div key={row.label} className="at-a-glance-row">
+                  <dt>{row.label}</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        );
+      })()}
 
       {dossier && (
         <section className="section city-dossier-section">
