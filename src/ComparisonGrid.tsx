@@ -16,6 +16,7 @@ import { PILLAR_COLORS, PILLAR_LABELS, TIER_LABELS } from "./types";
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
+  preselectedIds?: string[];
 }
 
 type CompareSelection = {
@@ -296,10 +297,19 @@ function CompareTable({
   );
 }
 
-export default function ComparisonGrid({ locale, onNavigate }: Props) {
+export default function ComparisonGrid({ locale, onNavigate, preselectedIds }: Props) {
   const { data: cities } = useCitySummaries();
   const sortedCities = useMemo(() => sortCities(cities, "composite"), [cities]);
-  const defaultIds = useMemo(() => sortedCities.slice(0, MAX_COMPARE).map(city => city.id), [sortedCities]);
+  const validPreselected = useMemo(() => {
+    if (!preselectedIds || preselectedIds.length === 0) return null;
+    const known = new Set(cities.map(c => c.id));
+    const filtered = preselectedIds.filter(id => known.has(id)).slice(0, MAX_COMPARE);
+    return filtered.length > 0 ? filtered : null;
+  }, [preselectedIds, cities]);
+  const defaultIds = useMemo(
+    () => validPreselected ?? sortedCities.slice(0, MAX_COMPARE).map(city => city.id),
+    [validPreselected, sortedCities],
+  );
   const [selection, setSelection] = useState<CompareSelection>({ ids: defaultIds, cursor: 0 });
 
   const groupedCities = useMemo(() => {

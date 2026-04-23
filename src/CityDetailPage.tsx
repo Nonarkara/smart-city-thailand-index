@@ -5,6 +5,7 @@ import {
   getResolvedPopulationThousand,
 } from "./adminBaselines";
 import { useCityDetail } from "./cityApi";
+import { getMoneyballProfile } from "./cityAnalytics";
 import { getCityExternalResearchLinks, getCityFactsCsv } from "./cityCdp";
 import {
   getCityName,
@@ -260,6 +261,43 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </div>
         </div>
       </section>
+
+      {(() => {
+        const moneyball = getMoneyballProfile(city);
+        const topEdges = moneyball.edges.filter(e => e.advantage).slice(0, 3);
+        if (topEdges.length === 0) return null;
+        return (
+          <section className="section reveal visible moneyball-band">
+            <p className="eyebrow">
+              {t({
+                en: "Moneyball read",
+                th: "อ่านแบบมันนี่บอล",
+                zh: "点球成金读数" ,
+              })}
+            </p>
+            <h2 className="section-title">
+              {t({
+                en: "Why this city, not Bangkok",
+                th: "ทำไมต้องเมืองนี้ ไม่ใช่กรุงเทพ",
+                zh: "为什么是这座城市而非曼谷",
+              })}
+            </h2>
+            <p className="moneyball-headline">
+              {locale === "th" ? moneyball.headlineTh : moneyball.headline}
+            </p>
+            <div className="moneyball-edge-list">
+              {topEdges.map((edge, idx) => (
+                <div key={idx} className="moneyball-edge-row">
+                  <span className="moneyball-edge-label">
+                    {locale === "th" ? edge.labelTh : edge.label}
+                  </span>
+                  <span className="moneyball-edge-value">{edge.value}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
 
       <section className="section reveal visible">
         <p className="eyebrow">
