@@ -676,32 +676,35 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
  * again on 24–27" desktops. Mobile base stays untouched. */
 @media (min-width: 1280px) {
   :root {
-    --text-base: 0.9375rem;   /* 15px */
-    --text-md:   1.0625rem;   /* 17px */
-    --text-lg:   1.375rem;    /* 22px */
-    --text-xl:   1.625rem;    /* 26px */
-    --text-2xl:  2.125rem;    /* 34px */
-    --text-3xl:  2.625rem;    /* 42px */
+    --text-base: 1rem;        /* 16px — laptop baseline. 13–15" is the modal device. */
+    --text-md:   1.125rem;    /* 18px */
+    --text-lg:   1.4375rem;   /* 23px */
+    --text-xl:   1.75rem;     /* 28px */
+    --text-2xl:  2.25rem;     /* 36px */
+    --text-3xl:  2.75rem;     /* 44px */
+    --w: 1200px;
   }
-  body { font-size: 15px; }
-}
-@media (min-width: 1400px) {
-  :root { --w: 1280px; }
+  body { font-size: 16px; }
+  .cinematic-hero-title { font-size: clamp(2.4rem, 6.2vw, 5.2rem) !important; }
+  .hero-title, .dashboard-title { font-size: clamp(1.75rem, 4.4vw, 3.6rem); }
 }
 @media (min-width: 1600px) {
   :root {
-    --text-base: 1rem;        /* 16px */
-    --text-md:   1.125rem;    /* 18px */
-    --text-lg:   1.5rem;      /* 24px */
-    --text-xl:   1.75rem;     /* 28px */
-    --text-2xl:  2.25rem;     /* 36px */
-    --text-3xl:  2.875rem;    /* 46px */
+    --text-base: 1.0625rem;   /* 17px */
+    --text-md:   1.1875rem;   /* 19px */
+    --text-lg:   1.5625rem;   /* 25px */
+    --text-xl:   1.875rem;    /* 30px */
+    --text-2xl:  2.375rem;    /* 38px */
+    --text-3xl:  3rem;        /* 48px */
+    --w: 1360px;
   }
-  body { font-size: 16px; }
+  body { font-size: 17px; }
+  .cinematic-hero-title { font-size: clamp(3rem, 6.6vw, 6rem) !important; }
+  .hero-title, .dashboard-title { font-size: clamp(2rem, 4.6vw, 4rem); }
 }
 @media (min-width: 2000px) {
   :root { --w: 1600px; }
-  body { font-size: 17px; }
+  body { font-size: 18px; }
 }
 
 /* ─── SPIDER ─── */
@@ -2984,11 +2987,44 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   GLOBE MAP v3 — Proper coastlines, dark ocean, dense legend
+   GLOBE MAP v4 — Theme-aware basemap switcher + ESRI tiles + satellite
    ═══════════════════════════════════════════════════════════════════════ */
 .globe-wrap { position: relative; margin: 1rem 0; }
 .globe-container { position: relative; margin: 1rem 0; }
-.globe-svg { width: 100%; display: block; }
+.globe-svg { width: 100%; display: block; background: var(--surface); }
+
+/* Basemap switcher — satellite-guy toggle (light / dark / satellite / terrain / ocean) */
+.globe-basemap-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin: 0 0 .5rem;
+  padding: 3px;
+  background: var(--surface);
+  border: 1px solid var(--5);
+  width: fit-content;
+}
+.globe-basemap-btn {
+  font: 600 .6rem var(--mono);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: .4rem .7rem;
+  min-height: 32px;
+  min-width: 56px;
+  background: transparent;
+  color: var(--3);
+  border: 0;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.globe-basemap-btn:hover { color: var(--ink); background: var(--alpha-bg); }
+.globe-basemap-btn.active {
+  background: var(--ink);
+  color: var(--bg);
+}
+@media (min-width: 600px) {
+  .globe-basemap-btn { min-width: 72px; min-height: 36px; padding: .5rem .9rem; }
+}
 
 /* Tooltip */
 .globe-html-tooltip {
