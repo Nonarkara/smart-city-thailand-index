@@ -303,7 +303,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 
 /* ─── TIERS ─── */
 .tier-overview { margin-bottom: 2rem; }
-.tier-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--5); margin-top: .75rem; }
+.tier-cards { display: grid; grid-template-columns: 1.45fr 1.1fr 1fr; border: 1px solid var(--5); margin-top: .75rem; }
 .tier-card { padding: .85rem .8rem; border-right: 1px solid var(--5); }
 .tier-card:last-child { border-right: 0; }
 .tier-card-alpha { background: var(--alpha-bg); }
@@ -601,7 +601,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .decomp-total-value { font-size: .78rem; }
 
 /* ─── PILLAR DETAIL ─── */
-.pillar-detail-grid { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(--5); margin-top: .6rem; margin-bottom: 2rem; }
+.pillar-detail-grid { display: grid; grid-template-columns: 1.3fr 1fr .95fr 1.15fr; border: 1px solid var(--5); margin-top: .6rem; margin-bottom: 2rem; }
 .pillar-detail-card { padding: .6rem .55rem; border-right: 1px solid var(--5); border-bottom: 1px solid var(--5); }
 .pillar-detail-card:nth-child(4n) { border-right: 0; }
 .pillar-detail-header { display: flex; align-items: center; gap: .2rem; margin-bottom: .15rem; }
@@ -765,7 +765,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .timeline-caption { font: italic .48rem var(--font); color: var(--4); }
 
 /* ─── METHODOLOGY ─── */
-.principle-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--5); margin-bottom: 2rem; }
+.principle-grid { display: grid; grid-template-columns: 1.3fr 1fr 1.15fr; border: 1px solid var(--5); margin-bottom: 2rem; }
 .principle-card { padding: .85rem .75rem; border-right: 1px solid var(--5); }
 .principle-card:last-child { border-right: 0; }
 .principle-card h3 { font-size: .75rem; font-weight: 700; margin-bottom: .2rem; }
@@ -4499,7 +4499,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .investor-inner h2 { font-size: var(--text-2xl); font-weight: 700; letter-spacing: -.02em; margin-bottom: 1rem; }
 .investor-lead { font-size: var(--text-base); color: var(--2); line-height: 1.6; max-width: 640px; margin-bottom: 1.5rem; }
-.investor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-bottom: 1.25rem; }
+.investor-grid { display: grid; grid-template-columns: 1.35fr 1fr 1.2fr; gap: .75rem; margin-bottom: 1.25rem; }
 .investor-card {
   display: flex; flex-direction: column; gap: .1rem;
   padding: .85rem 1rem; background: var(--bg); cursor: pointer;
@@ -5634,9 +5634,15 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .picks-strip {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 0.75rem;
   margin-top: 0.75rem;
+}
+/* Lead pick spans two tracks at ≥760px — editorial hierarchy (the
+ * top story is physically bigger, the rest carry on evenly). This
+ * breaks the "editor's picks carousel" template look. */
+@media (min-width: 760px) {
+  .picks-strip .pick-card:first-child { grid-column: span 2; }
 }
 .pick-card {
   display: flex;
@@ -6292,7 +6298,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .pillar-champions { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 900px) {
-  .pillar-champions { grid-template-columns: repeat(4, 1fr); }
+  .pillar-champions { grid-template-columns: 1.25fr .9fr 1.05fr .95fr; }
 }
 .pillar-champion-cell { list-style: none; }
 .pillar-champion-btn {
@@ -6358,7 +6364,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .home-collections { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 1040px) {
-  .home-collections { grid-template-columns: repeat(3, 1fr); }
+  .home-collections { grid-template-columns: 1.4fr 1.1fr 1fr; }
 }
 .home-collection-card {
   display: flex;
@@ -6458,7 +6464,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   overflow: hidden;
 }
 @media (min-width: 760px) {
-  .weekly-digest { grid-template-columns: repeat(3, 1fr); }
+  .weekly-digest { grid-template-columns: 1.25fr .95fr 1.1fr; }
 }
 .weekly-digest-slot {
   display: flex;
