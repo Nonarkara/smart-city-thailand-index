@@ -19,11 +19,27 @@ npx vite build      # Always verify both before pushing
 
 "Jony Ive meets Dieter Rams" — clarity, simplicity, elegance.
 
-- **Photo overlays**: dark gradients ≥78% opacity + `text-shadow` for legibility
-- **Ranking viz**: show individual pillar bars (not a single composite bar) — differences between cities must be immediately obvious
-- **Typography**: Major Third scale (1.25), tokens `--text-xs` through `--text-3xl`
-- **Cards**: glass-morphism, premium shadows
-- **Scroll animations**: `.reveal` class + IntersectionObserver
+- **Mobile-first, non-negotiable.** SCITI is a Moneyball-style manual
+  for investment in Thai cities, and the primary surface is a
+  smartphone — people hand their phone across a table and say "look
+  at this city." Base CSS must be phone (≤ 480 px) and scale up via
+  `@media (min-width: …)`. Every interactive target ≥ 44 × 44 px.
+  Every grid collapses cleanly to one column. Test on the iOS
+  simulator or a real device before pushing any home/rankings change.
+- **Pillar bars belong only on `/rankings` and `/city/:id`.** The
+  homepage must never rehearse them — seven bars in nineteen separate
+  100%-scale rows cannot be compared, so the homepage summarises by
+  theme instead (collections, pillar champions, weekly digest).
+- **Photo overlays**: dark gradients ≥ 78% opacity + `text-shadow`
+  for legibility.
+- **Ranking viz (on Rankings page only)**: individual pillar
+  segments at fixed pixel widths, not `width: %` of a flexing
+  parent. The Phase 11 `.pillar-strip` (220 px fixed, 7 segments) is
+  the pattern.
+- **Typography**: Major Third scale (1.25), tokens `--text-xs`
+  through `--text-3xl`. All numerics in `var(--mono)`.
+- **Cards**: glass-morphism, premium shadows.
+- **Scroll animations**: `.reveal` class + IntersectionObserver.
 
 ## Trilingual Content (EN / TH / CN)
 
@@ -50,6 +66,26 @@ npx vite build      # Always verify both before pushing
   2. `src/App.tsx` — lazy import + nav item + render case
   3. `src/siteMeta.ts` — add route title in all 3 locales
 - **Page loading**: lazy-loaded via `React.lazy()`, except `HomePage`, `RankingsPage`, `CityDetailPage`
+
+## Roadmap notes
+
+- **Phase 13 — Land price as an investability signal.** Add
+  provincial land-price data (Treasury Department appraisal values,
+  updated every 4 years; BOT / NESDC land-price index where
+  available; BOI industrial-estate rates for EEC/SEZ zones). Fold
+  into a new `investability` sub-score or as a `landPriceBaht` field
+  on `CityMetrics`. The math must be legible: document the raw
+  source per city, the normalisation function, and how it enters
+  the composite or a Moneyball edge. **No proxy data, no guessing**
+  — if a city has no Treasury record, leave the field null and let
+  the UI degrade. Cheap land is an asymmetric growth signal against
+  EEC benchmarks; surfacing it is the whole point of the Moneyball
+  frame.
+- **Weekly digest ritual** (live now): edit
+  `src/weeklyDigest.ts` every Monday. Update `weekOf`, the trending
+  city note, one Google Trends phrase, one headline link. Commit,
+  push. GitHub Pages redeploys. The page's "Updated N days ago"
+  stamp is the illusion of real time.
 
 ## Preview & Testing
 
