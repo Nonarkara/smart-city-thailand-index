@@ -5,7 +5,6 @@ import App from "./App";
 describe("App", () => {
   beforeEach(() => {
     localStorage.clear();
-    sessionStorage.clear();
     window.history.pushState({}, "", "/");
   });
 
@@ -14,7 +13,7 @@ describe("App", () => {
 
     render(<App />);
 
-    await screen.findByText(/2026 泰国智慧城市指数/i);
+    await screen.findByText("泰国智慧城市指数");
     expect(document.documentElement.lang).toBe("zh");
   });
 
@@ -26,7 +25,6 @@ describe("App", () => {
       await vi.dynamicImportSettled();
     });
     await screen.findByRole("heading", { name: "Phuket Smart City" });
-    await screen.findByRole("button", { name: "Export city CSV" });
 
     await act(async () => {
       window.history.pushState({}, "", "/city/chiang-mai-old-town");
@@ -48,19 +46,20 @@ describe("App", () => {
     });
   });
 
-  it("uses link-based primary and secondary navigation", async () => {
+  it("opens the responsive nav and closes it after navigating", async () => {
     const user = userEvent.setup();
-    render(<App />);
+    const { container } = render(<App />);
 
-    expect(screen.getByRole("link", { name: "Home" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Rankings" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Your City" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "NST" })).toBeInTheDocument();
+    const navToggle = screen.getByRole("button", { name: "Open navigation menu" });
+    await user.click(navToggle);
 
-    await user.click(screen.getByRole("link", { name: "Rankings" }));
+    const navLinks = container.querySelector(".nav-links");
+    expect(navLinks).toHaveClass("nav-links-open");
+
+    await user.click(screen.getByRole("button", { name: "Rankings" }));
     await vi.dynamicImportSettled();
+    await screen.findByRole("heading", { name: /who delivers, who just talks/i });
 
-    await screen.findByRole("heading", { name: /national leaderboard and comparison matrix/i });
-    expect(screen.getByRole("link", { name: "Rankings" })).toHaveAttribute("aria-current", "page");
+    expect(navLinks).not.toHaveClass("nav-links-open");
   });
 });
