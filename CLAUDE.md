@@ -38,6 +38,16 @@ npx vite build      # Always verify both before pushing
   the pattern.
 - **Typography**: Major Third scale (1.25), tokens `--text-xs`
   through `--text-3xl`. All numerics in `var(--mono)`.
+- **Thai typography — non-looped only.** Native Thai readers clock a
+  non-Thai establishment in one glance by its looped หัว (head-loops).
+  When a Thai person handwrites, the loop shrinks until it's vestigial
+  or absent; big prominent loops are a foreigner's crutch and read as
+  "learner material" or "not made by Thais". Use only non-looped Thai
+  faces: **IBM Plex Sans Thai** (non-looped) as primary, **Noto Sans
+  Thai** or display faces like **Prompt** / **Kanit** as alternates.
+  NEVER `IBM Plex Sans Thai Looped`, `Sarabun`, `TH Sarabun New`, or
+  any other looped Thai face. This rule applies to every Thai-facing
+  surface in this workspace — dashboards, decks, PDFs, signage.
 - **Cards**: glass-morphism, premium shadows.
 - **Scroll animations**: `.reveal` class + IntersectionObserver.
 

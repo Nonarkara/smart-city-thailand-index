@@ -1,17 +1,19 @@
 /* Phase 14 — typography refresh.
  * IBM Plex Sans for latin body + data (quietly editorial, not saturated).
  * IBM Plex Sans Thai (NON-looped) for Thai body — the modern professional
- * Thai face. Looped variants (Sarabun-style loops, Chinese-round-terminals)
- * read childish / textbook-era to Thai designers; the non-looped Plex Thai
- * matches contemporary editorial type in Bangkok. Sarabun kept as fallback
- * since it's the Thailand-government standard on most Thai machines.
+ * Thai face. THAI TYPOGRAPHY RULE: Thai readers instantly clock non-Thai
+ * establishments by looped หัว (head-loops). Native Thai writing shrinks
+ * the loop until it's vestigial or absent; prominent loops are a learner's
+ * crutch and look foreign. So the entire Thai stack here is non-looped:
+ * IBM Plex Sans Thai → Noto Sans Thai → system. NEVER add Plex Thai Looped,
+ * Sarabun, TH Sarabun New, or any other looped face.
  * IBM Plex Mono for numerics (ties the data grammar together).
  * Fraunces (variable) for display / section headings — gives the index a
  * magazine masthead feel Inter + Outfit cannot. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap');
 
 :root {
-  --font: "IBM Plex Sans", "IBM Plex Sans Thai", "Sarabun", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font: "IBM Plex Sans", "IBM Plex Sans Thai", "Noto Sans Thai", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-heading: "Fraunces", "IBM Plex Sans", Georgia, serif;
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
   
@@ -6610,7 +6612,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
  * in contemporary Bangkok publishing. Sarabun is the Thailand-government
  * fallback so it renders cleanly even when Google Fonts fails to load. */
 html[lang="th"] {
-  --font: "IBM Plex Sans Thai", "Sarabun", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font: "IBM Plex Sans Thai", "Noto Sans Thai", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
 }
 
 /* Editorial headings — give existing H1/H2/H3 tiers the Fraunces face and
