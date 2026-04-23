@@ -1,3 +1,4 @@
+import { SCORE_DOMAIN, TIER_THRESHOLDS, validateCityScores } from "./methodologySpec.ts";
 import { PILLAR_WEIGHTS } from "./types.ts";
 import type { CityScores, CityTier, ScoringPillar } from "./types.ts";
 
@@ -24,7 +25,8 @@ export interface CompositeScoreTerm {
  * @returns Rounded score (e.g. 74.56 -> 74.6)
  */
 export function roundScore(value: number): number {
-  return Math.round(value * 10) / 10;
+  const precision = 10 ** SCORE_DOMAIN.decimals;
+  return Math.round(value * precision) / precision;
 }
 
 /**
@@ -34,6 +36,8 @@ export function roundScore(value: number): number {
  * @returns Array of score terms with weights and contributions
  */
 export function buildCompositeScoreTerms(scores: CityScores): CompositeScoreTerm[] {
+  validateCityScores(scores);
+
   return SCORING_PILLARS.map(pillar => ({
     pillar,
     score: scores[pillar],
@@ -50,10 +54,10 @@ export function buildCompositeScoreTerms(scores: CityScores): CompositeScoreTerm
  */
 export function computeComposite(scores: CityScores): number {
   const terms = buildCompositeScoreTerms(scores);
-  const weightedSum = terms.reduce((sum, term) => sum + term.contribution, 0);
+  const weightedSum = terms.reduce((sum, term) => sum + term.score * term.weight, 0);
   const totalWeight = terms.reduce((sum, term) => sum + term.weight, 0);
 
-  return roundScore(weightedSum / (totalWeight / 100));
+  return roundScore(weightedSum / totalWeight);
 }
 
 /**
@@ -65,18 +69,20 @@ export function computeComposite(scores: CityScores): number {
  * @returns Assigned tier
  */
 export function assignTier(composite: number): CityTier {
-  if (composite >= 65) return "alpha";
-  if (composite >= 45) return "beta";
+  if (composite >= TIER_THRESHOLDS.alpha) return "alpha";
+  if (composite >= TIER_THRESHOLDS.beta) return "beta";
   return "gamma";
 }
 
 export function getCompositeBreakdown(scores: CityScores) {
   const terms = buildCompositeScoreTerms(scores);
   const totalWeight = terms.reduce((sum, term) => sum + term.weight, 0);
+  const weightedSum = terms.reduce((sum, term) => sum + term.score * term.weight, 0);
 
   return {
     terms,
     totalWeight,
+    weightedSum,
     composite: computeComposite(scores),
   };
 }

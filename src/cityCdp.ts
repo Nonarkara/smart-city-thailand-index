@@ -2,6 +2,7 @@ import { cdpSources, getAirQualityUrl, getBOIInvestmentUrl, getCityDataUrl, getO
 import { cityContexts, type CityContext } from "./cityContext.ts";
 import { allCities } from "./cityData.ts";
 import { dataSources, getEvidenceForCity, type DataSource, type EvidenceItem } from "./evidenceData.ts";
+import { SCITI_DATA_CUTOFF_ISO, classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import { SCORING_PILLARS } from "./scoring.ts";
 import type {
   CityReality,
@@ -212,7 +213,7 @@ export interface CityResearchExportRow {
 
 const VERSION = "2026.04-cdp-v1";
 const DEFAULT_OBSERVED_AT = "2026-04-01T00:00:00.000Z";
-const DEFAULT_VERIFIED_AT = "2026-04-04T00:00:00.000Z";
+const DEFAULT_VERIFIED_AT = SCITI_DATA_CUTOFF_ISO;
 
 const FINANCE_INSTRUMENTS: FinanceInstrumentSeed[] = [
   {
@@ -1484,9 +1485,16 @@ function buildCitySummary(
     ...observations.map(item => item.observedAt),
     ...recommendations.flatMap(item => item.supports.map(support => support.observedAt)),
   ]);
+  const provenanceCount = observations.length + recommendations.reduce((sum, item) => sum + item.supports.length, 0);
+  const dataConfidenceScore = computeDataConfidenceScore({
+    metrics: city.metrics,
+    provenanceCount,
+    latestObservedAt,
+  });
 
   return {
     ...city,
+    dataConfidence: classifyDataConfidence(dataConfidenceScore),
     keyMetrics: buildKeyMetrics(city, observations),
     shortTailoredNote: buildShortTailoredNote(city, context),
     financeSignal: buildFinanceSignal(city, financeProfile, recommendations),
@@ -1495,7 +1503,7 @@ function buildCitySummary(
       latestObservedAt,
       lastVerifiedAt: DEFAULT_VERIFIED_AT,
     },
-    provenanceCount: observations.length + recommendations.reduce((sum, item) => sum + item.supports.length, 0),
+    provenanceCount,
   };
 }
 

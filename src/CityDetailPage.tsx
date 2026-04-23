@@ -499,7 +499,7 @@ function ScoreBreakdown({
             zh: "得分拆解",
           })}
         </span>
-        <span className="decomp-formula">Composite = Σ (score × weight) / Σ weights</span>
+        <span className="decomp-formula">Composite = Σ (score × weight) / 100</span>
       </div>
       <div className="decomp-table">
         <div className="decomp-row decomp-row-header">

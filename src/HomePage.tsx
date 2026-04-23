@@ -17,6 +17,7 @@ import { getCitySummariesCsv, getCityFactsCsv } from "./cityCdp";
 import { ResponsiveImage, assetUrl } from "./mediaAssets";
 import { PILLAR_WEIGHTS } from "./types";
 import { HOME_COLLECTIONS } from "./homeCollections";
+import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_METHOD_CODE } from "./methodologySpec";
 import { WEEKLY_DIGEST, formatWeeklyStamp } from "./weeklyDigest";
 
 /** Short, unique vibe phrase per city — used by the top-5 podium. */
@@ -97,6 +98,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
   const digestCity = cityById.get(WEEKLY_DIGEST.trendingCity.cityId);
 
+  // Phase 13 — province count for the "Thailand by the numbers" ribbon.
+  const provinceCount = useMemo(
+    () => new Set(cities.map(c => c.province)).size,
+    [cities],
+  );
+
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
 
   return (
@@ -142,9 +149,44 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
+      {/* ─── THAILAND BY THE NUMBERS (Phase 13 bridge band) ─── */}
+      <section
+        className="home-stat-ribbon"
+        aria-label={t({ en: "Thailand by the numbers", th: "ประเทศไทยด้วยตัวเลข", zh: "数字里的泰国" })}
+      >
+        <div className="home-stat-ribbon-inner">
+          <div className="home-stat-cell">
+            <span className="home-stat-label">{t({ en: "Cities indexed", th: "เมืองในดัชนี", zh: "入选城市" })}</span>
+            <span className="home-stat-value">{stats.total}</span>
+          </div>
+          <div className="home-stat-cell">
+            <span className="home-stat-label">{t({ en: "depa-certified", th: "รับรองโดย depa", zh: "depa 认证" })}</span>
+            <span className="home-stat-value">{stats.certified}</span>
+          </div>
+          <div className="home-stat-cell">
+            <span className="home-stat-label">{t({ en: "Provinces covered", th: "จังหวัดครอบคลุม", zh: "覆盖府县" })}</span>
+            <span className="home-stat-value">{provinceCount}</span>
+          </div>
+          <div className="home-stat-cell">
+            <span className="home-stat-label">{t({ en: "Pillars measured", th: "เสาหลักที่วัด", zh: "衡量支柱" })}</span>
+            <span className="home-stat-value">{SCORING_PILLARS.length}</span>
+          </div>
+          <div className="home-stat-cell">
+            <span className="home-stat-label">{t({ en: "Edition", th: "ฉบับ", zh: "版本" })}</span>
+            <span className="home-stat-value">SCITI 2026</span>
+          </div>
+          <div className="home-stat-cell">
+            <span className="home-stat-label">{t({ en: "Refreshed", th: "อัปเดต", zh: "刷新" })}</span>
+            <span className="home-stat-value">{formatWeeklyStamp(WEEKLY_DIGEST.weekOf, locale)}</span>
+          </div>
+        </div>
+      </section>
+
       {/* ─── EDITION STAMP ─── */}
       <div className="edition-stamp">
-        <span>SCITI 2026 Edition · {stats.total} {t({ en: "cities", th: "เมือง", zh: "城市" })} · 15+ {t({ en: "data sources", th: "แหล่งข้อมูล", zh: "数据来源" })} · {t({ en: "Released April 2026", th: "เผยแพร่เมษายน 2569", zh: "2026年4月发布" })}</span>
+        <span>
+          {`SCITI 2026 Edition · ${stats.total} ${t({ en: "cities", th: "เมือง", zh: "城市" })} · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源族群" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}
+        </span>
         <span>{t({ en: "Research by Dr. Non A · depa · SLIC Methodology · Peer-reviewed at SCSE Taipei 2026", th: "วิจัยโดย ดร.ณณ · depa · วิธีการ SLIC · ตรวจสอบโดยผู้ทรงคุณวุฒิที่ SCSE ไทเป 2026", zh: "研究：Non A博士 · depa · SLIC方法论 · 2026台北SCSE同行评审" })}</span>
       </div>
 
@@ -367,9 +409,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
             </h2>
             <p className="open-data-body">
               {t({
-                en: "Every score, every metric, every source — downloadable. No city lobbied for a higher rank. No investor paid for placement. This is just facts that came in, processed through transparent equations, published under CC BY 4.0. Take the data. Challenge the methodology. Build on it.",
-                th: "ทุกคะแนน ทุกตัวชี้วัด ทุกแหล่งข้อมูล — ดาวน์โหลดได้ ไม่มีเมืองไหนล็อบบี้เพื่อขึ้นอันดับ ไม่มีนักลงทุนจ่ายเพื่อตำแหน่ง นี่คือข้อเท็จจริงที่เข้ามา ประมวลผลผ่านสมการที่โปร่งใส เผยแพร่ภายใต้ CC BY 4.0 เอาข้อมูลไปใช้ ท้าทายวิธีการ ต่อยอดได้เลย",
-                zh: "每个分数、每项指标、每个来源——都可下载。没有城市游说获取更高排名。没有投资者付费获取位置。这只是事实输入，通过透明方程处理，以CC BY 4.0发布。",
+                en: `Every score, every metric, every source row — downloadable. No city lobbied for a higher rank. No investor paid for placement. SCITI publishes the research layer, the deterministic equation, and the provenance exports under CC BY 4.0. Take the data. Audit the method. Build on it.`,
+                th: "ทุกคะแนน ทุกตัวชี้วัด ทุกแถวแหล่งข้อมูล — ดาวน์โหลดได้ ไม่มีเมืองไหนล็อบบี้เพื่อขึ้นอันดับ ไม่มีนักลงทุนจ่ายเพื่อตำแหน่ง SCITI เผยแพร่ทั้งชั้นวิจัย สมการที่กำหนดแน่นอน และไฟล์พิสูจน์ที่มา ภายใต้ CC BY 4.0 เอาข้อมูลไปใช้ ตรวจวิธีวิจัย แล้วต่อยอดได้เลย",
+                zh: "每个分数、每项指标、每一行来源记录都可下载。没有城市游说更高排名，也没有投资者付费买位置。SCITI 公开研究层、确定性公式和溯源导出文件，并采用 CC BY 4.0 许可。",
               })}
             </p>
           </div>
@@ -420,28 +462,44 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <span className="transparency-step-num">1</span>
               <div>
                 <strong>{t({ en: "Raw data in", th: "ข้อมูลดิบเข้ามา", zh: "原始数据输入" })}</strong>
-                <p>{t({ en: "15+ government sources: NSO, NESDC, PCD, GISTDA, Royal Thai Police, BOI, MOPH. No surveys, no self-reporting. Verifiable public data only.", th: "15+ แหล่งราชการ: NSO, NESDC, PCD, GISTDA, สำนักงานตำรวจแห่งชาติ, BOI, สธ. ไม่มีแบบสอบถาม ไม่มีการรายงานตนเอง ข้อมูลสาธารณะที่ตรวจสอบได้เท่านั้น", zh: "15+政府来源。无问卷，无自我报告。仅可验证的公开数据。" })}</p>
+                <p>{t({
+                  en: `${EVIDENCE_SOURCE_FAMILY_COUNT} evidence source families plus ${CDP_PLATFORM_COUNT} mapped public endpoints. Public indicators, platform registries, and field verification feed the research layer.`,
+                  th: `${EVIDENCE_SOURCE_FAMILY_COUNT} ตระกูลแหล่งหลักฐาน และ ${CDP_PLATFORM_COUNT} ปลายทางสาธารณะที่แม็ปไว้ ตัวชี้วัดสาธารณะ ทะเบียนแพลตฟอร์ม และการยืนยันภาคสนาม ป้อนเข้าสู่ชั้นวิจัย`,
+                  zh: `${EVIDENCE_SOURCE_FAMILY_COUNT} 个证据来源族群，加上 ${CDP_PLATFORM_COUNT} 个已映射公开端点。公共指标、平台名录和实地核验共同进入研究层。`,
+                })}</p>
               </div>
             </div>
             <div className="transparency-step">
               <span className="transparency-step-num">2</span>
               <div>
-                <strong>{t({ en: "7 pillars scored 0-100", th: "7 เสาหลัก ให้คะแนน 0-100", zh: "7个支柱评分0-100" })}</strong>
-                <p>{t({ en: "Each pillar converts raw metrics (PM2.5 μg/m³, crime/100K, GPP/capita, beds/10K) into a normalized 0-100 score. Higher = better for citizens.", th: "เสาหลักแต่ละอันแปลงตัวชี้วัดดิบ (PM2.5 μg/m³, อาชญากรรม/100K, GPP/หัว, เตียง/10K) เป็นคะแนน 0-100 ที่ปรับมาตรฐาน สูง = ดีกว่าสำหรับประชาชน", zh: "每个支柱将原始指标转换为标准化的0-100分。越高=对市民越好。" })}</p>
+                <strong>{t({ en: "7 pillars assessed 0-100", th: "7 เสาหลักประเมิน 0-100", zh: "7个支柱评估为0-100" })}</strong>
+                <p>{t({
+                  en: "Each pillar is a structured research assessment anchored in observed indicators and evidence items. The repo does not pretend one API feed can explain a whole city.",
+                  th: "แต่ละเสาหลักเป็นการประเมินเชิงวิจัยแบบมีโครงสร้าง ยึดกับตัวชี้วัดที่สังเกตได้และหลักฐานจริง รีโปนี้ไม่ได้แสร้งว่า API เส้นเดียวจะอธิบายเมืองทั้งเมืองได้",
+                  zh: "每个支柱都是以可观察指标和证据项为锚点的结构化研究评估。本仓库并不假装单一 API 就能解释整座城市。",
+                })}</p>
               </div>
             </div>
             <div className="transparency-step">
               <span className="transparency-step-num">3</span>
               <div>
                 <strong>{t({ en: "Weighted composite", th: "ถ่วงน้ำหนักรวม", zh: "加权综合" })}</strong>
-                <p>{t({ en: "Livability 25% because housing and transit matter most. Digital only 5% because tech is a tool, not the goal. Weights sum to 100%. No hidden adjustments.", th: "ความน่าอยู่ 25% เพราะที่อยู่และขนส่งสำคัญที่สุด ดิจิทัลเพียง 5% เพราะเทคเป็นเครื่องมือ ไม่ใช่เป้าหมาย น้ำหนักรวม 100% ไม่มีการปรับที่ซ่อนอยู่", zh: "宜居25%因为住房和交通最重要。数字仅5%因为技术是工具不是目标。权重总和100%。无隐藏调整。" })}</p>
+                <p>{t({
+                  en: "Weights sum to 100%. Livability carries 25% because daily function matters most; digital carries 5% because technology is an enabler, not the objective. No hidden adjustments.",
+                  th: "น้ำหนักรวม 100% ความน่าอยู่มี 25% เพราะการใช้ชีวิตประจำวันสำคัญที่สุด ดิจิทัลมี 5% เพราะเทคโนโลยีเป็นตัวเปิดทาง ไม่ใช่เป้าหมาย ไม่มีการปรับที่ซ่อนอยู่",
+                  zh: "权重总和为100%。宜居占25%，因为日常运转最重要；数字占5%，因为技术是赋能工具而不是目的。没有隐藏调整。",
+                })}</p>
               </div>
             </div>
             <div className="transparency-step">
               <span className="transparency-step-num">4</span>
               <div>
-                <strong>{t({ en: "Tier assignment", th: "จัดระดับ", zh: "层级分配" })}</strong>
-                <p>{t({ en: "Alpha ≥ 65 (operational, citizens feel it). Beta 45-64 (building, gaps remain). Gamma < 45 (mostly plans). Automatic — no committee picks winners.", th: "Alpha ≥ 65 (ใช้งานจริง ประชาชนรู้สึกได้) Beta 45-64 (กำลังสร้าง ยังมีช่องว่าง) Gamma < 45 (ส่วนใหญ่เป็นแผน) อัตโนมัติ — ไม่มีคณะกรรมการเลือกผู้ชนะ", zh: "Alpha≥65(运营中)。Beta 45-64(建设中)。Gamma<45(规划中)。自动分配——无委员会挑选赢家。" })}</p>
+                <strong>{t({ en: "Tier + confidence", th: "ระดับ + ความเชื่อมั่น", zh: "层级 + 置信度" })}</strong>
+                <p>{t({
+                  en: `Tier assignment is automatic once the composite is known. Confidence is reported separately so uncertainty stays visible instead of being hidden inside the score. Full method: ${SCITI_METHOD_CODE}.`,
+                  th: `เมื่อทราบคะแนนรวมแล้ว การจัดระดับเป็นอัตโนมัติ ส่วนความเชื่อมั่นจะรายงานแยก เพื่อให้ความไม่แน่นอนมองเห็นได้ ไม่ถูกซ่อนในคะแนน วิธีเต็ม: ${SCITI_METHOD_CODE}`,
+                  zh: `一旦综合分确定，层级分配即自动完成。置信度单独报告，让不确定性保持可见，而不是藏进分数里。完整方法：${SCITI_METHOD_CODE}。`,
+                })}</p>
               </div>
             </div>
           </div>

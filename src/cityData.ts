@@ -7,6 +7,7 @@
 // ---------------------------------------------------------------------------
 
 import { assignTier, computeComposite } from "./scoring.ts";
+import { classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import type { SmartCity, CityScores } from "./types.ts";
 
 export { assignTier, computeComposite } from "./scoring.ts";
@@ -29,13 +30,9 @@ function city(
   highlights: string[],
 ): SmartCity {
   const compositeScore = computeComposite(scores);
-
-  // Auto-assign dataConfidence based on metric completeness
-  const metricFields = [metrics.gppPerCapita, metrics.avgMonthlyIncome, metrics.pm25Annual,
-    metrics.hospitalBedsPer10k, metrics.crimeRatePer100k, metrics.greenCoverage];
-  const filledCount = metricFields.filter(v => v != null && v !== 0).length;
-  const dataConfidence: SmartCity["dataConfidence"] =
-    filledCount >= 5 ? "high" : filledCount >= 3 ? "medium" : "low";
+  const dataConfidence = classifyDataConfidence(
+    computeDataConfidenceScore({ metrics }),
+  );
 
   return {
     id,

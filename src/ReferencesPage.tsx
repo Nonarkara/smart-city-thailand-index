@@ -1,5 +1,6 @@
 import { dataSources } from "./evidenceData";
 import { instruments } from "./financialToolkit";
+import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_DATA_CUTOFF_ISO, SCITI_METHOD_CODE, TIER_THRESHOLDS } from "./methodologySpec";
 import { SCORING_PILLARS, computeComposite, assignTier, roundScore } from "./scoring";
 import { PILLAR_LABELS, PILLAR_WEIGHTS, PILLAR_COLORS } from "./types";
 import { WIKIMEDIA_PHOTO_CREDITS } from "./photoCredits";
@@ -88,9 +89,9 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
         <h1 className="hero-title">{t(locale, { en: "Audit Trail & References", th: "ร่องรอยการตรวจสอบและแหล่งอ้างอิง", zh: "审计轨迹与参考资料" })}</h1>
         <p className="hero-strapline">
           {t(locale, {
-            en: "Every decimal in the Smart City Thailand Index is anchored in verifiable evidence. We provide full traceability for every signal used in our calculation engine.",
-            th: "ทุกทศนิยมในดัชนีเมืองอัจฉริยะไทย ยึดโยงกับหลักฐานที่ตรวจสอบได้ เราให้ความโปร่งใสและตรวจสอบย้อนกลับได้ทุกสัญญาณที่ใช้ในเครื่องมือคำนวณ",
-            zh: "泰国智慧城市指数中的每一位小数都基于可验证的证据。我们为计算引擎中使用的每个信号提供完整的可追溯性。",
+            en: `SCITI runs on a research layer plus a deterministic aggregation layer. This page shows the provenance registry, the exact composite equation, and the evidence rules behind method ${SCITI_METHOD_CODE}.`,
+            th: `SCITI ทำงานด้วยชั้นวิจัยและชั้นการรวมคะแนนแบบกำหนดแน่นอน หน้านี้แสดงทะเบียนหลักฐาน สมการคะแนนรวมแบบตรงตัว และกฎหลักฐานของวิธี ${SCITI_METHOD_CODE}`,
+            zh: `SCITI 由研究层和确定性汇总层共同构成。本页展示溯源名录、精确综合公式，以及方法 ${SCITI_METHOD_CODE} 背后的证据规则。`,
           })}
         </p>
       </section>
@@ -124,8 +125,18 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
         <h2>{t(locale, { en: "The Scoring Engine", th: "เครื่องมือคำนวณคะแนน", zh: "评分引擎" })}</h2>
         <div className="engine-audit glass-card shadow-heavy">
           <div className="formula-box">
-             <code>Composite = Σ (Pillar_n * Weight_n) / 100</code>
+             <code>Composite = Σ (pillar score × weight) / 100</code>
           </div>
+          <div className="formula-box" style={{ marginTop: ".75rem" }}>
+             <code>Confidence = w(core coverage 65%, extended coverage 15%, provenance 10%, freshness 10%)</code>
+          </div>
+          <p style={{ fontSize: ".72rem", color: "var(--2)", lineHeight: 1.65, marginTop: "1rem" }}>
+            {t(locale, {
+              en: `Once the seven pillar scores are fixed, the composite is fully deterministic. Confidence is computed separately and does not secretly alter the score. Tier thresholds are fixed at Alpha ≥ ${TIER_THRESHOLDS.alpha}, Beta ≥ ${TIER_THRESHOLDS.beta}, Gamma < ${TIER_THRESHOLDS.beta}.`,
+              th: `เมื่อคะแนน 7 เสาหลักถูกตรึงแล้ว คะแนนรวมจะถูกคำนวณแบบกำหนดแน่นอนทั้งหมด ส่วนความเชื่อมั่นคำนวณแยกและไม่แอบเปลี่ยนคะแนน ระดับถูกตรึงที่ Alpha ≥ ${TIER_THRESHOLDS.alpha}, Beta ≥ ${TIER_THRESHOLDS.beta}, Gamma < ${TIER_THRESHOLDS.beta}`,
+              zh: `一旦七个支柱分固定，综合分即完全由确定性公式计算。置信度单独计算，不会暗中改写分数。层级阈值固定为 Alpha ≥ ${TIER_THRESHOLDS.alpha}、Beta ≥ ${TIER_THRESHOLDS.beta}、Gamma < ${TIER_THRESHOLDS.beta}。`,
+            })}
+          </p>
           <div className="weight-audit-grid">
             {SCORING_PILLARS.map(p => (
               <div key={p} className="weight-audit-row">
@@ -182,7 +193,19 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
             </div>
             <div className="compliance-item">
               <span className="c-label">{t(locale, { en: "Verification", th: "การยืนยัน", zh: "验证方式" })}</span>
-              <span className="c-value">{t(locale, { en: "Manual Field Audit + Automated API Poll", th: "ตรวจภาคสนามด้วยตนเอง + ดึงข้อมูล API อัตโนมัติ", zh: "人工实地审核 + 自动 API 采集" })}</span>
+              <span className="c-value">{t(locale, { en: "Registry-backed provenance + field verification + fixed release cut-off", th: "ทะเบียนหลักฐาน + การยืนยันภาคสนาม + วันตัดข้อมูลคงที่", zh: "溯源名录 + 实地核验 + 固定发布截点" })}</span>
+            </div>
+            <div className="compliance-item">
+              <span className="c-label">{t(locale, { en: "Source scope", th: "ขอบเขตแหล่งข้อมูล", zh: "来源范围" })}</span>
+              <span className="c-value">{t(locale, {
+                en: `${EVIDENCE_SOURCE_FAMILY_COUNT} evidence source families + ${CDP_PLATFORM_COUNT} mapped public endpoints`,
+                th: `${EVIDENCE_SOURCE_FAMILY_COUNT} ตระกูลแหล่งหลักฐาน + ${CDP_PLATFORM_COUNT} ปลายทางสาธารณะที่แม็ปไว้`,
+                zh: `${EVIDENCE_SOURCE_FAMILY_COUNT} 个证据来源族群 + ${CDP_PLATFORM_COUNT} 个已映射公开端点`,
+              })}</span>
+            </div>
+            <div className="compliance-item">
+              <span className="c-label">{t(locale, { en: "Data cut-off", th: "วันตัดข้อมูล", zh: "数据截点" })}</span>
+              <span className="c-value">{SCITI_DATA_CUTOFF_ISO.slice(0, 10)}</span>
             </div>
           </div>
         </div>

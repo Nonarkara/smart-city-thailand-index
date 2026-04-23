@@ -443,10 +443,10 @@ export default function App() {
                 </p>
                 <p>
                   {locale === "th"
-                    ? "แหล่งข้อมูล: สำนักงานสถิติแห่งชาติ (NSO) · สภาพัฒน์ (NESDC) · กรมควบคุมมลพิษ (PCD) · GISTDA · ธนาคารโลก Open Data · ADB · Open-Meteo/Copernicus · สำนักงานตำรวจแห่งชาติ · กรมการปกครอง (DOPA) · depa City Data Platform (citydata.in.th) · กระทรวงสาธารณสุข (MOPH)"
+                    ? "แหล่งข้อมูลคะแนน: สำนักงานสถิติแห่งชาติ (NSO) · สภาพัฒน์ (NESDC) · กรมควบคุมมลพิษ (PCD/Air4Thai) · GISTDA · สำนักงานตำรวจแห่งชาติ · กรมการปกครอง (DOPA) · depa registry · citydata.in.th · กระทรวงสาธารณสุข (MOPH) · BOI · ONEP · กรมป่าไม้ · Open-Meteo/Copernicus · การยืนยันภาคสนาม"
                     : locale === "zh"
-                      ? "数据来源：NSO · NESDC · PCD · GISTDA · 世界银行 · ADB · Open-Meteo/Copernicus · 泰国皇家警察 · DOPA · depa citydata.in.th · 公共卫生部。"
-                      : "Data sources: NSO · NESDC · PCD · GISTDA · World Bank Open Data · ADB · Open-Meteo/Copernicus · Royal Thai Police · DOPA · depa City Data Platform (citydata.in.th) · Ministry of Public Health (MOPH)."}
+                      ? "评分来源：NSO · NESDC · PCD/Air4Thai · GISTDA · 泰国皇家警察 · DOPA · depa 名录 · citydata.in.th · 公共卫生部 · BOI · ONEP · 皇家森林局 · Open-Meteo/Copernicus · 实地核验。"
+                      : "Scoring sources: NSO · NESDC · PCD/Air4Thai · GISTDA · Royal Thai Police · DOPA · depa registry · citydata.in.th · Ministry of Public Health · BOI · ONEP · Royal Forest Department · Open-Meteo/Copernicus · field verification."}
                 </p>
                 <p>
                   {locale === "th"

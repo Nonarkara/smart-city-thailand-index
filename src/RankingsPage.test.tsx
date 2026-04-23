@@ -1,42 +1,38 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import RankingsPage from "./RankingsPage";
 
 describe("RankingsPage", () => {
-  it("re-sorts cities within a tier when a pillar is selected", async () => {
-    const user = userEvent.setup();
-    render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
-
-    const alphaHeadings = screen.getAllByRole("heading", { level: 2, name: "Alpha" });
-    expect(alphaHeadings[0]).toBeInTheDocument();
-
-    const alphaSection = alphaHeadings[0].closest(".tier-section");
-    expect(alphaSection).not.toBeNull();
-    const initialCards = within(alphaSection as HTMLElement).getAllByRole("link");
-    expect(initialCards[0]).toHaveTextContent("Phuket Smart City");
-
-    await user.selectOptions(screen.getByRole("combobox"), "hospitality");
-
-    const sortedCards = within(alphaSection as HTMLElement).getAllByRole("link");
-    expect(sortedCards[0]).toHaveTextContent("Chiang Mai Smart Old Town");
-  });
-
-  it("replaces comparison slots one by one in side-by-side view", async () => {
+  it("re-ranks the directory when a different preset lens is selected", async () => {
     const user = userEvent.setup();
     const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
 
-    await user.click(screen.getByRole("tab", { name: "Side-by-side" }));
+    const firstRowBefore = container.querySelectorAll(".rank-row-link")[0];
+    expect(firstRowBefore).not.toBeUndefined();
+    const initialText = firstRowBefore?.textContent ?? "";
 
-    const slots = container.querySelectorAll(".compare-slot-card");
-    expect(slots).toHaveLength(5);
-    expect(within(slots[0] as HTMLElement).getByText("Phuket Smart City")).toBeInTheDocument();
-    expect(within(slots[1] as HTMLElement).getByText("Samyan Smart City")).toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "Growth, growth, growth" }));
 
-    await user.click(screen.getByRole("button", { name: /Saensuk Smart City/i }));
-    expect(within(slots[0] as HTMLElement).getByText("Saensuk Smart City")).toBeInTheDocument();
-    expect(within(slots[1] as HTMLElement).getByText("Samyan Smart City")).toBeInTheDocument();
+    const firstRowAfter = container.querySelectorAll(".rank-row-link")[0];
+    expect(firstRowAfter?.textContent).not.toBe(initialText);
+  });
 
-    await user.click(screen.getByRole("button", { name: /Phra Ram 4 Smart City/i }));
-    expect(within(slots[1] as HTMLElement).getByText("Phra Ram 4 Smart City")).toBeInTheDocument();
+  it("enters compare view after selecting cities in compare mode", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
+
+    await user.click(screen.getByRole("button", { name: "Compare mode" }));
+    const rankLinks = Array.from(container.querySelectorAll(".rank-row-link")) as HTMLAnchorElement[];
+    await user.click(rankLinks.find(link => /phuket smart city/i.test(link.textContent ?? "")) as HTMLAnchorElement);
+    await user.click(rankLinks.find(link => /samyan smart city/i.test(link.textContent ?? "")) as HTMLAnchorElement);
+
+    expect(screen.getByText("2 selected")).toBeInTheDocument();
+
+    await user.click(container.querySelector(".compare-launch-bar .btn-primary") as HTMLButtonElement);
+
+    expect(screen.getByRole("button", { name: /back to directory/i })).toBeInTheDocument();
+    expect(container.querySelectorAll(".compare-city-card")).toHaveLength(2);
+    expect(screen.getAllByText(/phuket smart city/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/samyan smart city/i)[0]).toBeInTheDocument();
   });
 });

@@ -1,6 +1,22 @@
+import { cdpSources } from "./cdpData";
+import { dataSources } from "./evidenceData";
+import {
+  CDP_PLATFORM_COUNT,
+  CORE_METRIC_KEYS,
+  EVIDENCE_SOURCE_FAMILY_COUNT,
+  EXTENDED_METRIC_KEYS,
+  FIELD_SOURCE_COUNT,
+  GOVERNMENT_SOURCE_COUNT,
+  INTERNATIONAL_SOURCE_COUNT,
+  SATELLITE_SOURCE_COUNT,
+  SCITI_DATA_CUTOFF_ISO,
+  SCITI_METHOD_CODE,
+  SCORE_DOMAIN,
+  TIER_THRESHOLDS,
+} from "./methodologySpec";
 import { SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
-import { PILLAR_LABELS, PILLAR_COLORS, PILLAR_WEIGHTS } from "./types";
+import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS } from "./types";
 import { translate } from "./cityPresentation";
 
 interface Props {
@@ -11,151 +27,151 @@ type TriLingual = { en: string; th: string; zh: string };
 
 const pillarDescriptions: Record<ScoringPillar, TriLingual & { signals: TriLingual[] }> = {
   livability: {
-    en: "Housing quality, infrastructure reliability, transit access, daily convenience. Can a family live here comfortably? Is commuting bearable? Does the plumbing work?",
-    th: "คุณภาพที่อยู่อาศัย ความน่าเชื่อถือของโครงสร้างพื้นฐาน การเข้าถึงขนส่ง ความสะดวกในชีวิตประจำวัน ครอบครัวอยู่ที่นี่ได้สบายไหม?",
-    zh: "住房质量、基础设施可靠性、交通可达性与日常便利度。一个家庭能不能舒舒服服住在这里？通勤会不会把人逼疯？水电到底稳不稳？",
+    en: "Daily urban function: housing, transit, utilities, and whether routine life works without heroic effort.",
+    th: "การทำงานของเมืองในชีวิตประจำวัน: ที่อยู่อาศัย การเดินทาง สาธารณูปโภค และชีวิตประจำวันที่ไม่ต้องใช้ความพยายามเกินปกติ",
+    zh: "日常城市功能：住房、出行、公用事业，以及普通生活是否能正常运转。",
     signals: [
-      { en: "Housing affordability index", th: "ดัชนีความสามารถซื้อที่อยู่อาศัย", zh: "住房可负担指数" },
-      { en: "Transit coverage and frequency", th: "ความครอบคลุมและความถี่ขนส่ง", zh: "公交覆盖与频次" },
-      { en: "Infrastructure reliability", th: "ความน่าเชื่อถือโครงสร้างพื้นฐาน", zh: "基础设施可靠性" },
-      { en: "Utilities uptime", th: "ความเสถียรสาธารณูปโภค", zh: "公共事业运行率" },
-      { en: "Walkability score", th: "คะแนนเดินเท้า", zh: "步行友好度" },
+      { en: "Housing and affordability", th: "ที่อยู่อาศัยและความสามารถในการจ่าย", zh: "住房与可负担性" },
+      { en: "Transit access", th: "การเข้าถึงขนส่ง", zh: "交通可达性" },
+      { en: "Infrastructure reliability", th: "ความเชื่อถือได้ของโครงสร้างพื้นฐาน", zh: "基础设施可靠性" },
+      { en: "Utility continuity", th: "ความต่อเนื่องของสาธารณูปโภค", zh: "公共服务连续性" },
     ],
   },
   economy: {
-    en: "Jobs, income growth, business environment, cost of living balance. Can a young graduate find meaningful work? Can a family afford to raise children?",
-    th: "งาน การเติบโตของรายได้ สภาพแวดล้อมธุรกิจ ความสมดุลค่าครองชีพ บัณฑิตจบใหม่หางานที่มีความหมายได้ไหม? ครอบครัวมีกำลังเลี้ยงลูกไหม?",
-    zh: "工作、收入增长、营商环境与生活成本的平衡。年轻毕业生能不能找到像样的工作？一个家庭养不养得起孩子？",
+    en: "Productive capacity and earning power: output, income, labor scale, and the city's ability to absorb capital honestly.",
+    th: "ศักยภาพการผลิตและกำลังหารายได้: ผลผลิต รายได้ ขนาดแรงงาน และความสามารถของเมืองในการรับทุนอย่างซื่อสัตย์",
+    zh: "生产能力与收入能力：产出、收入、劳动力规模，以及城市真实吸纳资本的能力。",
     signals: [
-      { en: "GPP per capita", th: "ผลิตภัณฑ์มวลรวมจังหวัดต่อหัว", zh: "人均地区生产总值" },
-      { en: "Employment rate", th: "อัตราการมีงานทำ", zh: "就业率" },
-      { en: "Income growth trend", th: "แนวโน้มรายได้", zh: "收入增长趋势" },
-      { en: "Business formation rate", th: "อัตราการจดทะเบียนธุรกิจ", zh: "企业创建率" },
-      { en: "Cost-to-income ratio", th: "สัดส่วนค่าใช้จ่ายต่อรายได้", zh: "生活成本与收入比" },
+      { en: "GPP per capita", th: "GPP ต่อหัว", zh: "人均 GPP" },
+      { en: "Monthly income", th: "รายได้ต่อเดือน", zh: "月收入" },
+      { en: "Growth trajectory", th: "ทิศทางการเติบโต", zh: "增长趋势" },
+      { en: "FDI and industry mix", th: "FDI และโครงสร้างอุตสาหกรรม", zh: "FDI 与产业结构" },
     ],
   },
   safety: {
-    en: "Crime rates, disaster resilience, road safety, personal security perception. Do women feel safe walking at night? Are children safe going to school?",
-    th: "อัตราอาชญากรรม ความยืดหยุ่นต่อภัยพิบัติ ความปลอดภัยบนถนน การรับรู้ความปลอดภัยส่วนบุคคล ผู้หญิงรู้สึกปลอดภัยเดินตอนกลางคืนไหม?",
-    zh: "犯罪率、灾害韧性、道路安全与个人安全感。女性晚上走路安不安全？孩子上学路上安不安全？",
+    en: "The city's constraint stack: crime exposure, emergency readiness, and whether daily movement feels secure.",
+    th: "ชุดข้อจำกัดของเมือง: ความเสี่ยงอาชญากรรม ความพร้อมฉุกเฉิน และการเดินทางในชีวิตจริงรู้สึกปลอดภัยหรือไม่",
+    zh: "城市的约束栈：犯罪暴露、应急准备，以及日常出行是否让人感到安全。",
     signals: [
-      { en: "Reported crime rate", th: "อัตราอาชญากรรมที่แจ้งเหตุ", zh: "报案犯罪率" },
-      { en: "Road fatality rate", th: "อัตราเสียชีวิตบนถนน", zh: "道路死亡率" },
-      { en: "Natural disaster preparedness", th: "ความพร้อมรับมือภัยพิบัติ", zh: "自然灾害应对准备" },
-      { en: "Personal safety perception", th: "การรับรู้ความปลอดภัยส่วนบุคคล", zh: "个人安全感" },
-      { en: "Emergency response time", th: "เวลาตอบสนองฉุกเฉิน", zh: "应急响应时间" },
+      { en: "Crime per 100K", th: "อาชญากรรมต่อแสนคน", zh: "每十万人犯罪率" },
+      { en: "Emergency response proxies", th: "ตัวแทนการตอบสนองฉุกเฉิน", zh: "应急响应代理指标" },
+      { en: "Disaster preparedness", th: "ความพร้อมรับภัยพิบัติ", zh: "灾害准备度" },
+      { en: "Operational safety systems", th: "ระบบความปลอดภัยที่ใช้งานจริง", zh: "实际运行的安全系统" },
     ],
   },
   wellbeing: {
-    en: "Healthcare access, education quality, mental health support, birth rate confidence. Does the city give people enough hope to start a family?",
-    th: "การเข้าถึงสาธารณสุข คุณภาพการศึกษา การสนับสนุนสุขภาพจิต ความมั่นใจในการมีลูก เมืองให้ความหวังเพียงพอที่จะสร้างครอบครัวไหม?",
-    zh: "医疗可及性、教育质量、心理健康支持与生育信心。这个城市是否给人足够的希望去建立家庭？",
+    en: "Public-service depth: health access, education-serving capacity, and whether the city can sustain human development after the ribbon-cutting.",
+    th: "ความลึกของบริการสาธารณะ: การเข้าถึงสุขภาพ ศักยภาพด้านการศึกษา และเมืองสามารถพัฒนาคนต่อได้หลังตัดริบบิ้นหรือไม่",
+    zh: "公共服务深度：医疗可及性、教育承载力，以及剪彩之后城市是否还能持续支撑人的发展。",
     signals: [
-      { en: "Hospital beds per capita", th: "เตียงโรงพยาบาลต่อประชากร", zh: "人均病床数" },
-      { en: "Education attainment", th: "ระดับการศึกษา", zh: "受教育程度" },
-      { en: "Mental health service access", th: "การเข้าถึงบริการสุขภาพจิต", zh: "心理健康服务可及性" },
-      { en: "Birth rate trend", th: "แนวโน้มอัตราการเกิด", zh: "出生率趋势" },
-      { en: "Life satisfaction index", th: "ดัชนีความพึงพอใจในชีวิต", zh: "生活满意度指数" },
+      { en: "Hospital beds and care access", th: "เตียงและการเข้าถึงการดูแล", zh: "病床与医疗可及性" },
+      { en: "Education-serving capacity", th: "ศักยภาพรองรับการศึกษา", zh: "教育承载能力" },
+      { en: "Service continuity", th: "ความต่อเนื่องของบริการ", zh: "服务连续性" },
+      { en: "Family-friendly conditions", th: "เงื่อนไขที่เป็นมิตรต่อครอบครัว", zh: "家庭友好条件" },
     ],
   },
   environment: {
-    en: "Air quality, green space, water quality, waste management, climate resilience. Can you breathe? Is there nature nearby? Does the city flood every year?",
-    th: "คุณภาพอากาศ พื้นที่สีเขียว คุณภาพน้ำ การจัดการขยะ ความยืดหยุ่นต่อสภาพอากาศ หายใจได้ไหม? มีธรรมชาติใกล้ๆ ไหม? เมืองน้ำท่วมทุกปีไหม?",
-    zh: "空气质量、绿地、水质、垃圾管理与气候韧性。你能不能好好呼吸？附近有没有自然空间？这座城市是不是每年都淹？",
+    en: "Environmental stress and resilience: air, water, green coverage, and whether the ecological baseline supports healthy urban life.",
+    th: "ความกดดันและความยืดหยุ่นด้านสิ่งแวดล้อม: อากาศ น้ำ พื้นที่สีเขียว และฐานนิเวศรองรับชีวิตเมืองที่ดีหรือไม่",
+    zh: "环境压力与韧性：空气、水、绿地，以及生态底盘是否支撑健康的城市生活。",
     signals: [
-      { en: "Annual PM2.5 average", th: "ค่าเฉลี่ย PM2.5 รายปี", zh: "年均 PM2.5" },
-      { en: "Green space per capita", th: "พื้นที่สีเขียวต่อประชากร", zh: "人均绿地面积" },
-      { en: "Water quality index", th: "ดัชนีคุณภาพน้ำ", zh: "水质指数" },
-      { en: "Waste management coverage", th: "ความครอบคลุมจัดการขยะ", zh: "垃圾管理覆盖率" },
-      { en: "Flood risk assessment", th: "การประเมินความเสี่ยงน้ำท่วม", zh: "洪水风险评估" },
+      { en: "Annual PM2.5", th: "PM2.5 รายปี", zh: "年均 PM2.5" },
+      { en: "Water quality", th: "คุณภาพน้ำ", zh: "水质" },
+      { en: "Green and forest coverage", th: "พื้นที่สีเขียวและป่าไม้", zh: "绿地与森林覆盖" },
+      { en: "Observed environmental trajectory", th: "ทิศทางสิ่งแวดล้อมที่สังเกตได้", zh: "可观察的环境趋势" },
     ],
   },
   hospitality: {
-    en: "Cultural richness, community warmth, social belonging, tolerance, tourism appeal. Do people feel welcome? Is there life beyond work? Does the city have soul?",
-    th: "ความอุดมทางวัฒนธรรม ความอบอุ่นของชุมชน ความเป็นส่วนหนึ่งทางสังคม ความอดทน เมืองมีจิตวิญญาณไหม? คนรู้สึกเป็นที่ต้อนรับไหม?",
-    zh: "文化丰度、社区温度、归属感、包容度与旅游吸引力。人会不会觉得自己受到欢迎？这座城市除了工作还有没有生活？它有没有灵魂？",
+    en: "Belonging and civic warmth: the city's cultural legibility, social welcome, and whether people want to stay rather than merely pass through.",
+    th: "ความรู้สึกเป็นส่วนหนึ่งและความอบอุ่นของเมือง: ความชัดเจนทางวัฒนธรรม การต้อนรับทางสังคม และผู้คนอยากอยู่ต่อหรือแค่ผ่านไป",
+    zh: "归属感与城市温度：文化可识别性、社会欢迎度，以及人们是否愿意留下而不只是路过。",
     signals: [
-      { en: "Cultural venue density", th: "ความหนาแน่นพื้นที่วัฒนธรรม", zh: "文化场所密度" },
-      { en: "Community event frequency", th: "ความถี่กิจกรรมชุมชน", zh: "社区活动频率" },
-      { en: "Social cohesion index", th: "ดัชนีความสมานฉันท์ทางสังคม", zh: "社会凝聚力指数" },
-      { en: "Tourism satisfaction", th: "ความพึงพอใจนักท่องเที่ยว", zh: "旅游满意度" },
-      { en: "Belonging perception", th: "การรับรู้ความเป็นส่วนหนึ่ง", zh: "归属感" },
+      { en: "Cultural intensity", th: "ความเข้มข้นทางวัฒนธรรม", zh: "文化强度" },
+      { en: "Community programming", th: "กิจกรรมชุมชน", zh: "社区活动" },
+      { en: "Tourism experience quality", th: "คุณภาพประสบการณ์ท่องเที่ยว", zh: "旅游体验质量" },
+      { en: "Field evidence of civic life", th: "หลักฐานภาคสนามของชีวิตเมือง", zh: "城市生活的实地证据" },
     ],
   },
   digital: {
-    en: "Bonus pillar. Extra points for cities that actually use digital technology to improve outcomes — not just having a website. Smart sensors, IoT, data platforms, AI applications that citizens can feel.",
-    th: "เสาหลักโบนัส คะแนนเพิ่มเติมสำหรับเมืองที่ใช้เทคโนโลยีดิจิทัลเพื่อปรับปรุงผลลัพธ์จริง ไม่ใช่แค่มีเว็บไซต์ เซ็นเซอร์อัจฉริยะ IoT แพลตฟอร์มข้อมูล AI ที่ประชาชนสัมผัสได้",
-    zh: "加分支柱。只有真正用数字技术改善结果的城市才得分，不是光有网站就算。重点是市民感受得到的智能传感器、IoT、数据平台与 AI 应用。",
+    en: "Digital is an enabling pillar, not a halo effect: data rails, IoT, service usage, and whether technology changes outcomes rather than headlines.",
+    th: "ดิจิทัลเป็นเสาหลักที่เปิดทาง ไม่ใช่รัศมี: รางข้อมูล IoT การใช้งานบริการ และเทคโนโลยีเปลี่ยนผลลัพธ์ ไม่ใช่แค่พาดหัว",
+    zh: "数字是赋能支柱，不是光环：数据底座、IoT、服务使用，以及技术是否改变结果而不只是制造标题。",
     signals: [
-      { en: "Smart tech deployment count", th: "จำนวนเทคโนโลยีที่ใช้งานจริง", zh: "智能技术部署数量" },
-      { en: "Digital service adoption rate", th: "อัตราการใช้บริการดิจิทัล", zh: "数字服务采用率" },
-      { en: "IoT sensor coverage", th: "ความครอบคลุมเซ็นเซอร์ IoT", zh: "IoT 传感器覆盖率" },
-      { en: "Open data platform maturity", th: "วุฒิภาวะแพลตฟอร์มข้อมูลเปิด", zh: "开放数据平台成熟度" },
-      { en: "Citizen digital satisfaction", th: "ความพึงพอใจดิจิทัลของประชาชน", zh: "市民数字满意度" },
+      { en: "Data platform maturity", th: "วุฒิภาวะของแพลตฟอร์มข้อมูล", zh: "数据平台成熟度" },
+      { en: "Operational IoT systems", th: "ระบบ IoT ที่ใช้งานจริง", zh: "实际运行的 IoT 系统" },
+      { en: "Citizen-facing service uptake", th: "การใช้บริการที่ประชาชนสัมผัสได้", zh: "面向市民的服务采用" },
+      { en: "Interoperability evidence", th: "หลักฐานการเชื่อมต่อกันได้", zh: "互操作性证据" },
     ],
   },
 };
 
-const dataFreshness: Array<{
-  source: TriLingual;
-  frequency: TriLingual;
-  lastUpdate: TriLingual;
-  status: "current" | "live";
-}> = [
+const methodSnapshots: Array<{ label: TriLingual; value: TriLingual }> = [
   {
-    source: { en: "NSO Thailand", th: "สำนักงานสถิติแห่งชาติ", zh: "泰国国家统计局" },
-    frequency: { en: "Annual", th: "รายปี", zh: "年度" },
-    lastUpdate: { en: "April 2025", th: "เม.ย. 2568", zh: "2025 年 4 月" },
-    status: "current",
+    label: { en: "Method code", th: "รหัสวิธีวิจัย", zh: "方法代码" },
+    value: { en: SCITI_METHOD_CODE, th: SCITI_METHOD_CODE, zh: SCITI_METHOD_CODE },
   },
   {
-    source: { en: "GISTDA Satellite", th: "ดาวเทียม GISTDA", zh: "GISTDA 卫星" },
-    frequency: { en: "Weekly", th: "รายสัปดาห์", zh: "每周" },
-    lastUpdate: { en: "March 2026", th: "มี.ค. 2569", zh: "2026 年 3 月" },
-    status: "live",
+    label: { en: "Data cut-off", th: "วันตัดข้อมูล", zh: "数据截点" },
+    value: { en: "2026-04-04", th: "2026-04-04", zh: "2026-04-04" },
   },
   {
-    source: { en: "Open-Meteo", th: "Open-Meteo", zh: "Open-Meteo" },
-    frequency: { en: "Hourly", th: "รายชั่วโมง", zh: "每小时" },
-    lastUpdate: { en: "Live", th: "เรียลไทม์", zh: "实时" },
-    status: "live",
+    label: { en: "Evidence registry", th: "ทะเบียนหลักฐาน", zh: "证据名录" },
+    value: {
+      en: `${EVIDENCE_SOURCE_FAMILY_COUNT} source families`,
+      th: `${EVIDENCE_SOURCE_FAMILY_COUNT} ตระกูลแหล่งข้อมูล`,
+      zh: `${EVIDENCE_SOURCE_FAMILY_COUNT} 个来源族群`,
+    },
   },
   {
-    source: { en: "depa City Platform", th: "แพลตฟอร์มเมือง depa", zh: "depa 城市平台" },
-    frequency: { en: "Real-time", th: "เรียลไทม์", zh: "实时" },
-    lastUpdate: { en: "Live", th: "เรียลไทม์", zh: "实时" },
-    status: "live",
+    label: { en: "Platform map", th: "แผนที่แพลตฟอร์ม", zh: "平台映射" },
+    value: {
+      en: `${CDP_PLATFORM_COUNT} public endpoints`,
+      th: `${CDP_PLATFORM_COUNT} ปลายทางสาธารณะ`,
+      zh: `${CDP_PLATFORM_COUNT} 个公开端点`,
+    },
   },
   {
-    source: { en: "Royal Thai Police", th: "สำนักงานตำรวจแห่งชาติ", zh: "泰国皇家警察" },
-    frequency: { en: "Annual", th: "รายปี", zh: "年度" },
-    lastUpdate: { en: "Jan 2026", th: "ม.ค. 2569", zh: "2026 年 1 月" },
-    status: "current",
+    label: { en: "Score domain", th: "ช่วงคะแนน", zh: "分数区间" },
+    value: {
+      en: `${SCORE_DOMAIN.min}-${SCORE_DOMAIN.max}`,
+      th: `${SCORE_DOMAIN.min}-${SCORE_DOMAIN.max}`,
+      zh: `${SCORE_DOMAIN.min}-${SCORE_DOMAIN.max}`,
+    },
+  },
+  {
+    label: { en: "Tier rule", th: "กฎจัดระดับ", zh: "层级规则" },
+    value: {
+      en: `α >= ${TIER_THRESHOLDS.alpha}, β >= ${TIER_THRESHOLDS.beta}`,
+      th: `α >= ${TIER_THRESHOLDS.alpha}, β >= ${TIER_THRESHOLDS.beta}`,
+      zh: `α >= ${TIER_THRESHOLDS.alpha}, β >= ${TIER_THRESHOLDS.beta}`,
+    },
   },
 ];
 
-const EXTERNAL_SOURCES: Array<{ name: TriLingual; url: string; label: TriLingual }> = [
-  {
-    name: { en: "NSO Thailand", th: "สำนักงานสถิติแห่งชาติ", zh: "泰国国家统计局" },
-    url: "http://www.nso.go.th/",
-    label: { en: "Socio-economic Stats", th: "สถิติเศรษฐกิจสังคม", zh: "社会经济统计" },
-  },
-  {
-    name: { en: "GISTDA", th: "GISTDA", zh: "GISTDA" },
-    url: "https://www.gistda.or.th/",
-    label: { en: "Satellite / Environment", th: "ดาวเทียม / สิ่งแวดล้อม", zh: "卫星与环境" },
-  },
-  {
-    name: { en: "Air4Thai", th: "Air4Thai", zh: "Air4Thai" },
-    url: "http://air4thai.pcd.go.th/",
-    label: { en: "Real-time Air Quality", th: "คุณภาพอากาศเรียลไทม์", zh: "实时空气质量" },
-  },
-  {
-    name: { en: "depa City Platform", th: "แพลตฟอร์มเมือง depa", zh: "depa 城市平台" },
-    url: "https://smartcitythailand.com",
-    label: { en: "Certified Project API", th: "API โครงการที่ได้รับการรับรอง", zh: "认证项目 API" },
-  },
-];
+const evidenceHighlightIds = ["nso", "nesdc", "pcd", "gistda", "rtp", "moph", "boi", "onep", "rfd", "field"];
+const platformHighlightIds = ["data-go-th", "citydata-in-th", "air4thai", "dopa-stat", "tmd"];
+
+const evidenceHighlights = evidenceHighlightIds
+  .map(id => dataSources.find(source => source.id === id))
+  .filter((source): source is (typeof dataSources)[number] => Boolean(source));
+
+const platformHighlights = platformHighlightIds
+  .map(id => cdpSources.find(source => source.id === id))
+  .filter((source): source is (typeof cdpSources)[number] => Boolean(source));
+
+const platformHighlightZh: Record<string, string> = {
+  "data-go-th": "泰国政府开放数据门户，聚合各部委和地方单位的数据集，可按省份和行政区检索。",
+  "citydata-in-th": "depa 的智慧城市数据平台，汇集项目、传感器与城市仪表板入口。",
+  "air4thai": "污染控制部门的实时空气质量平台，提供 PM2.5、AQI 及历史监测记录。",
+  "dopa-stat": "DOPA 户籍人口统计平台，提供省、县、分区层级的人口与迁移数据。",
+  "tmd": "泰国气象局实时天气平台，提供温度、湿度、降雨与预报数据。",
+};
+
+function formatIsoDate(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return date.toISOString().slice(0, 10);
+}
 
 export default function MethodologyPage({ locale }: Props) {
   return (
@@ -163,55 +179,56 @@ export default function MethodologyPage({ locale }: Props) {
       <section className="section methodology-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "Methodology", th: "วิธีการ", zh: "方法论" })}</p>
         <h1 className="hero-title">
-          {translate(locale, { en: "The Reality Blueprint", th: "พิมพ์เขียวแห่งความจริง", zh: "现实之蓝图" })}
+          {translate(locale, {
+            en: "Scoring, evidence, and uncertainty",
+            th: "คะแนน หลักฐาน และความไม่แน่นอน",
+            zh: "评分、证据与不确定性",
+          })}
         </h1>
         <p className="hero-strapline">
           {translate(locale, {
-            en: "Decoding Thai cities through hard data, not vibes. Built on the SLIC methodology, calibrated specifically for Thailand's unique data infrastructure.",
-            th: "เราถอดรหัสเมืองไทยผ่านข้อมูล ไม่ใช่ความรู้สึก ดัชนีนี้สร้างขึ้นจากวิธีการ SLIC ที่ปรับให้เหมาะกับโครงสร้างข้อมูลของไทยโดยเฉพาะ",
-            zh: "我们通过数据而非直觉来解读泰国城市。该指数基于 SLIC 方法论，并专门针对泰国的数据结构进行了优化。",
+            en: "SCITI is a two-layer model. Research assigns seven pillar scores from auditable metrics, evidence items, and field verification. Deterministic mathematics then aggregates those pillar scores into a composite, tier, and contribution breakdown.",
+            th: "SCITI เป็นโมเดลสองชั้น งานวิจัยกำหนดคะแนน 7 เสาหลักจากตัวชี้วัดที่ตรวจสอบได้ หลักฐาน และการยืนยันภาคสนาม จากนั้นคณิตศาสตร์แบบกำหนดแน่นอนจะรวมคะแนนเหล่านั้นเป็นคะแนนรวม ระดับ และการแยกส่วนการมีส่วนร่วม",
+            zh: "SCITI 是一个双层模型。研究层先根据可审计指标、证据项与实地核验给出七个支柱分数；随后由确定性的数学层将这些分数汇总为综合分、层级和贡献分解。",
           })}
         </p>
       </section>
 
-      {/* ─── SIGNAL FRESHNESS HUD ─── */}
       <section className="section reveal stagger-1 visible">
         <div className="methodology-hud shadow-premium">
           <div className="hud-header">
-            <span className="hud-dot animate-pulse" />
-            <h2 className="hud-title">{translate(locale, { en: "Data Stream Status", th: "สถานะการรับส่งข้อมูล", zh: "数据流状态" })}</h2>
+            <span className="hud-dot" />
+            <h2 className="hud-title">{translate(locale, { en: "Method Snapshot", th: "สรุปวิธีการ", zh: "方法快照" })}</h2>
           </div>
           <div className="hud-grid">
-            {dataFreshness.map((f, i) => (
-              <div key={i} className="hud-item">
-                <span className="hud-label">{translate(locale, f.source)}</span>
-                <span className="hud-value">{translate(locale, f.lastUpdate)}</span>
-                <span className={`hud-badge badge-${f.status}`}>{translate(locale, f.frequency)}</span>
+            {methodSnapshots.map(item => (
+              <div key={item.label.en} className="hud-item">
+                <span className="hud-label">{translate(locale, item.label)}</span>
+                <span className="hud-value">{translate(locale, item.value)}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── SIGNAL MATRIX ─── */}
       <section className="section reveal stagger-2 visible">
-        <p className="eyebrow">{translate(locale, { en: "Signal Matrix", th: "เมทริกซ์สัญญาณ", zh: "信号矩阵" })}</p>
-        <h2>{translate(locale, { en: "How we calculate", th: "เราคำนวณอย่างไร", zh: "我们如何计算" })}</h2>
+        <p className="eyebrow">{translate(locale, { en: "Pillar Model", th: "แบบจำลองเสาหลัก", zh: "支柱模型" })}</p>
+        <h2>{translate(locale, { en: "Seven pillars, fixed weights", th: "7 เสาหลัก น้ำหนักคงที่", zh: "七个支柱，固定权重" })}</h2>
 
         <div className="methodology-pillars">
-          {SCORING_PILLARS.map(p => {
-            const desc = pillarDescriptions[p];
+          {SCORING_PILLARS.map(pillar => {
+            const desc = pillarDescriptions[pillar];
             return (
-              <div key={p} className="methodology-pillar-card glass-card shadow-premium">
+              <div key={pillar} className="methodology-pillar-card glass-card shadow-premium">
                 <div className="methodology-pillar-header">
-                  <span className="methodology-pillar-dot" style={{ background: PILLAR_COLORS[p] }} />
-                  <span className="methodology-pillar-name">{PILLAR_LABELS[locale][p]}</span>
-                  <span className="methodology-pillar-weight">{PILLAR_WEIGHTS[p]}%</span>
+                  <span className="methodology-pillar-dot" style={{ background: PILLAR_COLORS[pillar] }} />
+                  <span className="methodology-pillar-name">{PILLAR_LABELS[locale][pillar]}</span>
+                  <span className="methodology-pillar-weight">{PILLAR_WEIGHTS[pillar]}%</span>
                 </div>
                 <p className="methodology-pillar-desc">{translate(locale, desc)}</p>
                 <div className="methodology-pillar-signals">
-                  {desc.signals.map((s, i) => (
-                    <span key={i} className="signal-chip">{translate(locale, s)}</span>
+                  {desc.signals.map(signal => (
+                    <span key={signal.en} className="signal-chip">{translate(locale, signal)}</span>
                   ))}
                 </div>
                 <div className="pillar-signal-flow" />
@@ -221,94 +238,158 @@ export default function MethodologyPage({ locale }: Props) {
         </div>
       </section>
 
-      {/* ─── TIER THRESHOLDS ─── */}
       <section className="section reveal stagger-3 visible">
-        <p className="eyebrow">{translate(locale, { en: "Performance Tiers", th: "เกณฑ์การจัดกลุ่ม", zh: "分层阈值" })}</p>
-        <h2>Alpha · Beta · Gamma</h2>
+        <p className="eyebrow">{translate(locale, { en: "Mathematics", th: "คณิตศาสตร์", zh: "数学" })}</p>
+        <h2>{translate(locale, { en: "What the code computes exactly", th: "สิ่งที่โค้ดคำนวณแบบตรงตัว", zh: "代码究竟计算什么" })}</h2>
         <div className="threshold-hud glass-card shadow-heavy">
           <div className="threshold-row threshold-alpha">
-            <span className="threshold-symbol">α</span>
+            <span className="threshold-symbol">1</span>
             <div className="threshold-content">
-              <span className="threshold-name">Alpha</span>
+              <span className="threshold-name">{translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}</span>
               <span className="threshold-desc">
                 {translate(locale, {
-                  en: "Operational advanced smart city",
-                  th: "เมืองอัจฉริยะที่ฉลาดจริง น่าอยู่จริง (Operational)",
-                  zh: "真正智慧，也真正宜居 (Operational)",
+                  en: `Composite = (${SCORING_PILLARS.map(pillar => `${PILLAR_SHORT_LABELS.en[pillar]} x ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
+                  th: `คะแนนรวม = (${SCORING_PILLARS.map(pillar => `${PILLAR_SHORT_LABELS.th[pillar]} x ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
+                  zh: `综合分 = (${SCORING_PILLARS.map(pillar => `${PILLAR_SHORT_LABELS.zh[pillar]} x ${PILLAR_WEIGHTS[pillar]}`).join(" + ")}) / 100`,
                 })}
               </span>
             </div>
-            <span className="threshold-range">≥ 65.0</span>
+            <span className="threshold-range">{translate(locale, { en: "Rounded to 0.1", th: "ปัดถึง 0.1", zh: "保留到 0.1" })}</span>
           </div>
           <div className="threshold-row threshold-beta">
-            <span className="threshold-symbol">β</span>
+            <span className="threshold-symbol">2</span>
             <div className="threshold-content">
-              <span className="threshold-name">Beta</span>
+              <span className="threshold-name">{translate(locale, { en: "Confidence score", th: "คะแนนความเชื่อมั่น", zh: "置信得分" })}</span>
               <span className="threshold-desc">
                 {translate(locale, {
-                  en: "Building / Emerging infrastructure",
-                  th: "กำลังดำเนินการ มีผลลัพธ์บางส่วน (Emerging)",
-                  zh: "推进中，已有部分成果 (Emerging)",
+                  en: "Confidence is separate from the composite. It is a weighted average of core metric coverage (65%), extended indicator coverage (15%), provenance density (10%), and freshness against the release cut-off (10%).",
+                  th: "คะแนนความเชื่อมั่นแยกจากคะแนนรวม คำนวณจากค่าเฉลี่ยถ่วงน้ำหนักของความครบถ้วนตัวชี้วัดหลัก (65%) ตัวชี้วัดเสริม (15%) ความหนาแน่นของหลักฐาน (10%) และความสดใหม่เทียบวันตัดข้อมูล (10%)",
+                  zh: "置信得分与综合分分离。它是核心指标覆盖率（65%）、扩展指标覆盖率（15%）、溯源密度（10%）和相对发布截点的新鲜度（10%）的加权平均。",
                 })}
               </span>
             </div>
-            <span className="threshold-range">45.0 – 64.9</span>
+            <span className="threshold-range">{translate(locale, { en: "No hidden penalty", th: "ไม่มีโทษแฝง", zh: "没有隐藏惩罚" })}</span>
           </div>
           <div className="threshold-row threshold-gamma">
-            <span className="threshold-symbol">γ</span>
+            <span className="threshold-symbol">3</span>
             <div className="threshold-content">
-              <span className="threshold-name">Gamma</span>
+              <span className="threshold-name">{translate(locale, { en: "Tier assignment", th: "การจัดระดับ", zh: "层级分配" })}</span>
               <span className="threshold-desc">
                 {translate(locale, {
-                  en: "Planning or foundation stage",
-                  th: "เริ่มต้นมาก หรือมีแต่แผน (Foundation)",
-                  zh: "非常早期，或只有规划 (Foundation)",
+                  en: `Alpha >= ${TIER_THRESHOLDS.alpha}. Beta ${TIER_THRESHOLDS.beta}-${TIER_THRESHOLDS.alpha - 0.1}. Gamma < ${TIER_THRESHOLDS.beta}. Once pillar scores are fixed, tier assignment is automatic.`,
+                  th: `Alpha >= ${TIER_THRESHOLDS.alpha} Beta ${TIER_THRESHOLDS.beta}-${(TIER_THRESHOLDS.alpha - 0.1).toFixed(1)} Gamma < ${TIER_THRESHOLDS.beta} เมื่อตรึงคะแนนเสาหลักแล้ว การจัดระดับเป็นอัตโนมัติ`,
+                  zh: `Alpha >= ${TIER_THRESHOLDS.alpha}，Beta ${TIER_THRESHOLDS.beta}-${(TIER_THRESHOLDS.alpha - 0.1).toFixed(1)}，Gamma < ${TIER_THRESHOLDS.beta}。一旦支柱分固定，层级分配即自动完成。`,
                 })}
               </span>
             </div>
-            <span className="threshold-range">{"< 45.0"}</span>
+            <span className="threshold-range">{translate(locale, { en: "Deterministic", th: "กำหนดแน่นอน", zh: "确定性" })}</span>
           </div>
         </div>
       </section>
 
-      {/* ─── WEIGHTING & LIMITATIONS ─── */}
-      <section className="reveal stagger-4 visible" style={{ marginTop: '3rem', borderTop: '1px solid var(--5)', paddingTop: '2rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+      <section className="reveal stagger-4 visible" style={{ marginTop: "3rem", borderTop: "1px solid var(--5)", paddingTop: "2rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
           <div>
-            <h3>{translate(locale, { en: "Citizen-Centric Weighting", th: "การถ่วงน้ำหนักโดยยึดพลเมือง", zh: "以公民为中心的权重分配" })}</h3>
-            <p style={{ fontSize: '.75rem', color: 'var(--2)', lineHeight: 1.6 }}>
+            <h3>{translate(locale, { en: "What is deterministic", th: "สิ่งที่กำหนดแน่นอน", zh: "哪些部分是确定性的" })}</h3>
+            <p style={{ fontSize: ".75rem", color: "var(--2)", lineHeight: 1.6 }}>
               {translate(locale, {
-                en: "Unlike traditional indices that weight 'Planning' or 'Investment Volume' highly, SCITI prioritizes 'Lived Experience'. Livability and Wellbeing account for 35% of the score because a smart city that doesn't improve daily life is just an expensive server room.",
-                th: "ต่างจากดัชนีทั่วไปที่ให้น้ำหนัก 'การวางแผน' หรือ 'งบประมาณ' สูง SCITI ให้ความสำคัญกับ 'ประสบการณ์จริง' Livability และ Wellbeing คิดเป็น 35% ของคะแนน เพราะเมืองที่ฉลาดแต่ไม่ทำให้ชีวิตดีขึ้น ก็เป็นเพียงห้องเซิร์ฟเวอร์ราคาแพง",
-                zh: "与传统指数高度评价“规划”或“投资额”不同，SCITI 优先考虑“生活体验”。宜居性和福祉占得分的 35%，因为不改善日常生活的智慧城市只不过是一个昂贵的服务器机房。"
+                en: "The aggregation layer is fully reproducible. The code validates that every pillar input is within 0-100, applies the fixed weight vector once, rounds to one decimal place, and then assigns a tier using fixed thresholds. There are no hidden bonuses, black-box penalties, or committee overrides in the composite step.",
+                th: "ชั้นการรวมคะแนนทำซ้ำได้ทั้งหมด โค้ดตรวจว่าคะแนนเสาหลักทุกค่าต้องอยู่ระหว่าง 0-100 ใช้น้ำหนักชุดเดิมครั้งเดียว ปัดหนึ่งตำแหน่งทศนิยม แล้วจัดระดับด้วยเกณฑ์คงที่ ไม่มีโบนัสแฝง ไม่มีโทษจากกล่องดำ และไม่มีคณะกรรมการแก้คะแนนในขั้นคะแนนรวม",
+                zh: "汇总层完全可复现。代码先验证每个支柱输入都在 0-100 之间，再套用固定权重向量、保留一位小数，并按固定阈值分层。综合分阶段不存在隐藏加分、黑箱惩罚或人工委员会改分。",
               })}
             </p>
           </div>
           <div>
-            <h3>{translate(locale, { en: "Data Limitations", th: "ข้อจำกัดของข้อมูล", zh: "数据局限性" })}</h3>
-            <p style={{ fontSize: '.75rem', color: 'var(--2)', lineHeight: 1.6 }}>
+            <h3>{translate(locale, { en: "What still requires research judgment", th: "สิ่งที่ยังต้องใช้วิจารณญาณวิจัย", zh: "哪些部分仍需研究判断" })}</h3>
+            <p style={{ fontSize: ".75rem", color: "var(--2)", lineHeight: 1.6 }}>
               {translate(locale, {
-                en: "We only measure what is falsifiable. Digital metrics rely on depa-certified API nodes. If a city has a project but no data rail, it scores 0. This is a feature, not a bug—it forces cities to prioritize interoperability over PR.",
-                th: "เราวัดเฉพาะสิ่งที่พิสูจน์ได้เท่านั้น ตัวชี้วัดดิจิทัลอ้างอิงจาก API ที่ depa รับรอง หากเมืองมีโปรเจกต์แต่ไม่มีรางข้อมูล (Data Rail) จะได้ 0 คะแนน นี่คือ 'คุณลักษณะ' ไม่ใช่ 'ข้อผิดพลาด' เพื่อบีบให้เมืองเลิกทำ PR แล้วหันมาทำระบบข้อมูลที่เชื่อมต่อได้จริง",
-                zh: "我们只测量可证伪的内容。数字指标依赖于 depa 认证的 API 节点。如果一个城市有项目但没有数据轨道（Data Rail），它将得到 0 分。这是一个“特性”而非“错误”——它迫使城市优先考虑互操作性而非公关。"
+                en: "SCITI is not pretending to auto-generate a whole city from one API feed. Pillar scores are structured research assessments anchored in public metrics, evidence items, and field verification. Not every listed source contributes to every city. Registered or promotion-zone cities without enough evidence receive provisional low-confidence baselines rather than being dressed up as fully observed cases.",
+                th: "SCITI ไม่ได้แสร้งทำเหมือนสร้างเมืองทั้งเมืองจาก API เส้นเดียว คะแนนเสาหลักเป็นการประเมินเชิงวิจัยที่มีโครงสร้าง ยึดกับตัวชี้วัดสาธารณะ หลักฐาน และการยืนยันภาคสนาม ไม่ใช่ทุกแหล่งข้อมูลจะถูกใช้กับทุกเมือง และเมืองที่ยังเป็นเขตส่งเสริมหรือข้อมูลไม่พอ จะได้ baseline ชั่วคราวที่ความเชื่อมั่นต่ำ แทนการทำให้ดูเหมือนถูกสังเกตครบแล้ว",
+                zh: "SCITI 并不假装能从单一 API 自动生成整座城市。支柱分数是以公共指标、证据项和实地核验为锚点的结构化研究判断。并非每个来源都会作用于每座城市。对证据不足的注册/推广城市，系统给出的是低置信度的临时基线，而不是把它们伪装成完整观测样本。",
               })}
             </p>
           </div>
         </div>
       </section>
 
-      {/* ─── EXTERNAL SOURCES ─── */}
-      <section className="section reveal visible" style={{ marginTop: '2rem' }}>
-        <p className="eyebrow">{translate(locale, { en: "Data Sovereignty", th: "แหล่งข้อมูลอ้างอิง", zh: "数据主权" })}</p>
-        <h2>{translate(locale, { en: "Primary Evidence Nodes", th: "โหนดหลักฐานหลัก", zh: "原始证据节点" })}</h2>
-        <div className="sources-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
-          {EXTERNAL_SOURCES.map(s => (
-            <div key={s.url} className="source-card glass-card">
-              <div className="source-card-name" style={{ fontSize: '.7rem', fontWeight: 800 }}>{translate(locale, s.name)}</div>
-              <div className="source-card-desc" style={{ fontSize: '.6rem', marginBottom: '.5rem' }}>{translate(locale, s.label)}</div>
-              <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: '.55rem', color: 'var(--teal)' }}>{s.url} →</a>
+      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+        <p className="eyebrow">{translate(locale, { en: "Evidence Base", th: "ฐานหลักฐาน", zh: "证据基础" })}</p>
+        <h2>{translate(locale, { en: "Source registries behind the method", th: "ทะเบียนแหล่งข้อมูลหลังวิธีวิจัย", zh: "方法背后的来源名录" })}</h2>
+        <p style={{ fontSize: ".75rem", color: "var(--2)", lineHeight: 1.6, marginBottom: "1rem" }}>
+          {translate(locale, {
+            en: `${EVIDENCE_SOURCE_FAMILY_COUNT} evidence source families are tracked in the provenance registry: ${GOVERNMENT_SOURCE_COUNT} government, ${SATELLITE_SOURCE_COUNT} satellite, ${INTERNATIONAL_SOURCE_COUNT} international reference, and ${FIELD_SOURCE_COUNT} field-verification entries. A separate platform map tracks ${CDP_PLATFORM_COUNT} public data endpoints that cities and researchers can inspect directly.`,
+            th: `มีการติดตาม ${EVIDENCE_SOURCE_FAMILY_COUNT} ตระกูลแหล่งข้อมูลในทะเบียนหลักฐาน: ภาครัฐ ${GOVERNMENT_SOURCE_COUNT} รายการ ดาวเทียม ${SATELLITE_SOURCE_COUNT} รายการ อ้างอิงสากล ${INTERNATIONAL_SOURCE_COUNT} รายการ และภาคสนาม ${FIELD_SOURCE_COUNT} รายการ อีกทะเบียนหนึ่งติดตามแพลตฟอร์มสาธารณะ ${CDP_PLATFORM_COUNT} ปลายทางที่เมืองและนักวิจัยเข้าไปตรวจดูได้ตรงๆ`,
+            zh: `溯源名录中跟踪了 ${EVIDENCE_SOURCE_FAMILY_COUNT} 个证据来源族群：${GOVERNMENT_SOURCE_COUNT} 个政府来源、${SATELLITE_SOURCE_COUNT} 个卫星来源、${INTERNATIONAL_SOURCE_COUNT} 个国际参考来源，以及 ${FIELD_SOURCE_COUNT} 个实地核验来源。另有一张平台地图跟踪 ${CDP_PLATFORM_COUNT} 个公开数据端点，城市与研究者都可直接核查。`,
+          })}
+        </p>
+        <div className="sources-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
+          {evidenceHighlights.map(source => (
+            <div key={source.id} className="source-card glass-card">
+              <div className="source-card-name" style={{ fontSize: ".7rem", fontWeight: 800 }}>{source.name}</div>
+              <div className="source-card-desc" style={{ fontSize: ".6rem", marginBottom: ".5rem" }}>
+                {translate(locale, { en: source.descEn, th: source.descTh, zh: source.descZh })}
+              </div>
+              <div style={{ fontSize: ".55rem", color: "var(--2)" }}>
+                {translate(locale, {
+                  en: `Frequency: ${source.updateFrequency}`,
+                  th: `ความถี่: ${source.updateFrequency}`,
+                  zh: `频率：${source.updateFrequency}`,
+                })}
+              </div>
             </div>
           ))}
+          {platformHighlights.map(source => (
+            <div key={source.id} className="source-card glass-card">
+              <div className="source-card-name" style={{ fontSize: ".7rem", fontWeight: 800 }}>{locale === "th" ? source.nameTh : source.nameEn}</div>
+              <div className="source-card-desc" style={{ fontSize: ".6rem", marginBottom: ".5rem" }}>
+                {translate(locale, { en: source.descEn, th: source.descTh, zh: platformHighlightZh[source.id] ?? source.descEn })}
+              </div>
+              <div style={{ fontSize: ".55rem", color: "var(--2)" }}>
+                {translate(locale, {
+                  en: `Mapped endpoint · ${source.frequency}`,
+                  th: `ปลายทางที่แม็ปไว้ · ${source.frequency}`,
+                  zh: `已映射端点 · ${source.frequency}`,
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+        <p className="eyebrow">{translate(locale, { en: "Audit Rules", th: "กฎการตรวจสอบ", zh: "审计规则" })}</p>
+        <h2>{translate(locale, { en: "What the method does not do", th: "สิ่งที่วิธีนี้ไม่ทำ", zh: "本方法不做什么" })}</h2>
+        <div className="sources-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
+          <div className="source-card glass-card">
+            <div className="source-card-name">{translate(locale, { en: "No hidden smoothing", th: "ไม่มีการไล่ค่าแบบซ่อน", zh: "没有隐藏平滑" })}</div>
+            <div className="source-card-desc">
+              {translate(locale, {
+                en: "Composite math does not include secret caps, bespoke city bonuses, or prestige multipliers.",
+                th: "คณิตศาสตร์ของคะแนนรวมไม่มีเพดานลับ โบนัสเฉพาะเมือง หรือคูณชื่อเสียง",
+                zh: "综合分数学中不存在秘密上限、特定城市加成或声望倍增器。",
+              })}
+            </div>
+          </div>
+          <div className="source-card glass-card">
+            <div className="source-card-name">{translate(locale, { en: "No one-feed automation myth", th: "ไม่มีมายาคติ API เส้นเดียว", zh: "没有单一数据流神话" })}</div>
+            <div className="source-card-desc">
+              {translate(locale, {
+                en: `The repo tracks ${CORE_METRIC_KEYS.length} core indicators and ${EXTENDED_METRIC_KEYS.length} extended indicators. That is not the same as claiming a single normalization pipeline can fully explain urban life.`,
+                th: `รีโปนี้ติดตามตัวชี้วัดหลัก ${CORE_METRIC_KEYS.length} ตัว และตัวชี้วัดเสริม ${EXTENDED_METRIC_KEYS.length} ตัว แต่นั่นไม่เท่ากับการอ้างว่ามี normalization pipeline เดียวที่อธิบายชีวิตเมืองได้ครบ`,
+                zh: `本仓库跟踪 ${CORE_METRIC_KEYS.length} 个核心指标和 ${EXTENDED_METRIC_KEYS.length} 个扩展指标，但这并不等于声称存在一条单一的标准化流水线就能完整解释城市生活。`,
+              })}
+            </div>
+          </div>
+          <div className="source-card glass-card">
+            <div className="source-card-name">{translate(locale, { en: "No stale-date theater", th: "ไม่มีละครวันที่ลวงตา", zh: "没有伪装时效的戏法" })}</div>
+            <div className="source-card-desc">
+              {translate(locale, {
+                en: `Freshness is evaluated against the fixed release cut-off of ${formatIsoDate(SCITI_DATA_CUTOFF_ISO)}. Scores reflect conditions at the time of assessment, not a promise about what happened after publication.`,
+                th: `ความสดใหม่ถูกประเมินเทียบกับวันตัดข้อมูลคงที่ ${formatIsoDate(SCITI_DATA_CUTOFF_ISO)} คะแนนสะท้อนสภาพ ณ เวลาประเมิน ไม่ใช่คำสัญญาว่าหลังเผยแพร่เกิดอะไรขึ้น`,
+                zh: `新鲜度是相对于固定发布截点 ${formatIsoDate(SCITI_DATA_CUTOFF_ISO)} 评估的。分数反映的是评估时点的状态，而不是出版后的承诺。`,
+              })}
+            </div>
+          </div>
         </div>
       </section>
     </div>

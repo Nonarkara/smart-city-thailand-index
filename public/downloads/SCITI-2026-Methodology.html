@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SCITI 2026 Methodology Paper</title>
+    <style>
+      :root {
+        --paper: #ffffff;
+        --ink: #0a0a0a;
+        --muted: #404040;
+        --rule: #d9d9d9;
+        --accent: #1a1aff;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: #f5f5f5;
+        color: var(--ink);
+        font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      main {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: var(--paper);
+        padding: 22mm 18mm 20mm;
+      }
+
+      h1, h2, h3 {
+        margin: 0;
+        font-family: "IBM Plex Sans", Inter, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 600;
+        line-height: 1.15;
+      }
+
+      h1 {
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 18px;
+        margin-top: 28px;
+        margin-bottom: 10px;
+      }
+
+      h3 {
+        font-size: 14px;
+        margin-top: 18px;
+        margin-bottom: 6px;
+      }
+
+      p {
+        margin: 0 0 10px;
+        max-width: 78ch;
+      }
+
+      small,
+      .meta,
+      .label {
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .header {
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 14px;
+      }
+
+      .lead {
+        font-size: 15px;
+        max-width: 70ch;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 18px;
+        margin-top: 18px;
+      }
+
+      .stat {
+        border-top: 1px solid var(--rule);
+        padding-top: 8px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 4px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      th,
+      td {
+        border-top: 1px solid var(--rule);
+        padding: 10px 0;
+        vertical-align: top;
+        text-align: left;
+      }
+
+      th {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      code,
+      .equation {
+        font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+        font-size: 12px;
+      }
+
+      .equation-block {
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        padding: 12px 0;
+        margin: 12px 0 14px;
+      }
+
+      ul {
+        margin: 8px 0 12px 18px;
+        padding: 0;
+      }
+
+      li {
+        margin: 0 0 6px;
+      }
+
+      .footer {
+        margin-top: 28px;
+        padding-top: 12px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .page-break {
+        break-before: page;
+        page-break-before: always;
+      }
+
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="header">
+        <div class="label">SCITI 2026 · Methodology Paper</div>
+        <h1>How the index is actually computed</h1>
+        <p class="lead">SCITI is a two-layer model. First, structured research assigns seven pillar scores from auditable outcome indicators, evidence items, and field verification. Second, deterministic mathematics aggregates those pillar scores into a composite score, tier, and contribution breakdown.</p>
+        <p class="meta">Method code SCITI-2026-METH · Release April 2026 · Data cut-off 2026-04-04 · Audited local repo state</p>
+      </header>
+
+      <section>
+        <div class="grid">
+          <div class="stat">
+            <div class="label">Score Domain</div>
+            <strong>0-100</strong>
+            <p>All seven pillar inputs are validated against the same closed numeric interval before aggregation.</p>
+          </div>
+          <div class="stat">
+            <div class="label">Tier Thresholds</div>
+            <strong>Alpha ≥ 65 · Beta ≥ 45 · Gamma &lt; 45</strong>
+            <p>Once the composite score is fixed, tier assignment is automatic. No hidden committee override exists in the scoring layer.</p>
+          </div>
+          <div class="stat">
+            <div class="label">Evidence Registry</div>
+            <strong>14 source families</strong>
+            <p>The provenance registry tracks government, satellite, international reference, and field-verification sources.</p>
+          </div>
+          <div class="stat">
+            <div class="label">Platform Map</div>
+            <strong>12 public endpoints</strong>
+            <p>A separate registry maps public data platforms and dashboards that researchers and cities can inspect directly.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>1. Analytical Structure</h2>
+        <p>The critical methodological distinction is between <strong>research judgment</strong> and <strong>deterministic aggregation</strong>.</p>
+        <ul>
+          <li>Research layer: each city receives seven pillar scores from a structured reading of public indicators, evidence items, and field verification.</li>
+          <li>Aggregation layer: once those seven inputs are fixed, the composite score, weighted contribution bars, and tier assignment are fully reproducible from code.</li>
+          <li>Confidence layer: evidence quality is reported separately so uncertainty stays visible instead of being hidden inside the score.</li>
+        </ul>
+        <p>SCITI therefore does not claim that one API feed or one normalization function can fully explain urban life. It claims something narrower and stronger: the final aggregation step is exact, while the research step is explicit about where judgment remains necessary.</p>
+      </section>
+
+      <section>
+        <h2>2. Composite Mathematics</h2>
+        <p>The composite score is a weighted average over seven pillars.</p>
+        <div class="equation-block">
+          <div class="equation">Composite = Σ(pillar score × weight) / 100</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Pillar</th>
+              <th>Weight</th>
+              <th>Interpretive Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Livability</td>
+              <td>25%</td>
+              <td>Daily urban function: housing, mobility, utilities, and whether life works without friction.</td>
+            </tr>
+            <tr>
+              <td>Economy</td>
+              <td>20%</td>
+              <td>Productive capacity, income, output, and honest demand absorption.</td>
+            </tr>
+            <tr>
+              <td>Safety</td>
+              <td>15%</td>
+              <td>Crime exposure, emergency readiness, and practical security.</td>
+            </tr>
+            <tr>
+              <td>Wellbeing</td>
+              <td>15%</td>
+              <td>Depth of public-service capacity after the ribbon-cutting.</td>
+            </tr>
+            <tr>
+              <td>Environment</td>
+              <td>10%</td>
+              <td>Air, water, green cover, and ecological resilience.</td>
+            </tr>
+            <tr>
+              <td>Hospitality</td>
+              <td>10%</td>
+              <td>Belonging, civic warmth, cultural life, and whether people want to stay.</td>
+            </tr>
+            <tr>
+              <td>Digital</td>
+              <td>5%</td>
+              <td>Enabling infrastructure: data rails, IoT, and digital service use that changes outcomes.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>The weights sum to 100. Livability carries the largest share because a city must function for residents before it can meaningfully claim to be smart. Digital carries the smallest share because technology is an enabler, not the goal itself.</p>
+      </section>
+
+      <section>
+        <h2>3. Data Confidence Mathematics</h2>
+        <p>Confidence is reported separately from the composite score. It is designed to answer a different question: <em>how dense and fresh is the evidentiary backbone supporting this dossier?</em></p>
+        <div class="equation-block">
+          <div class="equation">Confidence = weighted average(core coverage 65%, extended coverage 15%, provenance density 10%, freshness 10%)</div>
+        </div>
+        <ul>
+          <li><strong>Core coverage (65%)</strong>: six core indicators are tracked across the repo-level city metric model — GPP per capita, average monthly income, annual PM2.5, hospital beds per 10K, crime per 100K, and green coverage.</li>
+          <li><strong>Extended coverage (15%)</strong>: seven additional indicators widen the baseline — GPP growth, PM2.5 trend, water quality, forest coverage, FDI inflow, industry composition, and labor force.</li>
+          <li><strong>Provenance density (10%)</strong>: the model rewards cities whose score narrative is backed by a thicker stack of observations and source-linked supports.</li>
+          <li><strong>Freshness (10%)</strong>: observations are weighted against the fixed release cut-off of 2026-04-04 rather than against a moving runtime date, keeping the release reproducible.</li>
+        </ul>
+        <p>The confidence label is then classified as High, Medium, or Low. Crucially, this label does not secretly alter the composite score. It stays visible as a separate signal.</p>
+      </section>
+
+      <section class="page-break">
+        <h2>4. Evidence Scope</h2>
+        <p>The methodology relies on a registry of evidence source families and a separate platform map. The current audited release recognizes the following implemented source families and public endpoints in the repository.</p>
+        <h3>Core evidence families used or referenced by the provenance layer</h3>
+        <ul>
+          <li>National Statistical Office (NSO)</li>
+          <li>National Economic and Social Development Council (NESDC)</li>
+          <li>Pollution Control Department / Air4Thai</li>
+          <li>Royal Thai Police</li>
+          <li>Ministry of Public Health</li>
+          <li>GISTDA satellite / geospatial data</li>
+          <li>Open-Meteo / Copernicus cross-checks</li>
+          <li>depa smart city registry</li>
+          <li>citydata.in.th platform references</li>
+          <li>Board of Investment (BOI)</li>
+          <li>ONEP environmental performance inputs</li>
+          <li>Royal Forest Department</li>
+          <li>International contextual reference sources</li>
+          <li>Field verification</li>
+        </ul>
+        <h3>Mapped public data platforms and endpoints</h3>
+        <ul>
+          <li>data.go.th</li>
+          <li>citydata.in.th</li>
+          <li>Air4Thai</li>
+          <li>DOPA population statistics</li>
+          <li>NSO statistical hub</li>
+          <li>GISTDA Sphere</li>
+          <li>TMD weather platform</li>
+          <li>NESDC economic releases</li>
+          <li>BOI IPStat</li>
+          <li>ONEP environmental performance releases</li>
+          <li>Royal Forest Department datasets</li>
+          <li>HDX administrative boundaries</li>
+        </ul>
+        <p>Not every source contributes to every city or every pillar. The method is multi-source by design, but it does not fabricate a false sense of uniform observability across all cities.</p>
+      </section>
+
+      <section>
+        <h2>5. Treatment of Thinly Observed Cities</h2>
+        <p>Promotion-zone and registered cities with insufficient evidence are not dressed up as fully observed cases. In the repository they receive provisional low-confidence baselines and are clearly marked as such. This preserves rank continuity while making their uncertainty explicit.</p>
+        <p>That is an uncomfortable but methodologically cleaner choice than pretending the missing evidence does not matter.</p>
+      </section>
+
+      <section>
+        <h2>6. What the Method Does Not Claim</h2>
+        <ul>
+          <li>No hidden caps, prestige bonuses, or bespoke city penalties in the aggregation step.</li>
+          <li>No claim that a single normalization pipeline fully explains city quality.</li>
+          <li>No claim that every listed source is used equally for every city.</li>
+          <li>No promise that scores say anything about events after the release cut-off.</li>
+        </ul>
+        <p>Those limits matter. A methodology becomes more credible, not less, when it is precise about what is automated, what is curated, and what remains uncertain.</p>
+      </section>
+
+      <section>
+        <h2>7. Standards Alignment</h2>
+        <ul>
+          <li>UN-Habitat City Prosperity Initiative (CPI)</li>
+          <li>ISO 37122:2019 — Indicators for Smart Cities</li>
+          <li>UN SDG 11 — Sustainable Cities and Communities</li>
+          <li>ASEAN Smart Cities Framework (ASCF)</li>
+          <li>ASEAN Smart Cities Action Plan (ASCAP) 2021-2025</li>
+          <li>New Urban Agenda (2016)</li>
+          <li>Thailand PPP Act B.E. 2562 (2019)</li>
+        </ul>
+      </section>
+
+      <footer class="footer">
+        <p class="meta">SCITI-2026-METH · depa / MDES · CC BY 4.0 · Scores reflect conditions at the audited release cut-off and do not constitute investment advice.</p>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -340,9 +340,9 @@ const FAQS: FAQ[] = [
       zh: "SCITI代表什么？",
     },
     a: {
-      en: "SCITI stands for Smart City Thailand Index — pronounced 'City'. It is an independent assessment tool measuring how well Thai smart cities actually perform across 7 pillars (Livability, Economy, Safety, Wellbeing, Environment, Hospitality, Digital), scored 0-100. Unlike depa's certification which evaluates plans, SCITI measures real-world outcomes using 15+ verifiable data sources including satellite imagery, open data portals, and environmental sensors.",
-      th: "SCITI ย่อมาจาก Smart City Thailand Index — อ่านว่า 'ซิตี้' เป็นเครื่องมือประเมินอิสระวัดผลเมืองอัจฉริยะไทยจริงๆ ใน 7 เสาหลัก คะแนน 0-100 ต่างจากการรับรองของ depa ที่ประเมินแผน SCITI วัดผลลัพธ์จริงจาก 15+ แหล่งข้อมูลรวมถึงภาพดาวเทียม ข้อมูลเปิด และเซ็นเซอร์สิ่งแวดล้อม",
-      zh: "SCITI代表泰国智慧城市指数——发音为'City'。这是一个独立评估工具，衡量泰国智慧城市在7个支柱（宜居性、经济、安全、福祉、环境、旅游、数字）中的实际表现，评分0-100。与depa评估计划的认证不同，SCITI使用15+个可验证数据源衡量现实世界的结果，包括卫星图像、开放数据门户和环境传感器。",
+      en: "SCITI stands for Smart City Thailand Index — pronounced 'City'. It is an independent assessment tool measuring how well Thai smart cities actually perform across 7 pillars (Livability, Economy, Safety, Wellbeing, Environment, Hospitality, Digital), scored 0-100. Unlike depa's certification, which mainly evaluates plans and readiness, SCITI uses a two-layer method: research assigns pillar scores from public indicators, evidence items, and field verification; deterministic math then produces the composite score, tier, and confidence label.",
+      th: "SCITI ย่อมาจาก Smart City Thailand Index — อ่านว่า 'ซิตี้' เป็นเครื่องมือประเมินอิสระวัดผลเมืองอัจฉริยะไทยจริงๆ ใน 7 เสาหลัก คะแนน 0-100 ต่างจากการรับรองของ depa ที่เน้นแผนและความพร้อม SCITI ใช้วิธีสองชั้น: ชั้นวิจัยกำหนดคะแนนเสาหลักจากตัวชี้วัดสาธารณะ หลักฐาน และการยืนยันภาคสนาม จากนั้นคณิตศาสตร์แบบกำหนดแน่นอนจะสร้างคะแนนรวม ระดับ และฉลากความเชื่อมั่น",
+      zh: "SCITI 代表泰国智慧城市指数，读作“City”。它是一个独立评估工具，用 7 个支柱（宜居、经济、安全、福祉、环境、人文、数字）衡量泰国智慧城市的真实表现，分数范围为 0-100。与主要评估规划与准备度的 depa 认证不同，SCITI 采用双层方法：研究层依据公共指标、证据项和实地核验给出支柱分，随后由确定性数学层生成综合分、层级和置信标签。",
     },
   },
   {

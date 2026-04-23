@@ -58,7 +58,7 @@ describe("App", () => {
 
     await user.click(screen.getByRole("button", { name: "Rankings" }));
     await vi.dynamicImportSettled();
-    await screen.findByRole("heading", { name: /who delivers, who just talks/i });
+    await screen.findByRole("heading", { name: /the moneyball of thai city investment/i });
 
     expect(navLinks).not.toHaveClass("nav-links-open");
   });
