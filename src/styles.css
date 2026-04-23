@@ -1,14 +1,17 @@
 /* Phase 14 — typography refresh.
  * IBM Plex Sans for latin body + data (quietly editorial, not saturated).
- * IBM Plex Sans Thai Looped for Thai body (dramatically more legible for
- * Thai readers than Latin Plex's approximate glyphs).
+ * IBM Plex Sans Thai (NON-looped) for Thai body — the modern professional
+ * Thai face. Looped variants (Sarabun-style loops, Chinese-round-terminals)
+ * read childish / textbook-era to Thai designers; the non-looped Plex Thai
+ * matches contemporary editorial type in Bangkok. Sarabun kept as fallback
+ * since it's the Thailand-government standard on most Thai machines.
  * IBM Plex Mono for numerics (ties the data grammar together).
  * Fraunces (variable) for display / section headings — gives the index a
  * magazine masthead feel Inter + Outfit cannot. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap');
 
 :root {
-  --font: "IBM Plex Sans", "IBM Plex Sans Thai Looped", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font: "IBM Plex Sans", "IBM Plex Sans Thai", "Sarabun", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-heading: "Fraunces", "IBM Plex Sans", Georgia, serif;
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
   
@@ -6601,10 +6604,13 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 /* ─── PHASE 14 — TYPOGRAPHY, LEGENDS, REGIONAL CHAMPIONS, LEAGUE ─────── */
 
-/* Thai locale — swap body font to Plex Thai Looped (far more legible for
- * Thai than the Latin Plex transliteration). Headings stay on Fraunces. */
+/* Thai locale — swap body font to IBM Plex Sans Thai (non-looped). The
+ * looped variant reads childish / Chinese-round-terminal to modern Thai
+ * designers; non-looped Plex Thai is the professional editorial face used
+ * in contemporary Bangkok publishing. Sarabun is the Thailand-government
+ * fallback so it renders cleanly even when Google Fonts fails to load. */
 html[lang="th"] {
-  --font: "IBM Plex Sans Thai Looped", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font: "IBM Plex Sans Thai", "Sarabun", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
 }
 
 /* Editorial headings — give existing H1/H2/H3 tiers the Fraunces face and

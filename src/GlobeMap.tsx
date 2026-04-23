@@ -1,14 +1,32 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
+import { geoEquirectangular, geoPath } from "d3-geo";
+import { feature } from "topojson-client";
+import type { Topology, GeometryCollection } from "topojson-specification";
+import type { FeatureCollection } from "geojson";
+import land110m from "world-atlas/land-110m.json";
 import { partners, type Partner } from "./partnerData";
 import type { Locale } from "./types";
 
 interface Props { locale: Locale; }
 
-// Equirectangular projection — 960×480, lat -60 to 75
-function proj(lat: number, lng: number) {
-  return { x: ((lng + 180) / 360) * 960, y: ((75 - lat) / 135) * 480 };
-}
-const TH = proj(15, 101);
+// ---------------------------------------------------------------------------
+// Projection — d3 equirectangular fitted to the viewport. This replaces the
+// hand-rolled proj() we used before. Every partner dot, the Thailand hub,
+// and the land outline all go through the same projection, so they line
+// up pixel-exact. The viewport spans lat -60 → 75 (polar white-out hidden).
+// ---------------------------------------------------------------------------
+const VIEW_W = 960;
+const VIEW_H = 480;
+const projection = geoEquirectangular()
+  .rotate([0, 0])
+  .fitExtent(
+    [[0, 0], [VIEW_W, VIEW_H]],
+    {
+      type: "Polygon",
+      coordinates: [[[-180, 75], [180, 75], [180, -60], [-180, -60], [-180, 75]]],
+    } as GeoJSON.Polygon,
+  );
+const pathGen = geoPath(projection);
 
 const TYPE_COLORS: Record<string, string> = {
   government: "#1A9A82", multilateral: "#C49A2A", university: "#4A9AFF",
@@ -16,89 +34,91 @@ const TYPE_COLORS: Record<string, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// Basemap registry — free ESRI tile services, no key needed.
-// Each "export" endpoint returns a single PNG for the requested bbox so we
-// can paint it straight into <image> inside the SVG. Satellite + terrain get
-// an optional transparent label overlay so place names stay legible.
+// Land outline — TopoJSON from world-atlas. Same pattern SLIC uses. Rendered
+// once via useMemo, then cached. This is the BASE LAYER: always visible,
+// zero network dependency, works offline. Satellite imagery layers on top.
 // ---------------------------------------------------------------------------
-type BasemapId = "light" | "dark" | "satellite" | "terrain" | "ocean";
-type Basemap = {
-  id: BasemapId;
+function useLandPath(): string {
+  return useMemo(() => {
+    const topology = land110m as unknown as Topology;
+    const land = feature(topology, topology.objects.land as GeometryCollection) as FeatureCollection;
+    return pathGen(land) ?? "";
+  }, []);
+}
+
+// ---------------------------------------------------------------------------
+// Optional satellite/physical/night overlay. These are public-domain
+// equirectangular JPGs served direct (NASA Blue Marble, Earth at Night,
+// Wikipedia reference). They layer on top of the outline at reduced opacity
+// so the minimalist base still reads through.
+// ---------------------------------------------------------------------------
+type OverlayId = "none" | "physical" | "satellite" | "night";
+type Overlay = {
+  id: OverlayId;
   label: { en: string; th: string; zh: string };
-  tile: string;
-  /** Optional transparent overlay (roads, borders, labels). */
-  labelOverlay?: string;
-  /** Hover tint for arcs — light basemaps need darker strokes. */
+  src?: string;
   tone: "on-light" | "on-dark";
 };
-const BBOX = "bbox=-180,-60,180,75&size=1920,960&format=png&f=image&transparent=false";
-const BBOX_LABEL = "bbox=-180,-60,180,75&size=1920,960&format=png&f=image&transparent=true";
-const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services";
-const BASEMAPS: Basemap[] = [
+const OVERLAYS: Overlay[] = [
+  { id: "none", label: { en: "Outline", th: "โครง", zh: "轮廓" }, tone: "on-light" },
   {
-    id: "light",
-    label: { en: "Light", th: "สว่าง", zh: "浅色" },
-    tile: `${ESRI}/Canvas/World_Light_Gray_Base/MapServer/export?${BBOX}`,
-    labelOverlay: `${ESRI}/Canvas/World_Light_Gray_Reference/MapServer/export?${BBOX_LABEL}`,
+    id: "physical", label: { en: "Physical", th: "ภูมิประเทศ", zh: "地形" },
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Equirectangular_projection_SW.jpg/1920px-Equirectangular_projection_SW.jpg",
     tone: "on-light",
   },
   {
-    id: "dark",
-    label: { en: "Dark", th: "มืด", zh: "深色" },
-    tile: `${ESRI}/Canvas/World_Dark_Gray_Base/MapServer/export?${BBOX}`,
-    labelOverlay: `${ESRI}/Canvas/World_Dark_Gray_Reference/MapServer/export?${BBOX_LABEL}`,
+    id: "satellite", label: { en: "Satellite", th: "ดาวเทียม", zh: "卫星" },
+    src: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Land_ocean_ice_2048.jpg",
     tone: "on-dark",
   },
   {
-    id: "satellite",
-    label: { en: "Satellite", th: "ดาวเทียม", zh: "卫星" },
-    tile: `${ESRI}/World_Imagery/MapServer/export?${BBOX}`,
-    labelOverlay: `${ESRI}/Reference/World_Boundaries_and_Places/MapServer/export?${BBOX_LABEL}`,
-    tone: "on-dark",
-  },
-  {
-    id: "terrain",
-    label: { en: "Terrain", th: "ภูมิประเทศ", zh: "地形" },
-    tile: `${ESRI}/World_Physical_Map/MapServer/export?${BBOX}`,
-    tone: "on-light",
-  },
-  {
-    id: "ocean",
-    label: { en: "Ocean", th: "มหาสมุทร", zh: "海洋" },
-    tile: `${ESRI}/Ocean/World_Ocean_Base/MapServer/export?${BBOX}`,
-    labelOverlay: `${ESRI}/Ocean/World_Ocean_Reference/MapServer/export?${BBOX_LABEL}`,
+    id: "night", label: { en: "Night", th: "กลางคืน", zh: "夜间" },
+    src: "https://eoimages.gsfc.nasa.gov/images/imagerecords/55000/55167/earth_lights_lrg.jpg",
     tone: "on-dark",
   },
 ];
 
-function pickDefault(): BasemapId {
-  if (typeof document === "undefined") return "light";
-  const theme = document.documentElement.getAttribute("data-theme");
-  return theme === "dark" ? "dark" : "light";
+// Equirectangular JPGs cover lat 90 → -90 (180°). Our viewport spans lat 75
+// → -60 (135°). So to line up, image height in SVG units = VIEW_H * 180/135
+// ≈ 640, and y-offset = -(90-75)/180 * 640 ≈ -53.33.
+const IMG_Y = -((90 - 75) / 180) * (VIEW_H * 180 / 135);
+const IMG_H = VIEW_H * 180 / 135;
+
+function labelOf(o: Overlay, locale: Locale): string {
+  return locale === "th" ? o.label.th : locale === "zh" ? o.label.zh : o.label.en;
 }
 
-function labelOf(b: Basemap, locale: Locale): string {
-  return locale === "th" ? b.label.th : locale === "zh" ? b.label.zh : b.label.en;
+function pickDefault(): OverlayId {
+  if (typeof document === "undefined") return "none";
+  const theme = document.documentElement.getAttribute("data-theme");
+  // Dark-theme users see the outline with dark ocean — still legible. Don't
+  // auto-load imagery; let the user opt in. Saves ~500 kB on first paint.
+  return theme === "dark" ? "none" : "none";
 }
 
 export default function GlobeMap({ locale }: Props) {
   const [hovered, setHovered] = useState<Partner | null>(null);
-  const [basemapId, setBasemapId] = useState<BasemapId>(pickDefault);
+  const [overlayId, setOverlayId] = useState<OverlayId>(pickDefault);
+  const [isDark, setIsDark] = useState<boolean>(() =>
+    typeof document !== "undefined" && document.documentElement.getAttribute("data-theme") === "dark",
+  );
   const containerRef = useRef<HTMLDivElement>(null);
   const [mPos, setMPos] = useState({ x: 0, y: 0 });
 
-  // Re-sync basemap default when theme toggles — only if user hasn't
-  // explicitly picked satellite/terrain/ocean (those stay sticky).
+  // Track theme toggle so the outline colours swap live.
   useEffect(() => {
     const mo = new MutationObserver(() => {
-      setBasemapId(prev => (prev === "light" || prev === "dark" ? pickDefault() : prev));
+      setIsDark(document.documentElement.getAttribute("data-theme") === "dark");
     });
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     return () => mo.disconnect();
   }, []);
 
-  const basemap = BASEMAPS.find(b => b.id === basemapId) ?? BASEMAPS[0];
-  const onLight = basemap.tone === "on-light";
+  const overlay = OVERLAYS.find(o => o.id === overlayId) ?? OVERLAYS[0];
+  const onLight = overlay.id === "none" ? !isDark : overlay.tone === "on-light";
+
+  const landPath = useLandPath();
+  const thailandPt = projection([101, 15]) ?? [0, 0];
 
   const sameCountry = useMemo(() => {
     if (!hovered) return new Set<string>();
@@ -112,90 +132,97 @@ export default function GlobeMap({ locale }: Props) {
 
   const countryCount = useMemo(() => new Set(partners.map(p => p.country)).size, []);
 
-  // Thailand / hub + label contrast swap
+  // Outline colour system — hairline land fill + subtle country stroke.
+  const oceanFill = overlay.id !== "none" ? "transparent" : (isDark ? "#0A0A0B" : "#F4F4F5");
+  const landFill = overlay.id !== "none" ? "rgba(0,0,0,0)" : (isDark ? "#1D1D21" : "#E4E4E7");
+  const landStroke = overlay.id !== "none" ? "rgba(255,255,255,.25)" : (isDark ? "#2A2A2E" : "#D4D4D8");
   const hubColor = "#C49A2A";
   const labelColor = onLight ? "#14120F" : "#F5F3EE";
   const labelStroke = onLight ? "#FFFFFF" : "#14120F";
 
   return (
     <div className="globe-wrap" ref={containerRef} onMouseMove={onMove}>
-      {/* Basemap switcher — satellite-guy toggle */}
-      <div className="globe-basemap-switch" role="tablist" aria-label="Basemap">
-        {BASEMAPS.map(b => (
+      {/* Overlay switcher — satellite-guy toggle */}
+      <div className="globe-basemap-switch" role="tablist" aria-label="Overlay">
+        {OVERLAYS.map(o => (
           <button
-            key={b.id}
+            key={o.id}
             type="button"
             role="tab"
-            aria-selected={b.id === basemapId}
-            className={`globe-basemap-btn${b.id === basemapId ? " active" : ""}`}
-            onClick={() => setBasemapId(b.id)}
+            aria-selected={o.id === overlayId}
+            className={`globe-basemap-btn${o.id === overlayId ? " active" : ""}`}
+            onClick={() => setOverlayId(o.id)}
           >
-            {labelOf(b, locale)}
+            {labelOf(o, locale)}
           </button>
         ))}
       </div>
 
-      <svg viewBox="0 0 960 480" className="globe-svg" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="globe-title globe-desc">
+      <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className="globe-svg" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="globe-title globe-desc">
         <title id="globe-title">SCITI Partner Network</title>
         <desc id="globe-desc">{partners.length} partner organizations across {countryCount} countries connected to Thailand&apos;s smart city program</desc>
 
-        {/* Basemap tile */}
-        <image
-          key={basemap.id}
-          href={basemap.tile}
-          x="0" y="0" width="960" height="480"
-          preserveAspectRatio="none"
-          opacity={basemap.id === "satellite" ? 1 : 0.92}
-        />
-        {/* Optional transparent label overlay */}
-        {basemap.labelOverlay && (
+        {/* Ocean fill */}
+        <rect x="0" y="0" width={VIEW_W} height={VIEW_H} fill={oceanFill} />
+
+        {/* Optional remote imagery (satellite / physical / night) */}
+        {overlay.src && (
           <image
-            key={`${basemap.id}-labels`}
-            href={basemap.labelOverlay}
-            x="0" y="0" width="960" height="480"
+            key={overlay.id}
+            href={overlay.src}
+            x="0"
+            y={IMG_Y}
+            width={VIEW_W}
+            height={IMG_H}
             preserveAspectRatio="none"
-            opacity="0.85"
-            style={{ pointerEvents: "none" }}
+            opacity="0.92"
           />
         )}
 
+        {/* Always-visible land outline — this is the base layer that
+            guarantees the map is never blank even if imagery fails. */}
+        <path d={landPath} fill={landFill} stroke={landStroke} strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
+
         {/* Thailand pulse */}
-        <circle cx={TH.x} cy={TH.y} r="40" fill="rgba(196,154,42,.05)" />
-        <circle cx={TH.x} cy={TH.y} r="22" fill="rgba(196,154,42,.09)" />
-        <circle cx={TH.x} cy={TH.y} r="8" fill="none" stroke="rgba(196,154,42,.35)" strokeWidth="1" />
+        <circle cx={thailandPt[0]} cy={thailandPt[1]} r="40" fill="rgba(196,154,42,.05)" />
+        <circle cx={thailandPt[0]} cy={thailandPt[1]} r="22" fill="rgba(196,154,42,.09)" />
+        <circle cx={thailandPt[0]} cy={thailandPt[1]} r="8" fill="none" stroke="rgba(196,154,42,.45)" strokeWidth="1" />
 
         {/* Arcs from Thailand to each partner */}
         {partners.map(p => {
-          const pt = proj(p.lat, p.lng);
+          const pt = projection([p.lng, p.lat]);
+          if (!pt) return null;
           const active = hovered?.id === p.id || sameCountry.has(p.id);
-          const dx = pt.x - TH.x;
-          const dy = pt.y - TH.y;
+          const dx = pt[0] - thailandPt[0];
+          const dy = pt[1] - thailandPt[1];
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const cx = (TH.x + pt.x) / 2;
-          const cy = Math.min(TH.y, pt.y) - dist * 0.12;
-          const baseOpacity = onLight ? 0.28 : 0.18;
-          const dimOpacity = onLight ? 0.06 : 0.04;
+          const cx = (thailandPt[0] + pt[0]) / 2;
+          const cy = Math.min(thailandPt[1], pt[1]) - dist * 0.12;
+          const baseOpacity = onLight ? 0.32 : 0.22;
+          const dimOpacity = onLight ? 0.08 : 0.05;
           return (
             <path key={`a-${p.id}`}
-              d={`M${TH.x},${TH.y}Q${cx},${cy},${pt.x},${pt.y}`}
+              d={`M${thailandPt[0]},${thailandPt[1]}Q${cx},${cy},${pt[0]},${pt[1]}`}
               fill="none" stroke={TYPE_COLORS[p.type] ?? "#888"}
-              strokeWidth={active ? 2 : 0.5}
-              opacity={active ? 0.9 : hovered ? dimOpacity : baseOpacity}
+              strokeWidth={active ? 2 : 0.6}
+              opacity={active ? 0.92 : hovered ? dimOpacity : baseOpacity}
               style={{ transition: "all .2s" }}
+              vectorEffect="non-scaling-stroke"
             />
           );
         })}
 
         {/* Thailand hub */}
-        <circle cx={TH.x} cy={TH.y} r="5.5" fill={hubColor} />
-        <text x={TH.x} y={TH.y - 12} textAnchor="middle" fontSize="8" fontWeight="700"
+        <circle cx={thailandPt[0]} cy={thailandPt[1]} r="5.5" fill={hubColor} />
+        <text x={thailandPt[0]} y={thailandPt[1] - 12} textAnchor="middle" fontSize="8" fontWeight="700"
           fontFamily="Helvetica Neue,sans-serif" fill={hubColor}
           stroke={labelStroke} strokeWidth="2.5" paintOrder="stroke"
           letterSpacing="1.5">THAILAND</text>
 
         {/* Partner dots */}
         {partners.map((p, i) => {
-          const pt = proj(p.lat, p.lng);
+          const pt = projection([p.lng, p.lat]);
+          if (!pt) return null;
           const active = hovered?.id === p.id;
           const same = sameCountry.has(p.id);
           const off = (i % 3) * 4;
@@ -203,19 +230,19 @@ export default function GlobeMap({ locale }: Props) {
             <g key={p.id} tabIndex={0} role="button"
               aria-label={`${p.name}, ${p.country} — ${p.type}`}
               onFocus={() => setHovered(p)} onBlur={() => setHovered(null)}>
-              <circle cx={pt.x + off} cy={pt.y} r="12" fill="transparent" style={{ cursor: "pointer" }}
+              <circle cx={pt[0] + off} cy={pt[1]} r="12" fill="transparent" style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHovered(p)} onMouseLeave={() => setHovered(null)} />
-              {active && <circle cx={pt.x + off} cy={pt.y} r="9" fill={TYPE_COLORS[p.type]} opacity="0.22" />}
-              <circle cx={pt.x + off} cy={pt.y}
+              {active && <circle cx={pt[0] + off} cy={pt[1]} r="9" fill={TYPE_COLORS[p.type]} opacity="0.22" />}
+              <circle cx={pt[0] + off} cy={pt[1]}
                 r={active ? 5.5 : same ? 4 : 3}
                 fill={TYPE_COLORS[p.type] ?? "#888"}
                 stroke={labelStroke}
                 strokeWidth={onLight ? 0.6 : 0.4}
-                opacity={active ? 1 : same ? 0.95 : hovered ? 0.2 : 0.85}
+                opacity={active ? 1 : same ? 0.95 : hovered ? 0.2 : 0.88}
                 style={{ transition: "all .2s", pointerEvents: "none" }}
               />
               {active && (
-                <text x={pt.x + off} y={pt.y - 8} textAnchor="middle" fontSize="6.5" fontWeight="700"
+                <text x={pt[0] + off} y={pt[1] - 8} textAnchor="middle" fontSize="6.5" fontWeight="700"
                   fill={labelColor}
                   stroke={labelStroke} strokeWidth="2" paintOrder="stroke"
                   fontFamily="Helvetica Neue,sans-serif">
