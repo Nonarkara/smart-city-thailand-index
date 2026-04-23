@@ -101,6 +101,7 @@ See `/Users/nonarkara/Projects/CLAUDE.md` §11 (The Codex Incident — Anti-Regr
 - **SCITI mobile-first layout** — designed for Red Dot submission. Do not retro-fit as desktop-first.
 - **No React Router — single-page architecture.** Do not add routing, do not split pages.
 - **Jony Ive × Dieter Rams typography** — editorial type scale, hairline rules, mono numerics. ZERO border-radius, ZERO gradients, ZERO drop shadows.
+- **Design tokens are deliberately zero (Phase 17).** `--radius`, `--radius-sm`, `--radius-xs`, `--shadow-premium`, `--shadow-heavy`, `--card-shadow`, `--card-shadow-hover` are all `0` / `none` in `src/styles.css`. This is the Codex Incident law enforced at the token layer — any future "restore" of non-zero values is a regression, not a fix. Only gradients permitted in the stylesheet are dark-over-photo legibility overlays (see `.cinematic-hero-overlay` etc.). Only shadows permitted are `inset` border-substitutes and `:focus-visible` accessibility rings.
 - **`.reveal` scroll-animation pattern** — do not replace with a generic library.
 - **Dev server port 5188** — do not change without updating `.claude/launch.json`.
 
