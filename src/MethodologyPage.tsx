@@ -18,6 +18,7 @@ import { SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS } from "./types";
 import { translate } from "./cityPresentation";
+import { assetUrl } from "./mediaAssets";
 
 interface Props {
   locale: Locale;
@@ -192,6 +193,26 @@ export default function MethodologyPage({ locale }: Props) {
             zh: "SCITI 是一个双层模型。研究层先根据可审计指标、证据项与实地核验给出七个支柱分数；随后由确定性的数学层将这些分数汇总为综合分、层级和贡献分解。",
           })}
         </p>
+      </section>
+
+      <section className="section reveal visible">
+        <p className="eyebrow">{translate(locale, { en: "Downloads", th: "ดาวน์โหลด", zh: "下载" })}</p>
+        <h2>{translate(locale, { en: "Method paper and source", th: "เอกสารวิธีวิจัยและต้นฉบับ", zh: "方法论文与源文件" })}</h2>
+        <p className="hero-strapline" style={{ maxWidth: "56rem" }}>
+          {translate(locale, {
+            en: "The downloadable paper is the same audited methodology now used on this page. The HTML source is included as a readable master so the paper can be inspected, updated, and regenerated directly from the repo.",
+            th: "เอกสารที่ดาวน์โหลดได้คือวิธีวิจัยฉบับตรวจสอบเดียวกับที่ใช้บนหน้านี้ และมีไฟล์ HTML ต้นฉบับให้อ่านได้ เพื่อให้ตรวจ แก้ และสร้างเอกสารใหม่ได้ตรงจากรีโป",
+            zh: "可下载的论文与本页使用的是同一份审计后方法文本。HTML 源文件也一并提供，便于直接从仓库中审阅、更新和重新生成论文。",
+          })}
+        </p>
+        <div className="export-docs" style={{ marginTop: "1rem" }}>
+          <a href={assetUrl("/downloads/SCITI-2026-Methodology.pdf")} download className="export-doc-link">
+            {translate(locale, { en: "Methodology Paper (PDF)", th: "Methodology Paper (PDF)", zh: "方法论文（PDF）" })}
+          </a>
+          <a href={assetUrl("/downloads/SCITI-2026-Methodology.html")} download className="export-doc-link">
+            {translate(locale, { en: "Methodology Source (HTML)", th: "Methodology Source (HTML)", zh: "方法源文件（HTML）" })}
+          </a>
+        </div>
       </section>
 
       <section className="section reveal stagger-1 visible">
