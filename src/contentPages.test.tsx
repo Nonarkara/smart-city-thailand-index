@@ -11,9 +11,9 @@ describe("content page mechanics", () => {
     const onNavigate = vi.fn();
     render(<StoryPage locale="en" onNavigate={onNavigate} />);
 
-    expect(screen.getByRole("heading", { name: /from status.*to performance/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /from sensors.*to citizens/i })).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: /examine rankings/i }));
+    await user.click(screen.getByRole("button", { name: /see the rankings/i }));
     expect(onNavigate).toHaveBeenCalledWith("/rankings");
   });
 
@@ -33,9 +33,7 @@ describe("content page mechanics", () => {
     const onNavigate = vi.fn();
     render(<ShowcasePage locale="en" onNavigate={onNavigate} />);
 
-    expect(
-      screen.getByRole("heading", { name: /nakhon si thammarat:.*the city that listened/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /nakhon si thammarat:.*the city that listened/i })).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "View city profile" }));
     expect(onNavigate).toHaveBeenCalledWith("/city/nakhon-si-thammarat");
@@ -46,11 +44,9 @@ describe("content page mechanics", () => {
     const onNavigate = vi.fn();
     render(<PartnershipsPage locale="en" onNavigate={onNavigate} />);
 
-    expect(
-      screen.getByRole("heading", { name: /partnership architecture:.*delivery due diligence/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /5 countries, 4 statuses:.*who actually delivered/i })).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "See City Rankings" }));
+    await user.click(screen.getByRole("button", { name: "See the city rankings" }));
     expect(onNavigate).toHaveBeenCalledWith("/rankings");
   });
 });

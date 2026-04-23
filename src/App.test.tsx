@@ -5,7 +5,6 @@ import App from "./App";
 describe("App", () => {
   beforeEach(() => {
     localStorage.clear();
-    sessionStorage.clear();
     window.history.pushState({}, "", "/");
   });
 
@@ -14,7 +13,7 @@ describe("App", () => {
 
     render(<App />);
 
-    await screen.findByText(/2026 泰国智慧城市指数/i);
+    await screen.findByText("泰国智慧城市指数");
     expect(document.documentElement.lang).toBe("zh");
   });
 
@@ -25,13 +24,7 @@ describe("App", () => {
     await act(async () => {
       await vi.dynamicImportSettled();
     });
-
     await screen.findByRole("heading", { name: "Phuket Smart City" });
-    await screen.findByRole("heading", {
-      name: /what is real now, what is missing, and what unlocks the next step/i,
-    });
-    await screen.findByRole("heading", { name: /printable baseline for investment discussions/i });
-    await screen.findByRole("button", { name: "Export city CSV" });
 
     await act(async () => {
       window.history.pushState({}, "", "/city/chiang-mai-old-town");
@@ -39,14 +32,6 @@ describe("App", () => {
       await vi.dynamicImportSettled();
     });
     await screen.findByRole("heading", { name: "Chiang Mai Smart Old Town" });
-
-    await act(async () => {
-      window.history.pushState({}, "", "/city/satun");
-      window.dispatchEvent(new PopStateEvent("popstate"));
-      await vi.dynamicImportSettled();
-    });
-    await screen.findByRole("heading", { name: "Satun Smart City" });
-    expect((await screen.findAllByText(/3,019 km²/i)).length).toBeGreaterThan(0);
   });
 
   it("cycles locale and keeps document language in sync", async () => {
@@ -61,72 +46,20 @@ describe("App", () => {
     });
   });
 
-  it("marks registered city pages as proposal profiles with sourced administrative baselines", async () => {
-    window.history.pushState({}, "", "/city/reg-chumphon");
-    render(<App />);
-
-    await act(async () => {
-      await vi.dynamicImportSettled();
-    });
-
-    await screen.findByRole("heading", { name: "Chumphon Municipality" });
-    await screen.findByText("Registered Smart City Proposal");
-    await screen.findByText("Read this as a proposal stub.");
-    await screen.findByText("Registered proposal profile");
-  });
-
-  it("downloads city detail CSV from the client-side research dataset", async () => {
+  it("opens the responsive nav and closes it after navigating", async () => {
     const user = userEvent.setup();
-    const createObjectURL = vi.fn(() => "blob:city-export");
-    const revokeObjectURL = vi.fn();
-    const anchorClick = vi
-      .spyOn(HTMLAnchorElement.prototype, "click")
-      .mockImplementation(() => {});
+    const { container } = render(<App />);
 
-    Object.defineProperty(URL, "createObjectURL", {
-      value: createObjectURL,
-      configurable: true,
-    });
-    Object.defineProperty(URL, "revokeObjectURL", {
-      value: revokeObjectURL,
-      configurable: true,
-    });
+    const navToggle = screen.getByRole("button", { name: "Open navigation menu" });
+    await user.click(navToggle);
 
-    window.history.pushState({}, "", "/city/phuket");
-    render(<App />);
+    const navLinks = container.querySelector(".nav-links");
+    expect(navLinks).toHaveClass("nav-links-open");
 
-    await act(async () => {
-      await vi.dynamicImportSettled();
-    });
-
-    await user.click(await screen.findByRole("button", { name: "Export city CSV" }));
-
-    const blob = createObjectURL.mock.calls[0]?.[0] as Blob;
-    const bytes = new Uint8Array(await blob.arrayBuffer());
-    const text = await blob.text();
-    expect(blob).toBeInstanceOf(Blob);
-    expect(Array.from(bytes.slice(0, 3))).toEqual([0xef, 0xbb, 0xbf]);
-    expect(text).toContain("city_id,city_name_en");
-    expect(text).toContain("phuket,Phuket Smart City");
-    expect(anchorClick).toHaveBeenCalledTimes(1);
-    expect(revokeObjectURL).toHaveBeenCalledWith("blob:city-export");
-
-    anchorClick.mockRestore();
-  });
-
-  it("uses link-based primary and secondary navigation", async () => {
-    const user = userEvent.setup();
-    render(<App />);
-
-    expect(screen.getByRole("link", { name: "Home" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Rankings" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Your City" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Showcase" })).toBeInTheDocument();
-
-    await user.click(screen.getByRole("link", { name: "Rankings" }));
+    await user.click(screen.getByRole("button", { name: "Rankings" }));
     await vi.dynamicImportSettled();
+    await screen.findByRole("heading", { name: /who delivers, who just talks/i });
 
-    await screen.findByRole("heading", { name: /national leaderboard and comparison matrix/i });
-    expect(screen.getByRole("link", { name: "Rankings" })).toHaveAttribute("aria-current", "page");
+    expect(navLinks).not.toHaveClass("nav-links-open");
   });
 });

@@ -1,7 +1,6 @@
 import { translate } from "./cityPresentation";
 import type { Locale } from "./types";
 import { useInView } from "./useInView";
-import { getClaimValue } from "./claimRegistry";
 
 interface Props {
   locale: Locale;
@@ -14,8 +13,6 @@ interface BenefitBlock {
   title: { en: string; th: string; zh: string };
   body: { en: string; th: string; zh: string };
 }
-
-const smartCityTarget = Number(getClaimValue("target-smart-cities-2024-2027") ?? 105);
 
 const benefits: BenefitBlock[] = [
   {
@@ -63,9 +60,9 @@ const benefits: BenefitBlock[] = [
     lens: { en: "Policy targeting", th: "การกำหนดเป้าหมายนโยบาย", zh: "政策瞄准" },
     title: { en: "For policymakers: evidence-based decisions", th: "สำหรับผู้กำหนดนโยบาย: ตัดสินใจบนหลักฐาน", zh: "政策制定者：基于证据的决策" },
     body: {
-      en: `depa's current 2024-2027 plan period targets at least ${smartCityTarget} livable smart cities. But how do you allocate limited resources? This index shows which cities are closest to Alpha tier and would benefit most from targeted investment, which cities are stuck in Gamma and need fundamental infrastructure before smart technology, and which policies actually correlate with better outcomes. Academic research in Land Use Policy (2024) demonstrates that composite smart city indices enable more efficient resource allocation when they are transparent about their methodology.`,
-      th: `แผนช่วงปี 2567-2570 ของ depa ตั้งเป้าเมืองอัจฉริยะน่าอยู่ไม่น้อยกว่า ${smartCityTarget} เมือง แต่จะจัดสรรทรัพยากรจำกัดอย่างไร? ดัชนีนี้แสดงว่าเมืองไหนใกล้ Alpha ที่สุดและจะได้ประโยชน์มากที่สุดจากการลงทุนตรงเป้า เมืองไหนติดอยู่ที่ Gamma และต้องการโครงสร้างพื้นฐานก่อนเทคโนโลยีอัจฉริยะ และนโยบายใดสัมพันธ์กับผลลัพธ์ที่ดีขึ้นจริง`,
-      zh: `depa 当前 2024-2027 计划期的目标，是打造至少 ${smartCityTarget} 座宜居型智慧城市。但有限资源该怎么分配？本指数显示哪些城市最接近 Alpha、最值得定向投入，哪些城市仍困在 Gamma、需要先补基础设施，再谈智能技术，以及哪些政策真正与更好的结果相关。《土地利用政策》(2024) 的研究表明，只要方法透明，复合型智慧城市指数就能帮助更高效地配置资源。`,
+      en: "Thailand's target is 105 smart cities by 2027. But how do you allocate limited resources? This index shows which cities are closest to Alpha tier and would benefit most from targeted investment, which cities are stuck in Gamma and need fundamental infrastructure before smart technology, and which policies actually correlate with better outcomes. Academic research in Land Use Policy (2024) demonstrates that composite smart city indices enable more efficient resource allocation when they are transparent about their methodology.",
+      th: "ไทยตั้งเป้า 105 เมืองอัจฉริยะภายปี 2570 แต่จะจัดสรรทรัพยากรจำกัดอย่างไร? ดัชนีนี้แสดงว่าเมืองไหนใกล้ Alpha ที่สุดและจะได้ประโยชน์มากที่สุดจากการลงทุนตรงเป้า เมืองไหนติดอยู่ที่ Gamma และต้องการโครงสร้างพื้นฐานก่อนเทคโนโลยีอัจฉริยะ และนโยบายใดสัมพันธ์กับผลลัพธ์ที่ดีขึ้นจริง",
+      zh: "泰国的目标是到2027年拥有105个智慧城市。但如何分配有限的资源？本指数显示哪些城市最接近Alpha级别并能从定向投资中获益最大，哪些城市困在Gamma级别需要先完善基础设施再引入智能技术，以及哪些政策实际上与更好的成果相关。《土地利用政策》(2024)的学术研究表明，当复合智慧城市指数的方法论透明时，能实现更高效的资源分配。",
     },
   },
 ];

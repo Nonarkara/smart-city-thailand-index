@@ -47,7 +47,6 @@ export interface CityScores {
 
 export interface CityMetrics {
   population: number;            // thousands
-  landAreaKm2?: number;          // administrative/project area in square kilometres
   gppPerCapita?: number;         // Thai baht
   avgMonthlyIncome?: number;     // Thai baht
   pm25Annual?: number;           // ug/m3
@@ -63,6 +62,7 @@ export interface CityMetrics {
   forestCoverage?: number;       // percentage (Royal Forest Dept)
   fdiInflow?: number;            // million baht (BOI)
   dataLastUpdated?: string;      // ISO date of most recent data sync
+  landAreaKm2?: number;          // optional land area override from dataset
 }
 
 export interface SmartCity {

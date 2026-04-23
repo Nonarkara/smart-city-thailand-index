@@ -1,110 +1,190 @@
-import { SCORING_PILLARS } from "./scoring";
+import { dataSources } from "./evidenceData";
+import { instruments } from "./financialToolkit";
+import { SCORING_PILLARS, computeComposite, assignTier, roundScore } from "./scoring";
 import { PILLAR_LABELS, PILLAR_WEIGHTS, PILLAR_COLORS } from "./types";
 import { WIKIMEDIA_PHOTO_CREDITS } from "./photoCredits";
-import { translate } from "./cityPresentation";
-import type { Locale } from "./types";
+import type { Locale, CityScores } from "./types";
 
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
 }
 
+interface LocalizedItem {
+  en: string;
+  th: string;
+  zh: string;
+}
+
+function t(locale: Locale, copy: LocalizedItem): string {
+  return locale === "th" ? copy.th : locale === "zh" ? copy.zh : copy.en;
+}
+
+// ─── DOMAIN CATEGORIES ───
+const DOMAINS = {
+  economic: { en: "Economic & Productivity", th: "เศรษฐกิจและผลิตภาพ", zh: "经济与生产力", color: "var(--amber)" },
+  environmental: { en: "Environmental & Climate", th: "สิ่งแวดล้อมและสภาพภูมิอากาศ", zh: "环境与气候", color: "var(--emerald)" },
+  social: { en: "Social & Wellbeing", th: "สังคมและความเป็นอยู่", zh: "社会与福祉", color: "var(--indigo)" },
+  digital: { en: "Digital & Infrastructure", th: "ดิจิทัลและโครงสร้างพื้นฐาน", zh: "数字与基础设施", color: "var(--sky)" },
+};
+
+// ─── API & Data Endpoints (Categorized) ───
 const API_ENDPOINTS = [
-  { name: "NSO STATISTICAL DATA", domain: "ECONOMIC", endpoint: "nso.go.th", summary: { en: "Provincial income, employment, and household demographics.", th: "ข้อมูลรายได้จังหวัด การจ้างงาน และโครงสร้างครัวเรือน", zh: "省/直辖市收入、就业及家庭人口统计数据。" } },
-  { name: "NESDC GPP DATA", domain: "ECONOMIC", endpoint: "nesdc.go.th", summary: { en: "Gross Provincial Product (GPP) per capita output.", th: "ผลิตภัณฑ์มวลรวมจังหวัดต่อหัว (GPP per capita)", zh: "省级人均生产总值数据。" } },
-  { name: "OPEN-METEO CLIMATE API", domain: "ENVIRONMENTAL", endpoint: "api.open-meteo.com", summary: { en: "Historical PM2.5, temperature, and climate risk modeling.", th: "ข้อมูล PM2.5 อุณหภูมิย้อนหลัง และโมเดลความเสี่ยงสภาพภูมิอากาศ", zh: "历史 PM2.5、气温及气候风险模型数据。" } },
-  { name: "DEPA CITY PLATFORM", domain: "DIGITAL", endpoint: "citydata.in.th", summary: { en: "IoT deployment counts and open data maturity.", th: "จำนวนการติดตั้ง IoT และความพร้อมข้อมูลเปิด", zh: "物联网部署规模及开放数据成熟度。" } },
+  {
+    name: "NSO Statistical Data",
+    domain: "economic",
+    endpoint: "nso.go.th",
+    usage: { en: "Provincial income, employment, and household demographics", th: "รายได้จังหวัด การจ้างงาน และประชากรศาสตร์ครัวเรือน", zh: "省级收入、就业和家庭人口统计" },
+    url: "https://www.nso.go.th",
+    auditTrail: "Available via NSO Data Catalog",
+  },
+  {
+    name: "NESDC GPP Data",
+    domain: "economic",
+    endpoint: "nesdc.go.th",
+    usage: { en: "Gross Provincial Product (GPP) per capita — core economic output", th: "ผลิตภัณฑ์มวลรวมจังหวัด (GPP) ต่อหัว — ผลผลิตเศรษฐกิจหลัก", zh: "人均省内生产总值 (GPP) —— 核心经济产出" },
+    url: "https://www.nesdc.go.th",
+    auditTrail: "Annual publication series",
+  },
+  {
+    name: "Open-Meteo Climate API",
+    domain: "environmental",
+    endpoint: "api.open-meteo.com/v1",
+    usage: { en: "Historical PM2.5, temperature, and climate risk modeling", th: "ข้อมูล PM2.5 ย้อนหลัง อุณหภูมิ และโมเดลความเสี่ยงสภาพภูมิอากาศ", zh: "历史 PM2.5、温度和气候风险建模" },
+    url: "https://open-meteo.com",
+    auditTrail: "Live JSON feed / Historical Archiv",
+  },
+  {
+    name: "GISTDA Satellite",
+    domain: "environmental",
+    endpoint: "gistda.or.th",
+    usage: { en: "Urban green coverage and land-use change detection", th: "พื้นที่สีเขียวในเมืองและการตรวจจับการเปลี่ยนแปลงการใช้ที่ดิน", zh: "城市绿地覆盖率和土地利用变化检测" },
+    url: "https://www.gistda.or.th",
+    auditTrail: "Copernicus/Sentinel-2 derived imagery",
+  },
+  {
+    name: "Royal Thai Police",
+    domain: "social",
+    endpoint: "rtp.go.th",
+    usage: { en: "Reported crime rates per 100,000 residents", th: "อัตราอาชญากรรมที่รายงานต่อ 100,000 ประชากร", zh: "每 10 万名居民的报告犯罪率" },
+    url: "https://www.rtp.go.th",
+    auditTrail: "Official Annual Statistics",
+  },
+  {
+    name: "depa City Platform",
+    domain: "digital",
+    endpoint: "citydata.in.th",
+    usage: { en: "IoT deployment counts, digital service adoption, and open data maturity", th: "จำนวนการติดตั้ง IoT การใช้บริการดิจิทัล และความพร้อมของข้อมูลเปิด", zh: "IoT 部署数量、数字服务采用率和开放数据成熟度" },
+    url: "https://www.citydata.in.th",
+    auditTrail: "City-level API dashboards",
+  },
 ];
 
-export default function ReferencesPage({ locale }: Props) {
-  const t = (obj: { en: string; th: string; zh: string }) => translate(locale, obj);
-
+export default function ReferencesPage({ locale, onNavigate }: Props) {
   return (
-    <div className="references-page" style={{ paddingBottom: 'var(--space-8)' }}>
-      {/* 1. HERO SIGNAGE */}
-      <section className="section hero-signage reveal visible">
-        <p className="eyebrow">{t({ en: "Audit Trail // TECHNICAL-v2.1", th: "ร่องรอยการตรวจสอบ // TECHNICAL-v2.1", zh: "审计轨迹 // TECHNICAL-v2.1" })}</p>
-        <h1 className="hero-title">{t({ en: "References & Sources", th: "แหล่งอ้างอิงและข้อมูล", zh: "参考资料与数据源" })}</h1>
+    <div className="references-page">
+      <section className="section rankings-hero reveal visible">
+        <p className="eyebrow">{t(locale, { en: "Transparency", th: "ความโปร่งใส", zh: "透明度" })}</p>
+        <h1 className="hero-title">{t(locale, { en: "Audit Trail & References", th: "ร่องรอยการตรวจสอบและแหล่งอ้างอิง", zh: "审计轨迹与参考资料" })}</h1>
         <p className="hero-strapline">
-          {t({
-            en: "Every decimal in the Smart City Thailand Index is anchored in verifiable evidence. Full traceability for every signal used in the calculation engine.",
-            th: "ทุกจุดทศนิยมในดัชนีเมืองอัจฉริยะไทย ยึดโยงกับหลักฐานที่ตรวจสอบได้ มีความโปร่งใสในทุกสัญญาณที่ใช้คำนวณ",
-            zh: "泰国智慧城市指数中的每一位小数都基于可验证的证据。计算引擎中使用的每个信号都具备完整的可追溯性。",
+          {t(locale, {
+            en: "Every decimal in the Smart City Thailand Index is anchored in verifiable evidence. We provide full traceability for every signal used in our calculation engine.",
+            th: "ทุกทศนิยมในดัชนีเมืองอัจฉริยะไทย ยึดโยงกับหลักฐานที่ตรวจสอบได้ เราให้ความโปร่งใสและตรวจสอบย้อนกลับได้ทุกสัญญาณที่ใช้ในเครื่องมือคำนวณ",
+            zh: "泰国智慧城市指数中的每一位小数都基于可验证的证据。我们为计算引擎中使用的每个信号提供完整的可追溯性。",
           })}
         </p>
       </section>
 
-      {/* 2. ENGINE SPECIFICATION */}
-      <section className="section reveal visible">
-        <p className="eyebrow">{t({ en: "Calculation Engine", th: "เครื่องมือคำนวณ", zh: "计算引擎" })}</p>
-        <div className="data-sheet">
-           <div className="data-row" style={{ borderBottom: '2px solid var(--n-900)', paddingBottom: 'var(--space-2)' }}>
-              <span className="data-value" style={{ fontSize: '24px', fontWeight: 800 }}>Σ (Pillar_n * Weight_n) / 100</span>
-           </div>
-           <div className="weight-audit-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-4)', marginTop: 'var(--space-4)' }}>
-              {SCORING_PILLARS.map(p => (
-                <div key={p}>
-                   <div className="data-label" style={{ color: PILLAR_COLORS[p] }}>{PILLAR_LABELS[locale][p].toUpperCase()}</div>
-                   <div className="data-value" style={{ fontWeight: 800 }}>{PILLAR_WEIGHTS[p]}%</div>
-                   <div style={{ height: '4px', background: 'var(--n-100)', marginTop: '4px' }}>
-                      <div style={{ height: '100%', width: `${PILLAR_WEIGHTS[p]}%`, background: PILLAR_COLORS[p] }} />
-                   </div>
-                </div>
-              ))}
-           </div>
-        </div>
-      </section>
-
-      {/* 3. SOURCE REPOSITORY */}
-      <section className="section reveal visible">
-        <p className="eyebrow">{t({ en: "Verifiable Endpoints", th: "จุดเชื่อมต่อข้อมูลที่ตรวจสอบได้", zh: "可验证的数据终端" })}</p>
-        <div className="data-sheet" style={{ padding: 0 }}>
-          {API_ENDPOINTS.map((api, i) => (
-            <div key={i} className="data-row" style={{ padding: 'var(--space-3) var(--space-4)' }}>
-               <div style={{ flex: 1 }}>
-                  <div className="data-label">{api.domain}</div>
-                  <div className="data-value" style={{ fontWeight: 700 }}>{api.name}</div>
-                  <div className="data-note" style={{ color: 'var(--a-500)', fontWeight: 600 }}>{api.endpoint}</div>
-               </div>
-               <p className="data-note" style={{ flex: 2, margin: 0 }}>{t(api.summary)}</p>
+      {/* ─── DOMAIN BREAKDOWN ─── */}
+      <section className="section reveal stagger-1 visible">
+        <div className="domain-grid">
+          {Object.entries(DOMAINS).map(([key, domain]) => (
+            <div key={key} className="domain-card glass-card shadow-premium" style={{ borderLeft: `4px solid ${domain.color}` }}>
+              <h3 className="domain-title" style={{ color: domain.color }}>{t(locale, domain)}</h3>
+              <div className="domain-endpoints">
+                {API_ENDPOINTS.filter(api => api.domain === key).map((api, i) => (
+                  <div key={i} className="endpoint-item">
+                    <div className="endpoint-meta">
+                      <span className="endpoint-name">{api.name}</span>
+                      <span className="endpoint-audit">{t(locale, { en: "Audit Trail", th: "ร่องรอยการตรวจสอบ", zh: "审计轨迹" })}: {api.auditTrail}</span>
+                    </div>
+                    <p className="endpoint-usage">{t(locale, api.usage)}</p>
+                    <a href={api.url} target="_blank" rel="noopener noreferrer" className="endpoint-link">{t(locale, { en: "Source", th: "แหล่งข้อมูล", zh: "来源" })} →</a>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 4. MEDIA ATTRIBUTION */}
-      <section className="section reveal visible">
-        <p className="eyebrow">{t({ en: "Media Attribution", th: "การอ้างอิงสื่อ", zh: "媒体归属" })}</p>
-        <div className="data-sheet-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 'var(--space-2)' }}>
-          {WIKIMEDIA_PHOTO_CREDITS.slice(0, 12).map(credit => (
-            <div key={credit.cityId} className="data-sheet" style={{ padding: 'var(--space-2)' }}>
-               <div className="data-label">{credit.cityId.toUpperCase()}</div>
-               <div className="data-value" style={{ fontSize: '12px', fontWeight: 700 }}>{credit.author}</div>
-               <div className="data-note" style={{ fontSize: '10px' }}>{credit.license}</div>
+      {/* ─── SCORING ENGINE AUDIT ─── */}
+      <section className="section reveal stagger-2 visible">
+        <p className="eyebrow">{t(locale, { en: "Method", th: "วิธีการ", zh: "方法" })}</p>
+        <h2>{t(locale, { en: "The Scoring Engine", th: "เครื่องมือคำนวณคะแนน", zh: "评分引擎" })}</h2>
+        <div className="engine-audit glass-card shadow-heavy">
+          <div className="formula-box">
+             <code>Composite = Σ (Pillar_n * Weight_n) / 100</code>
+          </div>
+          <div className="weight-audit-grid">
+            {SCORING_PILLARS.map(p => (
+              <div key={p} className="weight-audit-row">
+                <span className="p-dot" style={{ background: PILLAR_COLORS[p] }} />
+                <span className="p-label">{PILLAR_LABELS[locale][p]}</span>
+                <span className="p-weight">{PILLAR_WEIGHTS[p]}%</span>
+                <div className="p-bar-track"><div className="p-bar-fill" style={{ width: `${PILLAR_WEIGHTS[p]}%`, background: PILLAR_COLORS[p] }} /></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── PHOTO CREDITS (CC BY / CC BY-SA attribution) ─── */}
+      <section className="section reveal stagger-3 visible">
+        <p className="eyebrow">{t(locale, { en: "Photo Credits", th: "เครดิตภาพ", zh: "图片致谢" })}</p>
+        <h2>{t(locale, { en: "Wikimedia Commons Attribution", th: "การอ้างอิงภาพจาก Wikimedia Commons", zh: "Wikimedia Commons 图片致谢" })}</h2>
+        <p style={{ fontSize: ".75rem", color: "var(--2)", lineHeight: 1.6, maxWidth: "620px", marginBottom: "1rem" }}>
+          {t(locale, {
+            en: "City photos on this site are sourced from Wikimedia Commons under Creative Commons licenses. Each requires attribution to the original photographer. The full list is below, with direct links to the source file on Wikimedia.",
+            th: "ภาพเมืองบนเว็บไซต์นี้มาจาก Wikimedia Commons ภายใต้สัญญาอนุญาต Creative Commons ซึ่งกำหนดให้ต้องอ้างอิงช่างภาพต้นฉบับ รายการทั้งหมดอยู่ด้านล่าง พร้อมลิงก์ไปยังไฟล์ต้นฉบับบน Wikimedia",
+            zh: "本站的城市照片来自 Wikimedia Commons，使用 Creative Commons 许可证。每张都需要注明原作者。完整列表如下，并附有指向 Wikimedia 原始文件的链接。",
+          })}
+        </p>
+        <div className="photo-credits-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: ".5rem" }}>
+          {WIKIMEDIA_PHOTO_CREDITS.map(credit => (
+            <div key={credit.cityId} className="photo-credit-card glass-card" style={{ padding: ".7rem", fontSize: ".65rem", lineHeight: 1.5 }}>
+              <div style={{ font: "700 .6rem var(--mono)", color: "var(--teal)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: ".2rem" }}>{credit.cityId}</div>
+              <div style={{ fontWeight: 600, marginBottom: ".15rem" }}>{credit.author}</div>
+              <div style={{ color: "var(--3)", marginBottom: ".3rem" }}>{credit.license}</div>
+              <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: ".6rem", color: "var(--teal)" }}>
+                {t(locale, { en: "Source on Wikimedia", th: "แหล่งที่มา Wikimedia", zh: "Wikimedia 原文件" })} →
+              </a>
             </div>
           ))}
         </div>
-        <p className="data-note" style={{ marginTop: 'var(--space-2)' }}>SOURCED VIA WIKIMEDIA COMMONS // CREATIVE COMMONS COMPLIANT</p>
       </section>
 
-      {/* 5. COMPLIANCE STANDARDS */}
-      <section className="section reveal visible" style={{ borderBottom: 0 }}>
-        <p className="eyebrow">{t({ en: "Standards & Compliance", th: "มาตรฐานและการกำกับดูแล", zh: "标准与合规" })}</p>
-        <div className="data-sheet" style={{ background: 'var(--n-900)', color: 'var(--n-0)' }}>
-           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-4)' }}>
-             <div>
-               <div className="data-label" style={{ color: 'var(--n-400)' }}>LICENSE</div>
-               <div className="data-value">CC BY 4.0</div>
-             </div>
-             <div>
-               <div className="data-label" style={{ color: 'var(--n-400)' }}>FRAMEWORK</div>
-               <div className="data-value">ISO 37122:2019</div>
-             </div>
-             <div>
-               <div className="data-label" style={{ color: 'var(--n-400)' }}>AUDIT METHOD</div>
-               <div className="data-value">MANUAL + API</div>
-             </div>
-           </div>
+      {/* ─── LEGAL & COMPLIANCE HUD ─── */}
+      <section className="section reveal stagger-3 visible">
+        <div className="compliance-hud glass-card shadow-premium">
+          <div className="hud-header">
+            <span className="hud-dot" />
+            <h3>{t(locale, { en: "Institutional & Compliance Standards", th: "มาตรฐานเชิงสถาบันและการกำกับดูแล", zh: "机构与合规标准" })}</h3>
+          </div>
+          <div className="compliance-grid">
+            <div className="compliance-item">
+              <span className="c-label">{t(locale, { en: "License", th: "ใบอนุญาต", zh: "许可" })}</span>
+              <span className="c-value">Creative Commons Attribution 4.0 (CC BY 4.0)</span>
+            </div>
+            <div className="compliance-item">
+              <span className="c-label">{t(locale, { en: "Alignment", th: "ความสอดคล้อง", zh: "对齐标准" })}</span>
+              <span className="c-value">UN-Habitat CPI · ISO 37122:2019 · ASEAN ASCF</span>
+            </div>
+            <div className="compliance-item">
+              <span className="c-label">{t(locale, { en: "Verification", th: "การยืนยัน", zh: "验证方式" })}</span>
+              <span className="c-value">{t(locale, { en: "Manual Field Audit + Automated API Poll", th: "ตรวจภาคสนามด้วยตนเอง + ดึงข้อมูล API อัตโนมัติ", zh: "人工实地审核 + 自动 API 采集" })}</span>
+            </div>
+          </div>
         </div>
       </section>
     </div>

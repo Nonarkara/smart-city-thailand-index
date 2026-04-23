@@ -2,7 +2,6 @@ import { cdpSources, getAirQualityUrl, getBOIInvestmentUrl, getCityDataUrl, getO
 import { cityContexts, type CityContext } from "./cityContext.ts";
 import { allCities } from "./cityData.ts";
 import { dataSources, getEvidenceForCity, type DataSource, type EvidenceItem } from "./evidenceData.ts";
-import { getPopulationDensityPerKm2, getResolvedLandAreaKm2, getResolvedPopulationThousand } from "./adminBaselines.ts";
 import { SCORING_PILLARS } from "./scoring.ts";
 import type {
   CityReality,
@@ -203,14 +202,11 @@ export interface CityResearchExportRow {
   fact_type: "metric" | "recommendation" | "context" | "summary";
   metric_key_or_recommendation_key: string;
   value: string;
-  value_numeric: string;
   unit: string;
   source_id: string;
-  source_name: string;
   source_url: string;
   observed_at: string;
   confidence: string;
-  method_note: string;
   version: string;
 }
 
@@ -428,8 +424,6 @@ const TIER_PROCESS_COPY: Record<CityTier, LocalizedText> = {
 
 const METRIC_SOURCE_LOOKUP: Record<string, string> = {
   population: "nso",
-  landAreaKm2: "admin-boundaries",
-  populationDensityPerKm2: "admin-boundaries",
   gppPerCapita: "nesdc",
   avgMonthlyIncome: "nso",
   pm25Annual: "pcd",
@@ -495,12 +489,6 @@ function formatMetricValue(metricKey: string, value: number | string | undefined
 
   if (metricKey === "population") {
     return { text: `${value.toLocaleString()}K`, unit: "people" };
-  }
-  if (metricKey === "landAreaKm2") {
-    return { text: `${value.toLocaleString(undefined, { maximumFractionDigits: 2 })}`, unit: "km2" };
-  }
-  if (metricKey === "populationDensityPerKm2") {
-    return { text: `${value.toLocaleString(undefined, { maximumFractionDigits: 0 })}`, unit: "people/km2" };
   }
   if (metricKey === "gppPerCapita" || metricKey === "avgMonthlyIncome" || metricKey === "fdiInflow") {
     return { text: `฿${value.toLocaleString()}`, unit: "THB" };
@@ -636,10 +624,6 @@ function metricLabel(metricKey: string): LocalizedText {
   switch (metricKey) {
     case "population":
       return localized("Population", "ประชากร", "人口");
-    case "landAreaKm2":
-      return localized("Land area", "พื้นที่", "土地面积");
-    case "populationDensityPerKm2":
-      return localized("Population density", "ความหนาแน่นประชากร", "人口密度");
     case "gppPerCapita":
       return localized("GPP per capita", "GPP ต่อหัว", "人均 GPP");
     case "avgMonthlyIncome":
@@ -675,10 +659,6 @@ function metricMethod(metricKey: string): string {
   switch (metricKey) {
     case "population":
       return "Baseline city population from index input; used as scale proxy.";
-    case "landAreaKm2":
-      return "Administrative or project land-area baseline; check method note for province, district, project, or historic-area scope.";
-    case "populationDensityPerKm2":
-      return "Derived from resolved population and land-area baselines; use as a quick scale signal, not cadastral truth.";
     case "gppPerCapita":
       return "Provincial economic productivity proxy; used for revenue and demand scoring.";
     case "avgMonthlyIncome":
@@ -710,117 +690,49 @@ function metricMethod(metricKey: string): string {
   }
 }
 
-type MetricObservationEntry = {
-  metricKey: string;
-  value: number | string | undefined;
-  sourceId?: string;
-  sourceName?: string;
-  sourceUrl?: string;
-  observedAt?: string;
-  confidence?: number;
-  methodNote?: string;
-  periodLabel?: string;
-};
-
 function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
   const metrics = city.metrics;
-  const contextLandArea = cityContexts[city.id]?.landArea;
-  const population = getResolvedPopulationThousand(city);
-  const landArea = getResolvedLandAreaKm2(city, contextLandArea);
-  const density = getPopulationDensityPerKm2(city, contextLandArea);
   const keepZeroMetrics = new Set(["population", "gppPerCapita", "avgMonthlyIncome"]);
-  const baselineSource = (resolved: ReturnType<typeof getResolvedPopulationThousand> | ReturnType<typeof getResolvedLandAreaKm2>): Partial<MetricObservationEntry> => {
-    if (!resolved.baseline) return {};
-
-    return {
-      sourceId: "admin-boundaries",
-      sourceName: resolved.baseline.sourceName,
-      sourceUrl: resolved.baseline.sourceUrl,
-      observedAt: resolved.baseline.observedAt,
-      confidence: resolved.baseline.confidence,
-      methodNote: resolved.methodNote,
-    };
-  };
-
-  const landAreaSource = landArea.baseline
-    ? baselineSource(landArea)
-    : landArea.value !== undefined
-      ? {
-          sourceId: "sciti-curation",
-          sourceName: "SCITI city context curation",
-          sourceUrl: "",
-          confidence: city.dataConfidence === "high" ? 0.78 : city.dataConfidence === "medium" ? 0.68 : 0.55,
-          methodNote: landArea.methodNote,
-        }
-      : {};
-
-  const entries: MetricObservationEntry[] = [
-    {
-      metricKey: "population",
-      value: population.value ?? metrics.population,
-      periodLabel: population.baseline ? "Administrative population baseline" : undefined,
-      ...baselineSource(population),
-    },
-    {
-      metricKey: "landAreaKm2",
-      value: landArea.value,
-      periodLabel: landArea.baseline ? "Administrative/project area baseline" : "Curated place baseline",
-      ...landAreaSource,
-    },
-    {
-      metricKey: "populationDensityPerKm2",
-      value: density.value,
-      periodLabel: "Derived density baseline",
-      sourceId: density.baseline ? "admin-boundaries" : landAreaSource.sourceId,
-      sourceName: density.baseline?.sourceName ?? landAreaSource.sourceName,
-      sourceUrl: density.baseline?.sourceUrl ?? landAreaSource.sourceUrl,
-      observedAt: density.baseline?.observedAt,
-      confidence: Math.min(density.baseline?.confidence ?? 0.6, 0.7),
-      methodNote: density.methodNote,
-    },
-    { metricKey: "gppPerCapita", value: metrics.gppPerCapita },
-    { metricKey: "avgMonthlyIncome", value: metrics.avgMonthlyIncome },
-    { metricKey: "pm25Annual", value: metrics.pm25Annual },
-    { metricKey: "hospitalBedsPer10k", value: metrics.hospitalBedsPer10k },
-    { metricKey: "crimeRatePer100k", value: metrics.crimeRatePer100k },
-    { metricKey: "greenCoverage", value: metrics.greenCoverage },
+  const entries: Array<[string, number | string | undefined]> = [
+    ["population", metrics.population],
+    ["gppPerCapita", metrics.gppPerCapita],
+    ["avgMonthlyIncome", metrics.avgMonthlyIncome],
+    ["pm25Annual", metrics.pm25Annual],
+    ["hospitalBedsPer10k", metrics.hospitalBedsPer10k],
+    ["crimeRatePer100k", metrics.crimeRatePer100k],
+    ["greenCoverage", metrics.greenCoverage],
     // Extended indicators
-    { metricKey: "gppGrowthRate", value: metrics.gppGrowthRate },
-    { metricKey: "pm25Trend", value: metrics.pm25Trend },
-    { metricKey: "waterQuality", value: metrics.waterQuality },
-    { metricKey: "forestCoverage", value: metrics.forestCoverage },
-    { metricKey: "fdiInflow", value: metrics.fdiInflow },
-    { metricKey: "industryComposition", value: metrics.industryComposition },
-    { metricKey: "laborForce", value: metrics.laborForce },
+    ["gppGrowthRate", metrics.gppGrowthRate],
+    ["pm25Trend", metrics.pm25Trend],
+    ["waterQuality", metrics.waterQuality],
+    ["forestCoverage", metrics.forestCoverage],
+    ["fdiInflow", metrics.fdiInflow],
+    ["industryComposition", metrics.industryComposition],
+    ["laborForce", metrics.laborForce],
   ];
 
   return entries
-    .filter(({ metricKey, value }) => value !== undefined && value !== null && (value !== 0 || keepZeroMetrics.has(metricKey)))
-    .map(entry => {
-      const { metricKey, value } = entry;
-      const isRegisteredPopulationPlaceholder = city.status === "registered" && metricKey === "population" && value === 0;
-      const sourceId = entry.sourceId ?? (isRegisteredPopulationPlaceholder ? "depa" : METRIC_SOURCE_LOOKUP[metricKey] ?? "field");
+    .filter(([metricKey, value]) => value !== undefined && value !== null && (value !== 0 || keepZeroMetrics.has(metricKey)))
+    .map(([metricKey, value]) => {
+      const sourceId = METRIC_SOURCE_LOOKUP[metricKey] ?? "field";
       const source = getSource(sourceId);
       const formatted = formatMetricValue(metricKey, value);
-      const observedAt = entry.observedAt ?? (metricKey === "pm25Annual" ? "2026-03-01T00:00:00.000Z" : DEFAULT_OBSERVED_AT);
-      const baseConfidence = city.dataConfidence === "high" ? 0.9 : city.dataConfidence === "medium" ? 0.75 : 0.6;
+      const observedAt = metricKey === "pm25Annual" ? "2026-03-01T00:00:00.000Z" : DEFAULT_OBSERVED_AT;
 
       return {
         cityId: city.id,
         metricKey,
         label: metricLabel(metricKey),
-        metricValueNum: isRegisteredPopulationPlaceholder ? null : typeof value === "number" ? value : null,
-        metricValueText: isRegisteredPopulationPlaceholder ? "Pending" : typeof value === "string" ? value : formatted.text,
-        unit: isRegisteredPopulationPlaceholder ? null : formatted.unit || null,
-        periodLabel: entry.periodLabel ?? (metricKey === "pm25Annual" ? "2025 annual average" : "2025 baseline"),
+        metricValueNum: typeof value === "number" ? value : null,
+        metricValueText: typeof value === "string" ? value : formatted.text,
+        unit: formatted.unit || null,
+        periodLabel: metricKey === "pm25Annual" ? "2025 annual average" : "2025 baseline",
         sourceId,
-        sourceName: entry.sourceName ?? source.name,
-        sourceUrl: entry.sourceUrl ?? source.url,
+        sourceName: source.name,
+        sourceUrl: source.url,
         observedAt,
-        confidence: isRegisteredPopulationPlaceholder ? 0.35 : entry.confidence ?? baseConfidence,
-        methodNote: isRegisteredPopulationPlaceholder
-          ? "Registered proposal placeholder; population baseline has not been curated yet."
-          : entry.methodNote ?? metricMethod(metricKey),
+        confidence: city.dataConfidence === "high" ? 0.9 : city.dataConfidence === "medium" ? 0.75 : 0.6,
+        methodNote: metricMethod(metricKey),
         verifiedAt: DEFAULT_VERIFIED_AT,
         version: VERSION,
       };
@@ -828,22 +740,11 @@ function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
 }
 
 function buildMetricBlocks(city: SmartCity, observations: CityMetricObservation[]): CityMetricBlock[] {
-  const place = observations.filter(item => ["population", "landAreaKm2", "populationDensityPerKm2"].includes(item.metricKey));
-  const economic = observations.filter(item => ["gppPerCapita", "avgMonthlyIncome"].includes(item.metricKey));
+  const economic = observations.filter(item => ["population", "gppPerCapita", "avgMonthlyIncome"].includes(item.metricKey));
   const risk = observations.filter(item => ["pm25Annual", "crimeRatePer100k", "greenCoverage"].includes(item.metricKey));
   const service = observations.filter(item => ["hospitalBedsPer10k"].includes(item.metricKey));
 
   return [
-    {
-      id: "place-and-scale",
-      title: localized("Place and scale", "ที่ตั้งและขนาด", "区位与规模"),
-      summary: localized(
-        "The first-pass scale read: how big the administrative or project footprint is, and whether density changes the delivery model.",
-        "การอ่านขนาดรอบแรก: พื้นที่ทางปกครองหรือพื้นที่โครงการใหญ่แค่ไหน และความหนาแน่นเปลี่ยนโมเดลการส่งมอบหรือไม่",
-        "First-pass scale read: administrative or project footprint, and whether density changes the delivery model.",
-      ),
-      observations: place,
-    },
     {
       id: "economic-readiness",
       title: localized("Economic readiness", "ฐานเศรษฐกิจ", "经济基础"),
@@ -1431,7 +1332,7 @@ function buildShortTailoredNote(city: SmartCity, context?: CityContext): Localiz
 }
 
 function buildKeyMetrics(city: SmartCity, observations: CityMetricObservation[]): CityKeyMetric[] {
-  const preferred = ["population", "landAreaKm2", "populationDensityPerKm2", "gppPerCapita", "pm25Annual", "waterQuality", "gppGrowthRate", "crimeRatePer100k", "greenCoverage"];
+  const preferred = ["gppPerCapita", "pm25Annual", "waterQuality", "gppGrowthRate", "crimeRatePer100k", "greenCoverage", "population"];
 
   return preferred
     .map(metricKey => observations.find(item => item.metricKey === metricKey))
@@ -1510,14 +1411,11 @@ function buildExportRows(
     fact_type: "summary",
     metric_key_or_recommendation_key: "compositeScore",
     value: city.compositeScore.toFixed(1),
-    value_numeric: city.compositeScore.toFixed(1),
     unit: "score",
     source_id: "sciti-index",
-    source_name: "SCITI composite scoring model",
     source_url: "",
     observed_at: DEFAULT_VERIFIED_AT,
     confidence: city.dataConfidence ?? "medium",
-    method_note: "Weighted composite using the seven SCITI pillars.",
     version: VERSION,
   };
 
@@ -1529,14 +1427,11 @@ function buildExportRows(
     fact_type: "metric" as const,
     metric_key_or_recommendation_key: item.metricKey,
     value: item.metricValueText ?? "",
-    value_numeric: item.metricValueNum == null ? "" : String(item.metricValueNum),
     unit: item.unit ?? "",
     source_id: item.sourceId,
-    source_name: item.sourceName,
     source_url: item.sourceUrl,
     observed_at: item.observedAt,
     confidence: String(item.confidence),
-    method_note: item.methodNote,
     version: item.version,
   }));
 
@@ -1548,14 +1443,11 @@ function buildExportRows(
     fact_type: "context" as const,
     metric_key_or_recommendation_key: note.kind,
     value: note.body.en,
-    value_numeric: "",
     unit: "",
     source_id: "sciti-curation",
-    source_name: "SCITI city curation",
     source_url: "",
     observed_at: DEFAULT_VERIFIED_AT,
     confidence: "0.8",
-    method_note: "Curated narrative note derived from the city dataset and context profile.",
     version: VERSION,
   }));
 
@@ -1568,14 +1460,11 @@ function buildExportRows(
       fact_type: "recommendation" as const,
       metric_key_or_recommendation_key: recommendation.instrumentId,
       value: `${recommendation.instrumentName}: ${support.summary}`,
-      value_numeric: "",
       unit: "",
       source_id: support.sourceId,
-      source_name: support.sourceId,
       source_url: support.sourceUrl,
       observed_at: support.observedAt,
       confidence: String(support.confidence),
-      method_note: support.supportType === "metric" ? "Finance recommendation support derived from a metric row." : "Finance recommendation support derived from an evidence row.",
       version: VERSION,
     })),
   );
@@ -1672,12 +1561,6 @@ function toCsv<Row extends Record<string, string>>(rows: Row[]): string {
   ].join("\n");
 }
 
-function exportMetric(value: number | string | undefined, blankZero = false): string {
-  if (value === undefined || value === null) return "";
-  if (blankZero && value === 0) return "";
-  return String(value);
-}
-
 export function getCityFinanceInstrumentCatalog(): FinanceInstrumentSeed[] {
   return FINANCE_INSTRUMENTS;
 }
@@ -1702,67 +1585,25 @@ export function getCityFactsRows(cityId?: string): CityResearchExportRow[] {
 }
 
 export function getCitySummariesCsv(): string {
-  return toCsv(getCitySummaries().map(city => {
-    const contextLandArea = cityContexts[city.id]?.landArea;
-    const population = getResolvedPopulationThousand(city);
-    const landArea = getResolvedLandAreaKm2(city, contextLandArea);
-    const density = getPopulationDensityPerKm2(city, contextLandArea);
-    const hasPopulation = population.value !== undefined && population.value > 0;
-    const hasLandArea = landArea.value !== undefined && landArea.value > 0;
-
-    return {
-      id: city.id,
-      name_en: city.nameEn,
-      name_th: city.nameTh,
-      province: city.province,
-      province_th: city.provinceTh,
-      region: city.region,
-      status: city.status,
-      profile_level: city.status === "registered" ? "registered_proposal" : "full_dossier",
-      batch: city.batch == null ? "" : String(city.batch),
-      reality: city.reality,
-      tier: city.tier,
-      composite_score: city.compositeScore.toFixed(1),
-      livability_score: String(city.scores.livability),
-      economy_score: String(city.scores.economy),
-      safety_score: String(city.scores.safety),
-      wellbeing_score: String(city.scores.wellbeing),
-      environment_score: String(city.scores.environment),
-      hospitality_score: String(city.scores.hospitality),
-      digital_score: String(city.scores.digital),
-      population_thousand: hasPopulation ? exportMetric(population.value) : "",
-      land_area_km2: hasLandArea ? exportMetric(landArea.value) : "",
-      population_density_per_km2: density.value === undefined ? "" : density.value.toFixed(0),
-      population_source_scope: population.baseline?.scope ?? (hasPopulation ? "city_dataset" : ""),
-      population_source_name: population.baseline?.sourceName ?? (hasPopulation ? "SCITI city dataset" : ""),
-      population_method_note: population.methodNote,
-      land_area_source_scope: landArea.baseline?.scope ?? (hasLandArea ? "city_context" : ""),
-      land_area_source_name: landArea.baseline?.sourceName ?? (hasLandArea ? "SCITI city context curation" : ""),
-      land_area_method_note: landArea.methodNote,
-      gpp_per_capita_thb: exportMetric(city.metrics.gppPerCapita),
-      avg_monthly_income_thb: exportMetric(city.metrics.avgMonthlyIncome),
-      gpp_growth_rate_pct: exportMetric(city.metrics.gppGrowthRate),
-      labor_force_thousand: exportMetric(city.metrics.laborForce),
-      industry_composition: exportMetric(city.metrics.industryComposition),
-      pm25_annual_ug_m3: exportMetric(city.metrics.pm25Annual),
-      pm25_trend: exportMetric(city.metrics.pm25Trend),
-      hospital_beds_per_10k: exportMetric(city.metrics.hospitalBedsPer10k),
-      crime_rate_per_100k: exportMetric(city.metrics.crimeRatePer100k),
-      green_coverage_pct: exportMetric(city.metrics.greenCoverage),
-      water_quality_index: exportMetric(city.metrics.waterQuality),
-      forest_coverage_pct: exportMetric(city.metrics.forestCoverage),
-      fdi_inflow_million_thb: exportMetric(city.metrics.fdiInflow),
-      data_confidence: city.dataConfidence ?? "medium",
-      smart_dimensions: city.smartDimensions.join("|"),
-      lead_mechanism: city.financeSignal.leadInstrumentName,
-      lead_note: city.financeSignal.line.en,
-      readiness_score: String(city.financeSignal.readinessScore),
-      latest_observed_at: city.freshness.latestObservedAt,
-      last_verified_at: city.freshness.lastVerifiedAt,
-      provenance_count: String(city.provenanceCount),
-      export_ready: city.exportReady ? "true" : "false",
-    };
-  }));
+  return toCsv(getCitySummaries().map(city => ({
+    id: city.id,
+    name_en: city.nameEn,
+    name_th: city.nameTh,
+    province: city.province,
+    region: city.region,
+    status: city.status,
+    reality: city.reality,
+    tier: city.tier,
+    composite_score: city.compositeScore.toFixed(1),
+    data_confidence: city.dataConfidence ?? "medium",
+    lead_mechanism: city.financeSignal.leadInstrumentName,
+    lead_note: city.financeSignal.line.en,
+    readiness_score: String(city.financeSignal.readinessScore),
+    latest_observed_at: city.freshness.latestObservedAt,
+    last_verified_at: city.freshness.lastVerifiedAt,
+    provenance_count: String(city.provenanceCount),
+    export_ready: city.exportReady ? "true" : "false",
+  })));
 }
 
 export function getCityFactsCsv(cityId?: string): string {
@@ -1774,14 +1615,11 @@ export function getCityFactsCsv(cityId?: string): string {
     fact_type: row.fact_type,
     metric_key_or_recommendation_key: row.metric_key_or_recommendation_key,
     value: row.value,
-    value_numeric: row.value_numeric,
     unit: row.unit,
     source_id: row.source_id,
-    source_name: row.source_name,
     source_url: row.source_url,
     observed_at: row.observed_at,
     confidence: row.confidence,
-    method_note: row.method_note,
     version: row.version,
   })));
 }
