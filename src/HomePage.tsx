@@ -19,6 +19,8 @@ import { PILLAR_WEIGHTS } from "./types";
 import { HOME_COLLECTIONS } from "./homeCollections";
 import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_METHOD_CODE } from "./methodologySpec";
 import { WEEKLY_DIGEST, formatWeeklyStamp } from "./weeklyDigest";
+import { REGIONS_ORDERED, REGION_LABELS, type Region } from "./regions";
+import { PillarLegend } from "./PillarLegend";
 
 /** Short, unique vibe phrase per city — used by the top-5 podium. */
 function getCityVibe(city: SmartCity, locale: Locale): string {
@@ -103,6 +105,18 @@ export default function HomePage({ locale, onNavigate }: Props) {
     () => new Set(cities.map(c => c.province)).size,
     [cities],
   );
+
+  // Phase 14 — regional champions. One highest-composite city per region,
+  // in canonical north→south order. Gives the homepage a geographic read
+  // that the global composite sort hides.
+  const regionalChampions = useMemo(() => {
+    return REGIONS_ORDERED.map(region => ({
+      region,
+      city: [...cities]
+        .filter(c => c.region === region)
+        .sort((a, b) => b.compositeScore - a.compositeScore)[0],
+    })).filter((x): x is { region: Region; city: typeof cities[number] } => x.city != null);
+  }, [cities]);
 
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
 
@@ -226,7 +240,43 @@ export default function HomePage({ locale, onNavigate }: Props) {
               </li>
             ))}
           </ul>
+          <PillarLegend locale={locale} />
         </section>
+
+        {/* ─── REGIONAL CHAMPIONS (Phase 14) ─── */}
+        {regionalChampions.length > 0 && (
+          <section
+            className="section reveal visible"
+            aria-label={t({ en: "Regional champions", th: "เมืองผู้นำรายภูมิภาค", zh: "区域冠军" })}
+          >
+            <p className="eyebrow">{t({ en: "By region", th: "รายภูมิภาค", zh: "按区域" })}</p>
+            <h2 className="home-section-title">
+              {t({
+                en: "The champion of each Thai region",
+                th: "ผู้นำของแต่ละภูมิภาคในไทย",
+                zh: "泰国各区域的头名城市",
+              })}
+            </h2>
+            <ul className="regional-champions">
+              {regionalChampions.map(({ region, city }) => (
+                <li key={region}>
+                  <button
+                    type="button"
+                    className="regional-champion-btn"
+                    onClick={() => onNavigate(`/city/${city.id}`)}
+                  >
+                    <span className="regional-champion-region">{REGION_LABELS[locale][region]}</span>
+                    <span className="regional-champion-city">{getCityName(city, locale)}</span>
+                    <span className="regional-champion-meta">
+                      <span>{getProvinceName(city, locale)}</span>
+                      <span className="regional-champion-score">{city.compositeScore.toFixed(1)}</span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* ─── TOP 5 PHOTO PODIUM ─── */}
         {top5.length >= 5 && (() => {

@@ -16,7 +16,8 @@ import {
 import { ResponsiveImage } from "./mediaAssets";
 import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar, SmartCity } from "./types";
-import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS, TIER_LABELS } from "./types";
+import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_SHORT_LABELS, PILLAR_WEIGHTS, TIER_LABELS, LEAGUE_LABELS } from "./types";
+import { PillarLegend } from "./PillarLegend";
 import { computeDevelopability, getGlobalComparison, getMoneyballProfile, getTailoredSteps, getFinancingAdvice } from "./cityAnalytics";
 import { allCities } from "./cityData";
 import { getCityFacts } from "./cityFacts";
@@ -1221,6 +1222,11 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
             <div className={`reality-badge reality-${city.reality}`}>
               {getCityRealityLabel(city.reality, locale)}
             </div>
+            {city.league ? (
+              <div className="league-badge" title={LEAGUE_LABELS[locale][city.league]}>
+                {LEAGUE_LABELS[locale][city.league]}
+              </div>
+            ) : null}
           </div>
         </div>
 
@@ -1534,6 +1540,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       <section className="section performance-triptych city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "Performance", th: "ประสิทธิภาพ", zh: "表现" })}</p>
         <h2>{translate(locale, { en: "Pillar scores, score math, and developability", th: "คะแนนรายเสาหลัก วิธีคำนวณ และความสามารถในการพัฒนา", zh: "七大支柱、计算方式与可开发性" })}</h2>
+        <PillarLegend locale={locale} />
 
         <div className="rpg-layout">
           <div className="rpg-radar-panel">

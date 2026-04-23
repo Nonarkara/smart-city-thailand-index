@@ -65,6 +65,14 @@ export interface CityMetrics {
   landAreaKm2?: number;          // optional land area override from dataset
 }
 
+export type CityLeague =
+  | "province"
+  | "municipality"
+  | "district"
+  | "campus"
+  | "special-zone"
+  | "township";
+
 export interface SmartCity {
   id: string;
   nameEn: string;
@@ -85,6 +93,11 @@ export interface SmartCity {
   taglineTh: string;
   highlights: string[];
   dataConfidence?: DataConfidence;
+  // Phase 14 — taxonomy distinguishing campus (CMU) from district (Samyan)
+  // from full province (Phuket) from municipality (Hat Yai) etc. Optional
+  // because truly uncertain classifications are left unset (see
+  // src/cityLeague.ts).
+  league?: CityLeague;
 }
 
 export const PILLAR_WEIGHTS: Record<ScoringPillar, number> = {
@@ -124,6 +137,33 @@ export const PILLAR_LABELS: Record<Locale, Record<ScoringPillar, string>> = {
     environment: "环境",
     hospitality: "人文",
     digital: "数字",
+  },
+};
+
+export const LEAGUE_LABELS: Record<Locale, Record<CityLeague, string>> = {
+  en: {
+    province: "Province",
+    municipality: "Municipality",
+    district: "District",
+    campus: "Campus",
+    "special-zone": "Special zone",
+    township: "Township",
+  },
+  th: {
+    province: "จังหวัด",
+    municipality: "เทศบาล",
+    district: "เขต / ตำบล",
+    campus: "วิทยาเขต",
+    "special-zone": "เขตพิเศษ",
+    township: "ชุมชน",
+  },
+  zh: {
+    province: "府",
+    municipality: "市镇",
+    district: "区 / 街道",
+    campus: "园区",
+    "special-zone": "特别区",
+    township: "镇",
   },
 };
 

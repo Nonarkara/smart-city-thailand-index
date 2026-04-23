@@ -1,9 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+/* Phase 14 — typography refresh.
+ * IBM Plex Sans for latin body + data (quietly editorial, not saturated).
+ * IBM Plex Sans Thai Looped for Thai body (dramatically more legible for
+ * Thai readers than Latin Plex's approximate glyphs).
+ * IBM Plex Mono for numerics (ties the data grammar together).
+ * Fraunces (variable) for display / section headings — gives the index a
+ * magazine masthead feel Inter + Outfit cannot. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap');
 
 :root {
-  --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-heading: "Outfit", "Inter", sans-serif;
-  --mono: "SF Mono", "Roboto Mono", monospace;
+  --font: "IBM Plex Sans", "IBM Plex Sans Thai Looped", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-heading: "Fraunces", "IBM Plex Sans", Georgia, serif;
+  --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
   
   /* Red Dot Palette — High Contrast, Premium */
   --ink: #0A0A0B;
@@ -664,12 +671,37 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .map-grid line { stroke-dasharray: 2 4; }
 
 /* ─── WIDE SCREEN ADJUSTMENTS ─── */
+/* Phase 14 — scaling ladder. Base rules are phone-first. These lift the
+ * typographic scale on 13–15" laptops (most common viewing device) and
+ * again on 24–27" desktops. Mobile base stays untouched. */
+@media (min-width: 1280px) {
+  :root {
+    --text-base: 0.9375rem;   /* 15px */
+    --text-md:   1.0625rem;   /* 17px */
+    --text-lg:   1.375rem;    /* 22px */
+    --text-xl:   1.625rem;    /* 26px */
+    --text-2xl:  2.125rem;    /* 34px */
+    --text-3xl:  2.625rem;    /* 42px */
+  }
+  body { font-size: 15px; }
+}
 @media (min-width: 1400px) {
   :root { --w: 1280px; }
 }
+@media (min-width: 1600px) {
+  :root {
+    --text-base: 1rem;        /* 16px */
+    --text-md:   1.125rem;    /* 18px */
+    --text-lg:   1.5rem;      /* 24px */
+    --text-xl:   1.75rem;     /* 28px */
+    --text-2xl:  2.25rem;     /* 36px */
+    --text-3xl:  2.875rem;    /* 46px */
+  }
+  body { font-size: 16px; }
+}
 @media (min-width: 2000px) {
   :root { --w: 1600px; }
-  body { font-size: 15px; }
+  body { font-size: 17px; }
 }
 
 /* ─── SPIDER ─── */
@@ -6559,4 +6591,161 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     overflow-x: visible;
   }
   .home-stat-value { font-size: 1.25rem; }
+}
+
+/* ─── PHASE 14 — TYPOGRAPHY, LEGENDS, REGIONAL CHAMPIONS, LEAGUE ─────── */
+
+/* Thai locale — swap body font to Plex Thai Looped (far more legible for
+ * Thai than the Latin Plex transliteration). Headings stay on Fraunces. */
+html[lang="th"] {
+  --font: "IBM Plex Sans Thai Looped", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+/* Editorial headings — give existing H1/H2/H3 tiers the Fraunces face and
+ * a touch of optical sizing. The display serif is the single biggest move
+ * away from the templated look. */
+h1, h2, h3,
+.hero-title,
+.dashboard-title,
+.cinematic-hero-title,
+.home-section-title,
+.timeline-title {
+  font-family: var(--font-heading);
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 72, "SOFT" 50;
+  letter-spacing: -0.02em;
+}
+.hero-title,
+.dashboard-title,
+.cinematic-hero-title {
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  letter-spacing: -0.035em;
+}
+
+/* Grow hero + section titles past the old 4rem / 2.5rem caps on
+ * wider screens so they actually feel editorial on a 16" laptop. */
+.cinematic-hero-title { font-size: clamp(2rem, 6vw, 5.5rem) !important; }
+.dashboard-title { font-size: clamp(1.5rem, 4vw, 3.25rem); }
+.home-section-title { font-size: clamp(1.4rem, 3vw, 2.4rem); }
+
+/* Pillar legend — one reusable row of 7 chips */
+.pillar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin: 0.75rem 0 1.25rem;
+  padding: 0.5rem 0;
+  list-style: none;
+}
+.pillar-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--4);
+  border-radius: 999px;
+  background: var(--surface);
+  font: 500 var(--text-sm) var(--font);
+  color: var(--ink);
+  white-space: nowrap;
+  cursor: default;
+}
+.pillar-legend-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.pillar-legend-short {
+  font: 600 var(--text-xs) var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+.pillar-legend-full {
+  font-size: var(--text-xs);
+  color: var(--2);
+}
+@media (max-width: 520px) {
+  .pillar-legend { gap: 0.35rem 0.5rem; }
+  .pillar-legend-chip { padding: 0.25rem 0.45rem; }
+  .pillar-legend-full { display: none; }
+}
+
+/* Regional champions — six tiles, one per Thai region */
+.regional-champions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin: 0.5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 520px) {
+  .regional-champions { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) {
+  .regional-champions { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+}
+.regional-champion-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 1rem 1.1rem;
+  min-height: 88px;
+  background: var(--surface);
+  border: 1px solid var(--4);
+  border-radius: var(--radius);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+.regional-champion-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--3);
+}
+.regional-champion-region {
+  font: 700 0.56rem var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+.regional-champion-city {
+  font: 600 var(--text-md) var(--font);
+  color: var(--ink);
+  line-height: 1.2;
+}
+.regional-champion-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  color: var(--2);
+}
+.regional-champion-score {
+  font: 600 var(--text-md) var(--mono);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+/* League badge — mono pill next to tier */
+.league-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  min-height: 24px;
+  border: 1px solid var(--hairline, var(--4));
+  border-radius: 999px;
+  background: transparent;
+  font: 600 var(--text-xs) var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--2);
+  white-space: nowrap;
+}
+[data-theme="dark"] .league-badge {
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.72);
 }

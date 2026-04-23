@@ -91,3 +91,17 @@ npx vite build      # Always verify both before pushing
 
 - `.reveal` animations don't fire in headless preview — force `.visible` via `preview_eval`
 - Dev server port: **5188** (configured in `.claude/launch.json`)
+
+---
+
+## Anti-Regression — Do Not Touch
+
+See `/Users/nonarkara/Projects/CLAUDE.md` §11 (The Codex Incident — Anti-Regression Laws) for the full rules. These items are the personality of SCITI 2026. Do not remove, replace, or "simplify" any of them without Dr Non's explicit in-chat approval:
+
+- **SCITI mobile-first layout** — designed for Red Dot submission. Do not retro-fit as desktop-first.
+- **No React Router — single-page architecture.** Do not add routing, do not split pages.
+- **Jony Ive × Dieter Rams typography** — editorial type scale, hairline rules, mono numerics. ZERO border-radius, ZERO gradients, ZERO drop shadows.
+- **`.reveal` scroll-animation pattern** — do not replace with a generic library.
+- **Dev server port 5188** — do not change without updating `.claude/launch.json`.
+
+If you are about to remove, replace, or "simplify" any item above: stop, show the diff, wait for explicit approval.

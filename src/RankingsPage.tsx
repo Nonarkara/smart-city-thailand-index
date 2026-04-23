@@ -17,7 +17,9 @@ import {
   type PresetLens,
 } from "./presetLenses";
 import type { CityTier, Locale, ScoringPillar, SmartCity } from "./types";
-import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LABELS } from "./types";
+import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LABELS, LEAGUE_LABELS } from "./types";
+import { REGION_LABELS } from "./regions";
+import { PillarLegend } from "./PillarLegend";
 
 interface Props {
   locale: Locale;
@@ -38,35 +40,8 @@ const PILLAR_ORDER: ScoringPillar[] = [
   "digital",
 ];
 
-const REGION_LABELS: Record<Locale, Record<SmartCity["region"] | "all", string>> = {
-  en: {
-    all: "All",
-    bangkok: "Bangkok",
-    central: "Central",
-    north: "North",
-    northeast: "Northeast",
-    east: "East",
-    south: "South",
-  },
-  th: {
-    all: "ทั้งหมด",
-    bangkok: "กรุงเทพ",
-    central: "กลาง",
-    north: "เหนือ",
-    northeast: "อีสาน",
-    east: "ตะวันออก",
-    south: "ใต้",
-  },
-  zh: {
-    all: "全部",
-    bangkok: "曼谷",
-    central: "中部",
-    north: "北部",
-    northeast: "东北",
-    east: "东部",
-    south: "南部",
-  },
-};
+// REGION_LABELS lives in regions.ts so HomePage + RankingsPage + future
+// surfaces share one trilingual source.
 
 function toAppPath(path: string): string {
   const base = import.meta.env.BASE_URL || "/";
@@ -334,6 +309,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
 
         <section className="section reveal visible">
           <p className="eyebrow">{t({ en: "Lenses", th: "เลนส์", zh: "镜头" })}</p>
+          <PillarLegend locale={locale} />
           <div className="lens-chip-row" role="tablist" aria-label={t({ en: "Preset lenses", th: "เลนส์สำเร็จรูป", zh: "预设镜头" })}>
             {PRESET_LENSES.map(preset => (
               <button
@@ -485,6 +461,11 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                           </span>
                           <span className="rank-row-caption">
                             {getProvinceName(city, locale)} · {getCityStatusLabel(city.status, locale)} · {getCityRealityLabel(city.reality, locale)}
+                            {city.league ? (
+                              <>
+                                {" "}· <span className="league-badge">{LEAGUE_LABELS[locale][city.league]}</span>
+                              </>
+                            ) : null}
                           </span>
                           <PillarStrip city={city} weights={activeWeights} />
                         </span>

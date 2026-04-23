@@ -625,6 +625,14 @@ export const promotionZoneCities: SmartCity[] = [
 // ---------------------------------------------------------------------------
 
 import { registeredCities } from "./registeredCityData.ts";
+import { CITY_LEAGUES } from "./cityLeague.ts";
+
+// Phase 14 — attach league taxonomy post-hoc so the factory signature
+// stays stable. Cities without a league entry simply hide the badge.
+for (const city of [...certifiedCities, ...promotionZoneCities, ...registeredCities]) {
+  const league = CITY_LEAGUES[city.id];
+  if (league) city.league = league;
+}
 
 export const allCities: SmartCity[] = [...certifiedCities, ...promotionZoneCities, ...registeredCities]
   .sort((a, b) => b.compositeScore - a.compositeScore);
