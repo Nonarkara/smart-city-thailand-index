@@ -6450,3 +6450,113 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   line-height: 1.5;
   color: var(--2);
 }
+
+/* ─── PHASE 13 — HERO REDESIGN ─────────────────────────────────────────── */
+/* Three moves, in order:                                                    */
+/*   1. Darken the gradient past the CLAUDE.md ≥78% floor and add a          */
+/*      text-shadow so white copy stays legible across any photograph.       */
+/*   2. Inset the overlay *content* to 1120px so title/why/stats/CTAs align  */
+/*      with the .home-column sections below — photograph stays full-bleed,  */
+/*      text stops feeling "crammed in the middle".                          */
+/*   3. Introduce a full-bleed stat ribbon directly under the hero to bridge */
+/*      the 100vw photograph into the column-width content below.            */
+
+/* 1. Legibility — stronger gradient + text-shadow */
+.cinematic-hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.55) 45%,
+    rgba(0, 0, 0, 0.82) 100%
+  );
+}
+[data-theme="dark"] .cinematic-hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.7) 45%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+}
+.cinematic-hero-title,
+.cinematic-hero-why,
+.cinematic-hero-stats,
+.cinematic-hero-eyebrow {
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+
+/* 2. Column-inset pattern — photograph full-bleed, text at 1120px */
+.cinematic-hero-overlay {
+  padding: 0;
+  align-items: stretch;
+}
+.cinematic-hero-overlay > * {
+  max-width: 1120px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 4vw, 2rem);
+  padding-right: clamp(1.25rem, 4vw, 2rem);
+}
+.cinematic-hero-overlay > *:first-child {
+  padding-top: 3.5rem;
+}
+.cinematic-hero-overlay > *:last-child {
+  padding-bottom: 3.5rem;
+}
+@media (max-width: 768px) {
+  .cinematic-hero-overlay > *:first-child { padding-top: 2rem; }
+  .cinematic-hero-overlay > *:last-child { padding-bottom: 2rem; }
+}
+
+/* 3. Full-bleed stat ribbon — bridges hero into column content */
+.home-stat-ribbon {
+  width: 100%;
+  background: var(--ink-soft, rgba(0, 0, 0, 0.88));
+  border-top: 1px solid var(--hairline, rgba(255, 255, 255, 0.08));
+  border-bottom: 1px solid var(--hairline, rgba(255, 255, 255, 0.08));
+  color: rgba(255, 255, 255, 0.92);
+}
+[data-theme="dark"] .home-stat-ribbon {
+  background: #0a0a0a;
+}
+.home-stat-ribbon-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.25rem clamp(1.25rem, 4vw, 2rem);
+  display: flex;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.home-stat-ribbon-inner::-webkit-scrollbar { display: none; }
+.home-stat-cell {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.home-stat-label {
+  font: 600 0.56rem var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+.home-stat-value {
+  font: 600 1.1rem var(--mono);
+  letter-spacing: -0.01em;
+  color: #fff;
+  white-space: nowrap;
+}
+@media (min-width: 900px) {
+  .home-stat-ribbon-inner {
+    justify-content: space-between;
+    overflow-x: visible;
+  }
+  .home-stat-value { font-size: 1.25rem; }
+}

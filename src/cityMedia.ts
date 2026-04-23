@@ -5,9 +5,13 @@ export type CityPhotoAsset = {
   objectPosition?: string;
 };
 
+// Phase 13 — Wikimedia Commons, Bangkok night expressway above Makkasan.
+// Chosen over the founder's own photo because SCITI's subject is urban
+// infrastructure (rail, roads, grids), not tourism theatre. Attribution is
+// tracked in src/photoCredits.ts under the same filename.
 export const HOME_HERO_ASSET: CityPhotoAsset = {
-  src: "/photos/report-city-night.jpg",
-  objectPosition: "center 48%",
+  src: "/photos/wp-makkasan.jpg",
+  objectPosition: "center 55%",
 };
 
 // Regional fallbacks — only used for cities without explicit mapping below.
