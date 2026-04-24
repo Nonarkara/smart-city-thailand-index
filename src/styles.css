@@ -10,11 +10,11 @@
  * IBM Plex Mono for numerics (ties the data grammar together).
  * Fraunces (variable) for display / section headings — gives the index a
  * magazine masthead feel Inter + Outfit cannot. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --font: "IBM Plex Sans", "IBM Plex Sans Thai", "Noto Sans Thai", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-heading: "Fraunces", "IBM Plex Sans", Georgia, serif;
+  --font: Raleway, "IBM Plex Sans Thai", "Noto Sans Thai", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-heading: Raleway, "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
   
   /* Red Dot Palette — High Contrast, Premium */
@@ -6618,12 +6618,11 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
  * in contemporary Bangkok publishing. Sarabun is the Thailand-government
  * fallback so it renders cleanly even when Google Fonts fails to load. */
 html[lang="th"] {
-  --font: "IBM Plex Sans Thai", "Noto Sans Thai", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font: "IBM Plex Sans Thai", "Noto Sans Thai", Raleway, "Segoe UI", system-ui, sans-serif;
 }
 
-/* Editorial headings — give existing H1/H2/H3 tiers the Fraunces face and
- * a touch of optical sizing. The display serif is the single biggest move
- * away from the templated look. */
+/* Editorial headings — Raleway at tighter tracking reads architectural
+ * at large sizes without the "personality font" signal of a variable serif. */
 h1, h2, h3,
 .hero-title,
 .dashboard-title,
@@ -6631,14 +6630,11 @@ h1, h2, h3,
 .home-section-title,
 .timeline-title {
   font-family: var(--font-heading);
-  font-optical-sizing: auto;
-  font-variation-settings: "opsz" 72, "SOFT" 50;
   letter-spacing: -0.02em;
 }
 .hero-title,
 .dashboard-title,
 .cinematic-hero-title {
-  font-variation-settings: "opsz" 144, "SOFT" 30;
   letter-spacing: -0.035em;
 }
 
