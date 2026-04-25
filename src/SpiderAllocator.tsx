@@ -172,7 +172,7 @@ export default function SpiderAllocator({ locale, onNavigate }: Props) {
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fontSize="8"
-                  fontFamily="var(--font-mono)"
+                  fontFamily="var(--mono)"
                   fontWeight="700"
                   fill={pillar.color}
                 >
@@ -192,7 +192,7 @@ export default function SpiderAllocator({ locale, onNavigate }: Props) {
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fontSize="7"
-                  fontFamily="var(--font-mono)"
+                  fontFamily="var(--mono)"
                   fontWeight="600"
                   fill="var(--ink-muted)"
                 >

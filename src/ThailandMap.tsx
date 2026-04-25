@@ -180,10 +180,10 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
               return (
                 <g transform={`translate(${tx}, ${ty})`}>
                   <rect x="0" y="-14" width="125" height="34" fill="rgba(10,18,16,0.92)" />
-                  <text x="6" y="1" fontSize="7.5" fontWeight="700" fill="#fff" fontFamily="var(--font-body, sans-serif)">
+                  <text x="6" y="1" fontSize="7.5" fontWeight="700" fill="#fff" fontFamily="var(--font)">
                     {getCityName(hovered, locale)}
                   </text>
-                  <text x="6" y="13" fontSize="6" fontFamily="var(--font-mono, monospace)" fontWeight="600">
+                  <text x="6" y="13" fontSize="6" fontFamily="var(--mono)" fontWeight="600">
                     <tspan fill="var(--teal, #2BBAA0)">{hovered.compositeScore.toFixed(1)}</tspan>
                     <tspan fill="rgba(255,255,255,0.5)"> · {TIER_LABELS[locale][hovered.tier]}</tspan>
                   </text>
@@ -202,7 +202,7 @@ export default function ThailandMap({ locale, onNavigate }: Props) {
                   <line x1="0" y1="0" x2={barW} y2="0" stroke={isDark ? "#fff" : "var(--ink, #222)"} strokeWidth="1.5" />
                   <line x1="0" y1="-3" x2="0" y2="3" stroke={isDark ? "#fff" : "var(--ink, #222)"} strokeWidth="1" />
                   <line x1={barW} y1="-3" x2={barW} y2="3" stroke={isDark ? "#fff" : "var(--ink, #222)"} strokeWidth="1" />
-                  <text x={barW / 2} y="10" textAnchor="middle" fontSize="6" fontFamily="var(--font-mono, monospace)"
+                  <text x={barW / 2} y="10" textAnchor="middle" fontSize="6" fontFamily="var(--mono)"
                     fontWeight="600" fill={isDark ? "rgba(255,255,255,0.7)" : "var(--ink-muted, #999)"}>
                     50 km
                   </text>

@@ -251,12 +251,14 @@ ul, ol { list-style: none; }
 .hero-strapline { font-size: .85rem; line-height: 1.6; color: var(--2); max-width: 500px; letter-spacing: -.005em; }
 .hero-actions { display: flex; gap: .4rem; margin-top: 1.25rem; }
 .cta-button {
+  display: inline-flex; align-items: center; min-height: 44px;
   padding: .6rem 1.4rem; font: 600 .72rem var(--font); background: var(--ink); color: var(--bg);
   border-radius: 0; transition: all .25s var(--ease);
   letter-spacing: -.01em;
 }
 .cta-button:hover { opacity: .8; }
 .ghost-button {
+  display: inline-flex; align-items: center; min-height: 44px;
   padding: .6rem 1.4rem; font: 500 .72rem var(--font); color: var(--2);
   border: 1px solid var(--4); border-radius: 0; transition: all .25s var(--ease);
   letter-spacing: -.01em;
@@ -345,6 +347,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   border-radius: 0;
 }
 .rankings-view-btn {
+  display: inline-flex; align-items: center; min-height: 44px;
   padding: .45rem .9rem;
   border-radius: 0;
   font: 700 .62rem var(--mono);
@@ -355,6 +358,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .rankings-view-btn.active { background: var(--ink); color: var(--bg); }
 .filter-group { display: flex; }
 .filter-btn {
+  display: inline-flex; align-items: center; min-height: 44px;
   padding: .45rem 1rem; font-size: var(--text-base); font-weight: 500; color: var(--3);
   border-radius: 0; transition: all .2s var(--ease);
 }
@@ -5990,6 +5994,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .lens-chip {
   flex: 0 1 auto;
+  display: inline-flex; align-items: center; min-height: 44px;
   padding: 0.5rem 0.85rem;
   font: 700 0.62rem var(--mono);
   letter-spacing: 0.08em;
