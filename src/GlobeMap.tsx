@@ -215,7 +215,7 @@ export default function GlobeMap({ locale }: Props) {
         {/* Thailand hub */}
         <circle cx={thailandPt[0]} cy={thailandPt[1]} r="5.5" fill={hubColor} />
         <text x={thailandPt[0]} y={thailandPt[1] - 12} textAnchor="middle" fontSize="8" fontWeight="700"
-          fontFamily="Helvetica Neue,sans-serif" fill={hubColor}
+          fontFamily="var(--mono)" fill={hubColor}
           stroke={labelStroke} strokeWidth="2.5" paintOrder="stroke"
           letterSpacing="1.5">THAILAND</text>
 
@@ -245,7 +245,7 @@ export default function GlobeMap({ locale }: Props) {
                 <text x={pt[0] + off} y={pt[1] - 8} textAnchor="middle" fontSize="6.5" fontWeight="700"
                   fill={labelColor}
                   stroke={labelStroke} strokeWidth="2" paintOrder="stroke"
-                  fontFamily="Helvetica Neue,sans-serif">
+                  fontFamily="var(--mono)">
                   {p.flag} {p.country}
                 </text>
               )}

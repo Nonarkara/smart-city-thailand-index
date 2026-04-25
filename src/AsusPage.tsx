@@ -75,7 +75,7 @@ export default function AsusPage({ locale, onNavigate }: Props) {
     <>
       <section className="section" style={{ paddingTop: "4.5rem", paddingBottom: "1rem" }}>
         <p className="eyebrow">{t(locale, "UN-Habitat", "UN-Habitat", "联合国人居署")}</p>
-        <h1 style={{ fontFamily: "var(--serif, Georgia, serif)", fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, letterSpacing: "-.03em", lineHeight: ".95", marginBottom: ".5rem" }}>
+        <h1 style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, letterSpacing: "-.03em", lineHeight: ".95", marginBottom: ".5rem" }}>
           {t(locale,
             "Accelerating Sustainable Urbanisation in ASEAN",
             "เร่งรัดการพัฒนาเมืองอย่างยั่งยืนในอาเซียน",

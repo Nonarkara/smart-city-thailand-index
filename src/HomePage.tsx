@@ -442,7 +442,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
           <div className="feedback-cta glass-card shadow-premium">
             <h2>{t({ en: "Is your city missing?", th: "เมืองของคุณยังไม่อยู่ในดัชนี?", zh: "您的城市不在名单上？" })}</h2>
             <p>{t({ en: "We only rank cities with enough verifiable data.", th: "เราจัดอันดับเฉพาะเมืองที่มีข้อมูลซึ่งตรวจสอบได้เพียงพอ", zh: "我们仅对拥有足够可验证数据的城市进行排名。" })}</p>
-            <button className="cta-button" onClick={() => window.open("mailto:data@slic-index.org")}>Submit Data</button>
+            <button className="cta-button" onClick={() => window.open("mailto:data@slic-index.org")}>{t({ en: "Submit Data", th: "ส่งข้อมูล", zh: "提交数据" })}</button>
           </div>
         </section>
       </div>
@@ -488,10 +488,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
               </span>
             </button>
             <div className="export-docs">
-              <a href={assetUrl("/downloads/SCITI-2026-Executive-Summary.pdf")} download className="export-doc-link">Executive Summary (PDF)</a>
-              <a href={assetUrl("/downloads/SCITI-2026-Methodology.pdf")} download className="export-doc-link">Methodology Paper (PDF)</a>
-              <a href={assetUrl("/downloads/SCITI-2026-Report.pdf")} download className="export-doc-link">Full Report (PDF)</a>
-              <a href={assetUrl("/downloads/SCITI-2026-Audit.pdf")} download className="export-doc-link">Performance Audit (PDF)</a>
+              <a href={assetUrl("/downloads/SCITI-2026-Executive-Summary.pdf")} download className="export-doc-link">{t({ en: "Executive Summary (PDF)", th: "บทสรุปผู้บริหาร (PDF)", zh: "执行摘要 (PDF)" })}</a>
+              <a href={assetUrl("/downloads/SCITI-2026-Methodology.pdf")} download className="export-doc-link">{t({ en: "Methodology Paper (PDF)", th: "เอกสารระเบียบวิธี (PDF)", zh: "方法论文 (PDF)" })}</a>
+              <a href={assetUrl("/downloads/SCITI-2026-Report.pdf")} download className="export-doc-link">{t({ en: "Full Report (PDF)", th: "รายงานฉบับเต็ม (PDF)", zh: "完整报告 (PDF)" })}</a>
+              <a href={assetUrl("/downloads/SCITI-2026-Audit.pdf")} download className="export-doc-link">{t({ en: "Performance Audit (PDF)", th: "การตรวจสอบผลการดำเนินงาน (PDF)", zh: "绩效审计 (PDF)" })}</a>
             </div>
           </div>
         </div>
