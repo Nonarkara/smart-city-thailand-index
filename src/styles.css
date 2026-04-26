@@ -3735,6 +3735,76 @@ details[open] .kb-question::before { content: "−"; }
 .bar-animate .podium-photo-leader .podium-bar-fill { animation-delay: .1s; animation-duration: .7s; }
 
 /* 3. City detail hero photo */
+/* ─── Chapter-break editorial photo (Phase 18) ──────────────────────────
+   Renders between dossier chapters. Per workspace CLAUDE.md §11.6:
+   - hard-edged rectangle (border-radius: 0)
+   - the only legitimate gradient: dark vertical legibility overlay on photo
+   - system-ui caption typography (mono micro kicker, body caption)
+   - no drop shadow, no decorative tint, no rounded corners */
+.city-chapter-break {
+  position: relative;
+  width: 100%;
+  margin: 3rem 0 2rem;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: 0;
+  page-break-inside: avoid;
+}
+.city-chapter-break picture { display: block; width: 100%; height: 100%; }
+.city-chapter-break img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.city-chapter-break-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.6rem 1.6rem 1.3rem;
+  background: linear-gradient(to top, rgba(0,0,0,.86) 0%, rgba(0,0,0,.45) 38%, rgba(0,0,0,0) 100%);
+  color: #fff;
+  pointer-events: none;
+}
+.city-chapter-break-kicker {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .76);
+  margin-bottom: .42rem;
+}
+.city-chapter-break-caption {
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.55;
+  max-width: 720px;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -.005em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+}
+
+@media (max-width: 720px) {
+  .city-chapter-break {
+    aspect-ratio: 4 / 3;
+    margin: 1.75rem 0 1.25rem;
+  }
+  .city-chapter-break-overlay {
+    padding: 1rem 1.05rem .95rem;
+  }
+}
+
+@media print {
+  .city-chapter-break {
+    aspect-ratio: 21 / 9;
+    margin: .35in 0 .15in;
+    break-inside: avoid;
+  }
+  .city-chapter-break-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.35) 38%, rgba(0,0,0,0) 100%);
+  }
+}
+
 .city-hero-photo {
   position: relative; width: 100%; height: 35vh; min-height: 200px; max-height: 280px;
   overflow: hidden; margin-bottom: -1rem;

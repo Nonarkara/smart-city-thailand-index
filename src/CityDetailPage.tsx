@@ -4,7 +4,7 @@ import { getCityContext } from "./cityContext";
 import { getCityExternalResearchLinks, getCityFactsCsv, getCitySummariesCsv } from "./cityCdp";
 import { downloadCsv } from "./csvDownload";
 import { useCityDetail } from "./cityApi";
-import { getCityPhotoAsset } from "./cityMedia";
+import { getCityPhotoSet, getChapterBreakCaption, type CityChapterBreak } from "./cityMedia";
 import { getCityResearchSources, getLocalizedList, getLocalizedText, resolveCityResearch } from "./cityResearch";
 import {
   getCityName,
@@ -25,6 +25,43 @@ interface Props {
   cityId: string;
   locale: Locale;
   onNavigate: (path: string) => void;
+}
+
+/**
+ * Chapter-break editorial photo block — appears between dossier chapters.
+ * Per workspace CLAUDE.md §11.6 — the four-cliche check:
+ *   - Hard-edged rectangle (no rounding)
+ *   - Single legitimate gradient: dark vertical legibility overlay only
+ *   - System-ui caption typography (mono micro kicker, body caption)
+ *   - No drop shadow
+ */
+function ChapterBreakBlock({
+  brk,
+  index,
+  locale,
+}: {
+  brk: CityChapterBreak;
+  /** 1-based position of the chapter this break closes (1=WHO, 2=WHAT, 3=HOW, 4=WHY). */
+  index: number;
+  locale: Locale;
+}) {
+  const positionLabel = `${String(index).padStart(2, "0")} / 05`;
+  const caption = getChapterBreakCaption(brk, locale);
+  return (
+    <div className="city-chapter-break" aria-hidden="false">
+      <ResponsiveImage
+        src={brk.asset.src}
+        alt={caption}
+        loading="lazy"
+        sizes="100vw"
+        style={{ objectPosition: brk.asset.objectPosition }}
+      />
+      <div className="city-chapter-break-overlay">
+        <span className="city-chapter-break-kicker">{positionLabel}</span>
+        <p className="city-chapter-break-caption">{caption}</p>
+      </div>
+    </div>
+  );
 }
 
 const DELIVERY_STEPS = [
@@ -676,7 +713,17 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const cityTagline = getCityTagline(city, locale);
   const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
   const overallGrade = statGrade(city.compositeScore);
-  const cityPhoto = getCityPhotoAsset(city);
+  const photoSet = getCityPhotoSet(city);
+  const cityPhoto = photoSet.hero;
+  // Chapter-break renderer — returns the JSX for a break image after the
+  // named chapter, or null if no break is registered for that slot.
+  const renderChapterBreak = (
+    after: CityChapterBreak["after"],
+    index: number,
+  ) => {
+    const brk = photoSet.breaks?.find(b => b.after === after);
+    return brk ? <ChapterBreakBlock brk={brk} index={index} locale={locale} /> : null;
+  };
   const cityContext = getCityContext(city.id);
   const research = resolveCityResearch(city);
   const comparison = getGlobalComparison(city.id);
@@ -1388,6 +1435,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       })()}
       </div>
 
+      {renderChapterBreak("who", 1)}
+
       {/* ─── CHAPTER 2 · WHAT ─── The substance: reality-gap dossier, Moneyball band, performance triptych, analog comparison, factbook, city research. */}
       <div id="what" className="city-chapter city-chapter-what">
       {dossier && (
@@ -1777,6 +1826,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       </section>
       </div>
 
+      {renderChapterBreak("what", 2)}
+
       {/* ─── CHAPTER 3 · HOW ─── Execution path: delivery profile (five steps from logo to operating city) and tailored finance stack. */}
       <div id="how" className="city-chapter city-chapter-how">
       <section className="section city-print-hide">
@@ -1928,6 +1979,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       </section>
       </div>
 
+      {renderChapterBreak("how", 3)}
+
       {/* ─── CHAPTER 4 · WHY ─── The evidence backbone: metric blocks, data rails, proof points, and the source trail that makes every claim audit-ready. */}
       <div id="why" className="city-chapter city-chapter-why">
       <section className="section city-print-hide">
@@ -2039,6 +2092,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         </section>
       )}
       </div>
+
+      {renderChapterBreak("why", 4)}
 
       {/* ─── CHAPTER 5 · NEXT ─── The move: tailored action steps, research links for deeper work, and the depa dimensions in scope. */}
       <div id="next" className="city-chapter city-chapter-next">
