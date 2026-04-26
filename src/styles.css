@@ -10,11 +10,11 @@
  * IBM Plex Mono for numerics (ties the data grammar together).
  * Fraunces (variable) for display / section headings — gives the index a
  * magazine masthead feel Inter + Outfit cannot. */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --font: Raleway, "IBM Plex Sans Thai", "Noto Sans Thai", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-heading: Raleway, "Segoe UI", system-ui, sans-serif;
+  --font: system-ui, -apple-system, "Segoe UI", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
+  --font-heading: system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
   
   /* Red Dot Palette — High Contrast, Premium */
@@ -57,15 +57,23 @@
   --card-shadow: none;
   --card-shadow-hover: none;
 
-  /* Typography Scale (Major Third 1.25) */
-  --text-xs: 0.625rem;
-  --text-sm: 0.75rem;
-  --text-base: 0.875rem;
-  --text-md: 1rem;
-  --text-lg: 1.25rem;
-  --text-xl: 1.5rem;
-  --text-2xl: 2rem;
-  --text-3xl: 2.5rem;
+  /* Typography Scale — Three Sizes Per Page (workspace CLAUDE.md §11.7).
+   * The canonical tokens are --text-display, --text-body, --text-micro.
+   * The legacy --text-* aliases below exist only so old rules don't break
+   * — every NEW rule must reach for one of the three canonical tokens. */
+  --text-display: 2rem;        /* 32px — page title only (one h1) */
+  --text-body:    0.875rem;    /* 14px — paragraphs, labels, fact values, mono numerics */
+  --text-micro:   0.6875rem;   /* 11px — eyebrow labels, mono ticks, tiny meta */
+
+  /* Legacy aliases — every old reference collapses to one of the three */
+  --text-xs:   var(--text-micro);
+  --text-sm:   var(--text-body);
+  --text-base: var(--text-body);
+  --text-md:   var(--text-body);
+  --text-lg:   var(--text-body);
+  --text-xl:   var(--text-display);
+  --text-2xl:  var(--text-display);
+  --text-3xl:  var(--text-display);
 }
 
 /* ─── DARK THEME ─── */
@@ -536,18 +544,18 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 
 /* ─── CITY DETAIL ─── */
 .city-detail-hero { padding-top: 4.5rem; padding-bottom: .75rem; }
-.back-link { font: 600 .62rem var(--font); color: var(--3); margin-bottom: .75rem; display: inline-block; }
+.back-link { font: 600 var(--text-micro) var(--font); color: var(--3); margin-bottom: .75rem; display: inline-block; text-transform: uppercase; letter-spacing: .08em; }
 .back-link:hover { color: var(--teal); }
 .city-detail-header { display: grid; grid-template-columns: 1fr auto; gap: 1.25rem; align-items: start; }
-.city-detail-header h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -.04em; line-height: .95; margin-bottom: .15rem; }
-.city-detail-province { font-size: .82rem; color: var(--3); }
+.city-detail-header h1 { font-size: var(--text-display); font-weight: 700; letter-spacing: -.04em; line-height: .95; margin-bottom: .15rem; }
+.city-detail-province { font-size: var(--text-body); color: var(--3); }
 .city-detail-score-block { display: flex; flex-direction: column; align-items: flex-end; gap: .25rem; }
-.composite-large { font: 700 2rem var(--mono); letter-spacing: -.03em; }
-.reality-badge { font: 700 .55rem var(--mono); padding: .08rem .35rem; }
+.composite-large { font: 700 var(--text-display) var(--mono); letter-spacing: -.03em; }
+.reality-badge { font: 700 var(--text-micro) var(--mono); padding: .08rem .35rem; }
 .reality-operational { background: var(--alpha-bg); color: var(--alpha); }
 .reality-partial { background: var(--beta-bg); color: var(--beta); }
 .reality-planned { background: var(--gamma-bg); color: var(--gamma); }
-.city-detail-tagline { font-size: .9rem; line-height: 1.7; color: var(--2); margin-top: .75rem; max-width: 520px; }
+.city-detail-tagline { font-size: var(--text-body); line-height: 1.7; color: var(--2); margin-top: .75rem; max-width: 520px; }
 .city-data-notice {
   display: grid;
   gap: .22rem;
@@ -561,13 +569,13 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   color: var(--2);
 }
 .city-data-notice strong {
-  font: 700 .58rem var(--mono);
+  font: 700 var(--text-micro) var(--mono);
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--gamma);
 }
 .city-data-notice span {
-  font-size: .68rem;
+  font-size: var(--text-body);
   line-height: 1.58;
 }
 
@@ -681,37 +689,12 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
  * typographic scale on 13–15" laptops (most common viewing device) and
  * again on 24–27" desktops. Mobile base stays untouched. */
 @media (min-width: 1280px) {
-  :root {
-    --text-base: 1rem;        /* 16px — laptop baseline. 13–15" is the modal device. */
-    --text-md:   1.125rem;    /* 18px */
-    --text-lg:   1.4375rem;   /* 23px */
-    --text-xl:   1.75rem;     /* 28px */
-    --text-2xl:  2.25rem;     /* 36px */
-    --text-3xl:  2.75rem;     /* 44px */
-    --w: 1200px;
-  }
-  body { font-size: 16px; }
-  .cinematic-hero-title { font-size: clamp(2.4rem, 6.2vw, 5.2rem) !important; }
-  .hero-title, .dashboard-title { font-size: clamp(1.75rem, 4.4vw, 3.6rem); }
+  :root { --w: 1200px; }
+  /* Typography no longer scales by viewport — the 3-size hierarchy
+   * (display / body / micro) holds across all devices per §11.7. */
 }
-@media (min-width: 1600px) {
-  :root {
-    --text-base: 1.0625rem;   /* 17px */
-    --text-md:   1.1875rem;   /* 19px */
-    --text-lg:   1.5625rem;   /* 25px */
-    --text-xl:   1.875rem;    /* 30px */
-    --text-2xl:  2.375rem;    /* 38px */
-    --text-3xl:  3rem;        /* 48px */
-    --w: 1360px;
-  }
-  body { font-size: 17px; }
-  .cinematic-hero-title { font-size: clamp(3rem, 6.6vw, 6rem) !important; }
-  .hero-title, .dashboard-title { font-size: clamp(2rem, 4.6vw, 4rem); }
-}
-@media (min-width: 2000px) {
-  :root { --w: 1600px; }
-  body { font-size: 18px; }
-}
+@media (min-width: 1600px) { :root { --w: 1360px; } }
+@media (min-width: 2000px) { :root { --w: 1600px; } }
 
 /* ─── SPIDER ─── */
 .spider-section { margin-bottom: 2rem; }
@@ -3481,7 +3464,7 @@ details[open] .kb-question::before { content: "−"; }
   margin-bottom: .7rem;
 }
 .city-factbook-freshness {
-  font: 600 .48rem var(--mono);
+  font: 600 var(--text-micro) var(--mono);
   letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--3);
@@ -3502,7 +3485,7 @@ details[open] .kb-question::before { content: "−"; }
 .city-factbook-title {
   padding: .78rem .9rem;
   border-bottom: 1px solid var(--5);
-  font: 700 .5rem var(--mono);
+  font: 700 var(--text-micro) var(--mono);
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--gold-ink);
@@ -3521,7 +3504,7 @@ details[open] .kb-question::before { content: "−"; }
 }
 .city-factbook-row:first-child { border-top: 0; }
 .city-factbook-label {
-  font: 700 .42rem var(--mono);
+  font: 700 var(--text-micro) var(--mono);
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--3);
@@ -3531,13 +3514,13 @@ details[open] .kb-question::before { content: "−"; }
   gap: .12rem;
 }
 .city-factbook-value {
-  font-size: .72rem;
+  font-size: var(--text-body);
   font-weight: 700;
   line-height: 1.45;
   color: var(--ink);
 }
 .city-factbook-note {
-  font-size: .55rem;
+  font-size: var(--text-micro);
   line-height: 1.5;
   color: var(--3);
 }
@@ -3547,10 +3530,10 @@ details[open] .kb-question::before { content: "−"; }
 }
 .city-ctx { padding: .55rem .6rem; background: var(--surface); }
 .city-ctx-label {
-  display: block; font: 700 .42rem var(--mono); color: var(--gold);
+  display: block; font: 700 var(--text-micro) var(--mono); color: var(--gold);
   text-transform: uppercase; letter-spacing: .08em; margin-bottom: .2rem;
 }
-.city-ctx-body { font-size: .62rem; color: var(--2); line-height: 1.5; }
+.city-ctx-body { font-size: var(--text-body); color: var(--2); line-height: 1.5; }
 .city-research-section { margin-top: -.1rem; }
 .city-research-grid {
   display: grid;
