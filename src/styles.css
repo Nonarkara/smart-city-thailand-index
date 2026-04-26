@@ -1601,7 +1601,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .record-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .4rem; margin-top: .6rem; border: 1px solid var(--5); border-radius: var(--radius-sm); overflow: hidden; }
 .record-item { padding: .55rem .65rem; background: var(--surface); border-right: 1px solid var(--5); }
 .record-label { display: block; font: 700 .38rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--3); margin-bottom: .1rem; }
-.record-value { font: 600 .65rem var(--mono); color: var(--ink); }
+.record-value { font: 600 var(--text-micro) var(--mono); color: var(--ink); }
 
 /* ─── CINEMATIC PHOTO HERO ─── */
 .cinematic-hero {
@@ -3178,7 +3178,7 @@ details[open] .kb-question::before { content: "−"; }
   display: flex; flex-direction: column; gap: .05rem;
   padding: .4rem .5rem; background: var(--surface); min-width: 70px;
 }
-.city-qm-val { font: 700 .85rem var(--mono); color: var(--ink); }
+.city-qm-val { font: 700 var(--text-body) var(--mono); color: var(--ink); }
 .city-qm-lab { font: 500 .38rem var(--mono); color: var(--3); text-transform: uppercase; letter-spacing: .06em; }
 .city-qm-conf-high { color: var(--alpha); }
 .city-qm-conf-medium { color: var(--gold); }
@@ -3887,7 +3887,7 @@ details[open] .kb-question::before { content: "−"; }
 
   .city-quick-metrics { gap: .2rem; }
   .city-qm { min-width: 50px; padding: .3rem .35rem; }
-  .city-qm-val { font-size: .7rem; }
+  .city-qm-val { font-size: var(--text-body); }
   .city-context-grid { grid-template-columns: 1fr; }
 
   .city-hero-photo { height: 30vh; min-height: 160px; }
@@ -5125,8 +5125,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
   .city-decision-value {
     align-self: end;
-    font: 800 clamp(.9rem, 1.45vw, 1.25rem)/1.1 var(--font-heading);
-    letter-spacing: -.035em;
+    font: 800 var(--text-body)/1.2 var(--font-heading);
+    letter-spacing: -.02em;
     color: var(--ink);
     overflow-wrap: anywhere;
   }
@@ -5155,7 +5155,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
   [data-theme="dark"] .city-qm { background: rgba(255, 255, 255, .04); }
 
-  .city-qm-val { font-size: 1rem; letter-spacing: -.04em; }
+  .city-qm-val { font-size: var(--text-body); letter-spacing: -.02em; }
   .city-qm-lab { font-size: .44rem; line-height: 1.25; }
 
   .city-dossier-section,
@@ -5417,7 +5417,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     box-shadow: inset 0 1px rgba(17, 24, 39, .06);
   }
 
-  .city-decision-value { font-size: 1rem; }
+  .city-decision-value { font-size: var(--text-body); }
 
   .city-dossier-lead,
   .city-analog-lead,
