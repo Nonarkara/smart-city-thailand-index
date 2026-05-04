@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { getDepaOfficial } from "./depaOfficialData";
 import { getPopulationDensityPerKm2, getResolvedLandAreaKm2, getResolvedPopulationThousand } from "./adminBaselines";
 import { getCityContext } from "./cityContext";
 import { getCityExternalResearchLinks, getCityFactsCsv, getCitySummariesCsv } from "./cityCdp";
@@ -809,11 +810,17 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     locale,
   );
   const economicDNA = getLocalizedList(locale, research.industries).slice(0, 4).join(" · ");
-  const cityOrientation = translate(locale, {
-    en: `${geographicSignal} in ${provinceName}. ${getStatusSummary(city, locale)} with ${city.smartDimensions.length} smart dimensions in play, serving a population base of ${populationLabel}${landArea ? ` across ${formatAreaKm2(landArea)}` : ""}.`,
-    th: `${geographicSignal}ใน${provinceName} ${getStatusSummary(city, locale)} ครอบคลุม ${city.smartDimensions.length} มิติอัจฉริยะ รองรับฐานประชากร ${populationLabel}${landArea ? ` บนพื้นที่ ${formatAreaKm2(landArea)}` : ""}.`,
-    zh: `${provinceName}的${geographicSignal}。${getStatusSummary(city, locale)}，覆盖 ${city.smartDimensions.length} 个智慧维度，服务人口基础约 ${populationLabel}${landArea ? `，面积 ${formatAreaKm2(landArea)}` : ""}。`,
-  });
+  const cityOrientation = hasPopulationBaseline
+    ? translate(locale, {
+      en: `${geographicSignal} in ${provinceName}. ${getStatusSummary(city, locale)} with ${city.smartDimensions.length} smart dimensions in play, serving a population base of ${populationLabel}${landArea ? ` across ${formatAreaKm2(landArea)}` : ""}.`,
+      th: `${geographicSignal}ใน${provinceName} ${getStatusSummary(city, locale)} ครอบคลุม ${city.smartDimensions.length} มิติอัจฉริยะ รองรับฐานประชากร ${populationLabel}${landArea ? ` บนพื้นที่ ${formatAreaKm2(landArea)}` : ""}.`,
+      zh: `${provinceName}的${geographicSignal}。${getStatusSummary(city, locale)}，覆盖 ${city.smartDimensions.length} 个智慧维度，服务人口基础约 ${populationLabel}${landArea ? `，面积 ${formatAreaKm2(landArea)}` : ""}。`,
+    })
+    : translate(locale, {
+      en: `${geographicSignal} in ${provinceName}. ${getStatusSummary(city, locale)} with ${city.smartDimensions.length} smart dimensions in play; the public population baseline is still pending${landArea ? ` for a ${formatAreaKm2(landArea)} area` : ""}.`,
+      th: `${geographicSignal}ใน${provinceName} ${getStatusSummary(city, locale)} ครอบคลุม ${city.smartDimensions.length} มิติอัจฉริยะ แต่ฐานประชากรสาธารณะยังรอยืนยัน${landArea ? ` สำหรับพื้นที่ ${formatAreaKm2(landArea)}` : ""}.`,
+      zh: `${provinceName}的${geographicSignal}。${getStatusSummary(city, locale)}，覆盖 ${city.smartDimensions.length} 个智慧维度；公开人口基线仍待核验${landArea ? `，面积 ${formatAreaKm2(landArea)}` : ""}。`,
+    });
   const contextHighlight = getContextText(
     locale,
     cityContext?.famousFor,
@@ -1280,6 +1287,65 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
         <p className="city-detail-tagline">{cityTagline}</p>
         <p className="section-intro">{cityOrientation}</p>
+
+        {/* ─── depa Official Recognition ─── */}
+        {(() => {
+          const depa = getDepaOfficial(city.id);
+          if (!depa) return null;
+          const batchLabel = translate(locale, {
+            en: `Smart City Local · Batch ${depa.batch}`,
+            th: `เมืองอัจฉริยะสัญจร · รุ่นที่ ${depa.batch}`,
+            zh: `智慧城市认证 · 第 ${depa.batch} 批`,
+          });
+          const endorsedLabel = translate(locale, {
+            en: `Endorsed ${new Date(depa.endorsedDate).toLocaleDateString("en", { month: "long", day: "numeric", year: "numeric" })}`,
+            th: `ผ่านมติคณะอนุกรรมการ ${new Date(depa.endorsedDate).toLocaleDateString("th-TH", { month: "long", day: "numeric", year: "numeric" })}`,
+            zh: `委员会通过日期：${new Date(depa.endorsedDate).toLocaleDateString("zh-CN", { month: "long", day: "numeric", year: "numeric" })}`,
+          });
+          return (
+            <section className="depa-official-section" aria-label={translate(locale, { en: "Official depa Recognition", th: "การรับรองอย่างเป็นทางการจาก depa", zh: "depa 官方认证" })}>
+              <div className="depa-official-header">
+                <span className="depa-official-badge">depa</span>
+                <span className="depa-official-batch">{batchLabel}</span>
+                <span className="depa-official-date">{endorsedLabel}</span>
+              </div>
+              <p className="depa-official-vision">{depa.vision}</p>
+              {depa.brandline && (
+                <p className="depa-official-brandline">"{depa.brandline}"</p>
+              )}
+              <div className="depa-official-projects">
+                <p className="depa-official-projects-label">
+                  {translate(locale, {
+                    en: depa.projectCount ? `${depa.projectCount} official smart city projects` : "Official smart city projects",
+                    th: depa.projectCount ? `${depa.projectCount} โครงการเมืองอัจฉริยะอย่างเป็นทางการ` : "โครงการเมืองอัจฉริยะอย่างเป็นทางการ",
+                    zh: depa.projectCount ? `${depa.projectCount} 项官方智慧城市项目` : "官方智慧城市项目",
+                  })}
+                </p>
+                <ul className="depa-official-project-list">
+                  {depa.keyProjects.map((project, i) => (
+                    <li key={i} className="depa-official-project-item">{project}</li>
+                  ))}
+                </ul>
+              </div>
+              {depa.partnerships && depa.partnerships.length > 0 && (
+                <p className="depa-official-partnerships">
+                  <span className="depa-official-meta-label">
+                    {translate(locale, { en: "Key partners", th: "พันธมิตรสำคัญ", zh: "关键合作方" })}:
+                  </span>{" "}
+                  {depa.partnerships.join(" · ")}
+                </p>
+              )}
+              <a
+                href={depa.depaUrl}
+                className="depa-official-source"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {translate(locale, { en: "Official depa record →", th: "ดูบันทึกอย่างเป็นทางการจาก depa →", zh: "查看 depa 官方记录 →" })}
+              </a>
+            </section>
+          );
+        })()}
 
         <div className="city-decision-strip" aria-label={translate(locale, { en: "Investor decision brief", th: "สรุปเพื่อการตัดสินใจลงทุน", zh: "投资决策速览" })}>
           <div className="city-decision-item">

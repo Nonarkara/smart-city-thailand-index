@@ -1,20 +1,13 @@
-/* Phase 14 — typography refresh.
- * IBM Plex Sans for latin body + data (quietly editorial, not saturated).
- * IBM Plex Sans Thai (NON-looped) for Thai body — the modern professional
- * Thai face. THAI TYPOGRAPHY RULE: Thai readers instantly clock non-Thai
- * establishments by looped หัว (head-loops). Native Thai writing shrinks
- * the loop until it's vestigial or absent; prominent loops are a learner's
- * crutch and look foreign. So the entire Thai stack here is non-looped:
- * IBM Plex Sans Thai → Noto Sans Thai → system. NEVER add Plex Thai Looped,
- * Sarabun, TH Sarabun New, or any other looped face.
- * IBM Plex Mono for numerics (ties the data grammar together).
- * Fraunces (variable) for display / section headings — gives the index a
- * magazine masthead feel Inter + Outfit cannot. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+/* Typography pairing chosen from the user's reference board:
+ * Libre Baskerville + Montserrat.
+ * Thai gets equivalent roles instead of fallback accidents:
+ * Noto Serif Thai for editorial headings and Noto Sans Thai for body/UI. */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@400;500;600;700;800&family=Noto+Serif+Thai:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --font: system-ui, -apple-system, "Segoe UI", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
-  --font-heading: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: "Montserrat", "Noto Sans Thai", "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Libre Baskerville", "Noto Serif Thai", Georgia, serif;
+  --sans: var(--font);
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
   
   /* Red Dot Palette — High Contrast, Premium */
@@ -122,7 +115,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv11", "ss01";
   font-optical-sizing: auto;
-  letter-spacing: -.005em;
+  letter-spacing: 0;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -556,6 +549,105 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .reality-partial { background: var(--beta-bg); color: var(--beta); }
 .reality-planned { background: var(--gamma-bg); color: var(--gamma); }
 .city-detail-tagline { font-size: var(--text-body); line-height: 1.7; color: var(--2); margin-top: .75rem; max-width: 520px; }
+
+/* ─── depa Official Recognition block ──────────────────────────────────────
+   Appears in the WHO chapter for certified cities.
+   Design rules per workspace CLAUDE.md §11.6:
+   - hard-edged rectangle (no border-radius), single left accent stripe
+   - no shadow, no gradient, no serif
+   - micro (11px) for badges and labels; body (14px) for vision + projects */
+.depa-official-section {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--5);
+  border-left: 3px solid var(--teal);
+  background: var(--surface);
+  max-width: 760px;
+}
+.depa-official-header {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .6rem;
+  flex-wrap: wrap;
+}
+.depa-official-badge {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--teal);
+  padding: .1rem .38rem;
+}
+.depa-official-batch {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.depa-official-date {
+  font: 500 var(--text-micro) var(--font);
+  color: var(--3);
+  margin-left: auto;
+}
+.depa-official-vision {
+  font-size: var(--text-body);
+  line-height: 1.62;
+  color: var(--ink);
+  margin-bottom: .5rem;
+}
+.depa-official-brandline {
+  font: 600 var(--text-body) var(--font);
+  color: var(--teal);
+  margin: .25rem 0 .65rem;
+  font-style: italic;
+}
+.depa-official-projects-label {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--3);
+  margin-bottom: .35rem;
+}
+.depa-official-project-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: .2rem;
+  margin-bottom: .65rem;
+}
+.depa-official-project-item {
+  font-size: var(--text-body);
+  line-height: 1.5;
+  color: var(--2);
+  padding-left: .85rem;
+  position: relative;
+}
+.depa-official-project-item::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font: 600 var(--text-micro) var(--mono);
+}
+.depa-official-partnerships {
+  font-size: var(--text-micro);
+  color: var(--3);
+  line-height: 1.55;
+  margin-bottom: .55rem;
+}
+.depa-official-meta-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.depa-official-source {
+  font: 600 var(--text-micro) var(--font);
+  color: var(--teal);
+  text-decoration: none;
+  letter-spacing: .01em;
+}
+.depa-official-source:hover { text-decoration: underline; }
 .city-data-notice {
   display: grid;
   gap: .22rem;
@@ -1610,9 +1702,9 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   overflow: hidden;
 }
 .cinematic-hero picture {
+  position: absolute; inset: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
 }
 .cinematic-hero-img {
   width: 100%; height: 100%; object-fit: cover; display: block;
@@ -3751,7 +3843,7 @@ details[open] .kb-question::before { content: "−"; }
   border-radius: 0;
   page-break-inside: avoid;
 }
-.city-chapter-break picture { display: block; width: 100%; height: 100%; }
+.city-chapter-break picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .city-chapter-break img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
@@ -3809,7 +3901,7 @@ details[open] .kb-question::before { content: "−"; }
   position: relative; width: 100%; height: 35vh; min-height: 200px; max-height: 280px;
   overflow: hidden; margin-bottom: -1rem;
 }
-.city-hero-photo picture { display: block; width: 100%; height: 100%; }
+.city-hero-photo picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .city-hero-photo img {
   width: 100%; height: 100%; object-fit: cover; display: block;
   animation: kenBurns 30s ease-in-out infinite alternate;
@@ -4994,9 +5086,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     display: block;
     font-family: var(--font-heading);
     font-size: clamp(2.6rem, 7.2vw, 5.8rem);
-    font-weight: 800;
-    line-height: .84;
-    letter-spacing: -.07em;
+    font-weight: 700;
+    line-height: .92;
+    letter-spacing: 0;
     color: #fff;
   }
 
@@ -6671,17 +6763,19 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 /* ─── PHASE 14 — TYPOGRAPHY, LEGENDS, REGIONAL CHAMPIONS, LEAGUE ─────── */
 
-/* Thai locale — swap body font to IBM Plex Sans Thai (non-looped). The
- * looped variant reads childish / Chinese-round-terminal to modern Thai
- * designers; non-looped Plex Thai is the professional editorial face used
- * in contemporary Bangkok publishing. Sarabun is the Thailand-government
- * fallback so it renders cleanly even when Google Fonts fails to load. */
+/* Thai locale — keep the same serif/sans relationship with Thai-native glyphs. */
 html[lang="th"] {
-  --font: "IBM Plex Sans Thai", "Noto Sans Thai", Raleway, "Segoe UI", system-ui, sans-serif;
+  --font: "Noto Sans Thai", "Montserrat", "Segoe UI", system-ui, sans-serif;
+  --font-heading: "Noto Serif Thai", "Noto Sans Thai", serif;
 }
 
-/* Editorial headings — Raleway at tighter tracking reads architectural
- * at large sizes without the "personality font" signal of a variable serif. */
+html[lang="zh"] {
+  --font: "Montserrat", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-heading: "Libre Baskerville", "Songti SC", "SimSun", serif;
+}
+
+/* Editorial headings — let the serif breathe; compressed tracking makes
+ * Thai and long city names look brittle. */
 h1, h2, h3,
 .hero-title,
 .dashboard-title,
@@ -6689,17 +6783,17 @@ h1, h2, h3,
 .home-section-title,
 .timeline-title {
   font-family: var(--font-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 .hero-title,
 .dashboard-title,
 .cinematic-hero-title {
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
 }
 
 /* Grow hero + section titles past the old 4rem / 2.5rem caps on
  * wider screens so they actually feel editorial on a 16" laptop. */
-.cinematic-hero-title { font-size: clamp(2rem, 6vw, 5.5rem) !important; }
+.cinematic-hero-title { font-size: clamp(2rem, 6vw, 4rem) !important; }
 .dashboard-title { font-size: clamp(1.5rem, 4vw, 3.25rem); }
 .home-section-title { font-size: clamp(1.4rem, 3vw, 2.4rem); }
 
@@ -7183,4 +7277,80 @@ h1, h2, h3,
   .compare-picker-list {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* ─── DATA FEEDBACK ─── */
+.data-feedback-section {
+  background: var(--bg);
+  padding: 4rem 0;
+  border-top: 1px solid var(--5);
+}
+.feedback-box {
+  max-width: 600px;
+  background: var(--surface);
+  padding: 2.5rem;
+  border: 1px solid var(--4);
+}
+.feedback-header h3 {
+  font: 700 var(--text-display) var(--font-heading);
+  margin-bottom: 1.5rem;
+  letter-spacing: -.02em;
+}
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.feedback-input {
+  width: 100%;
+  min-height: 140px;
+  padding: 1.25rem;
+  font: 400 var(--text-body) var(--mono);
+  background: var(--bg);
+  border: 1px solid var(--4);
+  color: var(--ink);
+  resize: vertical;
+}
+.feedback-input::placeholder { color: var(--3); opacity: 0.5; }
+.feedback-input:focus { border-color: var(--teal); outline: none; }
+
+.feedback-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.feedback-button {
+  padding: .85rem 1.75rem;
+  background: var(--teal);
+  color: #fff;
+  font: 700 var(--text-micro) var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  border: none;
+  cursor: pointer;
+  transition: all .2s var(--ease);
+}
+.feedback-button:hover:not(:disabled) { background: var(--ink); }
+.feedback-button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.feedback-meta {
+  font: 600 .5rem var(--mono);
+  color: var(--3);
+  letter-spacing: .05em;
+  opacity: 0.8;
+}
+
+.feedback-success {
+  font: 500 var(--text-body) var(--sans);
+  color: var(--teal);
+  padding: 1rem;
+  border-left: 3px solid var(--teal);
+  background: var(--teal-glow);
+}
+
+@media (max-width: 600px) {
+  .feedback-box { padding: 1.5rem; }
+  .feedback-footer { flex-direction: column; align-items: flex-start; }
 }
