@@ -1,20 +1,15 @@
-/* Phase 14 — typography refresh.
- * IBM Plex Sans for latin body + data (quietly editorial, not saturated).
- * IBM Plex Sans Thai (NON-looped) for Thai body — the modern professional
- * Thai face. THAI TYPOGRAPHY RULE: Thai readers instantly clock non-Thai
- * establishments by looped หัว (head-loops). Native Thai writing shrinks
- * the loop until it's vestigial or absent; prominent loops are a learner's
- * crutch and look foreign. So the entire Thai stack here is non-looped:
- * IBM Plex Sans Thai → Noto Sans Thai → system. NEVER add Plex Thai Looped,
- * Sarabun, TH Sarabun New, or any other looped face.
- * IBM Plex Mono for numerics (ties the data grammar together).
- * Fraunces (variable) for display / section headings — gives the index a
- * magazine masthead feel Inter + Outfit cannot. */
+/* Typography — workspace CLAUDE.md §11.6 + §11.7 + §11.10:
+ * system-ui (SF Pro / Segoe UI) for Latin — disappears into the OS, the Jony-Ive brief.
+ * IBM Plex Sans Thai (non-looped) for Thai script — professional editorial, never looped.
+ * IBM Plex Mono for numerics and mono labels.
+ * NO Libre Baskerville, NO Montserrat, NO Noto Serif — the fat-serif and cliché
+ * instincts are the Codex Incident. They are banned. */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
   --font: system-ui, -apple-system, "Segoe UI", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
   --font-heading: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sans: var(--font);
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
   
   /* Red Dot Palette — High Contrast, Premium */
@@ -122,7 +117,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv11", "ss01";
   font-optical-sizing: auto;
-  letter-spacing: -.005em;
+  letter-spacing: 0;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -556,6 +551,112 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .reality-partial { background: var(--beta-bg); color: var(--beta); }
 .reality-planned { background: var(--gamma-bg); color: var(--gamma); }
 .city-detail-tagline { font-size: var(--text-body); line-height: 1.7; color: var(--2); margin-top: .75rem; max-width: 520px; }
+
+/* ─── depa Official Recognition block ──────────────────────────────────────
+   Appears in the WHO chapter for certified cities.
+   Design rules per workspace CLAUDE.md §11.6:
+   - hard-edged rectangle (no border-radius), single left accent stripe
+   - no shadow, no gradient, no serif
+   - micro (11px) for badges and labels; body (14px) for vision + projects */
+.depa-official-section {
+  margin-top: 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--5);
+  border-left: 3px solid var(--teal);
+  background: var(--surface);
+  max-width: 760px;
+}
+.depa-official-header {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .6rem;
+  flex-wrap: wrap;
+}
+.depa-official-badge {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--teal);
+  padding: .1rem .38rem;
+}
+.depa-official-batch {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.depa-official-date {
+  font: 500 var(--text-micro) var(--font);
+  color: var(--3);
+  margin-left: auto;
+}
+.depa-official-vision {
+  font-size: var(--text-body);
+  line-height: 1.62;
+  color: var(--ink);
+  margin-bottom: .5rem;
+}
+.depa-official-brandline {
+  font: 600 var(--text-body) var(--font);
+  color: var(--teal);
+  margin: .25rem 0 .65rem;
+  font-style: italic;
+}
+.depa-official-projects-label {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--3);
+  margin-bottom: .35rem;
+}
+.depa-official-project-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: .2rem;
+  margin-bottom: .65rem;
+}
+.depa-official-project-item {
+  font-size: var(--text-body);
+  line-height: 1.5;
+  color: var(--2);
+  padding-left: .85rem;
+  position: relative;
+}
+.depa-official-project-item::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font: 600 var(--text-micro) var(--mono);
+}
+.depa-official-partnerships {
+  font-size: var(--text-micro);
+  color: var(--3);
+  line-height: 1.55;
+  margin-bottom: .55rem;
+}
+.depa-official-meta-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.depa-official-source {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font: 600 var(--text-micro) var(--mono);
+  color: var(--bg);
+  background: var(--teal);
+  text-decoration: none;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .3rem .7rem;
+}
+.depa-official-source::before { content: "↓ PDF"; }
+.depa-official-source:hover { opacity: .85; }
 .city-data-notice {
   display: grid;
   gap: .22rem;
@@ -757,13 +858,59 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .principle-card:last-child { border-right: 0; }
 .principle-card h3 { font-size: .75rem; font-weight: 700; margin-bottom: .2rem; }
 .principle-card p { font-size: .65rem; color: var(--2); line-height: 1.5; }
+/* ─── Methodology page — new sections (Phase 19) ─── */
+
+/* Version timeline */
+.meth-version-timeline { display: grid; gap: 0; border-top: 2px solid var(--ink); margin-top: 1rem; }
+.meth-version-item { display: grid; grid-template-columns: 100px 1fr; gap: 1.25rem; align-items: start; padding: 1rem 0; border-bottom: 1px solid var(--5); }
+.meth-version-current { background: var(--surface); margin: 0 -1.1rem; padding: 1rem 1.1rem; border-left: 3px solid var(--teal); border-bottom: 1px solid var(--5); }
+.meth-version-tag { display: flex; flex-direction: column; gap: .15rem; }
+.meth-version-label { font: 800 var(--text-body) var(--mono); color: var(--ink); }
+.meth-version-date { font: 500 var(--text-micro) var(--mono); color: var(--3); letter-spacing: .06em; }
+.meth-version-name { font: 700 var(--text-body) var(--font); color: var(--ink); margin-bottom: .3rem; }
+.meth-version-desc { font-size: var(--text-body); color: var(--2); line-height: 1.62; }
+
+/* Stack cards */
+.meth-stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: .7rem; margin-top: 1rem; }
+.meth-stack-card { padding: .9rem 1rem; border: 1px solid var(--5); background: var(--surface); }
+.meth-stack-icon { font-size: 1.4rem; margin-bottom: .35rem; }
+.meth-stack-name { font: 700 var(--text-body) var(--mono); color: var(--ink); margin-bottom: .3rem; }
+.meth-stack-what { font-size: var(--text-body); color: var(--2); line-height: 1.58; margin: 0; }
+
+/* GitHub block */
+.meth-github-section { border-top: 2px solid var(--ink); }
+.meth-github-inner { display: grid; grid-template-columns: 1fr auto; gap: 2.5rem; align-items: start; }
+.meth-github-text h2 { margin-bottom: .6rem; }
+.meth-github-text p { font-size: var(--text-body); color: var(--2); line-height: 1.62; max-width: 500px; margin-bottom: .85rem; }
+.meth-github-link { font: 700 var(--text-body) var(--font); color: var(--teal); text-decoration: none; }
+.meth-github-link:hover { text-decoration: underline; }
+.meth-github-mono { border: 1px solid var(--5); background: var(--surface); padding: 1rem 1.25rem; min-width: 280px; }
+.meth-github-badge { font: 700 var(--text-micro) var(--mono); color: var(--bg); background: var(--ink); padding: .08rem .35rem; letter-spacing: .1em; text-transform: uppercase; }
+.meth-github-repo { margin-top: .55rem; font: 600 var(--text-body) var(--mono); }
+.meth-github-owner { color: var(--3); }
+.meth-github-slash { color: var(--4); }
+.meth-github-name { color: var(--ink); }
+.meth-github-files { margin-top: .7rem; display: grid; gap: .18rem; }
+.meth-github-file { font: 400 var(--text-micro) var(--mono); color: var(--3); }
+
+/* Diagram blocks */
+.meth-diagram-block { margin-top: .75rem; padding: 1rem; border: 1px solid var(--5); background: var(--surface); }
+.methodology-flow-svg { width: 100%; height: auto; display: block; }
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .meth-github-inner { grid-template-columns: 1fr; }
+  .meth-github-mono { min-width: unset; }
+  .meth-version-item { grid-template-columns: 80px 1fr; gap: .75rem; }
+}
+
 .methodology-pillars { border-top: 2px solid var(--ink); margin-bottom: 2rem; }
 .methodology-pillar-card { padding: .85rem 0; border-bottom: 1px solid var(--5); }
 .methodology-pillar-header { display: flex; align-items: center; gap: .4rem; margin-bottom: .25rem; }
 .methodology-pillar-dot { width: 8px; height: 8px; }
-.methodology-pillar-name { font-size: .82rem; font-weight: 700; }
-.methodology-pillar-weight { margin-left: auto; font: 700 .65rem var(--mono); color: var(--3); }
-.methodology-pillar-desc { font-size: .7rem; color: var(--2); line-height: 1.65; margin-bottom: .3rem; max-width: 520px; }
+.methodology-pillar-name { font-size: var(--text-body); font-weight: 700; }
+.methodology-pillar-weight { margin-left: auto; font: 700 var(--text-micro) var(--mono); color: var(--3); }
+.methodology-pillar-desc { font-size: var(--text-body); color: var(--2); line-height: 1.65; margin-bottom: .3rem; max-width: 520px; }
 .methodology-pillar-signals { display: flex; flex-wrap: wrap; gap: 2px; }
 .signal-chip { font: 600 .42rem var(--mono); padding: .04rem .25rem; background: var(--surface); color: var(--3); }
 .threshold-table { margin-bottom: 2rem; border-top: 2px solid var(--ink); }
@@ -1601,7 +1748,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .record-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .4rem; margin-top: .6rem; border: 1px solid var(--5); border-radius: var(--radius-sm); overflow: hidden; }
 .record-item { padding: .55rem .65rem; background: var(--surface); border-right: 1px solid var(--5); }
 .record-label { display: block; font: 700 .38rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--3); margin-bottom: .1rem; }
-.record-value { font: 600 .65rem var(--mono); color: var(--ink); }
+.record-value { font: 600 var(--text-micro) var(--mono); color: var(--ink); }
 
 /* ─── CINEMATIC PHOTO HERO ─── */
 .cinematic-hero {
@@ -1610,9 +1757,9 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   overflow: hidden;
 }
 .cinematic-hero picture {
+  position: absolute; inset: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
 }
 .cinematic-hero-img {
   width: 100%; height: 100%; object-fit: cover; display: block;
@@ -2044,8 +2191,9 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 /* Back link: arrow is the affordance, not decoration */
 .back-link {
   display: inline-flex; align-items: center; gap: .25rem;
-  font: 600 .6rem var(--mono); color: var(--3);
+  font: 600 var(--text-micro) var(--mono); color: var(--3);
   margin-bottom: .5rem; transition: color .15s;
+  text-transform: uppercase; letter-spacing: .08em;
 }
 .back-link:hover { color: var(--teal); }
 
@@ -3177,7 +3325,7 @@ details[open] .kb-question::before { content: "−"; }
   display: flex; flex-direction: column; gap: .05rem;
   padding: .4rem .5rem; background: var(--surface); min-width: 70px;
 }
-.city-qm-val { font: 700 .85rem var(--mono); color: var(--ink); }
+.city-qm-val { font: 700 var(--text-body) var(--mono); color: var(--ink); }
 .city-qm-lab { font: 500 .38rem var(--mono); color: var(--3); text-transform: uppercase; letter-spacing: .06em; }
 .city-qm-conf-high { color: var(--alpha); }
 .city-qm-conf-medium { color: var(--gold); }
@@ -3734,11 +3882,81 @@ details[open] .kb-question::before { content: "−"; }
 .bar-animate .podium-photo-leader .podium-bar-fill { animation-delay: .1s; animation-duration: .7s; }
 
 /* 3. City detail hero photo */
+/* ─── Chapter-break editorial photo (Phase 18) ──────────────────────────
+   Renders between dossier chapters. Per workspace CLAUDE.md §11.6:
+   - hard-edged rectangle (border-radius: 0)
+   - the only legitimate gradient: dark vertical legibility overlay on photo
+   - system-ui caption typography (mono micro kicker, body caption)
+   - no drop shadow, no decorative tint, no rounded corners */
+.city-chapter-break {
+  position: relative;
+  width: 100%;
+  margin: 3rem 0 2rem;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: 0;
+  page-break-inside: avoid;
+}
+.city-chapter-break picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.city-chapter-break img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.city-chapter-break-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.6rem 1.6rem 1.3rem;
+  background: linear-gradient(to top, rgba(0,0,0,.86) 0%, rgba(0,0,0,.45) 38%, rgba(0,0,0,0) 100%);
+  color: #fff;
+  pointer-events: none;
+}
+.city-chapter-break-kicker {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .76);
+  margin-bottom: .42rem;
+}
+.city-chapter-break-caption {
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.55;
+  max-width: 720px;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -.005em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+}
+
+@media (max-width: 720px) {
+  .city-chapter-break {
+    aspect-ratio: 4 / 3;
+    margin: 1.75rem 0 1.25rem;
+  }
+  .city-chapter-break-overlay {
+    padding: 1rem 1.05rem .95rem;
+  }
+}
+
+@media print {
+  .city-chapter-break {
+    aspect-ratio: 21 / 9;
+    margin: .35in 0 .15in;
+    break-inside: avoid;
+  }
+  .city-chapter-break-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.35) 38%, rgba(0,0,0,0) 100%);
+  }
+}
+
 .city-hero-photo {
   position: relative; width: 100%; height: 35vh; min-height: 200px; max-height: 280px;
   overflow: hidden; margin-bottom: -1rem;
 }
-.city-hero-photo picture { display: block; width: 100%; height: 100%; }
+.city-hero-photo picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
 .city-hero-photo img {
   width: 100%; height: 100%; object-fit: cover; display: block;
   animation: kenBurns 30s ease-in-out infinite alternate;
@@ -3816,7 +4034,7 @@ details[open] .kb-question::before { content: "−"; }
 
   .city-quick-metrics { gap: .2rem; }
   .city-qm { min-width: 50px; padding: .3rem .35rem; }
-  .city-qm-val { font-size: .7rem; }
+  .city-qm-val { font-size: var(--text-body); }
   .city-context-grid { grid-template-columns: 1fr; }
 
   .city-hero-photo { height: 30vh; min-height: 160px; }
@@ -4923,9 +5141,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     display: block;
     font-family: var(--font-heading);
     font-size: clamp(2.6rem, 7.2vw, 5.8rem);
-    font-weight: 800;
-    line-height: .84;
-    letter-spacing: -.07em;
+    font-weight: 700;
+    line-height: .92;
+    letter-spacing: 0;
     color: #fff;
   }
 
@@ -4983,14 +5201,14 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
   .city-detail-header h1 {
     max-width: 760px;
-    font-size: clamp(1.45rem, 3vw, 2.35rem);
+    font-size: var(--text-display);
     line-height: .98;
     letter-spacing: -.055em;
   }
 
   .city-detail-province {
     margin-top: .22rem;
-    font: 600 .76rem/1.4 var(--font);
+    font: 600 var(--text-body)/1.4 var(--font);
     color: var(--3);
   }
 
@@ -5004,7 +5222,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   [data-theme="dark"] .city-detail-score-block { background: rgba(255, 255, 255, .04); }
 
   .composite-large {
-    font-size: 2.15rem;
+    font-size: var(--text-display);
     line-height: .95;
     color: var(--ink);
   }
@@ -5012,14 +5230,14 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .city-detail-tagline {
     max-width: 850px;
     margin-top: 1rem;
-    font: 600 clamp(.98rem, 1.7vw, 1.18rem)/1.62 var(--font);
+    font: 600 var(--text-body)/1.62 var(--font);
     color: var(--ink);
   }
 
   .city-detail-hero .section-intro {
     max-width: 920px;
     margin: .42rem 0 0;
-    font-size: .86rem;
+    font-size: var(--text-body);
     line-height: 1.72;
   }
 
@@ -5054,8 +5272,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
   .city-decision-value {
     align-self: end;
-    font: 800 clamp(.9rem, 1.45vw, 1.25rem)/1.1 var(--font-heading);
-    letter-spacing: -.035em;
+    font: 800 var(--text-body)/1.2 var(--font-heading);
+    letter-spacing: -.02em;
     color: var(--ink);
     overflow-wrap: anywhere;
   }
@@ -5084,7 +5302,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
   [data-theme="dark"] .city-qm { background: rgba(255, 255, 255, .04); }
 
-  .city-qm-val { font-size: 1rem; letter-spacing: -.04em; }
+  .city-qm-val { font-size: var(--text-body); letter-spacing: -.02em; }
   .city-qm-lab { font-size: .44rem; line-height: 1.25; }
 
   .city-dossier-section,
@@ -5232,7 +5450,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
   .city-factbook-title {
     padding: .95rem 1rem;
-    font-size: .56rem;
+    font-size: var(--text-micro);
     color: var(--ink);
     background: var(--surface);
   }
@@ -5244,18 +5462,18 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   }
 
   .city-factbook-label {
-    font-size: .46rem;
+    font-size: var(--text-micro);
     line-height: 1.35;
   }
 
   .city-factbook-value {
-    font-size: .82rem;
+    font-size: var(--text-body);
     line-height: 1.45;
     letter-spacing: -.015em;
   }
 
   .city-factbook-note {
-    font-size: .61rem;
+    font-size: var(--text-micro);
     line-height: 1.55;
   }
 
@@ -5346,7 +5564,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     box-shadow: inset 0 1px rgba(17, 24, 39, .06);
   }
 
-  .city-decision-value { font-size: 1rem; }
+  .city-decision-value { font-size: var(--text-body); }
 
   .city-dossier-lead,
   .city-analog-lead,
@@ -6600,17 +6818,21 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 /* ─── PHASE 14 — TYPOGRAPHY, LEGENDS, REGIONAL CHAMPIONS, LEAGUE ─────── */
 
-/* Thai locale — swap body font to IBM Plex Sans Thai (non-looped). The
- * looped variant reads childish / Chinese-round-terminal to modern Thai
- * designers; non-looped Plex Thai is the professional editorial face used
- * in contemporary Bangkok publishing. Sarabun is the Thailand-government
- * fallback so it renders cleanly even when Google Fonts fails to load. */
+/* Thai locale — non-looped Thai faces lead; system-ui handles Latin.
+ * No looped faces (Sarabun, Plex Thai Looped) per workspace CLAUDE.md §0. */
 html[lang="th"] {
-  --font: "IBM Plex Sans Thai", "Noto Sans Thai", Raleway, "Segoe UI", system-ui, sans-serif;
+  --font: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, "Segoe UI", sans-serif;
+  --font-heading: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
 }
 
-/* Editorial headings — Raleway at tighter tracking reads architectural
- * at large sizes without the "personality font" signal of a variable serif. */
+/* Chinese locale — system CJK faces; system-ui for Latin. No decorative serifs. */
+html[lang="zh"] {
+  --font: system-ui, "PingFang SC", "Microsoft YaHei", "IBM Plex Sans Thai", sans-serif;
+  --font-heading: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* Editorial headings — let the serif breathe; compressed tracking makes
+ * Thai and long city names look brittle. */
 h1, h2, h3,
 .hero-title,
 .dashboard-title,
@@ -6618,17 +6840,17 @@ h1, h2, h3,
 .home-section-title,
 .timeline-title {
   font-family: var(--font-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 .hero-title,
 .dashboard-title,
 .cinematic-hero-title {
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
 }
 
 /* Grow hero + section titles past the old 4rem / 2.5rem caps on
  * wider screens so they actually feel editorial on a 16" laptop. */
-.cinematic-hero-title { font-size: clamp(2rem, 6vw, 5.5rem) !important; }
+.cinematic-hero-title { font-size: clamp(2rem, 6vw, 4rem) !important; }
 .dashboard-title { font-size: clamp(1.5rem, 4vw, 3.25rem); }
 .home-section-title { font-size: clamp(1.4rem, 3vw, 2.4rem); }
 
@@ -7112,4 +7334,80 @@ h1, h2, h3,
   .compare-picker-list {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* ─── DATA FEEDBACK ─── */
+.data-feedback-section {
+  background: var(--bg);
+  padding: 4rem 0;
+  border-top: 1px solid var(--5);
+}
+.feedback-box {
+  max-width: 600px;
+  background: var(--surface);
+  padding: 2.5rem;
+  border: 1px solid var(--4);
+}
+.feedback-header h3 {
+  font: 700 var(--text-display) var(--font-heading);
+  margin-bottom: 1.5rem;
+  letter-spacing: -.02em;
+}
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.feedback-input {
+  width: 100%;
+  min-height: 140px;
+  padding: 1.25rem;
+  font: 400 var(--text-body) var(--mono);
+  background: var(--bg);
+  border: 1px solid var(--4);
+  color: var(--ink);
+  resize: vertical;
+}
+.feedback-input::placeholder { color: var(--3); opacity: 0.5; }
+.feedback-input:focus { border-color: var(--teal); outline: none; }
+
+.feedback-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.feedback-button {
+  padding: .85rem 1.75rem;
+  background: var(--teal);
+  color: #fff;
+  font: 700 var(--text-micro) var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  border: none;
+  cursor: pointer;
+  transition: all .2s var(--ease);
+}
+.feedback-button:hover:not(:disabled) { background: var(--ink); }
+.feedback-button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.feedback-meta {
+  font: 600 .5rem var(--mono);
+  color: var(--3);
+  letter-spacing: .05em;
+  opacity: 0.8;
+}
+
+.feedback-success {
+  font: 500 var(--text-body) var(--sans);
+  color: var(--teal);
+  padding: 1rem;
+  border-left: 3px solid var(--teal);
+  background: var(--teal-glow);
+}
+
+@media (max-width: 600px) {
+  .feedback-box { padding: 1.5rem; }
+  .feedback-footer { flex-direction: column; align-items: flex-start; }
 }

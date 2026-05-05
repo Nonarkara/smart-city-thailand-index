@@ -1,10 +1,11 @@
 import { useMemo } from "react";
+import { getDepaOfficial } from "./depaOfficialData";
 import { getPopulationDensityPerKm2, getResolvedLandAreaKm2, getResolvedPopulationThousand } from "./adminBaselines";
 import { getCityContext } from "./cityContext";
 import { getCityExternalResearchLinks, getCityFactsCsv, getCitySummariesCsv } from "./cityCdp";
 import { downloadCsv } from "./csvDownload";
 import { useCityDetail } from "./cityApi";
-import { getCityPhotoAsset } from "./cityMedia";
+import { getCityPhotoSet, getChapterBreakCaption, type CityChapterBreak } from "./cityMedia";
 import { getCityResearchSources, getLocalizedList, getLocalizedText, resolveCityResearch } from "./cityResearch";
 import {
   getCityName,
@@ -25,6 +26,43 @@ interface Props {
   cityId: string;
   locale: Locale;
   onNavigate: (path: string) => void;
+}
+
+/**
+ * Chapter-break editorial photo block — appears between dossier chapters.
+ * Per workspace CLAUDE.md §11.6 — the four-cliche check:
+ *   - Hard-edged rectangle (no rounding)
+ *   - Single legitimate gradient: dark vertical legibility overlay only
+ *   - System-ui caption typography (mono micro kicker, body caption)
+ *   - No drop shadow
+ */
+function ChapterBreakBlock({
+  brk,
+  index,
+  locale,
+}: {
+  brk: CityChapterBreak;
+  /** 1-based position of the chapter this break closes (1=WHO, 2=WHAT, 3=HOW, 4=WHY). */
+  index: number;
+  locale: Locale;
+}) {
+  const positionLabel = `${String(index).padStart(2, "0")} / 05`;
+  const caption = getChapterBreakCaption(brk, locale);
+  return (
+    <div className="city-chapter-break" aria-hidden="false">
+      <ResponsiveImage
+        src={brk.asset.src}
+        alt={caption}
+        loading="lazy"
+        sizes="100vw"
+        style={{ objectPosition: brk.asset.objectPosition }}
+      />
+      <div className="city-chapter-break-overlay">
+        <span className="city-chapter-break-kicker">{positionLabel}</span>
+        <p className="city-chapter-break-caption">{caption}</p>
+      </div>
+    </div>
+  );
 }
 
 const DELIVERY_STEPS = [
@@ -676,7 +714,17 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const cityTagline = getCityTagline(city, locale);
   const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
   const overallGrade = statGrade(city.compositeScore);
-  const cityPhoto = getCityPhotoAsset(city);
+  const photoSet = getCityPhotoSet(city);
+  const cityPhoto = photoSet.hero;
+  // Chapter-break renderer — returns the JSX for a break image after the
+  // named chapter, or null if no break is registered for that slot.
+  const renderChapterBreak = (
+    after: CityChapterBreak["after"],
+    index: number,
+  ) => {
+    const brk = photoSet.breaks?.find(b => b.after === after);
+    return brk ? <ChapterBreakBlock brk={brk} index={index} locale={locale} /> : null;
+  };
   const cityContext = getCityContext(city.id);
   const research = resolveCityResearch(city);
   const comparison = getGlobalComparison(city.id);
@@ -762,11 +810,17 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     locale,
   );
   const economicDNA = getLocalizedList(locale, research.industries).slice(0, 4).join(" · ");
-  const cityOrientation = translate(locale, {
-    en: `${geographicSignal} in ${provinceName}. ${getStatusSummary(city, locale)} with ${city.smartDimensions.length} smart dimensions in play, serving a population base of ${populationLabel}${landArea ? ` across ${formatAreaKm2(landArea)}` : ""}.`,
-    th: `${geographicSignal}ใน${provinceName} ${getStatusSummary(city, locale)} ครอบคลุม ${city.smartDimensions.length} มิติอัจฉริยะ รองรับฐานประชากร ${populationLabel}${landArea ? ` บนพื้นที่ ${formatAreaKm2(landArea)}` : ""}.`,
-    zh: `${provinceName}的${geographicSignal}。${getStatusSummary(city, locale)}，覆盖 ${city.smartDimensions.length} 个智慧维度，服务人口基础约 ${populationLabel}${landArea ? `，面积 ${formatAreaKm2(landArea)}` : ""}。`,
-  });
+  const cityOrientation = hasPopulationBaseline
+    ? translate(locale, {
+      en: `${geographicSignal} in ${provinceName}. ${getStatusSummary(city, locale)} with ${city.smartDimensions.length} smart dimensions in play, serving a population base of ${populationLabel}${landArea ? ` across ${formatAreaKm2(landArea)}` : ""}.`,
+      th: `${geographicSignal}ใน${provinceName} ${getStatusSummary(city, locale)} ครอบคลุม ${city.smartDimensions.length} มิติอัจฉริยะ รองรับฐานประชากร ${populationLabel}${landArea ? ` บนพื้นที่ ${formatAreaKm2(landArea)}` : ""}.`,
+      zh: `${provinceName}的${geographicSignal}。${getStatusSummary(city, locale)}，覆盖 ${city.smartDimensions.length} 个智慧维度，服务人口基础约 ${populationLabel}${landArea ? `，面积 ${formatAreaKm2(landArea)}` : ""}。`,
+    })
+    : translate(locale, {
+      en: `${geographicSignal} in ${provinceName}. ${getStatusSummary(city, locale)} with ${city.smartDimensions.length} smart dimensions in play; the public population baseline is still pending${landArea ? ` for a ${formatAreaKm2(landArea)} area` : ""}.`,
+      th: `${geographicSignal}ใน${provinceName} ${getStatusSummary(city, locale)} ครอบคลุม ${city.smartDimensions.length} มิติอัจฉริยะ แต่ฐานประชากรสาธารณะยังรอยืนยัน${landArea ? ` สำหรับพื้นที่ ${formatAreaKm2(landArea)}` : ""}.`,
+      zh: `${provinceName}的${geographicSignal}。${getStatusSummary(city, locale)}，覆盖 ${city.smartDimensions.length} 个智慧维度；公开人口基线仍待核验${landArea ? `，面积 ${formatAreaKm2(landArea)}` : ""}。`,
+    });
   const contextHighlight = getContextText(
     locale,
     cityContext?.famousFor,
@@ -1234,6 +1288,66 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         <p className="city-detail-tagline">{cityTagline}</p>
         <p className="section-intro">{cityOrientation}</p>
 
+        {/* ─── depa Official Recognition ─── */}
+        {(() => {
+          const depa = getDepaOfficial(city.id);
+          if (!depa) return null;
+          const batchLabel = translate(locale, {
+            en: `Smart City Local · Batch ${depa.batch}`,
+            th: `เมืองอัจฉริยะสัญจร · รุ่นที่ ${depa.batch}`,
+            zh: `智慧城市认证 · 第 ${depa.batch} 批`,
+          });
+          const endorsedLabel = translate(locale, {
+            en: `Endorsed ${new Date(depa.endorsedDate).toLocaleDateString("en", { month: "long", day: "numeric", year: "numeric" })}`,
+            th: `ผ่านมติคณะอนุกรรมการ ${new Date(depa.endorsedDate).toLocaleDateString("th-TH", { month: "long", day: "numeric", year: "numeric" })}`,
+            zh: `委员会通过日期：${new Date(depa.endorsedDate).toLocaleDateString("zh-CN", { month: "long", day: "numeric", year: "numeric" })}`,
+          });
+          return (
+            <section className="depa-official-section" aria-label={translate(locale, { en: "Official depa Recognition", th: "การรับรองอย่างเป็นทางการจาก depa", zh: "depa 官方认证" })}>
+              <div className="depa-official-header">
+                <span className="depa-official-badge">depa</span>
+                <span className="depa-official-batch">{batchLabel}</span>
+                <span className="depa-official-date">{endorsedLabel}</span>
+              </div>
+              <p className="depa-official-vision">{depa.vision}</p>
+              {depa.brandline && (
+                <p className="depa-official-brandline">"{depa.brandline}"</p>
+              )}
+              <div className="depa-official-projects">
+                <p className="depa-official-projects-label">
+                  {translate(locale, {
+                    en: depa.projectCount ? `${depa.projectCount} official smart city projects` : "Official smart city projects",
+                    th: depa.projectCount ? `${depa.projectCount} โครงการเมืองอัจฉริยะอย่างเป็นทางการ` : "โครงการเมืองอัจฉริยะอย่างเป็นทางการ",
+                    zh: depa.projectCount ? `${depa.projectCount} 项官方智慧城市项目` : "官方智慧城市项目",
+                  })}
+                </p>
+                <ul className="depa-official-project-list">
+                  {depa.keyProjects.map((project, i) => (
+                    <li key={i} className="depa-official-project-item">{project}</li>
+                  ))}
+                </ul>
+              </div>
+              {depa.partnerships && depa.partnerships.length > 0 && (
+                <p className="depa-official-partnerships">
+                  <span className="depa-official-meta-label">
+                    {translate(locale, { en: "Key partners", th: "พันธมิตรสำคัญ", zh: "关键合作方" })}:
+                  </span>{" "}
+                  {depa.partnerships.join(" · ")}
+                </p>
+              )}
+              <a
+                href={depa.depaUrl}
+                className="depa-official-source"
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+              >
+                {translate(locale, { en: "Official certification plan", th: "แผนพัฒนาเมืองอัจฉริยะอย่างเป็นทางการ", zh: "官方城市认证计划" })}
+              </a>
+            </section>
+          );
+        })()}
+
         <div className="city-decision-strip" aria-label={translate(locale, { en: "Investor decision brief", th: "สรุปเพื่อการตัดสินใจลงทุน", zh: "投资决策速览" })}>
           <div className="city-decision-item">
             <span className="city-decision-label">{translate(locale, { en: "Lead mechanism", th: "กลไกนำ", zh: "主机制" })}</span>
@@ -1387,6 +1501,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         );
       })()}
       </div>
+
+      {renderChapterBreak("who", 1)}
 
       {/* ─── CHAPTER 2 · WHAT ─── The substance: reality-gap dossier, Moneyball band, performance triptych, analog comparison, factbook, city research. */}
       <div id="what" className="city-chapter city-chapter-what">
@@ -1777,6 +1893,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       </section>
       </div>
 
+      {renderChapterBreak("what", 2)}
+
       {/* ─── CHAPTER 3 · HOW ─── Execution path: delivery profile (five steps from logo to operating city) and tailored finance stack. */}
       <div id="how" className="city-chapter city-chapter-how">
       <section className="section city-print-hide">
@@ -1928,6 +2046,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       </section>
       </div>
 
+      {renderChapterBreak("how", 3)}
+
       {/* ─── CHAPTER 4 · WHY ─── The evidence backbone: metric blocks, data rails, proof points, and the source trail that makes every claim audit-ready. */}
       <div id="why" className="city-chapter city-chapter-why">
       <section className="section city-print-hide">
@@ -2039,6 +2159,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         </section>
       )}
       </div>
+
+      {renderChapterBreak("why", 4)}
 
       {/* ─── CHAPTER 5 · NEXT ─── The move: tailored action steps, research links for deeper work, and the depa dimensions in scope. */}
       <div id="next" className="city-chapter city-chapter-next">
