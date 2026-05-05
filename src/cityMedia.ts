@@ -62,13 +62,40 @@ export const HOME_HERO_ASSET: CityPhotoAsset = {
   objectPosition: "center 55%",
 };
 
-// Phase 19 — Auto-rotating hero photos
-export const HOME_HERO_ASSETS: CityPhotoAsset[] = [
-  { src: "/photos/wp-makkasan.jpg", objectPosition: "center 55%" },
-  { src: "/photos/phuket-marine.webp", objectPosition: "center 48%" },
-  { src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"), objectPosition: "center 58%" },
-  { src: "/photos/rayong-future.webp", objectPosition: "center 50%" },
-  { src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"), objectPosition: "center 50%" },
+// Phase 19 — Auto-rotating hero photos.
+// All photos are real (authored or Wikimedia Commons CC BY-SA).
+// NO AI-generated images. phuket-marine.webp and rayong-future.webp
+// were 1024×1024 AI squares — removed.
+export type HeroAsset = CityPhotoAsset & {
+  label?: string; // city/location credit, shown bottom-right
+};
+
+export const HOME_HERO_ASSETS: HeroAsset[] = [
+  {
+    src: "/photos/wp-makkasan.jpg",
+    objectPosition: "center 55%",
+    label: "Bangkok · Makkasan",
+  },
+  {
+    src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"),
+    objectPosition: "center 50%",
+    label: "Nakhon Si Thammarat",
+  },
+  {
+    src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"),
+    objectPosition: "center 58%",
+    label: "Chiang Mai",
+  },
+  {
+    src: "/photos/wp-rattanakosin.jpg",
+    objectPosition: "center 55%",
+    label: "Bangkok · Rattanakosin",
+  },
+  {
+    src: "/photos/wp-songkhla.jpg",
+    objectPosition: "center 50%",
+    label: "Songkhla",
+  },
 ];
 
 // Regional fallbacks — only used for cities without explicit mapping below.

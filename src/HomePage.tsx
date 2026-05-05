@@ -4,7 +4,7 @@ import { useInView } from "./useInView";
 import NewsStrip from "./NewsStrip";
 import { useCitySummaries } from "./cityApi";
 import { summarizeCities } from "./cityCollections";
-import { getCityPhotoAsset, HOME_HERO_ASSETS } from "./cityMedia";
+import { getCityPhotoAsset, HOME_HERO_ASSETS, type HeroAsset } from "./cityMedia";
 import {
   getCityName,
   getProvinceName,
@@ -78,7 +78,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
   useEffect(() => {
     const interval = setInterval(() => {
       setHeroIndex((prev) => (prev + 1) % HOME_HERO_ASSETS.length);
-    }, 6000); // 6 seconds per photo
+    }, 7000); // 7s display + 2.4s fade = ~9.4s per photo feels unhurried
     return () => clearInterval(interval);
   }, []);
 
@@ -132,28 +132,39 @@ export default function HomePage({ locale, onNavigate }: Props) {
     <div className="dashboard-home">
       {/* ─── CINEMATIC HERO ─── */}
       <section ref={heroRef} className={`cinematic-hero reveal ${heroVisible ? "visible" : ""}`}>
-        {HOME_HERO_ASSETS.map((asset, index) => (
-          <ResponsiveImage
-            key={asset.src}
-            src={asset.src}
-            alt="Thai smart city aerial view"
-            className="cinematic-hero-img"
-            width={1920}
-            height={900}
-            loading={index === 0 ? "eager" : "lazy"}
-            fetchPriority={index === 0 ? "high" : "auto"}
-            sizes="100vw"
-            style={{
-              objectPosition: asset.objectPosition,
-              position: "absolute",
-              top: 0,
-              left: 0,
-              opacity: index === heroIndex ? 1 : 0,
-              transition: "opacity 1.5s ease-in-out",
-              zIndex: index === heroIndex ? 1 : 0
-            }}
-          />
-        ))}
+        {(HOME_HERO_ASSETS as HeroAsset[]).map((asset, index) => {
+          const active = index === heroIndex;
+          return (
+            <div
+              key={asset.src}
+              className="hero-slide-wrapper"
+              style={{
+                opacity: active ? 1 : 0,
+                transition: "opacity 2.4s cubic-bezier(0.45, 0, 0.55, 1)",
+                zIndex: active ? 1 : 0,
+              }}
+              aria-hidden={!active}
+            >
+              <ResponsiveImage
+                src={asset.src}
+                alt={asset.label ? `Thai smart city — ${asset.label}` : "Thai smart city"}
+                className="cinematic-hero-img"
+                width={1920}
+                height={900}
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                sizes="100vw"
+                style={{ objectPosition: asset.objectPosition }}
+              />
+            </div>
+          );
+        })}
+        {/* City label — bottom-right credit for the active photo */}
+        {(HOME_HERO_ASSETS as HeroAsset[])[heroIndex]?.label && (
+          <span className="hero-slide-label">
+            {(HOME_HERO_ASSETS as HeroAsset[])[heroIndex].label}
+          </span>
+        )}
         <div className="cinematic-hero-overlay">
           <p className="cinematic-hero-eyebrow">SCITI 2026 — {t({ en: "pronounced \"City\"", th: "อ่านว่า \"ซิตี้\"", zh: "读作 \"City\"" })}</p>
           <h1 className="cinematic-hero-title">

@@ -1755,6 +1755,13 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   position: relative; width: 100%;
   height: 80vh; min-height: 440px; max-height: 680px;
   overflow: hidden;
+  background: #0a0a0b; /* fallback while photos load */
+}
+/* Each slide is a full-bleed wrapper that cross-fades independently.
+   The overlay always sits on top (z-index: 10) so text never disappears. */
+.hero-slide-wrapper {
+  position: absolute; inset: 0;
+  will-change: opacity;
 }
 .cinematic-hero picture {
   position: absolute; inset: 0;
@@ -1766,9 +1773,21 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 }
 .cinematic-hero-overlay {
   position: absolute; inset: 0;
+  z-index: 10; /* always above the rotating slides */
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: 3.5rem min(calc((100% - var(--w, 1200px)) / 2), 2rem);
-  background: linear-gradient(transparent 0%, transparent 50%, rgba(0,0,0,.25) 75%, rgba(0,0,0,.55) 100%);
+  background: linear-gradient(transparent 0%, transparent 45%, rgba(0,0,0,.3) 70%, rgba(0,0,0,.7) 100%);
+}
+/* Slide credit label — bottom-right micro label showing which city */
+.hero-slide-label {
+  position: absolute;
+  bottom: .75rem; right: 1rem;
+  z-index: 11;
+  font: 500 var(--text-micro) var(--mono);
+  color: rgba(255,255,255,.42);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 .cinematic-hero-eyebrow {
   font: 600 var(--text-sm) var(--mono); letter-spacing: .18em;
@@ -3262,9 +3281,49 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
 
 /* Hero why paragraph */
 .cinematic-hero-why {
-  font: 400 var(--text-base) var(--font); color: rgba(255,255,255,.8);
+  font: 400 var(--text-body) var(--font); color: rgba(255,255,255,.8);
   max-width: 560px; line-height: 1.65; margin-bottom: 1.25rem;
   letter-spacing: -.005em;
+}
+
+/* ─── 13" laptop frame (1280px baseline) ─────────────────────────────────
+   A 13" MacBook viewport is ~1280×800. Mobile-first base handles ≤480px.
+   This block lifts the hero feel specifically for the 1280 reading context:
+   wider max-width cap, editorial text sizing, overlay bottom margin. */
+@media (min-width: 1024px) {
+  .cinematic-hero {
+    height: 76vh;
+    min-height: 480px;
+    max-height: 720px;
+  }
+  .cinematic-hero-overlay {
+    padding: 4rem min(calc((100% - var(--w, 1200px)) / 2 + 1rem), 3rem);
+    padding-bottom: 4rem;
+    background: linear-gradient(
+      transparent 0%,
+      transparent 40%,
+      rgba(0,0,0,.22) 62%,
+      rgba(0,0,0,.65) 100%
+    );
+  }
+  .cinematic-hero-title {
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
+    letter-spacing: -.045em;
+    line-height: .9;
+    margin-bottom: 1.25rem;
+  }
+  .cinematic-hero-why {
+    font-size: var(--text-body);
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+  }
+  .cinematic-hero-stats {
+    gap: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .cinematic-hero-actions {
+    gap: 1rem;
+  }
 }
 
 /* Partner Project Timeline */
