@@ -644,12 +644,19 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   letter-spacing: .06em;
 }
 .depa-official-source {
-  font: 600 var(--text-micro) var(--font);
-  color: var(--teal);
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font: 600 var(--text-micro) var(--mono);
+  color: var(--bg);
+  background: var(--teal);
   text-decoration: none;
-  letter-spacing: .01em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .3rem .7rem;
 }
-.depa-official-source:hover { text-decoration: underline; }
+.depa-official-source::before { content: "↓ PDF"; }
+.depa-official-source:hover { opacity: .85; }
 .city-data-notice {
   display: grid;
   gap: .22rem;
@@ -851,13 +858,59 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .principle-card:last-child { border-right: 0; }
 .principle-card h3 { font-size: .75rem; font-weight: 700; margin-bottom: .2rem; }
 .principle-card p { font-size: .65rem; color: var(--2); line-height: 1.5; }
+/* ─── Methodology page — new sections (Phase 19) ─── */
+
+/* Version timeline */
+.meth-version-timeline { display: grid; gap: 0; border-top: 2px solid var(--ink); margin-top: 1rem; }
+.meth-version-item { display: grid; grid-template-columns: 100px 1fr; gap: 1.25rem; align-items: start; padding: 1rem 0; border-bottom: 1px solid var(--5); }
+.meth-version-current { background: var(--surface); margin: 0 -1.1rem; padding: 1rem 1.1rem; border-left: 3px solid var(--teal); border-bottom: 1px solid var(--5); }
+.meth-version-tag { display: flex; flex-direction: column; gap: .15rem; }
+.meth-version-label { font: 800 var(--text-body) var(--mono); color: var(--ink); }
+.meth-version-date { font: 500 var(--text-micro) var(--mono); color: var(--3); letter-spacing: .06em; }
+.meth-version-name { font: 700 var(--text-body) var(--font); color: var(--ink); margin-bottom: .3rem; }
+.meth-version-desc { font-size: var(--text-body); color: var(--2); line-height: 1.62; }
+
+/* Stack cards */
+.meth-stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: .7rem; margin-top: 1rem; }
+.meth-stack-card { padding: .9rem 1rem; border: 1px solid var(--5); background: var(--surface); }
+.meth-stack-icon { font-size: 1.4rem; margin-bottom: .35rem; }
+.meth-stack-name { font: 700 var(--text-body) var(--mono); color: var(--ink); margin-bottom: .3rem; }
+.meth-stack-what { font-size: var(--text-body); color: var(--2); line-height: 1.58; margin: 0; }
+
+/* GitHub block */
+.meth-github-section { border-top: 2px solid var(--ink); }
+.meth-github-inner { display: grid; grid-template-columns: 1fr auto; gap: 2.5rem; align-items: start; }
+.meth-github-text h2 { margin-bottom: .6rem; }
+.meth-github-text p { font-size: var(--text-body); color: var(--2); line-height: 1.62; max-width: 500px; margin-bottom: .85rem; }
+.meth-github-link { font: 700 var(--text-body) var(--font); color: var(--teal); text-decoration: none; }
+.meth-github-link:hover { text-decoration: underline; }
+.meth-github-mono { border: 1px solid var(--5); background: var(--surface); padding: 1rem 1.25rem; min-width: 280px; }
+.meth-github-badge { font: 700 var(--text-micro) var(--mono); color: var(--bg); background: var(--ink); padding: .08rem .35rem; letter-spacing: .1em; text-transform: uppercase; }
+.meth-github-repo { margin-top: .55rem; font: 600 var(--text-body) var(--mono); }
+.meth-github-owner { color: var(--3); }
+.meth-github-slash { color: var(--4); }
+.meth-github-name { color: var(--ink); }
+.meth-github-files { margin-top: .7rem; display: grid; gap: .18rem; }
+.meth-github-file { font: 400 var(--text-micro) var(--mono); color: var(--3); }
+
+/* Diagram blocks */
+.meth-diagram-block { margin-top: .75rem; padding: 1rem; border: 1px solid var(--5); background: var(--surface); }
+.methodology-flow-svg { width: 100%; height: auto; display: block; }
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .meth-github-inner { grid-template-columns: 1fr; }
+  .meth-github-mono { min-width: unset; }
+  .meth-version-item { grid-template-columns: 80px 1fr; gap: .75rem; }
+}
+
 .methodology-pillars { border-top: 2px solid var(--ink); margin-bottom: 2rem; }
 .methodology-pillar-card { padding: .85rem 0; border-bottom: 1px solid var(--5); }
 .methodology-pillar-header { display: flex; align-items: center; gap: .4rem; margin-bottom: .25rem; }
 .methodology-pillar-dot { width: 8px; height: 8px; }
-.methodology-pillar-name { font-size: .82rem; font-weight: 700; }
-.methodology-pillar-weight { margin-left: auto; font: 700 .65rem var(--mono); color: var(--3); }
-.methodology-pillar-desc { font-size: .7rem; color: var(--2); line-height: 1.65; margin-bottom: .3rem; max-width: 520px; }
+.methodology-pillar-name { font-size: var(--text-body); font-weight: 700; }
+.methodology-pillar-weight { margin-left: auto; font: 700 var(--text-micro) var(--mono); color: var(--3); }
+.methodology-pillar-desc { font-size: var(--text-body); color: var(--2); line-height: 1.65; margin-bottom: .3rem; max-width: 520px; }
 .methodology-pillar-signals { display: flex; flex-wrap: wrap; gap: 2px; }
 .signal-chip { font: 600 .42rem var(--mono); padding: .04rem .25rem; background: var(--surface); color: var(--3); }
 .threshold-table { margin-bottom: 2rem; border-top: 2px solid var(--ink); }

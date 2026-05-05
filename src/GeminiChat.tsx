@@ -78,7 +78,7 @@ ${sourceSummaries}
 BACKEND CITY DATA RAILS:
 ${getCityDataRailReferenceText(locale)}
 
-Nakhon Si Thammarat is the model city: 112,000 app users, <48h issue resolution, 10-hour flood warning, 0 flood fatalities since 2021. Mayor Kanop's citizen-centric approach.
+Nakhon Si Thammarat is the model city: 112,000 app users, <48h issue resolution, 10-hour flood warning, 0 flood fatalities since 2021. Mayor Kanop Ketchart (กณพ เกตุชาติ)'s citizen-centric governance.
 
 Wangchan Valley is Gamma tier — it is a masterplanned area that is still in early development phases.
 

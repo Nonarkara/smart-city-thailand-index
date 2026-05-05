@@ -6,6 +6,9 @@
 // This is the human layer on top of the numbers.
 // ---------------------------------------------------------------------------
 
+import { allCities } from "./cityData.ts";
+import type { SmartCity } from "./types.ts";
+
 export interface CityContext {
   livelihood: { en: string; th: string };
   famousFor: { en: string; th: string };
@@ -55,7 +58,7 @@ export const cityContexts: Record<string, CityContext> = {
   },
   "nakhon-si-thammarat": {
     livelihood: { en: "Government services, rubber and palm oil plantations, fisheries, small commerce. A provincial capital with deep Buddhist cultural roots — Wat Phra Mahathat is one of Thailand's most sacred sites.", th: "ราชการ สวนยางและปาล์ม ประมง พาณิชย์ย่อย เมืองเอกที่มีรากวัฒนธรรมพุทธลึก — วัดพระมหาธาตุเป็นสถานที่ศักดิ์สิทธิ์ที่สุดแห่งหนึ่งของไทย" },
-    famousFor: { en: "The city that listened. 112K app users. 10-hour flood warning. Zero flood fatalities since 2021. The ASEAN CSCO Handbook model city. Mayor Kanop's LINE Q&A sessions.", th: "เมืองที่ฟัง ผู้ใช้แอป 112K เตือนน้ำท่วมล่วงหน้า 10 ชั่วโมง ไม่มีผู้เสียชีวิตจากน้ำท่วมตั้งแต่ 2564 เมืองต้นแบบ ASEAN CSCO Handbook นายก Kanop ตอบคำถามบน LINE" },
+    famousFor: { en: "The city that listened. 112K app users. 10-hour flood warning. Zero flood fatalities since 2021. The ASEAN CSCO Handbook model city. Mayor Kanop Ketchart (กณพ เกตุชาติ)'s LINE Q&A sessions.", th: "เมืองที่ฟัง ผู้ใช้แอป 112K เตือนน้ำท่วมล่วงหน้า 10 ชั่วโมง ไม่มีผู้เสียชีวิตจากน้ำท่วมตั้งแต่ 2564 เมืองต้นแบบ ASEAN CSCO Handbook นายกกณพ เกตุชาติ ตอบคำถามบน LINE" },
     opportunity: { en: "The citizen-centric model is copyable and cheap. No exotic tech required. LINE-based governance, flood sensors, and a 5-star service rating — all replicable by any Thai municipality with political will.", th: "โมเดลเน้นประชาชนลอกได้และถูก ไม่ต้องใช้เทคโนโลยีแพง การปกครองผ่าน LINE เซ็นเซอร์น้ำท่วม และระบบให้คะแนนบริการ 5 ดาว — ทั้งหมดทำซ้ำได้โดยเทศบาลไทยที่มีเจตจำนงทางการเมือง" },
     theCatch: { en: "Low GPP (฿118K/capita). Youth out-migration to Bangkok. The success depends heavily on one mayor's leadership style — institutional continuity is the risk.", th: "GPP ต่ำ (฿118K/หัว) เยาวชนอพยพไปกรุงเทพฯ ความสำเร็จพึ่งพาสไตล์ผู้นำของนายกคนเดียวมาก ความต่อเนื่องเชิงสถาบันคือความเสี่ยง" },
     landArea: 9943,
@@ -337,7 +340,92 @@ export const cityContexts: Record<string, CityContext> = {
   },
 };
 
-/** Get city context — returns undefined if no context exists for that city */
+function dimensionName(dimension: SmartCity["smartDimensions"][number]): { en: string; th: string } {
+  switch (dimension) {
+    case "economy":
+      return { en: "local economy", th: "เศรษฐกิจท้องถิ่น" };
+    case "energy":
+      return { en: "energy systems", th: "ระบบพลังงาน" };
+    case "environment":
+      return { en: "environmental management", th: "การจัดการสิ่งแวดล้อม" };
+    case "governance":
+      return { en: "public service governance", th: "การบริหารบริการสาธารณะ" };
+    case "living":
+      return { en: "daily urban services", th: "บริการเมืองในชีวิตประจำวัน" };
+    case "mobility":
+      return { en: "mobility", th: "การเดินทาง" };
+    case "people":
+      return { en: "people and skills", th: "คนและทักษะ" };
+  }
+}
+
+function regionRole(city: SmartCity): { en: string; th: string } {
+  switch (city.region) {
+    case "bangkok":
+      return { en: "part of the capital region, where land value, congestion, and service demand are tightly linked", th: "ส่วนหนึ่งของเขตเมืองหลวงที่มูลค่าที่ดิน การจราจร และความต้องการบริการผูกกันแน่น" };
+    case "central":
+      return { en: "a central-region service and logistics node with direct pull from Bangkok's economy", th: "โหนดบริการและโลจิสติกส์ภาคกลางที่รับแรงดึงจากเศรษฐกิจกรุงเทพฯ โดยตรง" };
+    case "east":
+      return { en: "inside the eastern growth corridor, where industry, ports, tourism, and agriculture overlap", th: "อยู่ในแนวเติบโตภาคตะวันออกที่อุตสาหกรรม ท่าเรือ ท่องเที่ยว และเกษตรทับซ้อนกัน" };
+    case "north":
+      return { en: "a northern city where heritage, universities, agriculture, and seasonal haze shape delivery choices", th: "เมืองภาคเหนือที่มรดกวัฒนธรรม มหาวิทยาลัย เกษตร และหมอกควันตามฤดูเป็นตัวกำหนดงานส่งมอบ" };
+    case "northeast":
+      return { en: "an Isan city where public services, agriculture, migration, and border links often matter more than glossy pilots", th: "เมืองอีสานที่บริการสาธารณะ เกษตร การย้ายถิ่น และการเชื่อมชายแดนมักสำคัญกว่าโครงการโชว์" };
+    case "south":
+      return { en: "a southern city where tourism, fisheries, rubber, flood risk, and border trade often share the same streets", th: "เมืองภาคใต้ที่ท่องเที่ยว ประมง ยางพารา ความเสี่ยงน้ำท่วม และการค้าชายแดนมักอยู่บนถนนเดียวกัน" };
+  }
+}
+
+function buildFallbackContext(city: SmartCity): CityContext {
+  const primary = dimensionName(city.smartDimensions[0] ?? "governance");
+  const secondary = dimensionName(city.smartDimensions[1] ?? "living");
+  const role = regionRole(city);
+  const statusPhrase =
+    city.status === "registered"
+      ? {
+        en: "a registered smart-city promotion zone with public implementation evidence still thin",
+        th: "เขตส่งเสริมเมืองอัจฉริยะที่ขึ้นทะเบียนแล้ว แต่หลักฐานสาธารณะด้านการดำเนินงานยังมีจำกัด",
+      }
+      : city.status === "promotion"
+        ? {
+          en: "a promotion-zone dossier where the strongest public evidence should be read project by project",
+          th: "เมืองในกลุ่มส่งเสริมที่ควรอ่านหลักฐานสาธารณะเป็นรายโครงการ",
+        }
+        : {
+          en: "a certified smart-city dossier whose claims still need to be checked against visible operating evidence",
+          th: "เมืองอัจฉริยะที่ได้รับการรับรองแล้ว แต่คำอ้างยังต้องตรวจเทียบกับหลักฐานการเดินระบบที่มองเห็นได้",
+        };
+
+  return {
+    livelihood: {
+      en: `${city.nameEn} is ${role.en}. Daily life is best read through ${primary.en}, ${secondary.en}, and the ordinary municipal services residents actually touch.`,
+      th: `${city.nameTh} เป็น${role.th} ชีวิตประจำวันควรอ่านผ่าน${primary.th} ${secondary.th} และบริการเทศบาลธรรมดาที่ประชาชนใช้งานจริง`,
+    },
+    famousFor: {
+      en: `${city.nameEn} is currently documented as ${statusPhrase.en}. The safest public claim is its registry position, location, and stated smart-city dimensions.`,
+      th: `${city.nameTh} ถูกบันทึกไว้ในฐานะ${statusPhrase.th} คำอ้างที่ปลอดภัยที่สุดคือสถานะในทะเบียน ทำเล และมิติเมืองอัจฉริยะที่ระบุไว้`,
+    },
+    opportunity: {
+      en: `The practical opportunity is to turn the ${primary.en} agenda into a measurable service: publish baseline data, name the operator, and show residents what changed.`,
+      th: `โอกาสที่จับต้องได้คือเปลี่ยนวาระ${primary.th}ให้เป็นบริการที่วัดผลได้: เปิดข้อมูลตั้งต้น ระบุผู้เดินระบบ และแสดงให้ประชาชนเห็นว่าอะไรเปลี่ยนไป`,
+    },
+    theCatch: city.status === "registered"
+      ? {
+        en: "The key constraint is registry status: being in the depa promotion registry is not the same thing as live deployment, so this dossier should stay conservative until public implementation evidence appears.",
+        th: "ข้อจำกัดหลักคือสถานะในทะเบียน: การอยู่ในทะเบียนส่งเสริมของ depa ไม่ใช่สิ่งเดียวกับการมีระบบใช้งานจริง ดอสซิเยร์นี้จึงควรเล่าอย่างระมัดระวังจนกว่าจะมีหลักฐานสาธารณะของการดำเนินงาน",
+      }
+      : {
+        en: `The risk is over-claiming. ${city.nameEn} needs evidence that the ${primary.en} work is operating, not just listed in a plan.`,
+        th: `ความเสี่ยงคือการกล่าวอ้างเกินจริง ${city.nameTh} ต้องมีหลักฐานว่างานด้าน${primary.th}กำลังใช้งาน ไม่ใช่แค่ถูกเขียนไว้ในแผน`,
+      },
+  };
+}
+
+for (const city of allCities) {
+  cityContexts[city.id] ??= buildFallbackContext(city);
+}
+
+/** Get city context — generated conservatively when no curated context exists */
 export function getCityContext(cityId: string): CityContext | undefined {
   return cityContexts[cityId];
 }

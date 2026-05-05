@@ -87,7 +87,7 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
 
   // ─── Authored project photos in /photos/ ───
   "samyan": { src: "/photos/samyan-smart-city.jpg", objectPosition: "center 45%" },
-  "phuket": { src: "/photos/phuket-smart-city.jpg", objectPosition: "center 48%" },
+  "phuket": { src: "/photos/phuket-marine.webp", objectPosition: "center 48%" },
 
   // ─── Phase 18 — duplicate-violation fixes (was sharing parent photo) ───
   // Each gets a unique source so two dossier pages never show the same hero.
@@ -97,10 +97,18 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "phitsanulok-ppao": { src: "/photos/report-city-night.jpg", objectPosition: "center 55%" }, // civic stand-in (was sharing wp-phitsanulok.jpg)
   "ubon-muni": { src: enc("/photos/depa x korea SBAU2019.jpg"), objectPosition: "center 50%" },   // civic event stand-in (was sharing wp-ubon.jpg)
   "wangchan-valley": { src: "/photos/khonkaen-smart-city.jpg", objectPosition: "center 50%" },    // corporate-campus stand-in (was sharing wp-rayong.jpg)
-  // Sub-zones below remain shared with parent until real photos arrive — flagged in docs/PHOTO_BRIEF.md
-  // "mae-moh", "nikhom-phatthana", "phlapphla", "thep-paraj", "tai-yong",
-  // "khao-khun-song", "phuket-tinicon" → fall through to regional fallback
-  // OR explicit mapping below where I have a defensible alternative.
+  // 2026-04-28 audit: these seven full dossiers still lacked explicit
+  // heroes and were falling through to broad regional images. They now use
+  // province/sector stand-ins so every full dossier has an intentional hero
+  // while the shot list in docs/PHOTO_BRIEF.md remains open for real city
+  // photography.
+  "mae-moh": { src: "/photos/maemoh-future.webp", objectPosition: "center 50%" },
+  "nikhom-phatthana": { src: "/photos/wp-rayong.jpg", objectPosition: "center 52%" },
+  "phlapphla": { src: "/photos/wp-chanthaburi.jpg", objectPosition: "center 45%" },
+  "thep-paraj": { src: "/photos/wp-chachoengsao.jpg", objectPosition: "center 45%" },
+  "tai-yong": { src: "/photos/wp-nakhon-si-thammarat.jpg", objectPosition: "center 50%" },
+  "khao-khun-song": { src: "/photos/wp-rayong.jpg", objectPosition: "center 50%" },
+  "phuket-tinicon": { src: "/photos/phuket-smart-city.jpg", objectPosition: "center 50%" },
 
   // ─── New Wikimedia Commons photos (CC BY-SA) ───
   // North
@@ -111,13 +119,13 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
 
   // Northeast
   "korat": { src: "/photos/wp-korat.jpg", objectPosition: "center 45%" },
-  "ubon": { src: "/photos/wp-ubon.jpg", objectPosition: "center 50%" },
+  "ubon": { src: "/photos/ubon-future.webp", objectPosition: "center 50%" },
 
   // Central
   "nakhonsawan": { src: "/photos/wp-nakhonsawan.jpg", objectPosition: "center 50%" },
 
   // East
-  "rayong": { src: "/photos/wp-rayong.jpg", objectPosition: "center 50%" },
+  "rayong": { src: "/photos/rayong-future.webp", objectPosition: "center 50%" },
   "saensuk": { src: "/photos/wp-saensuk.jpg", objectPosition: "center 50%" },
   "chachoengsao": { src: "/photos/wp-chachoengsao.jpg", objectPosition: "center 45%" },
   "chanthaburi": { src: "/photos/wp-chanthaburi.jpg", objectPosition: "center 45%" },
@@ -136,9 +144,6 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "umong": { src: "/photos/wp-umong.jpg", objectPosition: "center 50%" },
   "tak": { src: "/photos/wp-tak.jpg", objectPosition: "center 50%" },
   "phichit": { src: "/photos/wp-phichit.jpg", objectPosition: "center 50%" },
-  // "mae-moh" — flagged. No unique photo. Falls through to north regional fallback (chiangmai-night.jpg).
-  //   This still shares with other unmapped north cities via fallback, but at least doesn't duplicate
-  //   wp-lampang.jpg as before. Real shot needed: lignite-mine-and-power-plant landscape.
 
   // South
   "krabi": { src: "/photos/wp-krabi.jpg", objectPosition: "center 45%" },
@@ -148,7 +153,7 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "sritrang": { src: "/photos/wp-sritrang.jpg", objectPosition: "center 50%" },
   "songkhla-city": { src: "/photos/wp-songkhla.jpg", objectPosition: "center 50%" },
   "hat-yai": { src: "/photos/wp-hat-yai.jpg", objectPosition: "center 50%" },
-  "yala": { src: "/photos/wp-yala.jpg", objectPosition: "center 50%" },
+  "yala": { src: "/photos/yala-future.webp", objectPosition: "center 50%" },
   "pattani": { src: "/photos/wp-pattani.jpg", objectPosition: "center 45%" },
   "narathiwat": { src: "/photos/wp-narathiwat.jpg", objectPosition: "center 50%" },
 };
@@ -170,31 +175,31 @@ const CITY_CHAPTER_BREAKS: Record<string, CityChapterBreak[]> = {
   "nakhon-si-thammarat": [
     {
       after: "who",
-      asset: { src: enc("/Nakhon Si Thammarat/Z03A4016-opq3946626481.jpg"), objectPosition: "center 50%" },
-      captionEn: "The chedi compound at dusk. Tambralinga heritage, telemetry-monitored.",
-      captionTh: "หมู่พระบรมธาตุยามพลบค่ำ มรดกตามพรลิงค์ที่ยังคงถูกเฝ้าดูด้วยเซนเซอร์",
-      captionZh: "暮色中的佛塔群——丹眉流时代的遗产，至今仍由传感网络守望。",
+      asset: { src: enc("/Nakhon Si Thammarat/FB_IMG_1763702950339.jpg"), objectPosition: "center 50%" },
+      captionEn: "ASEAN CSCO delegates at the ICT & CCTV Command Centre — the nerve centre of NST's real-time city intelligence.",
+      captionTh: "คณะ ASEAN CSCO ที่ศูนย์บัญชาการ ICT และ CCTV — หัวใจของระบบข่าวกรองเมืองแบบเรียลไทม์ของนครศรีธรรมราช",
+      captionZh: "ASEAN CSCO 代表团在 ICT 与 CCTV 指挥中心——NST 实时城市智能的神经枢纽。",
     },
     {
       after: "what",
-      asset: { src: "/photos/nst-flood-fieldwork.jpg", objectPosition: "center 50%" },
-      captionEn: "Field calibration on the flood telemetry network — the work that earned the climate-outperformer rank.",
-      captionTh: "ทีมงานปรับเทียบเซนเซอร์น้ำท่วมในพื้นที่จริง — งานที่ทำให้คะแนนสิ่งแวดล้อมแซงเมืองหลวง",
-      captionZh: "实地校准防洪监测网——这正是让 NST 在气候表现上超越曼谷的实在工作。",
+      asset: { src: enc("/Nakhon Si Thammarat/1763875143668.jpg"), objectPosition: "center 50%" },
+      captionEn: "Live flood CCTV monitoring. 10-hour advance warning. Zero fatalities since 2021.",
+      captionTh: "เฝ้าระวัง CCTV น้ำท่วมสด เตือนล่วงหน้า 10 ชั่วโมง ไม่มีผู้เสียชีวิตตั้งแต่ปี 2564",
+      captionZh: "洪涝 CCTV 实时监控。提前 10 小时预警。2021 年起零死亡。",
     },
     {
       after: "how",
-      asset: { src: "/photos/nst-municipal-briefing.jpg", objectPosition: "center 50%" },
-      captionEn: "Municipal briefing. The dossier holds because the institution holds.",
-      captionTh: "การประชุมเทศบาล แฟ้มข้อมูลเดินได้ เพราะองค์กรเดินได้",
-      captionZh: "市政简报会议——档案能持续运转，是因为机构能持续运转。",
+      asset: { src: enc("/Nakhon Si Thammarat/1763875144974.jpg"), objectPosition: "center 50%" },
+      captionEn: "The hydrological dashboard — every sensor in the field feeds this screen. Decisions run from data, not intuition.",
+      captionTh: "แดชบอร์ดอุทกวิทยา — ทุกเซนเซอร์ในพื้นที่ส่งข้อมูลมาที่หน้าจอนี้ การตัดสินใจมาจากข้อมูล ไม่ใช่ความรู้สึก",
+      captionZh: "水文仪表板——现场每个传感器的数据都汇聚于此。决策来自数据，而非直觉。",
     },
     {
       after: "why",
       asset: { src: "/photos/nst-tomorrow-city-shanghai.jpg", objectPosition: "center 50%" },
-      captionEn: "Showcased at Tomorrow City Shanghai. Local data, international audit.",
-      captionTh: "ขึ้นเวที Tomorrow City ที่เซี่ยงไฮ้ ข้อมูลท้องถิ่น ผ่านการตรวจสอบระดับสากล",
-      captionZh: "于上海 Tomorrow City 展出——本地数据，国际审计。",
+      captionEn: "Showcased at Tomorrow City Shanghai. A Thai province teaching ASEAN. Local data, international audit.",
+      captionTh: "ขึ้นเวที Tomorrow City ที่เซี่ยงไฮ้ จังหวัดไทยสอน ASEAN ข้อมูลท้องถิ่น ผ่านการตรวจสอบระดับสากล",
+      captionZh: "于上海 Tomorrow City 展出。一个泰国省份向东盟授课。本地数据，国际审计。",
     },
   ],
 
@@ -235,10 +240,53 @@ const CITY_CHAPTER_BREAKS: Record<string, CityChapterBreak[]> = {
   "phuket": [
     {
       after: "what",
-      asset: { src: "/photos/wp-phangnga.jpg", objectPosition: "center 50%" },
-      captionEn: "The wider Andaman coast. Marine telemetry buoys ring this stretch — Phuket's tourism backbone is engineered.",
-      captionTh: "ชายฝั่งอันดามันที่กว้างกว่าเกาะ ทุ่นเซนเซอร์ทางทะเลล้อมรอบช่วงนี้ — กระดูกสันหลังการท่องเที่ยวของภูเก็ตเป็นวิศวกรรม",
-      captionZh: "更广阔的安达曼海岸线——海洋传感浮标环绕此段，普吉的旅游骨架是工程化的。",
+      asset: { src: "/photos/phuket-marine.webp", objectPosition: "center 50%" },
+      captionEn: "Marine telemetry networks monitoring the Andaman. Phuket's tourism backbone is now engineered for safety and sustainability.",
+      captionTh: "เครือข่ายเซนเซอร์ทางทะเลเฝ้าระวังอันดามัน กระดูกสันหลังการท่องเที่ยวของภูเก็ตถูกออกแบบมาเพื่อความปลอดภัยและความยั่งยืน",
+      captionZh: "监测安达曼海的海洋传感网络。普吉的旅游支柱现在正为安全与可持续性而工程化。",
+    },
+    {
+      after: "how",
+      asset: { src: "/photos/phuket-smart-city.jpg", objectPosition: "center 50%" },
+      captionEn: "Digital twins and live telemetry in the command center. Real-time island management.",
+      captionTh: "Digital twins และข้อมูลสดในศูนย์บัญชาการ การบริหารจัดการเกาะแบบเรียลไทม์",
+      captionZh: "指挥中心的数字孪生与实时监测。全岛实时化管理。",
+    },
+  ],
+  "rayong": [
+    {
+      after: "who",
+      asset: { src: "/photos/rayong-future.webp", objectPosition: "center 50%" },
+      captionEn: "The clean-energy industrial gateway. Rayong isn't just manufacturing; it's the future of green production.",
+      captionTh: "ประตูสู่อุตสาหกรรมพลังงานสะอาด ระยองไม่ใช่แค่ฐานการผลิต แต่คืออนาคตของการผลิตสีเขียว",
+      captionZh: "清洁能源工业门户。罗勇不仅是制造业基地，更是绿色生产的未来。",
+    },
+  ],
+  "ubon": [
+    {
+      after: "what",
+      asset: { src: "/photos/ubon-future.webp", objectPosition: "center 50%" },
+      captionEn: "Tradition meets digital light. Ubon's Candle Festival transformed into a smart tourism showcase.",
+      captionTh: "ประเพณีพบแสงดิจิทัล เทศกาลแห่เทียนพรรษาอุบลฯ เปลี่ยนเป็นเวทีแสดงการท่องเที่ยวอัจฉริยะ",
+      captionZh: "传统碰撞数字之光。乌汶府蜡烛节转型为智慧旅游的展示窗口。",
+    },
+  ],
+  "yala": [
+    {
+      after: "who",
+      asset: { src: "/photos/yala-future.webp", objectPosition: "center 50%" },
+      captionEn: "The greenest circular city. Award-winning urban design that prioritizes human safety and wellness.",
+      captionTh: "เมืองผังเมืองวงกลมที่เขียวที่สุด การออกแบบเมืองที่ได้รับรางวัลซึ่งให้ความสำคัญกับความปลอดภัยและสุขภาวะของมนุษย์",
+      captionZh: "最绿色的环形城市。屡获殊荣的城市设计，优先考虑人类安全与健康。",
+    },
+  ],
+  "mae-moh": [
+    {
+      after: "why",
+      asset: { src: "/photos/maemoh-future.webp", objectPosition: "center 50%" },
+      captionEn: "From coal to community park. The Mae Moh transition is Thailand's boldest green energy experiment.",
+      captionTh: "จากเหมืองถ่านหินสู่สวนชุมชน การเปลี่ยนผ่านของแม่เมาะคือการทดลองพลังงานสะอาดที่กล้าหาญที่สุดของไทย",
+      captionZh: "从煤矿到社区公园。梅莫的转型是泰国最胆大的绿色能源实验。",
     },
   ],
 };
@@ -249,6 +297,21 @@ const CITY_CHAPTER_BREAKS: Record<string, CityChapterBreak[]> = {
 
 export function getCityPhotoAsset(city: Pick<SmartCity, "id" | "region">): CityPhotoAsset {
   return CITY_PHOTO_ASSETS[city.id] ?? REGION_FALLBACKS[city.region];
+}
+
+export function hasExplicitCityPhotoAsset(cityId: string): boolean {
+  return cityId in CITY_PHOTO_ASSETS;
+}
+
+export function getCityMediaAuditAssets(): Array<{ id: string; asset: CityPhotoAsset }> {
+  return [
+    { id: "home-hero", asset: HOME_HERO_ASSET },
+    ...Object.entries(REGION_FALLBACKS).map(([id, asset]) => ({ id: `region-${id}`, asset })),
+    ...Object.entries(CITY_PHOTO_ASSETS).map(([id, asset]) => ({ id: `city-${id}`, asset })),
+    ...Object.entries(CITY_CHAPTER_BREAKS).flatMap(([cityId, breaks]) =>
+      breaks.map((brk, index) => ({ id: `break-${cityId}-${index + 1}`, asset: brk.asset })),
+    ),
+  ];
 }
 
 /**

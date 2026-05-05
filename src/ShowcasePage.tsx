@@ -43,7 +43,7 @@ const ideas: ShowcaseIdea[] = [
     title: { en: "Hospital on Wheels", th: "โรงพยาบาลเคลื่อนที่", zh: "移动医院" },
     desc: {
       en: "A mobile medical unit with doctors, nurses, pharmacists, and telemedicine support. It reaches underserved neighborhoods without waiting for a new clinic building.",
-      th: "หน่วยแพทย์เคลื่อนที่ที่มีหมอ พยาบาล เภสัชกร และ telemedicine ไปถึงชุมชนที่บริการเข้าไม่ถึง โดยไม่ต้องรอสร้างคลินิกใหม่",
+      th: "หน่วยแพทย์เคลื่อนที่ที่มีหมอ พยาบาล เภสัชกร และระบบการแพทย์ทางไกล ไปถึงชุมชนที่บริการเข้าไม่ถึง โดยไม่ต้องรอสร้างคลินิกใหม่",
       zh: "配备医生、护士、药师与远程医疗支持的移动医疗单元，不必等新诊所盖好就能进入服务不足社区。",
     },
   },
@@ -53,7 +53,7 @@ const ideas: ShowcaseIdea[] = [
     title: { en: "Digital catalog for street vendors", th: "แคตตาล็อกดิจิทัลสำหรับพ่อค้าแม่ค้า", zh: "街头商贩数字目录" },
     desc: {
       en: "A QR-based storefront layer for local merchants. The point is not e-commerce theatre; it is giving informal vendors a low-friction way into the digital economy.",
-      th: "ชั้นหน้าร้านแบบ QR สำหรับผู้ค้ารายย่อย ประเด็นไม่ใช่ละคร e-commerce แต่คือการให้พ่อค้าแม่ค้าเข้าระบบเศรษฐกิจดิจิทัลแบบ friction ต่ำ",
+      th: "ชั้นหน้าร้านแบบ QR สำหรับผู้ค้ารายย่อย ประเด็นไม่ใช่ละครอีคอมเมิร์ซ แต่คือการให้พ่อค้าแม่ค้าเข้าระบบเศรษฐกิจดิจิทัลได้อย่างง่ายดาย",
       zh: "基于 QR 的数字店面层，重点不是电商表演，而是让非正规摊贩以极低门槛进入数字经济。",
     },
   },
@@ -208,39 +208,39 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             {translate(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开 ASEAN CSCO 手册" })}
           </a>
         </div>
-        {/* NST Photo Strip */}
+        {/* NST Photo Strip — ASEAN CSCO workshop photos + field shots */}
         <div className="photo-strip" style={{ marginTop: "1.25rem" }}>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage
-              src="/photos/report-city-walkway.jpg"
-              alt="Thai smart city walkway"
+              src="/Nakhon Si Thammarat/FB_IMG_1763702950339.jpg"
+              alt={translate(locale, { en: "ASEAN CSCO team at NST's ICT & CCTV Command Center during the 2025 workshop", th: "ทีม ASEAN CSCO ที่ศูนย์บัญชาการ ICT และ CCTV ของนครศรีธรรมราช ในงาน workshop ปี 2025", zh: "ASEAN CSCO 团队在 NST 的 ICT 与 CCTV 指挥中心参观（2025 年研讨会）" })}
               sizes="240px"
             />
-            <span className="photo-strip-label">Smart city walkway</span>
+            <span className="photo-strip-label">{translate(locale, { en: "Command centre", th: "ศูนย์บัญชาการ", zh: "指挥中心" })}</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage
-              src="/Photos international/JSCF2025-2495.jpg"
-              alt="JSCF Smart City Forum"
+              src="/Nakhon Si Thammarat/1763875143668.jpg"
+              alt={translate(locale, { en: "NST officials monitoring live flood CCTV feeds at the city command centre", th: "เจ้าหน้าที่นครฯ เฝ้าระวัง CCTV น้ำท่วมแบบเรียลไทม์ที่ศูนย์บัญชาการเมือง", zh: "NST 官员在城市指挥中心实时监控洪涝 CCTV 画面" })}
               sizes="240px"
             />
-            <span className="photo-strip-label">JSCF Forum</span>
+            <span className="photo-strip-label">{translate(locale, { en: "Flood monitoring", th: "เฝ้าระวังน้ำท่วม", zh: "洪涝监控" })}</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage
-              src="/photos/slic-waterfront.jpg"
-              alt="Thai waterfront development"
+              src="/Nakhon Si Thammarat/1763875144974.jpg"
+              alt={translate(locale, { en: "Real-time hydrological data dashboard at the NST smart city operations centre", th: "แดชบอร์ดข้อมูลอุทกวิทยาแบบเรียลไทม์ที่ศูนย์ปฏิบัติการเมืองอัจฉริยะนครศรีธรรมราช", zh: "NST 智慧城市运营中心的实时水文数据仪表板" })}
               sizes="240px"
             />
-            <span className="photo-strip-label">Waterfront development</span>
+            <span className="photo-strip-label">{translate(locale, { en: "Hydro dashboard", th: "แดชบอร์ดน้ำ", zh: "水文仪表板" })}</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage
-              src="/Photos international/459288254_924132223081934_9217219278417242092_n.jpg"
-              alt="CSCO Workshop"
+              src="/Nakhon Si Thammarat/1763875528673.jpg"
+              alt={translate(locale, { en: "ASEAN CSCO workshop delegation in front of Nakhon Si Thammarat Municipality", th: "คณะผู้เข้าร่วมอบรม ASEAN CSCO หน้าเทศบาลนครนครศรีธรรมราช", zh: "ASEAN CSCO 研讨团在那空是贪玛叻市政大楼前合影" })}
               sizes="240px"
             />
-            <span className="photo-strip-label">CSCO Workshop</span>
+            <span className="photo-strip-label">{translate(locale, { en: "ASEAN CSCO workshop", th: "อบรม ASEAN CSCO", zh: "ASEAN CSCO 研讨" })}</span>
           </div>
         </div>
         <p className="showcase-source-note">
@@ -267,7 +267,14 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         <div className="showcase-summary-grid">
           <article className="showcase-summary-card">
             <p className="showcase-card-kicker">{translate(locale, { en: "Leadership", th: "ภาวะผู้นำ", zh: "领导力" })}</p>
-            <h2>{translate(locale, { en: "Mayor Kanop Ketchart", th: "นายกคานป เกชาติ", zh: "Kanop Ketchart 市长" })}</h2>
+            <h2>{translate(locale, { en: "Mayor Kanop Ketchart", th: "นายกกณพ เกตุชาติ", zh: "กณพ เกตุชาติ 市长" })}</h2>
+            <div className="showcase-mayor-photo">
+              <ResponsiveImage
+                src="/Nakhon Si Thammarat/FB_IMG_1769074736483.jpg"
+                alt={translate(locale, { en: "Mayor Kanop Ketchart at Nakhon Si Thammarat City Hall", th: "นายกกณพ เกตุชาติ ณ เทศบาลนครนครศรีธรรมราช", zh: "กณพ เกตุชาติ 市长在那空是贪玛叻市政厅" })}
+                sizes="(max-width: 600px) 100vw, 420px"
+              />
+            </div>
             <p>
               {translate(locale, {
                 en: "The city story only makes sense if leadership is understood as a listening system. The mayor's role here is not technological heroism. It is repeated contact, direct explanation, and willingness to make the service loop visible.",

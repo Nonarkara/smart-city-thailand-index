@@ -1340,8 +1340,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 className="depa-official-source"
                 target="_blank"
                 rel="noopener noreferrer"
+                download
               >
-                {translate(locale, { en: "Official depa record →", th: "ดูบันทึกอย่างเป็นทางการจาก depa →", zh: "查看 depa 官方记录 →" })}
+                {translate(locale, { en: "Official certification plan", th: "แผนพัฒนาเมืองอัจฉริยะอย่างเป็นทางการ", zh: "官方城市认证计划" })}
               </a>
             </section>
           );
