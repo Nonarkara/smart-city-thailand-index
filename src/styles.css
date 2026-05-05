@@ -1,12 +1,14 @@
-/* Typography pairing chosen from the user's reference board:
- * Libre Baskerville + Montserrat.
- * Thai gets equivalent roles instead of fallback accidents:
- * Noto Serif Thai for editorial headings and Noto Sans Thai for body/UI. */
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@400;500;600;700;800&family=Noto+Serif+Thai:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+/* Typography — workspace CLAUDE.md §11.6 + §11.7 + §11.10:
+ * system-ui (SF Pro / Segoe UI) for Latin — disappears into the OS, the Jony-Ive brief.
+ * IBM Plex Sans Thai (non-looped) for Thai script — professional editorial, never looped.
+ * IBM Plex Mono for numerics and mono labels.
+ * NO Libre Baskerville, NO Montserrat, NO Noto Serif — the fat-serif and cliché
+ * instincts are the Codex Incident. They are banned. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --font: "Montserrat", "Noto Sans Thai", "Helvetica Neue", Arial, sans-serif;
-  --font-heading: "Libre Baskerville", "Noto Serif Thai", Georgia, serif;
+  --font: system-ui, -apple-system, "Segoe UI", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
+  --font-heading: system-ui, -apple-system, "Segoe UI", sans-serif;
   --sans: var(--font);
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
   
@@ -6763,15 +6765,17 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 /* ─── PHASE 14 — TYPOGRAPHY, LEGENDS, REGIONAL CHAMPIONS, LEAGUE ─────── */
 
-/* Thai locale — keep the same serif/sans relationship with Thai-native glyphs. */
+/* Thai locale — non-looped Thai faces lead; system-ui handles Latin.
+ * No looped faces (Sarabun, Plex Thai Looped) per workspace CLAUDE.md §0. */
 html[lang="th"] {
-  --font: "Noto Sans Thai", "Montserrat", "Segoe UI", system-ui, sans-serif;
-  --font-heading: "Noto Serif Thai", "Noto Sans Thai", serif;
+  --font: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, "Segoe UI", sans-serif;
+  --font-heading: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
 }
 
+/* Chinese locale — system CJK faces; system-ui for Latin. No decorative serifs. */
 html[lang="zh"] {
-  --font: "Montserrat", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-  --font-heading: "Libre Baskerville", "Songti SC", "SimSun", serif;
+  --font: system-ui, "PingFang SC", "Microsoft YaHei", "IBM Plex Sans Thai", sans-serif;
+  --font-heading: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 /* Editorial headings — let the serif breathe; compressed tracking makes
