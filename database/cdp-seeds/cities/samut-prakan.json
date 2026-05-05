@@ -33,7 +33,14 @@
       "pm25Annual": 30.8,
       "hospitalBedsPer10k": 16,
       "crimeRatePer100k": 195,
-      "greenCoverage": 18
+      "greenCoverage": 18,
+      "gppGrowthRate": 3,
+      "pm25Trend": "stable",
+      "waterQuality": 48,
+      "forestCoverage": 5,
+      "fdiInflow": 5200,
+      "industryComposition": "manufacturing 55%, services 35%, agriculture 5%, other 5%",
+      "laborForce": 680
     },
     "compositeScore": 60.9,
     "tier": "beta",
@@ -45,6 +52,7 @@
       "Digital municipal services integration"
     ],
     "dataConfidence": "high",
+    "league": "province",
     "keyMetrics": [
       {
         "key": "gppPerCapita",
@@ -71,51 +79,51 @@
         "sourceId": "pcd"
       },
       {
-        "key": "crimeRatePer100k",
+        "key": "waterQuality",
         "label": {
-          "en": "Crime / 100K",
-          "th": "อาชญากรรม / แสนคน",
-          "zh": "每十万人犯罪率"
+          "en": "Water quality index",
+          "th": "ดัชนีคุณภาพน้ำ",
+          "zh": "水质指数"
         },
-        "value": "195",
-        "unit": "incidents/100k",
+        "value": "48",
+        "unit": "/100",
         "confidence": "high",
-        "sourceId": "rtp"
+        "sourceId": "onep"
       },
       {
-        "key": "greenCoverage",
+        "key": "gppGrowthRate",
         "label": {
-          "en": "Green coverage",
-          "th": "พื้นที่สีเขียว",
-          "zh": "绿化覆盖"
+          "en": "GPP growth rate",
+          "th": "อัตราเติบโต GPP",
+          "zh": "GPP 增长率"
         },
-        "value": "18",
+        "value": "3",
         "unit": "%",
         "confidence": "high",
-        "sourceId": "gistda"
+        "sourceId": "nesdc"
       }
     ],
     "shortTailoredNote": {
-      "en": "Samut Prakan Smart City leans on economy but still gets capped by environment. That's where the backend should keep drilling.",
-      "th": "สมุทรปราการสมาร์ทซิตี้ มีแรงหลักอยู่ที่economy แต่ยังถูกกดเพดานโดยenvironment ตรงนี้แหละที่ backend ต้องขุดต่อ",
-      "zh": "Samut Prakan Smart City leans on economy but is still capped by environment. That's where the backend should keep drilling."
+      "en": "Largest manufacturing base near Bangkok. Industry 4.0 adoption is real and measurable. New airport connectivity (Suvarnabhumi) creates logistics advantage. Watch the constraint: PM2.5 30.8. Crime 195/100K. Green coverage only 18% — the lowest in the index. Flooding is chronic in low-lying areas. Livability trails far behind economic output.",
+      "th": "ฐานการผลิตใหญ่สุดใกล้กรุงเทพฯ Industry 4.0 จริงและวัดได้ เชื่อมต่อสนามบินใหม่ (สุวรรณภูมิ) สร้างข้อได้เปรียบโลจิสติกส์ แต่ต้องระวัง: PM2.5 30.8 อาชญากรรม 195/100,000 พื้นที่สีเขียวเพียง 18% — ต่ำสุดในดัชนี น้ำท่วมเรื้อรังในพื้นที่ลุ่ม ความน่าอยู่ตามหลังผลผลิตเศรษฐกิจมาก",
+      "zh": "Largest manufacturing base near Bangkok. Industry 4.0 adoption is real and measurable. New airport connectivity (Suvarnabhumi) creates logistics advantage. Watch the constraint: PM2.5 30.8. Crime 195/100K. Green coverage only 18% — the lowest in the index. Flooding is chronic in low-lying areas. Livability trails far behind economic output."
     },
     "financeSignal": {
       "leadInstrumentId": "dfi-cofinance",
       "leadInstrumentName": "DFI Co-finance",
       "line": {
         "en": "DFI Co-finance leads because Samut Prakan Smart City is building with a medium risk profile.",
-        "th": "DFI Co-finance นำ เพราะ สมุทรปราการสมาร์ทซิตี้ อยู่ในระดับ building และมีความเสี่ยงแบบ medium",
+        "th": "เงินร่วมลงทุนจาก DFI เป็นเครื่องมือนำ เพราะ สมุทรปราการสมาร์ทซิตี้ อยู่ในกำลังสร้าง และมีความเสี่ยงปานกลาง",
         "zh": "DFI Co-finance leads because Samut Prakan Smart City is building with a medium risk profile."
       },
-      "readinessScore": 66
+      "readinessScore": 67
     },
     "exportReady": true,
     "freshness": {
       "latestObservedAt": "2026-04-01T00:00:00.000Z",
       "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
     },
-    "provenanceCount": 11
+    "provenanceCount": 17
   },
   "contextNotes": [
     {
@@ -127,9 +135,9 @@
         "zh": "定制机会"
       },
       "body": {
-        "en": "Samut Prakan Smart City has room to turn its economy advantage into a city product instead of another presentation. The clearest wedge is economy delivery backed by hard metrics.",
-        "th": "สมุทรปราการสมาร์ทซิตี้ มีโอกาสเปลี่ยนจุดแข็งด้านeconomy ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านeconomy ที่ผูกกับตัวชี้วัดจริง",
-        "zh": "Samut Prakan Smart City can turn its economy edge into a real city product. The clearest wedge is economy delivery tied to hard metrics."
+        "en": "Largest manufacturing base near Bangkok. Industry 4.0 adoption is real and measurable. New airport connectivity (Suvarnabhumi) creates logistics advantage.",
+        "th": "ฐานการผลิตใหญ่สุดใกล้กรุงเทพฯ Industry 4.0 จริงและวัดได้ เชื่อมต่อสนามบินใหม่ (สุวรรณภูมิ) สร้างข้อได้เปรียบโลจิสติกส์",
+        "zh": "Largest manufacturing base near Bangkok. Industry 4.0 adoption is real and measurable. New airport connectivity (Suvarnabhumi) creates logistics advantage."
       }
     },
     {
@@ -141,9 +149,9 @@
         "zh": "约束"
       },
       "body": {
-        "en": "The weakest drag is environment. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.",
-        "th": "ตัวฉุดหลักคือด้านenvironment ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม",
-        "zh": "The weakest drag is environment. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes."
+        "en": "PM2.5 30.8. Crime 195/100K. Green coverage only 18% — the lowest in the index. Flooding is chronic in low-lying areas. Livability trails far behind economic output.",
+        "th": "PM2.5 30.8 อาชญากรรม 195/100,000 พื้นที่สีเขียวเพียง 18% — ต่ำสุดในดัชนี น้ำท่วมเรื้อรังในพื้นที่ลุ่ม ความน่าอยู่ตามหลังผลผลิตเศรษฐกิจมาก",
+        "zh": "PM2.5 30.8. Crime 195/100K. Green coverage only 18% — the lowest in the index. Flooding is chronic in low-lying areas. Livability trails far behind economic output."
       }
     },
     {
@@ -169,9 +177,9 @@
         "zh": "可输出经验"
       },
       "body": {
-        "en": "Samut Prakan Smart City is most exportable when it acts like itself. The reusable lesson is how it turns economy into something operational.",
-        "th": "สมุทรปราการสมาร์ทซิตี้ ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนeconomy ให้เป็นระบบปฏิบัติการ",
-        "zh": "Samut Prakan Smart City becomes exportable when it acts like itself. The reusable lesson is how it turns economy into operations."
+        "en": "Largest manufacturing base near Bangkok. Industry 4.0 adoption is real and measurable. New airport connectivity (Suvarnabhumi) creates logistics advantage.",
+        "th": "ฐานการผลิตใหญ่สุดใกล้กรุงเทพฯ Industry 4.0 จริงและวัดได้ เชื่อมต่อสนามบินใหม่ (สุวรรณภูมิ) สร้างข้อได้เปรียบโลจิสติกส์",
+        "zh": "Largest manufacturing base near Bangkok. Industry 4.0 adoption is real and measurable. New airport connectivity (Suvarnabhumi) creates logistics advantage."
       }
     }
   ],
@@ -367,6 +375,168 @@
           "version": "2026.04-cdp-v1"
         }
       ]
+    },
+    {
+      "id": "extended-indicators",
+      "title": {
+        "en": "Extended indicators",
+        "th": "ตัวชี้วัดเชิงลึก",
+        "zh": "扩展指标"
+      },
+      "summary": {
+        "en": "Ground-truth trajectory data most indices ignore: growth direction, environmental trends, real investment flows.",
+        "th": "ข้อมูลทิศทางจากพื้นจริงที่ดัชนีส่วนใหญ่ละเลย: ทิศทางการเติบโต แนวโน้มสิ่งแวดล้อม กระแสการลงทุนจริง",
+        "zh": "大多数指数忽略的实地趋势数据：增长方向、环境走势、真实投资流向。"
+      },
+      "observations": [
+        {
+          "cityId": "samut-prakan",
+          "metricKey": "gppGrowthRate",
+          "label": {
+            "en": "GPP growth rate",
+            "th": "อัตราเติบโต GPP",
+            "zh": "GPP 增长率"
+          },
+          "metricValueNum": 3,
+          "metricValueText": "3",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Year-on-year provincial GPP growth (NESDC); shows economic trajectory, not snapshot.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "samut-prakan",
+          "metricKey": "pm25Trend",
+          "label": {
+            "en": "PM2.5 trend",
+            "th": "แนวโน้ม PM2.5",
+            "zh": "PM2.5 趋势"
+          },
+          "metricValueNum": null,
+          "metricValueText": "stable",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "3-year PM2.5 direction from PCD monitoring; reveals whether air is improving or deteriorating.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "samut-prakan",
+          "metricKey": "waterQuality",
+          "label": {
+            "en": "Water quality index",
+            "th": "ดัชนีคุณภาพน้ำ",
+            "zh": "水质指数"
+          },
+          "metricValueNum": 48,
+          "metricValueText": "48",
+          "unit": "/100",
+          "periodLabel": "2025 baseline",
+          "sourceId": "onep",
+          "sourceName": "ONEP — Environmental Performance Index",
+          "sourceUrl": "https://www.onep.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "PCD/ONEP composite water quality index (0-100); livability signal most indices ignore.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "samut-prakan",
+          "metricKey": "forestCoverage",
+          "label": {
+            "en": "Forest coverage",
+            "th": "พื้นที่ป่าไม้",
+            "zh": "森林覆盖率"
+          },
+          "metricValueNum": 5,
+          "metricValueText": "5",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rfd",
+          "sourceName": "Royal Forest Department",
+          "sourceUrl": "https://www.forest.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Royal Forest Department provincial forest percentage; ground-truth environmental baseline.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "samut-prakan",
+          "metricKey": "fdiInflow",
+          "label": {
+            "en": "FDI inflow",
+            "th": "เงินลงทุนจากต่างประเทศ",
+            "zh": "外资流入"
+          },
+          "metricValueNum": 5200,
+          "metricValueText": "฿5,200",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "boi",
+          "sourceName": "Board of Investment (BOI)",
+          "sourceUrl": "https://ipstat.boi.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "BOI-promoted foreign direct investment (million baht); real money, not memoranda of understanding.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "samut-prakan",
+          "metricKey": "industryComposition",
+          "label": {
+            "en": "Industry mix",
+            "th": "สัดส่วนอุตสาหกรรม",
+            "zh": "产业结构"
+          },
+          "metricValueNum": null,
+          "metricValueText": "manufacturing 55%, services 35%, agriculture 5%, other 5%",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "samut-prakan",
+          "metricKey": "laborForce",
+          "label": {
+            "en": "Labor force",
+            "th": "กำลังแรงงาน",
+            "zh": "劳动力"
+          },
+          "metricValueNum": 680,
+          "metricValueText": "680K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NSO provincial employed population (thousands); human-scale economic capacity measure.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
     }
   ],
   "deliveryProfile": {
@@ -379,12 +549,12 @@
     "recommendedLeadStep": "infrastructure",
     "deliveryNote": {
       "en": "Beta cities need phased delivery: blended finance, performance contracts, and readiness-building before going full commercial.",
-      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: blended finance, performance contract และการสร้าง readiness ก่อนจะไปเชิงพาณิชย์เต็มตัว",
+      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: การเงินผสมผสาน สัญญาอิงผลลัพธ์ และการสร้างความพร้อม ก่อนจะไปเชิงพาณิชย์เต็มตัว",
       "zh": "Beta 城市需要分阶段交付：先做混合融资、绩效合同和准备度建设，再谈完全商业化。"
     },
     "publicRole": {
       "en": "Anchor the pipeline, de-risk first-loss pieces, and keep the city from overpromising.",
-      "th": "รัฐต้องยึด pipeline ลดความเสี่ยงในชิ้น first-loss และกันไม่ให้เมืองขายฝันเกินจริง",
+      "th": "รัฐต้องยึดลำดับโครงการ รับความเสี่ยงชั้นแรกในจุดที่จำเป็น และกันไม่ให้เมืองขายฝันเกินจริง",
       "zh": "Government should anchor the pipeline, de-risk first-loss pieces, and stop the city from overselling."
     },
     "privateRole": {
@@ -409,10 +579,10 @@
     "revenueBase": "moderate",
     "institutionalCapacity": "strong",
     "projectPipeline": "moderate",
-    "privateInterest": "moderate",
+    "privateInterest": "strong",
     "riskProfile": "medium",
     "deliveryReadiness": "building",
-    "readinessScore": 66,
+    "readinessScore": 67,
     "segment": "beta",
     "assessedAt": "2026-04-04T00:00:00.000Z",
     "version": "2026.04-cdp-v1"
@@ -429,27 +599,27 @@
       "segment": "beta",
       "reasonSummary": {
         "en": "DFI Co-finance fits Samut Prakan Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money.",
-        "th": "DFI Co-finance fits Samut Prakan Smart City because its metrics and operating context create a credible use case. ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
-        "zh": "DFI Co-finance fits Samut Prakan Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money."
+        "th": "เงินร่วมลงทุนจาก DFI เหมาะกับ สมุทรปราการสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
+        "zh": "DFI Co-finance fits Samut Prakan Smart City because its metrics and operating context create a credible use case. ADB、JICA 等机构很多时候作为信誉放大器比单纯给钱更关键。"
       },
       "whyNow": {
-        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 66/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 66/100",
-        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 66/100."
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 67/100.",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 67/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 67/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
-        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้",
         "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
       },
       "supports": [
@@ -478,27 +648,27 @@
       "segment": "beta",
       "reasonSummary": {
         "en": "Blended Finance fits Samut Prakan Smart City because its metrics and operating context create a credible use case. This is the bridge between 'not bankable yet' and 'commercially believable'.",
-        "th": "Blended Finance fits Samut Prakan Smart City because its metrics and operating context create a credible use case. นี่คือสะพานระหว่าง 'ยังไม่ bankable' กับ 'เริ่มเชื่อทางการค้าได้'",
-        "zh": "Blended Finance fits Samut Prakan Smart City because its metrics and operating context create a credible use case. This is the bridge between 'not bankable yet' and 'commercially believable'."
+        "th": "การเงินผสมผสาน เหมาะกับ สมุทรปราการสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ นี่คือสะพานระหว่าง 'ยังไม่น่าเชื่อทางการเงิน' กับ 'เริ่มเชื่อทางการค้าได้'",
+        "zh": "Blended Finance fits Samut Prakan Smart City because its metrics and operating context create a credible use case. 它是“尚不可融资”和“开始具备商业可信度”之间的桥。"
       },
       "whyNow": {
-        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 66/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 66/100",
-        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 66/100."
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 67/100.",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 67/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 67/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -517,61 +687,50 @@
       "version": "2026.04-cdp-v1"
     },
     {
-      "id": "samut-prakan-performance-contract",
+      "id": "samut-prakan-ppp-concession",
       "cityId": "samut-prakan",
-      "instrumentId": "performance-contract",
-      "instrumentName": "Performance Contract",
+      "instrumentId": "ppp-concession",
+      "instrumentName": "PPP / Concession",
       "priority": "watch",
-      "priorityScore": 70,
+      "priorityScore": 71,
       "stage": "operational",
       "segment": "beta",
       "reasonSummary": {
-        "en": "Performance Contract fits Samut Prakan Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes.",
-        "th": "Performance Contract fits Samut Prakan Smart City because its metrics and operating context create a credible use case. เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
-        "zh": "Performance Contract fits Samut Prakan Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes."
+        "en": "PPP / Concession fits Samut Prakan Smart City because its metrics and operating context create a credible use case. Works when there is enough demand, enough operating discipline, and a city government that can hold a contract line.",
+        "th": "PPP / สัมปทาน เหมาะกับ สมุทรปราการสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ใช้ได้เมื่อมีดีมานด์พอ มีวินัยการเดินระบบพอ และภาครัฐคุมสัญญาได้",
+        "zh": "PPP / Concession fits Samut Prakan Smart City because its metrics and operating context create a credible use case. 当需求、运营纪律和政府的合同管理能力都足够时才真正成立。"
       },
       "whyNow": {
-        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 66/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 66/100",
-        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 66/100."
+        "en": "Because the city already has the demand spine to anchor long-term contracts. Readiness score: 67/100.",
+        "th": "เพราะเมืองมีแกนความต้องการมากพอจะรองรับสัญญาระยะยาว คะแนนความพร้อม: 67/100",
+        "zh": "Because the city already has the demand spine to anchor long-term contracts. Readiness score: 67/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
         {
-          "id": "samut-prakan-pm25Annual",
+          "id": "samut-prakan-gppPerCapita",
           "supportType": "metric",
-          "metricKey": "pm25Annual",
-          "metricLabel": "Annual PM2.5",
-          "sourceId": "pcd",
-          "sourceUrl": "http://air4thai.pcd.go.th",
-          "observedAt": "2026-03-01T00:00:00.000Z",
-          "confidence": 0.9,
-          "summary": "Outcome-based contracts make sense where performance can be metered."
-        },
-        {
-          "id": "samut-prakan-greenCoverage",
-          "supportType": "metric",
-          "metricKey": "greenCoverage",
-          "metricLabel": "Green coverage",
-          "sourceId": "gistda",
-          "sourceUrl": "https://www.gistda.or.th",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
           "observedAt": "2026-04-01T00:00:00.000Z",
           "confidence": 0.9,
-          "summary": "Green coverage provides a resilience baseline for outcome measurement."
+          "summary": "High economic output supports contractable demand."
         }
       ],
       "version": "2026.04-cdp-v1"
@@ -625,7 +784,7 @@
   "exportMetadata": {
     "latestObservedAt": "2026-04-01T00:00:00.000Z",
     "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
-    "provenanceCount": 11,
+    "provenanceCount": 17,
     "summaryCsvUrl": "/api/exports/cities-summary.csv",
     "factsCsvUrl": "/api/exports/city-facts.csv",
     "cityCsvUrl": "/api/cities/samut-prakan/export.csv"

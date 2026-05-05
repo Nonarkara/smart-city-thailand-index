@@ -1,5 +1,7 @@
-import { getCityContext } from "./cityContext";
-import type { Locale, SmartCity } from "./types";
+import { getCityContext } from "./cityContext.ts";
+import { getAirQualityUrl, getBOIInvestmentUrl, getCityDataUrl, getOpenDataSearchUrl } from "./cdpData.ts";
+import { polishThaiList, polishThaiText } from "./thaiText.ts";
+import type { Locale, SmartCity } from "./types.ts";
 
 export interface TrilingualText {
   en: string;
@@ -13,7 +15,19 @@ export interface TrilingualList {
   zh: string[];
 }
 
+export type CitySourceCategory =
+  | "official"
+  | "dataset"
+  | "project"
+  | "local-news"
+  | "academic"
+  | "sentiment";
+
 export interface CityResearchSource {
+  id?: string;
+  category?: CitySourceCategory;
+  observedAt?: string;
+  usedFor?: TrilingualText;
   label: TrilingualText;
   url: string;
 }
@@ -32,6 +46,146 @@ const genericSourceLabel = (
   th: string,
   zh: string,
 ): TrilingualText => ({ en, th, zh });
+
+const SOURCE_OBSERVED_AT = "2026-04-28";
+
+function slug(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "source";
+}
+
+function sourceCategoryFromUrl(url: string): CitySourceCategory {
+  if (/data\.go\.th|air4thai|ipstat\.boi|nesdc|nso|stat\.bora|forest\.go\.th|onep\.go\.th/i.test(url)) {
+    return "dataset";
+  }
+  if (/depa\.or\.th/i.test(url)) {
+    return "official";
+  }
+  if (/unesco|university|\.ac\.th|research|journal/i.test(url)) {
+    return "academic";
+  }
+  if (/news|govinsider|bangkokpost|nationthailand|thaipbs/i.test(url)) {
+    return "local-news";
+  }
+  return "project";
+}
+
+function normalizeSource(city: SmartCity, source: CityResearchSource, index: number): CityResearchSource {
+  const category = source.category ?? sourceCategoryFromUrl(source.url);
+  return {
+    ...source,
+    id: source.id ?? `${city.id}-${category}-${slug(source.url || source.label.en || String(index))}`,
+    category,
+    observedAt: source.observedAt ?? SOURCE_OBSERVED_AT,
+    usedFor: source.usedFor ?? genericSourceLabel(
+      "Narrative verification and local context.",
+      "ใช้ตรวจสอบเรื่องเล่าและบริบทท้องถิ่น",
+      "用于核验叙事与地方背景。",
+    ),
+  };
+}
+
+function baselineSources(city: SmartCity): CityResearchSource[] {
+  const registryUrl = "https://www.depa.or.th/en/smart-city-plan/existing-smart-city";
+  return [
+    {
+      id: `${city.id}-depa-registry`,
+      category: "official",
+      observedAt: SOURCE_OBSERVED_AT,
+      label: genericSourceLabel(
+        "depa smart city registry",
+        "ทะเบียนเมืองอัจฉริยะของ depa",
+        "depa 智慧城市名录",
+      ),
+      url: registryUrl,
+      usedFor: genericSourceLabel(
+        "Certification or promotion-zone status.",
+        "สถานะการรับรองหรือเขตส่งเสริม",
+        "认证或推广区状态。",
+      ),
+    },
+    {
+      id: `${city.id}-citydata-profile`,
+      category: "project",
+      observedAt: SOURCE_OBSERVED_AT,
+      label: genericSourceLabel(
+        "City Data Platform Thailand profile",
+        "โปรไฟล์บนแพลตฟอร์มข้อมูลเมืองอัจฉริยะ",
+        "泰国城市数据平台资料",
+      ),
+      url: getCityDataUrl(city.nameEn),
+      usedFor: genericSourceLabel(
+        "Project visibility and public smart-city data rail.",
+        "การมองเห็นโครงการและรางข้อมูลสาธารณะของเมือง",
+        "项目可见度与公共城市数据轨。",
+      ),
+    },
+    {
+      id: `${city.id}-data-go-th-${slug(city.province)}`,
+      category: "dataset",
+      observedAt: SOURCE_OBSERVED_AT,
+      label: genericSourceLabel(
+        `data.go.th datasets for ${city.province}`,
+        `ชุดข้อมูล data.go.th ของ${city.provinceTh}`,
+        `${city.province} 的 data.go.th 数据集`,
+      ),
+      url: getOpenDataSearchUrl(city.province),
+      usedFor: genericSourceLabel(
+        "Population, service, economy, and administrative baselines.",
+        "ฐานข้อมูลประชากร บริการ เศรษฐกิจ และการปกครอง",
+        "人口、服务、经济与行政基线。",
+      ),
+    },
+  ];
+}
+
+function supplementalSources(city: SmartCity): CityResearchSource[] {
+  if (city.status === "registered") return [];
+  return [
+    {
+      id: `${city.id}-air4thai`,
+      category: "dataset",
+      observedAt: SOURCE_OBSERVED_AT,
+      label: genericSourceLabel(
+        "Air4Thai air-quality dashboard",
+        "แดชบอร์ดคุณภาพอากาศ Air4Thai",
+        "Air4Thai 空气质量仪表板",
+      ),
+      url: getAirQualityUrl(),
+      usedFor: genericSourceLabel(
+        "Environmental baseline and PM2.5 cross-check.",
+        "ฐานสิ่งแวดล้อมและการตรวจทาน PM2.5",
+        "环境基线与 PM2.5 交叉核验。",
+      ),
+    },
+    {
+      id: `${city.id}-boi-${slug(city.province)}`,
+      category: "dataset",
+      observedAt: SOURCE_OBSERVED_AT,
+      label: genericSourceLabel(
+        `BOI investment view for ${city.province}`,
+        `ข้อมูลการลงทุน BOI ของ${city.provinceTh}`,
+        `${city.province} 的 BOI 投资视图`,
+      ),
+      url: getBOIInvestmentUrl(city.province),
+      usedFor: genericSourceLabel(
+        "Investment and business-climate triangulation.",
+        "ตรวจทานการลงทุนและบรรยากาศธุรกิจ",
+        "投资与商业环境交叉核验。",
+      ),
+    },
+  ];
+}
+
+function bibliographySources(city: SmartCity, curatedSources: CityResearchSource[] = []): CityResearchSource[] {
+  const deduped = new Map<string, CityResearchSource>();
+  [...curatedSources, ...baselineSources(city), ...supplementalSources(city)]
+    .map((source, index) => normalizeSource(city, source, index))
+    .forEach(source => {
+      const key = source.url || source.id || source.label.en;
+      if (!deduped.has(key)) deduped.set(key, source);
+    });
+  return [...deduped.values()];
+}
 
 const CITY_INDUSTRY_TAGS: Record<string, TrilingualList> = {
   phuket: {
@@ -1196,48 +1350,58 @@ function fallbackText(copy: { en: string; th: string }, zh?: string): Trilingual
 }
 
 function defaultIndustries(city: SmartCity): TrilingualList {
-  const english = city.smartDimensions.slice(0, 4).map(dimension =>
-    dimension === "economy"
-      ? "Economic services"
-      : dimension === "energy"
-        ? "Energy systems"
-        : dimension === "environment"
-          ? "Environmental services"
-          : dimension === "governance"
-            ? "Public administration"
-            : dimension === "living"
-              ? "Urban services"
-              : dimension === "mobility"
-                ? "Mobility"
-                : "Education & people",
-  );
+  const labels = city.smartDimensions.slice(0, 4).map(dimension => {
+    if (dimension === "economy") return { en: "Economic services", th: "บริการเศรษฐกิจ", zh: "经济服务" };
+    if (dimension === "energy") return { en: "Energy systems", th: "ระบบพลังงาน", zh: "能源系统" };
+    if (dimension === "environment") return { en: "Environmental services", th: "บริการสิ่งแวดล้อม", zh: "环境服务" };
+    if (dimension === "governance") return { en: "Public administration", th: "การบริหารสาธารณะ", zh: "公共治理" };
+    if (dimension === "living") return { en: "Urban services", th: "บริการเมือง", zh: "城市服务" };
+    if (dimension === "mobility") return { en: "Mobility", th: "การเดินทาง", zh: "交通出行" };
+    return { en: "Education & people", th: "การศึกษาและคน", zh: "教育与人才" };
+  });
 
   return {
-    en: english,
-    th: english,
-    zh: english,
+    en: labels.map(label => label.en),
+    th: labels.map(label => label.th),
+    zh: labels.map(label => label.zh),
   };
 }
 
 export function getLocalizedText(locale: Locale, copy: TrilingualText): string {
-  if (locale === "th") return copy.th;
+  if (locale === "th") return polishThaiText(copy.th);
   if (locale === "zh") return copy.zh;
   return copy.en;
 }
 
 export function getLocalizedList(locale: Locale, copy: TrilingualList): string[] {
-  if (locale === "th") return copy.th;
+  if (locale === "th") return polishThaiList(copy.th);
   if (locale === "zh") return copy.zh;
   return copy.en;
+}
+
+function polishResearchProfile(profile: CityResearchProfile): CityResearchProfile {
+  return {
+    ...profile,
+    industries: {
+      en: profile.industries.en,
+      th: polishThaiList(profile.industries.th),
+      zh: profile.industries.zh,
+    },
+    dailyLife: { ...profile.dailyLife, th: polishThaiText(profile.dailyLife.th) },
+    signatureStory: { ...profile.signatureStory, th: polishThaiText(profile.signatureStory.th) },
+    funFact: { ...profile.funFact, th: polishThaiText(profile.funFact.th) },
+    compareNote: { ...profile.compareNote, th: polishThaiText(profile.compareNote.th) },
+  };
 }
 
 export function resolveCityResearch(city: SmartCity): CityResearchProfile {
   const curated = CITY_RESEARCH_PROFILES[city.id];
   const context = getCityContext(city.id);
   const industries = curated?.industries ?? CITY_INDUSTRY_TAGS[city.id] ?? defaultIndustries(city);
+  const sources = bibliographySources(city, curated?.sources);
 
   if (!context) {
-    return curated ?? {
+    return polishResearchProfile(curated ?? {
       industries,
       dailyLife: {
         en: city.tagline,
@@ -1259,17 +1423,18 @@ export function resolveCityResearch(city: SmartCity): CityResearchProfile {
         th: city.taglineTh,
         zh: city.tagline,
       },
-    };
+      sources,
+    });
   }
 
-  return {
+  return polishResearchProfile({
     industries,
     dailyLife: curated?.dailyLife ?? fallbackText(context.livelihood),
     signatureStory: curated?.signatureStory ?? fallbackText(context.opportunity),
     funFact: curated?.funFact ?? fallbackText(context.famousFor),
     compareNote: curated?.compareNote ?? fallbackText(context.opportunity),
-    sources: curated?.sources ?? [],
-  };
+    sources,
+  });
 }
 
 export function getCityResearchSources(city: SmartCity): CityResearchSource[] {

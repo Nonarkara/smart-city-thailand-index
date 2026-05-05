@@ -1,0 +1,45 @@
+name: SCITI 2026 Weekly Data Sync
+
+on:
+  schedule:
+    # Run every Monday at 02:00 UTC (09:00 Thai time)
+    - cron: '0 2 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  sync-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Sync Script
+        env:
+          WEEKLY_SHEET_URL: ${{ secrets.WEEKLY_SHEET_URL }}
+          RANKING_SHEET_URL: ${{ secrets.RANKING_SHEET_URL }}
+        run: npm run sync
+
+      - name: Commit and Push Updates
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          if git status --porcelain | grep -qE "src/dynamicWeeklyData.ts|src/dynamicCityData.ts"; then
+            git add src/dynamicWeeklyData.ts src/dynamicCityData.ts
+            git commit -m "chore(data): auto-sync weekly digest and ranking overrides from Google Sheets"
+            git push
+          else
+            echo "No data changes detected."
+          fi

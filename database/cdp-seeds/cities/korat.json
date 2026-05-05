@@ -34,7 +34,14 @@
       "pm25Annual": 28.1,
       "hospitalBedsPer10k": 22,
       "crimeRatePer100k": 152,
-      "greenCoverage": 40
+      "greenCoverage": 40,
+      "gppGrowthRate": 3.2,
+      "pm25Trend": "improving",
+      "waterQuality": 64,
+      "forestCoverage": 22,
+      "fdiInflow": 3800,
+      "industryComposition": "manufacturing 38%, services 35%, agriculture 27%",
+      "laborForce": 1380
     },
     "compositeScore": 64.9,
     "tier": "beta",
@@ -46,6 +53,7 @@
       "Digital municipal services platform"
     ],
     "dataConfidence": "high",
+    "league": "municipality",
     "keyMetrics": [
       {
         "key": "gppPerCapita",
@@ -72,41 +80,41 @@
         "sourceId": "pcd"
       },
       {
-        "key": "crimeRatePer100k",
+        "key": "waterQuality",
         "label": {
-          "en": "Crime / 100K",
-          "th": "อาชญากรรม / แสนคน",
-          "zh": "每十万人犯罪率"
+          "en": "Water quality index",
+          "th": "ดัชนีคุณภาพน้ำ",
+          "zh": "水质指数"
         },
-        "value": "152",
-        "unit": "incidents/100k",
+        "value": "64",
+        "unit": "/100",
         "confidence": "high",
-        "sourceId": "rtp"
+        "sourceId": "onep"
       },
       {
-        "key": "greenCoverage",
+        "key": "gppGrowthRate",
         "label": {
-          "en": "Green coverage",
-          "th": "พื้นที่สีเขียว",
-          "zh": "绿化覆盖"
+          "en": "GPP growth rate",
+          "th": "อัตราเติบโต GPP",
+          "zh": "GPP 增长率"
         },
-        "value": "40",
+        "value": "3.2",
         "unit": "%",
         "confidence": "high",
-        "sourceId": "gistda"
+        "sourceId": "nesdc"
       }
     ],
     "shortTailoredNote": {
-      "en": "Korat Smart City leans on livability but still gets capped by environment. That's where the backend should keep drilling.",
-      "th": "โคราชสมาร์ทซิตี้ มีแรงหลักอยู่ที่livability แต่ยังถูกกดเพดานโดยenvironment ตรงนี้แหละที่ backend ต้องขุดต่อ",
-      "zh": "Korat Smart City leans on livability but is still capped by environment. That's where the backend should keep drilling."
+      "en": "High-speed rail will transform Korat from a 3-hour drive to a 90-minute commute from Bangkok. Smart city infrastructure can ride the rail investment wave. Watch the constraint: Still building momentum — not yet at Alpha tier (64.9). Population 2.65M makes service delivery complex. Brain drain to Bangkok despite being Isan's biggest city.",
+      "th": "รถไฟความเร็วสูงจะเปลี่ยนโคราชจากขับรถ 3 ชม. เป็นเดินทาง 90 นาทีจากกรุงเทพฯ โครงสร้างพื้นฐานเมืองอัจฉริยะขี่คลื่นการลงทุนรถไฟได้ แต่ต้องระวัง: ยังสร้างโมเมนตัม — ยังไม่ถึงระดับ Alpha (64.9) ประชากร 2.65 ล้านทำให้การส่งมอบบริการซับซ้อน สมองไหลไปกรุงเทพฯ แม้เป็นเมืองใหญ่สุดของอีสาน",
+      "zh": "High-speed rail will transform Korat from a 3-hour drive to a 90-minute commute from Bangkok. Smart city infrastructure can ride the rail investment wave. Watch the constraint: Still building momentum — not yet at Alpha tier (64.9). Population 2.65M makes service delivery complex. Brain drain to Bangkok despite being Isan's biggest city."
     },
     "financeSignal": {
       "leadInstrumentId": "dfi-cofinance",
       "leadInstrumentName": "DFI Co-finance",
       "line": {
         "en": "DFI Co-finance leads because Korat Smart City is building with a medium risk profile.",
-        "th": "DFI Co-finance นำ เพราะ โคราชสมาร์ทซิตี้ อยู่ในระดับ building และมีความเสี่ยงแบบ medium",
+        "th": "เงินร่วมลงทุนจาก DFI เป็นเครื่องมือนำ เพราะ โคราชสมาร์ทซิตี้ อยู่ในกำลังสร้าง และมีความเสี่ยงปานกลาง",
         "zh": "DFI Co-finance leads because Korat Smart City is building with a medium risk profile."
       },
       "readinessScore": 63
@@ -116,7 +124,7 @@
       "latestObservedAt": "2026-04-01T00:00:00.000Z",
       "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
     },
-    "provenanceCount": 11
+    "provenanceCount": 18
   },
   "contextNotes": [
     {
@@ -128,9 +136,9 @@
         "zh": "定制机会"
       },
       "body": {
-        "en": "Korat Smart City has room to turn its livability advantage into a city product instead of another presentation. The clearest wedge is economy delivery backed by hard metrics.",
-        "th": "โคราชสมาร์ทซิตี้ มีโอกาสเปลี่ยนจุดแข็งด้านlivability ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านeconomy ที่ผูกกับตัวชี้วัดจริง",
-        "zh": "Korat Smart City can turn its livability edge into a real city product. The clearest wedge is economy delivery tied to hard metrics."
+        "en": "High-speed rail will transform Korat from a 3-hour drive to a 90-minute commute from Bangkok. Smart city infrastructure can ride the rail investment wave.",
+        "th": "รถไฟความเร็วสูงจะเปลี่ยนโคราชจากขับรถ 3 ชม. เป็นเดินทาง 90 นาทีจากกรุงเทพฯ โครงสร้างพื้นฐานเมืองอัจฉริยะขี่คลื่นการลงทุนรถไฟได้",
+        "zh": "High-speed rail will transform Korat from a 3-hour drive to a 90-minute commute from Bangkok. Smart city infrastructure can ride the rail investment wave."
       }
     },
     {
@@ -142,9 +150,9 @@
         "zh": "约束"
       },
       "body": {
-        "en": "The weakest drag is environment. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.",
-        "th": "ตัวฉุดหลักคือด้านenvironment ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม",
-        "zh": "The weakest drag is environment. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes."
+        "en": "Still building momentum — not yet at Alpha tier (64.9). Population 2.65M makes service delivery complex. Brain drain to Bangkok despite being Isan's biggest city.",
+        "th": "ยังสร้างโมเมนตัม — ยังไม่ถึงระดับ Alpha (64.9) ประชากร 2.65 ล้านทำให้การส่งมอบบริการซับซ้อน สมองไหลไปกรุงเทพฯ แม้เป็นเมืองใหญ่สุดของอีสาน",
+        "zh": "Still building momentum — not yet at Alpha tier (64.9). Population 2.65M makes service delivery complex. Brain drain to Bangkok despite being Isan's biggest city."
       }
     },
     {
@@ -170,9 +178,9 @@
         "zh": "可输出经验"
       },
       "body": {
-        "en": "Korat Smart City is most exportable when it acts like itself. The reusable lesson is how it turns livability into something operational.",
-        "th": "โคราชสมาร์ทซิตี้ ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนlivability ให้เป็นระบบปฏิบัติการ",
-        "zh": "Korat Smart City becomes exportable when it acts like itself. The reusable lesson is how it turns livability into operations."
+        "en": "High-speed rail will transform Korat from a 3-hour drive to a 90-minute commute from Bangkok. Smart city infrastructure can ride the rail investment wave.",
+        "th": "รถไฟความเร็วสูงจะเปลี่ยนโคราชจากขับรถ 3 ชม. เป็นเดินทาง 90 นาทีจากกรุงเทพฯ โครงสร้างพื้นฐานเมืองอัจฉริยะขี่คลื่นการลงทุนรถไฟได้",
+        "zh": "High-speed rail will transform Korat from a 3-hour drive to a 90-minute commute from Bangkok. Smart city infrastructure can ride the rail investment wave."
       }
     }
   ],
@@ -368,6 +376,168 @@
           "version": "2026.04-cdp-v1"
         }
       ]
+    },
+    {
+      "id": "extended-indicators",
+      "title": {
+        "en": "Extended indicators",
+        "th": "ตัวชี้วัดเชิงลึก",
+        "zh": "扩展指标"
+      },
+      "summary": {
+        "en": "Ground-truth trajectory data most indices ignore: growth direction, environmental trends, real investment flows.",
+        "th": "ข้อมูลทิศทางจากพื้นจริงที่ดัชนีส่วนใหญ่ละเลย: ทิศทางการเติบโต แนวโน้มสิ่งแวดล้อม กระแสการลงทุนจริง",
+        "zh": "大多数指数忽略的实地趋势数据：增长方向、环境走势、真实投资流向。"
+      },
+      "observations": [
+        {
+          "cityId": "korat",
+          "metricKey": "gppGrowthRate",
+          "label": {
+            "en": "GPP growth rate",
+            "th": "อัตราเติบโต GPP",
+            "zh": "GPP 增长率"
+          },
+          "metricValueNum": 3.2,
+          "metricValueText": "3.2",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Year-on-year provincial GPP growth (NESDC); shows economic trajectory, not snapshot.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "korat",
+          "metricKey": "pm25Trend",
+          "label": {
+            "en": "PM2.5 trend",
+            "th": "แนวโน้ม PM2.5",
+            "zh": "PM2.5 趋势"
+          },
+          "metricValueNum": null,
+          "metricValueText": "improving",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "3-year PM2.5 direction from PCD monitoring; reveals whether air is improving or deteriorating.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "korat",
+          "metricKey": "waterQuality",
+          "label": {
+            "en": "Water quality index",
+            "th": "ดัชนีคุณภาพน้ำ",
+            "zh": "水质指数"
+          },
+          "metricValueNum": 64,
+          "metricValueText": "64",
+          "unit": "/100",
+          "periodLabel": "2025 baseline",
+          "sourceId": "onep",
+          "sourceName": "ONEP — Environmental Performance Index",
+          "sourceUrl": "https://www.onep.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "PCD/ONEP composite water quality index (0-100); livability signal most indices ignore.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "korat",
+          "metricKey": "forestCoverage",
+          "label": {
+            "en": "Forest coverage",
+            "th": "พื้นที่ป่าไม้",
+            "zh": "森林覆盖率"
+          },
+          "metricValueNum": 22,
+          "metricValueText": "22",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rfd",
+          "sourceName": "Royal Forest Department",
+          "sourceUrl": "https://www.forest.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Royal Forest Department provincial forest percentage; ground-truth environmental baseline.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "korat",
+          "metricKey": "fdiInflow",
+          "label": {
+            "en": "FDI inflow",
+            "th": "เงินลงทุนจากต่างประเทศ",
+            "zh": "外资流入"
+          },
+          "metricValueNum": 3800,
+          "metricValueText": "฿3,800",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "boi",
+          "sourceName": "Board of Investment (BOI)",
+          "sourceUrl": "https://ipstat.boi.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "BOI-promoted foreign direct investment (million baht); real money, not memoranda of understanding.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "korat",
+          "metricKey": "industryComposition",
+          "label": {
+            "en": "Industry mix",
+            "th": "สัดส่วนอุตสาหกรรม",
+            "zh": "产业结构"
+          },
+          "metricValueNum": null,
+          "metricValueText": "manufacturing 38%, services 35%, agriculture 27%",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "korat",
+          "metricKey": "laborForce",
+          "label": {
+            "en": "Labor force",
+            "th": "กำลังแรงงาน",
+            "zh": "劳动力"
+          },
+          "metricValueNum": 1380,
+          "metricValueText": "1,380K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NSO provincial employed population (thousands); human-scale economic capacity measure.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
     }
   ],
   "deliveryProfile": {
@@ -380,12 +550,12 @@
     "recommendedLeadStep": "infrastructure",
     "deliveryNote": {
       "en": "Beta cities need phased delivery: blended finance, performance contracts, and readiness-building before going full commercial.",
-      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: blended finance, performance contract และการสร้าง readiness ก่อนจะไปเชิงพาณิชย์เต็มตัว",
+      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: การเงินผสมผสาน สัญญาอิงผลลัพธ์ และการสร้างความพร้อม ก่อนจะไปเชิงพาณิชย์เต็มตัว",
       "zh": "Beta 城市需要分阶段交付：先做混合融资、绩效合同和准备度建设，再谈完全商业化。"
     },
     "publicRole": {
       "en": "Anchor the pipeline, de-risk first-loss pieces, and keep the city from overpromising.",
-      "th": "รัฐต้องยึด pipeline ลดความเสี่ยงในชิ้น first-loss และกันไม่ให้เมืองขายฝันเกินจริง",
+      "th": "รัฐต้องยึดลำดับโครงการ รับความเสี่ยงชั้นแรกในจุดที่จำเป็น และกันไม่ให้เมืองขายฝันเกินจริง",
       "zh": "Government should anchor the pipeline, de-risk first-loss pieces, and stop the city from overselling."
     },
     "privateRole": {
@@ -430,27 +600,27 @@
       "segment": "beta",
       "reasonSummary": {
         "en": "DFI Co-finance fits Korat Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money.",
-        "th": "DFI Co-finance fits Korat Smart City because its metrics and operating context create a credible use case. ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
-        "zh": "DFI Co-finance fits Korat Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money."
+        "th": "เงินร่วมลงทุนจาก DFI เหมาะกับ โคราชสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
+        "zh": "DFI Co-finance fits Korat Smart City because its metrics and operating context create a credible use case. ADB、JICA 等机构很多时候作为信誉放大器比单纯给钱更关键。"
       },
       "whyNow": {
         "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 63/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 63/100",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 63/100",
         "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 63/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
-        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้",
         "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
       },
       "supports": [
@@ -479,27 +649,27 @@
       "segment": "beta",
       "reasonSummary": {
         "en": "Blended Finance fits Korat Smart City because its metrics and operating context create a credible use case. This is the bridge between 'not bankable yet' and 'commercially believable'.",
-        "th": "Blended Finance fits Korat Smart City because its metrics and operating context create a credible use case. นี่คือสะพานระหว่าง 'ยังไม่ bankable' กับ 'เริ่มเชื่อทางการค้าได้'",
-        "zh": "Blended Finance fits Korat Smart City because its metrics and operating context create a credible use case. This is the bridge between 'not bankable yet' and 'commercially believable'."
+        "th": "การเงินผสมผสาน เหมาะกับ โคราชสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ นี่คือสะพานระหว่าง 'ยังไม่น่าเชื่อทางการเงิน' กับ 'เริ่มเชื่อทางการค้าได้'",
+        "zh": "Blended Finance fits Korat Smart City because its metrics and operating context create a credible use case. 它是“尚不可融资”和“开始具备商业可信度”之间的桥。"
       },
       "whyNow": {
         "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 63/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 63/100",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 63/100",
         "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 63/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -528,27 +698,27 @@
       "segment": "beta",
       "reasonSummary": {
         "en": "Performance Contract fits Korat Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes.",
-        "th": "Performance Contract fits Korat Smart City because its metrics and operating context create a credible use case. เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
-        "zh": "Performance Contract fits Korat Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes."
+        "th": "สัญญาอิงผลลัพธ์ เหมาะกับ โคราชสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ เมืองที่ยังรับเงินลงทุนก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+        "zh": "Performance Contract fits Korat Smart City because its metrics and operating context create a credible use case. 即便扛不起大额前期投资，城市仍可为已验证结果付费。"
       },
       "whyNow": {
         "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 63/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 63/100",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 63/100",
         "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 63/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -626,7 +796,7 @@
   "exportMetadata": {
     "latestObservedAt": "2026-04-01T00:00:00.000Z",
     "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
-    "provenanceCount": 11,
+    "provenanceCount": 18,
     "summaryCsvUrl": "/api/exports/cities-summary.csv",
     "factsCsvUrl": "/api/exports/city-facts.csv",
     "cityCsvUrl": "/api/cities/korat/export.csv"

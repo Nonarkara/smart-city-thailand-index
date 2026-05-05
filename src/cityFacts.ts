@@ -10,7 +10,10 @@
 // omitted — the renderer shows only what exists.
 // ---------------------------------------------------------------------------
 
-import type { LocalizedText } from "./cityCdp";
+import { getOpenDataSearchUrl } from "./cdpData.ts";
+import { getCityById } from "./cityData.ts";
+import type { LocalizedText } from "./cityCdp.ts";
+import type { CityResearchSource } from "./cityResearch.ts";
 
 export interface CityFacts {
   nativeName?: string;          // Thai script, the canonical native form
@@ -23,6 +26,7 @@ export interface CityFacts {
   notableInstitution?: LocalizedText;
   dialect?: LocalizedText;       // regional Thai variant or minority language
   geography?: LocalizedText;     // one-line landform description
+  sources?: CityResearchSource[];
 }
 
 export const CITY_FACTS: Record<string, CityFacts> = {
@@ -385,6 +389,54 @@ export const CITY_FACTS: Record<string, CityFacts> = {
   },
 };
 
+const FACTS_OBSERVED_AT = "2026-04-28";
+
+function buildFactSources(cityId: string): CityResearchSource[] {
+  const city = getCityById(cityId);
+  if (!city) return [];
+
+  return [
+    {
+      id: `${city.id}-facts-data-go-th`,
+      category: "dataset",
+      observedAt: FACTS_OBSERVED_AT,
+      label: {
+        en: `data.go.th datasets for ${city.province}`,
+        th: `ชุดข้อมูล data.go.th ของ${city.provinceTh}`,
+        zh: `${city.province} 的 data.go.th 数据集`,
+      },
+      url: getOpenDataSearchUrl(city.province),
+      usedFor: {
+        en: "At-a-glance administrative, population, service, and geography checks.",
+        th: "ใช้ตรวจทานข้อมูลพื้นฐานด้านการปกครอง ประชากร บริการ และภูมิศาสตร์",
+        zh: "用于核验行政、人口、服务与地理基础信息。",
+      },
+    },
+    {
+      id: `${city.id}-facts-dopa`,
+      category: "official",
+      observedAt: FACTS_OBSERVED_AT,
+      label: {
+        en: "Department of Provincial Administration population statistics",
+        th: "สถิติทะเบียนราษฎร์ กรมการปกครอง",
+        zh: "泰国内政部地方行政厅人口统计",
+      },
+      url: "https://stat.bora.dopa.go.th",
+      usedFor: {
+        en: "Registered population and administrative baseline.",
+        th: "ฐานประชากรทะเบียนราษฎร์และข้อมูลการปกครอง",
+        zh: "户籍人口与行政基线。",
+      },
+    },
+  ];
+}
+
 export function getCityFacts(cityId: string): CityFacts | undefined {
-  return CITY_FACTS[cityId];
+  const facts = CITY_FACTS[cityId];
+  if (!facts) return undefined;
+
+  return {
+    ...facts,
+    sources: [...(facts.sources ?? []), ...buildFactSources(cityId)],
+  };
 }

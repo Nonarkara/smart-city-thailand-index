@@ -1,6 +1,6 @@
-import { cdpSources } from "./cdpData";
-import { dataSources } from "./evidenceData";
-import { PILLAR_WEIGHTS, type CityMetrics, type CityScores, type DataConfidence, type ScoringPillar } from "./types";
+import { cdpSources } from "./cdpData.ts";
+import { dataSources } from "./evidenceData.ts";
+import { PILLAR_WEIGHTS, type CityMetrics, type CityScores, type DataConfidence, type ScoringPillar } from "./types.ts";
 
 export const SCITI_METHOD_CODE = "SCITI-2026-METH";
 export const SCITI_METHOD_VERSION = "2026.04";

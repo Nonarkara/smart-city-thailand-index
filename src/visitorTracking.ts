@@ -70,6 +70,26 @@ export async function trackVisitor(page = "/") {
   }).catch(() => {});
 }
 
+/** Send textual feedback to the editorial team. */
+export async function sendFeedback(text: string, page: string) {
+  const FEEDBACK_URL = "https://script.google.com/macros/s/AKfycbxvOCOjlsYHF7qwWEXEYyDM8CeoLfT2asWRwaa171evuRoa-HubOkliqG3GPNyshUE4mw/exec";
+  
+  // Use no-cors for Apps Script POSTs
+  return fetch(FEEDBACK_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      action: "feedback",
+      message: text,
+      page: page,
+      target: "non.ar@depa.or.th",
+      version: "sciti-2026",
+      timestamp: new Date().toISOString()
+    }),
+  });
+}
+
 /** Visitor count + country breakdown from Google Sheets. */
 export interface VisitorStats {
   count: number;

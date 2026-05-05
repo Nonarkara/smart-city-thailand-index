@@ -9,6 +9,7 @@
 import { assignTier, computeComposite } from "./scoring.ts";
 import { classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import type { SmartCity, CityScores } from "./types.ts";
+import { RANKING_OVERRIDES } from "./dynamicCityData.ts";
 
 export { assignTier, computeComposite } from "./scoring.ts";
 
@@ -29,7 +30,8 @@ function city(
   taglineTh: string,
   highlights: string[],
 ): SmartCity {
-  const compositeScore = computeComposite(scores);
+  const finalScores = RANKING_OVERRIDES[id] ? { ...scores, ...RANKING_OVERRIDES[id] } : scores;
+  const compositeScore = computeComposite(finalScores);
   const dataConfidence = classifyDataConfidence(
     computeDataConfidenceScore({ metrics }),
   );
@@ -45,7 +47,7 @@ function city(
     reality,
     batch,
     smartDimensions,
-    scores,
+    scores: finalScores,
     metrics,
     compositeScore,
     tier: assignTier(compositeScore),

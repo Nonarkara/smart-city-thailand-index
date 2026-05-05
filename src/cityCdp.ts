@@ -4,6 +4,7 @@ import { allCities } from "./cityData.ts";
 import { dataSources, getEvidenceForCity, type DataSource, type EvidenceItem } from "./evidenceData.ts";
 import { SCITI_DATA_CUTOFF_ISO, classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import { SCORING_PILLARS } from "./scoring.ts";
+import { polishThaiText } from "./thaiText.ts";
 import type {
   CityReality,
   CityStatus,
@@ -297,7 +298,7 @@ const FINANCE_INSTRUMENTS: FinanceInstrumentSeed[] = [
     },
     whyItFits: {
       en: "This is the bridge between 'not bankable yet' and 'commercially believable'.",
-      th: "นี่คือสะพานระหว่าง 'ยังไม่ bankable' กับ 'เริ่มเชื่อทางการค้าได้'",
+      th: "นี่คือสะพานระหว่าง 'ยังไม่น่าเชื่อทางการเงิน' กับ 'เริ่มเชื่อทางการค้าได้'",
       zh: "它是“尚不可融资”和“开始具备商业可信度”之间的桥。",
     },
   },
@@ -314,7 +315,7 @@ const FINANCE_INSTRUMENTS: FinanceInstrumentSeed[] = [
     },
     whyItFits: {
       en: "Cities that cannot stomach big capex can still pay for verified outcomes.",
-      th: "เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+      th: "เมืองที่ยังรับเงินลงทุนก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
       zh: "即便扛不起大额前期投资，城市仍可为已验证结果付费。",
     },
   },
@@ -343,7 +344,7 @@ const FINANCE_INSTRUMENTS: FinanceInstrumentSeed[] = [
     segmentFit: ["beta", "gamma"],
     desc: {
       en: "Right for cities that still need pipeline design, data governance, feasibility work, and procurement readiness.",
-      th: "เหมาะกับเมืองที่ยังต้องปั้น pipeline ออกแบบธรรมาภิบาลข้อมูล ศึกษาความเป็นไปได้ และเตรียม procurement",
+      th: "เหมาะกับเมืองที่ยังต้องปั้นลำดับโครงการ ออกแบบธรรมาภิบาลข้อมูล ศึกษาความเป็นไปได้ และเตรียมการจัดซื้อ",
       zh: "适合仍需打磨项目管线、数据治理、可行性研究和采购准备的城市。",
     },
     whyItFits: {
@@ -365,7 +366,7 @@ const FINANCE_INSTRUMENTS: FinanceInstrumentSeed[] = [
     },
     whyItFits: {
       en: "Some things should not be tortured into fake bankability just to sound sophisticated.",
-      th: "บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
+      th: "บางอย่างไม่ควรถูกบิดให้ดูน่าเชื่อทางการเงินแบบปลอมๆ แค่เพื่อให้ฟังหรู",
       zh: "有些项目不该为了显得高级而被硬拗成“可融资”。",
     },
   },
@@ -382,7 +383,7 @@ const FINANCE_INSTRUMENTS: FinanceInstrumentSeed[] = [
     },
     whyItFits: {
       en: "For gamma cities, scale usually comes from the buying coalition, not from the city itself.",
-      th: "สำหรับเมือง gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
+      th: "สำหรับเมืองระดับ Gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
       zh: "对 gamma 城市来说，规模通常来自联合采购，而不是单城本身。",
     },
   },
@@ -413,12 +414,12 @@ const TIER_PROCESS_COPY: Record<CityTier, LocalizedText> = {
   },
   beta: {
     en: "Beta cities need phased delivery: blended finance, performance contracts, and readiness-building before going full commercial.",
-    th: "เมือง Beta ต้องเดินแบบเป็นช่วง: blended finance, performance contract และการสร้าง readiness ก่อนจะไปเชิงพาณิชย์เต็มตัว",
+    th: "เมือง Beta ต้องเดินแบบเป็นช่วง: การเงินผสมผสาน สัญญาอิงผลลัพธ์ และการสร้างความพร้อม ก่อนจะไปเชิงพาณิชย์เต็มตัว",
     zh: "Beta 城市需要分阶段交付：先做混合融资、绩效合同和准备度建设，再谈完全商业化。",
   },
   gamma: {
     en: "Gamma cities should build the boring essentials first: grants, pooled procurement, data plumbing, and civic-scale pilots before dashboard theatre.",
-    th: "เมือง Gamma ต้องสร้างของจำเป็นที่น่าเบื่อก่อน: เงินอุดหนุน การจัดซื้อรวม ระบบข้อมูลพื้นฐาน และ pilot ขนาดชุมชน ก่อนจะเล่นละครแดชบอร์ด",
+    th: "เมือง Gamma ต้องสร้างของจำเป็นที่น่าเบื่อก่อน: เงินอุดหนุน การจัดซื้อรวม ระบบข้อมูลพื้นฐาน และโครงการนำร่องระดับชุมชน ก่อนจะเล่นละครแดชบอร์ด",
     zh: "Gamma 城市应先把那些“无聊但必要”的底座搭好：补助、联合采购、数据底座和社区级试点，然后再谈仪表板表演。",
   },
 };
@@ -448,7 +449,7 @@ type CityDetailBuild = {
 };
 
 function localized(en: string, th: string, zh = en): LocalizedText {
-  return { en, th, zh };
+  return { en, th: polishThaiText(th), zh };
 }
 
 function clamp(value: number, min: number, max: number): number {
@@ -489,6 +490,9 @@ function formatMetricValue(metricKey: string, value: number | string | undefined
   }
 
   if (metricKey === "population") {
+    if (value <= 0) {
+      return { text: "Pending public baseline", unit: "people" };
+    }
     return { text: `${value.toLocaleString()}K`, unit: "people" };
   }
   if (metricKey === "gppPerCapita" || metricKey === "avgMonthlyIncome" || metricKey === "fdiInflow") {
@@ -589,7 +593,7 @@ function citySpecificWarning(city: SmartCity): LocalizedText {
     );
   }
 
-  if ((city.metrics.population ?? 0) < 100) {
+  if (city.metrics.population != null && city.metrics.population < 100) {
     return localized(
       "This city is small enough to prototype fast. That also means bad procurement choices get very visible, very quickly.",
       "เมืองนี้เล็กพอที่จะทดลองได้เร็ว แปลว่าถ้าจัดซื้อพลาด ความพลาดจะมองเห็นชัดและเร็วเหมือนกัน",
@@ -719,12 +723,13 @@ function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
       const source = getSource(sourceId);
       const formatted = formatMetricValue(metricKey, value);
       const observedAt = metricKey === "pm25Annual" ? "2026-03-01T00:00:00.000Z" : DEFAULT_OBSERVED_AT;
+      const isPendingPopulation = metricKey === "population" && typeof value === "number" && value <= 0;
 
       return {
         cityId: city.id,
         metricKey,
         label: metricLabel(metricKey),
-        metricValueNum: typeof value === "number" ? value : null,
+        metricValueNum: typeof value === "number" && !isPendingPopulation ? value : null,
         metricValueText: typeof value === "string" ? value : formatted.text,
         unit: formatted.unit || null,
         periodLabel: metricKey === "pm25Annual" ? "2025 annual average" : "2025 baseline",
@@ -853,7 +858,7 @@ function privateInterestScore(city: SmartCity, context?: CityContext): number {
 }
 
 function riskProfile(city: SmartCity): "low" | "medium" | "high" | "acute" {
-  if (city.reality === "planned" && (city.metrics.population ?? 0) === 0) return "acute";
+  if (city.reality === "planned" && city.metrics.population === 0) return "acute";
   if ((city.metrics.crimeRatePer100k ?? 0) >= 220 || (city.metrics.pm25Annual ?? 0) >= 45) return "high";
   if ((city.metrics.crimeRatePer100k ?? 0) >= 150 || (city.metrics.pm25Annual ?? 0) >= 30) return "medium";
   return "low";
@@ -928,10 +933,10 @@ function buildDeliveryProfile(city: SmartCity, finance: CityFinanceProfile, obse
           ? "Anchor the pipeline, de-risk first-loss pieces, and keep the city from overpromising."
           : "Fund the boring baseline, standardize procurement, and protect service continuity.",
       city.tier === "alpha"
-        ? "รัฐต้องกำหนดตรรกะของ corridor คุมเส้นสัญญา และปกป้องประโยชน์สาธารณะด้วย KPI ที่วัดได้"
+        ? "รัฐต้องกำหนดตรรกะของระเบียงพัฒนา คุมเส้นสัญญา และปกป้องประโยชน์สาธารณะด้วยตัวชี้วัดที่วัดได้"
         : city.tier === "beta"
-          ? "รัฐต้องยึด pipeline ลดความเสี่ยงในชิ้น first-loss และกันไม่ให้เมืองขายฝันเกินจริง"
-          : "รัฐต้องจ่ายของพื้นฐานที่น่าเบื่อ มาตรฐาน procurement และคุ้มครองความต่อเนื่องของบริการ",
+          ? "รัฐต้องยึดลำดับโครงการ รับความเสี่ยงชั้นแรกในจุดที่จำเป็น และกันไม่ให้เมืองขายฝันเกินจริง"
+          : "รัฐต้องจ่ายของพื้นฐานที่น่าเบื่อ วางมาตรฐานการจัดซื้อ และคุ้มครองความต่อเนื่องของบริการ",
       city.tier === "alpha"
         ? "Government should set corridor logic, hold the contract line, and protect public interest with measurable KPIs."
         : city.tier === "beta"
@@ -945,10 +950,10 @@ function buildDeliveryProfile(city: SmartCity, finance: CityFinanceProfile, obse
           ? "Co-invest in phased systems after the city proves the first operating metrics."
           : "Supply practical service packages and maintenance, not vanity tech stacks.",
       city.tier === "alpha"
-        ? "เอกชนต้องเอา capex ความรู้เดินระบบ และวินัยรายได้เข้ามา ในจุดที่ดีมานด์เห็นชัดอยู่แล้ว"
+        ? "เอกชนต้องเอาเงินลงทุน ความรู้เดินระบบ และวินัยรายได้เข้ามา ในจุดที่เห็นความต้องการชัดอยู่แล้ว"
         : city.tier === "beta"
           ? "เอกชนควรร่วมลงทุนแบบเป็นช่วง หลังเมืองพิสูจน์ตัวเลขปฏิบัติการชุดแรกได้แล้ว"
-          : "เอกชนควรขายชุดบริการใช้งานจริงพร้อมบำรุงรักษา ไม่ใช่สแต็กเทคโชว์",
+          : "เอกชนควรขายชุดบริการใช้งานจริงพร้อมบำรุงรักษา ไม่ใช่ชุดเทคโนโลยีไว้โชว์",
       city.tier === "alpha"
         ? "Private capital should bring capex, operating know-how, and revenue discipline where demand is already visible."
         : city.tier === "beta"
@@ -981,9 +986,9 @@ function buildDeliveryProfile(city: SmartCity, finance: CityFinanceProfile, obse
             ? "Tie payment to service availability, resilience, and maintenance handover."
             : "Use contracts to sequence readiness, not to pretend readiness already exists.",
       recommendedLeadStep === "business_model"
-        ? "เขียน operating model ก่อนซื้อ hardware วินัย Opex สำคัญกว่า procurement สวยๆ"
+        ? "เขียนแบบจำลองการเดินระบบก่อนซื้อฮาร์ดแวร์ วินัยค่าใช้จ่ายประจำสำคัญกว่าการจัดซื้อที่ดูสวย"
         : recommendedLeadStep === "data_platform"
-          ? "ทำสัญญาเรื่องมาตรฐานข้อมูล uptime และ interoperability ไม่ใช่แค่ dashboard กับ screenshot"
+          ? "ทำสัญญาเรื่องมาตรฐานข้อมูล เวลาระบบพร้อมใช้งาน และการเชื่อมต่อข้ามระบบ ไม่ใช่แค่แดชบอร์ดกับภาพหน้าจอ"
           : recommendedLeadStep === "infrastructure"
             ? "ผูกการจ่ายกับความพร้อมใช้งาน ความยืดหยุ่น และการส่งมอบงานบำรุงรักษา"
             : "ใช้สัญญาเพื่อจัดลำดับ readiness ไม่ใช่แกล้งทำว่า readiness มีอยู่แล้ว",
@@ -1060,13 +1065,26 @@ function buildSupportFromEvidence(city: SmartCity, evidence: EvidenceItem): City
   };
 }
 
+function buildSupportFromRegistry(city: SmartCity): CityFinanceRecommendationSupport {
+  const source = getSource("depa");
+  return {
+    id: `${city.id}-registry-status`,
+    supportType: "evidence",
+    sourceId: source.id,
+    sourceUrl: source.url,
+    observedAt: DEFAULT_OBSERVED_AT,
+    confidence: 0.62,
+    summary: "Registry status only: use this as a project-definition signal, not live deployment evidence.",
+  };
+}
+
 type InstrumentScore = {
   instrument: FinanceInstrumentSeed;
   score: number;
-  reason: string;
+  reason: LocalizedText;
   drivers: CityFinanceRecommendationSupport[];
-  whyNow: string;
-  nextStep: string;
+  whyNow: LocalizedText;
+  nextStep: LocalizedText;
 };
 
 function scoreInstruments(
@@ -1077,6 +1095,7 @@ function scoreInstruments(
 ): InstrumentScore[] {
   const metricByKey = new Map(observations.map(item => [item.metricKey, item]));
   const topEvidence = evidence[0];
+  const registryOnly = city.status === "registered" && observations.length === 0 && evidence.length === 0;
   const touristPattern = /tourism|visitor|island|beach|hospitality/i.test(
     `${city.tagline} ${city.highlights.join(" ")} ${cityContexts[city.id]?.livelihood.en ?? ""}`,
   );
@@ -1186,35 +1205,89 @@ function scoreInstruments(
       if (!drivers.length && topEvidence) {
         drivers.push(buildSupportFromEvidence(city, topEvidence));
       }
+      if (!drivers.length && registryOnly) {
+        drivers.push(buildSupportFromRegistry(city));
+      }
 
       return {
         instrument,
         score,
         reason:
-          instrument.id === "government-budget"
-            ? `${city.nameEn} still needs public risk-bearing for foundational delivery.`
+          registryOnly
+            ? localized(
+              `${city.nameEn} has registry standing but no public implementation evidence yet; the finance case should stay at project definition and baseline funding.`,
+              `${city.nameTh} มีสถานะในทะเบียน แต่ยังไม่มีหลักฐานสาธารณะด้านการดำเนินงาน จึงควรจำกัดกรอบการเงินไว้ที่การนิยามโครงการและงบตั้งต้น`,
+            )
+            : instrument.id === "government-budget"
+            ? localized(
+              `${city.nameEn} still needs public risk-bearing for foundational delivery.`,
+              `${city.nameTh} ยังต้องให้ภาครัฐรับความเสี่ยงช่วงตั้งต้นเพื่อให้การส่งมอบพื้นฐานเกิดขึ้นจริง`,
+            )
             : instrument.id === "technical-assistance-grant"
-              ? `${city.nameEn} needs sharper project definition and procurement readiness before bigger money.`
-              : `${instrument.name} fits ${city.nameEn} because its metrics and operating context create a credible use case.`,
+              ? localized(
+                `${city.nameEn} needs sharper project definition and procurement readiness before bigger money.`,
+                `${city.nameTh} ต้องนิยามโครงการและเตรียมการจัดซื้อให้คมกว่านี้ก่อนรับเงินก้อนใหญ่`,
+              )
+              : localized(
+                `${instrument.name} fits ${city.nameEn} because its metrics and operating context create a credible use case.`,
+                `${instrument.nameTh} เหมาะกับ ${city.nameTh} เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ`,
+              ),
         drivers: drivers.slice(0, 3),
         whyNow:
-          instrument.id === "green-climate-bond"
-            ? "Because the environmental problem is visible enough to finance against."
+          registryOnly
+            ? localized(
+              "Because registry status is not deployment evidence; the next cycle should clarify baseline data before capital is sized.",
+              "เพราะสถานะในทะเบียนยังไม่ใช่หลักฐานการใช้งานจริง รอบถัดไปควรทำข้อมูลตั้งต้นให้ชัดก่อนกำหนดวงเงิน",
+            )
+            : instrument.id === "green-climate-bond"
+            ? localized(
+              "Because the environmental problem is visible enough to finance against.",
+              "เพราะปัญหาสิ่งแวดล้อมเห็นชัดพอที่จะผูกกับโครงสร้างการเงินได้",
+            )
             : instrument.id === "ppp-concession"
-              ? "Because the city already has the demand spine to anchor long-term contracts."
+              ? localized(
+                "Because the city already has the demand spine to anchor long-term contracts.",
+                "เพราะเมืองมีแกนความต้องการมากพอจะรองรับสัญญาระยะยาว",
+              )
               : instrument.id === "technical-assistance-grant"
-                ? "Because unreadiness is cheaper to fix now than after a failed capital program."
-                : "Because the city has enough signal to move from generic planning into tailored execution.",
+                ? localized(
+                  "Because unreadiness is cheaper to fix now than after a failed capital program.",
+                  "เพราะแก้ความไม่พร้อมตอนนี้ถูกกว่าปล่อยให้ล้มหลังเริ่มโครงการเงินก้อนใหญ่",
+                )
+                : localized(
+                  "Because the city has enough signal to move from generic planning into tailored execution.",
+                  "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่",
+                ),
         nextStep:
-          instrument.id === "land-value-capture"
-            ? "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city."
+          registryOnly
+            ? localized(
+              "Publish the population boundary, operator, project owner, baseline dataset, and first verifiable implementation milestone before naming a commercial instrument.",
+              "ประกาศขอบเขตประชากร ผู้เดินระบบ เจ้าของโครงการ ชุดข้อมูลตั้งต้น และหมุดหมายการดำเนินงานที่ตรวจสอบได้ ก่อนระบุเครื่องมือการเงินเชิงพาณิชย์",
+            )
+            : instrument.id === "land-value-capture"
+            ? localized(
+              "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
+              "ทำแผนที่พื้นที่มูลค่าเพิ่ม กำหนดเงื่อนไขงานสาธารณะ และล็อกกติกาจับมูลค่าก่อนการเก็งกำไรที่ดินจะนำหน้าเมือง",
+            )
             : instrument.id === "municipal-revenue-bond"
-              ? "Ring-fence the revenue line, publish three years of collection quality, and prepare a credit story."
+              ? localized(
+                "Ring-fence the revenue line, publish three years of collection quality, and prepare a credit story.",
+                "แยกรายได้ที่จะใช้รองรับหนี้ เปิดคุณภาพการจัดเก็บย้อนหลังสามปี และจัดทำเรื่องเล่าเครดิตให้ตรวจสอบได้",
+              )
               : instrument.id === "pooled-procurement"
-                ? "Bundle the commodity stack with peer cities and buy maintenance with the hardware."
+                ? localized(
+                  "Bundle the commodity stack with peer cities and buy maintenance with the hardware.",
+                  "รวมซื้อเทคโนโลยีพื้นฐานกับเมืองระดับเดียวกัน และซื้อบริการบำรุงรักษาควบคู่กับฮาร์ดแวร์",
+                )
                 : instrument.id === "technical-assistance-grant"
-                  ? "Write the feasibility package, data governance note, and procurement scope before applying for capital."
-                  : "Translate the city metrics into a bankable project package with a clear public and private role split.",
+                  ? localized(
+                    "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
+                    "จัดทำชุดศึกษาความเป็นไปได้ บันทึกธรรมาภิบาลข้อมูล และขอบเขตจัดซื้อก่อนขอเงินลงทุน",
+                  )
+                  : localized(
+                    "Translate the city metrics into a bankable project package with a clear public and private role split.",
+                    "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
+                  ),
       };
     })
     .sort((left, right) => right.score - left.score);
@@ -1224,28 +1297,28 @@ function recommendationCopy(
   city: SmartCity,
   instrument: FinanceInstrumentSeed,
   finance: CityFinanceProfile,
-  reason: string,
-  whyNow: string,
-  nextStep: string,
+  reason: LocalizedText,
+  whyNow: LocalizedText,
+  nextStep: LocalizedText,
 ): Pick<
   CityFinanceRecommendation,
   "reasonSummary" | "whyNow" | "nextStep" | "publicFundingRole" | "privateCapitalRole"
 > {
   return {
     reasonSummary: localized(
-      `${reason} ${instrument.whyItFits.en}`,
-      `${reason} ${instrument.whyItFits.th}`,
-      `${reason} ${instrument.whyItFits.en}`,
+      `${reason.en} ${instrument.whyItFits.en}`,
+      `${reason.th} ${instrument.whyItFits.th}`,
+      `${reason.zh} ${instrument.whyItFits.zh}`,
     ),
     whyNow: localized(
-      `${whyNow} Readiness score: ${finance.readinessScore}/100.`,
-      `${whyNow} คะแนน readiness: ${finance.readinessScore}/100`,
-      `${whyNow} Readiness score: ${finance.readinessScore}/100.`,
+      `${whyNow.en} Readiness score: ${finance.readinessScore}/100.`,
+      `${whyNow.th} คะแนนความพร้อม: ${finance.readinessScore}/100`,
+      `${whyNow.zh} Readiness score: ${finance.readinessScore}/100.`,
     ),
     nextStep: localized(
-      nextStep,
-      nextStep,
-      nextStep,
+      nextStep.en,
+      nextStep.th,
+      nextStep.zh,
     ),
     publicFundingRole: localized(
       city.tier === "alpha"
@@ -1254,10 +1327,10 @@ function recommendationCopy(
           ? "Government should anchor the first-loss piece and publish the delivery KPIs."
           : "Government should pay for baseline readiness and civic safeguards.",
       city.tier === "alpha"
-        ? "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor"
+        ? "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และฐานนโยบาย"
         : city.tier === "beta"
-          ? "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด"
-          : "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
+          ? "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด"
+          : "ภาครัฐควรจ่ายความพร้อมตั้งต้นและระบบคุ้มครองสาธารณะ",
       city.tier === "alpha"
         ? "Government should hold land, standards, permits, and the policy floor."
         : city.tier === "beta"
@@ -1269,8 +1342,8 @@ function recommendationCopy(
         ? "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
         : "Private capital should take the commercial slice only after the city proves the local demand logic.",
       instrument.category === "grant"
-        ? "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้"
-        : "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        ? "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้"
+        : "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
       instrument.category === "grant"
         ? "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
         : "Private capital should take the commercial slice only after the city proves the local demand logic.",
@@ -1351,18 +1424,36 @@ function buildKeyMetrics(city: SmartCity, observations: CityMetricObservation[])
 
 function buildFinanceSignal(city: SmartCity, finance: CityFinanceProfile, recommendations: CityFinanceRecommendation[]): CityFinanceSignal {
   const lead = recommendations[0];
+  const leadSeed = lead ? FINANCE_INSTRUMENTS.find(instrument => instrument.id === lead.instrumentId) : undefined;
+  const leadName = {
+    en: lead?.instrumentName ?? "Government Budget / Grant",
+    th: leadSeed?.nameTh ?? "งบประมาณ / เงินอุดหนุนภาครัฐ",
+    zh: lead?.instrumentName ?? "Government Budget / Grant",
+  };
+  const readinessLabel: Record<CityFinanceProfile["deliveryReadiness"], LocalizedText> = {
+    advanced: localized("advanced", "ขั้นสูง", "advanced"),
+    building: localized("building", "กำลังสร้าง", "building"),
+    foundational: localized("foundational", "ระดับรากฐาน", "foundational"),
+  };
+  const riskLabel: Record<CityFinanceProfile["riskProfile"], LocalizedText> = {
+    low: localized("low", "ต่ำ", "low"),
+    medium: localized("medium", "ปานกลาง", "medium"),
+    high: localized("high", "สูง", "high"),
+    acute: localized("acute", "วิกฤต", "acute"),
+  };
+
   return {
     leadInstrumentId: lead?.instrumentId ?? "government-budget",
-    leadInstrumentName: lead?.instrumentName ?? "Government Budget / Grant",
+    leadInstrumentName: leadName.en,
     line: localized(
       lead
-        ? `${lead.instrumentName} leads because ${city.nameEn} is ${finance.deliveryReadiness} with a ${finance.riskProfile} risk profile.`
+        ? `${leadName.en} leads because ${city.nameEn} is ${readinessLabel[finance.deliveryReadiness].en} with a ${riskLabel[finance.riskProfile].en} risk profile.`
         : `${city.nameEn} is still too thin for bespoke finance; stay with public baseline funding.`,
       lead
-        ? `${lead.instrumentName} นำ เพราะ ${city.nameTh} อยู่ในระดับ ${finance.deliveryReadiness} และมีความเสี่ยงแบบ ${finance.riskProfile}`
+        ? `${leadName.th} เป็นเครื่องมือนำ เพราะ ${city.nameTh} อยู่ใน${readinessLabel[finance.deliveryReadiness].th} และมีความเสี่ยง${riskLabel[finance.riskProfile].th}`
         : `${city.nameTh} ยังบางเกินไปสำหรับการเงินเฉพาะทาง ควรใช้เงินภาครัฐพื้นฐานก่อน`,
       lead
-        ? `${lead.instrumentName} leads because ${city.nameEn} is ${finance.deliveryReadiness} with a ${finance.riskProfile} risk profile.`
+        ? `${leadName.zh} leads because ${city.nameEn} is ${readinessLabel[finance.deliveryReadiness].zh} with a ${riskLabel[finance.riskProfile].zh} risk profile.`
         : `${city.nameEn} is still too thin for bespoke finance; stay with public baseline funding.`,
     ),
     readinessScore: finance.readinessScore,

@@ -94,7 +94,7 @@
     },
     "whyItFits": {
       "en": "This is the bridge between 'not bankable yet' and 'commercially believable'.",
-      "th": "นี่คือสะพานระหว่าง 'ยังไม่ bankable' กับ 'เริ่มเชื่อทางการค้าได้'",
+      "th": "นี่คือสะพานระหว่าง 'ยังไม่น่าเชื่อทางการเงิน' กับ 'เริ่มเชื่อทางการค้าได้'",
       "zh": "它是“尚不可融资”和“开始具备商业可信度”之间的桥。"
     }
   },
@@ -115,7 +115,7 @@
     },
     "whyItFits": {
       "en": "Cities that cannot stomach big capex can still pay for verified outcomes.",
-      "th": "เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+      "th": "เมืองที่ยังรับเงินลงทุนก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
       "zh": "即便扛不起大额前期投资，城市仍可为已验证结果付费。"
     }
   },
@@ -150,7 +150,7 @@
     ],
     "desc": {
       "en": "Right for cities that still need pipeline design, data governance, feasibility work, and procurement readiness.",
-      "th": "เหมาะกับเมืองที่ยังต้องปั้น pipeline ออกแบบธรรมาภิบาลข้อมูล ศึกษาความเป็นไปได้ และเตรียม procurement",
+      "th": "เหมาะกับเมืองที่ยังต้องปั้นลำดับโครงการ ออกแบบธรรมาภิบาลข้อมูล ศึกษาความเป็นไปได้ และเตรียมการจัดซื้อ",
       "zh": "适合仍需打磨项目管线、数据治理、可行性研究和采购准备的城市。"
     },
     "whyItFits": {
@@ -176,7 +176,7 @@
     },
     "whyItFits": {
       "en": "Some things should not be tortured into fake bankability just to sound sophisticated.",
-      "th": "บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
+      "th": "บางอย่างไม่ควรถูกบิดให้ดูน่าเชื่อทางการเงินแบบปลอมๆ แค่เพื่อให้ฟังหรู",
       "zh": "有些项目不该为了显得高级而被硬拗成“可融资”。"
     }
   },
@@ -195,7 +195,7 @@
     },
     "whyItFits": {
       "en": "For gamma cities, scale usually comes from the buying coalition, not from the city itself.",
-      "th": "สำหรับเมือง gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
+      "th": "สำหรับเมืองระดับ Gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
       "zh": "对 gamma 城市来说，规模通常来自联合采购，而不是单城本身。"
     }
   },

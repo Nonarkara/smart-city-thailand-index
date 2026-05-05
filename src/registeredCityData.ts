@@ -40,7 +40,7 @@ function reg(c: RegCity): SmartCity {
     reality: "planned",
     smartDimensions: c.dims ?? ["living", "governance"],
     scores,
-    metrics: { population: 0 },
+    metrics: {},
     compositeScore: composite,
     tier: assignTier(composite),
     tagline: "Promotion zone — awaiting sufficient data for full assessment.",

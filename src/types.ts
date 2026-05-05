@@ -46,7 +46,7 @@ export interface CityScores {
 }
 
 export interface CityMetrics {
-  population: number;            // thousands
+  population?: number;           // thousands; omit when unknown, reserve 0 for verified zero
   gppPerCapita?: number;         // Thai baht
   avgMonthlyIncome?: number;     // Thai baht
   pm25Annual?: number;           // ug/m3

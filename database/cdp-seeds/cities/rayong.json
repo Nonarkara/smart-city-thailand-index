@@ -33,7 +33,14 @@
       "pm25Annual": 26.5,
       "hospitalBedsPer10k": 18,
       "crimeRatePer100k": 155,
-      "greenCoverage": 38
+      "greenCoverage": 38,
+      "gppGrowthRate": 2.5,
+      "pm25Trend": "stable",
+      "waterQuality": 55,
+      "forestCoverage": 25,
+      "fdiInflow": 5800,
+      "industryComposition": "petrochemical/manufacturing 55%, services 30%, agriculture 15%",
+      "laborForce": 420
     },
     "compositeScore": 64.4,
     "tier": "beta",
@@ -45,6 +52,7 @@
       "Digital citizen reporting for pollution complaints"
     ],
     "dataConfidence": "high",
+    "league": "province",
     "keyMetrics": [
       {
         "key": "gppPerCapita",
@@ -71,28 +79,28 @@
         "sourceId": "pcd"
       },
       {
-        "key": "crimeRatePer100k",
+        "key": "waterQuality",
         "label": {
-          "en": "Crime / 100K",
-          "th": "อาชญากรรม / แสนคน",
-          "zh": "每十万人犯罪率"
+          "en": "Water quality index",
+          "th": "ดัชนีคุณภาพน้ำ",
+          "zh": "水质指数"
         },
-        "value": "155",
-        "unit": "incidents/100k",
+        "value": "55",
+        "unit": "/100",
         "confidence": "high",
-        "sourceId": "rtp"
+        "sourceId": "onep"
       },
       {
-        "key": "greenCoverage",
+        "key": "gppGrowthRate",
         "label": {
-          "en": "Green coverage",
-          "th": "พื้นที่สีเขียว",
-          "zh": "绿化覆盖"
+          "en": "GPP growth rate",
+          "th": "อัตราเติบโต GPP",
+          "zh": "GPP 增长率"
         },
-        "value": "38",
+        "value": "2.5",
         "unit": "%",
         "confidence": "high",
-        "sourceId": "gistda"
+        "sourceId": "nesdc"
       }
     ],
     "shortTailoredNote": {
@@ -105,7 +113,7 @@
       "leadInstrumentName": "PPP / Concession",
       "line": {
         "en": "PPP / Concession leads because Rayong Smart City is advanced with a medium risk profile.",
-        "th": "PPP / Concession นำ เพราะ ระยองสมาร์ทซิตี้ อยู่ในระดับ advanced และมีความเสี่ยงแบบ medium",
+        "th": "PPP / สัมปทาน เป็นเครื่องมือนำ เพราะ ระยองสมาร์ทซิตี้ อยู่ในขั้นสูง และมีความเสี่ยงปานกลาง",
         "zh": "PPP / Concession leads because Rayong Smart City is advanced with a medium risk profile."
       },
       "readinessScore": 73
@@ -115,7 +123,7 @@
       "latestObservedAt": "2026-04-01T00:00:00.000Z",
       "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
     },
-    "provenanceCount": 11
+    "provenanceCount": 18
   },
   "contextNotes": [
     {
@@ -367,6 +375,168 @@
           "version": "2026.04-cdp-v1"
         }
       ]
+    },
+    {
+      "id": "extended-indicators",
+      "title": {
+        "en": "Extended indicators",
+        "th": "ตัวชี้วัดเชิงลึก",
+        "zh": "扩展指标"
+      },
+      "summary": {
+        "en": "Ground-truth trajectory data most indices ignore: growth direction, environmental trends, real investment flows.",
+        "th": "ข้อมูลทิศทางจากพื้นจริงที่ดัชนีส่วนใหญ่ละเลย: ทิศทางการเติบโต แนวโน้มสิ่งแวดล้อม กระแสการลงทุนจริง",
+        "zh": "大多数指数忽略的实地趋势数据：增长方向、环境走势、真实投资流向。"
+      },
+      "observations": [
+        {
+          "cityId": "rayong",
+          "metricKey": "gppGrowthRate",
+          "label": {
+            "en": "GPP growth rate",
+            "th": "อัตราเติบโต GPP",
+            "zh": "GPP 增长率"
+          },
+          "metricValueNum": 2.5,
+          "metricValueText": "2.5",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Year-on-year provincial GPP growth (NESDC); shows economic trajectory, not snapshot.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "rayong",
+          "metricKey": "pm25Trend",
+          "label": {
+            "en": "PM2.5 trend",
+            "th": "แนวโน้ม PM2.5",
+            "zh": "PM2.5 趋势"
+          },
+          "metricValueNum": null,
+          "metricValueText": "stable",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "3-year PM2.5 direction from PCD monitoring; reveals whether air is improving or deteriorating.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "rayong",
+          "metricKey": "waterQuality",
+          "label": {
+            "en": "Water quality index",
+            "th": "ดัชนีคุณภาพน้ำ",
+            "zh": "水质指数"
+          },
+          "metricValueNum": 55,
+          "metricValueText": "55",
+          "unit": "/100",
+          "periodLabel": "2025 baseline",
+          "sourceId": "onep",
+          "sourceName": "ONEP — Environmental Performance Index",
+          "sourceUrl": "https://www.onep.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "PCD/ONEP composite water quality index (0-100); livability signal most indices ignore.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "rayong",
+          "metricKey": "forestCoverage",
+          "label": {
+            "en": "Forest coverage",
+            "th": "พื้นที่ป่าไม้",
+            "zh": "森林覆盖率"
+          },
+          "metricValueNum": 25,
+          "metricValueText": "25",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rfd",
+          "sourceName": "Royal Forest Department",
+          "sourceUrl": "https://www.forest.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Royal Forest Department provincial forest percentage; ground-truth environmental baseline.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "rayong",
+          "metricKey": "fdiInflow",
+          "label": {
+            "en": "FDI inflow",
+            "th": "เงินลงทุนจากต่างประเทศ",
+            "zh": "外资流入"
+          },
+          "metricValueNum": 5800,
+          "metricValueText": "฿5,800",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "boi",
+          "sourceName": "Board of Investment (BOI)",
+          "sourceUrl": "https://ipstat.boi.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "BOI-promoted foreign direct investment (million baht); real money, not memoranda of understanding.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "rayong",
+          "metricKey": "industryComposition",
+          "label": {
+            "en": "Industry mix",
+            "th": "สัดส่วนอุตสาหกรรม",
+            "zh": "产业结构"
+          },
+          "metricValueNum": null,
+          "metricValueText": "petrochemical/manufacturing 55%, services 30%, agriculture 15%",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "rayong",
+          "metricKey": "laborForce",
+          "label": {
+            "en": "Labor force",
+            "th": "กำลังแรงงาน",
+            "zh": "劳动力"
+          },
+          "metricValueNum": 420,
+          "metricValueText": "420K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NSO provincial employed population (thousands); human-scale economic capacity measure.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
     }
   ],
   "deliveryProfile": {
@@ -379,12 +549,12 @@
     "recommendedLeadStep": "infrastructure",
     "deliveryNote": {
       "en": "Beta cities need phased delivery: blended finance, performance contracts, and readiness-building before going full commercial.",
-      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: blended finance, performance contract และการสร้าง readiness ก่อนจะไปเชิงพาณิชย์เต็มตัว",
+      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: การเงินผสมผสาน สัญญาอิงผลลัพธ์ และการสร้างความพร้อม ก่อนจะไปเชิงพาณิชย์เต็มตัว",
       "zh": "Beta 城市需要分阶段交付：先做混合融资、绩效合同和准备度建设，再谈完全商业化。"
     },
     "publicRole": {
       "en": "Anchor the pipeline, de-risk first-loss pieces, and keep the city from overpromising.",
-      "th": "รัฐต้องยึด pipeline ลดความเสี่ยงในชิ้น first-loss และกันไม่ให้เมืองขายฝันเกินจริง",
+      "th": "รัฐต้องยึดลำดับโครงการ รับความเสี่ยงชั้นแรกในจุดที่จำเป็น และกันไม่ให้เมืองขายฝันเกินจริง",
       "zh": "Government should anchor the pipeline, de-risk first-loss pieces, and stop the city from overselling."
     },
     "privateRole": {
@@ -429,27 +599,27 @@
       "segment": "beta",
       "reasonSummary": {
         "en": "PPP / Concession fits Rayong Smart City because its metrics and operating context create a credible use case. Works when there is enough demand, enough operating discipline, and a city government that can hold a contract line.",
-        "th": "PPP / Concession fits Rayong Smart City because its metrics and operating context create a credible use case. ใช้ได้เมื่อมีดีมานด์พอ มีวินัยการเดินระบบพอ และภาครัฐคุมสัญญาได้",
-        "zh": "PPP / Concession fits Rayong Smart City because its metrics and operating context create a credible use case. Works when there is enough demand, enough operating discipline, and a city government that can hold a contract line."
+        "th": "PPP / สัมปทาน เหมาะกับ ระยองสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ใช้ได้เมื่อมีดีมานด์พอ มีวินัยการเดินระบบพอ และภาครัฐคุมสัญญาได้",
+        "zh": "PPP / Concession fits Rayong Smart City because its metrics and operating context create a credible use case. 当需求、运营纪律和政府的合同管理能力都足够时才真正成立。"
       },
       "whyNow": {
         "en": "Because the city already has the demand spine to anchor long-term contracts. Readiness score: 73/100.",
-        "th": "Because the city already has the demand spine to anchor long-term contracts. คะแนน readiness: 73/100",
+        "th": "เพราะเมืองมีแกนความต้องการมากพอจะรองรับสัญญาระยะยาว คะแนนความพร้อม: 73/100",
         "zh": "Because the city already has the demand spine to anchor long-term contracts. Readiness score: 73/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -478,27 +648,27 @@
       "segment": "beta",
       "reasonSummary": {
         "en": "Performance Contract fits Rayong Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes.",
-        "th": "Performance Contract fits Rayong Smart City because its metrics and operating context create a credible use case. เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
-        "zh": "Performance Contract fits Rayong Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes."
+        "th": "สัญญาอิงผลลัพธ์ เหมาะกับ ระยองสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ เมืองที่ยังรับเงินลงทุนก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+        "zh": "Performance Contract fits Rayong Smart City because its metrics and operating context create a credible use case. 即便扛不起大额前期投资，城市仍可为已验证结果付费。"
       },
       "whyNow": {
         "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 73/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 73/100",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 73/100",
         "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 73/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -538,27 +708,27 @@
       "segment": "beta",
       "reasonSummary": {
         "en": "Land Value Capture fits Rayong Smart City because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away.",
-        "th": "Land Value Capture fits Rayong Smart City because its metrics and operating context create a credible use case. ถ้าเมืองเป็นคนสร้างมูลค่าเพิ่ม เมืองก็ควรเก็บบางส่วนกลับมา ไม่ใช่ปล่อยให้ไหลออกหมด",
-        "zh": "Land Value Capture fits Rayong Smart City because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away."
+        "th": "จับมูลค่าที่ดิน เหมาะกับ ระยองสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ถ้าเมืองเป็นคนสร้างมูลค่าเพิ่ม เมืองก็ควรเก็บบางส่วนกลับมา ไม่ใช่ปล่อยให้ไหลออกหมด",
+        "zh": "Land Value Capture fits Rayong Smart City because its metrics and operating context create a credible use case. 如果增值由城市创造，城市就该拿回其中一部分。"
       },
       "whyNow": {
         "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 73/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 73/100",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 73/100",
         "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 73/100."
       },
       "nextStep": {
         "en": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
-        "th": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
+        "th": "ทำแผนที่พื้นที่มูลค่าเพิ่ม กำหนดเงื่อนไขงานสาธารณะ และล็อกกติกาจับมูลค่าก่อนการเก็งกำไรที่ดินจะนำหน้าเมือง",
         "zh": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -625,7 +795,7 @@
   "exportMetadata": {
     "latestObservedAt": "2026-04-01T00:00:00.000Z",
     "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
-    "provenanceCount": 11,
+    "provenanceCount": 18,
     "summaryCsvUrl": "/api/exports/cities-summary.csv",
     "factsCsvUrl": "/api/exports/city-facts.csv",
     "cityCsvUrl": "/api/cities/rayong/export.csv"

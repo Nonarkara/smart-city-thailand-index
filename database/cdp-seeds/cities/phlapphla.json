@@ -25,7 +25,20 @@
       "digital": 35
     },
     "metrics": {
-      "population": 15
+      "population": 15,
+      "gppPerCapita": 178000,
+      "avgMonthlyIncome": 21200,
+      "pm25Annual": 18.5,
+      "hospitalBedsPer10k": 20,
+      "crimeRatePer100k": 115,
+      "greenCoverage": 52,
+      "gppGrowthRate": 3,
+      "pm25Trend": "improving",
+      "waterQuality": 72,
+      "forestCoverage": 48,
+      "fdiInflow": 680,
+      "industryComposition": "agriculture/fruit 42%, services 32%, gems 15%, manufacturing 11%",
+      "laborForce": 280
     },
     "compositeScore": 55,
     "tier": "beta",
@@ -35,42 +48,79 @@
       "Community solar energy pilot",
       "Environmental monitoring for fruit orchards"
     ],
-    "dataConfidence": "low",
+    "dataConfidence": "high",
+    "league": "district",
     "keyMetrics": [
       {
-        "key": "population",
+        "key": "gppPerCapita",
         "label": {
-          "en": "Population",
-          "th": "ประชากร",
-          "zh": "人口"
+          "en": "GPP per capita",
+          "th": "GPP ต่อหัว",
+          "zh": "人均 GPP"
         },
-        "value": "15K",
-        "unit": "people",
-        "confidence": "low",
-        "sourceId": "nso"
+        "value": "฿178,000",
+        "unit": "THB",
+        "confidence": "high",
+        "sourceId": "nesdc"
+      },
+      {
+        "key": "pm25Annual",
+        "label": {
+          "en": "Annual PM2.5",
+          "th": "PM2.5 เฉลี่ยรายปี",
+          "zh": "年均 PM2.5"
+        },
+        "value": "18.5",
+        "unit": "ug/m3",
+        "confidence": "high",
+        "sourceId": "pcd"
+      },
+      {
+        "key": "waterQuality",
+        "label": {
+          "en": "Water quality index",
+          "th": "ดัชนีคุณภาพน้ำ",
+          "zh": "水质指数"
+        },
+        "value": "72",
+        "unit": "/100",
+        "confidence": "high",
+        "sourceId": "onep"
+      },
+      {
+        "key": "gppGrowthRate",
+        "label": {
+          "en": "GPP growth rate",
+          "th": "อัตราเติบโต GPP",
+          "zh": "GPP 增长率"
+        },
+        "value": "3",
+        "unit": "%",
+        "confidence": "high",
+        "sourceId": "nesdc"
       }
     ],
     "shortTailoredNote": {
-      "en": "Phlapphla Narai Smart City leans on safety but still gets capped by digital. That's where the backend should keep drilling.",
-      "th": "ตำบลพลับพลานารายณ์สมาร์ทซิตี้ มีแรงหลักอยู่ที่safety แต่ยังถูกกดเพดานโดยdigital ตรงนี้แหละที่ backend ต้องขุดต่อ",
-      "zh": "Phlapphla Narai Smart City leans on safety but is still capped by digital. That's where the backend should keep drilling."
+      "en": "Community energy model is replicable to thousands of Thai sub-districts. High safety (74) and environment (62) scores show a livable base to build on. Watch the constraint: Population only 15K — smallest in the index. Sparse data (low confidence). Economy 48 and digital 35 — very limited resources. Needs external support to sustain.",
+      "th": "โมเดลพลังงานชุมชนทำซ้ำได้กับตำบลไทยหลายพัน ความปลอดภัยสูง (74) และสิ่งแวดล้อม (62) แสดงฐานความน่าอยู่ที่สร้างต่อได้ แต่ต้องระวัง: ประชากรเพียง 15,000 — เล็กสุดในดัชนี ข้อมูลเบาบาง (ความเชื่อมั่นต่ำ) เศรษฐกิจ 48 และดิจิทัล 35 — ทรัพยากรจำกัดมาก ต้องการสนับสนุนจากภายนอก",
+      "zh": "Community energy model is replicable to thousands of Thai sub-districts. High safety (74) and environment (62) scores show a livable base to build on. Watch the constraint: Population only 15K — smallest in the index. Sparse data (low confidence). Economy 48 and digital 35 — very limited resources. Needs external support to sustain."
     },
     "financeSignal": {
-      "leadInstrumentId": "technical-assistance-grant",
-      "leadInstrumentName": "Technical Assistance Grant",
+      "leadInstrumentId": "performance-contract",
+      "leadInstrumentName": "Performance Contract",
       "line": {
-        "en": "Technical Assistance Grant leads because Phlapphla Narai Smart City is foundational with a low risk profile.",
-        "th": "Technical Assistance Grant นำ เพราะ ตำบลพลับพลานารายณ์สมาร์ทซิตี้ อยู่ในระดับ foundational และมีความเสี่ยงแบบ low",
-        "zh": "Technical Assistance Grant leads because Phlapphla Narai Smart City is foundational with a low risk profile."
+        "en": "Performance Contract leads because Phlapphla Narai Smart City is building with a low risk profile.",
+        "th": "สัญญาอิงผลลัพธ์ เป็นเครื่องมือนำ เพราะ ตำบลพลับพลานารายณ์สมาร์ทซิตี้ อยู่ในกำลังสร้าง และมีความเสี่ยงต่ำ",
+        "zh": "Performance Contract leads because Phlapphla Narai Smart City is building with a low risk profile."
       },
-      "readinessScore": 44
+      "readinessScore": 50
     },
     "exportReady": true,
     "freshness": {
       "latestObservedAt": "2026-04-01T00:00:00.000Z",
       "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
     },
-    "provenanceCount": 3
+    "provenanceCount": 18
   },
   "contextNotes": [
     {
@@ -82,9 +132,9 @@
         "zh": "定制机会"
       },
       "body": {
-        "en": "Phlapphla Narai Smart City has room to turn its safety advantage into a city product instead of another presentation. The clearest wedge is energy delivery backed by hard metrics.",
-        "th": "ตำบลพลับพลานารายณ์สมาร์ทซิตี้ มีโอกาสเปลี่ยนจุดแข็งด้านsafety ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านenergy ที่ผูกกับตัวชี้วัดจริง",
-        "zh": "Phlapphla Narai Smart City can turn its safety edge into a real city product. The clearest wedge is energy delivery tied to hard metrics."
+        "en": "Community energy model is replicable to thousands of Thai sub-districts. High safety (74) and environment (62) scores show a livable base to build on.",
+        "th": "โมเดลพลังงานชุมชนทำซ้ำได้กับตำบลไทยหลายพัน ความปลอดภัยสูง (74) และสิ่งแวดล้อม (62) แสดงฐานความน่าอยู่ที่สร้างต่อได้",
+        "zh": "Community energy model is replicable to thousands of Thai sub-districts. High safety (74) and environment (62) scores show a livable base to build on."
       }
     },
     {
@@ -96,9 +146,9 @@
         "zh": "约束"
       },
       "body": {
-        "en": "The weakest drag is digital. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.",
-        "th": "ตัวฉุดหลักคือด้านdigital ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม",
-        "zh": "The weakest drag is digital. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes."
+        "en": "Population only 15K — smallest in the index. Sparse data (low confidence). Economy 48 and digital 35 — very limited resources. Needs external support to sustain.",
+        "th": "ประชากรเพียง 15,000 — เล็กสุดในดัชนี ข้อมูลเบาบาง (ความเชื่อมั่นต่ำ) เศรษฐกิจ 48 และดิจิทัล 35 — ทรัพยากรจำกัดมาก ต้องการสนับสนุนจากภายนอก",
+        "zh": "Population only 15K — smallest in the index. Sparse data (low confidence). Economy 48 and digital 35 — very limited resources. Needs external support to sustain."
       }
     },
     {
@@ -124,9 +174,9 @@
         "zh": "可输出经验"
       },
       "body": {
-        "en": "Phlapphla Narai Smart City is most exportable when it acts like itself. The reusable lesson is how it turns safety into something operational.",
-        "th": "ตำบลพลับพลานารายณ์สมาร์ทซิตี้ ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนsafety ให้เป็นระบบปฏิบัติการ",
-        "zh": "Phlapphla Narai Smart City becomes exportable when it acts like itself. The reusable lesson is how it turns safety into operations."
+        "en": "Community energy model is replicable to thousands of Thai sub-districts. High safety (74) and environment (62) scores show a livable base to build on.",
+        "th": "โมเดลพลังงานชุมชนทำซ้ำได้กับตำบลไทยหลายพัน ความปลอดภัยสูง (74) และสิ่งแวดล้อม (62) แสดงฐานความน่าอยู่ที่สร้างต่อได้",
+        "zh": "Community energy model is replicable to thousands of Thai sub-districts. High safety (74) and environment (62) scores show a livable base to build on."
       }
     }
   ],
@@ -160,8 +210,326 @@
           "sourceName": "National Statistical Office (NSO)",
           "sourceUrl": "https://www.nso.go.th",
           "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
+          "confidence": 0.9,
           "methodNote": "Baseline city population from index input; used as scale proxy.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "gppPerCapita",
+          "label": {
+            "en": "GPP per capita",
+            "th": "GPP ต่อหัว",
+            "zh": "人均 GPP"
+          },
+          "metricValueNum": 178000,
+          "metricValueText": "฿178,000",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Provincial economic productivity proxy; used for revenue and demand scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "avgMonthlyIncome",
+          "label": {
+            "en": "Average monthly income",
+            "th": "รายได้เฉลี่ยต่อเดือน",
+            "zh": "月均收入"
+          },
+          "metricValueNum": 21200,
+          "metricValueText": "฿21,200",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Household earning proxy; used for affordability and fee tolerance.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "risk-and-resilience",
+      "title": {
+        "en": "Risk and resilience",
+        "th": "ความเสี่ยงและความยืดหยุ่น",
+        "zh": "风险与韧性"
+      },
+      "summary": {
+        "en": "The constraint stack that should shape finance structure, contract terms, and sequencing.",
+        "th": "ชุดข้อจำกัดที่ต้องกำหนดโครงสร้างการเงิน เงื่อนไขสัญญา และลำดับงาน",
+        "zh": "These constraints should shape financing structure, contract terms, and sequencing."
+      },
+      "observations": [
+        {
+          "cityId": "phlapphla",
+          "metricKey": "pm25Annual",
+          "label": {
+            "en": "Annual PM2.5",
+            "th": "PM2.5 เฉลี่ยรายปี",
+            "zh": "年均 PM2.5"
+          },
+          "metricValueNum": 18.5,
+          "metricValueText": "18.5",
+          "unit": "ug/m3",
+          "periodLabel": "2025 annual average",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Environmental stress proxy; used for resilience and green finance scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "crimeRatePer100k",
+          "label": {
+            "en": "Crime / 100K",
+            "th": "อาชญากรรม / แสนคน",
+            "zh": "每十万人犯罪率"
+          },
+          "metricValueNum": 115,
+          "metricValueText": "115",
+          "unit": "incidents/100k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rtp",
+          "sourceName": "Royal Thai Police",
+          "sourceUrl": "https://www.royalthaipolice.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Risk proxy; used for contractability and investor comfort.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "greenCoverage",
+          "label": {
+            "en": "Green coverage",
+            "th": "พื้นที่สีเขียว",
+            "zh": "绿化覆盖"
+          },
+          "metricValueNum": 52,
+          "metricValueText": "52",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "gistda",
+          "sourceName": "GISTDA — Satellite Imagery",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Land/environment quality proxy; used for resilience and amenity value.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "service-capacity",
+      "title": {
+        "en": "Service capacity",
+        "th": "ศักยภาพบริการสาธารณะ",
+        "zh": "服务能力"
+      },
+      "summary": {
+        "en": "Signals for whether the city can operate systems after ribbon-cutting day.",
+        "th": "สัญญาณว่าเมืองจะเดินระบบต่อหลังวันตัดริบบิ้นได้หรือไม่",
+        "zh": "Signals of whether the city can run systems after ribbon-cutting day."
+      },
+      "observations": [
+        {
+          "cityId": "phlapphla",
+          "metricKey": "hospitalBedsPer10k",
+          "label": {
+            "en": "Hospital beds / 10K",
+            "th": "เตียงโรงพยาบาล / หมื่นคน",
+            "zh": "每万人床位"
+          },
+          "metricValueNum": 20,
+          "metricValueText": "20",
+          "unit": "beds/10k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "moph",
+          "sourceName": "Ministry of Public Health",
+          "sourceUrl": "https://www.moph.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Public service capacity proxy; used for wellbeing and delivery maturity.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "extended-indicators",
+      "title": {
+        "en": "Extended indicators",
+        "th": "ตัวชี้วัดเชิงลึก",
+        "zh": "扩展指标"
+      },
+      "summary": {
+        "en": "Ground-truth trajectory data most indices ignore: growth direction, environmental trends, real investment flows.",
+        "th": "ข้อมูลทิศทางจากพื้นจริงที่ดัชนีส่วนใหญ่ละเลย: ทิศทางการเติบโต แนวโน้มสิ่งแวดล้อม กระแสการลงทุนจริง",
+        "zh": "大多数指数忽略的实地趋势数据：增长方向、环境走势、真实投资流向。"
+      },
+      "observations": [
+        {
+          "cityId": "phlapphla",
+          "metricKey": "gppGrowthRate",
+          "label": {
+            "en": "GPP growth rate",
+            "th": "อัตราเติบโต GPP",
+            "zh": "GPP 增长率"
+          },
+          "metricValueNum": 3,
+          "metricValueText": "3",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Year-on-year provincial GPP growth (NESDC); shows economic trajectory, not snapshot.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "pm25Trend",
+          "label": {
+            "en": "PM2.5 trend",
+            "th": "แนวโน้ม PM2.5",
+            "zh": "PM2.5 趋势"
+          },
+          "metricValueNum": null,
+          "metricValueText": "improving",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "3-year PM2.5 direction from PCD monitoring; reveals whether air is improving or deteriorating.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "waterQuality",
+          "label": {
+            "en": "Water quality index",
+            "th": "ดัชนีคุณภาพน้ำ",
+            "zh": "水质指数"
+          },
+          "metricValueNum": 72,
+          "metricValueText": "72",
+          "unit": "/100",
+          "periodLabel": "2025 baseline",
+          "sourceId": "onep",
+          "sourceName": "ONEP — Environmental Performance Index",
+          "sourceUrl": "https://www.onep.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "PCD/ONEP composite water quality index (0-100); livability signal most indices ignore.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "forestCoverage",
+          "label": {
+            "en": "Forest coverage",
+            "th": "พื้นที่ป่าไม้",
+            "zh": "森林覆盖率"
+          },
+          "metricValueNum": 48,
+          "metricValueText": "48",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rfd",
+          "sourceName": "Royal Forest Department",
+          "sourceUrl": "https://www.forest.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Royal Forest Department provincial forest percentage; ground-truth environmental baseline.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "fdiInflow",
+          "label": {
+            "en": "FDI inflow",
+            "th": "เงินลงทุนจากต่างประเทศ",
+            "zh": "外资流入"
+          },
+          "metricValueNum": 680,
+          "metricValueText": "฿680",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "boi",
+          "sourceName": "Board of Investment (BOI)",
+          "sourceUrl": "https://ipstat.boi.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "BOI-promoted foreign direct investment (million baht); real money, not memoranda of understanding.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "industryComposition",
+          "label": {
+            "en": "Industry mix",
+            "th": "สัดส่วนอุตสาหกรรม",
+            "zh": "产业结构"
+          },
+          "metricValueNum": null,
+          "metricValueText": "agriculture/fruit 42%, services 32%, gems 15%, manufacturing 11%",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "phlapphla",
+          "metricKey": "laborForce",
+          "label": {
+            "en": "Labor force",
+            "th": "กำลังแรงงาน",
+            "zh": "劳动力"
+          },
+          "metricValueNum": 280,
+          "metricValueText": "280K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NSO provincial employed population (thousands); human-scale economic capacity measure.",
           "verifiedAt": "2026-04-04T00:00:00.000Z",
           "version": "2026.04-cdp-v1"
         }
@@ -174,16 +542,16 @@
     "infrastructureStatus": "building",
     "dataPlatformStatus": "gap",
     "businessModelStatus": "gap",
-    "partnershipStatus": "gap",
+    "partnershipStatus": "building",
     "recommendedLeadStep": "data_platform",
     "deliveryNote": {
       "en": "Beta cities need phased delivery: blended finance, performance contracts, and readiness-building before going full commercial.",
-      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: blended finance, performance contract และการสร้าง readiness ก่อนจะไปเชิงพาณิชย์เต็มตัว",
+      "th": "เมือง Beta ต้องเดินแบบเป็นช่วง: การเงินผสมผสาน สัญญาอิงผลลัพธ์ และการสร้างความพร้อม ก่อนจะไปเชิงพาณิชย์เต็มตัว",
       "zh": "Beta 城市需要分阶段交付：先做混合融资、绩效合同和准备度建设，再谈完全商业化。"
     },
     "publicRole": {
       "en": "Anchor the pipeline, de-risk first-loss pieces, and keep the city from overpromising.",
-      "th": "รัฐต้องยึด pipeline ลดความเสี่ยงในชิ้น first-loss และกันไม่ให้เมืองขายฝันเกินจริง",
+      "th": "รัฐต้องยึดลำดับโครงการ รับความเสี่ยงชั้นแรกในจุดที่จำเป็น และกันไม่ให้เมืองขายฝันเกินจริง",
       "zh": "Government should anchor the pipeline, de-risk first-loss pieces, and stop the city from overselling."
     },
     "privateRole": {
@@ -198,7 +566,7 @@
     },
     "contractLens": {
       "en": "Contract for data standards, uptime, and interoperability. Not just dashboards and screenshots.",
-      "th": "ทำสัญญาเรื่องมาตรฐานข้อมูล uptime และ interoperability ไม่ใช่แค่ dashboard กับ screenshot",
+      "th": "ทำสัญญาเรื่องมาตรฐานข้อมูล เวลาระบบพร้อมใช้งาน และการเชื่อมต่อข้ามระบบ ไม่ใช่แค่แดชบอร์ดกับภาพหน้าจอ",
       "zh": "Contract for data standards, uptime, and interoperability. Not just dashboards and screenshots."
     },
     "version": "2026.04-cdp-v1"
@@ -206,111 +574,171 @@
   "financeProfile": {
     "cityId": "phlapphla",
     "revenueBase": "thin",
-    "institutionalCapacity": "moderate",
+    "institutionalCapacity": "strong",
     "projectPipeline": "thin",
     "privateInterest": "thin",
     "riskProfile": "low",
-    "deliveryReadiness": "foundational",
-    "readinessScore": 44,
+    "deliveryReadiness": "building",
+    "readinessScore": 50,
     "segment": "beta",
     "assessedAt": "2026-04-04T00:00:00.000Z",
     "version": "2026.04-cdp-v1"
   },
   "financeRecommendations": [
     {
-      "id": "phlapphla-technical-assistance-grant",
+      "id": "phlapphla-performance-contract",
       "cityId": "phlapphla",
-      "instrumentId": "technical-assistance-grant",
-      "instrumentName": "Technical Assistance Grant",
+      "instrumentId": "performance-contract",
+      "instrumentName": "Performance Contract",
       "priority": "lead",
-      "priorityScore": 68,
+      "priorityScore": 67,
       "stage": "partial",
       "segment": "beta",
       "reasonSummary": {
-        "en": "Phlapphla Narai Smart City needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess.",
-        "th": "Phlapphla Narai Smart City needs sharper project definition and procurement readiness before bigger money. ถ้าเมืองยังนิยามโครงการไม่ชัด เอาเงินก้อนใหญ่ไปใส่ก็แค่ทำให้ความเละเทะแพงขึ้น",
-        "zh": "Phlapphla Narai Smart City needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess."
+        "en": "Performance Contract fits Phlapphla Narai Smart City because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes.",
+        "th": "สัญญาอิงผลลัพธ์ เหมาะกับ ตำบลพลับพลานารายณ์สมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ เมืองที่ยังรับเงินลงทุนก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+        "zh": "Performance Contract fits Phlapphla Narai Smart City because its metrics and operating context create a credible use case. 即便扛不起大额前期投资，城市仍可为已验证结果付费。"
       },
       "whyNow": {
-        "en": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 44/100.",
-        "th": "Because unreadiness is cheaper to fix now than after a failed capital program. คะแนน readiness: 44/100",
-        "zh": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 44/100."
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 50/100.",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 50/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 50/100."
       },
       "nextStep": {
-        "en": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
-        "th": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
-        "zh": "Write the feasibility package, data governance note, and procurement scope before applying for capital."
+        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
+        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
-        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
-        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
-        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
         {
-          "id": "phlapphla-population",
+          "id": "phlapphla-pm25Annual",
           "supportType": "metric",
-          "metricKey": "population",
-          "metricLabel": "Population",
-          "sourceId": "nso",
-          "sourceUrl": "https://www.nso.go.th",
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Outcome-based contracts make sense where performance can be metered."
+        },
+        {
+          "id": "phlapphla-greenCoverage",
+          "supportType": "metric",
+          "metricKey": "greenCoverage",
+          "metricLabel": "Green coverage",
+          "sourceId": "gistda",
+          "sourceUrl": "https://www.gistda.or.th",
           "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
-          "summary": "City scale shapes the right size for first-phase technical support."
+          "confidence": 0.9,
+          "summary": "Green coverage provides a resilience baseline for outcome measurement."
         }
       ],
       "version": "2026.04-cdp-v1"
     },
     {
-      "id": "phlapphla-government-budget",
+      "id": "phlapphla-land-value-capture",
       "cityId": "phlapphla",
-      "instrumentId": "government-budget",
-      "instrumentName": "Government Budget / Grant",
+      "instrumentId": "land-value-capture",
+      "instrumentName": "Land Value Capture",
       "priority": "secondary",
-      "priorityScore": 60,
+      "priorityScore": 64,
       "stage": "partial",
       "segment": "beta",
       "reasonSummary": {
-        "en": "Phlapphla Narai Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated.",
-        "th": "Phlapphla Narai Smart City still needs public risk-bearing for foundational delivery. บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
-        "zh": "Phlapphla Narai Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated."
+        "en": "Land Value Capture fits Phlapphla Narai Smart City because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away.",
+        "th": "จับมูลค่าที่ดิน เหมาะกับ ตำบลพลับพลานารายณ์สมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ถ้าเมืองเป็นคนสร้างมูลค่าเพิ่ม เมืองก็ควรเก็บบางส่วนกลับมา ไม่ใช่ปล่อยให้ไหลออกหมด",
+        "zh": "Land Value Capture fits Phlapphla Narai Smart City because its metrics and operating context create a credible use case. 如果增值由城市创造，城市就该拿回其中一部分。"
       },
       "whyNow": {
-        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 44/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 44/100",
-        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 44/100."
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 50/100.",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 50/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 50/100."
+      },
+      "nextStep": {
+        "en": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
+        "th": "ทำแผนที่พื้นที่มูลค่าเพิ่ม กำหนดเงื่อนไขงานสาธารณะ และล็อกกติกาจับมูลค่าก่อนการเก็งกำไรที่ดินจะนำหน้าเมือง",
+        "zh": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city."
+      },
+      "publicFundingRole": {
+        "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
+        "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
+      },
+      "privateCapitalRole": {
+        "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
+        "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
+      },
+      "supports": [
+        {
+          "id": "phlapphla-gppPerCapita",
+          "supportType": "metric",
+          "metricKey": "gppPerCapita",
+          "metricLabel": "GPP per capita",
+          "sourceId": "nesdc",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Strong urban demand makes value capture plausible."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
+      "id": "phlapphla-dfi-cofinance",
+      "cityId": "phlapphla",
+      "instrumentId": "dfi-cofinance",
+      "instrumentName": "DFI Co-finance",
+      "priority": "watch",
+      "priorityScore": 62,
+      "stage": "partial",
+      "segment": "beta",
+      "reasonSummary": {
+        "en": "DFI Co-finance fits Phlapphla Narai Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money.",
+        "th": "เงินร่วมลงทุนจาก DFI เหมาะกับ ตำบลพลับพลานารายณ์สมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
+        "zh": "DFI Co-finance fits Phlapphla Narai Smart City because its metrics and operating context create a credible use case. ADB、JICA 等机构很多时候作为信誉放大器比单纯给钱更关键。"
+      },
+      "whyNow": {
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 50/100.",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 50/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 50/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should anchor the first-loss piece and publish the delivery KPIs.",
-        "th": "ภาครัฐควรรับส่วน first-loss และประกาศ KPI การส่งมอบให้ชัด",
+        "th": "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด",
         "zh": "Government should anchor the first-loss piece and publish the delivery KPIs."
       },
       "privateCapitalRole": {
         "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
-        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้",
         "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
       },
       "supports": [
         {
-          "id": "phlapphla-population",
+          "id": "phlapphla-pm25Annual",
           "supportType": "metric",
-          "metricKey": "population",
-          "metricLabel": "Population",
-          "sourceId": "nso",
-          "sourceUrl": "https://www.nso.go.th",
-          "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
-          "summary": "Population scale affects the public-good case for grant funding."
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Measured environmental pressure supports concessional co-finance."
         }
       ],
       "version": "2026.04-cdp-v1"
@@ -364,7 +792,7 @@
   "exportMetadata": {
     "latestObservedAt": "2026-04-01T00:00:00.000Z",
     "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
-    "provenanceCount": 3,
+    "provenanceCount": 18,
     "summaryCsvUrl": "/api/exports/cities-summary.csv",
     "factsCsvUrl": "/api/exports/city-facts.csv",
     "cityCsvUrl": "/api/cities/phlapphla/export.csv"

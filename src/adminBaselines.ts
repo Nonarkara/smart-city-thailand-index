@@ -265,7 +265,7 @@ export function getAdminBaselineForCity(city: Pick<SmartCity, "id" | "province">
 }
 
 export function getResolvedPopulationThousand(city: Pick<SmartCity, "id" | "province" | "metrics" | "status">): ResolvedBaselineValue {
-  if (city.metrics.population > 0) {
+  if (city.metrics.population != null && city.metrics.population > 0) {
     return {
       value: city.metrics.population,
       baseline: city.status === "registered" ? getAdminBaselineForCity(city) : undefined,

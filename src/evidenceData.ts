@@ -5,7 +5,7 @@
 // This is the foundation of a credible index.
 // ---------------------------------------------------------------------------
 
-import { getClaimValue } from "./claimRegistry";
+import { getClaimValue } from "./claimRegistry.ts";
 
 export interface EvidenceItem {
   cityId: string;

@@ -45,7 +45,7 @@ const PILLAR_ORDER: ScoringPillar[] = [
 function toAppPath(path: string): string {
   const base = import.meta.env.BASE_URL || "/";
   const prefix = base === "/" ? "" : base.replace(/\/$/, "");
-  return path === "/" ? `${prefix}/` || "/" : `${prefix}${path}`;
+  return path === "/" ? `${prefix}/` : `${prefix}${path}`;
 }
 
 function percentile(value: number, all: number[]): number {
@@ -59,31 +59,47 @@ function tierSymbol(tier: CityTier): string {
 }
 
 // ---------------------------------------------------------------------------
-// PillarStrip — fixed 220px, 7 segments, width ∝ pillar contribution to score
+// IndividualPillarBars — 7 segments, each a separate bar for easy comparison
 // ---------------------------------------------------------------------------
-function PillarStrip({
+function IndividualPillarBars({
   city,
-  weights,
+  locale,
 }: {
   city: SmartCity;
-  weights: Record<ScoringPillar, number>;
+  locale: Locale;
 }) {
-  const TOTAL = 220;
+  const getShort = (pillar: ScoringPillar): string => {
+    // We use standard 3-letter codes for the mono-interface look
+    const map: Record<ScoringPillar, string> = {
+      livability: "LIV",
+      economy: "ECO",
+      safety: "SAF",
+      wellbeing: "WEL",
+      environment: "ENV",
+      hospitality: "HOS",
+      digital: "DIG",
+    };
+    return map[pillar];
+  };
+
   return (
-    <span className="pillar-strip" aria-hidden="true">
+    <div className="ranking-pillar-grid" aria-hidden="true">
       {PILLAR_ORDER.map(pillar => {
-        const contribution = (city.scores[pillar] * weights[pillar]) / 10000;
-        const width = Math.max(0, TOTAL * contribution);
+        const value = city.scores[pillar];
         return (
-          <span
-            key={pillar}
-            className="pillar-strip-seg"
-            style={{ width: `${width}px`, background: PILLAR_COLORS[pillar] }}
-            title={`${pillar} ${city.scores[pillar]}`}
-          />
+          <div key={pillar} className="ranking-pillar-row">
+            <span className="ranking-pillar-label">{getShort(pillar)}</span>
+            <div className="ranking-pillar-track">
+              <div
+                className="ranking-pillar-fill"
+                style={{ width: `${value}%`, background: PILLAR_COLORS[pillar] }}
+              />
+            </div>
+            <span className="ranking-pillar-value">{value}</span>
+          </div>
         );
       })}
-    </span>
+    </div>
   );
 }
 
@@ -465,7 +481,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                               </>
                             ) : null}
                           </span>
-                          <PillarStrip city={city} weights={activeWeights} />
+                          <IndividualPillarBars city={city} locale={locale} />
                         </span>
                         <span className="rank-row-meta">
                           <span className="rank-row-score">{lensScore.toFixed(1)}</span>

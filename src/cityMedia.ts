@@ -62,6 +62,15 @@ export const HOME_HERO_ASSET: CityPhotoAsset = {
   objectPosition: "center 55%",
 };
 
+// Phase 19 — Auto-rotating hero photos
+export const HOME_HERO_ASSETS: CityPhotoAsset[] = [
+  { src: "/photos/wp-makkasan.jpg", objectPosition: "center 55%" },
+  { src: "/photos/phuket-marine.webp", objectPosition: "center 48%" },
+  { src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"), objectPosition: "center 58%" },
+  { src: "/photos/rayong-future.webp", objectPosition: "center 50%" },
+  { src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"), objectPosition: "center 50%" },
+];
+
 // Regional fallbacks — only used for cities without explicit mapping below.
 // Kept diverse so no two cities in the same region share the same photo
 // unless they actually share a geographic identity.

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-04T04:47:00.914Z",
+  "generatedAt": "2026-04-29T08:26:50.358Z",
   "cities": [
     {
       "cityId": "phuket",
@@ -7,7 +7,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 13
+      "provenanceCount": 20
     },
     {
       "cityId": "samyan",
@@ -15,23 +15,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 12
-    },
-    {
-      "cityId": "chiang-mai-old-town",
-      "file": "cities/chiang-mai-old-town.json",
-      "tier": "alpha",
-      "status": "certified",
-      "exportReady": true,
-      "provenanceCount": 13
-    },
-    {
-      "cityId": "khon-kaen",
-      "file": "cities/khon-kaen.json",
-      "tier": "alpha",
-      "status": "certified",
-      "exportReady": true,
-      "provenanceCount": 13
+      "provenanceCount": 20
     },
     {
       "cityId": "cmu-smart-city",
@@ -39,7 +23,23 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 10
+      "provenanceCount": 18
+    },
+    {
+      "cityId": "khon-kaen",
+      "file": "cities/khon-kaen.json",
+      "tier": "alpha",
+      "status": "certified",
+      "exportReady": true,
+      "provenanceCount": 20
+    },
+    {
+      "cityId": "chiang-mai-old-town",
+      "file": "cities/chiang-mai-old-town.json",
+      "tier": "alpha",
+      "status": "certified",
+      "exportReady": true,
+      "provenanceCount": 20
     },
     {
       "cityId": "saensuk",
@@ -47,7 +47,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 13
+      "provenanceCount": 20
     },
     {
       "cityId": "phra-ram-4",
@@ -55,7 +55,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "krabi",
@@ -63,7 +63,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 12
+      "provenanceCount": 19
     },
     {
       "cityId": "chachoengsao",
@@ -71,7 +71,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 10
+      "provenanceCount": 17
     },
     {
       "cityId": "hat-yai",
@@ -79,7 +79,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 13
+      "provenanceCount": 20
     },
     {
       "cityId": "rattanakosin",
@@ -87,7 +87,7 @@
       "tier": "alpha",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 7
+      "provenanceCount": 17
     },
     {
       "cityId": "nan",
@@ -95,7 +95,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 12
+      "provenanceCount": 20
     },
     {
       "cityId": "samui",
@@ -103,7 +103,7 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 12
+      "provenanceCount": 18
     },
     {
       "cityId": "klong-phadung",
@@ -111,7 +111,15 @@
       "tier": "alpha",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 9
+      "provenanceCount": 18
+    },
+    {
+      "cityId": "phangnga",
+      "file": "cities/phangnga.json",
+      "tier": "alpha",
+      "status": "certified",
+      "exportReady": true,
+      "provenanceCount": 19
     },
     {
       "cityId": "chanthaburi",
@@ -119,7 +127,7 @@
       "tier": "alpha",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 19
     },
     {
       "cityId": "korat",
@@ -127,15 +135,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
-    },
-    {
-      "cityId": "phangnga",
-      "file": "cities/phangnga.json",
-      "tier": "beta",
-      "status": "certified",
-      "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "phitsanulok-muni",
@@ -143,7 +143,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "rayong",
@@ -151,7 +151,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "lampang",
@@ -159,7 +159,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "chiang-rai",
@@ -167,7 +167,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "sritrang",
@@ -175,7 +175,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "songkhla-city",
@@ -183,7 +183,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 17
     },
     {
       "cityId": "nonthaburi",
@@ -191,7 +191,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "nakhon-si-thammarat",
@@ -199,7 +199,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 13
+      "provenanceCount": 20
     },
     {
       "cityId": "phitsanulok-nu",
@@ -207,7 +207,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 10
+      "provenanceCount": 18
     },
     {
       "cityId": "umong",
@@ -215,7 +215,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 9
+      "provenanceCount": 18
     },
     {
       "cityId": "ubon",
@@ -223,7 +223,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "satun",
@@ -231,7 +231,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "phitsanulok-ppao",
@@ -239,7 +239,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 6
+      "provenanceCount": 18
     },
     {
       "cityId": "samut-prakan",
@@ -247,7 +247,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 17
     },
     {
       "cityId": "nakhonsawan",
@@ -255,7 +255,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 9
+      "provenanceCount": 18
     },
     {
       "cityId": "ubon-muni",
@@ -263,7 +263,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 6
+      "provenanceCount": 18
     },
     {
       "cityId": "bang-saray",
@@ -271,7 +271,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 6
+      "provenanceCount": 18
     },
     {
       "cityId": "mae-moh",
@@ -279,7 +279,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 13
+      "provenanceCount": 20
     },
     {
       "cityId": "yala",
@@ -287,7 +287,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 13
+      "provenanceCount": 20
     },
     {
       "cityId": "tak",
@@ -295,7 +295,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 9
+      "provenanceCount": 18
     },
     {
       "cityId": "phlapphla",
@@ -303,7 +303,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 3
+      "provenanceCount": 18
     },
     {
       "cityId": "phichit",
@@ -311,7 +311,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 7
+      "provenanceCount": 18
     },
     {
       "cityId": "tai-yong",
@@ -319,7 +319,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 6
+      "provenanceCount": 18
     },
     {
       "cityId": "thep-paraj",
@@ -327,7 +327,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 3
+      "provenanceCount": 18
     },
     {
       "cityId": "maesai",
@@ -335,7 +335,7 @@
       "tier": "beta",
       "status": "promotion",
       "exportReady": true,
-      "provenanceCount": 9
+      "provenanceCount": 18
     },
     {
       "cityId": "nikhom-phatthana",
@@ -343,7 +343,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 5
+      "provenanceCount": 18
     },
     {
       "cityId": "khao-khun-song",
@@ -351,7 +351,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 3
+      "provenanceCount": 18
     },
     {
       "cityId": "pattani",
@@ -359,7 +359,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "narathiwat",
@@ -367,7 +367,7 @@
       "tier": "beta",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 11
+      "provenanceCount": 18
     },
     {
       "cityId": "reg-chiang-mai-pao",
@@ -375,7 +375,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-lamphun",
@@ -383,7 +383,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-lampang-pao",
@@ -391,7 +391,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-uttaradit",
@@ -399,7 +399,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-sukhothai",
@@ -407,7 +407,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-phrae",
@@ -415,7 +415,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-phayao",
@@ -423,7 +423,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-mae-hong-son",
@@ -431,7 +431,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-kamphaeng-phet",
@@ -439,7 +439,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-uthai-thani",
@@ -447,7 +447,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-nakhon-sawan-pao",
@@ -455,7 +455,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-phetchabun",
@@ -463,7 +463,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-ayutthaya",
@@ -471,7 +471,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-pathum-thani",
@@ -479,7 +479,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-nakhon-pathom",
@@ -487,7 +487,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-samut-sakhon",
@@ -495,7 +495,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-samut-songkhram",
@@ -503,7 +503,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-ang-thong",
@@ -511,7 +511,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-singburi",
@@ -519,7 +519,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-lop-buri",
@@ -527,7 +527,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-saraburi",
@@ -535,7 +535,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-chainat",
@@ -543,7 +543,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-suphan-buri",
@@ -551,7 +551,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-kanchanaburi",
@@ -559,7 +559,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-ratchaburi",
@@ -567,7 +567,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-phetchaburi",
@@ -575,7 +575,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-prachuap",
@@ -583,7 +583,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-hua-hin",
@@ -591,7 +591,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-udon-thani",
@@ -599,7 +599,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-nong-khai",
@@ -607,7 +607,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-sakon-nakhon",
@@ -615,7 +615,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-nakhon-phanom",
@@ -623,7 +623,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-mukdahan",
@@ -631,7 +631,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-roi-et",
@@ -639,7 +639,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-kalasin",
@@ -647,7 +647,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-maha-sarakham",
@@ -655,7 +655,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-chaiyaphum",
@@ -663,7 +663,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-buriram",
@@ -671,7 +671,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-surin",
@@ -679,7 +679,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-sisaket",
@@ -687,7 +687,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-amnat-charoen",
@@ -695,7 +695,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-yasothon",
@@ -703,7 +703,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-loei",
@@ -711,7 +711,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-nong-bua-lamphu",
@@ -719,7 +719,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-bueng-kan",
@@ -727,7 +727,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-chon-buri-muni",
@@ -735,7 +735,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-pattaya",
@@ -743,7 +743,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-sri-racha",
@@ -751,7 +751,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-trat",
@@ -759,7 +759,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-sa-kaeo",
@@ -767,7 +767,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-prachin-buri",
@@ -775,7 +775,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-nakhon-nayok",
@@ -783,7 +783,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-surat-thani",
@@ -791,7 +791,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-nakhon-si-pao",
@@ -799,7 +799,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-chumphon",
@@ -807,7 +807,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-ranong",
@@ -815,7 +815,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-phatthalung",
@@ -823,7 +823,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-songkhla-pao",
@@ -831,7 +831,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-phuket-pao",
@@ -839,7 +839,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-krabi-muni",
@@ -847,7 +847,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-trang-muni",
@@ -855,7 +855,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-yala-pao",
@@ -863,7 +863,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-pattani-muni",
@@ -871,7 +871,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-narathiwat-muni",
@@ -879,7 +879,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-bangkok-noi",
@@ -887,7 +887,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-bang-rak",
@@ -895,7 +895,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-din-daeng",
@@ -903,7 +903,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-chatuchak",
@@ -911,7 +911,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "reg-bang-sue",
@@ -919,7 +919,7 @@
       "tier": "gamma",
       "status": "registered",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 3
     },
     {
       "cityId": "makkasan",
@@ -927,7 +927,7 @@
       "tier": "gamma",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 17
     },
     {
       "cityId": "phuket-tinicon",
@@ -935,7 +935,7 @@
       "tier": "gamma",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 4
+      "provenanceCount": 17
     },
     {
       "cityId": "wangchan-valley",
@@ -943,7 +943,7 @@
       "tier": "gamma",
       "status": "certified",
       "exportReady": true,
-      "provenanceCount": 8
+      "provenanceCount": 20
     }
   ]
 }

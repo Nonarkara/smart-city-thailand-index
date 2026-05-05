@@ -31,7 +31,15 @@
       "avgMonthlyIncome": 40200,
       "pm25Annual": 32.4,
       "hospitalBedsPer10k": 42,
-      "crimeRatePer100k": 285
+      "crimeRatePer100k": 285,
+      "greenCoverage": 8,
+      "gppGrowthRate": 2.1,
+      "pm25Trend": "stable",
+      "waterQuality": 55,
+      "forestCoverage": 11,
+      "fdiInflow": 12500,
+      "industryComposition": "services 72%, manufacturing 18%, agriculture 1%, other 9%",
+      "laborForce": 4200
     },
     "compositeScore": 65.1,
     "tier": "alpha",
@@ -43,6 +51,7 @@
       "Heritage walk with AR cultural overlay"
     ],
     "dataConfidence": "high",
+    "league": "district",
     "keyMetrics": [
       {
         "key": "gppPerCapita",
@@ -69,41 +78,41 @@
         "sourceId": "pcd"
       },
       {
-        "key": "crimeRatePer100k",
+        "key": "waterQuality",
         "label": {
-          "en": "Crime / 100K",
-          "th": "อาชญากรรม / แสนคน",
-          "zh": "每十万人犯罪率"
+          "en": "Water quality index",
+          "th": "ดัชนีคุณภาพน้ำ",
+          "zh": "水质指数"
         },
-        "value": "285",
-        "unit": "incidents/100k",
+        "value": "55",
+        "unit": "/100",
         "confidence": "high",
-        "sourceId": "rtp"
+        "sourceId": "onep"
       },
       {
-        "key": "population",
+        "key": "gppGrowthRate",
         "label": {
-          "en": "Population",
-          "th": "ประชากร",
-          "zh": "人口"
+          "en": "GPP growth rate",
+          "th": "อัตราเติบโต GPP",
+          "zh": "GPP 增长率"
         },
-        "value": "95K",
-        "unit": "people",
+        "value": "2.1",
+        "unit": "%",
         "confidence": "high",
-        "sourceId": "nso"
+        "sourceId": "nesdc"
       }
     ],
     "shortTailoredNote": {
-      "en": "Klong Phadung Krung Kasem leans on economy but still gets capped by environment. That's where the backend should keep drilling.",
-      "th": "คลองผดุงกรุงเกษม มีแรงหลักอยู่ที่economy แต่ยังถูกกดเพดานโดยenvironment ตรงนี้แหละที่ backend ต้องขุดต่อ",
-      "zh": "Klong Phadung Krung Kasem leans on economy but is still capped by environment. That's where the backend should keep drilling."
+      "en": "Canal-based smart cities are globally rare. If this works, it's an exportable model for Venice, Amsterdam, Suzhou — any city with historic waterways. Watch the constraint: Bangkok-level PM2.5 (32.4) and crime (285/100K). The smart canal project is small-scale. Scaling beyond the pilot area requires political will that comes and goes.",
+      "th": "เมืองอัจฉริยะริมคลองหายากระดับโลก ถ้าสำเร็จ มันเป็นโมเดลส่งออกสำหรับเวนิส อัมสเตอร์ดัม ซูโจว — เมืองใดก็ตามที่มีทางน้ำประวัติศาสตร์ แต่ต้องระวัง: PM2.5 ระดับกรุงเทพฯ (32.4) และอาชญากรรม (285/100,000) โครงการคลองอัจฉริยะขนาดเล็ก ขยายเกินพื้นที่นำร่องต้องใช้เจตจำนงทางการเมืองที่มาๆ ไปๆ",
+      "zh": "Canal-based smart cities are globally rare. If this works, it's an exportable model for Venice, Amsterdam, Suzhou — any city with historic waterways. Watch the constraint: Bangkok-level PM2.5 (32.4) and crime (285/100K). The smart canal project is small-scale. Scaling beyond the pilot area requires political will that comes and goes."
     },
     "financeSignal": {
       "leadInstrumentId": "asset-recycling",
       "leadInstrumentName": "Asset Recycling",
       "line": {
         "en": "Asset Recycling leads because Klong Phadung Krung Kasem is building with a high risk profile.",
-        "th": "Asset Recycling นำ เพราะ คลองผดุงกรุงเกษม อยู่ในระดับ building และมีความเสี่ยงแบบ high",
+        "th": "รีไซเคิลสินทรัพย์รัฐ เป็นเครื่องมือนำ เพราะ คลองผดุงกรุงเกษม อยู่ในกำลังสร้าง และมีความเสี่ยงสูง",
         "zh": "Asset Recycling leads because Klong Phadung Krung Kasem is building with a high risk profile."
       },
       "readinessScore": 65
@@ -113,7 +122,7 @@
       "latestObservedAt": "2026-04-01T00:00:00.000Z",
       "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
     },
-    "provenanceCount": 9
+    "provenanceCount": 18
   },
   "contextNotes": [
     {
@@ -125,9 +134,9 @@
         "zh": "定制机会"
       },
       "body": {
-        "en": "Klong Phadung Krung Kasem has room to turn its economy advantage into a city product instead of another presentation. The clearest wedge is energy delivery backed by hard metrics.",
-        "th": "คลองผดุงกรุงเกษม มีโอกาสเปลี่ยนจุดแข็งด้านeconomy ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านenergy ที่ผูกกับตัวชี้วัดจริง",
-        "zh": "Klong Phadung Krung Kasem can turn its economy edge into a real city product. The clearest wedge is energy delivery tied to hard metrics."
+        "en": "Canal-based smart cities are globally rare. If this works, it's an exportable model for Venice, Amsterdam, Suzhou — any city with historic waterways.",
+        "th": "เมืองอัจฉริยะริมคลองหายากระดับโลก ถ้าสำเร็จ มันเป็นโมเดลส่งออกสำหรับเวนิส อัมสเตอร์ดัม ซูโจว — เมืองใดก็ตามที่มีทางน้ำประวัติศาสตร์",
+        "zh": "Canal-based smart cities are globally rare. If this works, it's an exportable model for Venice, Amsterdam, Suzhou — any city with historic waterways."
       }
     },
     {
@@ -139,9 +148,9 @@
         "zh": "约束"
       },
       "body": {
-        "en": "The weakest drag is environment. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.",
-        "th": "ตัวฉุดหลักคือด้านenvironment ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม",
-        "zh": "The weakest drag is environment. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes."
+        "en": "Bangkok-level PM2.5 (32.4) and crime (285/100K). The smart canal project is small-scale. Scaling beyond the pilot area requires political will that comes and goes.",
+        "th": "PM2.5 ระดับกรุงเทพฯ (32.4) และอาชญากรรม (285/100,000) โครงการคลองอัจฉริยะขนาดเล็ก ขยายเกินพื้นที่นำร่องต้องใช้เจตจำนงทางการเมืองที่มาๆ ไปๆ",
+        "zh": "Bangkok-level PM2.5 (32.4) and crime (285/100K). The smart canal project is small-scale. Scaling beyond the pilot area requires political will that comes and goes."
       }
     },
     {
@@ -167,9 +176,9 @@
         "zh": "可输出经验"
       },
       "body": {
-        "en": "Klong Phadung Krung Kasem is most exportable when it acts like itself. The reusable lesson is how it turns economy into something operational.",
-        "th": "คลองผดุงกรุงเกษม ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนeconomy ให้เป็นระบบปฏิบัติการ",
-        "zh": "Klong Phadung Krung Kasem becomes exportable when it acts like itself. The reusable lesson is how it turns economy into operations."
+        "en": "Canal-based smart cities are globally rare. If this works, it's an exportable model for Venice, Amsterdam, Suzhou — any city with historic waterways.",
+        "th": "เมืองอัจฉริยะริมคลองหายากระดับโลก ถ้าสำเร็จ มันเป็นโมเดลส่งออกสำหรับเวนิส อัมสเตอร์ดัม ซูโจว — เมืองใดก็ตามที่มีทางน้ำประวัติศาสตร์",
+        "zh": "Canal-based smart cities are globally rare. If this works, it's an exportable model for Venice, Amsterdam, Suzhou — any city with historic waterways."
       }
     }
   ],
@@ -306,6 +315,27 @@
           "methodNote": "Risk proxy; used for contractability and investor comfort.",
           "verifiedAt": "2026-04-04T00:00:00.000Z",
           "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "klong-phadung",
+          "metricKey": "greenCoverage",
+          "label": {
+            "en": "Green coverage",
+            "th": "พื้นที่สีเขียว",
+            "zh": "绿化覆盖"
+          },
+          "metricValueNum": 8,
+          "metricValueText": "8",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "gistda",
+          "sourceName": "GISTDA — Satellite Imagery",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Land/environment quality proxy; used for resilience and amenity value.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
         }
       ]
     },
@@ -344,6 +374,168 @@
           "version": "2026.04-cdp-v1"
         }
       ]
+    },
+    {
+      "id": "extended-indicators",
+      "title": {
+        "en": "Extended indicators",
+        "th": "ตัวชี้วัดเชิงลึก",
+        "zh": "扩展指标"
+      },
+      "summary": {
+        "en": "Ground-truth trajectory data most indices ignore: growth direction, environmental trends, real investment flows.",
+        "th": "ข้อมูลทิศทางจากพื้นจริงที่ดัชนีส่วนใหญ่ละเลย: ทิศทางการเติบโต แนวโน้มสิ่งแวดล้อม กระแสการลงทุนจริง",
+        "zh": "大多数指数忽略的实地趋势数据：增长方向、环境走势、真实投资流向。"
+      },
+      "observations": [
+        {
+          "cityId": "klong-phadung",
+          "metricKey": "gppGrowthRate",
+          "label": {
+            "en": "GPP growth rate",
+            "th": "อัตราเติบโต GPP",
+            "zh": "GPP 增长率"
+          },
+          "metricValueNum": 2.1,
+          "metricValueText": "2.1",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Year-on-year provincial GPP growth (NESDC); shows economic trajectory, not snapshot.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "klong-phadung",
+          "metricKey": "pm25Trend",
+          "label": {
+            "en": "PM2.5 trend",
+            "th": "แนวโน้ม PM2.5",
+            "zh": "PM2.5 趋势"
+          },
+          "metricValueNum": null,
+          "metricValueText": "stable",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "3-year PM2.5 direction from PCD monitoring; reveals whether air is improving or deteriorating.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "klong-phadung",
+          "metricKey": "waterQuality",
+          "label": {
+            "en": "Water quality index",
+            "th": "ดัชนีคุณภาพน้ำ",
+            "zh": "水质指数"
+          },
+          "metricValueNum": 55,
+          "metricValueText": "55",
+          "unit": "/100",
+          "periodLabel": "2025 baseline",
+          "sourceId": "onep",
+          "sourceName": "ONEP — Environmental Performance Index",
+          "sourceUrl": "https://www.onep.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "PCD/ONEP composite water quality index (0-100); livability signal most indices ignore.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "klong-phadung",
+          "metricKey": "forestCoverage",
+          "label": {
+            "en": "Forest coverage",
+            "th": "พื้นที่ป่าไม้",
+            "zh": "森林覆盖率"
+          },
+          "metricValueNum": 11,
+          "metricValueText": "11",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rfd",
+          "sourceName": "Royal Forest Department",
+          "sourceUrl": "https://www.forest.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Royal Forest Department provincial forest percentage; ground-truth environmental baseline.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "klong-phadung",
+          "metricKey": "fdiInflow",
+          "label": {
+            "en": "FDI inflow",
+            "th": "เงินลงทุนจากต่างประเทศ",
+            "zh": "外资流入"
+          },
+          "metricValueNum": 12500,
+          "metricValueText": "฿12,500",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "boi",
+          "sourceName": "Board of Investment (BOI)",
+          "sourceUrl": "https://ipstat.boi.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "BOI-promoted foreign direct investment (million baht); real money, not memoranda of understanding.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "klong-phadung",
+          "metricKey": "industryComposition",
+          "label": {
+            "en": "Industry mix",
+            "th": "สัดส่วนอุตสาหกรรม",
+            "zh": "产业结构"
+          },
+          "metricValueNum": null,
+          "metricValueText": "services 72%, manufacturing 18%, agriculture 1%, other 9%",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "klong-phadung",
+          "metricKey": "laborForce",
+          "label": {
+            "en": "Labor force",
+            "th": "กำลังแรงงาน",
+            "zh": "劳动力"
+          },
+          "metricValueNum": 4200,
+          "metricValueText": "4,200K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NSO provincial employed population (thousands); human-scale economic capacity measure.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
     }
   ],
   "deliveryProfile": {
@@ -361,12 +553,12 @@
     },
     "publicRole": {
       "en": "Set the corridor logic, hold the concession line, and protect public interest with measurable KPIs.",
-      "th": "รัฐต้องกำหนดตรรกะของ corridor คุมเส้นสัญญา และปกป้องประโยชน์สาธารณะด้วย KPI ที่วัดได้",
+      "th": "รัฐต้องกำหนดตรรกะของระเบียงพัฒนา คุมเส้นสัญญา และปกป้องประโยชน์สาธารณะด้วยตัวชี้วัดที่วัดได้",
       "zh": "Government should set corridor logic, hold the contract line, and protect public interest with measurable KPIs."
     },
     "privateRole": {
       "en": "Bring capex, operating know-how, and revenue discipline where demand is already visible.",
-      "th": "เอกชนต้องเอา capex ความรู้เดินระบบ และวินัยรายได้เข้ามา ในจุดที่ดีมานด์เห็นชัดอยู่แล้ว",
+      "th": "เอกชนต้องเอาเงินลงทุน ความรู้เดินระบบ และวินัยรายได้เข้ามา ในจุดที่เห็นความต้องการชัดอยู่แล้ว",
       "zh": "Private capital should bring capex, operating know-how, and revenue discipline where demand is already visible."
     },
     "riskAllocation": {
@@ -406,27 +598,27 @@
       "segment": "alpha",
       "reasonSummary": {
         "en": "Asset Recycling fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. Better than begging for new money while underused public assets sit there doing nothing.",
-        "th": "Asset Recycling fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. ดีกว่านั่งขอเงินใหม่ ทั้งที่สินทรัพย์รัฐที่ใช้ไม่คุ้มยังนอนนิ่งอยู่",
-        "zh": "Asset Recycling fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. Better than begging for new money while underused public assets sit there doing nothing."
+        "th": "รีไซเคิลสินทรัพย์รัฐ เหมาะกับ คลองผดุงกรุงเกษม เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ดีกว่านั่งขอเงินใหม่ ทั้งที่สินทรัพย์รัฐที่ใช้ไม่คุ้มยังนอนนิ่งอยู่",
+        "zh": "Asset Recycling fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. 总比一边哭穷一边把闲置公共资产晾着强。"
       },
       "whyNow": {
         "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 65/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 65/100",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 65/100",
         "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 65/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should hold land, standards, permits, and the policy floor.",
-        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และฐานนโยบาย",
         "zh": "Government should hold land, standards, permits, and the policy floor."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -455,27 +647,27 @@
       "segment": "alpha",
       "reasonSummary": {
         "en": "Performance Contract fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes.",
-        "th": "Performance Contract fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. เมืองที่ยังรับ capex ก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
-        "zh": "Performance Contract fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. Cities that cannot stomach big capex can still pay for verified outcomes."
+        "th": "สัญญาอิงผลลัพธ์ เหมาะกับ คลองผดุงกรุงเกษม เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ เมืองที่ยังรับเงินลงทุนก้อนใหญ่ไม่ไหว ยังสามารถจ่ายตามผลลัพธ์ที่พิสูจน์ได้",
+        "zh": "Performance Contract fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. 即便扛不起大额前期投资，城市仍可为已验证结果付费。"
       },
       "whyNow": {
         "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 65/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 65/100",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 65/100",
         "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 65/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should hold land, standards, permits, and the policy floor.",
-        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และฐานนโยบาย",
         "zh": "Government should hold land, standards, permits, and the policy floor."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -489,6 +681,17 @@
           "observedAt": "2026-03-01T00:00:00.000Z",
           "confidence": 0.9,
           "summary": "Outcome-based contracts make sense where performance can be metered."
+        },
+        {
+          "id": "klong-phadung-greenCoverage",
+          "supportType": "metric",
+          "metricKey": "greenCoverage",
+          "metricLabel": "Green coverage",
+          "sourceId": "gistda",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Green coverage provides a resilience baseline for outcome measurement."
         }
       ],
       "version": "2026.04-cdp-v1"
@@ -504,27 +707,27 @@
       "segment": "alpha",
       "reasonSummary": {
         "en": "Land Value Capture fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away.",
-        "th": "Land Value Capture fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. ถ้าเมืองเป็นคนสร้างมูลค่าเพิ่ม เมืองก็ควรเก็บบางส่วนกลับมา ไม่ใช่ปล่อยให้ไหลออกหมด",
-        "zh": "Land Value Capture fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. If the city creates the uplift, it should capture part of that uplift instead of gifting it away."
+        "th": "จับมูลค่าที่ดิน เหมาะกับ คลองผดุงกรุงเกษม เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ถ้าเมืองเป็นคนสร้างมูลค่าเพิ่ม เมืองก็ควรเก็บบางส่วนกลับมา ไม่ใช่ปล่อยให้ไหลออกหมด",
+        "zh": "Land Value Capture fits Klong Phadung Krung Kasem because its metrics and operating context create a credible use case. 如果增值由城市创造，城市就该拿回其中一部分。"
       },
       "whyNow": {
         "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 65/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 65/100",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 65/100",
         "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 65/100."
       },
       "nextStep": {
         "en": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
-        "th": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city.",
+        "th": "ทำแผนที่พื้นที่มูลค่าเพิ่ม กำหนดเงื่อนไขงานสาธารณะ และล็อกกติกาจับมูลค่าก่อนการเก็งกำไรที่ดินจะนำหน้าเมือง",
         "zh": "Map the uplift zone, define the public works trigger, and lock the capture rule before land speculation outruns the city."
       },
       "publicFundingRole": {
         "en": "Government should hold land, standards, permits, and the policy floor.",
-        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และ policy floor",
+        "th": "ภาครัฐควรถือที่ดิน มาตรฐาน ใบอนุญาต และฐานนโยบาย",
         "zh": "Government should hold land, standards, permits, and the policy floor."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -591,7 +794,7 @@
   "exportMetadata": {
     "latestObservedAt": "2026-04-01T00:00:00.000Z",
     "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
-    "provenanceCount": 9,
+    "provenanceCount": 18,
     "summaryCsvUrl": "/api/exports/cities-summary.csv",
     "factsCsvUrl": "/api/exports/city-facts.csv",
     "cityCsvUrl": "/api/cities/klong-phadung/export.csv"

@@ -750,6 +750,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     if (!iso) return null;
     const t = Date.parse(iso);
     if (Number.isNaN(t)) return null;
+    // eslint-disable-next-line react-hooks/purity
     return Math.max(0, Math.floor((Date.now() - t) / 86_400_000));
   };
   const freshnessDays = daysAgo(city.freshness.latestObservedAt);

@@ -10,7 +10,7 @@
 // unambiguous. Uncertain cities are omitted — the UI simply hides the badge.
 // ---------------------------------------------------------------------------
 
-import type { CityLeague } from "./types";
+import type { CityLeague } from "./types.ts";
 
 export const CITY_LEAGUES: Record<string, CityLeague> = {
   // ─── Province (whole-province smart-city coverage) ───

@@ -21,50 +21,35 @@
       "hospitality": 40,
       "digital": 30
     },
-    "metrics": {
-      "population": 0
-    },
+    "metrics": {},
     "compositeScore": 39.5,
     "tier": "gamma",
     "tagline": "Promotion zone — awaiting sufficient data for full assessment.",
     "taglineTh": "เขตส่งเสริม — รอข้อมูลเพียงพอสำหรับการประเมินเต็มรูปแบบ",
     "highlights": [],
     "dataConfidence": "low",
-    "keyMetrics": [
-      {
-        "key": "population",
-        "label": {
-          "en": "Population",
-          "th": "ประชากร",
-          "zh": "人口"
-        },
-        "value": "0K",
-        "unit": "people",
-        "confidence": "low",
-        "sourceId": "nso"
-      }
-    ],
+    "keyMetrics": [],
     "shortTailoredNote": {
-      "en": "Yasothon Municipality leans on livability but still gets capped by digital. That's where the backend should keep drilling.",
-      "th": "เทศบาลเมืองยโสธร มีแรงหลักอยู่ที่livability แต่ยังถูกกดเพดานโดยdigital ตรงนี้แหละที่ backend ต้องขุดต่อ",
-      "zh": "Yasothon Municipality leans on livability but is still capped by digital. That's where the backend should keep drilling."
+      "en": "The practical opportunity is to turn the daily urban services agenda into a measurable service: publish baseline data, name the operator, and show residents what changed. Watch the constraint: The key constraint is registry status: being in the depa promotion registry is not the same thing as live deployment, so this dossier should stay conservative until public implementation evidence appears.",
+      "th": "โอกาสที่จับต้องได้คือเปลี่ยนวาระบริการเมืองในชีวิตประจำวันให้เป็นบริการที่วัดผลได้: เปิดข้อมูลตั้งต้น ระบุผู้เดินระบบ และแสดงให้ประชาชนเห็นว่าอะไรเปลี่ยนไป แต่ต้องระวัง: ข้อจำกัดหลักคือสถานะในทะเบียน: การอยู่ในทะเบียนส่งเสริมของ depa ไม่ใช่สิ่งเดียวกับการมีระบบใช้งานจริง ดอสซิเยร์นี้จึงควรเล่าอย่างระมัดระวังจนกว่าจะมีหลักฐานสาธารณะของการดำเนินงาน",
+      "zh": "The practical opportunity is to turn the daily urban services agenda into a measurable service: publish baseline data, name the operator, and show residents what changed. Watch the constraint: The key constraint is registry status: being in the depa promotion registry is not the same thing as live deployment, so this dossier should stay conservative until public implementation evidence appears."
     },
     "financeSignal": {
-      "leadInstrumentId": "pooled-procurement",
-      "leadInstrumentName": "Pooled Procurement",
+      "leadInstrumentId": "technical-assistance-grant",
+      "leadInstrumentName": "Technical Assistance Grant",
       "line": {
-        "en": "Pooled Procurement leads because Yasothon Municipality is foundational with a acute risk profile.",
-        "th": "Pooled Procurement นำ เพราะ เทศบาลเมืองยโสธร อยู่ในระดับ foundational และมีความเสี่ยงแบบ acute",
-        "zh": "Pooled Procurement leads because Yasothon Municipality is foundational with a acute risk profile."
+        "en": "Technical Assistance Grant leads because Yasothon Municipality is foundational with a low risk profile.",
+        "th": "ทุนช่วยเหลือทางเทคนิค เป็นเครื่องมือนำ เพราะ เทศบาลเมืองยโสธร อยู่ในระดับรากฐาน และมีความเสี่ยงต่ำ",
+        "zh": "Technical Assistance Grant leads because Yasothon Municipality is foundational with a low risk profile."
       },
-      "readinessScore": 3
+      "readinessScore": 21
     },
     "exportReady": true,
     "freshness": {
       "latestObservedAt": "2026-04-01T00:00:00.000Z",
       "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
     },
-    "provenanceCount": 4
+    "provenanceCount": 3
   },
   "contextNotes": [
     {
@@ -76,9 +61,9 @@
         "zh": "定制机会"
       },
       "body": {
-        "en": "Yasothon Municipality has room to turn its livability advantage into a city product instead of another presentation. The clearest wedge is living delivery backed by hard metrics.",
-        "th": "เทศบาลเมืองยโสธร มีโอกาสเปลี่ยนจุดแข็งด้านlivability ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านliving ที่ผูกกับตัวชี้วัดจริง",
-        "zh": "Yasothon Municipality can turn its livability edge into a real city product. The clearest wedge is living delivery tied to hard metrics."
+        "en": "The practical opportunity is to turn the daily urban services agenda into a measurable service: publish baseline data, name the operator, and show residents what changed.",
+        "th": "โอกาสที่จับต้องได้คือเปลี่ยนวาระบริการเมืองในชีวิตประจำวันให้เป็นบริการที่วัดผลได้: เปิดข้อมูลตั้งต้น ระบุผู้เดินระบบ และแสดงให้ประชาชนเห็นว่าอะไรเปลี่ยนไป",
+        "zh": "The practical opportunity is to turn the daily urban services agenda into a measurable service: publish baseline data, name the operator, and show residents what changed."
       }
     },
     {
@@ -90,9 +75,9 @@
         "zh": "约束"
       },
       "body": {
-        "en": "The weakest drag is digital. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.",
-        "th": "ตัวฉุดหลักคือด้านdigital ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม",
-        "zh": "The weakest drag is digital. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes."
+        "en": "The key constraint is registry status: being in the depa promotion registry is not the same thing as live deployment, so this dossier should stay conservative until public implementation evidence appears.",
+        "th": "ข้อจำกัดหลักคือสถานะในทะเบียน: การอยู่ในทะเบียนส่งเสริมของ depa ไม่ใช่สิ่งเดียวกับการมีระบบใช้งานจริง ดอสซิเยร์นี้จึงควรเล่าอย่างระมัดระวังจนกว่าจะมีหลักฐานสาธารณะของการดำเนินงาน",
+        "zh": "The key constraint is registry status: being in the depa promotion registry is not the same thing as live deployment, so this dossier should stay conservative until public implementation evidence appears."
       }
     },
     {
@@ -105,7 +90,7 @@
       },
       "body": {
         "en": "Do not finance dashboard theatre before the physical city exists. Pipe, wire, rights-of-way, and service operators come first.",
-        "th": "อย่าไปลงเงินกับ dashboard theatre ก่อนที่เมืองทางกายภาพจะมีจริง ท่อ สาย สิทธิทาง และผู้เดินระบบ ต้องมาก่อน",
+        "th": "อย่าไปลงเงินกับ การทำแดชบอร์ดไว้โชว์ ก่อนที่เมืองทางกายภาพจะมีจริง ท่อ สาย สิทธิทาง และผู้เดินระบบ ต้องมาก่อน",
         "zh": "Do not fund dashboard theatre before the physical city exists. Pipes, wires, rights-of-way, and operators come first."
       }
     },
@@ -118,50 +103,13 @@
         "zh": "可输出经验"
       },
       "body": {
-        "en": "Yasothon Municipality is most exportable when it acts like itself. The reusable lesson is how it turns livability into something operational.",
-        "th": "เทศบาลเมืองยโสธร ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนlivability ให้เป็นระบบปฏิบัติการ",
-        "zh": "Yasothon Municipality becomes exportable when it acts like itself. The reusable lesson is how it turns livability into operations."
+        "en": "The practical opportunity is to turn the daily urban services agenda into a measurable service: publish baseline data, name the operator, and show residents what changed.",
+        "th": "โอกาสที่จับต้องได้คือเปลี่ยนวาระบริการเมืองในชีวิตประจำวันให้เป็นบริการที่วัดผลได้: เปิดข้อมูลตั้งต้น ระบุผู้เดินระบบ และแสดงให้ประชาชนเห็นว่าอะไรเปลี่ยนไป",
+        "zh": "The practical opportunity is to turn the daily urban services agenda into a measurable service: publish baseline data, name the operator, and show residents what changed."
       }
     }
   ],
-  "metricBlocks": [
-    {
-      "id": "economic-readiness",
-      "title": {
-        "en": "Economic readiness",
-        "th": "ฐานเศรษฐกิจ",
-        "zh": "经济基础"
-      },
-      "summary": {
-        "en": "What scale of capital this city can plausibly absorb without making up demand.",
-        "th": "เมืองนี้รับเงินลงทุนระดับไหนได้จริงโดยไม่ต้องแต่งดีมานด์",
-        "zh": "This block shows how much capital the city can plausibly absorb without inventing demand."
-      },
-      "observations": [
-        {
-          "cityId": "reg-yasothon",
-          "metricKey": "population",
-          "label": {
-            "en": "Population",
-            "th": "ประชากร",
-            "zh": "人口"
-          },
-          "metricValueNum": 0,
-          "metricValueText": "0K",
-          "unit": "people",
-          "periodLabel": "2025 baseline",
-          "sourceId": "nso",
-          "sourceName": "National Statistical Office (NSO)",
-          "sourceUrl": "https://www.nso.go.th",
-          "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
-          "methodNote": "Baseline city population from index input; used as scale proxy.",
-          "verifiedAt": "2026-04-04T00:00:00.000Z",
-          "version": "2026.04-cdp-v1"
-        }
-      ]
-    }
-  ],
+  "metricBlocks": [],
   "deliveryProfile": {
     "cityId": "reg-yasothon",
     "visionStatus": "building",
@@ -172,23 +120,23 @@
     "recommendedLeadStep": "infrastructure",
     "deliveryNote": {
       "en": "Gamma cities should build the boring essentials first: grants, pooled procurement, data plumbing, and civic-scale pilots before dashboard theatre.",
-      "th": "เมือง Gamma ต้องสร้างของจำเป็นที่น่าเบื่อก่อน: เงินอุดหนุน การจัดซื้อรวม ระบบข้อมูลพื้นฐาน และ pilot ขนาดชุมชน ก่อนจะเล่นละครแดชบอร์ด",
+      "th": "เมือง Gamma ต้องสร้างของจำเป็นที่น่าเบื่อก่อน: เงินอุดหนุน การจัดซื้อรวม ระบบข้อมูลพื้นฐาน และโครงการนำร่องระดับชุมชน ก่อนจะเล่นละครแดชบอร์ด",
       "zh": "Gamma 城市应先把那些“无聊但必要”的底座搭好：补助、联合采购、数据底座和社区级试点，然后再谈仪表板表演。"
     },
     "publicRole": {
       "en": "Fund the boring baseline, standardize procurement, and protect service continuity.",
-      "th": "รัฐต้องจ่ายของพื้นฐานที่น่าเบื่อ มาตรฐาน procurement และคุ้มครองความต่อเนื่องของบริการ",
+      "th": "รัฐต้องจ่ายของพื้นฐานที่น่าเบื่อ วางมาตรฐานการจัดซื้อ และคุ้มครองความต่อเนื่องของบริการ",
       "zh": "Government should fund the boring baseline, standardize procurement, and protect service continuity."
     },
     "privateRole": {
       "en": "Supply practical service packages and maintenance, not vanity tech stacks.",
-      "th": "เอกชนควรขายชุดบริการใช้งานจริงพร้อมบำรุงรักษา ไม่ใช่สแต็กเทคโชว์",
+      "th": "เอกชนควรขายชุดบริการใช้งานจริงพร้อมบำรุงรักษา ไม่ใช่ชุดเทคโนโลยีไว้โชว์",
       "zh": "Private providers should supply practical service packages and maintenance, not vanity tech stacks."
     },
     "riskAllocation": {
-      "en": "Do not dump core demand risk on the private side. Stage the project until the city earns trust with data.",
-      "th": "อย่าโยนความเสี่ยงดีมานด์หลักไปฝั่งเอกชน ให้แบ่งเป็นช่วงจนเมืองสร้างความเชื่อมั่นจากข้อมูลได้ก่อน",
-      "zh": "Do not dump core demand risk on the private side. Stage the project until the city earns trust with data."
+      "en": "Construction and operating risk can move outward; policy and land assembly should stay public.",
+      "th": "ความเสี่ยงก่อสร้างและเดินระบบโยนออกไปได้ แต่ความเสี่ยงเชิงนโยบายและการจัดที่ดินควรอยู่ฝั่งรัฐ",
+      "zh": "Construction and operating risk can move outward, but policy and land assembly should stay public."
     },
     "contractLens": {
       "en": "Tie payment to service availability, resilience, and maintenance handover.",
@@ -203,59 +151,104 @@
     "institutionalCapacity": "thin",
     "projectPipeline": "thin",
     "privateInterest": "thin",
-    "riskProfile": "acute",
+    "riskProfile": "low",
     "deliveryReadiness": "foundational",
-    "readinessScore": 3,
+    "readinessScore": 21,
     "segment": "gamma",
     "assessedAt": "2026-04-04T00:00:00.000Z",
     "version": "2026.04-cdp-v1"
   },
   "financeRecommendations": [
     {
+      "id": "reg-yasothon-technical-assistance-grant",
+      "cityId": "reg-yasothon",
+      "instrumentId": "technical-assistance-grant",
+      "instrumentName": "Technical Assistance Grant",
+      "priority": "lead",
+      "priorityScore": 86,
+      "stage": "planned",
+      "segment": "gamma",
+      "reasonSummary": {
+        "en": "Yasothon Municipality has registry standing but no public implementation evidence yet; the finance case should stay at project definition and baseline funding. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess.",
+        "th": "เทศบาลเมืองยโสธร มีสถานะในทะเบียน แต่ยังไม่มีหลักฐานสาธารณะด้านการดำเนินงาน จึงควรจำกัดกรอบการเงินไว้ที่การนิยามโครงการและงบตั้งต้น ถ้าเมืองยังนิยามโครงการไม่ชัด เอาเงินก้อนใหญ่ไปใส่ก็แค่ทำให้ความเละเทะแพงขึ้น",
+        "zh": "Yasothon Municipality has registry standing but no public implementation evidence yet; the finance case should stay at project definition and baseline funding. 如果项目定义都还没站稳，往里砸更大的钱只是更贵的混乱。"
+      },
+      "whyNow": {
+        "en": "Because registry status is not deployment evidence; the next cycle should clarify baseline data before capital is sized. Readiness score: 21/100.",
+        "th": "เพราะสถานะในทะเบียนยังไม่ใช่หลักฐานการใช้งานจริง รอบถัดไปควรทำข้อมูลตั้งต้นให้ชัดก่อนกำหนดวงเงิน คะแนนความพร้อม: 21/100",
+        "zh": "Because registry status is not deployment evidence; the next cycle should clarify baseline data before capital is sized. Readiness score: 21/100."
+      },
+      "nextStep": {
+        "en": "Publish the population boundary, operator, project owner, baseline dataset, and first verifiable implementation milestone before naming a commercial instrument.",
+        "th": "ประกาศขอบเขตประชากร ผู้เดินระบบ เจ้าของโครงการ ชุดข้อมูลตั้งต้น และหมุดหมายการดำเนินงานที่ตรวจสอบได้ ก่อนระบุเครื่องมือการเงินเชิงพาณิชย์",
+        "zh": "Publish the population boundary, operator, project owner, baseline dataset, and first verifiable implementation milestone before naming a commercial instrument."
+      },
+      "publicFundingRole": {
+        "en": "Government should pay for baseline readiness and civic safeguards.",
+        "th": "ภาครัฐควรจ่ายความพร้อมตั้งต้นและระบบคุ้มครองสาธารณะ",
+        "zh": "Government should pay for baseline readiness and civic safeguards."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "reg-yasothon-registry-status",
+          "supportType": "evidence",
+          "sourceId": "depa",
+          "sourceUrl": "https://www.depa.or.th/th/smart-city-plan/existing-smart-city",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.62,
+          "summary": "Registry status only: use this as a project-definition signal, not live deployment evidence."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
       "id": "reg-yasothon-pooled-procurement",
       "cityId": "reg-yasothon",
       "instrumentId": "pooled-procurement",
       "instrumentName": "Pooled Procurement",
-      "priority": "lead",
-      "priorityScore": 94,
+      "priority": "secondary",
+      "priorityScore": 82,
       "stage": "planned",
       "segment": "gamma",
       "reasonSummary": {
-        "en": "Pooled Procurement fits Yasothon Municipality because its metrics and operating context create a credible use case. For gamma cities, scale usually comes from the buying coalition, not from the city itself.",
-        "th": "Pooled Procurement fits Yasothon Municipality because its metrics and operating context create a credible use case. สำหรับเมือง gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
-        "zh": "Pooled Procurement fits Yasothon Municipality because its metrics and operating context create a credible use case. For gamma cities, scale usually comes from the buying coalition, not from the city itself."
+        "en": "Yasothon Municipality has registry standing but no public implementation evidence yet; the finance case should stay at project definition and baseline funding. For gamma cities, scale usually comes from the buying coalition, not from the city itself.",
+        "th": "เทศบาลเมืองยโสธร มีสถานะในทะเบียน แต่ยังไม่มีหลักฐานสาธารณะด้านการดำเนินงาน จึงควรจำกัดกรอบการเงินไว้ที่การนิยามโครงการและงบตั้งต้น สำหรับเมืองระดับ Gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
+        "zh": "Yasothon Municipality has registry standing but no public implementation evidence yet; the finance case should stay at project definition and baseline funding. 对 gamma 城市来说，规模通常来自联合采购，而不是单城本身。"
       },
       "whyNow": {
-        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 3/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 3/100",
-        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 3/100."
+        "en": "Because registry status is not deployment evidence; the next cycle should clarify baseline data before capital is sized. Readiness score: 21/100.",
+        "th": "เพราะสถานะในทะเบียนยังไม่ใช่หลักฐานการใช้งานจริง รอบถัดไปควรทำข้อมูลตั้งต้นให้ชัดก่อนกำหนดวงเงิน คะแนนความพร้อม: 21/100",
+        "zh": "Because registry status is not deployment evidence; the next cycle should clarify baseline data before capital is sized. Readiness score: 21/100."
       },
       "nextStep": {
-        "en": "Bundle the commodity stack with peer cities and buy maintenance with the hardware.",
-        "th": "Bundle the commodity stack with peer cities and buy maintenance with the hardware.",
-        "zh": "Bundle the commodity stack with peer cities and buy maintenance with the hardware."
+        "en": "Publish the population boundary, operator, project owner, baseline dataset, and first verifiable implementation milestone before naming a commercial instrument.",
+        "th": "ประกาศขอบเขตประชากร ผู้เดินระบบ เจ้าของโครงการ ชุดข้อมูลตั้งต้น และหมุดหมายการดำเนินงานที่ตรวจสอบได้ ก่อนระบุเครื่องมือการเงินเชิงพาณิชย์",
+        "zh": "Publish the population boundary, operator, project owner, baseline dataset, and first verifiable implementation milestone before naming a commercial instrument."
       },
       "publicFundingRole": {
         "en": "Government should pay for baseline readiness and civic safeguards.",
-        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
+        "th": "ภาครัฐควรจ่ายความพร้อมตั้งต้นและระบบคุ้มครองสาธารณะ",
         "zh": "Government should pay for baseline readiness and civic safeguards."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
         {
-          "id": "reg-yasothon-population",
-          "supportType": "metric",
-          "metricKey": "population",
-          "metricLabel": "Population",
-          "sourceId": "nso",
-          "sourceUrl": "https://www.nso.go.th",
+          "id": "reg-yasothon-registry-status",
+          "supportType": "evidence",
+          "sourceId": "depa",
+          "sourceUrl": "https://www.depa.or.th/th/smart-city-plan/existing-smart-city",
           "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
-          "summary": "Small scale supports pooled rather than bespoke procurement."
+          "confidence": 0.62,
+          "summary": "Registry status only: use this as a project-definition signal, not live deployment evidence."
         }
       ],
       "version": "2026.04-cdp-v1"
@@ -265,95 +258,44 @@
       "cityId": "reg-yasothon",
       "instrumentId": "government-budget",
       "instrumentName": "Government Budget / Grant",
-      "priority": "secondary",
-      "priorityScore": 90,
-      "stage": "planned",
-      "segment": "gamma",
-      "reasonSummary": {
-        "en": "Yasothon Municipality still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated.",
-        "th": "Yasothon Municipality still needs public risk-bearing for foundational delivery. บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
-        "zh": "Yasothon Municipality still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated."
-      },
-      "whyNow": {
-        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 3/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 3/100",
-        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 3/100."
-      },
-      "nextStep": {
-        "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
-      },
-      "publicFundingRole": {
-        "en": "Government should pay for baseline readiness and civic safeguards.",
-        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
-        "zh": "Government should pay for baseline readiness and civic safeguards."
-      },
-      "privateCapitalRole": {
-        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
-        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
-        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
-      },
-      "supports": [
-        {
-          "id": "reg-yasothon-population",
-          "supportType": "metric",
-          "metricKey": "population",
-          "metricLabel": "Population",
-          "sourceId": "nso",
-          "sourceUrl": "https://www.nso.go.th",
-          "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
-          "summary": "Population scale affects the public-good case for grant funding."
-        }
-      ],
-      "version": "2026.04-cdp-v1"
-    },
-    {
-      "id": "reg-yasothon-technical-assistance-grant",
-      "cityId": "reg-yasothon",
-      "instrumentId": "technical-assistance-grant",
-      "instrumentName": "Technical Assistance Grant",
       "priority": "watch",
-      "priorityScore": 86,
+      "priorityScore": 72,
       "stage": "planned",
       "segment": "gamma",
       "reasonSummary": {
-        "en": "Yasothon Municipality needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess.",
-        "th": "Yasothon Municipality needs sharper project definition and procurement readiness before bigger money. ถ้าเมืองยังนิยามโครงการไม่ชัด เอาเงินก้อนใหญ่ไปใส่ก็แค่ทำให้ความเละเทะแพงขึ้น",
-        "zh": "Yasothon Municipality needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess."
+        "en": "Yasothon Municipality has registry standing but no public implementation evidence yet; the finance case should stay at project definition and baseline funding. Some things should not be tortured into fake bankability just to sound sophisticated.",
+        "th": "เทศบาลเมืองยโสธร มีสถานะในทะเบียน แต่ยังไม่มีหลักฐานสาธารณะด้านการดำเนินงาน จึงควรจำกัดกรอบการเงินไว้ที่การนิยามโครงการและงบตั้งต้น บางอย่างไม่ควรถูกบิดให้ดูน่าเชื่อทางการเงินแบบปลอมๆ แค่เพื่อให้ฟังหรู",
+        "zh": "Yasothon Municipality has registry standing but no public implementation evidence yet; the finance case should stay at project definition and baseline funding. 有些项目不该为了显得高级而被硬拗成“可融资”。"
       },
       "whyNow": {
-        "en": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 3/100.",
-        "th": "Because unreadiness is cheaper to fix now than after a failed capital program. คะแนน readiness: 3/100",
-        "zh": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 3/100."
+        "en": "Because registry status is not deployment evidence; the next cycle should clarify baseline data before capital is sized. Readiness score: 21/100.",
+        "th": "เพราะสถานะในทะเบียนยังไม่ใช่หลักฐานการใช้งานจริง รอบถัดไปควรทำข้อมูลตั้งต้นให้ชัดก่อนกำหนดวงเงิน คะแนนความพร้อม: 21/100",
+        "zh": "Because registry status is not deployment evidence; the next cycle should clarify baseline data before capital is sized. Readiness score: 21/100."
       },
       "nextStep": {
-        "en": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
-        "th": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
-        "zh": "Write the feasibility package, data governance note, and procurement scope before applying for capital."
+        "en": "Publish the population boundary, operator, project owner, baseline dataset, and first verifiable implementation milestone before naming a commercial instrument.",
+        "th": "ประกาศขอบเขตประชากร ผู้เดินระบบ เจ้าของโครงการ ชุดข้อมูลตั้งต้น และหมุดหมายการดำเนินงานที่ตรวจสอบได้ ก่อนระบุเครื่องมือการเงินเชิงพาณิชย์",
+        "zh": "Publish the population boundary, operator, project owner, baseline dataset, and first verifiable implementation milestone before naming a commercial instrument."
       },
       "publicFundingRole": {
         "en": "Government should pay for baseline readiness and civic safeguards.",
-        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
+        "th": "ภาครัฐควรจ่ายความพร้อมตั้งต้นและระบบคุ้มครองสาธารณะ",
         "zh": "Government should pay for baseline readiness and civic safeguards."
       },
       "privateCapitalRole": {
         "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
-        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้",
         "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
       },
       "supports": [
         {
-          "id": "reg-yasothon-population",
-          "supportType": "metric",
-          "metricKey": "population",
-          "metricLabel": "Population",
-          "sourceId": "nso",
-          "sourceUrl": "https://www.nso.go.th",
+          "id": "reg-yasothon-registry-status",
+          "supportType": "evidence",
+          "sourceId": "depa",
+          "sourceUrl": "https://www.depa.or.th/th/smart-city-plan/existing-smart-city",
           "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
-          "summary": "City scale shapes the right size for first-phase technical support."
+          "confidence": 0.62,
+          "summary": "Registry status only: use this as a project-definition signal, not live deployment evidence."
         }
       ],
       "version": "2026.04-cdp-v1"
@@ -407,7 +349,7 @@
   "exportMetadata": {
     "latestObservedAt": "2026-04-01T00:00:00.000Z",
     "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
-    "provenanceCount": 4,
+    "provenanceCount": 3,
     "summaryCsvUrl": "/api/exports/cities-summary.csv",
     "factsCsvUrl": "/api/exports/city-facts.csv",
     "cityCsvUrl": "/api/cities/reg-yasothon/export.csv"

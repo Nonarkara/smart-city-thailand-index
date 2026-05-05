@@ -25,6 +25,7 @@ const KnowledgePage = lazy(() => import("./KnowledgePage"));
 const DiscoverPage = lazy(() => import("./DiscoverPage"));
 const InvestPage = lazy(() => import("./InvestPage"));
 const ComparePage = lazy(() => import("./ComparePage"));
+import DataFeedback from "./DataFeedback";
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 const THEME_STORAGE_KEY = "smart-city-thailand-theme";
@@ -335,6 +336,8 @@ export default function App() {
             )}
           </Suspense>
         </ErrorBoundary>
+        
+        <DataFeedback locale={locale} />
       </main>
 
       {!isDashboardRoute && (

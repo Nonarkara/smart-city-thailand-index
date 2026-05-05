@@ -25,7 +25,20 @@
       "digital": 40
     },
     "metrics": {
-      "population": 0
+      "population": 0,
+      "gppPerCapita": 628000,
+      "avgMonthlyIncome": 40200,
+      "pm25Annual": 32.4,
+      "hospitalBedsPer10k": 42,
+      "crimeRatePer100k": 285,
+      "greenCoverage": 15,
+      "gppGrowthRate": 2.1,
+      "pm25Trend": "stable",
+      "waterQuality": 55,
+      "forestCoverage": 11,
+      "fdiInflow": 12500,
+      "industryComposition": "services 72%, manufacturing 18%, agriculture 1%, other 9%",
+      "laborForce": 4200
     },
     "compositeScore": 35.3,
     "tier": "gamma",
@@ -36,42 +49,79 @@
       "Environmental impact assessment done",
       "Transit integration design with Airport Rail Link"
     ],
-    "dataConfidence": "low",
+    "dataConfidence": "high",
+    "league": "district",
     "keyMetrics": [
       {
-        "key": "population",
+        "key": "gppPerCapita",
         "label": {
-          "en": "Population",
-          "th": "ประชากร",
-          "zh": "人口"
+          "en": "GPP per capita",
+          "th": "GPP ต่อหัว",
+          "zh": "人均 GPP"
         },
-        "value": "0K",
-        "unit": "people",
-        "confidence": "low",
-        "sourceId": "nso"
+        "value": "฿628,000",
+        "unit": "THB",
+        "confidence": "high",
+        "sourceId": "nesdc"
+      },
+      {
+        "key": "pm25Annual",
+        "label": {
+          "en": "Annual PM2.5",
+          "th": "PM2.5 เฉลี่ยรายปี",
+          "zh": "年均 PM2.5"
+        },
+        "value": "32.4",
+        "unit": "ug/m3",
+        "confidence": "high",
+        "sourceId": "pcd"
+      },
+      {
+        "key": "waterQuality",
+        "label": {
+          "en": "Water quality index",
+          "th": "ดัชนีคุณภาพน้ำ",
+          "zh": "水质指数"
+        },
+        "value": "55",
+        "unit": "/100",
+        "confidence": "high",
+        "sourceId": "onep"
+      },
+      {
+        "key": "gppGrowthRate",
+        "label": {
+          "en": "GPP growth rate",
+          "th": "อัตราเติบโต GPP",
+          "zh": "GPP 增长率"
+        },
+        "value": "2.1",
+        "unit": "%",
+        "confidence": "high",
+        "sourceId": "nesdc"
       }
     ],
     "shortTailoredNote": {
-      "en": "Makkasan Smart City leans on safety but still gets capped by hospitality. That's where the backend should keep drilling.",
-      "th": "มักกะสันสมาร์ทซิตี้ มีแรงหลักอยู่ที่safety แต่ยังถูกกดเพดานโดยhospitality ตรงนี้แหละที่ backend ต้องขุดต่อ",
-      "zh": "Makkasan Smart City leans on safety but is still capped by hospitality. That's where the backend should keep drilling."
+      "en": "If the transit hub is built, the location (central Bangkok, next to Airport Rail Link) is genuinely world-class. The land value alone justifies smart infrastructure. Watch the constraint: Zero residents. Zero infrastructure. Zero timeline. The logo was awarded to a concept. This is exactly why this index measures reality.",
+      "th": "ถ้าศูนย์กลางขนส่งถูกสร้าง ทำเล (กลางกรุงเทพฯ ติด Airport Rail Link) เป็นระดับโลกจริง มูลค่าที่ดินเพียงอย่างเดียวก็คุ้มค่าโครงสร้างพื้นฐานอัจฉริยะ แต่ต้องระวัง: ผู้อยู่อาศัย ศูนย์ โครงสร้างพื้นฐาน ศูนย์ ไทม์ไลน์ ศูนย์ ตราสัญลักษณ์มอบให้กับแนวคิด นี่คือเหตุผลที่ดัชนีนี้วัดความจริง",
+      "zh": "If the transit hub is built, the location (central Bangkok, next to Airport Rail Link) is genuinely world-class. The land value alone justifies smart infrastructure. Watch the constraint: Zero residents. Zero infrastructure. Zero timeline. The logo was awarded to a concept. This is exactly why this index measures reality."
     },
     "financeSignal": {
-      "leadInstrumentId": "pooled-procurement",
-      "leadInstrumentName": "Pooled Procurement",
+      "leadInstrumentId": "technical-assistance-grant",
+      "leadInstrumentName": "Technical Assistance Grant",
       "line": {
-        "en": "Pooled Procurement leads because Makkasan Smart City is foundational with a acute risk profile.",
-        "th": "Pooled Procurement นำ เพราะ มักกะสันสมาร์ทซิตี้ อยู่ในระดับ foundational และมีความเสี่ยงแบบ acute",
-        "zh": "Pooled Procurement leads because Makkasan Smart City is foundational with a acute risk profile."
+        "en": "Technical Assistance Grant leads because Makkasan Smart City is foundational with a acute risk profile.",
+        "th": "ทุนช่วยเหลือทางเทคนิค เป็นเครื่องมือนำ เพราะ มักกะสันสมาร์ทซิตี้ อยู่ในระดับรากฐาน และมีความเสี่ยงวิกฤต",
+        "zh": "Technical Assistance Grant leads because Makkasan Smart City is foundational with a acute risk profile."
       },
-      "readinessScore": 10
+      "readinessScore": 23
     },
     "exportReady": true,
     "freshness": {
       "latestObservedAt": "2026-04-01T00:00:00.000Z",
       "lastVerifiedAt": "2026-04-04T00:00:00.000Z"
     },
-    "provenanceCount": 4
+    "provenanceCount": 17
   },
   "contextNotes": [
     {
@@ -83,9 +133,9 @@
         "zh": "定制机会"
       },
       "body": {
-        "en": "Makkasan Smart City has room to turn its safety advantage into a city product instead of another presentation. The clearest wedge is economy delivery backed by hard metrics.",
-        "th": "มักกะสันสมาร์ทซิตี้ มีโอกาสเปลี่ยนจุดแข็งด้านsafety ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้านeconomy ที่ผูกกับตัวชี้วัดจริง",
-        "zh": "Makkasan Smart City can turn its safety edge into a real city product. The clearest wedge is economy delivery tied to hard metrics."
+        "en": "If the transit hub is built, the location (central Bangkok, next to Airport Rail Link) is genuinely world-class. The land value alone justifies smart infrastructure.",
+        "th": "ถ้าศูนย์กลางขนส่งถูกสร้าง ทำเล (กลางกรุงเทพฯ ติด Airport Rail Link) เป็นระดับโลกจริง มูลค่าที่ดินเพียงอย่างเดียวก็คุ้มค่าโครงสร้างพื้นฐานอัจฉริยะ",
+        "zh": "If the transit hub is built, the location (central Bangkok, next to Airport Rail Link) is genuinely world-class. The land value alone justifies smart infrastructure."
       }
     },
     {
@@ -97,9 +147,9 @@
         "zh": "约束"
       },
       "body": {
-        "en": "The weakest drag is hospitality. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.",
-        "th": "ตัวฉุดหลักคือด้านhospitality ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม",
-        "zh": "The weakest drag is hospitality. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes."
+        "en": "Zero residents. Zero infrastructure. Zero timeline. The logo was awarded to a concept. This is exactly why this index measures reality.",
+        "th": "ผู้อยู่อาศัย ศูนย์ โครงสร้างพื้นฐาน ศูนย์ ไทม์ไลน์ ศูนย์ ตราสัญลักษณ์มอบให้กับแนวคิด นี่คือเหตุผลที่ดัชนีนี้วัดความจริง",
+        "zh": "Zero residents. Zero infrastructure. Zero timeline. The logo was awarded to a concept. This is exactly why this index measures reality."
       }
     },
     {
@@ -112,7 +162,7 @@
       },
       "body": {
         "en": "Do not finance dashboard theatre before the physical city exists. Pipe, wire, rights-of-way, and service operators come first.",
-        "th": "อย่าไปลงเงินกับ dashboard theatre ก่อนที่เมืองทางกายภาพจะมีจริง ท่อ สาย สิทธิทาง และผู้เดินระบบ ต้องมาก่อน",
+        "th": "อย่าไปลงเงินกับ การทำแดชบอร์ดไว้โชว์ ก่อนที่เมืองทางกายภาพจะมีจริง ท่อ สาย สิทธิทาง และผู้เดินระบบ ต้องมาก่อน",
         "zh": "Do not fund dashboard theatre before the physical city exists. Pipes, wires, rights-of-way, and operators come first."
       }
     },
@@ -125,9 +175,9 @@
         "zh": "可输出经验"
       },
       "body": {
-        "en": "Makkasan Smart City is most exportable when it acts like itself. The reusable lesson is how it turns safety into something operational.",
-        "th": "มักกะสันสมาร์ทซิตี้ ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยนsafety ให้เป็นระบบปฏิบัติการ",
-        "zh": "Makkasan Smart City becomes exportable when it acts like itself. The reusable lesson is how it turns safety into operations."
+        "en": "If the transit hub is built, the location (central Bangkok, next to Airport Rail Link) is genuinely world-class. The land value alone justifies smart infrastructure.",
+        "th": "ถ้าศูนย์กลางขนส่งถูกสร้าง ทำเล (กลางกรุงเทพฯ ติด Airport Rail Link) เป็นระดับโลกจริง มูลค่าที่ดินเพียงอย่างเดียวก็คุ้มค่าโครงสร้างพื้นฐานอัจฉริยะ",
+        "zh": "If the transit hub is built, the location (central Bangkok, next to Airport Rail Link) is genuinely world-class. The land value alone justifies smart infrastructure."
       }
     }
   ],
@@ -153,16 +203,334 @@
             "th": "ประชากร",
             "zh": "人口"
           },
-          "metricValueNum": 0,
-          "metricValueText": "0K",
+          "metricValueNum": null,
+          "metricValueText": "Pending public baseline",
           "unit": "people",
           "periodLabel": "2025 baseline",
           "sourceId": "nso",
           "sourceName": "National Statistical Office (NSO)",
           "sourceUrl": "https://www.nso.go.th",
           "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
+          "confidence": 0.9,
           "methodNote": "Baseline city population from index input; used as scale proxy.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "gppPerCapita",
+          "label": {
+            "en": "GPP per capita",
+            "th": "GPP ต่อหัว",
+            "zh": "人均 GPP"
+          },
+          "metricValueNum": 628000,
+          "metricValueText": "฿628,000",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Provincial economic productivity proxy; used for revenue and demand scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "avgMonthlyIncome",
+          "label": {
+            "en": "Average monthly income",
+            "th": "รายได้เฉลี่ยต่อเดือน",
+            "zh": "月均收入"
+          },
+          "metricValueNum": 40200,
+          "metricValueText": "฿40,200",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Household earning proxy; used for affordability and fee tolerance.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "risk-and-resilience",
+      "title": {
+        "en": "Risk and resilience",
+        "th": "ความเสี่ยงและความยืดหยุ่น",
+        "zh": "风险与韧性"
+      },
+      "summary": {
+        "en": "The constraint stack that should shape finance structure, contract terms, and sequencing.",
+        "th": "ชุดข้อจำกัดที่ต้องกำหนดโครงสร้างการเงิน เงื่อนไขสัญญา และลำดับงาน",
+        "zh": "These constraints should shape financing structure, contract terms, and sequencing."
+      },
+      "observations": [
+        {
+          "cityId": "makkasan",
+          "metricKey": "pm25Annual",
+          "label": {
+            "en": "Annual PM2.5",
+            "th": "PM2.5 เฉลี่ยรายปี",
+            "zh": "年均 PM2.5"
+          },
+          "metricValueNum": 32.4,
+          "metricValueText": "32.4",
+          "unit": "ug/m3",
+          "periodLabel": "2025 annual average",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Environmental stress proxy; used for resilience and green finance scoring.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "crimeRatePer100k",
+          "label": {
+            "en": "Crime / 100K",
+            "th": "อาชญากรรม / แสนคน",
+            "zh": "每十万人犯罪率"
+          },
+          "metricValueNum": 285,
+          "metricValueText": "285",
+          "unit": "incidents/100k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rtp",
+          "sourceName": "Royal Thai Police",
+          "sourceUrl": "https://www.royalthaipolice.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Risk proxy; used for contractability and investor comfort.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "greenCoverage",
+          "label": {
+            "en": "Green coverage",
+            "th": "พื้นที่สีเขียว",
+            "zh": "绿化覆盖"
+          },
+          "metricValueNum": 15,
+          "metricValueText": "15",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "gistda",
+          "sourceName": "GISTDA — Satellite Imagery",
+          "sourceUrl": "https://www.gistda.or.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Land/environment quality proxy; used for resilience and amenity value.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "service-capacity",
+      "title": {
+        "en": "Service capacity",
+        "th": "ศักยภาพบริการสาธารณะ",
+        "zh": "服务能力"
+      },
+      "summary": {
+        "en": "Signals for whether the city can operate systems after ribbon-cutting day.",
+        "th": "สัญญาณว่าเมืองจะเดินระบบต่อหลังวันตัดริบบิ้นได้หรือไม่",
+        "zh": "Signals of whether the city can run systems after ribbon-cutting day."
+      },
+      "observations": [
+        {
+          "cityId": "makkasan",
+          "metricKey": "hospitalBedsPer10k",
+          "label": {
+            "en": "Hospital beds / 10K",
+            "th": "เตียงโรงพยาบาล / หมื่นคน",
+            "zh": "每万人床位"
+          },
+          "metricValueNum": 42,
+          "metricValueText": "42",
+          "unit": "beds/10k",
+          "periodLabel": "2025 baseline",
+          "sourceId": "moph",
+          "sourceName": "Ministry of Public Health",
+          "sourceUrl": "https://www.moph.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Public service capacity proxy; used for wellbeing and delivery maturity.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        }
+      ]
+    },
+    {
+      "id": "extended-indicators",
+      "title": {
+        "en": "Extended indicators",
+        "th": "ตัวชี้วัดเชิงลึก",
+        "zh": "扩展指标"
+      },
+      "summary": {
+        "en": "Ground-truth trajectory data most indices ignore: growth direction, environmental trends, real investment flows.",
+        "th": "ข้อมูลทิศทางจากพื้นจริงที่ดัชนีส่วนใหญ่ละเลย: ทิศทางการเติบโต แนวโน้มสิ่งแวดล้อม กระแสการลงทุนจริง",
+        "zh": "大多数指数忽略的实地趋势数据：增长方向、环境走势、真实投资流向。"
+      },
+      "observations": [
+        {
+          "cityId": "makkasan",
+          "metricKey": "gppGrowthRate",
+          "label": {
+            "en": "GPP growth rate",
+            "th": "อัตราเติบโต GPP",
+            "zh": "GPP 增长率"
+          },
+          "metricValueNum": 2.1,
+          "metricValueText": "2.1",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Year-on-year provincial GPP growth (NESDC); shows economic trajectory, not snapshot.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "pm25Trend",
+          "label": {
+            "en": "PM2.5 trend",
+            "th": "แนวโน้ม PM2.5",
+            "zh": "PM2.5 趋势"
+          },
+          "metricValueNum": null,
+          "metricValueText": "stable",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "pcd",
+          "sourceName": "Pollution Control Department (PCD)",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "3-year PM2.5 direction from PCD monitoring; reveals whether air is improving or deteriorating.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "waterQuality",
+          "label": {
+            "en": "Water quality index",
+            "th": "ดัชนีคุณภาพน้ำ",
+            "zh": "水质指数"
+          },
+          "metricValueNum": 55,
+          "metricValueText": "55",
+          "unit": "/100",
+          "periodLabel": "2025 baseline",
+          "sourceId": "onep",
+          "sourceName": "ONEP — Environmental Performance Index",
+          "sourceUrl": "https://www.onep.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "PCD/ONEP composite water quality index (0-100); livability signal most indices ignore.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "forestCoverage",
+          "label": {
+            "en": "Forest coverage",
+            "th": "พื้นที่ป่าไม้",
+            "zh": "森林覆盖率"
+          },
+          "metricValueNum": 11,
+          "metricValueText": "11",
+          "unit": "%",
+          "periodLabel": "2025 baseline",
+          "sourceId": "rfd",
+          "sourceName": "Royal Forest Department",
+          "sourceUrl": "https://www.forest.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "Royal Forest Department provincial forest percentage; ground-truth environmental baseline.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "fdiInflow",
+          "label": {
+            "en": "FDI inflow",
+            "th": "เงินลงทุนจากต่างประเทศ",
+            "zh": "外资流入"
+          },
+          "metricValueNum": 12500,
+          "metricValueText": "฿12,500",
+          "unit": "THB",
+          "periodLabel": "2025 baseline",
+          "sourceId": "boi",
+          "sourceName": "Board of Investment (BOI)",
+          "sourceUrl": "https://ipstat.boi.go.th/",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "BOI-promoted foreign direct investment (million baht); real money, not memoranda of understanding.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "industryComposition",
+          "label": {
+            "en": "Industry mix",
+            "th": "สัดส่วนอุตสาหกรรม",
+            "zh": "产业结构"
+          },
+          "metricValueNum": null,
+          "metricValueText": "services 72%, manufacturing 18%, agriculture 1%, other 9%",
+          "unit": null,
+          "periodLabel": "2025 baseline",
+          "sourceId": "nesdc",
+          "sourceName": "NESDC — GPP Data",
+          "sourceUrl": "https://www.nesdc.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.",
+          "verifiedAt": "2026-04-04T00:00:00.000Z",
+          "version": "2026.04-cdp-v1"
+        },
+        {
+          "cityId": "makkasan",
+          "metricKey": "laborForce",
+          "label": {
+            "en": "Labor force",
+            "th": "กำลังแรงงาน",
+            "zh": "劳动力"
+          },
+          "metricValueNum": 4200,
+          "metricValueText": "4,200K",
+          "unit": "people",
+          "periodLabel": "2025 baseline",
+          "sourceId": "nso",
+          "sourceName": "National Statistical Office (NSO)",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "methodNote": "NSO provincial employed population (thousands); human-scale economic capacity measure.",
           "verifiedAt": "2026-04-04T00:00:00.000Z",
           "version": "2026.04-cdp-v1"
         }
@@ -179,17 +547,17 @@
     "recommendedLeadStep": "infrastructure",
     "deliveryNote": {
       "en": "Gamma cities should build the boring essentials first: grants, pooled procurement, data plumbing, and civic-scale pilots before dashboard theatre.",
-      "th": "เมือง Gamma ต้องสร้างของจำเป็นที่น่าเบื่อก่อน: เงินอุดหนุน การจัดซื้อรวม ระบบข้อมูลพื้นฐาน และ pilot ขนาดชุมชน ก่อนจะเล่นละครแดชบอร์ด",
+      "th": "เมือง Gamma ต้องสร้างของจำเป็นที่น่าเบื่อก่อน: เงินอุดหนุน การจัดซื้อรวม ระบบข้อมูลพื้นฐาน และโครงการนำร่องระดับชุมชน ก่อนจะเล่นละครแดชบอร์ด",
       "zh": "Gamma 城市应先把那些“无聊但必要”的底座搭好：补助、联合采购、数据底座和社区级试点，然后再谈仪表板表演。"
     },
     "publicRole": {
       "en": "Fund the boring baseline, standardize procurement, and protect service continuity.",
-      "th": "รัฐต้องจ่ายของพื้นฐานที่น่าเบื่อ มาตรฐาน procurement และคุ้มครองความต่อเนื่องของบริการ",
+      "th": "รัฐต้องจ่ายของพื้นฐานที่น่าเบื่อ วางมาตรฐานการจัดซื้อ และคุ้มครองความต่อเนื่องของบริการ",
       "zh": "Government should fund the boring baseline, standardize procurement, and protect service continuity."
     },
     "privateRole": {
       "en": "Supply practical service packages and maintenance, not vanity tech stacks.",
-      "th": "เอกชนควรขายชุดบริการใช้งานจริงพร้อมบำรุงรักษา ไม่ใช่สแต็กเทคโชว์",
+      "th": "เอกชนควรขายชุดบริการใช้งานจริงพร้อมบำรุงรักษา ไม่ใช่ชุดเทคโนโลยีไว้โชว์",
       "zh": "Private providers should supply practical service packages and maintenance, not vanity tech stacks."
     },
     "riskAllocation": {
@@ -206,50 +574,99 @@
   },
   "financeProfile": {
     "cityId": "makkasan",
-    "revenueBase": "thin",
-    "institutionalCapacity": "thin",
+    "revenueBase": "moderate",
+    "institutionalCapacity": "moderate",
     "projectPipeline": "thin",
-    "privateInterest": "thin",
+    "privateInterest": "moderate",
     "riskProfile": "acute",
     "deliveryReadiness": "foundational",
-    "readinessScore": 10,
+    "readinessScore": 23,
     "segment": "gamma",
     "assessedAt": "2026-04-04T00:00:00.000Z",
     "version": "2026.04-cdp-v1"
   },
   "financeRecommendations": [
     {
+      "id": "makkasan-technical-assistance-grant",
+      "cityId": "makkasan",
+      "instrumentId": "technical-assistance-grant",
+      "instrumentName": "Technical Assistance Grant",
+      "priority": "lead",
+      "priorityScore": 92,
+      "stage": "planned",
+      "segment": "gamma",
+      "reasonSummary": {
+        "en": "Makkasan Smart City needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess.",
+        "th": "มักกะสันสมาร์ทซิตี้ ต้องนิยามโครงการและเตรียมการจัดซื้อให้คมกว่านี้ก่อนรับเงินก้อนใหญ่ ถ้าเมืองยังนิยามโครงการไม่ชัด เอาเงินก้อนใหญ่ไปใส่ก็แค่ทำให้ความเละเทะแพงขึ้น",
+        "zh": "Makkasan Smart City needs sharper project definition and procurement readiness before bigger money. 如果项目定义都还没站稳，往里砸更大的钱只是更贵的混乱。"
+      },
+      "whyNow": {
+        "en": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 23/100.",
+        "th": "เพราะแก้ความไม่พร้อมตอนนี้ถูกกว่าปล่อยให้ล้มหลังเริ่มโครงการเงินก้อนใหญ่ คะแนนความพร้อม: 23/100",
+        "zh": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 23/100."
+      },
+      "nextStep": {
+        "en": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
+        "th": "จัดทำชุดศึกษาความเป็นไปได้ บันทึกธรรมาภิบาลข้อมูล และขอบเขตจัดซื้อก่อนขอเงินลงทุน",
+        "zh": "Write the feasibility package, data governance note, and procurement scope before applying for capital."
+      },
+      "publicFundingRole": {
+        "en": "Government should pay for baseline readiness and civic safeguards.",
+        "th": "ภาครัฐควรจ่ายความพร้อมตั้งต้นและระบบคุ้มครองสาธารณะ",
+        "zh": "Government should pay for baseline readiness and civic safeguards."
+      },
+      "privateCapitalRole": {
+        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้",
+        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
+      },
+      "supports": [
+        {
+          "id": "makkasan-population",
+          "supportType": "metric",
+          "metricKey": "population",
+          "metricLabel": "Population",
+          "sourceId": "nso",
+          "sourceUrl": "https://www.nso.go.th",
+          "observedAt": "2026-04-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "City scale shapes the right size for first-phase technical support."
+        }
+      ],
+      "version": "2026.04-cdp-v1"
+    },
+    {
       "id": "makkasan-pooled-procurement",
       "cityId": "makkasan",
       "instrumentId": "pooled-procurement",
       "instrumentName": "Pooled Procurement",
-      "priority": "lead",
-      "priorityScore": 94,
+      "priority": "secondary",
+      "priorityScore": 82,
       "stage": "planned",
       "segment": "gamma",
       "reasonSummary": {
         "en": "Pooled Procurement fits Makkasan Smart City because its metrics and operating context create a credible use case. For gamma cities, scale usually comes from the buying coalition, not from the city itself.",
-        "th": "Pooled Procurement fits Makkasan Smart City because its metrics and operating context create a credible use case. สำหรับเมือง gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
-        "zh": "Pooled Procurement fits Makkasan Smart City because its metrics and operating context create a credible use case. For gamma cities, scale usually comes from the buying coalition, not from the city itself."
+        "th": "จัดซื้อรวม เหมาะกับ มักกะสันสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ สำหรับเมืองระดับ Gamma ขนาดมักไม่ได้มาจากตัวเมือง แต่มาจากการรวมกันซื้อ",
+        "zh": "Pooled Procurement fits Makkasan Smart City because its metrics and operating context create a credible use case. 对 gamma 城市来说，规模通常来自联合采购，而不是单城本身。"
       },
       "whyNow": {
-        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 10/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 10/100",
-        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 10/100."
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 23/100.",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 23/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 23/100."
       },
       "nextStep": {
         "en": "Bundle the commodity stack with peer cities and buy maintenance with the hardware.",
-        "th": "Bundle the commodity stack with peer cities and buy maintenance with the hardware.",
+        "th": "รวมซื้อเทคโนโลยีพื้นฐานกับเมืองระดับเดียวกัน และซื้อบริการบำรุงรักษาควบคู่กับฮาร์ดแวร์",
         "zh": "Bundle the commodity stack with peer cities and buy maintenance with the hardware."
       },
       "publicFundingRole": {
         "en": "Government should pay for baseline readiness and civic safeguards.",
-        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
+        "th": "ภาครัฐควรจ่ายความพร้อมตั้งต้นและระบบคุ้มครองสาธารณะ",
         "zh": "Government should pay for baseline readiness and civic safeguards."
       },
       "privateCapitalRole": {
         "en": "Private capital should take the commercial slice only after the city proves the local demand logic.",
-        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะ demand ของพื้นที่ได้แล้ว",
+        "th": "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
         "zh": "Private capital should take the commercial slice only after the city proves the local demand logic."
       },
       "supports": [
@@ -261,106 +678,57 @@
           "sourceId": "nso",
           "sourceUrl": "https://www.nso.go.th",
           "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
+          "confidence": 0.9,
           "summary": "Small scale supports pooled rather than bespoke procurement."
         }
       ],
       "version": "2026.04-cdp-v1"
     },
     {
-      "id": "makkasan-government-budget",
+      "id": "makkasan-dfi-cofinance",
       "cityId": "makkasan",
-      "instrumentId": "government-budget",
-      "instrumentName": "Government Budget / Grant",
-      "priority": "secondary",
-      "priorityScore": 90,
+      "instrumentId": "dfi-cofinance",
+      "instrumentName": "DFI Co-finance",
+      "priority": "watch",
+      "priorityScore": 78,
       "stage": "planned",
       "segment": "gamma",
       "reasonSummary": {
-        "en": "Makkasan Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated.",
-        "th": "Makkasan Smart City still needs public risk-bearing for foundational delivery. บางอย่างไม่ควรถูกบิดให้ดู bankable ปลอมๆ แค่เพื่อให้ฟังหรู",
-        "zh": "Makkasan Smart City still needs public risk-bearing for foundational delivery. Some things should not be tortured into fake bankability just to sound sophisticated."
+        "en": "DFI Co-finance fits Makkasan Smart City because its metrics and operating context create a credible use case. ADB, JICA, and similar players often matter more as signal amplifiers than as raw money.",
+        "th": "เงินร่วมลงทุนจาก DFI เหมาะกับ มักกะสันสมาร์ทซิตี้ เพราะตัวชี้วัดและบริบทการเดินระบบทำให้กรณีใช้งานมีน้ำหนักพอ ADB, JICA และพวกเดียวกัน บางทีสำคัญในฐานะตัวขยายความน่าเชื่อถือ มากกว่าแค่ตัวเงิน",
+        "zh": "DFI Co-finance fits Makkasan Smart City because its metrics and operating context create a credible use case. ADB、JICA 等机构很多时候作为信誉放大器比单纯给钱更关键。"
       },
       "whyNow": {
-        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 10/100.",
-        "th": "Because the city has enough signal to move from generic planning into tailored execution. คะแนน readiness: 10/100",
-        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 10/100."
+        "en": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 23/100.",
+        "th": "เพราะเมืองมีสัญญาณพอที่จะขยับจากแผนกว้างๆ ไปสู่การลงมือที่เข้ากับพื้นที่ คะแนนความพร้อม: 23/100",
+        "zh": "Because the city has enough signal to move from generic planning into tailored execution. Readiness score: 23/100."
       },
       "nextStep": {
         "en": "Translate the city metrics into a bankable project package with a clear public and private role split.",
-        "th": "Translate the city metrics into a bankable project package with a clear public and private role split.",
+        "th": "แปลงตัวชี้วัดเมืองให้เป็นชุดโครงการที่ตรวจสอบทางการเงินได้ พร้อมแบ่งบทบาทรัฐและเอกชนให้ชัด",
         "zh": "Translate the city metrics into a bankable project package with a clear public and private role split."
       },
       "publicFundingRole": {
         "en": "Government should pay for baseline readiness and civic safeguards.",
-        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
+        "th": "ภาครัฐควรจ่ายความพร้อมตั้งต้นและระบบคุ้มครองสาธารณะ",
         "zh": "Government should pay for baseline readiness and civic safeguards."
       },
       "privateCapitalRole": {
         "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
-        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
+        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้",
         "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
       },
       "supports": [
         {
-          "id": "makkasan-population",
+          "id": "makkasan-pm25Annual",
           "supportType": "metric",
-          "metricKey": "population",
-          "metricLabel": "Population",
-          "sourceId": "nso",
-          "sourceUrl": "https://www.nso.go.th",
-          "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
-          "summary": "Population scale affects the public-good case for grant funding."
-        }
-      ],
-      "version": "2026.04-cdp-v1"
-    },
-    {
-      "id": "makkasan-technical-assistance-grant",
-      "cityId": "makkasan",
-      "instrumentId": "technical-assistance-grant",
-      "instrumentName": "Technical Assistance Grant",
-      "priority": "watch",
-      "priorityScore": 86,
-      "stage": "planned",
-      "segment": "gamma",
-      "reasonSummary": {
-        "en": "Makkasan Smart City needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess.",
-        "th": "Makkasan Smart City needs sharper project definition and procurement readiness before bigger money. ถ้าเมืองยังนิยามโครงการไม่ชัด เอาเงินก้อนใหญ่ไปใส่ก็แค่ทำให้ความเละเทะแพงขึ้น",
-        "zh": "Makkasan Smart City needs sharper project definition and procurement readiness before bigger money. If the city cannot define the project cleanly, throwing bigger money at it is just a more expensive mess."
-      },
-      "whyNow": {
-        "en": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 10/100.",
-        "th": "Because unreadiness is cheaper to fix now than after a failed capital program. คะแนน readiness: 10/100",
-        "zh": "Because unreadiness is cheaper to fix now than after a failed capital program. Readiness score: 10/100."
-      },
-      "nextStep": {
-        "en": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
-        "th": "Write the feasibility package, data governance note, and procurement scope before applying for capital.",
-        "zh": "Write the feasibility package, data governance note, and procurement scope before applying for capital."
-      },
-      "publicFundingRole": {
-        "en": "Government should pay for baseline readiness and civic safeguards.",
-        "th": "ภาครัฐควรจ่าย baseline readiness และระบบคุ้มครองสาธารณะ",
-        "zh": "Government should pay for baseline readiness and civic safeguards."
-      },
-      "privateCapitalRole": {
-        "en": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake.",
-        "th": "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์ uptake ได้",
-        "zh": "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
-      },
-      "supports": [
-        {
-          "id": "makkasan-population",
-          "supportType": "metric",
-          "metricKey": "population",
-          "metricLabel": "Population",
-          "sourceId": "nso",
-          "sourceUrl": "https://www.nso.go.th",
-          "observedAt": "2026-04-01T00:00:00.000Z",
-          "confidence": 0.6,
-          "summary": "City scale shapes the right size for first-phase technical support."
+          "metricKey": "pm25Annual",
+          "metricLabel": "Annual PM2.5",
+          "sourceId": "pcd",
+          "sourceUrl": "http://air4thai.pcd.go.th",
+          "observedAt": "2026-03-01T00:00:00.000Z",
+          "confidence": 0.9,
+          "summary": "Measured environmental pressure supports concessional co-finance."
         }
       ],
       "version": "2026.04-cdp-v1"
@@ -414,7 +782,7 @@
   "exportMetadata": {
     "latestObservedAt": "2026-04-01T00:00:00.000Z",
     "lastVerifiedAt": "2026-04-04T00:00:00.000Z",
-    "provenanceCount": 4,
+    "provenanceCount": 17,
     "summaryCsvUrl": "/api/exports/cities-summary.csv",
     "factsCsvUrl": "/api/exports/city-facts.csv",
     "cityCsvUrl": "/api/cities/makkasan/export.csv"
