@@ -27,6 +27,11 @@ const CATEGORY_LABELS: Record<string, { en: string; th: string; zh: string }> = 
   "Politics": { en: "Politics", th: "การเมือง", zh: "政治" },
   "Success": { en: "Success Stories", th: "กรณีสำเร็จ", zh: "成功案例" },
   "About SCITI": { en: "About SCITI", th: "เกี่ยวกับ SCITI", zh: "关于 SCITI" },
+  "Smart City is a Process": { en: "Smart City is a Process", th: "เมืองอัจฉริยะคือกระบวนการ", zh: "智慧城市是过程" },
+  "What Makes a Good Smart City": { en: "What Makes a Good Smart City?", th: "เมืองอัจฉริยะที่ดีคืออะไร?", zh: "好的智慧城市是什么样的？" },
+  "ASEAN Context": { en: "ASEAN Context", th: "บริบทอาเซียน", zh: "东盟背景" },
+  "Design Thinking": { en: "Design Thinking Approach", th: "แนวทาง Design Thinking", zh: "设计思维方法" },
+  "Smart or Not Smart": { en: "Smart or Not Smart?", th: "อัจฉริยะหรือไม่อัจฉริยะ?", zh: "智慧还是不智慧？" },
 };
 
 function localiseCategory(category: string, locale: Locale): string {
@@ -45,7 +50,7 @@ const FAQS: FAQ[] = [
     },
     a: {
       en: "Certification acknowledges a plan. Our index measures the reality. depa's five certification criteria evaluate boundaries, infrastructure plans, CDP design, projects, and participation models — all on paper. SCITI measures what actually runs: operational sensors, open data feeds, citizen satisfaction, real environmental metrics. A city with a 100-page slide deck but zero operational sensors is 'Planned Gamma'.",
-      th: "การรับรอง (Certification) คือการรับรอง 'แผน' ตามเกณฑ์ 5 ข้อของ depa ได้แก่ ขอบเขต แผนโครงสร้างพื้นฐาน ออกแบบ CDP โครงการ และการมีส่วนร่วม ทั้งหมดอยู่บนกระดาษ แต่ SCITI วัดสิ่งที่ทำงานจริง: เซ็นเซอร์ ข้อมูลเปิด ความพึงพอใจ และตัวชี้วัดสิ่งแวดล้อม",
+      th: "การรับรอง (Certification) คือการยอมรับ 'แผน' ตามเกณฑ์ 5 ข้อของ depa: ขอบเขต แผนโครงสร้างพื้นฐาน การออกแบบ CDP โครงการ และการมีส่วนร่วม — ทั้งหมดอยู่บนกระดาษ แต่ SCITI วัดสิ่งที่ทำงานจริง: เซ็นเซอร์ ข้อมูลเปิด ความพึงพอใจ และตัวชี้วัดสิ่งแวดล้อม",
       zh: "认证是对计划的认可。depa 的五项认证标准评估的是边界、基础设施计划、CDP 设计、项目和参与模型——都是纸上谈兵。SCITI 衡量的是实际运行的情况：运营传感器、开放数据、市民满意度、真实环境指标。",
     },
   },
@@ -58,7 +63,7 @@ const FAQS: FAQ[] = [
     },
     a: {
       en: "Yes. Thailand has 92 million mobile subscribers (133% penetration) and 55 million active mobile internet users — impressive on paper. But only 21% of Thai households own a computer, far below the global average of 49%. This means 'smart city' services that require desktop or broadband access exclude most residents outside Bangkok and the EEC. The SCITI index reflects this by weighting Livability higher than Digital.",
-      th: "ใช่ ไทยมี 92 ล้านเลขหมายมือถือ (เจาะ 133%) และผู้ใช้เน็ตมือถือ 55 ล้านคน แต่มีเพียง 21% ของครัวเรือนไทยที่มีคอมพิวเตอร์ ต่ำกว่าค่าเฉลี่ยโลก 49% มาก บริการ smart city ที่ต้องใช้เดสก์ท็อปจึงเข้าไม่ถึงคนส่วนใหญ่นอกกรุงเทพฯ",
+      th: "ใช่ ไทยมี 92 ล้านเลขหมายมือถือ (อัตราการเข้าถึง 133%) และผู้ใช้เน็ตมือถือ 55 ล้านคน แต่มีเพียง 21% ของครัวเรือนไทยที่มีคอมพิวเตอร์ ต่ำกว่าค่าเฉลี่ยโลก 49% มาก บริการ smart city ที่ต้องใช้บรอดแบนด์จึงเข้าไม่ถึงคนส่วนใหญ่นอกกรุงเทพฯ และ EEC",
       zh: "是的。泰国拥有9200万手机用户（渗透率133%）和5500万活跃移动互联网用户——但只有21%的家庭拥有电脑，远低于全球49%的平均水平。这意味着需要桌面或宽带访问的”智慧城市”服务将大部分曼谷以外的居民排除在外。",
     },
   },
@@ -98,7 +103,7 @@ const FAQS: FAQ[] = [
     },
     a: {
       en: "The concept was first introduced in 2003 by MICT, but didn't gain real traction until Thailand 4.0 launched in 2016. The 20-year National Strategy (2017-2036) formally established smart cities as a national priority. MICT was reorganized into MDES in 2017. Phuket was designated as the first official pilot, followed by Chiang Mai. The Smart City Thailand Office was established within depa in early 2019.",
-      th: "แนวคิดเมืองอัจฉริยะปรากฏครั้งแรกในปี 2003 โดย กระทรวง ICT แต่ไม่ได้ผลจริงจนกว่า Thailand 4.0 เปิดตัวในปี 2016 ยุทธศาสตร์ชาติ 20 ปี (2017-2036) กำหนดเมืองอัจฉริยะเป็นวาระแห่งชาติ ภูเก็ตเป็นนำร่องแรก ตามด้วยเชียงใหม่ สำนักงานเมืองอัจฉริยะตั้งขึ้นในปี 2019",
+      th: "แนวคิดเมืองอัจฉริยะปรากฏครั้งแรกในปี 2003 โดยกระทรวง ICT แต่ไม่ได้รับแรงขับเคลื่อนจริงจนกระทั่ง Thailand 4.0 เปิดตัวในปี 2016 ยุทธศาสตร์ชาติ 20 ปี (2017-2036) กำหนดเมืองอัจฉริยะเป็นวาระแห่งชาติ ภูเก็ตเป็นเมืองนำร่องแรก ตามด้วยเชียงใหม่ สำนักงานเมืองอัจฉริยะตั้งขึ้นในปี 2019",
       zh: "这个概念最早由信息通信技术部于2003年提出，但直到2016年泰国4.0启动后才真正获得动力。20年国家战略（2017-2036）正式将智慧城市确立为国家优先事项。普吉岛被指定为第一个官方试点城市，随后是清迈。智慧城市泰国办公室于2019年初成立。",
     },
   },
@@ -138,7 +143,7 @@ const FAQS: FAQ[] = [
     },
     a: {
       en: "depa's 7 domains (Environment, Economy, Mobility, Energy, People, Living, Governance) are a planning framework — they help cities organize proposals. SCITI's 7 pillars (Livability, Economy, Safety, Wellbeing, Environment, Hospitality, Digital) are measurement pillars weighted by citizen impact. Livability (25%) and Economy (20%) carry the most weight because they reflect lived experience. Digital (5%) weighs least because connectivity without quality of life is just infrastructure theater.",
-      th: "7 Smart ของ depa เป็นกรอบการวางแผน ช่วยจัดทำข้อเสนอ 7 เสาหลักของ SCITI (ความน่าอยู่ เศรษฐกิจ ความปลอดภัย คุณภาพชีวิต สิ่งแวดล้อม การท่องเที่ยว ดิจิทัล) เป็นเสาวัดผลถ่วงน้ำหนักตามผลกระทบต่อพลเมือง ความน่าอยู่ (25%) และเศรษฐกิจ (20%) หนักสุดเพราะสะท้อนชีวิตจริง ดิจิทัล (5%) หนักน้อยสุดเพราะเน็ตเร็วที่ไม่มีคุณภาพชีวิตเป็นแค่โครงสร้างพื้นฐานโชว์",
+      th: "7 Smart ของ depa เป็นกรอบวางแผน ช่วยจัดทำข้อเสนอ ส่วน 7 เสาหลักของ SCITI (ความน่าอยู่ เศรษฐกิจ ความปลอดภัย คุณภาพชีวิต สิ่งแวดล้อม การท่องเที่ยว ดิจิทัล) เป็นเสาวัดผล ถ่วงน้ำหนักตามผลกระทบต่อประชาชน ความน่าอยู่ (25%) และเศรษฐกิจ (20%) หนักสุดเพราะสะท้อนชีวิตจริง ดิจิทัล (5%) น้อยสุดเพราะเน็ตเร็วที่ไม่มีคุณภาพชีวิตเป็นแค่โชว์โครงสร้างพื้นฐาน",
       zh: "depa的7个领域是规划框架——帮助城市组织提案。SCITI的7个支柱（宜居性、经济、安全、福祉、环境、旅游、数字）是按市民影响加权的测量支柱。宜居性(25%)和经济(20%)权重最高因为反映了真实生活体验。数字(5%)权重最低因为没有生活质量的连接只是基础设施表演。",
     },
   },
@@ -358,6 +363,128 @@ const FAQS: FAQ[] = [
       zh: "SCITI由depa智慧城市推广部门高级专家Non A.博士开发，使用SLIC（智慧宜居城市指数）方法论。该方法论在2026年台北SCSE会议上经过同行评审。它基于Non博士在日立评论（2021年）发表的学术成果和自2019年以来在40多个泰国城市部署智慧城市框架的实践经验。",
     },
   },
+  // ─── Smart City is a Process ───
+  {
+    category: "Smart City is a Process",
+    q: {
+      en: "Why is a smart city described as a process, not a result?",
+      th: "ทำไมเมืองอัจฉริยะจึงถูกอธิบายว่าเป็นกระบวนการ ไม่ใช่ผลลัพธ์?",
+      zh: "为什么说智慧城市是一个过程而不是结果？",
+    },
+    a: {
+      en: "The phrase comes directly from Thailand's foundational smart city literature, authored in part by depa's own senior experts. The argument is that 'smart' refers to the ability to comprehend, adapt, and transform — qualities that belong to living systems, not finished products. A city that has installed sensors and declared itself smart, but stops learning from the data, has confused the hardware with the habit. The Three Concepts that underpin Thailand's framework make this concrete: citizens at the center (meaning the city continuously listens), PPPP partnership (meaning the collaboration never stops), and simultaneous physical and digital development (meaning the work is never done, because both layers keep evolving). A city reaches smart city status not by ticking boxes but by becoming the kind of organisation that keeps asking what its residents actually need.",
+      th: "วลีนี้มาจากเอกสารพื้นฐานด้านเมืองอัจฉริยะของไทย ซึ่งเขียนขึ้นบางส่วนโดยผู้เชี่ยวชาญอาวุโสของ depa เอง ข้อโต้แย้งคือ 'อัจฉริยะ' หมายถึงความสามารถในการเข้าใจ ปรับตัว และเปลี่ยนแปลง คุณสมบัติที่เป็นของระบบที่มีชีวิต ไม่ใช่ผลิตภัณฑ์สำเร็จรูป เมืองที่ติดตั้งเซนเซอร์แล้วประกาศตัวเองว่าอัจฉริยะแต่หยุดเรียนรู้จากข้อมูล กำลังสับสนระหว่างฮาร์ดแวร์กับนิสัย สามแนวคิดที่รองรับกรอบของไทยทำให้สิ่งนี้เป็นรูปธรรม: ประชาชนอยู่ตรงกลาง (หมายความว่าเมืองรับฟังอย่างต่อเนื่อง) หุ้นส่วน PPPP (หมายความว่าความร่วมมือไม่เคยหยุด) และการพัฒนากายภาพและดิจิทัลพร้อมกัน (หมายความว่างานไม่เคยเสร็จ เพราะทั้งสองชั้นยังคงพัฒนา)",
+      zh: "这句话直接来自泰国智慧城市基础文献，部分由depa自身的高级专家撰写。论点是'智慧'指的是理解、适应和转变的能力——这些品质属于活的系统，而非完成品。一座安装了传感器并宣称自己智慧、但停止从数据中学习的城市，混淆了硬件与习惯。支撑泰国框架的三个概念使这一点具体化：市民在中心（意味着城市持续倾听）、PPPP伙伴关系（意味着合作从不停止）、物理和数字同步发展（意味着工作永不完成，因为两个层次都在持续演进）。",
+    },
+  },
+  {
+    category: "Smart City is a Process",
+    q: {
+      en: "What are the Three Concepts at the heart of Thailand's smart city framework?",
+      th: "สามแนวคิดหลักที่อยู่ในใจกลางกรอบเมืองอัจฉริยะของไทยคืออะไร?",
+      zh: "泰国智慧城市框架核心的三个概念是什么？",
+    },
+    a: {
+      en: "First: citizens at the center, technology in the background. The end goal is quality of life, not gadget deployment. A smart city should make life quieter and easier, not demand residents master new platforms to access basic services. Second: People-Public-Private-Partnership — PPPP, not PPP. The extra P is the most important one. Projects designed without residents tend to go unused. Projects designed with residents tend to get maintained. Third: simultaneous development of both physical and digital infrastructure. Connectivity is worthless if the road to the clinic is unpaved, the goods cannot be delivered, or the power grid drops before the sensors can report. These three concepts appear across Thailand's certification criteria, its academic publications, and in the ASEAN regional primer — they are the architecture behind the framework, not just marketing language.",
+      th: "แรก: ประชาชนอยู่ตรงกลาง เทคโนโลยีอยู่เบื้องหลัง เป้าหมายสุดท้ายคือคุณภาพชีวิต ไม่ใช่การติดตั้งอุปกรณ์ เมืองอัจฉริยะควรทำให้ชีวิตเงียบสงบและง่ายขึ้น ไม่ใช่บังคับให้ผู้อยู่อาศัยเชี่ยวชาญแพลตฟอร์มใหม่เพื่อเข้าถึงบริการพื้นฐาน ที่สอง: PPPP ไม่ใช่ PPP P ที่เพิ่มขึ้นคือสิ่งสำคัญที่สุด โครงการที่ออกแบบโดยไม่มีผู้อยู่อาศัยมักไม่ได้ใช้งาน โครงการที่ออกแบบร่วมกับผู้อยู่อาศัยมักได้รับการดูแลรักษา ที่สาม: การพัฒนาพร้อมกันทั้งโครงสร้างพื้นฐานกายภาพและดิจิทัล ระบบเน็ตเวิร์กไม่มีค่าถ้าถนนไปคลินิกยังไม่ได้ลาด สินค้าส่งไม่ได้ หรือไฟฟ้าดับก่อนที่เซนเซอร์จะรายงาน",
+      zh: "第一：市民在中心，技术在幕后。最终目标是生活质量，而非设备部署。智慧城市应让生活更安静便捷，而不是要求居民掌握新平台才能获得基本服务。第二：PPPP而非PPP。那个额外的P是最重要的。没有居民参与设计的项目往往无人使用；与居民共同设计的项目往往得到维护。第三：物理和数字基础设施同步发展。如果去诊所的路还是泥路、货物无法送达、传感器报告前就停电，连接性毫无价值。这三个概念贯穿泰国的认证标准、学术出版物以及东盟区域入门指南。",
+    },
+  },
+  // ─── What Makes a Good Smart City ───
+  {
+    category: "What Makes a Good Smart City",
+    q: {
+      en: "Does a good smart city have to be large and high-tech?",
+      th: "เมืองอัจฉริยะที่ดีต้องใหญ่และไฮเทคไหม?",
+      zh: "好的智慧城市必须是大城市和高科技吗？",
+    },
+    a: {
+      en: "No, and this is one of the most important correctives in the ASEAN smart city literature. The Smart City Primer published by C asean, depa, and the U.S. Embassy explicitly states that smart cities are not limited to metropolises with high technology — they should refer to cities that are inclusive and supportive of the wellbeing of all inhabitants. Appropriate technology is the operative phrase: not cutting-edge, but fit-for-context. Nakhon Si Thammarat's flood warning system cost a fraction of what Bangkok's digital infrastructure has consumed, yet it has saved lives every monsoon season since 2021. The success metrics that matter are less travel time, worry-free healthcare, and more spare time for residents — not the generation of the chipset running the platform.",
+      th: "ไม่ใช่ และนี่คือหนึ่งในการแก้ไขที่สำคัญที่สุดในวรรณกรรมเมืองอัจฉริยะอาเซียน Smart City Primer ที่เผยแพร่โดย C asean, depa และสถานทูตสหรัฐฯ ระบุชัดเจนว่า เมืองอัจฉริยะไม่จำกัดเฉพาะมหานครที่มีเทคโนโลยีสูง แต่ควรหมายถึงเมืองที่ครอบคลุมและสนับสนุนความเป็นอยู่ที่ดีของผู้อยู่อาศัยทุกคน เทคโนโลยีที่เหมาะสมคือวลีสำคัญ: ไม่ใช่เทคโนโลยีล้ำสุด แต่เหมาะสมกับบริบท ตัวชี้วัดความสำเร็จที่สำคัญคือเวลาเดินทางที่ลดลง การดูแลสุขภาพที่ไร้กังวล และเวลาว่างที่มากขึ้นสำหรับผู้อยู่อาศัย ไม่ใช่รุ่นของชิปเซ็ตที่ใช้งานแพลตฟอร์ม",
+      zh: "不，这是东盟智慧城市文献中最重要的纠偏之一。由C asean、depa和美国大使馆出版的《智慧城市入门指南》明确指出，智慧城市不限于拥有高技术的大都市——它们应指对所有居民都具有包容性并支持其福祉的城市。适当技术是关键词：不是最尖端的，而是适合语境的。真正重要的成功指标是减少出行时间、无忧的医疗保健以及更多的闲暇时间，而不是运行平台的芯片组代数。",
+    },
+  },
+  {
+    category: "What Makes a Good Smart City",
+    q: {
+      en: "What do the 4Ps mean for a smart city, and what does a real-world example look like?",
+      th: "4P มีความหมายอย่างไรสำหรับเมืองอัจฉริยะ และตัวอย่างจริงในโลกมีลักษณะอย่างไร?",
+      zh: "4P对智慧城市意味着什么？现实世界的例子是什么样的？",
+    },
+    a: {
+      en: "The 4Ps — People, Public sector, Private sector, Partnership — describe the governance model that the ASEAN Smart City Primer identifies as characteristic of successful smart cities. One Bangkok, a citizen-centric mixed-use development in Bangkok's CBD, is often cited as the regional example: a single site that integrates offices, residences, retail, parks, and public infrastructure, designed from the outset to minimise car dependency and maximise walkable connectivity. Smart City Iskandar in Malaysia demonstrates the data-powered dimension: city management decisions are driven by a live data platform integrating transport, utilities, and safety feeds, allowing administrators to respond to problems in near-real time rather than after the fact. What both share is the same structural logic — people's needs defined the brief, public-private investment executed it, and data keeps it accountable.",
+      th: "4P ได้แก่ ประชาชน ภาครัฐ ภาคเอกชน และหุ้นส่วน อธิบายรูปแบบการกำกับดูแลที่ Smart City Primer อาเซียนระบุว่าเป็นลักษณะของเมืองอัจฉริยะที่ประสบความสำเร็จ One Bangkok โครงการพัฒนาแบบผสมผสานที่เน้นประชาชนในย่าน CBD ของกรุงเทพฯ มักถูกอ้างถึงว่าเป็นตัวอย่างระดับภูมิภาค: สถานที่เดียวที่บูรณาการสำนักงาน ที่พักอาศัย ร้านค้า สวนสาธารณะ และโครงสร้างพื้นฐานสาธารณะ ออกแบบตั้งแต่ต้นเพื่อลดการพึ่งพารถยนต์และเพิ่มการเชื่อมต่อเดินเท้า Smart City Iskandar ในมาเลเซียแสดงให้เห็นมิติที่ขับเคลื่อนด้วยข้อมูล สิ่งที่ทั้งสองมีร่วมกันคือตรรกะเชิงโครงสร้างเดียวกัน ความต้องการของประชาชนเป็นตัวกำหนดโจทย์ การลงทุนรัฐ-เอกชนเป็นผู้ดำเนินการ และข้อมูลเป็นตัวรักษาความรับผิดชอบ",
+      zh: "4P——人民、公共部门、私营部门、伙伴关系——描述了东盟智慧城市入门指南所认定的成功智慧城市的治理模式。曼谷CBD的One Bangkok综合开发项目是常被引用的区域案例：单一场地整合办公、住宅、零售、公园和公共基础设施，从一开始就设计为减少汽车依赖、最大化步行连通性。马来西亚伊斯干达智慧城市展示了数据驱动维度：整合交通、公用事业和安全数据的实时平台驱动城市管理决策。两者共同的结构逻辑是：人的需求定义了任务书，公私投资执行了它，数据保持了问责制。",
+    },
+  },
+  // ─── ASEAN Context ───
+  {
+    category: "ASEAN Context",
+    q: {
+      en: "What is the ASEAN Smart Cities Network and how does it work?",
+      th: "ASEAN Smart Cities Network คืออะไรและทำงานอย่างไร?",
+      zh: "东盟智慧城市网络是什么，它如何运作？",
+    },
+    a: {
+      en: "The ASEAN Smart Cities Network (ASCN) was established in 2018 as a collaborative platform for all ten ASEAN member states to share smart city best practices, pilot projects, and private sector partnerships. Each ASEAN country nominates up to three cities, and the network meets regularly at the ASEAN Smart Cities Summit. Cambodia chaired the network in 2022. Thailand's nominees have included Bangkok, Chiang Mai, and Chonburi. The ASCN connects cities not only to each other but to a wide range of international partners: Japan provides funding and technical assistance through the ASEAN-Japan Smart Cities Network; Australia implements the ASUS project via UN-Habitat; the UK runs the Global Future Cities Programme; and Mastercard contributes through the City Possible initiative. The network is deliberately practical — it prioritises pilot projects and knowledge exchange over declarations, because the gap between smart city policy and smart city reality is where the real work happens.",
+      th: "ASEAN Smart Cities Network (ASCN) ก่อตั้งในปี 2018 เป็นแพลตฟอร์มความร่วมมือสำหรับประเทศสมาชิกอาเซียนทั้ง 10 ประเทศเพื่อแลกเปลี่ยนแนวปฏิบัติที่ดี โครงการนำร่อง และหุ้นส่วนภาคเอกชนด้านเมืองอัจฉริยะ แต่ละประเทศอาเซียนสามารถเสนอชื่อเมืองได้สูงสุด 3 เมือง กัมพูชาเป็นประธานเครือข่ายในปี 2022 เมืองที่ไทยเสนอชื่อ ได้แก่ กรุงเทพฯ เชียงใหม่ และชลบุรี ASCN เชื่อมต่อเมืองไม่เพียงแต่กันเองแต่ยังกับพันธมิตรระหว่างประเทศที่หลากหลาย เครือข่ายนี้ให้ความสำคัญกับโครงการนำร่องและการแลกเปลี่ยนความรู้มากกว่าการออกปฏิญญา เพราะช่องว่างระหว่างนโยบายเมืองอัจฉริยะและความเป็นจริงคือที่ที่งานจริงเกิดขึ้น",
+      zh: "东盟智慧城市网络(ASCN)于2018年建立，作为所有十个东盟成员国分享智慧城市最佳实践、试点项目和私营部门伙伴关系的协作平台。每个东盟国家最多提名三个城市。柬埔寨于2022年担任网络主席。泰国的提名城市包括曼谷、清迈和春武里。ASCN不仅将城市彼此连接，还与各类国际合作伙伴相连：日本通过东盟-日本智慧城市网络提供资金和技术援助；澳大利亚通过联合国人居署实施ASUS项目；英国运营全球未来城市计划；万事达卡通过City Possible倡议贡献力量。",
+    },
+  },
+  {
+    category: "ASEAN Context",
+    q: {
+      en: "What innovations did YSEALI fellows develop for Southeast Asian smart cities?",
+      th: "นักวิจัย YSEALI พัฒนานวัตกรรมอะไรบ้างสำหรับเมืองอัจฉริยะในเอเชียตะวันออกเฉียงใต้?",
+      zh: "YSEALI学者为东南亚智慧城市开发了哪些创新？",
+    },
+    a: {
+      en: "The Young Southeast Asian Leaders Initiative (YSEALI) Smart City Workshop in 2021 brought together emerging urban innovators from across the region and produced three notable projects. Wasterant addressed waste management by creating a platform that connects households with waste collectors and recyclers, making segregation and disposal more convenient — a practical application of data-matching to an infrastructure gap. Zappy tackled first- and last-mile mobility by connecting commuters to micro-transit options in areas underserved by formal public transport. E-Wise focused on digital literacy for elderly residents, recognising that smart city services are worthless to the people who need them most if those people cannot access them. The thread connecting all three is the same: they identified a specific group being left behind by existing systems and used relatively simple technology to close the gap. None required the construction of new physical infrastructure.",
+      th: "YSEALI Smart City Workshop ปี 2021 รวบรวมนักนวัตกรรมเมืองรุ่นใหม่จากทั่วภูมิภาคและสร้างสามโครงการที่น่าสนใจ Wasterant แก้ปัญหาการจัดการขยะด้วยแพลตฟอร์มที่เชื่อมต่อครัวเรือนกับผู้เก็บขยะและผู้รีไซเคิล ทำให้การแยกและกำจัดขยะสะดวกขึ้น Zappy แก้ปัญหาการเดินทางระยะแรกและสุดท้ายโดยเชื่อมผู้โดยสารกับตัวเลือกการขนส่งขนาดเล็กในพื้นที่ที่ขนส่งสาธารณะไม่เพียงพอ E-Wise มุ่งเน้นการรู้ดิจิทัลสำหรับผู้สูงอายุ เพราะบริการเมืองอัจฉริยะไม่มีค่าสำหรับคนที่ต้องการมากที่สุดหากพวกเขาเข้าถึงไม่ได้ สิ่งที่เชื่อมทั้งสามคือเหมือนกัน: พวกเขาระบุกลุ่มเฉพาะที่ถูกระบบปัจจุบันทิ้งไว้เบื้องหลังและใช้เทคโนโลยีค่อนข้างเรียบง่ายเพื่อปิดช่องว่าง",
+      zh: "2021年青年东南亚领袖倡议(YSEALI)智慧城市研讨会汇聚了来自全区域的新兴城市创新者，产生了三个值得关注的项目。Wasterant通过创建连接家庭与垃圾收集者和回收者的平台解决废物管理问题，使分类和处置更加便利。Zappy解决首末一英里出行问题，在正式公共交通服务不足的地区连接通勤者与小型交通选择。E-Wise专注于老年居民的数字素养，认识到如果最需要帮助的人无法访问，智慧城市服务就毫无价值。连接这三者的共同线索：他们都识别了被现有系统抛在身后的特定群体，并使用相对简单的技术来弥合差距。",
+    },
+  },
+  // ─── Design Thinking ───
+  {
+    category: "Design Thinking",
+    q: {
+      en: "How does design thinking apply to building a smart city?",
+      th: "Design Thinking ประยุกต์ใช้กับการสร้างเมืองอัจฉริยะอย่างไร?",
+      zh: "设计思维如何应用于建设智慧城市？",
+    },
+    a: {
+      en: "The ASEAN Smart City Primer identifies Design Thinking as the core methodology for smart city development — not because it is a management fad, but because it is structurally the opposite of the top-down failure mode that has sunk many smart city projects. The five-step process runs as follows. Empathize: go into the city, talk to residents, observe problems firsthand. Do not start from a technology product looking for a use case. Define: synthesise what you heard into a problem statement that has a specific human being at its center. Ideate: generate multiple solutions — not just one, and not just the ones the technology vendors propose. Prototype: build the smallest possible version of the best idea and put it in front of real users quickly. Test: observe what actually happens, revise, and repeat. The Thailand certification criteria for identifying a city's vision and goals 'with residents' is the Empathize step made mandatory. The failure to iterate after launch — the CDP that goes offline, the app nobody uses — is what happens when cities skip Prototype and Test.",
+      th: "Smart City Primer อาเซียนระบุ Design Thinking เป็นวิธีการหลักสำหรับการพัฒนาเมืองอัจฉริยะ ไม่ใช่เพราะเป็นแฟชั่นการจัดการ แต่เพราะโครงสร้างของมันตรงข้ามกับรูปแบบความล้มเหลวจากบนลงล่างที่ทำให้โครงการเมืองอัจฉริยะหลายโครงการล่มไป กระบวนการ 5 ขั้นตอนดำเนินดังนี้: เข้าใจ (Empathize): ลงพื้นที่ พูดคุยกับผู้อยู่อาศัย สังเกตปัญหาโดยตรง กำหนด (Define): สังเคราะห์สิ่งที่ได้ยินเป็นคำแถลงปัญหาที่มีมนุษย์เฉพาะเจาะจงเป็นศูนย์กลาง คิดสร้างสรรค์ (Ideate): สร้างวิธีแก้ปัญหาหลายทาง ต้นแบบ (Prototype): สร้างเวอร์ชันเล็กที่สุดที่เป็นไปได้ ทดสอบ (Test): สังเกตสิ่งที่เกิดขึ้นจริง ปรับปรุง และทำซ้ำ",
+      zh: "东盟智慧城市入门指南将设计思维确定为智慧城市发展的核心方法论——不是因为它是管理时尚，而是因为它在结构上与导致许多智慧城市项目沉没的自上而下失败模式截然相反。五步流程如下。共情：进入城市，与居民交谈，亲眼观察问题。不要从寻找用例的技术产品出发。定义：将你听到的内容综合成一个以特定人为中心的问题陈述。构思：生成多种解决方案。原型：快速制作最佳想法的最小版本并展示给真实用户。测试：观察实际发生了什么，修改并重复。泰国认证标准中'与居民'共同确定城市愿景和目标，就是强制化了共情步骤。",
+    },
+  },
+  // ─── Smart or Not Smart ───
+  {
+    category: "Smart or Not Smart",
+    q: {
+      en: "What are the warning signs that a city labelled 'smart' is not actually smart?",
+      th: "สัญญาณเตือนที่บ่งชี้ว่าเมืองที่ถูกเรียกว่า 'อัจฉริยะ' ไม่ได้อัจฉริยะจริงๆ มีอะไรบ้าง?",
+      zh: "一个被称为'智慧'的城市实际上并不智慧的警示信号有哪些？",
+    },
+    a: {
+      en: "Three warning signs are consistent across the regional literature. The first is phone addiction theater: if using the city's smart services requires residents to be hooked on a smartphone for 12 or more hours a day, the technology has become the product rather than the means. Good smart city design should reduce the cognitive load on residents, not add to it. The second is ultra-high-tech spectacle with no resident benefit: autonomous robots in the lobby, holographic displays in the city hall foyer, drone shows at the launch event. If the headline technology creates no measurable improvement in residents' daily lives within two years of deployment, it is marketing, not governance. The third is no citizen participation in design or operation: if residents were not involved in identifying the problems the system was built to solve, and have no ongoing role in evaluating whether it is working, the project is infrastructure for someone else's agenda. The corrective is always to return to the question: does this make residents' lives concretely better? Less travel time, worry-free healthcare, more spare time — these are the right benchmarks.",
+      th: "สัญญาณเตือนสามประการที่สอดคล้องกันในวรรณกรรมระดับภูมิภาค อันดับแรกคือการแสดงการติดโทรศัพท์: หากการใช้บริการเมืองอัจฉริยะต้องให้ผู้อยู่อาศัยติดสมาร์ทโฟน 12 ชั่วโมงขึ้นไปต่อวัน เทคโนโลยีได้กลายเป็นผลิตภัณฑ์แทนที่จะเป็นวิธีการ การออกแบบเมืองอัจฉริยะที่ดีควรลดภาระทางความคิดของผู้อยู่อาศัย ไม่ใช่เพิ่ม อันดับสองคือความเป็นเทคโนโลยีสูงที่ไม่มีประโยชน์ต่อผู้อยู่อาศัย: หุ่นยนต์อัตโนมัติในล็อบบี้ จอโฮโลแกรมในห้องโถงศาลากลาง โชว์โดรนในงานเปิดตัว หากเทคโนโลยีพาดหัวไม่สร้างการปรับปรุงที่วัดได้ในชีวิตประจำวันของผู้อยู่อาศัยภายในสองปีหลังการใช้งาน มันคือการตลาด ไม่ใช่การปกครอง อันดับสามคือไม่มีการมีส่วนร่วมของพลเมืองในการออกแบบหรือการดำเนินงาน",
+      zh: "区域文献中有三个一致的警示信号。第一是手机成瘾表演：如果使用城市智慧服务要求居民每天盯着手机12小时或更多，技术就成了产品而非手段。良好的智慧城市设计应减少而非增加居民的认知负担。第二是对居民毫无裨益的超高科技奇观：大厅里的自主机器人、市政厅门廊的全息显示、发布活动的无人机表演。如果头条技术在部署两年内未在居民日常生活中产生可测量的改善，那是营销而非治理。第三是设计或运营中没有市民参与：如果居民没有参与识别系统所要解决的问题，且在评估其是否有效方面没有持续角色，该项目就是服务于他人议程的基础设施。",
+    },
+  },
+  {
+    category: "Smart or Not Smart",
+    q: {
+      en: "What does success actually look like for a smart city resident?",
+      th: "ความสำเร็จสำหรับผู้อยู่อาศัยในเมืองอัจฉริยะมีลักษณะอย่างไรในความเป็นจริง?",
+      zh: "对智慧城市居民而言，成功究竟是什么样的？",
+    },
+    a: {
+      en: "The ASEAN Smart City Primer offers a deliberately unglamorous answer: less travel time, worry-free healthcare, and more spare time. These three outcomes are what residents actually notice and remember. They do not require residents to interact with any visible technology to achieve them — a smart traffic management system reduces commute time whether or not the commuter knows it exists; a preventive health data platform reduces emergency admissions whether or not the patient ever logs into a portal. The invisibility of good smart city technology is a feature, not a limitation. The LLWP framework — Live, Learn, Work, Play — offers a complementary lens: a successful smart city makes each of those four activities easier and more equitable for all residents, regardless of age, income, or digital literacy. If a smart city scores well on LLWP criteria but only for the top income quartile, it has partially succeeded. If it scores well for everyone, it has actually done the job.",
+      th: "Smart City Primer อาเซียนให้คำตอบที่ไม่ค่อยน่าตื่นเต้นโดยตั้งใจ: เวลาเดินทางที่ลดลง การดูแลสุขภาพที่ไร้กังวล และเวลาว่างที่มากขึ้น สามผลลัพธ์เหล่านี้คือสิ่งที่ผู้อยู่อาศัยสังเกตเห็นและจดจำจริงๆ ไม่ต้องการให้ผู้อยู่อาศัยโต้ตอบกับเทคโนโลยีที่มองเห็นได้เพื่อให้บรรลุผล กรอบ LLWP — อยู่อาศัย เรียนรู้ ทำงาน เล่น — เสนอมุมมองเสริม: เมืองอัจฉริยะที่ประสบความสำเร็จทำให้กิจกรรมทั้งสี่อย่างนั้นง่ายขึ้นและเท่าเทียมกันมากขึ้นสำหรับผู้อยู่อาศัยทุกคน โดยไม่คำนึงถึงอายุ รายได้ หรือความรู้ดิจิทัล",
+      zh: "东盟智慧城市入门指南给出了一个刻意不华丽的答案：减少出行时间、无忧的医疗保健以及更多的闲暇时间。这三个结果是居民真正注意到和记住的。它们不要求居民与任何可见技术互动——智慧交通管理系统无论通勤者是否知道其存在都能减少通勤时间；预防性健康数据平台无论患者是否登录门户都能减少急诊入院。好的智慧城市技术的隐形性是特性而非局限。LLWP框架——居住、学习、工作、玩耍——提供了补充视角：成功的智慧城市使这四项活动对所有居民都更容易、更公平，无论年龄、收入或数字素养如何。",
+    },
+  },
 ];
 
 const CATEGORIES = [...new Set(FAQS.map(f => f.category))];
@@ -388,7 +515,7 @@ export default function KnowledgePage({ locale }: Props) {
         </h1>
         <p className="hero-strapline">
           {locale === "th"
-            ? `คัดกรองคำถามที่พบบ่อยโดยยึดความจริงเชิงสถาบันและความโปร่งใสของข้อมูลเป็นหลัก`
+            ? `คำถามที่พบบ่อย กลั่นจากข้อเท็จจริงเชิงสถาบันและความโปร่งใสของข้อมูล`
             : locale === "zh"
               ? `基于机构真实性和数据透明度的常见问题解答`
             : "No-BS FAQ distilled from institutional reality and data transparency."}

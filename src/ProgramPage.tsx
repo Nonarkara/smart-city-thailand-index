@@ -119,6 +119,8 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
   const [certRef, certVisible] = useInView(0.1);
   const [batchRef, batchVisible] = useInView(0.1);
   const [cdpRef, cdpVisible] = useInView(0.1);
+  const [incentivesRef, incentivesVisible] = useInView(0.1);
+  const [sourcesRef, sourcesVisible] = useInView(0.1);
 
   return (
     <>
@@ -315,6 +317,89 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
             <button type="button" className="ghost-button" onClick={() => onNavigate("/rankings")}>
               {translate(locale, { en: "Explore rankings", th: "สำรวจอันดับ", zh: "探索排名" })}
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── KEY INCENTIVES ─── */}
+      <section ref={incentivesRef} className={`section reveal stagger-4 ${incentivesVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+        <p className="eyebrow">{translate(locale, { en: "Incentives", th: "สิทธิประโยชน์", zh: "激励措施" })}</p>
+        <h2>{translate(locale, { en: "Why invest in a Thai smart city?", th: "ทำไมต้องลงทุนในเมืองอัจฉริยะไทย?", zh: "为什么投资泰国智慧城市？" })}</h2>
+        <p style={{ marginBottom: "1.5rem", maxWidth: "680px" }}>
+          {translate(locale, {
+            en: "Thailand has constructed a complete incentive stack for companies, investors, and skilled professionals who choose to build inside a certified smart city. The incentives span tax relief, talent mobility, regulatory flexibility, and hands-on support — each designed to lower the friction of the first deployment.",
+            th: "ประเทศไทยสร้างระบบสิทธิประโยชน์ครบชุดสำหรับบริษัท นักลงทุน และผู้เชี่ยวชาญที่เลือกสร้างงานในเมืองอัจฉริยะที่ได้รับการรับรอง ครอบคลุมทั้งการลดหย่อนภาษี การเคลื่อนย้ายบุคลากร ความยืดหยุ่นด้านกฎระเบียบ และการสนับสนุนเชิงปฏิบัติ เพื่อลดแรงต้านในการเริ่มต้นใช้งาน",
+            zh: "泰国为选择在认证智慧城市中建设的公司、投资者和专业人士构建了完整的激励体系，涵盖税收减免、人才流动、监管灵活性和实操支持，每项都旨在降低首次部署的阻力。"
+          })}
+        </p>
+        <div className="program-concepts-grid">
+          <div className="program-concept-card">
+            <span className="program-concept-num">①</span>
+            <h3>{translate(locale, { en: "BOI Tax Benefits", th: "สิทธิประโยชน์ภาษี BOI", zh: "BOI税收优惠" })}</h3>
+            <p>{translate(locale, {
+              en: "The Board of Investment offers corporate income tax exemptions for up to eight years for technology companies operating within depa-designated smart city promotional areas. Capital equipment imports may also qualify for duty exemptions, significantly reducing the upfront cost of deploying sensing infrastructure, edge computing, or mobility systems.",
+              th: "สำนักงานคณะกรรมการส่งเสริมการลงทุน (BOI) มอบการยกเว้นภาษีเงินได้นิติบุคคลสูงสุดถึง 8 ปีสำหรับบริษัทเทคโนโลยีที่ดำเนินงานในเขตส่งเสริมเมืองอัจฉริยะที่กำหนดโดย depa การนำเข้าอุปกรณ์ทุนอาจได้รับการยกเว้นอากรด้วย ช่วยลดต้นทุนเริ่มต้นในการติดตั้งโครงสร้างพื้นฐานเซนเซอร์ ระบบคอมพิวเตอร์ขอบ หรือระบบการเคลื่อนที่",
+              zh: "泰国投资促进委员会(BOI)为在depa指定智慧城市推广区运营的技术公司提供最长8年的企业所得税减免。资本设备进口也可能获得关税豁免，大幅降低部署传感基础设施、边缘计算或出行系统的前期成本。"
+            })}</p>
+          </div>
+          <div className="program-concept-card">
+            <span className="program-concept-num">②</span>
+            <h3>{translate(locale, { en: "Smart Visa for Skilled Foreign Workforce", th: "Smart Visa สำหรับแรงงานต่างชาติทักษะสูง", zh: "智慧签证（外籍高技能人才）" })}</h3>
+            <p>{translate(locale, {
+              en: "Thailand’s Smart Visa programme grants up to four years of stay for highly skilled professionals, investors, and executives working in targeted industries — including smart city technology, digital infrastructure, and advanced manufacturing. Visa holders are exempt from work permit requirements and their spouses and dependants receive matching authorisation, removing a significant administrative barrier for international talent.",
+              th: "โครงการ Smart Visa ของไทยให้สิทธิ์พำนักสูงสุด 4 ปีสำหรับผู้เชี่ยวชาญทักษะสูง นักลงทุน และผู้บริหารที่ทำงานในอุตสาหกรรมเป้าหมาย รวมถึงเทคโนโลยีเมืองอัจฉริยะ โครงสร้างพื้นฐานดิจิทัล และการผลิตขั้นสูง ผู้ถือวีซ่าได้รับการยกเว้นข้อกำหนดใบอนุญาตทำงาน และคู่สมรสและผู้ติดตามได้รับการอนุญาตตามมา ช่วยขจัดอุปสรรคด้านเอกสารสำหรับบุคลากรต่างชาติ",
+              zh: "泰国智慧签证计划为在目标产业工作的高技能专业人士、投资者和高管提供最长4年的居留权，包括智慧城市技术、数字基础设施和先进制造业。持证人免于工作许可证要求，其配偶和受抚养人获得同等授权，为国际人才消除了重大行政障碍。"
+            })}</p>
+          </div>
+          <div className="program-concept-card">
+            <span className="program-concept-num">③</span>
+            <h3>{translate(locale, { en: "Technology Sandbox", th: "Technology Sandbox", zh: "技术沙盒" })}</h3>
+            <p>{translate(locale, {
+              en: "depa operates a regulatory sandbox that allows companies to test new technologies — autonomous vehicles, drone logistics, fintech payment infrastructure, health monitoring platforms — under relaxed regulatory conditions within a designated area for a defined trial period. This is the fastest legal path to a live proof-of-concept in Thailand, without needing to navigate the full licensing regime upfront.",
+              th: "depa ดำเนินการ sandbox ด้านกฎระเบียบที่ช่วยให้บริษัทสามารถทดสอบเทคโนโลยีใหม่ เช่น รถยนต์ไร้คนขับ โลจิสติกส์โดรน โครงสร้างพื้นฐานการชำระเงิน FinTech แพลตฟอร์มการติดตามสุขภาพ ภายใต้เงื่อนไขกฎระเบียบที่ผ่อนปรนในพื้นที่กำหนดเป็นระยะเวลาทดลองที่กำหนด นี่คือเส้นทางทางกฎหมายที่เร็วที่สุดสู่หลักฐานแนวคิดสดในไทย โดยไม่ต้องผ่านขั้นตอนการออกใบอนุญาตเต็มรูปแบบล่วงหน้า",
+              zh: "depa运营一个监管沙盒，允许公司在指定区域内的特定试验期内，在放宽的监管条件下测试新技术——自动驾驶车辆、无人机物流、金融科技支付基础设施、健康监测平台。这是在泰国进行实时概念验证的最快法律路径，无需事先完整履行许可证制度。"
+            })}</p>
+          </div>
+          <div className="program-concept-card">
+            <span className="program-concept-num">④</span>
+            <h3>{translate(locale, { en: "Incubation Programs", th: "โปรแกรมบ่มเพาะ", zh: "孵化计划" })}</h3>
+            <p>{translate(locale, {
+              en: "depa coordinates incubation and acceleration programs that connect smart city technology startups with municipal buyers, corporate partners, and international networks. Startups accepted into these programs gain access to city-level pilot opportunities, co-investment matching, mentorship from senior depa experts, and introductions to the ASEAN Smart Cities Network — giving early-stage companies a credible path from prototype to real deployment.",
+              th: "depa ประสานงานโปรแกรมบ่มเพาะและเร่งการเจริญเติบโตที่เชื่อมต่อสตาร์ทอัพเทคโนโลยีเมืองอัจฉริยะกับผู้ซื้อจากหน่วยงานเทศบาล พันธมิตรองค์กร และเครือข่ายระหว่างประเทศ สตาร์ทอัพที่ได้รับการยอมรับในโปรแกรมจะสามารถเข้าถึงโอกาสนำร่องระดับเมือง การจับคู่ร่วมลงทุน คำปรึกษาจากผู้เชี่ยวชาญ depa อาวุโส และการแนะนำสู่ ASEAN Smart Cities Network ทำให้บริษัทระยะเริ่มต้นมีเส้นทางน่าเชื่อถือจากต้นแบบสู่การใช้งานจริง",
+              zh: "depa协调孵化和加速计划，将智慧城市技术初创企业与市政买家、企业合作伙伴和国际网络连接起来。被接受进入这些计划的初创企业可以获得城市级试点机会、联合投资匹配、资深depa专家指导以及东盟智慧城市网络介绍，为早期企业提供从原型到实际部署的可信路径。"
+            })}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SOURCES ─── */}
+      <section ref={sourcesRef} className={`section reveal stagger-1 ${sourcesVisible ? "visible" : ""}`} style={{ marginBottom: "3rem" }}>
+        <p className="eyebrow">{translate(locale, { en: "Academic Sources", th: "แหล่งอ้างอิงทางวิชาการ", zh: "学术来源" })}</p>
+        <h2>{translate(locale, { en: "This page draws on peer-reviewed research", th: "หน้านี้อ้างอิงจากงานวิจัยที่ผ่านการตรวจสอบ", zh: "本页内容来自同行评审研究" })}</h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
+          <div className="program-concept-card" style={{ gap: "0.5rem" }}>
+            <p style={{ fontFamily: "var(--mono)", fontSize: "var(--text-micro)", letterSpacing: "0.08em", textTransform: "uppercase", opacity: 0.6 }}>
+              {translate(locale, { en: "Journal Article", th: "บทความวิชาการ", zh: "期刊文章" })}
+            </p>
+            <p>
+              {translate(locale, {
+                en: "Nimmanphatcharin et al. (incl. Non A., Ph.D., Senior Expert in Smart City Promotion, depa). \"Smart City Initiatives in Thailand: Key Concepts and Methods.\" Hitachi Review, Vol. 70, No. 1, pp. 106–110, 2021.",
+                th: "นิมมานพัชรินทร์ และคณะ (รวมถึง ดร.ณณ ผู้เชี่ยวชาญอาวุโสด้านการส่งเสริมเมืองอัจฉริยะ depa). \"Smart City Initiatives in Thailand: Key Concepts and Methods.\" Hitachi Review, Vol. 70, No. 1, หน้า 106–110, 2021.",
+                zh: "Nimmanphatcharin 等（含 Non A. 博士，depa 智慧城市推广高级专家）。《泰国智慧城市倡议：核心概念与方法》。Hitachi Review，第 70 卷，第 1 期，第 106–110 页，2021 年。"
+              })}
+            </p>
+          </div>
+          <div className="program-concept-card" style={{ gap: "0.5rem" }}>
+            <p style={{ fontFamily: "var(--mono)", fontSize: "var(--text-micro)", letterSpacing: "0.08em", textTransform: "uppercase", opacity: 0.6 }}>
+              {translate(locale, { en: "Regional Primer", th: "คู่มือระดับภูมิภาค", zh: "区域入门指南" })}
+            </p>
+            <p>
+              {translate(locale, {
+                en: "Smart City Primer: Selected ASEAN Experiences (2022). C asean, Digital Economy Promotion Agency (depa), U.S. Embassy Bangkok, Foundation for Innovative New Democracy (FINSEDT). Published in partnership with the Young Southeast Asian Leaders Initiative (YSEALI).",
+                th: "Smart City Primer: Selected ASEAN Experiences (2022). C asean, สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa), สถานทูตสหรัฐอเมริกาประจำกรุงเทพฯ, มูลนิธิเพื่อประชาธิปไตยใหม่เชิงนวัตกรรม (FINSEDT). เผยแพร่ร่วมกับโครงการ Young Southeast Asian Leaders Initiative (YSEALI)",
+                zh: "《智慧城市入门指南：东盟精选经验》（2022）。C asean、数字经济促进局 (depa)、美国驻曼谷大使馆、创新新民主基金会 (FINSEDT)。与青年东南亚领袖倡议计划 (YSEALI) 合作出版。"
+              })}
+            </p>
           </div>
         </div>
       </section>
