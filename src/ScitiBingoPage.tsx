@@ -5,13 +5,13 @@ import type { Locale, SmartDimension } from "./types";
 import { PILLAR_COLORS } from "./types";
 
 const DIM_LOGOS: Record<SmartDimension, string> = {
-  environment: assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-01.png"),
-  governance:  assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-02.png"),
-  mobility:    assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-03.png"),
-  energy:      assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-04.png"),
-  economy:     assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-05.png"),
-  living:      assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-06.png"),
-  people:      assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-07.png"),
+  environment: assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-01.png")),
+  governance:  assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-02.png")),
+  mobility:    assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-03.png")),
+  energy:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-04.png")),
+  economy:     assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-05.png")),
+  living:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-06.png")),
+  people:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-07.png")),
 };
 
 interface Props { locale: Locale; }
