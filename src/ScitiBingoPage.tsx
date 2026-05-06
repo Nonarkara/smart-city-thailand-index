@@ -1,7 +1,21 @@
 import { useState, useCallback } from "react";
 import { translate } from "./cityPresentation";
+import { assetUrl } from "./mediaAssets";
 import type { Locale, SmartDimension } from "./types";
 import { PILLAR_COLORS } from "./types";
+
+// ─── Smart City Thailand official dimension logos (public/icon 7 Smarts PNG/)
+// Order from depa 7 Smart City Indicators TOC:
+// 01 Environment · 02 Governance · 03 Mobility · 04 Energy · 05 Economy · 06 Living · 07 People
+const DIM_LOGOS: Record<SmartDimension, string> = {
+  environment: assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-01.png"),
+  governance:  assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-02.png"),
+  mobility:    assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-03.png"),
+  energy:      assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-04.png"),
+  economy:     assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-05.png"),
+  living:      assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-06.png"),
+  people:      assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-07.png"),
+};
 
 interface Props { locale: Locale; }
 
@@ -251,16 +265,30 @@ export default function ScitiBingoPage({ locale }: Props) {
               return (
                 <button
                   key={cell.id}
-                  className={`bingo-cell5${isM ? " bingo-cell5-marked" : ""}${isFree ? " bingo-cell5-free" : ""}${cell.isLogo ? " bingo-cell5-logo" : ""}`}
-                  style={isM ? { background: color, borderColor: color } : { borderColor: `${color}66` }}
+                  className={`bingo-cell5${isM ? " bingo-cell5-marked" : ""}${isFree ? " bingo-cell5-free" : ""}`}
+                  style={{ borderColor: isM ? color : `${color}66` }}
                   onClick={() => toggleCell(cell.id)}
                   aria-pressed={isM}
                   title={`Smart ${translate(locale, DIM_LABELS[cell.dim])}`}
                 >
-                  <span className="bingo-cell5-emoji">{cell.emoji}</span>
-                  <span className="bingo-cell5-text">{translate(locale, cell.label)}</span>
-                  {!isFree && !isM && (
-                    <span className="bingo-cell5-dot" style={{ background: color }} />
+                  {/* FRONT — emoji + label */}
+                  <div className="bingo-card-front">
+                    <span className="bingo-cell5-emoji">{cell.emoji}</span>
+                    <span className="bingo-cell5-text">{translate(locale, cell.label)}</span>
+                    {!isFree && (
+                      <span className="bingo-cell5-dot" style={{ background: color }} />
+                    )}
+                  </div>
+                  {/* BACK — dimension logo on teal background */}
+                  {!isFree && (
+                    <div className="bingo-card-back" style={{ background: color }}>
+                      <img
+                        src={DIM_LOGOS[cell.dim]}
+                        alt={`Smart ${translate(locale, DIM_LABELS[cell.dim])}`}
+                        className="bingo-logo-img"
+                        loading="lazy"
+                      />
+                    </div>
                   )}
                 </button>
               );

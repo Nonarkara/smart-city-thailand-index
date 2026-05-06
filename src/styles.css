@@ -7656,7 +7656,7 @@ h1, h2, h3,
 }
 
 /* 5×5 grid */
-/* 5×5 BINGO GRID — each cell shows emoji + label */
+/* 5×5 BINGO GRID — card-flip on mark */
 .bingo-grid-5x5 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -7666,27 +7666,64 @@ h1, h2, h3,
   width: 100%;
 }
 .bingo-cell5 {
-  background: var(--surface);
   border: 1.5px solid transparent;
   padding: 0;
   cursor: pointer;
   position: relative;
   aspect-ratio: 1;
+  min-height: 56px;
+  perspective: 600px;    /* 3-D flip context */
+  transition: border-color .2s;
+  background: transparent;
+}
+.bingo-cell5:hover:not(.bingo-cell5-marked):not(.bingo-cell5-free) .bingo-card-front {
+  background: var(--surface-hover);
+}
+.bingo-cell5-free { cursor: default; }
+.bingo-cell5-free .bingo-card-front { background: var(--5); }
+
+/* Shared face rules */
+.bingo-card-front,
+.bingo-card-back {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform .45s cubic-bezier(.4,0,.2,1);
+}
+
+/* FRONT: resting state — visible */
+.bingo-card-front {
+  background: var(--surface);
   gap: 3px;
-  transition: background .15s, border-color .15s;
-  min-height: 56px;
-  overflow: hidden;
+  transform: rotateY(0deg);
 }
-.bingo-cell5:hover:not(.bingo-cell5-marked):not(.bingo-cell5-free) {
-  background: var(--surface-hover);
+
+/* BACK: resting state — hidden (rotated away) */
+.bingo-card-back {
+  transform: rotateY(180deg);
 }
-.bingo-cell5-marked { color: #fff; }
-.bingo-cell5-free { cursor: default; background: var(--5); }
-.bingo-cell5-logo { font-weight: 800; }
+
+/* MARKED: flip! front hides, back reveals */
+.bingo-cell5-marked .bingo-card-front { transform: rotateY(-180deg); }
+.bingo-cell5-marked .bingo-card-back  { transform: rotateY(0deg); }
+
+/* Logo image on the back */
+.bingo-logo-img {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  display: block;
+  /* logos have their own colours — mix-blend for light vs dark bg */
+  mix-blend-mode: multiply;
+  filter: brightness(0) invert(1); /* make any colour logo white on coloured bg */
+}
+
+/* Cell text content */
 .bingo-cell5-emoji {
   font-size: 1.4rem;
   line-height: 1;
@@ -7698,8 +7735,8 @@ h1, h2, h3,
   padding: 0 3px;
   word-break: break-word;
   hyphens: auto;
-  color: inherit;
-  white-space: pre-line; /* respects \n in logo labels */
+  color: var(--ink);
+  white-space: pre-line;
 }
 .bingo-cell5-dot {
   position: absolute;
@@ -7716,6 +7753,8 @@ h1, h2, h3,
   text-align: center;
   margin-top: .5rem;
 }
+
+/* Responsive sizing */
 @media (min-width: 400px) {
   .bingo-cell5-emoji { font-size: 1.6rem; }
   .bingo-cell5-text { font-size: 9px; }
@@ -7723,12 +7762,14 @@ h1, h2, h3,
 @media (min-width: 600px) {
   .bingo-cell5-emoji { font-size: 1.9rem; }
   .bingo-cell5-text { font-size: 10px; }
-  .bingo-cell5 { gap: 5px; }
+  .bingo-card-front { gap: 5px; }
+  .bingo-logo-img { width: 68%; height: 68%; }
 }
 @media (min-width: 900px) {
+  .bingo-cell5 { min-height: 80px; }
   .bingo-cell5-emoji { font-size: 2.2rem; }
   .bingo-cell5-text { font-size: 11px; }
-  .bingo-cell5 { min-height: 80px; gap: 6px; }
+  .bingo-card-front { gap: 6px; }
 }
 
 /* Stage panel emoji tweaks */
