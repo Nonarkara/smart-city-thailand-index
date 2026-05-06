@@ -162,19 +162,23 @@ function makeBoard(seed: number): BingoTerm[] {
 }
 
 function checkBingo(marked: Set<string>, board: BingoTerm[]): boolean {
-  const ids = board.map(c => c.id);
-  const isM = (i: number) => marked.has(ids[i]);
-  // 5 rows
-  for (let r = 0; r < 5; r++) {
-    if ([0,1,2,3,4].every(c => isM(r*5+c))) return true;
+  // A winning line requires all 5 cells to be marked AND share the same dimension
+  // (FREE cell at index 12 is neutral — it matches any dimension in a line)
+  const lines = [
+    // rows
+    [0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],
+    // cols
+    [0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],
+    // diagonals
+    [0,6,12,18,24],[4,8,12,16,20],
+  ];
+  for (const line of lines) {
+    if (!line.every(i => marked.has(board[i].id))) continue;
+    // All marked — now check same dimension (ignore FREE at center)
+    const dims = line.map(i => board[i].id === "FREE" ? null : board[i].dim);
+    const nonFree = dims.filter(Boolean) as SmartDimension[];
+    if (nonFree.every(d => d === nonFree[0])) return true;
   }
-  // 5 cols
-  for (let c = 0; c < 5; c++) {
-    if ([0,1,2,3,4].every(r => isM(r*5+c))) return true;
-  }
-  // diagonals
-  if ([0,6,12,18,24].every(isM)) return true;
-  if ([4,8,12,16,20].every(isM)) return true;
   return false;
 }
 
@@ -204,17 +208,11 @@ export default function ScitiBingoPage({ locale }: Props) {
   }, []);
 
   const callDimension = useCallback((dim: SmartDimension) => {
+    // Stage announces the category — players must click manually. No auto-mark.
     if (calledDims.includes(dim)) return;
-    const newCalled = [...calledDims, dim];
-    setCalledDims(newCalled);
+    setCalledDims(prev => [...prev, dim]);
     setLastCalled(dim);
-    const nm = new Set(marked);
-    board.forEach(cell => {
-      if (cell.dim === dim || cell.id === "FREE") nm.add(cell.id);
-    });
-    setMarked(nm);
-    if (!won && checkBingo(nm, board)) setWon(true);
-  }, [calledDims, marked, board, won]);
+  }, [calledDims]);
 
   const toggleCell = useCallback((cellId: string) => {
     if (cellId === "FREE") return;
@@ -286,9 +284,10 @@ export default function ScitiBingoPage({ locale }: Props) {
                       <span className="bingo-cell5-dot" style={{ background: color }} />
                     )}
                   </div>
-                  {/* BACK — dimension logo on teal background */}
+                  {/* BACK — dimension logo on white, coloured top bar */}
                   {!isFree && (
-                    <div className="bingo-card-back" style={{ background: color }}>
+                    <div className="bingo-card-back">
+                      <div className="bingo-card-back-bar" style={{ background: color }} />
                       <img
                         src={DIM_LOGOS[cell.dim]}
                         alt={`Smart ${translate(locale, DIM_LABELS[cell.dim])}`}

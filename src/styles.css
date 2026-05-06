@@ -7731,13 +7731,22 @@ h1, h2, h3,
 .bingo-cell5-marked .bingo-card-front { transform: rotateY(-180deg); }
 .bingo-cell5-marked .bingo-card-back  { transform: rotateY(0deg); }
 
-/* Logo image on the back — multiply removes white bg, logo colours show through */
+/* Back face: white background so official logos render full-colour */
+.bingo-card-back {
+  background: #fff;
+  flex-direction: column;
+  gap: 0;
+}
+.bingo-card-back-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
 .bingo-logo-img {
-  width: 75%;
-  height: 75%;
+  width: 78%;
+  height: 78%;
   object-fit: contain;
   display: block;
-  mix-blend-mode: multiply;
 }
 
 /* Cell text content */
