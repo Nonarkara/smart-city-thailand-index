@@ -7467,3 +7467,233 @@ h1, h2, h3,
   .feedback-box { padding: 1.5rem; }
   .feedback-footer { flex-direction: column; align-items: flex-start; }
 }
+
+/* ─── SCITI BINGO ─────────────────────────────────────────────────────────── */
+.bingo-page { padding-bottom: 4rem; }
+.bingo-header { padding-bottom: 1rem; }
+.bingo-title {
+  font-size: var(--text-display);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  margin-bottom: .5rem;
+}
+.bingo-sub {
+  font-size: var(--text-body);
+  color: var(--2);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.bingo-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.bingo-seed {
+  font: 600 var(--text-micro) var(--mono);
+  color: var(--3);
+  letter-spacing: .12em;
+}
+
+/* Win banner */
+.bingo-win-banner {
+  margin: 0 0 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.bingo-win-text {
+  font: 800 var(--text-display) var(--font);
+  color: #fff;
+  letter-spacing: -.03em;
+}
+.bingo-win-sub {
+  font-size: var(--text-body);
+  color: rgba(255,255,255,.85);
+  flex: 1;
+}
+.bingo-win-reset {
+  font: 700 var(--text-micro) var(--mono);
+  color: var(--teal);
+  background: #fff;
+  border: none;
+  padding: .5rem 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* Layout: board + stage panel side by side on desktop */
+.bingo-layout {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 2rem;
+  padding: 0 min(calc((100% - var(--w)) / 2), 1.25rem);
+}
+@media (max-width: 900px) {
+  .bingo-layout { grid-template-columns: 1fr; }
+}
+
+/* Legend bar */
+.bingo-legend {
+  display: flex;
+  gap: .35rem;
+  flex-wrap: wrap;
+  margin-bottom: .5rem;
+}
+.bingo-legend-item {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  font: 700 var(--text-micro) var(--mono);
+  border: 1px solid;
+  padding: .15rem .4rem;
+  letter-spacing: .06em;
+}
+.bingo-legend-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+}
+
+/* 9×9 grid */
+.bingo-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2px;
+  background: var(--4);
+  border: 1px solid var(--4);
+}
+.bingo-cell {
+  background: var(--surface);
+  border: 1px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+  min-height: 44px;
+}
+.bingo-cell:hover:not(.bingo-cell-marked) { background: var(--surface-hover); }
+.bingo-cell-marked { color: #fff; }
+.bingo-cell-free { cursor: default; }
+.bingo-cell-text {
+  font: 700 6px/1.2 var(--mono);
+  text-align: center;
+  padding: 2px;
+  word-break: break-word;
+  hyphens: auto;
+  letter-spacing: 0;
+  color: inherit;
+}
+.bingo-cell-dim-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  opacity: .7;
+}
+@media (min-width: 480px) {
+  .bingo-cell-text { font-size: 7px; }
+}
+@media (min-width: 768px) {
+  .bingo-cell-text { font-size: 8.5px; }
+}
+@media (min-width: 1024px) {
+  .bingo-cell-text { font-size: 9px; padding: 3px; }
+  .bingo-cell-dim-dot { width: 5px; height: 5px; }
+}
+
+/* Stage caller panel */
+.bingo-stage-panel {
+  border-top: 2px solid var(--ink);
+  padding-top: 1rem;
+}
+.bingo-stage-eyebrow {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--3);
+  margin-bottom: .3rem;
+}
+.bingo-stage-desc {
+  font-size: var(--text-micro);
+  color: var(--2);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+.bingo-last-called {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: .75rem 1rem;
+  margin-bottom: 1rem;
+}
+.bingo-last-called-label {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.7);
+}
+.bingo-last-called-dim {
+  font: 800 var(--text-body) var(--font);
+  color: #fff;
+  letter-spacing: -.02em;
+}
+.bingo-dim-buttons {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 1rem;
+}
+.bingo-dim-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .55rem .75rem;
+  border: 1px solid;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity .15s;
+  min-height: 44px;
+}
+.bingo-dim-btn:hover:not(:disabled) { opacity: .8; }
+.bingo-dim-btn:disabled { cursor: not-allowed; }
+.bingo-dim-btn-called { cursor: not-allowed; }
+.bingo-dim-name {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.bingo-dim-tick {
+  font-size: var(--text-micro);
+  opacity: .8;
+}
+.bingo-progress { margin-bottom: .85rem; }
+.bingo-progress-label {
+  font: 500 var(--text-micro) var(--mono);
+  color: var(--3);
+  display: block;
+  margin-bottom: .3rem;
+}
+.bingo-progress-bar {
+  height: 4px;
+  background: var(--5);
+}
+.bingo-progress-fill {
+  height: 100%;
+  background: var(--teal);
+  transition: width .4s;
+}
+.bingo-manual-note {
+  font-size: var(--text-micro);
+  color: var(--3);
+  line-height: 1.5;
+}

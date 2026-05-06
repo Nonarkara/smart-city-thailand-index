@@ -97,6 +97,11 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | เปรียบเทียบเมือง`,
     zh: `${SITE_NAME} | 城市对比`,
   },
+  bingo: {
+    en: `${SITE_NAME} | SCITI Bingo`,
+    th: `${SITE_NAME} | SCITI บิงโก`,
+    zh: `${SITE_NAME} | SCITI 宾果`,
+  },
 };
 
 export type ApiResponse = {
