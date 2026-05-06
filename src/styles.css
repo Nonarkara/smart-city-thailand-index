@@ -94,12 +94,12 @@
   box-shadow: none;
 }
 [data-theme="dark"] .institutional-logo-container {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 3px 6px;
 }
 [data-theme="dark"] .institutional-logo {
-  mix-blend-mode: normal;
-  opacity: 1;
+  mix-blend-mode: normal; /* multiply doesn't work on dark bg */
+  opacity: 0.9;
 }
 [data-theme="dark"] img { opacity: 0.9; }
 [data-theme="dark"] .cinematic-hero-overlay { background: linear-gradient(transparent 0%, transparent 50%, rgba(0,0,0,.35) 75%, rgba(0,0,0,.65) 100%); }
@@ -162,23 +162,20 @@ ul, ol { list-style: none; }
 .shadow-heavy { box-shadow: var(--shadow-heavy); }
 
 /* ─── INSTITUTIONAL LOGO CONTAINER ─── */
+/* mix-blend-mode: multiply makes the logos' JPEG white backgrounds
+   disappear into whatever color the banner is — no more visible boxes. */
 .institutional-logo-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  padding: 4px;
-  border-radius: var(--radius-sm);
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  background: transparent;
+  padding: 0 2px;
   overflow: hidden;
 }
-.institutional-logo-container:hover {
-  transform: none;
-  box-shadow: var(--shadow-premium);
-}
+.institutional-logo-container:hover { opacity: 1; }
 .institutional-logo {
   filter: none !important;
-  mix-blend-mode: normal;
+  mix-blend-mode: multiply; /* white → transparent on light bar */
   height: auto;
   object-fit: contain;
 }
