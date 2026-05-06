@@ -189,6 +189,7 @@ export default function ScitiBingoPage({ locale }: Props) {
   const [calledDims, setCalledDims] = useState<SmartDimension[]>([]);
   const [won, setWon] = useState(false);
   const [lastCalled, setLastCalled] = useState<SmartDimension | null>(null);
+  const [clickCount, setClickCount] = useState(0);
 
   const resetBoard = useCallback(() => {
     const ns = Math.floor(Math.random() * 1_000_000);
@@ -199,6 +200,7 @@ export default function ScitiBingoPage({ locale }: Props) {
     setCalledDims([]);
     setWon(false);
     setLastCalled(null);
+    setClickCount(0);
   }, []);
 
   const callDimension = useCallback((dim: SmartDimension) => {
@@ -216,6 +218,7 @@ export default function ScitiBingoPage({ locale }: Props) {
 
   const toggleCell = useCallback((cellId: string) => {
     if (cellId === "FREE") return;
+    setClickCount(n => n + 1);
     setMarked(prev => {
       const next = new Set(prev);
       next.has(cellId) ? next.delete(cellId) : next.add(cellId);
@@ -241,6 +244,10 @@ export default function ScitiBingoPage({ locale }: Props) {
           <button className="cta-button" onClick={resetBoard}>
             ↻ {t({ en:"New Card", th:"การ์ดใหม่", zh:"新棋盘" })}
           </button>
+          <div className="bingo-click-counter" title={t({ en:"Total clicks — fewer is better", th:"จำนวนคลิก — น้อยกว่าดีกว่า", zh:"总点击次数 — 越少越好" })}>
+            <span className="bingo-click-num">{clickCount}</span>
+            <span className="bingo-click-label">{t({ en:"clicks", th:"คลิก", zh:"次" })}</span>
+          </div>
           <span className="bingo-seed">#{seed.toString(16).toUpperCase().padStart(5,"0")}</span>
         </div>
       </section>
