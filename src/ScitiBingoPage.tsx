@@ -4,9 +4,6 @@ import { assetUrl } from "./mediaAssets";
 import type { Locale, SmartDimension } from "./types";
 import { PILLAR_COLORS } from "./types";
 
-// ─── Smart City Thailand official dimension logos (public/icon 7 Smarts PNG/)
-// Order from depa 7 Smart City Indicators TOC:
-// 01 Environment · 02 Governance · 03 Mobility · 04 Energy · 05 Economy · 06 Living · 07 People
 const DIM_LOGOS: Record<SmartDimension, string> = {
   environment: assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-01.png"),
   governance:  assetUrl("/icon 7 Smarts PNG/icon 7 Smarts Logo-02.png"),
@@ -18,336 +15,164 @@ const DIM_LOGOS: Record<SmartDimension, string> = {
 };
 
 interface Props { locale: Locale; }
-
-type BingoTerm = {
-  id: string;
-  emoji: string;
-  label: { en: string; th: string; zh: string };
-  dim: SmartDimension;
-  isLogo?: boolean;
-};
-
-// ─── POOL — 7 logo anchors + ~56 regular terms with emojis ──────────────────
-// Source: depa 7 Smart City Indicators + Hitachi Review Vol.70 + ASEAN Primer 2022
+type T3 = { en: string; th: string; zh: string };
+type BingoTerm = { id: string; emoji: string; label: T3; hint: T3; dim: SmartDimension };
 
 const POOL: BingoTerm[] = [
-  // LOGO ANCHORS — each dimension's "name card" (always big, auto-marks on call)
-  { id:"logo1", dim:"environment", isLogo:true, emoji:"🌿", label:{ en:"Smart Environment", th:"Smart\nEnvironment", zh:"Smart\nEnvironment" } },
-  { id:"logo2", dim:"economy",     isLogo:true, emoji:"📈", label:{ en:"Smart Economy",     th:"Smart\nEconomy",     zh:"Smart\nEconomy"     } },
-  { id:"logo3", dim:"mobility",    isLogo:true, emoji:"🚌", label:{ en:"Smart Mobility",    th:"Smart\nMobility",    zh:"Smart\nMobility"    } },
-  { id:"logo4", dim:"energy",      isLogo:true, emoji:"⚡", label:{ en:"Smart Energy",      th:"Smart\nEnergy",      zh:"Smart\nEnergy"      } },
-  { id:"logo5", dim:"people",      isLogo:true, emoji:"👥", label:{ en:"Smart People",      th:"Smart\nPeople",      zh:"Smart\nPeople"      } },
-  { id:"logo6", dim:"living",      isLogo:true, emoji:"🏠", label:{ en:"Smart Living",      th:"Smart\nLiving",      zh:"Smart\nLiving"      } },
-  { id:"logo7", dim:"governance",  isLogo:true, emoji:"🏛️", label:{ en:"Smart Governance",  th:"Smart\nGovernance",  zh:"Smart\nGovernance"  } },
-
-  // ENVIRONMENT ────────────────────────────────────────────────────────────────
-  { id:"env1",  dim:"environment", emoji:"🌬️", label:{ en:"Air Quality Monitor",  th:"มอนิเตอร์อากาศ",   zh:"空气质量监测" } },
-  { id:"env2",  dim:"environment", emoji:"🌊", label:{ en:"Flood Sensor",         th:"เซนเซอร์น้ำท่วม",  zh:"洪涝传感" } },
-  { id:"env3",  dim:"environment", emoji:"💧", label:{ en:"Water Management",     th:"จัดการน้ำ",         zh:"水资源管理" } },
-  { id:"env4",  dim:"environment", emoji:"🌡️", label:{ en:"Climate Watch",        th:"เฝ้าระวังภูมิอากาศ",zh:"气候监测" } },
-  { id:"env5",  dim:"environment", emoji:"♻️", label:{ en:"Waste IoT",            th:"ติดตามขยะ IoT",    zh:"废物物联" } },
-  { id:"env6",  dim:"environment", emoji:"🚨", label:{ en:"Disaster Alert",       th:"แจ้งเตือนภัย",     zh:"灾害预警" } },
-  { id:"env7",  dim:"environment", emoji:"🌳", label:{ en:"Green Space ≥10m²",   th:"พื้นที่เขียว ≥10m²",zh:"绿地≥10m²" } },
-  { id:"env8",  dim:"environment", emoji:"😷", label:{ en:"PM2.5 Real-Time",      th:"PM2.5 เรียลไทม์",  zh:"PM2.5实时" } },
-
-  // ECONOMY ────────────────────────────────────────────────────────────────────
-  { id:"eco1",  dim:"economy", emoji:"✈️", label:{ en:"Digital Tourism",   th:"ท่องเที่ยวดิจิทัล",    zh:"数字旅游" } },
-  { id:"eco2",  dim:"economy", emoji:"🏪", label:{ en:"SME Platform",      th:"แพลตฟอร์ม SME",        zh:"中小企业平台" } },
-  { id:"eco3",  dim:"economy", emoji:"🚀", label:{ en:"Startup Hub",       th:"ฮับสตาร์ทอัพ",         zh:"创业中心" } },
-  { id:"eco4",  dim:"economy", emoji:"🌾", label:{ en:"Smart Agriculture", th:"เกษตรอัจฉริยะ",        zh:"智慧农业" } },
-  { id:"eco5",  dim:"economy", emoji:"🚁", label:{ en:"Agri Drone",        th:"โดรนการเกษตร",         zh:"农业无人机" } },
-  { id:"eco6",  dim:"economy", emoji:"🏙️", label:{ en:"Innovation Zone",   th:"เขตนวัตกรรม",          zh:"创新区" } },
-  { id:"eco7",  dim:"economy", emoji:"💰", label:{ en:"FDI Gateway",       th:"ดึงดูด FDI",           zh:"外资门户" } },
-  { id:"eco8",  dim:"economy", emoji:"💳", label:{ en:"Cashless Society",  th:"ไร้เงินสด",             zh:"无现金社会" } },
-
-  // MOBILITY ───────────────────────────────────────────────────────────────────
-  { id:"mob1",  dim:"mobility", emoji:"🚍", label:{ en:"BRT Corridor",      th:"รถ BRT",              zh:"快速公交" } },
-  { id:"mob2",  dim:"mobility", emoji:"⚡", label:{ en:"EV Charging",       th:"จุดชาร์จ EV",          zh:"电动车充电" } },
-  { id:"mob3",  dim:"mobility", emoji:"🚦", label:{ en:"AI Traffic Light",  th:"ไฟจราจร AI",           zh:"AI交通灯" } },
-  { id:"mob4",  dim:"mobility", emoji:"🅿️", label:{ en:"Smart Parking",    th:"จอดรถอัจฉริยะ",       zh:"智能停车" } },
-  { id:"mob5",  dim:"mobility", emoji:"🗺️", label:{ en:"MaaS Platform",    th:"แพลตฟอร์ม MaaS",       zh:"出行即服务" } },
-  { id:"mob6",  dim:"mobility", emoji:"🚲", label:{ en:"Bike Share",        th:"จักรยานสาธารณะ",       zh:"共享单车" } },
-  { id:"mob7",  dim:"mobility", emoji:"🚋", label:{ en:"LRT Transit",       th:"รถไฟฟ้า LRT",          zh:"轻轨" } },
-  { id:"mob8",  dim:"mobility", emoji:"🚶", label:{ en:"Pedestrian Path",   th:"ทางเดินคนเดิน",        zh:"步行道" } },
-
-  // ENERGY ─────────────────────────────────────────────────────────────────────
-  { id:"enr1",  dim:"energy", emoji:"☀️", label:{ en:"Solar ≥50%",         th:"พลังงานแสงอาทิตย์",   zh:"太阳能≥50%" } },
-  { id:"enr2",  dim:"energy", emoji:"🔌", label:{ en:"Smart Grid",          th:"กริดอัจฉริยะ",         zh:"智能电网" } },
-  { id:"enr3",  dim:"energy", emoji:"💨", label:{ en:"Wind Energy",         th:"พลังงานลม",            zh:"风力发电" } },
-  { id:"enr4",  dim:"energy", emoji:"🎯", label:{ en:"Net Zero Target",     th:"เป้า Net Zero",        zh:"净零目标" } },
-  { id:"enr5",  dim:"energy", emoji:"🔋", label:{ en:"Energy Storage 30%", th:"เก็บพลังงาน ≥30%",    zh:"储能≥30%" } },
-  { id:"enr6",  dim:"energy", emoji:"📊", label:{ en:"Smart Meter 100%",   th:"มิเตอร์อัจฉริยะ 100%",zh:"智能电表100%" } },
-  { id:"enr7",  dim:"energy", emoji:"🏘️", label:{ en:"Smart Home/Building",th:"Smart Home",            zh:"智慧楼宇" } },
-  { id:"enr8",  dim:"energy", emoji:"🏝️", label:{ en:"Micro-grid 24hr",    th:"ไมโครกริด 24 ชม.",    zh:"微电网24小时" } },
-
-  // PEOPLE ─────────────────────────────────────────────────────────────────────
-  { id:"ppl1",  dim:"people", emoji:"📱", label:{ en:"Digital Literacy",   th:"การรู้ดิจิทัล",         zh:"数字素养" } },
-  { id:"ppl2",  dim:"people", emoji:"📚", label:{ en:"Lifelong Learning",  th:"เรียนรู้ตลอดชีวิต",     zh:"终身学习" } },
-  { id:"ppl3",  dim:"people", emoji:"🔬", label:{ en:"STEM Lab",           th:"ห้อง STEM",              zh:"STEM实验室" } },
-  { id:"ppl4",  dim:"people", emoji:"🌟", label:{ en:"Youth Leader",       th:"ผู้นำเยาวชน",            zh:"青年领袖" } },
-  { id:"ppl5",  dim:"people", emoji:"👩‍💻", label:{ en:"Coding Bootcamp",   th:"เรียนโค้ดดิ้ง",          zh:"编程训练营" } },
-  { id:"ppl6",  dim:"people", emoji:"💡", label:{ en:"Social Innovation",  th:"นวัตกรรมสังคม",          zh:"社会创新" } },
-  { id:"ppl7",  dim:"people", emoji:"🎨", label:{ en:"Design Thinking",    th:"Design Thinking",        zh:"设计思维" } },
-  { id:"ppl8",  dim:"people", emoji:"🌏", label:{ en:"YSEALI Workshop",    th:"YSEALI Workshop",        zh:"YSEALI工作坊" } },
-
-  // LIVING ─────────────────────────────────────────────────────────────────────
-  { id:"liv1",  dim:"living", emoji:"⭐", label:{ en:"5-Star Service",     th:"บริการ 5 ดาว",           zh:"五星服务" } },
-  { id:"liv2",  dim:"living", emoji:"🏥", label:{ en:"Smart Hospital",     th:"โรงพยาบาลอัจฉริยะ",     zh:"智慧医院" } },
-  { id:"liv3",  dim:"living", emoji:"📷", label:{ en:"CCTV Safety",        th:"CCTV ความปลอดภัย",       zh:"CCTV安全" } },
-  { id:"liv4",  dim:"living", emoji:"👴", label:{ en:"Elderly Day Care",   th:"ศูนย์ดูแลผู้สูงอายุ",   zh:"老人日托" } },
-  { id:"liv5",  dim:"living", emoji:"🏫", label:{ en:"Smart School",       th:"โรงเรียนอัจฉริยะ",       zh:"智慧学校" } },
-  { id:"liv6",  dim:"living", emoji:"🚑", label:{ en:"Smart Ambulance",    th:"รถพยาบาลอัจฉริยะ",       zh:"智能救护" } },
-  { id:"liv7",  dim:"living", emoji:"💊", label:{ en:"QR Healthcare",      th:"บัตรสุขภาพ QR",          zh:"QR医疗" } },
-  { id:"liv8",  dim:"living", emoji:"🌱", label:{ en:"Urban Farm",         th:"ฟาร์มในเมือง",            zh:"城市农场" } },
-
-  // GOVERNANCE ─────────────────────────────────────────────────────────────────
-  { id:"gov1",  dim:"governance", emoji:"🗄️", label:{ en:"City Data Platform",  th:"แพลตฟอร์มข้อมูลเมือง", zh:"城市数据平台" } },
-  { id:"gov2",  dim:"governance", emoji:"🔓", label:{ en:"Open Government Data", th:"ข้อมูลรัฐเปิด",        zh:"开放政府数据" } },
-  { id:"gov3",  dim:"governance", emoji:"📲", label:{ en:"Citizen App",          th:"แอปประชาชน",           zh:"市民应用" } },
-  { id:"gov4",  dim:"governance", emoji:"🖥️", label:{ en:"e-Government",        th:"รัฐบาลอิเล็กทรอนิกส์", zh:"电子政务" } },
-  { id:"gov5",  dim:"governance", emoji:"📊", label:{ en:"City Dashboard",       th:"แดชบอร์ดเมือง",        zh:"城市仪表板" } },
-  { id:"gov6",  dim:"governance", emoji:"🔗", label:{ en:"Public API",           th:"API สาธารณะ",          zh:"公共API" } },
-  { id:"gov7",  dim:"governance", emoji:"🗳️", label:{ en:"Participatory Budget", th:"งบฯ มีส่วนร่วม",       zh:"参与式预算" } },
-  { id:"gov8",  dim:"governance", emoji:"🔍", label:{ en:"Transparency Audit",   th:"ตรวจสอบโปร่งใส",      zh:"透明度审计" } },
+  { id:"env1", dim:"environment", emoji:"🌬️", label:{ en:"Air Quality Monitor", th:"มอนิเตอร์อากาศ", zh:"空气质量监测" }, hint:{ en:"tracks what you breathe every day", th:"วัดอากาศที่คุณหายใจทุกวัน", zh:"监测你每天呼吸的空气" } },
+  { id:"env2", dim:"environment", emoji:"🌊", label:{ en:"Flood Sensor", th:"เซนเซอร์น้ำท่วม", zh:"洪涝传感" }, hint:{ en:"warns before the water rises", th:"เตือนก่อนน้ำจะท่วม", zh:"水位上涨前提前预警" } },
+  { id:"env3", dim:"environment", emoji:"💧", label:{ en:"Water Management", th:"จัดการน้ำ", zh:"水资源管理" }, hint:{ en:"keeps clean water flowing to taps", th:"ทำให้น้ำสะอาดไหลออกก๊อก", zh:"保障清洁水流出水龙头" } },
+  { id:"env4", dim:"environment", emoji:"🌡️", label:{ en:"Climate Watch", th:"เฝ้าระวังภูมิอากาศ", zh:"气候监测" }, hint:{ en:"predicts extreme weather before it hits", th:"คาดการณ์พายุก่อนถึง", zh:"极端天气来袭前提前预测" } },
+  { id:"env5", dim:"environment", emoji:"♻️", label:{ en:"Waste IoT", th:"ติดตามขยะ IoT", zh:"废物物联" }, hint:{ en:"smart bins know when they're full", th:"ถังขยะรู้เองเมื่อเต็ม", zh:"智能垃圾桶知道自己满了" } },
+  { id:"env6", dim:"environment", emoji:"🚨", label:{ en:"Disaster Alert", th:"แจ้งเตือนภัย", zh:"灾害预警" }, hint:{ en:"early warning saves lives", th:"เตือนภัยก่อนช่วยชีวิตได้", zh:"提前预警总能救命" } },
+  { id:"env7", dim:"environment", emoji:"🌳", label:{ en:"Green Space ≥10m²", th:"พื้นที่เขียว ≥10m²", zh:"绿地≥10m²" }, hint:{ en:"minimum parks per person, required by law", th:"ข้อกำหนดทางกฎหมาย: สวนต่อหัวคน", zh:"法定最低人均公园面积" } },
+  { id:"env8", dim:"environment", emoji:"😷", label:{ en:"PM2.5 Real-Time", th:"PM2.5 เรียลไทม์", zh:"PM2.5实时" }, hint:{ en:"tiny invisible particles, big health risk", th:"อนุภาคเล็กมองไม่เห็น ภัยสุขภาพใหญ่", zh:"肉眼不可见的细颗粒，大健康风险" } },
+  { id:"eco1", dim:"economy", emoji:"✈️", label:{ en:"Digital Tourism", th:"ท่องเที่ยวดิจิทัล", zh:"数字旅游" }, hint:{ en:"tourists discover and book the city via apps", th:"นักท่องเที่ยวค้นหาและจองผ่านแอป", zh:"游客通过应用发现并预订" } },
+  { id:"eco2", dim:"economy", emoji:"🏪", label:{ en:"SME Platform", th:"แพลตฟอร์ม SME", zh:"中小企业平台" }, hint:{ en:"small businesses go digital together", th:"ธุรกิจเล็กก้าวสู่โลกดิจิทัล", zh:"小企业集体数字化" } },
+  { id:"eco3", dim:"economy", emoji:"🚀", label:{ en:"Startup Hub", th:"ฮับสตาร์ทอัพ", zh:"创业中心" }, hint:{ en:"where new ideas become real companies", th:"ที่ที่ไอเดียใหม่กลายเป็นบริษัทจริง", zh:"新想法在这里变成真正的公司" } },
+  { id:"eco4", dim:"economy", emoji:"🌾", label:{ en:"Smart Agriculture", th:"เกษตรอัจฉริยะ", zh:"智慧农业" }, hint:{ en:"sensors and data help grow better crops", th:"เซนเซอร์และข้อมูลช่วยปลูกพืชได้ดีขึ้น", zh:"传感器和数据帮助更好地种植作物" } },
+  { id:"eco5", dim:"economy", emoji:"🚁", label:{ en:"Agri Drone", th:"โดรนการเกษตร", zh:"农业无人机" }, hint:{ en:"crops surveyed and sprayed from above", th:"ติดตามและพ่นยาพืชจากทางอากาศ", zh:"从空中监测并喷洒作物" } },
+  { id:"eco6", dim:"economy", emoji:"🏙️", label:{ en:"Innovation Zone", th:"เขตนวัตกรรม", zh:"创新区" }, hint:{ en:"city-approved area for testing new tech", th:"พื้นที่เมืองอนุมัติสำหรับทดลองเทคโนโลยีใหม่", zh:"城市批准的新技术测试区域" } },
+  { id:"eco7", dim:"economy", emoji:"💰", label:{ en:"FDI Gateway", th:"ดึงดูด FDI", zh:"外资门户" }, hint:{ en:"makes foreign investment fast and easy", th:"ทำให้การลงทุนต่างชาติรวดเร็วง่ายดาย", zh:"让外资投资变得快捷简便" } },
+  { id:"eco8", dim:"economy", emoji:"💳", label:{ en:"Cashless Society", th:"ไร้เงินสด", zh:"无现金社会" }, hint:{ en:"pay with QR — no coins, no wallets", th:"จ่ายด้วย QR ไม่ต้องใช้เหรียญ", zh:"扫码支付，无需现金和钱包" } },
+  { id:"mob1", dim:"mobility", emoji:"🚍", label:{ en:"BRT Corridor", th:"รถ BRT", zh:"快速公交" }, hint:{ en:"dedicated fast lane for buses only", th:"เลนด่วนเฉพาะรถโดยสาร", zh:"专供公交的快速专用道" } },
+  { id:"mob2", dim:"mobility", emoji:"⚡", label:{ en:"EV Charging", th:"จุดชาร์จ EV", zh:"电动车充电" }, hint:{ en:"plug-in stops spread across the city", th:"จุดชาร์จกระจายทั่วเมือง", zh:"遍布全城的充电站点" } },
+  { id:"mob3", dim:"mobility", emoji:"🚦", label:{ en:"AI Traffic Light", th:"ไฟจราจร AI", zh:"AI交通灯" }, hint:{ en:"adjusts green/red to live traffic conditions", th:"ปรับเขียว-แดงตามสภาพจราจรจริง", zh:"根据实时路况调节红绿灯" } },
+  { id:"mob4", dim:"mobility", emoji:"🅿️", label:{ en:"Smart Parking", th:"จอดรถอัจฉริยะ", zh:"智能停车" }, hint:{ en:"find an empty space before you arrive", th:"หาที่ว่างก่อนถึงที่หมาย", zh:"到达前就找好空车位" } },
+  { id:"mob5", dim:"mobility", emoji:"🗺️", label:{ en:"MaaS Platform", th:"แพลตฟอร์ม MaaS", zh:"出行即服务" }, hint:{ en:"one app for bus, train, bike and taxi", th:"แอปเดียวครบทุกการเดินทาง", zh:"一个应用涵盖所有出行方式" } },
+  { id:"mob6", dim:"mobility", emoji:"🚲", label:{ en:"Bike Share", th:"จักรยานสาธารณะ", zh:"共享单车" }, hint:{ en:"borrow a bicycle, return it anywhere", th:"ยืมจักรยานและคืนได้ทุกที่", zh:"随借随还的共享单车" } },
+  { id:"mob7", dim:"mobility", emoji:"🚋", label:{ en:"LRT Transit", th:"รถไฟฟ้า LRT", zh:"轻轨" }, hint:{ en:"light rail connecting districts quietly", th:"รางเบาเชื่อมย่านต่างๆ อย่างเงียบ", zh:"轻轨静静连接各个街区" } },
+  { id:"mob8", dim:"mobility", emoji:"🚶", label:{ en:"Pedestrian Path", th:"ทางเดินคนเดิน", zh:"步行道" }, hint:{ en:"safe, shaded routes just for walking", th:"ทางเดินปลอดภัยมีร่มเงา", zh:"专为步行设计的安全遮阳路线" } },
+  { id:"enr1", dim:"energy", emoji:"☀️", label:{ en:"Solar ≥50%", th:"พลังงานแสงอาทิตย์", zh:"太阳能≥50%" }, hint:{ en:"half the city's power comes from the sun", th:"ครึ่งหนึ่งของพลังงานมาจากแสงอาทิตย์", zh:"城市一半电力来自太阳" } },
+  { id:"enr2", dim:"energy", emoji:"🔌", label:{ en:"Smart Grid", th:"กริดอัจฉริยะ", zh:"智能电网" }, hint:{ en:"power re-routes automatically when cut", th:"ไฟฟ้าเบี่ยงเส้นทางอัตโนมัติเมื่อดับ", zh:"断电时电力自动改道" } },
+  { id:"enr3", dim:"energy", emoji:"💨", label:{ en:"Wind Energy", th:"พลังงานลม", zh:"风力发电" }, hint:{ en:"turbines turn breeze into electricity", th:"กังหันเปลี่ยนลมเป็นไฟฟ้า", zh:"风机把风变成电" } },
+  { id:"enr4", dim:"energy", emoji:"🎯", label:{ en:"Net Zero Target", th:"เป้า Net Zero", zh:"净零目标" }, hint:{ en:"whatever you emit, you must absorb", th:"ปล่อยเท่าไหร่ต้องดูดซับเท่านั้น", zh:"排放多少就要吸收多少" } },
+  { id:"enr5", dim:"energy", emoji:"🔋", label:{ en:"Energy Storage 30%", th:"เก็บพลังงาน ≥30%", zh:"储能≥30%" }, hint:{ en:"stores daytime solar for the night", th:"เก็บพลังงานกลางวันไว้ใช้ตอนกลางคืน", zh:"把白天太阳能存起来夜晚用" } },
+  { id:"enr6", dim:"energy", emoji:"📊", label:{ en:"Smart Meter 100%", th:"มิเตอร์ 100%", zh:"智能电表100%" }, hint:{ en:"every home tracked in real-time", th:"ทุกบ้านถูกติดตามแบบเรียลไทม์", zh:"每家每户实时监测用电量" } },
+  { id:"enr7", dim:"energy", emoji:"🏘️", label:{ en:"Smart Home/Building", th:"Smart Home", zh:"智慧楼宇" }, hint:{ en:"buildings manage their own power use", th:"อาคารบริหารการใช้พลังงานตัวเอง", zh:"建筑自主管理自身能耗" } },
+  { id:"enr8", dim:"energy", emoji:"🏝️", label:{ en:"Micro-grid 24hr", th:"ไมโครกริด 24 ชม.", zh:"微电网24小时" }, hint:{ en:"city runs off the national grid for a full day", th:"เมืองทำงานโดยไม่พึ่งสายส่งหลักได้ 24 ชม.", zh:"城市可独立运行整整一天" } },
+  { id:"ppl1", dim:"people", emoji:"📱", label:{ en:"Digital Literacy", th:"การรู้ดิจิทัล", zh:"数字素养" }, hint:{ en:"everyone can use the internet safely", th:"ทุกคนใช้อินเทอร์เน็ตได้อย่างปลอดภัย", zh:"每个人都能安全使用互联网" } },
+  { id:"ppl2", dim:"people", emoji:"📚", label:{ en:"Lifelong Learning", th:"เรียนรู้ตลอดชีวิต", zh:"终身学习" }, hint:{ en:"education doesn't stop after school", th:"การศึกษาไม่จบแค่ในโรงเรียน", zh:"学习不因毕业而停止" } },
+  { id:"ppl3", dim:"people", emoji:"🔬", label:{ en:"STEM Lab", th:"ห้อง STEM", zh:"STEM实验室" }, hint:{ en:"hands-on science for young people", th:"วิทยาศาสตร์เชิงปฏิบัติสำหรับเยาวชน", zh:"为年轻人设计的动手科学课" } },
+  { id:"ppl4", dim:"people", emoji:"🌟", label:{ en:"Youth Leader", th:"ผู้นำเยาวชน", zh:"青年领袖" }, hint:{ en:"young citizens help shape city policy", th:"เยาวชนมีส่วนกำหนดนโยบายเมือง", zh:"年轻市民参与塑造城市政策" } },
+  { id:"ppl5", dim:"people", emoji:"👩‍💻", label:{ en:"Coding Bootcamp", th:"เรียนโค้ดดิ้ง", zh:"编程训练营" }, hint:{ en:"learn to build software in a few weeks", th:"เรียนสร้างโปรแกรมภายในไม่กี่สัปดาห์", zh:"数周内学会构建软件" } },
+  { id:"ppl6", dim:"people", emoji:"💡", label:{ en:"Social Innovation", th:"นวัตกรรมสังคม", zh:"社会创新" }, hint:{ en:"fix root causes, not just symptoms", th:"แก้ต้นตอ ไม่ใช่แค่ผล", zh:"解决根源，而非表象" } },
+  { id:"ppl7", dim:"people", emoji:"🎨", label:{ en:"Design Thinking", th:"Design Thinking", zh:"设计思维" }, hint:{ en:"empathise with users before you build anything", th:"เข้าใจผู้ใช้ก่อนลงมือสร้าง", zh:"建造前先理解用户需求" } },
+  { id:"ppl8", dim:"people", emoji:"🌏", label:{ en:"YSEALI Workshop", th:"YSEALI Workshop", zh:"YSEALI工作坊" }, hint:{ en:"ASEAN young leaders exchange city ideas", th:"ผู้นำเยาวชน ASEAN แลกไอเดียเมือง", zh:"东盟青年领袖交流城市创意" } },
+  { id:"liv1", dim:"living", emoji:"⭐", label:{ en:"5-Star Service", th:"บริการ 5 ดาว", zh:"五星服务" }, hint:{ en:"citizens rate every interaction with the city", th:"ประชาชนให้คะแนนทุกการบริการเมือง", zh:"市民为每次城市服务评分" } },
+  { id:"liv2", dim:"living", emoji:"🏥", label:{ en:"Smart Hospital", th:"โรงพยาบาลอัจฉริยะ", zh:"智慧医院" }, hint:{ en:"your medical record follows you everywhere", th:"ประวัติการรักษาติดตามคุณทุกที่", zh:"医疗档案随你走遍各处" } },
+  { id:"liv3", dim:"living", emoji:"📷", label:{ en:"CCTV Safety", th:"CCTV ความปลอดภัย", zh:"CCTV安全" }, hint:{ en:"cameras deter crime and document incidents", th:"กล้องป้องปรามอาชญากรรมและบันทึกเหตุ", zh:"摄像头震慑犯罪并记录事件" } },
+  { id:"liv4", dim:"living", emoji:"👴", label:{ en:"Elderly Day Care", th:"ศูนย์ผู้สูงอายุ", zh:"老人日托" }, hint:{ en:"daytime support for the ageing population", th:"ดูแลผู้สูงอายุระหว่างวัน", zh:"为老龄人口提供白天照护" } },
+  { id:"liv5", dim:"living", emoji:"🏫", label:{ en:"Smart School", th:"โรงเรียนอัจฉริยะ", zh:"智慧学校" }, hint:{ en:"digital tools enrich what happens in class", th:"เครื่องมือดิจิทัลเสริมห้องเรียน", zh:"数字工具丰富课堂体验" } },
+  { id:"liv6", dim:"living", emoji:"🚑", label:{ en:"Smart Ambulance", th:"รถพยาบาลอัจฉริยะ", zh:"智能救护" }, hint:{ en:"patient data sent ahead to the hospital", th:"ส่งข้อมูลผู้ป่วยไปโรงพยาบาลล่วงหน้า", zh:"患者数据提前发送至医院" } },
+  { id:"liv7", dim:"living", emoji:"💊", label:{ en:"QR Healthcare", th:"บัตรสุขภาพ QR", zh:"QR医疗" }, hint:{ en:"scan a code, your health record appears", th:"สแกนโค้ด เห็นประวัติสุขภาพทั้งหมด", zh:"扫码即可查看完整健康档案" } },
+  { id:"liv8", dim:"living", emoji:"🌱", label:{ en:"Urban Farm", th:"ฟาร์มในเมือง", zh:"城市农场" }, hint:{ en:"grow food inside the city limits", th:"ปลูกอาหารกินเองในเขตเมือง", zh:"在城市范围内种植食物" } },
+  { id:"gov1", dim:"governance", emoji:"🗄️", label:{ en:"City Data Platform", th:"แพลตฟอร์มข้อมูลเมือง", zh:"城市数据平台" }, hint:{ en:"all city sensors talk to one single system", th:"เซนเซอร์ทุกตัวส่งข้อมูลมาที่เดียวกัน", zh:"所有城市传感器汇入同一系统" } },
+  { id:"gov2", dim:"governance", emoji:"🔓", label:{ en:"Open Gov Data", th:"ข้อมูลรัฐเปิด", zh:"开放政府数据" }, hint:{ en:"the public can see what the city collects", th:"ประชาชนดูข้อมูลที่เมืองเก็บได้", zh:"公众可以查看城市收集的数据" } },
+  { id:"gov3", dim:"governance", emoji:"📲", label:{ en:"Citizen App", th:"แอปประชาชน", zh:"市民应用" }, hint:{ en:"report a broken streetlight from your phone", th:"แจ้งไฟดับผ่านโทรศัพท์ทันที", zh:"用手机举报路灯故障" } },
+  { id:"gov4", dim:"governance", emoji:"🖥️", label:{ en:"e-Government", th:"รัฐบาลอิเล็กทรอนิกส์", zh:"电子政务" }, hint:{ en:"renew your ID without queuing at all", th:"ต่ออายุบัตรโดยไม่ต้องต่อคิว", zh:"无需排队即可续办证件" } },
+  { id:"gov5", dim:"governance", emoji:"📊", label:{ en:"City Dashboard", th:"แดชบอร์ดเมือง", zh:"城市仪表板" }, hint:{ en:"city performance is visible to every citizen", th:"ผลการดำเนินงานเมืองเห็นได้ทุกคน", zh:"城市绩效对每位市民透明可见" } },
+  { id:"gov6", dim:"governance", emoji:"🔗", label:{ en:"Public API", th:"API สาธารณะ", zh:"公共API" }, hint:{ en:"developers can build apps on city data", th:"นักพัฒนาต่อยอดข้อมูลเมืองได้", zh:"开发者可在城市数据上构建应用" } },
+  { id:"gov7", dim:"governance", emoji:"🗳️", label:{ en:"Participatory Budget", th:"งบฯ มีส่วนร่วม", zh:"参与式预算" }, hint:{ en:"citizens vote on how city money is spent", th:"ประชาชนโหวตกำหนดการใช้งบเมือง", zh:"市民投票决定城市资金用途" } },
+  { id:"gov8", dim:"governance", emoji:"🔍", label:{ en:"Transparency Audit", th:"ตรวจสอบโปร่งใส", zh:"透明度审计" }, hint:{ en:"outsiders verify what the city claims", th:"บุคคลภายนอกตรวจสอบคำกล่าวอ้างเมือง", zh:"外部机构核实城市的陈述" } },
 ];
 
-const DIM_COLORS: Record<SmartDimension, string> = {
-  environment: PILLAR_COLORS.environment,
-  economy:     PILLAR_COLORS.economy,
-  mobility:    PILLAR_COLORS.livability,
-  energy:      PILLAR_COLORS.digital,
-  people:      PILLAR_COLORS.hospitality,
-  living:      PILLAR_COLORS.wellbeing,
-  governance:  PILLAR_COLORS.safety,
-};
-
-const DIM_LABELS: Record<SmartDimension, { en: string; th: string; zh: string }> = {
-  environment: { en: "Environment", th: "สิ่งแวดล้อม", zh: "环境" },
-  economy:     { en: "Economy",     th: "เศรษฐกิจ",   zh: "经济" },
-  mobility:    { en: "Mobility",    th: "การเดินทาง", zh: "出行" },
-  energy:      { en: "Energy",      th: "พลังงาน",    zh: "能源" },
-  people:      { en: "People",      th: "พลเมือง",    zh: "市民" },
-  living:      { en: "Living",      th: "การดำรงชีวิต", zh: "生活" },
-  governance:  { en: "Governance",  th: "การบริหาร",  zh: "治理" },
-};
-
-const DIM_EMOJIS: Record<SmartDimension, string> = {
-  environment: "🌿", economy: "📈", mobility: "🚌",
-  energy: "⚡", people: "👥", living: "🏠", governance: "🏛️",
-};
-
+const DIM_COLORS: Record<SmartDimension,string> = { environment:PILLAR_COLORS.environment, economy:PILLAR_COLORS.economy, mobility:PILLAR_COLORS.livability, energy:PILLAR_COLORS.digital, people:PILLAR_COLORS.hospitality, living:PILLAR_COLORS.wellbeing, governance:PILLAR_COLORS.safety };
+const DIM_LABELS: Record<SmartDimension,T3> = { environment:{en:"Environment",th:"สิ่งแวดล้อม",zh:"环境"}, economy:{en:"Economy",th:"เศรษฐกิจ",zh:"经济"}, mobility:{en:"Mobility",th:"การเดินทาง",zh:"出行"}, energy:{en:"Energy",th:"พลังงาน",zh:"能源"}, people:{en:"People",th:"พลเมือง",zh:"市民"}, living:{en:"Living",th:"การดำรงชีวิต",zh:"生活"}, governance:{en:"Governance",th:"การบริหาร",zh:"治理"} };
+const DIM_EMOJIS: Record<SmartDimension,string> = { environment:"🌿", economy:"📈", mobility:"🚌", energy:"⚡", people:"👥", living:"🏠", governance:"🏛️" };
 const DIMS: SmartDimension[] = ["environment","economy","mobility","energy","people","living","governance"];
 
-// ─── Board generation ───────────────────────────────────────────────────────
-
 function seededShuffle<T>(arr: T[], seed: number): T[] {
-  const a = [...arr];
-  let s = seed;
-  for (let i = a.length - 1; i > 0; i--) {
-    s = (s * 1664525 + 1013904223) & 0xffffffff;
-    const j = Math.abs(s) % (i + 1);
-    [a[i], a[j]] = [a[j], a[i]];
-  }
+  const a=[...arr]; let s=seed;
+  for(let i=a.length-1;i>0;i--){s=(s*1664525+1013904223)&0xffffffff;const j=Math.abs(s)%(i+1);[a[i],a[j]]=[a[j],a[i]];}
   return a;
 }
-
 function makeBoard(seed: number): BingoTerm[] {
-  // Pick 24 from pool, arrange 5×5 with FREE in center (index 12)
-  const shuffled = seededShuffle(POOL, seed).slice(0, 24);
-  const FREE: BingoTerm = {
-    id: "FREE", dim: "governance", emoji: "🆓",
-    label: { en: "FREE", th: "ฟรี", zh: "FREE" },
-  };
-  return [...shuffled.slice(0, 12), FREE, ...shuffled.slice(12)];
+  const s=seededShuffle(POOL,seed).slice(0,24);
+  const FREE:BingoTerm={id:"FREE",dim:"governance",emoji:"🆓",label:{en:"FREE",th:"ฟรี",zh:"FREE"},hint:{en:"no guessing needed!",th:"ช่องนี้ไม่ต้องเดา!",zh:"这格不用猜！"}};
+  return [...s.slice(0,12),FREE,...s.slice(12)];
 }
-
 function checkBingo(marked: Set<string>, board: BingoTerm[]): boolean {
-  // A winning line requires all 5 cells to be marked AND share the same dimension
-  // (FREE cell at index 12 is neutral — it matches any dimension in a line)
-  const lines = [
-    // rows
-    [0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],
-    // cols
-    [0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],
-    // diagonals
-    [0,6,12,18,24],[4,8,12,16,20],
-  ];
-  for (const line of lines) {
-    if (!line.every(i => marked.has(board[i].id))) continue;
-    // All marked — now check same dimension (ignore FREE at center)
-    const dims = line.map(i => board[i].id === "FREE" ? null : board[i].dim);
-    const nonFree = dims.filter(Boolean) as SmartDimension[];
-    if (nonFree.every(d => d === nonFree[0])) return true;
-  }
+  const ids=board.map(c=>c.id); const isM=(i:number)=>marked.has(ids[i]);
+  for(let r=0;r<5;r++) if([0,1,2,3,4].every(c=>isM(r*5+c))) return true;
+  for(let c=0;c<5;c++) if([0,1,2,3,4].every(r=>isM(r*5+c))) return true;
+  if([0,6,12,18,24].every(isM)) return true;
+  if([4,8,12,16,20].every(isM)) return true;
   return false;
 }
 
-// ─── Component ──────────────────────────────────────────────────────────────
-
 export default function ScitiBingoPage({ locale }: Props) {
-  const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
-
-  const [seed, setSeed] = useState(() => Math.floor(Math.random() * 1_000_000));
-  const [board, setBoard] = useState<BingoTerm[]>(() => makeBoard(seed));
-  const [marked, setMarked] = useState<Set<string>>(new Set(["FREE"]));
-  const [calledDims, setCalledDims] = useState<SmartDimension[]>([]);
-  const [won, setWon] = useState(false);
-  const [lastCalled, setLastCalled] = useState<SmartDimension | null>(null);
-  const [clickCount, setClickCount] = useState(0);
-
-  const resetBoard = useCallback(() => {
-    const ns = Math.floor(Math.random() * 1_000_000);
-    setSeed(ns);
-    const nb = makeBoard(ns);
-    setBoard(nb);
-    setMarked(new Set(["FREE"]));
-    setCalledDims([]);
-    setWon(false);
-    setLastCalled(null);
-    setClickCount(0);
-  }, []);
-
-  const callDimension = useCallback((dim: SmartDimension) => {
-    // Stage announces the category — players must click manually. No auto-mark.
-    if (calledDims.includes(dim)) return;
-    setCalledDims(prev => [...prev, dim]);
-    setLastCalled(dim);
-  }, [calledDims]);
-
-  const toggleCell = useCallback((cellId: string) => {
-    if (cellId === "FREE") return;
-    setClickCount(n => n + 1);
-    setMarked(prev => {
-      const next = new Set(prev);
-      next.has(cellId) ? next.delete(cellId) : next.add(cellId);
-      if (checkBingo(next, board)) setWon(true);
-      return next;
-    });
-  }, [board]);
+  const t=(copy:T3)=>translate(locale,copy);
+  const [seed,setSeed]=useState(()=>Math.floor(Math.random()*1_000_000));
+  const [board,setBoard]=useState<BingoTerm[]>(()=>makeBoard(seed));
+  const [marked,setMarked]=useState<Set<string>>(new Set(["FREE"]));
+  const [calledDims,setCalledDims]=useState<SmartDimension[]>([]);
+  const [won,setWon]=useState(false);
+  const [lastCalled,setLastCalled]=useState<SmartDimension|null>(null);
+  const resetBoard=useCallback(()=>{const ns=Math.floor(Math.random()*1_000_000);setSeed(ns);setBoard(makeBoard(ns));setMarked(new Set(["FREE"]));setCalledDims([]);setWon(false);setLastCalled(null);},[]);
+  const callDimension=useCallback((dim:SmartDimension)=>{
+    if(calledDims.includes(dim))return;
+    const nc=[...calledDims,dim];setCalledDims(nc);setLastCalled(dim);
+    const nm=new Set(marked);board.forEach(cell=>{if(cell.dim===dim||cell.id==="FREE")nm.add(cell.id);});
+    setMarked(nm);if(!won&&checkBingo(nm,board))setWon(true);
+  },[calledDims,marked,board,won]);
+  const toggleCell=useCallback((cellId:string)=>{
+    if(cellId==="FREE")return;
+    setMarked(prev=>{const next=new Set(prev);next.has(cellId)?next.delete(cellId):next.add(cellId);if(checkBingo(next,board))setWon(true);return next;});
+  },[board]);
 
   return (
     <div className="bingo-page">
-      {/* HEADER */}
       <section className="section bingo-header">
-        <p className="eyebrow">SCITI 2026 · {t({ en:"Interactive Workshop Game", th:"เกมเวิร์กช็อป", zh:"互动工作坊游戏" })}</p>
+        <p className="eyebrow">SCITI 2026 · {t({en:"Workshop Game",th:"เกมเวิร์กช็อป",zh:"工作坊游戏"})}</p>
         <h1 className="bingo-title">SCITI Bingo</h1>
-        <p className="bingo-sub">
-          {t({
-            en:"Each player gets a unique 5×5 card. Stage calls a Smart dimension — all matching cells mark automatically. First line wins 🎉",
-            th:"แต่ละคนได้การ์ด 5×5 ที่ไม่ซ้ำกัน เมื่อเวทีประกาศมิติ Smart ช่องที่ตรงกันจะทำเครื่องหมายอัตโนมัติ — ต่อแถวได้ก่อนชนะ 🎉",
-            zh:"每位玩家获得独特的5×5棋盘。舞台宣布Smart维度，匹配格子自动标记。率先连线者获胜 🎉",
-          })}
-        </p>
+        <p className="bingo-sub">{t({en:"Each card shows a clue — read it and guess which Smart dimension it belongs to. When the stage calls a dimension, matching cards flip to reveal the official logo. First line wins!",th:"แต่ละการ์ดมีคำใบ้ — อ่านแล้วเดาว่าเป็นมิติ Smart อะไร เมื่อเวทีประกาศ การ์ดที่ตรงจะพลิกแสดงโลโก้ทางการ ต่อแถวได้ก่อนชนะ!",zh:"每张牌都有线索——读完猜猜它属于哪个Smart维度。舞台宣布时，匹配的牌翻转显示官方Logo。率先连线者获胜！"})}</p>
         <div className="bingo-header-actions">
-          <button className="cta-button" onClick={resetBoard}>
-            ↻ {t({ en:"New Card", th:"การ์ดใหม่", zh:"新棋盘" })}
-          </button>
-          <div className="bingo-click-counter" title={t({ en:"Total clicks — fewer is better", th:"จำนวนคลิก — น้อยกว่าดีกว่า", zh:"总点击次数 — 越少越好" })}>
-            <span className="bingo-click-num">{clickCount}</span>
-            <span className="bingo-click-label">{t({ en:"clicks", th:"คลิก", zh:"次" })}</span>
-          </div>
+          <button className="cta-button" onClick={resetBoard}>↻ {t({en:"New Card",th:"การ์ดใหม่",zh:"新棋盘"})}</button>
           <span className="bingo-seed">#{seed.toString(16).toUpperCase().padStart(5,"0")}</span>
         </div>
       </section>
-
-      {/* WIN BANNER */}
-      {won && (
-        <div className="bingo-win-banner">
-          <span className="bingo-win-text">🎉 BINGO! 🎉</span>
-          <span className="bingo-win-sub">{t({ en:"First to complete a line!", th:"ต่อแถวสำเร็จเป็นคนแรก!", zh:"首先完成一条线！" })}</span>
-          <button className="bingo-win-reset" onClick={resetBoard}>{t({ en:"Play again", th:"เล่นอีกครั้ง", zh:"再玩" })}</button>
-        </div>
-      )}
-
+      {won&&(<div className="bingo-win-banner"><span className="bingo-win-text">🎉 BINGO! 🎉</span><span className="bingo-win-sub">{t({en:"First line complete!",th:"ต่อแถวสำเร็จ!",zh:"率先连线！"})}</span><button className="bingo-win-reset" onClick={resetBoard}>{t({en:"Play again",th:"เล่นอีกครั้ง",zh:"再玩"})}</button></div>)}
       <div className="bingo-layout">
-        {/* 5×5 BOARD */}
         <div className="bingo-board-wrapper">
           <div className="bingo-grid-5x5">
-            {board.map((cell) => {
-              const isM = marked.has(cell.id);
-              const isFree = cell.id === "FREE";
-              const color = DIM_COLORS[cell.dim];
+            {board.map((cell)=>{
+              const isM=marked.has(cell.id); const isFree=cell.id==="FREE"; const color=DIM_COLORS[cell.dim];
               return (
-                <button
-                  key={cell.id}
-                  className={`bingo-cell5${isM ? " bingo-cell5-marked" : ""}${isFree ? " bingo-cell5-free" : ""}`}
-                  style={{ borderColor: isM ? color : `${color}66` }}
-                  onClick={() => toggleCell(cell.id)}
-                  aria-pressed={isM}
-                  title={`Smart ${translate(locale, DIM_LABELS[cell.dim])}`}
-                >
-                  {/* FRONT — emoji + label */}
+                <button key={cell.id} className={`bingo-cell5${isM?" bingo-cell5-marked":""}${isFree?" bingo-cell5-free":""}`} style={{borderColor:isM?color:`${color}55`}} onClick={()=>toggleCell(cell.id)} aria-pressed={isM}>
                   <div className="bingo-card-front">
                     <span className="bingo-cell5-emoji">{cell.emoji}</span>
-                    <span className="bingo-cell5-text">{translate(locale, cell.label)}</span>
-                    {!isFree && (
-                      <span className="bingo-cell5-dot" style={{ background: color }} />
-                    )}
+                    <span className="bingo-cell5-text">{t(cell.label)}</span>
+                    <span className="bingo-cell5-hint">{t(cell.hint)}</span>
+                    {!isFree&&<span className="bingo-cell5-dot" style={{background:color}}/>}
                   </div>
-                  {/* BACK — dimension logo on white, coloured top bar */}
-                  {!isFree && (
-                    <div className="bingo-card-back">
-                      <div className="bingo-card-back-bar" style={{ background: color }} />
-                      <img
-                        src={DIM_LOGOS[cell.dim]}
-                        alt={`Smart ${translate(locale, DIM_LABELS[cell.dim])}`}
-                        className="bingo-logo-img"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
+                  {!isFree&&(<div className="bingo-card-back" style={{background:color}}>
+                    <img src={DIM_LOGOS[cell.dim]} alt={`Smart ${t(DIM_LABELS[cell.dim])}`} className="bingo-logo-img" loading="lazy"/>
+                  </div>)}
                 </button>
               );
             })}
           </div>
-          <p className="bingo-board-hint">
-            {t({ en:"Tap any cell to mark manually, or let the stage call a dimension.", th:"แตะช่องเพื่อทำเครื่องหมายด้วยตัวเอง หรือรอให้เวทีประกาศ", zh:"点击格子手动标记，或等待舞台呼叫维度。" })}
-          </p>
+          <p className="bingo-board-hint">{t({en:"Tap to mark manually, or let the stage call a dimension.",th:"แตะเพื่อทำเครื่องหมาย หรือรอให้เวทีประกาศมิติ",zh:"点击手动标记，或等待舞台呼叫。"})}</p>
         </div>
-
-        {/* STAGE CALLER */}
         <aside className="bingo-stage-panel">
-          <p className="bingo-stage-eyebrow">{t({ en:"STAGE CALLER", th:"ผู้ประกาศเวที", zh:"舞台主持" })}</p>
-
-          {lastCalled && (
-            <div className="bingo-last-called" style={{ background: DIM_COLORS[lastCalled] }}>
-              <span className="bingo-last-emoji">{DIM_EMOJIS[lastCalled]}</span>
-              <div>
-                <div className="bingo-last-called-label">{t({ en:"Called!", th:"ประกาศแล้ว!", zh:"已呼叫！" })}</div>
-                <div className="bingo-last-called-dim">Smart {translate(locale, DIM_LABELS[lastCalled])}</div>
-              </div>
-            </div>
-          )}
-
+          <p className="bingo-stage-eyebrow">{t({en:"STAGE CALLER",th:"ผู้ประกาศเวที",zh:"舞台主持"})}</p>
+          {lastCalled&&(<div className="bingo-last-called" style={{background:DIM_COLORS[lastCalled]}}>
+            <span className="bingo-last-emoji">{DIM_EMOJIS[lastCalled]}</span>
+            <div><div className="bingo-last-called-label">{t({en:"Called!",th:"ประกาศแล้ว!",zh:"已呼叫！"})}</div><div className="bingo-last-called-dim">Smart {t(DIM_LABELS[lastCalled])}</div></div>
+          </div>)}
           <div className="bingo-dim-buttons">
-            {DIMS.map(dim => {
-              const called = calledDims.includes(dim);
-              return (
-                <button
-                  key={dim}
-                  className={`bingo-dim-btn${called ? " bingo-dim-btn-called" : ""}`}
-                  style={called
-                    ? { background: DIM_COLORS[dim], borderColor: DIM_COLORS[dim], color:"#fff", opacity:.4 }
-                    : { borderColor: DIM_COLORS[dim], color: DIM_COLORS[dim] }
-                  }
-                  onClick={() => callDimension(dim)}
-                  disabled={called}
-                >
-                  <span className="bingo-dim-emoji">{DIM_EMOJIS[dim]}</span>
-                  <span className="bingo-dim-name">Smart {translate(locale, DIM_LABELS[dim])}</span>
-                  {called && <span className="bingo-dim-tick">✓</span>}
-                </button>
-              );
-            })}
+            {DIMS.map(dim=>{const called=calledDims.includes(dim);return(
+              <button key={dim} className={`bingo-dim-btn${called?" bingo-dim-btn-called":""}`} style={called?{background:DIM_COLORS[dim],borderColor:DIM_COLORS[dim],color:"#fff",opacity:.4}:{borderColor:DIM_COLORS[dim],color:DIM_COLORS[dim]}} onClick={()=>callDimension(dim)} disabled={called}>
+                <span className="bingo-dim-emoji">{DIM_EMOJIS[dim]}</span>
+                <span className="bingo-dim-name">Smart {t(DIM_LABELS[dim])}</span>
+                {called&&<span className="bingo-dim-tick">✓</span>}
+              </button>
+            );})}
           </div>
-
           <div className="bingo-progress">
-            <span className="bingo-progress-label">
-              {t({ en:`${calledDims.length} / 7 called`, th:`ประกาศแล้ว ${calledDims.length} / 7`, zh:`已呼叫 ${calledDims.length} / 7` })}
-            </span>
-            <div className="bingo-progress-bar">
-              <div className="bingo-progress-fill" style={{ width:`${(calledDims.length/7)*100}%` }} />
-            </div>
+            <span className="bingo-progress-label">{t({en:`${calledDims.length} / 7 called`,th:`ประกาศแล้ว ${calledDims.length} / 7`,zh:`已呼叫 ${calledDims.length} / 7`})}</span>
+            <div className="bingo-progress-bar"><div className="bingo-progress-fill" style={{width:`${(calledDims.length/7)*100}%`}}/></div>
           </div>
         </aside>
       </div>
