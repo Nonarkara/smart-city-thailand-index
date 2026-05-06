@@ -90,6 +90,48 @@ const CERT_STEPS = [
   },
 ];
 
+const MEASURE_ROWS: {
+  dim: SmartDimension;
+  def: { en: string; th: string; zh: string };
+  targets: { en: string; th: string; zh: string };
+}[] = [
+  {
+    dim: "environment",
+    def: { en: "Ecological quality of the urban environment", th: "คุณภาพเชิงนิเวศของสภาพแวดล้อมเมือง", zh: "城市环境的生态质量" },
+    targets: { en: "Green space ≥10 m²/resident · wastewater systems >50% HH · disaster adaptation plans", th: "พื้นที่สีเขียว ≥10 ตร.ม./คน · ระบบน้ำเสียครอบคลุม >50% ครัวเรือน · มีแผนรับมือภัยพิบัติ", zh: "人均绿地 ≥10㎡ · 污水系统覆盖 >50%住户 · 制定灾害适应计划" },
+  },
+  {
+    dim: "governance",
+    def: { en: "Open data, accountability, and participatory budgeting", th: "ข้อมูลเปิด ความรับผิดชอบ และงบประมาณแบบมีส่วนร่วม", zh: "开放数据、问责制与参与式预算" },
+    targets: { en: "Open Gov Data portal · one-stop service · external auditors · participatory Action Plan", th: "พอร์ทัลข้อมูลเปิด · บริการ one-stop · ผู้ตรวจสอบภายนอก · แผนงบประมาณมีส่วนร่วม", zh: "开放政府数据门户 · 一站式服务 · 外部审计员 · 参与式行动计划" },
+  },
+  {
+    dim: "mobility",
+    def: { en: "Convenient, safe, and sustainable urban movement", th: "การเดินทางในเมืองที่สะดวก ปลอดภัย และยั่งยืน", zh: "便捷、安全、可持续的城市出行" },
+    targets: { en: "Transit ≤500m from all residences · cashless 100% · CCTV all vehicles/stations · drills ≥1/yr", th: "ขนส่งห่างที่พักไม่เกิน 500 ม. · ไร้เงินสด 100% · CCTV ทุกยานพาหนะ/สถานี · ซ้อมภัย ≥1 ครั้ง/ปี", zh: "公交距所有住宅 ≤500米 · 无现金100% · 所有车辆/站点安装监控 · 演练 ≥1次/年" },
+  },
+  {
+    dim: "energy",
+    def: { en: "Clean energy production, efficiency, and storage", th: "การผลิตพลังงานสะอาด ประสิทธิภาพ และการสะสมพลังงาน", zh: "清洁能源生产、效率与储能" },
+    targets: { en: "Renewable ≥50% · Smart Meters 100% · GHG −40% BAU · AEMS ≥80% coverage", th: "พลังงานหมุนเวียน ≥50% · มิเตอร์อัจฉริยะ 100% · GHG −40% จากกรณีฐาน · AEMS ≥80%", zh: "可再生能源 ≥50% · 智能电表100% · 温室气体较基准 −40% · AEMS覆盖 ≥80%" },
+  },
+  {
+    dim: "people",
+    def: { en: "Digital skills, lifelong learning, and creative capacity", th: "ทักษะดิจิทัล การเรียนรู้ตลอดชีวิต และความสามารถสร้างสรรค์", zh: "数字技能、终身学习与创意能力" },
+    targets: { en: "Digital literacy programs · STEM labs · creative hubs · SME upskilling · YSEALI-type programs", th: "โปรแกรมความรู้ดิจิทัล · ห้อง STEM · Creative Hub · พัฒนาทักษะ SME · โปรแกรมแบบ YSEALI", zh: "数字素养项目 · STEM实验室 · 创意中心 · 中小企业技能提升 · YSEALI类项目" },
+  },
+  {
+    dim: "living",
+    def: { en: "Quality of life, health, safety, and social support", th: "คุณภาพชีวิต สุขภาพ ความปลอดภัย และการสนับสนุนทางสังคม", zh: "生活质量、健康、安全与社会支持" },
+    targets: { en: "Preventive health platform · child care + elderly day care · community health volunteers · disaster drills ≥1/yr", th: "แพลตฟอร์มสุขภาพเชิงป้องกัน · ศูนย์เด็กเล็ก + ดูแลผู้สูงอายุ · อสม. · ซ้อมภัย ≥1 ครั้ง/ปี", zh: "预防性健康平台 · 儿童托育+老年日托 · 社区健康志愿者 · 应急演练 ≥1次/年" },
+  },
+  {
+    dim: "economy",
+    def: { en: "Business ecosystem, digital commerce, and innovation capacity", th: "ระบบนิเวศธุรกิจ การค้าดิจิทัล และศักยภาพนวัตกรรม", zh: "商业生态系统、数字商务与创新能力" },
+    targets: { en: "One-stop business registration · Big Data BCP infrastructure · incubation center + test bed · cashless adoption", th: "จดทะเบียนธุรกิจ one-stop · โครงสร้าง Big Data สำหรับ BCP · ศูนย์บ่มเพาะ + Test Bed · ยอมรับสังคมไร้เงินสด", zh: "一站式企业注册 · 业务连续性大数据基础设施 · 孵化中心+试验场 · 无现金社会采用" },
+  },
+];
+
 const BATCHES = [
   { batch: 1, year: "2019", cities: 15, label: { en: "Pioneers", th: "ผู้บุกเบิก", zh: "先驱者" } },
   { batch: 2, year: "2021", cities: 15, label: { en: "Expansion", th: "ขยายผล", zh: "扩成果" } },
@@ -117,6 +159,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
   const [dnaRef, dnaVisible] = useInView(0.1);
   const [mref257, visible257] = useInView(0.1);
   const [certRef, certVisible] = useInView(0.1);
+  const [measureRef, measureVisible] = useInView(0.1);
   const [batchRef, batchVisible] = useInView(0.1);
   const [cdpRef, cdpVisible] = useInView(0.1);
   const [incentivesRef, incentivesVisible] = useInView(0.1);
@@ -261,6 +304,38 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ─── MEASUREMENT FRAMEWORK ─── */}
+      <section ref={measureRef} className={`section reveal stagger-4 ${measureVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+        <p className="eyebrow">{translate(locale, { en: "Measurement Framework", th: "กรอบการวัดผล", zh: "测量框架" })}</p>
+        <h2>{translate(locale, { en: "What the evaluation committee actually checks", th: "สิ่งที่คณะกรรมการประเมินตรวจสอบจริงๆ", zh: "评估委员会实际审查的内容" })}</h2>
+        <p style={{ maxWidth: "680px", marginBottom: "1.5rem" }}>
+          {translate(locale, {
+            en: "Every city that applies for Smart City Local status faces a technical committee review across all 7 dimensions. These are the publicly available output/outcome indicators from the official depa measurement framework.",
+            th: "ทุกเมืองที่สมัครสถานะ Smart City Local จะต้องผ่านการตรวจสอบจากคณะกรรมการเทคนิคใน 7 มิติ นี่คือตัวชี้วัดผลผลิต/ผลลัพธ์จากกรอบการวัดผลทางการของ depa ที่เปิดเผยต่อสาธารณะ",
+            zh: "每个申请智慧城市地方认证的城市都将面临技术委员会对全部7个维度的评审。以下是depa官方测量框架中公开的产出/成果指标。",
+          })}
+        </p>
+        <div className="program-indicator-list">
+          {MEASURE_ROWS.map(row => (
+            <div key={row.dim} className="program-indicator-row">
+              <span className="program-indicator-dim-name">
+                <span className="program-indicator-dot" style={{ background: `var(--dim-${row.dim}, var(--teal))` }} />
+                {DIMENSION_LABELS[locale][row.dim]}
+              </span>
+              <span className="program-indicator-def">{translate(locale, row.def)}</span>
+              <span className="program-indicator-targets">{translate(locale, row.targets)}</span>
+            </div>
+          ))}
+        </div>
+        <p className="program-source" style={{ marginTop: "1rem" }}>
+          {translate(locale, {
+            en: "Source: 7 Smart City Indicators, Smart City Thailand Office (depa)",
+            th: "ที่มา: 7 ตัวชี้วัดเมืองอัจฉริยะ, สำนักงานเมืองอัจฉริยะประเทศไทย (depa)",
+            zh: "来源：7项智慧城市指标，泰国智慧城市办公室（depa）",
+          })}
+        </p>
       </section>
 
       {/* ─── BATCH TIMELINE + KEY STATS ─── */}

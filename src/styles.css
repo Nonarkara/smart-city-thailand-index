@@ -1648,6 +1648,102 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   .story-shift-grid { grid-template-columns: 1fr; }
 }
 
+/* ─── STORY INDICATOR GRID (depa 7 Smart Indicators) ─── */
+.story-indicator-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--5, #E5E5E5);
+  margin-bottom: 1rem;
+}
+.story-indicator-card {
+  padding: 1rem;
+  border-right: 1px solid var(--5, #E5E5E5);
+  border-bottom: 1px solid var(--5, #E5E5E5);
+}
+.story-indicator-card:nth-child(3n) { border-right: 0; }
+.story-indicator-card:nth-last-child(-n+3):nth-child(3n+1),
+.story-indicator-card:nth-last-child(-n+3):nth-child(3n+1) ~ .story-indicator-card { border-bottom: 0; }
+.story-indicator-dim {
+  font: 700 var(--text-micro) var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  margin: 0 0 .35rem;
+}
+.story-indicator-threshold {
+  font-size: var(--text-body);
+  color: var(--ink);
+  line-height: 1.5;
+  margin: 0;
+}
+.story-indicator-note {
+  font: 500 var(--text-micro) var(--mono);
+  color: var(--3);
+  margin-top: .5rem;
+}
+@media (max-width: 720px) {
+  .story-indicator-grid { grid-template-columns: 1fr; }
+  .story-indicator-card { border-right: 0; }
+  .story-indicator-card:nth-last-child(-n+3):nth-child(3n+1),
+  .story-indicator-card:nth-last-child(-n+3):nth-child(3n+1) ~ .story-indicator-card { border-bottom: 1px solid var(--5, #E5E5E5); }
+  .story-indicator-card:last-child { border-bottom: 0; }
+}
+@media (min-width: 721px) and (max-width: 1023px) {
+  .story-indicator-grid { grid-template-columns: repeat(2, 1fr); }
+  .story-indicator-card:nth-child(2n) { border-right: 0; }
+  .story-indicator-card:nth-child(3n) { border-right: 1px solid var(--5, #E5E5E5); }
+}
+
+/* ─── PROGRAM INDICATOR LIST (depa measurement framework) ─── */
+.program-indicator-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--5, #E5E5E5);
+}
+.program-indicator-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr;
+  gap: 1rem;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--5, #E5E5E5);
+  align-items: start;
+}
+.program-indicator-row:last-child { border-bottom: 0; }
+.program-indicator-dim-name {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font: 700 var(--text-micro) var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+.program-indicator-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+}
+.program-indicator-def {
+  font-size: var(--text-body);
+  color: var(--2);
+  line-height: 1.5;
+}
+.program-indicator-targets {
+  font-size: var(--text-body);
+  color: var(--ink);
+  line-height: 1.5;
+  font-family: var(--mono);
+}
+@media (max-width: 720px) {
+  .program-indicator-row {
+    grid-template-columns: 1fr;
+    gap: .35rem;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════
    MISSING COMPONENTS — CityDetail Planning / Finance / Delivery
    ═══════════════════════════════════════════════════════════════ */
@@ -7559,11 +7655,11 @@ h1, h2, h3,
   flex-shrink: 0;
 }
 
-/* 9×9 grid */
+/* 5×5 grid */
 .bingo-grid {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap: 2px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
   background: var(--4);
   border: 1px solid var(--4);
 }
@@ -7584,13 +7680,51 @@ h1, h2, h3,
 .bingo-cell-marked { color: #fff; }
 .bingo-cell-free { cursor: default; }
 .bingo-cell-text {
-  font: 700 6px/1.2 var(--mono);
+  font: 700 12px/1.2 var(--mono);
   text-align: center;
-  padding: 2px;
+  padding: 4px;
   word-break: break-word;
   hyphens: auto;
   letter-spacing: 0;
   color: inherit;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bingo-board-cell-logo {
+  max-width: 70%;
+  max-height: 70%;
+  object-fit: contain;
+  opacity: 0.9;
+}
+.bingo-cell-marked .bingo-board-cell-logo {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+}
+.bingo-free-logos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+}
+.bingo-free-logo {
+  max-width: 80%;
+  max-height: 40%;
+  object-fit: contain;
+}
+.bingo-legend-logo {
+  height: 16px;
+  object-fit: contain;
+}
+.bingo-dim-btn-logo {
+  height: 20px;
+  object-fit: contain;
+  margin-right: 6px;
 }
 .bingo-cell-dim-dot {
   position: absolute;
@@ -7602,14 +7736,14 @@ h1, h2, h3,
   opacity: .7;
 }
 @media (min-width: 480px) {
-  .bingo-cell-text { font-size: 7px; }
+  .bingo-cell-text { font-size: 13px; }
 }
 @media (min-width: 768px) {
-  .bingo-cell-text { font-size: 8.5px; }
+  .bingo-cell-text { font-size: 15px; }
 }
 @media (min-width: 1024px) {
-  .bingo-cell-text { font-size: 9px; padding: 3px; }
-  .bingo-cell-dim-dot { width: 5px; height: 5px; }
+  .bingo-cell-text { font-size: 16px; padding: 6px; }
+  .bingo-cell-dim-dot { width: 6px; height: 6px; }
 }
 
 /* Stage caller panel */
@@ -7696,4 +7830,165 @@ h1, h2, h3,
   font-size: var(--text-micro);
   color: var(--3);
   line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   UX AUDIT PASS — mobile-first navigation, FAQ density, city hero fit
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.knowledge-page .rankings-hero {
+  padding-top: clamp(2.25rem, 5vw, 3.5rem);
+  padding-bottom: .75rem;
+}
+.knowledge-page .kb-search {
+  min-height: 46px;
+  border: 1px solid var(--5);
+}
+.knowledge-page .kb-categories {
+  gap: .35rem .45rem;
+}
+.knowledge-page .filter-btn {
+  min-height: 42px;
+  border: 1px solid transparent;
+}
+
+.back-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.city-hero-photo-title {
+  max-width: 900px;
+  font-size: clamp(2.4rem, 5.8vw, 4.65rem);
+  line-height: .95;
+  text-wrap: balance;
+}
+.city-hero-photo-overlay {
+  padding-bottom: clamp(5rem, 8vw, 6.25rem);
+}
+.city-detail-header h1 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+@media (max-width: 900px) {
+  .nav-links.nav-links-open {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .35rem;
+    align-items: stretch;
+    padding: .85rem;
+    background: var(--bg);
+  }
+  .nav-links.nav-links-open .nav-link,
+  .nav-links.nav-links-open .theme-toggle,
+  .nav-links.nav-links-open .locale-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin: 0;
+    padding: .55rem .45rem;
+    border: 1px solid var(--5);
+    background: var(--surface);
+    color: var(--2);
+  }
+  .nav-links.nav-links-open .nav-link.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .city-detail-score-block {
+    flex-wrap: wrap;
+    gap: .45rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .knowledge-page .rankings-hero {
+    padding-top: 2rem;
+  }
+  .knowledge-page .hero-title {
+    line-height: 1.05;
+  }
+  .knowledge-page .kb-categories {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -1.25rem .5rem;
+    padding: 0 1.25rem .45rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  .knowledge-page .kb-categories::-webkit-scrollbar {
+    display: none;
+  }
+  .knowledge-page .filter-btn {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    padding: .5rem .8rem;
+    border-color: var(--5);
+    background: var(--surface);
+    color: var(--2);
+    font-size: .78rem;
+    white-space: nowrap;
+  }
+  .knowledge-page .filter-btn.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .knowledge-page .kb-count {
+    margin-bottom: .35rem;
+  }
+  .knowledge-page .kb-question {
+    display: grid;
+    grid-template-columns: 1rem minmax(0, 1fr);
+    align-items: start;
+    gap: .2rem .55rem;
+    padding: .7rem .15rem;
+    font-size: .78rem;
+    line-height: 1.35;
+  }
+  .knowledge-page .kb-question::before {
+    grid-row: 1 / span 2;
+    margin-top: .05rem;
+  }
+  .knowledge-page .kb-cat-badge {
+    width: max-content;
+    max-width: 100%;
+  }
+  .knowledge-page .kb-answer {
+    max-width: none;
+    padding-left: 1.7rem;
+    padding-right: .25rem;
+    font-size: .78rem;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .city-hero-photo,
+  .city-hero-gradient {
+    height: 58vh;
+    min-height: 340px;
+  }
+  .city-hero-photo-overlay {
+    padding-bottom: 2.6rem;
+  }
+  .city-hero-photo-title {
+    font-size: clamp(2.05rem, 11.8vw, 3.15rem);
+    line-height: .98;
+  }
+  .city-detail-header h1 {
+    font-size: clamp(1.45rem, 8vw, 1.9rem);
+    line-height: 1.02;
+    letter-spacing: -.035em;
+  }
+  .city-detail-score-block {
+    align-items: center;
+  }
+  .city-detail-score-block .composite-large {
+    font-size: clamp(1.85rem, 9vw, 2.25rem);
+  }
 }

@@ -2,6 +2,62 @@ import { translate } from "./cityPresentation";
 import type { Locale } from "./types";
 import { useInView } from "./useInView";
 
+interface IndicatorCard {
+  dim: { en: string; th: string; zh: string };
+  threshold: { en: string; th: string; zh: string };
+}
+
+const INDICATOR_CARDS: IndicatorCard[] = [
+  {
+    dim: { en: "Smart Energy", th: "พลังงานอัจฉริยะ", zh: "智慧能源" },
+    threshold: {
+      en: "≥50% renewable · 100% Smart Meters (AMI) · ≥40% GHG cut from BAU",
+      th: "พลังงานหมุนเวียน ≥50% · มิเตอร์อัจฉริยะ 100% · ลด GHG ≥40% จากกรณีฐาน",
+      zh: "可再生能源 ≥50% · 智能电表(AMI)100% · 温室气体较基准减少 ≥40%",
+    },
+  },
+  {
+    dim: { en: "Smart Environment", th: "สิ่งแวดล้อมอัจฉริยะ", zh: "智慧环境" },
+    threshold: {
+      en: "≥10 m² green space per resident · disaster climate adaptation plans required",
+      th: "พื้นที่สีเขียว ≥10 ตร.ม./คน · ต้องมีแผนรับมือภัยพิบัติและการเปลี่ยนแปลงภูมิอากาศ",
+      zh: "人均绿地 ≥10 平方米 · 必须制定气候灾害适应计划",
+    },
+  },
+  {
+    dim: { en: "Smart Mobility", th: "การเดินทางอัจฉริยะ", zh: "智慧出行" },
+    threshold: {
+      en: "Transit within 500m of all residences · cashless payments 100% · emergency drills ≥1/yr",
+      th: "ระบบขนส่งสาธารณะภายใน 500 ม.จากที่พักทุกหลัง · ชำระเงินไร้เงินสด 100% · ฝึกซ้อมภัยพิบัติ ≥1 ครั้ง/ปี",
+      zh: "公共交通覆盖所有住宅500米内 · 无现金支付100% · 应急演练 ≥1次/年",
+    },
+  },
+  {
+    dim: { en: "Smart Living", th: "การใช้ชีวิตอัจฉริยะ", zh: "智慧生活" },
+    threshold: {
+      en: "Preventive health data platform + child care centers + elderly day care + community health volunteers",
+      th: "แพลตฟอร์มข้อมูลสุขภาพเชิงป้องกัน + ศูนย์เด็กเล็ก + ศูนย์ดูแลผู้สูงอายุ + อสม.",
+      zh: "预防性健康数据平台 + 儿童托育中心 + 老年日间照料 + 社区健康志愿者",
+    },
+  },
+  {
+    dim: { en: "Smart Governance", th: "ธรรมาภิบาลอัจฉริยะ", zh: "智慧治理" },
+    threshold: {
+      en: "Open Government Data portal + one-stop service + external performance auditors",
+      th: "พอร์ทัลข้อมูลเปิดภาครัฐ + บริการเบ็ดเสร็จ ณ จุดเดียว + ผู้ตรวจสอบประสิทธิภาพภายนอก",
+      zh: "政府开放数据门户 + 一站式服务 + 外部绩效审计员",
+    },
+  },
+  {
+    dim: { en: "Smart Economy", th: "เศรษฐกิจอัจฉริยะ", zh: "智慧经济" },
+    threshold: {
+      en: "Incubation center + cashless society + Big Data infrastructure for business continuity",
+      th: "ศูนย์บ่มเพาะ + สังคมไร้เงินสด + โครงสร้างพื้นฐาน Big Data เพื่อความต่อเนื่องทางธุรกิจ",
+      zh: "孵化中心 + 无现金社会 + 业务连续性大数据基础设施",
+    },
+  },
+];
+
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
@@ -65,6 +121,7 @@ export default function StoryPage({ locale, onNavigate }: Props) {
   const [quoteRef, quoteVisible] = useInView(0.1);
   const [timelineRef, timelineVisible] = useInView(0.1);
   const [shiftRef, shiftVisible] = useInView(0.1);
+  const [indicatorsRef, indicatorsVisible] = useInView(0.1);
   const [ctaRef, ctaVisible] = useInView(0.1);
 
   return (
@@ -214,6 +271,34 @@ export default function StoryPage({ locale, onNavigate }: Props) {
             <p style={{ fontSize: '.65rem' }}>{translate(locale, { en: "From waiting for Bangkok to empowerment of local consortiums like KKTS for resilience.", th: "ย้ายหน้าจากการรอฟังคำสั่งจากกรุงเทพเพื่อเสริมพลังท้องถิ่นในการพัฒนาความยืดหยุ่น", zh: "从等待曼谷指令转向赋权地方联盟（如KKTS）以增强韧性。" })}</p>
           </div>
         </div>
+      </section>
+
+      {/* ─── THE NUMBERS ARE MANDATORY ─── */}
+      <section ref={indicatorsRef} className={`section reveal stagger-1 ${indicatorsVisible ? "visible" : ""}`}>
+        <p className="eyebrow">{translate(locale, { en: "Official Standards · depa Thailand", th: "มาตรฐานทางการ · depa ประเทศไทย", zh: "官方标准 · depa 泰国" })}</p>
+        <h2>{translate(locale, { en: "What smart cities are actually required to deliver", th: "สิ่งที่เมืองอัจฉริยะต้องส่งมอบจริงๆ", zh: "智慧城市被实际要求交付的内容" })}</h2>
+        <p className="hero-strapline" style={{ maxWidth: "680px", marginBottom: "2rem" }}>
+          {translate(locale, {
+            en: "These are not voluntary targets. Cities applying for Smart City Local status are evaluated against official depa thresholds. The following numbers are extracted from the depa 7 Smart City Indicators measurement framework.",
+            th: "เหล่านี้ไม่ใช่เป้าหมายสมัครใจ เมืองที่สมัครสถานะ Smart City Local ถูกประเมินตามเกณฑ์ทางการของ depa ตัวเลขต่อไปนี้ถูกดึงมาจากกรอบการวัดผล 7 ตัวชี้วัดเมืองอัจฉริยะของ depa",
+            zh: "这些不是自愿目标。申请智慧城市地方认证的城市将依据depa官方阈值进行评估。以下数据摘自depa 7项智慧城市指标测量框架。",
+          })}
+        </p>
+        <div className="story-indicator-grid">
+          {INDICATOR_CARDS.map((card, i) => (
+            <div key={i} className="story-indicator-card">
+              <p className="story-indicator-dim">{translate(locale, card.dim)}</p>
+              <p className="story-indicator-threshold">{translate(locale, card.threshold)}</p>
+            </div>
+          ))}
+        </div>
+        <p className="story-indicator-note">
+          {translate(locale, {
+            en: "Source: 7 Smart City Indicators, Smart City Thailand Office (depa)",
+            th: "ที่มา: 7 ตัวชี้วัดเมืองอัจฉริยะ, สำนักงานเมืองอัจฉริยะประเทศไทย (depa)",
+            zh: "来源：7项智慧城市指标，泰国智慧城市办公室（depa）",
+          })}
+        </p>
       </section>
 
       {/* ─── CTA ─── */}

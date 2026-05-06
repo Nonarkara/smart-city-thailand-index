@@ -27,11 +27,13 @@ const CATEGORY_LABELS: Record<string, { en: string; th: string; zh: string }> = 
   "Politics": { en: "Politics", th: "การเมือง", zh: "政治" },
   "Success": { en: "Success Stories", th: "กรณีสำเร็จ", zh: "成功案例" },
   "About SCITI": { en: "About SCITI", th: "เกี่ยวกับ SCITI", zh: "关于 SCITI" },
+  "Using SCITI": { en: "Using SCITI", th: "การใช้งาน SCITI", zh: "如何使用 SCITI" },
   "Smart City is a Process": { en: "Smart City is a Process", th: "เมืองอัจฉริยะคือกระบวนการ", zh: "智慧城市是过程" },
   "What Makes a Good Smart City": { en: "What Makes a Good Smart City?", th: "เมืองอัจฉริยะที่ดีคืออะไร?", zh: "好的智慧城市是什么样的？" },
   "ASEAN Context": { en: "ASEAN Context", th: "บริบทอาเซียน", zh: "东盟背景" },
   "Design Thinking": { en: "Design Thinking Approach", th: "แนวทาง Design Thinking", zh: "设计思维方法" },
   "Smart or Not Smart": { en: "Smart or Not Smart?", th: "อัจฉริยะหรือไม่อัจฉริยะ?", zh: "智慧还是不智慧？" },
+  "Official Measurement Standards": { en: "Official Measurement Standards", th: "มาตรฐานการวัดผลทางการ", zh: "官方测量标准" },
 };
 
 function localiseCategory(category: string, locale: Locale): string {
@@ -363,6 +365,137 @@ const FAQS: FAQ[] = [
       zh: "SCITI由depa智慧城市推广部门高级专家Non A.博士开发，使用SLIC（智慧宜居城市指数）方法论。该方法论在2026年台北SCSE会议上经过同行评审。它基于Non博士在日立评论（2021年）发表的学术成果和自2019年以来在40多个泰国城市部署智慧城市框架的实践经验。",
     },
   },
+  // ─── Using SCITI ───
+  {
+    category: "Using SCITI",
+    q: {
+      en: "How should I read Alpha, Beta, and Gamma?",
+      th: "ควรอ่าน Alpha, Beta และ Gamma อย่างไร?",
+      zh: "应该如何理解 Alpha、Beta 和 Gamma？",
+    },
+    a: {
+      en: "Read them as delivery tiers, not prestige labels. Alpha means the city has stronger evidence of real operation. Beta means the picture is mixed: some parts work, some still need proof or continuity. Gamma usually means the city is still mostly planned, lightly evidenced, or not yet producing enough public outcomes. A Gamma city is not a failure; it is a signal that the next work should be specific.",
+      th: "ให้อ่านเป็นระดับการส่งมอบ ไม่ใช่ตราศักดิ์ศรี Alpha หมายถึงมีหลักฐานการทำงานจริงค่อนข้างชัด Beta คือภาพผสม: บางส่วนเดินแล้ว บางส่วนยังต้องพิสูจน์หรือทำให้ต่อเนื่อง Gamma มักหมายถึงยังเป็นแผนเป็นหลัก หลักฐานยังเบา หรือผลลัพธ์สาธารณะยังไม่พอ เมือง Gamma ไม่ใช่ความล้มเหลว แต่เป็นสัญญาณว่าขั้นต่อไปต้องชัดเจนขึ้น",
+      zh: "它们是交付层级，不是荣誉标签。Alpha 表示城市有较强的实际运行证据。Beta 表示情况混合：有些部分已经运作，有些仍需证明或保持连续性。Gamma 通常表示项目仍以规划为主、证据较弱，或尚未产生足够公开成果。Gamma 不是失败，而是在提醒下一步工作需要更具体。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "Why show seven pillar bars instead of only one score?",
+      th: "ทำไมต้องแสดงแถบ 7 เสาหลัก แทนที่จะโชว์แค่คะแนนเดียว?",
+      zh: "为什么展示七个支柱条，而不是只显示一个总分？",
+    },
+    a: {
+      en: "A single score is useful for sorting, but it hides the story. The seven bars show the shape of the city: a place can be strong on safety and weak on economy, or digitally advanced but not yet livable. The composite still follows the fixed weights - Livability 25%, Economy 20%, Safety 15%, Wellbeing 15%, Environment 10%, Hospitality 10%, Digital 5% - but the bars keep the trade-offs visible.",
+      th: "คะแนนเดียวช่วยจัดอันดับได้ แต่ซ่อนเรื่องสำคัญ แถบทั้ง 7 ทำให้เห็นรูปร่างของเมือง: บางเมืองเด่นด้านความปลอดภัยแต่เศรษฐกิจยังอ่อน หรือดิจิทัลดีแต่ความน่าอยู่ยังไม่ถึง คะแนนรวมยังคำนวณตามน้ำหนักคงที่ - ความน่าอยู่ 25%, เศรษฐกิจ 20%, ความปลอดภัย 15%, คุณภาพชีวิต 15%, สิ่งแวดล้อม 10%, การท่องเที่ยว 10%, ดิจิทัล 5% - แต่แถบช่วยให้เห็น trade-off ทันที",
+      zh: "单一分数便于排序，但会掩盖真正的结构。七个柱条显示城市的形状：一座城市可能安全强、经济弱，也可能数字化先进但宜居性不足。综合分仍按固定权重计算 - 宜居 25%、经济 20%、安全 15%、福祉 15%、环境 10%、人文旅游 10%、数字 5% - 但柱条让取舍一眼可见。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "What should a mayor do after seeing a low score?",
+      th: "นายกเมืองควรทำอย่างไรเมื่อเห็นคะแนนต่ำ?",
+      zh: "市长看到低分后应该怎么做？",
+    },
+    a: {
+      en: "Start with the weakest pillar and the weakest evidence trail. A low score is most useful when it becomes a workplan: update the public data, keep the CDP online, publish service outcomes, and ask residents whether the project solved the problem it promised to solve. The right response is not a press release. It is a sharper delivery loop.",
+      th: "เริ่มจากเสาที่อ่อนที่สุดและร่องรอยหลักฐานที่อ่อนที่สุด คะแนนต่ำมีประโยชน์ที่สุดเมื่อแปลงเป็นแผนงาน: อัปเดตข้อมูลสาธารณะ รักษา CDP ให้ใช้งานได้ เผยแพร่ผลลัพธ์บริการ และถามประชาชนว่าโครงการแก้ปัญหาที่สัญญาไว้จริงหรือไม่ คำตอบที่ดีไม่ใช่ข่าวประชาสัมพันธ์ แต่คือวงจรส่งมอบที่คมขึ้น",
+      zh: "先看最弱的支柱和最弱的证据链。低分最有价值的时候，是它变成工作计划：更新公开数据、保持 CDP 在线、发布服务成效，并询问居民项目是否真正解决了承诺的问题。正确回应不是新闻稿，而是更清晰的交付闭环。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "Can residents or cities challenge the data?",
+      th: "ประชาชนหรือเมืองสามารถทักท้วงข้อมูลได้ไหม?",
+      zh: "居民或城市可以质疑数据吗？",
+    },
+    a: {
+      en: "Yes. Corrections are welcome when they come with evidence: a public dataset, official document, working platform link, field photo, operating report, or recent source that can be checked by another person. The goal is not to win an argument. The goal is to make the index truer.",
+      th: "ได้ เรายินดีรับการแก้ไขเมื่อมีหลักฐานประกอบ: ชุดข้อมูลสาธารณะ เอกสารทางการ ลิงก์แพลตฟอร์มที่ใช้งานได้ ภาพภาคสนาม รายงานการดำเนินงาน หรือแหล่งข้อมูลล่าสุดที่ผู้อื่นตรวจสอบได้ เป้าหมายไม่ใช่การเอาชนะข้อโต้แย้ง แต่คือทำให้ดัชนีจริงขึ้น",
+      zh: "可以。只要附有证据，我们欢迎修正：公开数据集、官方文件、可访问的平台链接、现场照片、运行报告，或其他近期且可由他人核验的来源。目标不是赢得争论，而是让指数更接近事实。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "What do Operational, Partial, and Planned mean?",
+      th: "Operational, Partial และ Planned หมายถึงอะไร?",
+      zh: "Operational、Partial 和 Planned 分别是什么意思？",
+    },
+    a: {
+      en: "They describe delivery reality, separate from the Alpha/Beta/Gamma tier. Operational means the city has visible systems, data, or services in use. Partial means some pieces are working but the chain is incomplete. Planned means the evidence mostly describes intent, design, procurement, or future deployment. This label helps users separate ambition from operation.",
+      th: "คำเหล่านี้อธิบายความจริงด้านการส่งมอบ แยกจากระดับ Alpha/Beta/Gamma Operational คือมีระบบ ข้อมูล หรือบริการที่ใช้งานจริงให้เห็น Partial คือบางส่วนทำงานแล้วแต่ห่วงโซ่ยังไม่ครบ Planned คือหลักฐานส่วนใหญ่ยังเป็นเจตนา การออกแบบ การจัดซื้อ หรือการเตรียมใช้งานในอนาคต ป้ายนี้ช่วยแยกความทะเยอทะยานออกจากการทำงานจริง",
+      zh: "这些词描述交付现实，独立于 Alpha/Beta/Gamma 层级。Operational 表示已有可见系统、数据或服务在运行。Partial 表示部分环节运作，但链条还不完整。Planned 表示证据主要仍是意图、设计、采购或未来部署。这个标签帮助用户区分愿景与运行。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "How often should I expect scores to change?",
+      th: "คะแนนควรเปลี่ยนบ่อยแค่ไหน?",
+      zh: "分数通常多久会变化一次？",
+    },
+    a: {
+      en: "Scores should change when evidence changes. A city can move up when new public data, operating proof, or resident outcomes become verifiable. It can move down when data becomes stale, platforms go offline, or claims stop matching what people can see. SCITI is not a live popularity poll; it is a release-based evidence system.",
+      th: "คะแนนควรเปลี่ยนเมื่อหลักฐานเปลี่ยน เมืองขยับขึ้นได้เมื่อมีข้อมูลสาธารณะใหม่ หลักฐานการทำงานจริง หรือผลลัพธ์ต่อประชาชนที่ตรวจสอบได้ และขยับลงได้เมื่อข้อมูลค้าง แพลตฟอร์มล่ม หรือคำกล่าวอ้างไม่ตรงกับสิ่งที่ผู้ใช้เห็น SCITI ไม่ใช่โพลสด แต่เป็นระบบหลักฐานตามรอบเผยแพร่",
+      zh: "分数应在证据变化时变化。当新的公开数据、运行证明或居民结果可以核验时，城市可以上升；当数据变旧、平台下线，或声称与可见事实不符时，城市可以下降。SCITI 不是实时人气投票，而是按发布版本运行的证据系统。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "Can investors use SCITI as investment advice?",
+      th: "นักลงทุนใช้ SCITI เป็นคำแนะนำการลงทุนได้ไหม?",
+      zh: "投资者可以把 SCITI 当作投资建议吗？",
+    },
+    a: {
+      en: "No. SCITI is a public-interest screening tool, not financial advice. It can help investors ask better questions: which cities have credible delivery capacity, transparent data, working partnerships, and a realistic project pipeline? Any investment decision still needs legal, financial, technical, and local due diligence.",
+      th: "ไม่ได้ SCITI เป็นเครื่องมือคัดกรองเพื่อประโยชน์สาธารณะ ไม่ใช่คำแนะนำการลงทุน แต่มันช่วยให้นักลงทุนถามคำถามที่ดีขึ้นได้: เมืองไหนมีศักยภาพส่งมอบที่น่าเชื่อถือ ข้อมูลโปร่งใส หุ้นส่วนที่ทำงานจริง และ pipeline โครงการที่สมจริง? การลงทุนยังต้องตรวจสอบด้านกฎหมาย การเงิน เทคนิค และบริบทท้องถิ่นเสมอ",
+      zh: "不可以。SCITI 是公共利益导向的筛查工具，不是投资建议。它可以帮助投资者提出更好的问题：哪些城市具备可信的交付能力、透明数据、有效伙伴关系和现实的项目管线？任何投资决定仍需进行法律、财务、技术和地方尽调。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "Why are provinces, municipalities, districts, and special projects shown together?",
+      th: "ทำไมจังหวัด เทศบาล เขต และโครงการเฉพาะถึงอยู่ด้วยกัน?",
+      zh: "为什么府、市政、区和专项项目会放在一起展示？",
+    },
+    a: {
+      en: "Because Thailand's smart city pipeline is not one administrative shape. Some entries are municipalities, some are provincial programs, some are districts, and some are development zones. SCITI tracks the named smart city boundary or proposal, then labels the city league so users can compare with context instead of pretending every entry is the same kind of place.",
+      th: "เพราะ pipeline เมืองอัจฉริยะไทยไม่ได้มีรูปทรงการปกครองแบบเดียว บางรายการเป็นเทศบาล บางรายการเป็นโครงการระดับจังหวัด บางรายการเป็นเขต และบางรายการเป็นเขตพัฒนา SCITI ติดตามขอบเขตหรือข้อเสนอเมืองอัจฉริยะตามชื่อที่ใช้จริง แล้วใส่ league ของเมืองเพื่อให้ผู้ใช้เปรียบเทียบพร้อมบริบท ไม่ใช่ทำเหมือนทุกแห่งเป็นหน่วยเดียวกัน",
+      zh: "因为泰国智慧城市项目并不只有一种行政形态。有些是市政，有些是府级计划，有些是城区，有些是开发区。SCITI 追踪被正式命名的智慧城市边界或提案，并标注城市类型，让用户在语境中比较，而不是假装所有条目都是同一种地方。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "What is the fastest way to compare two cities?",
+      th: "วิธีเร็วที่สุดในการเทียบสองเมืองคืออะไร?",
+      zh: "比较两座城市最快的方法是什么？",
+    },
+    a: {
+      en: "Use Compare mode from the Rankings page, or open the Compare page directly. Start with the seven pillar bars, then check tier, data confidence, delivery reality, and the evidence trail. If one city has a higher composite but weaker data confidence, treat that as a question to investigate, not as a final answer.",
+      th: "ใช้โหมดเปรียบเทียบในหน้าอันดับ หรือเปิดหน้า Compare โดยตรง เริ่มจากแถบ 7 เสาหลัก แล้วดูระดับ ความเชื่อมั่นข้อมูล ความจริงด้านการส่งมอบ และร่องรอยหลักฐาน ถ้าเมืองหนึ่งคะแนนรวมสูงกว่าแต่ความเชื่อมั่นข้อมูลอ่อนกว่า ให้อ่านเป็นคำถามที่ต้องตรวจต่อ ไม่ใช่คำตอบสุดท้าย",
+      zh: "可以在排名页使用对比模式，或直接打开 Compare 页面。先看七个支柱条，再看层级、数据置信度、交付现实和证据链。如果一座城市综合分更高但数据置信度更弱，应把它视为需要继续核查的问题，而不是最终结论。",
+    },
+  },
+  {
+    category: "Using SCITI",
+    q: {
+      en: "Why does a famous city not always rank first?",
+      th: "ทำไมเมืองดังถึงไม่ได้อันดับหนึ่งเสมอไป?",
+      zh: "为什么知名城市不一定排第一？",
+    },
+    a: {
+      en: "Because fame is not the same as performance. A famous destination may have strong hospitality and economy scores but weaker safety, livability, environmental, or data-confidence signals. A smaller city can rank higher when it solves a concrete local problem and proves the result. That is the point of the index: reward working systems, not brand recognition.",
+      th: "เพราะชื่อเสียงไม่เท่ากับผลการทำงาน เมืองปลายทางชื่อดังอาจเด่นด้านท่องเที่ยวและเศรษฐกิจ แต่สัญญาณด้านความปลอดภัย ความน่าอยู่ สิ่งแวดล้อม หรือความเชื่อมั่นข้อมูลอาจอ่อนกว่า เมืองเล็กสามารถขึ้นสูงกว่าได้ถ้าแก้ปัญหาท้องถิ่นที่ชัดและพิสูจน์ผลลัพธ์ได้ นี่คือหัวใจของดัชนี: ให้รางวัลกับระบบที่ทำงานจริง ไม่ใช่การจดจำแบรนด์",
+      zh: "因为知名度不等于表现。知名目的地可能在人文旅游和经济上很强，但在安全、宜居、环境或数据置信度上较弱。较小城市如果解决了具体地方问题并能证明结果，也可以排得更高。这正是指数的意义：奖励真正运行的系统，而不是品牌知名度。",
+    },
+  },
   // ─── Smart City is a Process ───
   {
     category: "Smart City is a Process",
@@ -483,6 +616,98 @@ const FAQS: FAQ[] = [
       en: "The ASEAN Smart City Primer offers a deliberately unglamorous answer: less travel time, worry-free healthcare, and more spare time. These three outcomes are what residents actually notice and remember. They do not require residents to interact with any visible technology to achieve them — a smart traffic management system reduces commute time whether or not the commuter knows it exists; a preventive health data platform reduces emergency admissions whether or not the patient ever logs into a portal. The invisibility of good smart city technology is a feature, not a limitation. The LLWP framework — Live, Learn, Work, Play — offers a complementary lens: a successful smart city makes each of those four activities easier and more equitable for all residents, regardless of age, income, or digital literacy. If a smart city scores well on LLWP criteria but only for the top income quartile, it has partially succeeded. If it scores well for everyone, it has actually done the job.",
       th: "Smart City Primer อาเซียนให้คำตอบที่ไม่ค่อยน่าตื่นเต้นโดยตั้งใจ: เวลาเดินทางที่ลดลง การดูแลสุขภาพที่ไร้กังวล และเวลาว่างที่มากขึ้น สามผลลัพธ์เหล่านี้คือสิ่งที่ผู้อยู่อาศัยสังเกตเห็นและจดจำจริงๆ ไม่ต้องการให้ผู้อยู่อาศัยโต้ตอบกับเทคโนโลยีที่มองเห็นได้เพื่อให้บรรลุผล กรอบ LLWP — อยู่อาศัย เรียนรู้ ทำงาน เล่น — เสนอมุมมองเสริม: เมืองอัจฉริยะที่ประสบความสำเร็จทำให้กิจกรรมทั้งสี่อย่างนั้นง่ายขึ้นและเท่าเทียมกันมากขึ้นสำหรับผู้อยู่อาศัยทุกคน โดยไม่คำนึงถึงอายุ รายได้ หรือความรู้ดิจิทัล",
       zh: "东盟智慧城市入门指南给出了一个刻意不华丽的答案：减少出行时间、无忧的医疗保健以及更多的闲暇时间。这三个结果是居民真正注意到和记住的。它们不要求居民与任何可见技术互动——智慧交通管理系统无论通勤者是否知道其存在都能减少通勤时间；预防性健康数据平台无论患者是否登录门户都能减少急诊入院。好的智慧城市技术的隐形性是特性而非局限。LLWP框架——居住、学习、工作、玩耍——提供了补充视角：成功的智慧城市使这四项活动对所有居民都更容易、更公平，无论年龄、收入或数字素养如何。",
+    },
+  },
+  // ─── Official Measurement Standards ───
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "What specific indicators make a city Smart Environment-certified?",
+      th: "ตัวชี้วัดใดที่ทำให้เมืองได้รับการรับรองด้านสิ่งแวดล้อมอัจฉริยะ?",
+      zh: "哪些具体指标能使城市获得智慧环境认证？",
+    },
+    a: {
+      en: "depa evaluates Smart Environment across four areas. Green space: cities must provide at least 10 square metres of green space per resident. Wastewater: community wastewater treatment systems must cover more than 50% of households. Climate resilience: cities must have documented disaster and climate adaptation plans. Pollution governance: community-based pollution management networks must be established and operational. All four must be evidenced, not just planned.",
+      th: "depa ประเมิน Smart Environment ใน 4 ด้าน พื้นที่สีเขียว: เมืองต้องจัดให้มีพื้นที่สีเขียวอย่างน้อย 10 ตร.ม./คน ระบบน้ำเสีย: ระบบบำบัดน้ำเสียชุมชนต้องครอบคลุมครัวเรือนมากกว่า 50% ความยืดหยุ่นต่อภัยพิบัติ: เมืองต้องมีแผนรับมือภัยพิบัติและการเปลี่ยนแปลงสภาพภูมิอากาศที่เป็นเอกสาร การจัดการมลพิษ: ต้องมีเครือข่ายจัดการมลพิษโดยชุมชนที่จัดตั้งและดำเนินการแล้ว ทั้งสี่ด้านต้องมีหลักฐาน ไม่ใช่แค่แผนงาน",
+      zh: "depa从四个领域评估智慧环境。绿地：城市必须为每位居民提供至少10平方米的绿地。污水处理：社区污水处理系统必须覆盖50%以上的家庭。气候韧性：城市必须有经过记录的灾害和气候适应计划。污染治理：必须建立并运营以社区为基础的污染管理网络。四项均需有证据，而非仅有计划。",
+    },
+  },
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "What does Smart Governance certification actually require?",
+      th: "การรับรอง Smart Governance ต้องการอะไรจริงๆ?",
+      zh: "智慧治理认证实际需要什么？",
+    },
+    a: {
+      en: "Four mandatory elements. First, an Open Government Data portal must be live and publicly accessible — not announced, actually running. Second, a single-window one-stop service must be operational for residents to access public services without being bounced between departments. Third, external performance auditors must be engaged to evaluate outcomes, not internal self-assessment alone. Fourth, a participatory budget Action Plan must exist with measurable milestones — resident participation in budget allocation is not a checkbox; the Action Plan must show how feedback was incorporated and how progress is tracked.",
+      th: "ต้องมีองค์ประกอบ 4 อย่าง ประการแรก พอร์ทัลข้อมูลเปิดภาครัฐต้องใช้งานได้จริงและเข้าถึงได้สาธารณะ ประการที่สอง บริการเบ็ดเสร็จ ณ จุดเดียวต้องดำเนินการได้จริง ประการที่สาม ต้องมีผู้ตรวจสอบประสิทธิภาพภายนอก ไม่ใช่แค่การประเมินตนเอง ประการที่สี่ ต้องมีแผนปฏิบัติการงบประมาณแบบมีส่วนร่วมพร้อมเป้าหมายที่วัดได้ การมีส่วนร่วมของประชาชนในการจัดสรรงบประมาณไม่ใช่แค่การทำเครื่องหมาย แต่ต้องแสดงให้เห็นว่านำข้อเสนอแนะมาปรับใช้และติดตามความคืบหน้าอย่างไร",
+      zh: "四项必要要素。第一，开放政府数据门户必须上线并可公开访问——不是宣布，而是实际运行。第二，一站式单窗口服务必须运营，让居民无需在各部门之间辗转即可获得公共服务。第三，必须聘请外部绩效审计员评估成果，而非仅靠内部自我评估。第四，必须有带可测量里程碑的参与式预算行动计划——居民参与预算分配不是打勾项；行动计划必须说明如何整合反馈以及如何跟踪进展。",
+    },
+  },
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "How is Smart Mobility evaluated in Thailand?",
+      th: "Smart Mobility ในประเทศไทยถูกประเมินอย่างไร?",
+      zh: "泰国如何评估智慧出行？",
+    },
+    a: {
+      en: "Smart Mobility covers six areas. Transit access: public transport must be within 500 metres of every residence. Smart parking: real-time availability information and electronic payment must both be operational. Cashless payments: e-ticket, ETC, and QR code systems must be available across all transit modes. Safety surveillance: CCTV must be installed in all transit vehicles and stations. Emergency preparedness: drills must be conducted at least once per year. Green mobility: walking and cycling infrastructure must exist, and vehicle sharing must reach at least 50 users per 100,000 population.",
+      th: "Smart Mobility ครอบคลุม 6 ด้าน การเข้าถึงระบบขนส่ง: ขนส่งสาธารณะต้องอยู่ภายใน 500 ม.จากที่อยู่อาศัยทุกหลัง ที่จอดรถอัจฉริยะ: ต้องมีข้อมูลความพร้อมแบบเรียลไทม์และการชำระเงินอิเล็กทรอนิกส์ การชำระเงินไร้เงินสด: ต้องมีระบบ e-ticket, ETC และ QR code ในขนส่งทุกประเภท ความปลอดภัย: ต้องติดตั้ง CCTV ในยานพาหนะและสถานีขนส่งทุกแห่ง การเตรียมพร้อมรับมือฉุกเฉิน: ต้องซ้อมอย่างน้อย 1 ครั้ง/ปี Green Mobility: ต้องมีโครงสร้างพื้นฐานสำหรับเดินและปั่นจักรยาน และการแชร์ยานพาหนะต้องมีผู้ใช้อย่างน้อย 50 คนต่อประชากร 100,000 คน",
+      zh: "智慧出行涵盖六个领域。交通可达性：公共交通必须在每处住宅500米范围内。智慧停车：实时车位信息和电子支付必须均已运营。无现金支付：所有交通方式必须提供电子票、ETC和二维码系统。安全监控：所有交通车辆和站点必须安装监控摄像头。应急准备：每年至少开展一次演练。绿色出行：必须有步行和骑行基础设施，且共享交通每10万人口至少达到50名用户。",
+    },
+  },
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "What are the exact Smart Energy thresholds?",
+      th: "เกณฑ์ Smart Energy ที่แน่ชัดคืออะไร?",
+      zh: "智慧能源的确切阈值是什么？",
+    },
+    a: {
+      en: "Smart Energy has ten specific thresholds. Buildings: at least 75% must meet Specific Energy Consumption (SEC) standards. Renewable energy: must reach at least 50% of the total energy mix. Onsite generation: local power generation must cover at least 70% of local demand. Energy storage: storage capacity must reach at least 30% of locally produced power. GHG reduction long-term: a 40% reduction from Business As Usual is required. GHG reduction near-term: at least 20% within the first five years. Area Energy Management System (AEMS): must cover at least 80% of the city. Smart Meters (AMI): 100% coverage is required — no exceptions. Micro-grid island mode: must sustain operations for at least 24 hours independently. Smart Home and Smart Building: 100% coverage.",
+      th: "Smart Energy มี 10 เกณฑ์เฉพาะ อาคาร: อย่างน้อย 75% ต้องผ่านมาตรฐาน SEC พลังงานหมุนเวียน: ต้องถึงอย่างน้อย 50% ของส่วนผสมพลังงานทั้งหมด การผลิตไฟฟ้าในพื้นที่: ต้องครอบคลุมอย่างน้อย 70% ของความต้องการในพื้นที่ การสะสมพลังงาน: ต้องถึงอย่างน้อย 30% ของพลังงานที่ผลิตในพื้นที่ การลด GHG ระยะยาว: ลด 40% จากกรณีฐาน การลด GHG ระยะสั้น: อย่างน้อย 20% ใน 5 ปีแรก AEMS: ต้องครอบคลุมอย่างน้อย 80% ของเมือง มิเตอร์อัจฉริยะ: ครอบคลุม 100% Micro-grid: ต้องทำงานได้อิสระอย่างน้อย 24 ชั่วโมง Smart Home/Building: ครอบคลุม 100%",
+      zh: "智慧能源有十项具体阈值。建筑：至少75%必须符合能耗强度(SEC)标准。可再生能源：必须达到总能源结构的至少50%。本地发电：本地发电量必须满足本地需求的至少70%。能源储存：储能容量必须达到本地产电量的至少30%。长期温室气体减排：必须比基准情景减少40%。近期温室气体减排：五年内至少减少20%。区域能源管理系统(AEMS)：必须覆盖城市的至少80%。智能电表(AMI)：必须100%覆盖，无例外。微电网孤岛模式：必须能独立运行至少24小时。智慧家庭和智慧建筑：100%覆盖。",
+    },
+  },
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "What counts as Smart Economy evidence?",
+      th: "หลักฐาน Smart Economy มีอะไรบ้าง?",
+      zh: "什么算作智慧经济的证据？",
+    },
+    a: {
+      en: "Smart Economy is assessed across five areas. Business registration: a one-stop service must be operational so companies can register without visiting multiple offices. Digital infrastructure: Big Data platforms must be in place to support business continuity planning (BCP) for local enterprises. Business ecosystem alignment: the local economy must demonstrate a coherent ecosystem aligned with the city's distinctive strengths and competitive advantages. Innovation infrastructure: an incubation center, a startup-friendly zone, and a test bed for new technology must all be present and active. Digital payments: cashless society adoption must be measurable across local businesses, not just pilot installations.",
+      th: "Smart Economy ประเมินใน 5 ด้าน การจดทะเบียนธุรกิจ: บริการเบ็ดเสร็จต้องดำเนินการได้ โครงสร้างพื้นฐานดิจิทัล: ต้องมีแพลตฟอร์ม Big Data เพื่อสนับสนุนการวางแผนความต่อเนื่องทางธุรกิจ (BCP) ระบบนิเวศทางธุรกิจ: เศรษฐกิจท้องถิ่นต้องแสดงให้เห็นระบบนิเวศที่สอดคล้องกับจุดแข็งของเมือง โครงสร้างพื้นฐานนวัตกรรม: ต้องมีศูนย์บ่มเพาะ พื้นที่เอื้อต่อสตาร์ทอัพ และ Test Bed ที่ดำเนินการอยู่ การชำระเงินดิจิทัล: ต้องวัดการยอมรับสังคมไร้เงินสดได้ทั่วธุรกิจท้องถิ่น",
+      zh: "智慧经济从五个领域进行评估。企业注册：一站式服务必须运营，使企业无需跑多个窗口即可注册。数字基础设施：必须建立大数据平台，支持本地企业的业务连续性规划(BCP)。商业生态系统对齐：本地经济必须展示与城市独特优势和竞争力相匹配的完整生态系统。创新基础设施：孵化中心、创业友好区和新技术试验场必须均已建立并活跃运营。数字支付：必须可量化地衡量本地企业的无现金社会采用率，而非仅是试点项目。",
+    },
+  },
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "What does Smart Living require beyond CCTV?",
+      th: "Smart Living ต้องการอะไรมากกว่าแค่ CCTV?",
+      zh: "智慧生活除了监控摄像头还需要什么？",
+    },
+    a: {
+      en: "CCTV and lighting are only one part of Smart Living. The framework requires a preventive health data platform that aggregates health indicators before emergencies occur — not just hospital records after the fact. Cities must provide adequate Child Care Centers and Day Care facilities for elderly residents, so families at both ends of the age spectrum have institutional support. Community medical volunteers must be trained and active, extending health reach beyond clinical settings. On safety: an emergency disaster plan must exist, CCTV and lighting must cover public areas, and emergency drills must be conducted at least once per year. The key distinction from a surveillance-only approach is that Smart Living measures health outcomes and social support structures, not just security infrastructure.",
+      th: "CCTV และไฟส่องสว่างเป็นเพียงส่วนหนึ่งของ Smart Living กรอบการประเมินต้องการแพลตฟอร์มข้อมูลสุขภาพเชิงป้องกันที่รวบรวมตัวชี้วัดสุขภาพก่อนเกิดเหตุฉุกเฉิน ไม่ใช่แค่บันทึกจากโรงพยาบาลหลังเกิดเหตุ เมืองต้องจัดให้มีศูนย์เด็กเล็กและศูนย์ดูแลผู้สูงอายุที่เพียงพอ อาสาสมัครสาธารณสุขชุมชน (อสม.) ต้องได้รับการฝึกอบรมและปฏิบัติงานอยู่ ด้านความปลอดภัย: ต้องมีแผนรับมือภัยพิบัติ CCTV และไฟส่องสว่างต้องครอบคลุมพื้นที่สาธารณะ และต้องซ้อมอย่างน้อย 1 ครั้ง/ปี จุดสำคัญที่แตกต่างจากแนวทางการเฝ้าระวังอย่างเดียวคือ Smart Living วัดผลลัพธ์ด้านสุขภาพและโครงสร้างสนับสนุนทางสังคม ไม่ใช่แค่โครงสร้างพื้นฐานด้านความปลอดภัย",
+      zh: "监控摄像头和照明只是智慧生活的一部分。该框架要求建立预防性健康数据平台，在紧急情况发生之前汇总健康指标——而非仅仅是事后的医院记录。城市必须提供足够的儿童托育中心和老年日间照料设施，使年龄两端的家庭都能获得机构支持。社区健康志愿者必须经过培训并积极活动，将健康服务延伸到临床环境之外。安全方面：必须有紧急灾害计划，监控和照明必须覆盖公共区域，每年至少开展一次演练。与纯监控方式的关键区别在于，智慧生活衡量的是健康结果和社会支持结构，而非仅仅是安全基础设施。",
+    },
+  },
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "What is Smart People in the Thai context?",
+      th: "Smart People ในบริบทไทยหมายความว่าอะไร?",
+      zh: "泰国语境下的智慧人才是什么？",
+    },
+    a: {
+      en: "Smart People addresses human capital development across six areas. Digital literacy programs that reach all population segments, not just youth. Lifelong learning infrastructure that includes formal institutions, community learning centers, and online platforms. STEM labs in schools and community spaces to build applied science and technology skills. Creative hubs that bring together makers, designers, and entrepreneurs for cross-disciplinary work. Diversity and inclusion initiatives that ensure smart city benefits are accessible regardless of gender, income, age, or disability. SME upskilling programs that help small and medium enterprises adopt digital tools and operate in a cashless, data-driven economy. The ASEAN Smart City Primer also references YSEALI-type young leader programs as models for regional human capital development. Smart People is evaluated on reach and measurable improvement, not just programme existence.",
+      th: "Smart People ครอบคลุมการพัฒนาทุนมนุษย์ใน 6 ด้าน โปรแกรมความรู้ดิจิทัลที่ครอบคลุมทุกกลุ่มประชากร โครงสร้างพื้นฐานการเรียนรู้ตลอดชีวิต ห้องปฏิบัติการ STEM ในโรงเรียนและชุมชน Creative Hub ที่รวบรวม makers นักออกแบบ และผู้ประกอบการ โครงการความหลากหลายและการรวมเข้า เพื่อให้ประโยชน์เมืองอัจฉริยะเข้าถึงได้โดยไม่คำนึงถึงเพศ รายได้ อายุ หรือความพิการ โปรแกรมพัฒนาทักษะ SME Smart City Primer ของอาเซียนยังอ้างถึงโปรแกรม YSEALI เป็นแบบอย่างการพัฒนาทุนมนุษย์ระดับภูมิภาค Smart People ประเมินจากการเข้าถึงและการปรับปรุงที่วัดได้ ไม่ใช่แค่การมีโปรแกรม",
+      zh: "智慧人才涵盖六个领域的人力资本发展。覆盖所有人群（而非仅限青年）的数字素养项目。包含正规机构、社区学习中心和在线平台的终身学习基础设施。学校和社区空间的STEM实验室，以培养应用科学和技术技能。汇聚创客、设计师和企业家进行跨学科工作的创意中心。确保智慧城市福利无论性别、收入、年龄或残障均可获取的多元包容举措。帮助中小企业采用数字工具并在无现金、数据驱动经济中运营的技能提升计划。东盟智慧城市入门指南还将YSEALI类型的青年领袖项目作为区域人力资本发展的参考模式。智慧人才的评估基于覆盖范围和可量化的改善，而非仅项目的存在。",
     },
   },
 ];
