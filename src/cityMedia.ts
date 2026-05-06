@@ -1,4 +1,5 @@
 import type { Locale, SmartCity } from "./types";
+import { assetUrl } from "./mediaAssets";
 
 // ---------------------------------------------------------------------------
 // Photo registry — Phase 18 (overnight 2026-04-27)
@@ -71,30 +72,40 @@ export type HeroAsset = CityPhotoAsset & {
 };
 
 export const HOME_HERO_ASSETS: HeroAsset[] = [
+  // Wat Arun — Bangkok's most iconic skyline, Chao Phraya riverfront.
+  // Downloaded from Wikimedia Commons CC BY-SA.
   {
-    src: "/photos/wp-makkasan.jpg",
-    objectPosition: "center 55%",
-    label: "Bangkok · Makkasan",
+    src: "/photos/wiki-wat-arun.jpg",
+    objectPosition: "center 60%",
+    label: "Bangkok · Wat Arun",
   },
+  // BTS Skytrain elevated corridor — Bangkok's kinetic urban spine.
+  // Wikimedia Commons CC BY-SA.
   {
-    src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"),
+    src: "/photos/wiki-bangkok-bts.jpg",
+    objectPosition: "center 50%",
+    label: "Bangkok · BTS Skytrain",
+  },
+  // Khon Kaen aerial — Isan's economic capital, the BRT corridor city.
+  // Authored photo (2024).
+  {
+    src: assetUrl(enc("/Khon Kaen/IMG_4264.JPG")),
+    objectPosition: "center 50%",
+    label: "Khon Kaen",
+  },
+  // NST temple compound at dusk — ancient southern capital, telemetry-monitored.
+  // Authored photo.
+  {
+    src: assetUrl(enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg")),
     objectPosition: "center 50%",
     label: "Nakhon Si Thammarat",
   },
+  // Chiang Mai at night — the north's cultural capital, burning-season caveat.
+  // Authored photo.
   {
-    src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"),
+    src: assetUrl(enc("/Chiang Mai/IMG_20251218_190749854.jpg")),
     objectPosition: "center 58%",
     label: "Chiang Mai",
-  },
-  {
-    src: "/photos/wp-rattanakosin.jpg",
-    objectPosition: "center 55%",
-    label: "Bangkok · Rattanakosin",
-  },
-  {
-    src: "/photos/wp-songkhla.jpg",
-    objectPosition: "center 50%",
-    label: "Songkhla",
   },
 ];
 
@@ -116,14 +127,16 @@ const REGION_FALLBACKS: Record<SmartCity["region"], CityPhotoAsset> = {
 
 const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   // ─── Real, authored city photos in capitalised folders (Phase 16+) ───
-  "chiang-mai-old-town": { src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"), objectPosition: "center 58%" },
-  "cmu-smart-city": { src: enc("/CMU Smart City/P1210289.JPG"), objectPosition: "center 45%" },
-  "khon-kaen": { src: enc("/Khon Kaen/IMG_4264.JPG"), objectPosition: "center 50%" },
-  "nakhon-si-thammarat": { src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"), objectPosition: "center 50%" },
+  // All use assetUrl() to handle GitHub Pages /smart-city-thailand-index/ base path.
+  "chiang-mai-old-town": { src: assetUrl(enc("/Chiang Mai/IMG_20251218_190749854.jpg")), objectPosition: "center 58%" },
+  "cmu-smart-city": { src: assetUrl(enc("/CMU Smart City/P1210289.JPG")), objectPosition: "center 45%" },
+  "khon-kaen": { src: assetUrl(enc("/Khon Kaen/IMG_4264.JPG")), objectPosition: "center 50%" },
+  "nakhon-si-thammarat": { src: assetUrl(enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg")), objectPosition: "center 50%" },
 
   // ─── Authored project photos in /photos/ ───
   "samyan": { src: "/photos/samyan-smart-city.jpg", objectPosition: "center 45%" },
-  "phuket": { src: "/photos/phuket-marine.webp", objectPosition: "center 48%" },
+  // phuket-smart-city.jpg — real photo, Nothing Phone (3a) Pro, 2026-01-25, 4096×3072px.
+  "phuket": { src: "/photos/phuket-smart-city.jpg", objectPosition: "center 48%" },
 
   // ─── Phase 18 — duplicate-violation fixes (was sharing parent photo) ───
   // Each gets a unique source so two dossier pages never show the same hero.
@@ -138,7 +151,7 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   // province/sector stand-ins so every full dossier has an intentional hero
   // while the shot list in docs/PHOTO_BRIEF.md remains open for real city
   // photography.
-  "mae-moh": { src: "/photos/maemoh-future.webp", objectPosition: "center 50%" },
+  "mae-moh": { src: "/photos/wp-lampang.jpg", objectPosition: "center 50%" }, // same Lampang province, Wikimedia CC
   "nikhom-phatthana": { src: "/photos/wp-rayong.jpg", objectPosition: "center 52%" },
   "phlapphla": { src: "/photos/wp-chanthaburi.jpg", objectPosition: "center 45%" },
   "thep-paraj": { src: "/photos/wp-chachoengsao.jpg", objectPosition: "center 45%" },
@@ -155,13 +168,13 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
 
   // Northeast
   "korat": { src: "/photos/wp-korat.jpg", objectPosition: "center 45%" },
-  "ubon": { src: "/photos/ubon-future.webp", objectPosition: "center 50%" },
+  "ubon": { src: "/photos/wp-ubon.jpg", objectPosition: "center 50%" },
 
   // Central
   "nakhonsawan": { src: "/photos/wp-nakhonsawan.jpg", objectPosition: "center 50%" },
 
   // East
-  "rayong": { src: "/photos/rayong-future.webp", objectPosition: "center 50%" },
+  "rayong": { src: "/photos/wp-rayong.jpg", objectPosition: "center 50%" },
   "saensuk": { src: "/photos/wp-saensuk.jpg", objectPosition: "center 50%" },
   "chachoengsao": { src: "/photos/wp-chachoengsao.jpg", objectPosition: "center 45%" },
   "chanthaburi": { src: "/photos/wp-chanthaburi.jpg", objectPosition: "center 45%" },
@@ -189,7 +202,7 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "sritrang": { src: "/photos/wp-sritrang.jpg", objectPosition: "center 50%" },
   "songkhla-city": { src: "/photos/wp-songkhla.jpg", objectPosition: "center 50%" },
   "hat-yai": { src: "/photos/wp-hat-yai.jpg", objectPosition: "center 50%" },
-  "yala": { src: "/photos/yala-future.webp", objectPosition: "center 50%" },
+  "yala": { src: "/photos/wp-yala.jpg", objectPosition: "center 50%" },
   "pattani": { src: "/photos/wp-pattani.jpg", objectPosition: "center 45%" },
   "narathiwat": { src: "/photos/wp-narathiwat.jpg", objectPosition: "center 50%" },
 };
@@ -211,21 +224,21 @@ const CITY_CHAPTER_BREAKS: Record<string, CityChapterBreak[]> = {
   "nakhon-si-thammarat": [
     {
       after: "who",
-      asset: { src: enc("/Nakhon Si Thammarat/FB_IMG_1763702950339.jpg"), objectPosition: "center 50%" },
+      asset: { src: assetUrl(enc("/Nakhon Si Thammarat/FB_IMG_1763702950339.jpg")), objectPosition: "center 50%" },
       captionEn: "ASEAN CSCO delegates at the ICT & CCTV Command Centre — the nerve centre of NST's real-time city intelligence.",
       captionTh: "คณะ ASEAN CSCO ที่ศูนย์บัญชาการ ICT และ CCTV — หัวใจของระบบข่าวกรองเมืองแบบเรียลไทม์ของนครศรีธรรมราช",
       captionZh: "ASEAN CSCO 代表团在 ICT 与 CCTV 指挥中心——NST 实时城市智能的神经枢纽。",
     },
     {
       after: "what",
-      asset: { src: enc("/Nakhon Si Thammarat/1763875143668.jpg"), objectPosition: "center 50%" },
+      asset: { src: assetUrl(enc("/Nakhon Si Thammarat/1763875143668.jpg")), objectPosition: "center 50%" },
       captionEn: "Live flood CCTV monitoring. 10-hour advance warning. Zero fatalities since 2021.",
       captionTh: "เฝ้าระวัง CCTV น้ำท่วมสด เตือนล่วงหน้า 10 ชั่วโมง ไม่มีผู้เสียชีวิตตั้งแต่ปี 2564",
       captionZh: "洪涝 CCTV 实时监控。提前 10 小时预警。2021 年起零死亡。",
     },
     {
       after: "how",
-      asset: { src: enc("/Nakhon Si Thammarat/1763875144974.jpg"), objectPosition: "center 50%" },
+      asset: { src: assetUrl(enc("/Nakhon Si Thammarat/1763875144974.jpg")), objectPosition: "center 50%" },
       captionEn: "The hydrological dashboard — every sensor in the field feeds this screen. Decisions run from data, not intuition.",
       captionTh: "แดชบอร์ดอุทกวิทยา — ทุกเซนเซอร์ในพื้นที่ส่งข้อมูลมาที่หน้าจอนี้ การตัดสินใจมาจากข้อมูล ไม่ใช่ความรู้สึก",
       captionZh: "水文仪表板——现场每个传感器的数据都汇聚于此。决策来自数据，而非直觉。",
@@ -276,53 +289,53 @@ const CITY_CHAPTER_BREAKS: Record<string, CityChapterBreak[]> = {
   "phuket": [
     {
       after: "what",
-      asset: { src: "/photos/phuket-marine.webp", objectPosition: "center 50%" },
-      captionEn: "Marine telemetry networks monitoring the Andaman. Phuket's tourism backbone is now engineered for safety and sustainability.",
-      captionTh: "เครือข่ายเซนเซอร์ทางทะเลเฝ้าระวังอันดามัน กระดูกสันหลังการท่องเที่ยวของภูเก็ตถูกออกแบบมาเพื่อความปลอดภัยและความยั่งยืน",
-      captionZh: "监测安达曼海的海洋传感网络。普吉的旅游支柱现在正为安全与可持续性而工程化。",
+      asset: { src: "/photos/wp-phangnga.jpg", objectPosition: "center 50%" },
+      captionEn: "The wider Andaman coast. Marine telemetry buoys ring this stretch — Phuket's tourism backbone is engineered.",
+      captionTh: "ชายฝั่งอันดามันที่กว้างกว่าเกาะ ทุ่นเซนเซอร์ทางทะเลล้อมรอบช่วงนี้ — กระดูกสันหลังการท่องเที่ยวของภูเก็ตเป็นวิศวกรรม",
+      captionZh: "更广阔的安达曼海岸线——海洋传感浮标环绕此段，普吉的旅游骨架是工程化的。",
     },
     {
       after: "how",
       asset: { src: "/photos/phuket-smart-city.jpg", objectPosition: "center 50%" },
-      captionEn: "Digital twins and live telemetry in the command center. Real-time island management.",
-      captionTh: "Digital twins และข้อมูลสดในศูนย์บัญชาการ การบริหารจัดการเกาะแบบเรียลไทม์",
-      captionZh: "指挥中心的数字孪生与实时监测。全岛实时化管理。",
+      captionEn: "Phuket's operational smart city infrastructure. Real systems, real outcomes.",
+      captionTh: "โครงสร้างพื้นฐานเมืองอัจฉริยะที่เดินระบบจริงของภูเก็ต ระบบจริง ผลลัพธ์จริง",
+      captionZh: "普吉岛实际运行的智慧城市基础设施。真实系统，真实成果。",
     },
   ],
   "rayong": [
     {
       after: "who",
-      asset: { src: "/photos/rayong-future.webp", objectPosition: "center 50%" },
-      captionEn: "The clean-energy industrial gateway. Rayong isn't just manufacturing; it's the future of green production.",
-      captionTh: "ประตูสู่อุตสาหกรรมพลังงานสะอาด ระยองไม่ใช่แค่ฐานการผลิต แต่คืออนาคตของการผลิตสีเขียว",
-      captionZh: "清洁能源工业门户。罗勇不仅是制造业基地，更是绿色生产的未来。",
+      asset: { src: "/photos/wp-rayong.jpg", objectPosition: "center 50%" },
+      captionEn: "Rayong — the Eastern Economic Corridor's industrial anchor and coastal province.",
+      captionTh: "ระยอง — ฐานอุตสาหกรรมของระเบียงเศรษฐกิจพิเศษภาคตะวันออกและจังหวัดชายฝั่ง",
+      captionZh: "罗勇——东部经济走廊的工业锚点与沿海省份。",
     },
   ],
   "ubon": [
     {
       after: "what",
-      asset: { src: "/photos/ubon-future.webp", objectPosition: "center 50%" },
-      captionEn: "Tradition meets digital light. Ubon's Candle Festival transformed into a smart tourism showcase.",
-      captionTh: "ประเพณีพบแสงดิจิทัล เทศกาลแห่เทียนพรรษาอุบลฯ เปลี่ยนเป็นเวทีแสดงการท่องเที่ยวอัจฉริยะ",
-      captionZh: "传统碰撞数字之光。乌汶府蜡烛节转型为智慧旅游的展示窗口。",
+      asset: { src: "/photos/wp-ubon.jpg", objectPosition: "center 50%" },
+      captionEn: "Ubon Ratchathani — eastern Isan's cultural and economic capital on the Mun River.",
+      captionTh: "อุบลราชธานี — ศูนย์กลางวัฒนธรรมและเศรษฐกิจของอีสานตะวันออกบนแม่น้ำมูล",
+      captionZh: "乌汶府——伊桑东部的文化和经济中心，坐落于蒙河畔。",
     },
   ],
   "yala": [
     {
       after: "who",
-      asset: { src: "/photos/yala-future.webp", objectPosition: "center 50%" },
-      captionEn: "The greenest circular city. Award-winning urban design that prioritizes human safety and wellness.",
-      captionTh: "เมืองผังเมืองวงกลมที่เขียวที่สุด การออกแบบเมืองที่ได้รับรางวัลซึ่งให้ความสำคัญกับความปลอดภัยและสุขภาวะของมนุษย์",
-      captionZh: "最绿色的环形城市。屡获殊荣的城市设计，优先考虑人类安全与健康。",
+      asset: { src: "/photos/wp-yala.jpg", objectPosition: "center 50%" },
+      captionEn: "Yala — Thailand's only grid-planned city, laid out in 1928. The geometry is the argument.",
+      captionTh: "ยะลา — เมืองผังตารางเดียวของไทย วางผังในปี 2471 รูปทรงเรขาคณิตคือข้อโต้แย้ง",
+      captionZh: "亚拉——泰国唯一网格规划城市，建于 1928 年。几何形态本身就是论点。",
     },
   ],
   "mae-moh": [
     {
       after: "why",
-      asset: { src: "/photos/maemoh-future.webp", objectPosition: "center 50%" },
-      captionEn: "From coal to community park. The Mae Moh transition is Thailand's boldest green energy experiment.",
-      captionTh: "จากเหมืองถ่านหินสู่สวนชุมชน การเปลี่ยนผ่านของแม่เมาะคือการทดลองพลังงานสะอาดที่กล้าหาญที่สุดของไทย",
-      captionZh: "从煤矿到社区公园。梅莫的转型是泰国最胆大的绿色能源实验。",
+      asset: { src: "/photos/wp-lampang.jpg", objectPosition: "center 50%" },
+      captionEn: "Lampang Province — the wider landscape where Mae Moh's coal-to-clean energy transition is playing out.",
+      captionTh: "จังหวัดลำปาง — ภูมิทัศน์กว้างที่การเปลี่ยนผ่านจากถ่านหินสู่พลังงานสะอาดของแม่เมาะกำลังดำเนินอยู่",
+      captionZh: "南奔府——梅莫从煤炭到清洁能源转型正在上演的更宏观地景。",
     },
   ],
 };
