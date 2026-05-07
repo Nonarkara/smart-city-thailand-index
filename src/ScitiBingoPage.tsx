@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { translate } from "./cityPresentation";
 import { assetUrl } from "./mediaAssets";
 import type { Locale, SmartDimension } from "./types";
@@ -100,6 +100,16 @@ function checkBingo(marked: Set<string>, board: BingoTerm[]): boolean {
   return false;
 }
 
+type Feedback = { correct: boolean; cell: BingoTerm };
+
+function formatTime(ms: number): string {
+  const m = Math.floor(ms / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  // 7 decimal places of seconds → atomic-clock feel
+  const frac = ((ms % 1000) / 1000).toFixed(7).slice(1); // ".ddddddd"
+  return `${m}:${String(s).padStart(2, "0")}${frac}`;
+}
+
 export default function ScitiBingoPage({ locale }: Props) {
   const t=(copy:T3)=>translate(locale,copy);
   const [seed,setSeed]=useState(()=>Math.floor(Math.random()*1_000_000));
@@ -110,6 +120,14 @@ export default function ScitiBingoPage({ locale }: Props) {
   const [calledDims,setCalledDims]=useState<SmartDimension[]>([]);
   const [animatingId, setAnimatingId]=useState<string|null>(null);
   const [won,setWon]=useState(false);
+  // Timer
+  const [gameStarted, setGameStarted]=useState(false);
+  const [elapsed, setElapsed]=useState(0);
+  const startTimeRef=useRef<number|null>(null);
+  const rafRef=useRef<number|null>(null);
+  // Feedback bar
+  const [feedback, setFeedback]=useState<Feedback|null>(null);
+  const fbTimerRef=useRef<ReturnType<typeof setTimeout>|null>(null);
 
   const resetBoard=useCallback(()=>{
     const ns=Math.floor(Math.random()*1_000_000);
@@ -120,6 +138,32 @@ export default function ScitiBingoPage({ locale }: Props) {
     setCalledDims([]);
     setTargetDim(null);
     setWon(false);
+    setGameStarted(false);
+    setElapsed(0);
+    startTimeRef.current=null;
+    setFeedback(null);
+    if(fbTimerRef.current) clearTimeout(fbTimerRef.current);
+  },[]);
+
+  // Atomic timer loop — runs at display frame rate, reads performance.now()
+  useEffect(()=>{
+    if(!gameStarted||won){
+      if(rafRef.current){cancelAnimationFrame(rafRef.current);rafRef.current=null;}
+      return;
+    }
+    if(startTimeRef.current===null) startTimeRef.current=performance.now();
+    function tick(){
+      setElapsed(performance.now()-(startTimeRef.current??0));
+      rafRef.current=requestAnimationFrame(tick);
+    }
+    rafRef.current=requestAnimationFrame(tick);
+    return()=>{if(rafRef.current){cancelAnimationFrame(rafRef.current);rafRef.current=null;}};
+  },[gameStarted,won]);
+
+  const showFeedback=useCallback((f:Feedback)=>{
+    if(fbTimerRef.current) clearTimeout(fbTimerRef.current);
+    setFeedback(f);
+    fbTimerRef.current=setTimeout(()=>setFeedback(null),3200);
   },[]);
 
   const callDimension=useCallback((dim:SmartDimension)=>{
@@ -132,18 +176,19 @@ export default function ScitiBingoPage({ locale }: Props) {
     if(!targetDim || cell.id==="FREE" || flippedIds.has(cell.id) || animatingId || won) return;
 
     setClickCount(prev => prev + 1);
+    showFeedback({ correct: cell.dim === targetDim, cell });
 
-    if (targetDim && cell.dim === targetDim) {
-      // Correct guess
+    if (cell.dim === targetDim) {
+      // Correct — permanently flip
       const nextFlipped = new Set(flippedIds).add(cell.id);
       setFlippedIds(nextFlipped);
       if(checkBingo(nextFlipped, board)) setWon(true);
     } else {
-      // Wrong guess - transient flip
+      // Wrong — transient flip, flip back after 1.5s
       setAnimatingId(cell.id);
       setTimeout(() => setAnimatingId(null), 1500);
     }
-  },[flippedIds, animatingId, targetDim, board, won]);
+  },[flippedIds, animatingId, targetDim, board, won, showFeedback]);
 
   return (
     <div className="bingo-page">
@@ -153,10 +198,38 @@ export default function ScitiBingoPage({ locale }: Props) {
         <p className="bingo-sub">{t({en:"Use Stage Caller first. Correct cards stay open; wrong cards flip back. The center square counts every scored click.",th:"เริ่มจาก Stage Caller ก่อน การ์ดที่ถูกจะค้างไว้ การ์ดที่ผิดจะพลิกกลับ ช่องกลางนับทุกคลิกที่ใช้เล่น",zh:"先使用 Stage Caller。正确卡片保持打开，错误卡片会翻回；中央格记录每次有效点击。"})}</p>
         <div className="bingo-header-actions">
           <button className="cta-button" onClick={resetBoard}>↻ {t({en:"New Card",th:"การ์ดใหม่",zh:"新棋盘"})}</button>
+          {!gameStarted && !won && (
+            <button className="bingo-start-btn" onClick={()=>setGameStarted(true)}>
+              ▶ {t({en:"Start",th:"เริ่ม",zh:"开始"})}
+            </button>
+          )}
+          {(gameStarted || won) && (
+            <div className={`bingo-timer${won?" bingo-timer-stopped":""}`}>
+              <span className="bingo-timer-digits">{formatTime(elapsed)}</span>
+              <span className="bingo-timer-label">{won ? t({en:"FINAL TIME",th:"เวลาสุดท้าย",zh:"最终用时"}) : t({en:"ELAPSED",th:"เวลา",zh:"用时"})}</span>
+            </div>
+          )}
           <span className="bingo-seed">#{seed.toString(16).toUpperCase().padStart(5,"0")}</span>
         </div>
       </section>
-      {won&&(<div className="bingo-win-banner"><span className="bingo-win-text">🎉 BINGO! 🎉</span><span className="bingo-win-sub">{t({en:`Completed in ${clickCount} clicks`,th:`จบเกมใน ${clickCount} คลิก`,zh:`在 ${clickCount} 次点击中完成`})}</span><button className="bingo-win-reset" onClick={resetBoard}>{t({en:"Play again",th:"เล่นอีกครั้ง",zh:"再玩"})}</button></div>)}
+      {won&&(
+        <div className="bingo-win-banner">
+          <span className="bingo-win-text">🎉 BINGO! 🎉</span>
+          <div className="bingo-win-score">
+            <div className="bingo-win-stat">
+              <span className="bingo-win-stat-n">{formatTime(elapsed)}</span>
+              <span className="bingo-win-stat-l">{t({en:"TIME",th:"เวลา",zh:"用时"})}</span>
+            </div>
+            <div className="bingo-win-divider">·</div>
+            <div className="bingo-win-stat">
+              <span className="bingo-win-stat-n">{clickCount}</span>
+              <span className="bingo-win-stat-l">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
+            </div>
+          </div>
+          <p className="bingo-win-rule">{t({en:"Fewer clicks, faster time = better score.",th:"คลิกน้อยกว่า เวลาสั้นกว่า = คะแนนดีกว่า",zh:"点击次数越少、用时越短 = 分数越高"})}</p>
+          <button className="bingo-win-reset" onClick={resetBoard}>{t({en:"Play again",th:"เล่นอีกครั้ง",zh:"再玩"})}</button>
+        </div>
+      )}
       <div className="bingo-layout">
         <div className={`bingo-board-wrapper${!targetDim ? " bingo-board-wrapper-locked" : ""}`}>
           {!targetDim && (
@@ -164,6 +237,36 @@ export default function ScitiBingoPage({ locale }: Props) {
               {t({en:"Choose a Stage Caller dimension first. The cards unlock after the call.",th:"เลือกมิติจากผู้ประกาศก่อน แล้วการ์ดจึงจะเปิดให้เล่น",zh:"请先选择舞台主持呼叫的维度，之后卡片才会解锁。"})}
             </p>
           )}
+          {/* FEEDBACK BAR */}
+          {feedback && (
+            <div className={`bingo-feedback${feedback.correct?" bingo-feedback-correct":" bingo-feedback-wrong"}`}>
+              <span className="bingo-feedback-icon">{feedback.correct?"✓":"✗"}</span>
+              <div className="bingo-feedback-body">
+                {feedback.correct ? (
+                  <>
+                    <strong>{t(feedback.cell.label)}</strong>
+                    {" "}{t({
+                      en:`belongs to Smart ${t(DIM_LABELS[feedback.cell.dim])}.`,
+                      th:`อยู่ใน Smart ${t(DIM_LABELS[feedback.cell.dim])}`,
+                      zh:`属于Smart ${t(DIM_LABELS[feedback.cell.dim])}。`
+                    })}
+                    {" · "}<span className="bingo-feedback-hint">{t(feedback.cell.hint)}</span>
+                  </>
+                ) : (
+                  <>
+                    <strong>{t(feedback.cell.label)}</strong>
+                    {" "}{t({
+                      en:`is Smart ${t(DIM_LABELS[feedback.cell.dim])}, not the current call.`,
+                      th:`อยู่ใน Smart ${t(DIM_LABELS[feedback.cell.dim])} ไม่ใช่ที่ประกาศ`,
+                      zh:`属于Smart ${t(DIM_LABELS[feedback.cell.dim])}，不符合当前呼叫。`
+                    })}
+                    {" "}<span className="bingo-feedback-hint">{t({en:"Hint:",th:"คำใบ้:",zh:"提示："})} {t(feedback.cell.hint)}</span>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="bingo-grid-5x5">
             {board.map((cell)=>{
               const isFlipped=flippedIds.has(cell.id);

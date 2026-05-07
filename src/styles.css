@@ -7710,6 +7710,82 @@ h1, h2, h3,
 }
 
 /* Win banner */
+/* ── Start button ─────────────────────────────── */
+.bingo-start-btn {
+  font: 700 var(--text-body) var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: #fff;
+  border: 2px solid var(--ink);
+  padding: .45rem 1.25rem;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.bingo-start-btn:hover { background: transparent; color: var(--ink); }
+
+/* ── Atomic timer ─────────────────────────────── */
+.bingo-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: .3rem .75rem;
+  border: 1.5px solid var(--ink);
+  background: var(--surface);
+}
+.bingo-timer-stopped { border-color: var(--teal); background: rgba(0,131,143,.08); }
+.bingo-timer-digits {
+  font: 700 1.1rem var(--mono);
+  color: var(--ink);
+  letter-spacing: .02em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.bingo-timer-stopped .bingo-timer-digits { color: var(--teal); }
+.bingo-timer-label {
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+
+/* ── Feedback bar ─────────────────────────────── */
+.bingo-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: .75rem 1rem;
+  margin-bottom: .75rem;
+  border-left: 4px solid transparent;
+  font-size: var(--text-body);
+  animation: fb-slide-in .18s ease;
+}
+@keyframes fb-slide-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.bingo-feedback-correct {
+  background: rgba(46,125,50,.12);
+  border-left-color: #2E7D32;
+  color: var(--ink);
+}
+.bingo-feedback-wrong {
+  background: rgba(183,28,28,.1);
+  border-left-color: #b71c1c;
+  color: var(--ink);
+}
+.bingo-feedback-icon {
+  font: 700 1.1rem var(--mono);
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+.bingo-feedback-correct .bingo-feedback-icon { color: #2E7D32; }
+.bingo-feedback-wrong   .bingo-feedback-icon { color: #b71c1c; }
+.bingo-feedback-body { font-size: 13px; line-height: 1.45; }
+.bingo-feedback-hint { opacity: .72; font-style: italic; }
+
+/* ── Win banner (updated) ─────────────────────── */
 .bingo-win-banner {
   margin: 0 0 1.5rem;
   padding: 1.25rem 1.5rem;
@@ -7724,10 +7800,36 @@ h1, h2, h3,
   color: #fff;
   letter-spacing: -.03em;
 }
-.bingo-win-sub {
-  font-size: var(--text-body);
-  color: rgba(255,255,255,.85);
+.bingo-win-score {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   flex: 1;
+}
+.bingo-win-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+.bingo-win-stat-n {
+  font: 700 1rem var(--mono);
+  color: #fff;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.bingo-win-stat-l {
+  font: 600 var(--text-micro) var(--mono);
+  color: rgba(255,255,255,.7);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.bingo-win-divider { color: rgba(255,255,255,.4); font-size: 1.2rem; }
+.bingo-win-rule {
+  font-size: 12px;
+  color: rgba(255,255,255,.75);
+  width: 100%;
+  padding-top: .25rem;
 }
 .bingo-win-reset {
   font: 700 var(--text-micro) var(--mono);
