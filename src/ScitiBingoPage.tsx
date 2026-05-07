@@ -57,13 +57,13 @@ const POOL: BingoTerm[] = [
   { id:"ppl4", dim:"people", emoji:"🌟", label:{ en:"Youth Leader", th:"ผู้นำเยาวชน", zh:"青年领袖" }, hint:{ en:"young citizens help shape city policy", th:"เยาวชนมีส่วนกำหนดนโยบายเมือง", zh:"年轻市民参与塑造城市政策" } },
   { id:"ppl5", dim:"people", emoji:"👩‍💻", label:{ en:"Coding Bootcamp", th:"เรียนโค้ดดิ้ง", zh:"编程训练营" }, hint:{ en:"learn to build software in a few weeks", th:"เรียนสร้างโปรแกรมภายในไม่กี่สัปดาห์", zh:"数周内学会构建软件" } },
   { id:"ppl6", dim:"people", emoji:"💡", label:{ en:"Social Innovation", th:"นวัตกรรมสังคม", zh:"社会创新" }, hint:{ en:"fix root causes, not just symptoms", th:"แก้ต้นตอ ไม่ใช่แค่ผล", zh:"解决根源，而非表象" } },
-  { id:"ppl7", dim:"people", emoji:"🎨", label:{ en:"Design Thinking", th:"Design Thinking", zh:"设计思维" }, hint:{ en:"empathise with users before you build anything", th:"เข้าใจผู้ใช้ก่อนลงมือสร้าง", zh:"建造前先理解用户需求" } },
+  { id:"ppl7", dim:"governance", emoji:"🎨", label:{ en:"Design Thinking", th:"Design Thinking", zh:"设计思维" }, hint:{ en:"empathise with users before you build anything", th:"เข้าใจผู้ใช้ก่อนลงมือสร้าง", zh:"建造前先理解用户需求" } },
   { id:"ppl8", dim:"people", emoji:"🌏", label:{ en:"ODOS Summer Camp", th:"ODOS Summer Camp", zh:"ODOS夏令营" }, hint:{ en:"young leaders spend a summer building smart city skills", th:"ผู้นำเยาวชนใช้ฤดูร้อนพัฒนาทักษะเมืองอัจฉริยะ", zh:"青年领袖共度暑假培养智慧城市技能" } },
   { id:"liv1", dim:"living", emoji:"⭐", label:{ en:"5-Star Service", th:"บริการ 5 ดาว", zh:"五星服务" }, hint:{ en:"citizens rate every interaction with the city", th:"ประชาชนให้คะแนนทุกการบริการเมือง", zh:"市民为每次城市服务评分" } },
   { id:"liv2", dim:"living", emoji:"🏥", label:{ en:"Smart Hospital", th:"โรงพยาบาลอัจฉริยะ", zh:"智慧医院" }, hint:{ en:"your medical record follows you everywhere", th:"ประวัติการรักษาติดตามคุณทุกที่", zh:"医疗档案随你走遍各处" } },
   { id:"liv3", dim:"living", emoji:"📷", label:{ en:"CCTV Safety", th:"CCTV ความปลอดภัย", zh:"CCTV安全" }, hint:{ en:"cameras deter crime and document incidents", th:"กล้องป้องปรามอาชญากรรมและบันทึกเหตุ", zh:"摄像头震慑犯罪并记录事件" } },
   { id:"liv4", dim:"living", emoji:"👴", label:{ en:"Elderly Day Care", th:"ศูนย์ผู้สูงอายุ", zh:"老人日托" }, hint:{ en:"daytime support for the ageing population", th:"ดูแลผู้สูงอายุระหว่างวัน", zh:"为老龄人口提供白天照护" } },
-  { id:"liv5", dim:"living", emoji:"🏫", label:{ en:"Smart School", th:"โรงเรียนอัจฉริยะ", zh:"智慧学校" }, hint:{ en:"digital tools enrich what happens in class", th:"เครื่องมือดิจิทัลเสริมห้องเรียน", zh:"数字工具丰富课堂体验" } },
+  { id:"liv5", dim:"people", emoji:"🏫", label:{ en:"Smart School", th:"โรงเรียนอัจฉริยะ", zh:"智慧学校" }, hint:{ en:"digital tools enrich what happens in class", th:"เครื่องมือดิจิทัลเสริมห้องเรียน", zh:"数字工具丰富课堂体验" } },
   { id:"liv6", dim:"living", emoji:"🚑", label:{ en:"Smart Ambulance", th:"รถพยาบาลอัจฉริยะ", zh:"智能救护" }, hint:{ en:"patient data sent ahead to the hospital", th:"ส่งข้อมูลผู้ป่วยไปโรงพยาบาลล่วงหน้า", zh:"患者数据提前发送至医院" } },
   { id:"liv7", dim:"living", emoji:"💊", label:{ en:"QR Healthcare", th:"บัตรสุขภาพ QR", zh:"QR医疗" }, hint:{ en:"scan a code, your health record appears", th:"สแกนโค้ด เห็นประวัติสุขภาพทั้งหมด", zh:"扫码即可查看完整健康档案" } },
   { id:"liv8", dim:"living", emoji:"🌱", label:{ en:"Urban Farm", th:"ฟาร์มในเมือง", zh:"城市农场" }, hint:{ en:"grow food inside the city limits", th:"ปลูกอาหารกินเองในเขตเมือง", zh:"在城市范围内种植食物" } },
@@ -118,7 +118,7 @@ export default function ScitiBingoPage({ locale }: Props) {
   },[calledDims,marked,board,won]);
   const toggleCell=useCallback((cellId:string)=>{
     if(cellId==="FREE")return;
-    setMarked(prev=>{const next=new Set(prev);next.has(cellId)?next.delete(cellId):next.add(cellId);if(checkBingo(next,board))setWon(true);return next;});
+    setMarked(prev=>{const next=new Set(prev);if(next.has(cellId)){next.delete(cellId);}else{next.add(cellId);}if(checkBingo(next,board))setWon(true);return next;});
   },[board]);
 
   return (
