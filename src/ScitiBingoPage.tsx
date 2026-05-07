@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { translate } from "./cityPresentation";
 import { assetUrl } from "./mediaAssets";
 import type { Locale, SmartDimension } from "./types";
@@ -15,7 +16,9 @@ const DIM_LOGOS: Record<SmartDimension, string> = {
 
 interface Props { locale: Locale; }
 type T3 = { en: string; th: string; zh: string };
+type GridSize = 5 | 6 | 7;
 type BingoTerm = { id: string; emoji: string; label: T3; hint: T3; dim: SmartDimension };
+type Feedback = { correct: boolean; cell: BingoTerm };
 
 const POOL: BingoTerm[] = [
   { id:"env1", dim:"environment", emoji:"🌬️", label:{ en:"Air Quality Monitor", th:"มอนิเตอร์อากาศ", zh:"空气质量监测" }, hint:{ en:"tracks what you breathe every day", th:"วัดอากาศที่คุณหายใจทุกวัน", zh:"监测你每天呼吸的空气" } },
@@ -86,137 +89,233 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
   for(let i=a.length-1;i>0;i--){s=(s*1664525+1013904223)&0xffffffff;const j=Math.abs(s)%(i+1);[a[i],a[j]]=[a[j],a[i]];}
   return a;
 }
-function makeBoard(seed: number): BingoTerm[] {
-  const s=seededShuffle(POOL,seed).slice(0,24);
-  const FREE:BingoTerm={id:"FREE",dim:"governance",emoji:"🆓",label:{en:"FREE",th:"ฟรี",zh:"FREE"},hint:{en:"no guessing needed!",th:"ช่องนี้ไม่ต้องเดา!",zh:"这格不用猜！"}};
-  return [...s.slice(0,12),FREE,...s.slice(12)];
+
+function makeBoard(seed: number, n: GridSize): BingoTerm[] {
+  const shuffled = seededShuffle(POOL, seed);
+  const cellCount = n * n;
+  const hasFree = n % 2 === 1;
+  if (hasFree) {
+    const s = shuffled.slice(0, cellCount - 1);
+    const FREE: BingoTerm = { id:"FREE", dim:"governance", emoji:"🆓", label:{en:"FREE",th:"ฟรี",zh:"FREE"}, hint:{en:"no guessing needed!",th:"ช่องนี้ไม่ต้องเดา!",zh:"这格不用猜！"} };
+    const center = Math.floor(cellCount / 2);
+    return [...s.slice(0,center), FREE, ...s.slice(center)];
+  }
+  return shuffled.slice(0, cellCount);
 }
-function checkBingo(marked: Set<string>, board: BingoTerm[]): boolean {
+
+function checkBingo(marked: Set<string>, board: BingoTerm[], n: number): boolean {
   const ids=board.map(c=>c.id); const isM=(i:number)=>marked.has(ids[i]);
-  for(let r=0;r<5;r++) if([0,1,2,3,4].every(c=>isM(r*5+c))) return true;
-  for(let c=0;c<5;c++) if([0,1,2,3,4].every(r=>isM(r*5+c))) return true;
-  if([0,6,12,18,24].every(isM)) return true;
-  if([4,8,12,16,20].every(isM)) return true;
+  for(let r=0;r<n;r++) if(Array.from({length:n},(_,c)=>r*n+c).every(isM)) return true;
+  for(let c=0;c<n;c++) if(Array.from({length:n},(_,r)=>r*n+c).every(isM)) return true;
+  if(Array.from({length:n},(_,i)=>i*n+i).every(isM)) return true;
+  if(Array.from({length:n},(_,i)=>i*n+(n-1-i)).every(isM)) return true;
   return false;
+}
+
+// Full 7-decimal precision for win banner; shorter for mobile bar
+function formatTimeFull(ms: number): string {
+  const m=Math.floor(ms/60000);
+  const s=Math.floor((ms%60000)/1000);
+  const frac=((ms%1000)/1000).toFixed(7).slice(1);
+  return `${m}:${String(s).padStart(2,"0")}${frac}`;
+}
+function formatTimeShort(ms: number): string {
+  const m=Math.floor(ms/60000);
+  const s=((ms%60000)/1000).toFixed(2);
+  return `${m}:${s.padStart(5,"0")}`;
 }
 
 export default function ScitiBingoPage({ locale }: Props) {
   const t=(copy:T3)=>translate(locale,copy);
-  const [seed,setSeed]=useState(()=>Math.floor(Math.random()*1_000_000));
-  const [board,setBoard]=useState<BingoTerm[]>(()=>makeBoard(seed));
-  const [flippedIds,setFlippedIds]=useState<Set<string>>(new Set(["FREE"]));
-  const [clickCount, setClickCount]=useState(0);
-  const [targetDim, setTargetDim]=useState<SmartDimension|null>(null);
-  const [calledDims,setCalledDims]=useState<SmartDimension[]>([]);
-  const [animatingId, setAnimatingId]=useState<string|null>(null);
-  const [won,setWon]=useState(false);
 
-  const resetBoard=useCallback(()=>{
-    const ns=Math.floor(Math.random()*1_000_000);
-    setSeed(ns);
-    setBoard(makeBoard(ns));
-    setFlippedIds(new Set(["FREE"]));
-    setClickCount(0);
-    setCalledDims([]);
-    setTargetDim(null);
-    setWon(false);
+  // Portal to body on mobile to bypass page-frame transform that breaks position:fixed
+  const [isMobile, setIsMobile] = useState(()=>window.innerWidth<=640);
+  useEffect(()=>{
+    const mq=window.matchMedia('(max-width: 640px)');
+    setIsMobile(mq.matches);
+    const h=(e:MediaQueryListEvent)=>setIsMobile(e.matches);
+    mq.addEventListener('change',h);
+    return ()=>mq.removeEventListener('change',h);
   },[]);
 
-  const callDimension=useCallback((dim:SmartDimension)=>{
-    if(calledDims.includes(dim) || won)return;
+  const [gridSize, setGridSize]=useState<GridSize>(5);
+  const [seed,setSeed]=useState(()=>Math.floor(Math.random()*1_000_000));
+  const [board,setBoard]=useState<BingoTerm[]>(()=>makeBoard(seed,5));
+  const [flippedIds,setFlippedIds]=useState<Set<string>>(()=>new Set(["FREE"]));
+  const [clickCount,setClickCount]=useState(0);
+  const [targetDim,setTargetDim]=useState<SmartDimension|null>(null);
+  const [calledDims,setCalledDims]=useState<SmartDimension[]>([]);
+  const [animatingId,setAnimatingId]=useState<string|null>(null);
+  const [won,setWon]=useState(false);
+  // Atomic timer (rAF + performance.now)
+  const [gameStarted,setGameStarted]=useState(false);
+  const [elapsed,setElapsed]=useState(0);
+  const startTimeRef=useRef<number|null>(null);
+  const rafRef=useRef<number|null>(null);
+  // Feedback bar
+  const [feedback,setFeedback]=useState<Feedback|null>(null);
+  const fbTimerRef=useRef<ReturnType<typeof setTimeout>|null>(null);
+
+  // rAF timer loop
+  useEffect(()=>{
+    if(!gameStarted||won){
+      if(rafRef.current){cancelAnimationFrame(rafRef.current);rafRef.current=null;}
+      return;
+    }
+    if(startTimeRef.current===null) startTimeRef.current=performance.now();
+    function tick(){
+      setElapsed(performance.now()-(startTimeRef.current??0));
+      rafRef.current=requestAnimationFrame(tick);
+    }
+    rafRef.current=requestAnimationFrame(tick);
+    return()=>{if(rafRef.current){cancelAnimationFrame(rafRef.current);rafRef.current=null;}};
+  },[gameStarted,won]);
+
+  const showFeedback=useCallback((f:Feedback)=>{
+    if(fbTimerRef.current) clearTimeout(fbTimerRef.current);
+    setFeedback(f);
+    fbTimerRef.current=setTimeout(()=>setFeedback(null),3200);
+  },[]);
+
+  const reset=useCallback((newSize?:GridSize)=>{
+    const size=newSize??gridSize;
+    const ns=Math.floor(Math.random()*1_000_000);
+    setSeed(ns); setGridSize(size); setBoard(makeBoard(ns,size));
+    setFlippedIds(new Set(size%2===1?["FREE"]:[]));
+    setClickCount(0); setCalledDims([]); setTargetDim(null);
+    setWon(false); setGameStarted(false); setElapsed(0);
+    startTimeRef.current=null;
+    setFeedback(null);
+    if(fbTimerRef.current) clearTimeout(fbTimerRef.current);
+  },[gridSize]);
+
+  const changeSize=useCallback((size:GridSize)=>{ if(size!==gridSize) reset(size); },[gridSize,reset]);
+
+  const callDim=useCallback((dim:SmartDimension)=>{
+    if(calledDims.includes(dim)||won) return;
+    if(!gameStarted) setGameStarted(true);
     setCalledDims(prev=>[...prev,dim]);
     setTargetDim(dim);
-  },[calledDims, won]);
+  },[calledDims,won,gameStarted]);
 
-  const handleCardClick=useCallback((cell:BingoTerm)=>{
-    if(!targetDim || cell.id==="FREE" || flippedIds.has(cell.id) || animatingId || won) return;
-
-    setClickCount(prev => prev + 1);
-
-    if (targetDim && cell.dim === targetDim) {
-      // Correct guess
-      const nextFlipped = new Set(flippedIds).add(cell.id);
-      setFlippedIds(nextFlipped);
-      if(checkBingo(nextFlipped, board)) setWon(true);
+  const handleClick=useCallback((cell:BingoTerm)=>{
+    if(!targetDim||cell.id==="FREE"||flippedIds.has(cell.id)||animatingId||won) return;
+    setClickCount(p=>p+1);
+    showFeedback({correct:cell.dim===targetDim,cell});
+    if(cell.dim===targetDim){
+      const next=new Set(flippedIds).add(cell.id);
+      setFlippedIds(next);
+      if(checkBingo(next,board,gridSize)) setWon(true);
     } else {
-      // Wrong guess - transient flip
       setAnimatingId(cell.id);
-      setTimeout(() => setAnimatingId(null), 1500);
+      setTimeout(()=>setAnimatingId(null),1500);
     }
-  },[flippedIds, animatingId, targetDim, board, won]);
+  },[flippedIds,animatingId,targetDim,board,gridSize,won,showFeedback]);
 
-  return (
+  const seedLabel=`#${seed.toString(16).toUpperCase().padStart(5,"0")}`;
+  const sizeTabs=([5,6,7] as GridSize[]).map(n=>(
+    <button key={n} className={`bingo-size-tab${gridSize===n?" bingo-size-tab-active":""}`} onClick={()=>changeSize(n)}>{n}×{n}</button>
+  ));
+
+  const grid=(
+    <div className={`bingo-grid bingo-grid-${gridSize}x${gridSize}`}>
+      {board.map(cell=>{
+        const isFlipped=flippedIds.has(cell.id);
+        const isAnim=animatingId===cell.id;
+        const isFree=cell.id==="FREE";
+        const color=DIM_COLORS[cell.dim];
+        const showBack=!isFree&&(isFlipped||isAnim);
+        const disabled=isFree||!targetDim||isFlipped||Boolean(animatingId)||won;
+        return(
+          <button key={cell.id}
+            className={`bingo-cell${showBack?" bingo-cell-marked":""}${isFree?" bingo-cell-free":""}${isAnim?" bingo-cell-wrong":""}${!targetDim&&!isFree?" bingo-cell-waiting":""}`}
+            style={{borderColor:showBack?color:`${color}55`}}
+            onClick={()=>handleClick(cell)} aria-pressed={showBack} disabled={disabled}>
+            <div className="bingo-card-front">
+              {isFree?(
+                <div className="bingo-free-content">
+                  <span className="bingo-click-count">{clickCount}</span>
+                  <span className="bingo-free-label">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
+                </div>
+              ):(
+                <>
+                  <span className="bingo-cell-emoji">{cell.emoji}</span>
+                  <span className="bingo-cell-text">{t(cell.label)}</span>
+                  <span className="bingo-cell-hint">{t(cell.hint)}</span>
+                  <span className="bingo-cell-dot" style={{background:color}}/>
+                </>
+              )}
+            </div>
+            {!isFree&&(
+              <div className="bingo-card-back" style={{background:color}}>
+                <img src={DIM_LOGOS[cell.dim]} alt={`Smart ${t(DIM_LABELS[cell.dim])}`} className="bingo-logo-img" loading="lazy"/>
+                <span className="bingo-back-label">Smart {t(DIM_LABELS[cell.dim])}</span>
+              </div>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const content=(
     <div className="bingo-page">
-      <section className="section bingo-header">
-        <p className="eyebrow">SCITI 2026 · {t({en:"Workshop Game",th:"เกมเวิร์กช็อป",zh:"工作坊游戏"})}</p>
-        <h1 className="bingo-title">SCITI Bingo</h1>
-        <p className="bingo-sub">{t({en:"Use Stage Caller first. Correct cards stay open; wrong cards flip back. The center square counts every scored click.",th:"เริ่มจาก Stage Caller ก่อน การ์ดที่ถูกจะค้างไว้ การ์ดที่ผิดจะพลิกกลับ ช่องกลางนับทุกคลิกที่ใช้เล่น",zh:"先使用 Stage Caller。正确卡片保持打开，错误卡片会翻回；中央格记录每次有效点击。"})}</p>
-        <div className="bingo-header-actions">
-          <button className="cta-button" onClick={resetBoard}>↻ {t({en:"New Card",th:"การ์ดใหม่",zh:"新棋盘"})}</button>
-          <span className="bingo-seed">#{seed.toString(16).toUpperCase().padStart(5,"0")}</span>
-        </div>
-      </section>
-      {won&&(<div className="bingo-win-banner"><span className="bingo-win-text">🎉 BINGO! 🎉</span><span className="bingo-win-sub">{t({en:`Completed in ${clickCount} clicks`,th:`จบเกมใน ${clickCount} คลิก`,zh:`在 ${clickCount} 次点击中完成`})}</span><button className="bingo-win-reset" onClick={resetBoard}>{t({en:"Play again",th:"เล่นอีกครั้ง",zh:"再玩"})}</button></div>)}
-      <div className="bingo-layout">
-        <div className={`bingo-board-wrapper${!targetDim ? " bingo-board-wrapper-locked" : ""}`}>
-          {!targetDim && (
-            <p className="bingo-board-hint bingo-board-hint-top">
-              {t({en:"Choose a Stage Caller dimension first. The cards unlock after the call.",th:"เลือกมิติจากผู้ประกาศก่อน แล้วการ์ดจึงจะเปิดให้เล่น",zh:"请先选择舞台主持呼叫的维度，之后卡片才会解锁。"})}
-            </p>
-          )}
-          <div className="bingo-grid-5x5">
-            {board.map((cell)=>{
-              const isFlipped=flippedIds.has(cell.id);
-              const isAnimating=animatingId===cell.id;
-              const isFree=cell.id==="FREE";
-              const color=DIM_COLORS[cell.dim];
-              const showBack = !isFree && (isFlipped || isAnimating);
-              const disabled = isFree || !targetDim || isFlipped || Boolean(animatingId) || won;
 
-              return (
-                <button
-                  key={cell.id}
-                  className={`bingo-cell5${showBack?" bingo-cell5-marked":""}${isFree?" bingo-cell5-free":""}${isAnimating?" bingo-cell5-wrong":""}${!targetDim&&!isFree?" bingo-cell5-waiting":""}`}
-                  style={{borderColor:showBack?color:`${color}55`}}
-                  onClick={()=>handleCardClick(cell)}
-                  aria-pressed={showBack}
-                  disabled={disabled}
-                >
-                  <div className="bingo-card-front">
-                    {isFree ? (
-                      <div className="bingo-free-content">
-                        <span className="bingo-click-count">{clickCount}</span>
-                        <span className="bingo-free-label">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
-                      </div>
-                    ) : (
-                      <>
-                        <span className="bingo-cell5-emoji">{cell.emoji}</span>
-                        <span className="bingo-cell5-text">{t(cell.label)}</span>
-                        <span className="bingo-cell5-hint">{t(cell.hint)}</span>
-                        <span className="bingo-cell5-dot" style={{background:color}}/>
-                      </>
-                    )}
-                  </div>
-                  {!isFree && (
-                    <div className="bingo-card-back" style={{background:color}}>
-                      <img src={DIM_LOGOS[cell.dim]} alt={`Smart ${t(DIM_LABELS[cell.dim])}`} className="bingo-logo-img" loading="lazy"/>
-                      <span className="bingo-back-label">Smart {t(DIM_LABELS[cell.dim])}</span>
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-          <p className="bingo-board-hint">{t({en:"Find cards matching the moderator's call.",th:"ค้นหาการ์ดที่ตรงกับที่ผู้ประกาศบอก",zh:"找到与主持人呼叫匹配的卡片。"})}</p>
-        </div>
-        <aside className="bingo-stage-panel">
-          <p className="bingo-stage-eyebrow">{t({en:"STAGE CALLER",th:"ผู้ประกาศเวที",zh:"舞台主持"})}</p>
-          {!targetDim && (
-            <div className="bingo-call-status">
-              {t({en:"Choose the first dimension to start scoring flips.",th:"เลือกมิติแรกเพื่อเริ่มนับการพลิกการ์ด",zh:"选择第一个维度后开始计分翻牌。"})}
+      {/* ── MOBILE TOP BAR ── */}
+      <div className="bingo-mobile-bar">
+        <span className={`bingo-timer-mobile${won?" bingo-timer-mobile-stopped":""}`}>
+          {formatTimeShort(elapsed)}
+        </span>
+        <div className="bingo-size-tabs">{sizeTabs}</div>
+        <button className="bingo-reset-pill" onClick={()=>reset()}>↻</button>
+      </div>
+
+      {/* ── MOBILE CALL BAR — the dimension they picked ── */}
+      <div className={`bingo-call-bar${won?" bingo-call-bar-won":targetDim?" bingo-call-bar-active":""}`}
+           style={targetDim&&!won?{background:DIM_COLORS[targetDim]}:undefined}>
+        {won?(
+          <>
+            <span className="bingo-call-bar-emoji">🎉</span>
+            <span className="bingo-call-bar-name">BINGO! {clickCount} clicks · {formatTimeShort(elapsed)}</span>
+            <button className="bingo-call-bar-reset" onClick={()=>reset()}>↻</button>
+          </>
+        ):targetDim?(
+          <>
+            <span className="bingo-call-bar-emoji">{DIM_EMOJIS[targetDim]}</span>
+            <span className="bingo-call-bar-name">Smart {t(DIM_LABELS[targetDim])}</span>
+          </>
+        ):(
+          <span className="bingo-call-bar-empty">{t({en:"↓ Pick a dimension below to start",th:"↓ เลือกมิติด้านล่างเพื่อเริ่ม",zh:"↓ 在下方选择维度开始"})}</span>
+        )}
+      </div>
+
+      {/* ── BOARD AREA (mobile row 3 / desktop left column) ── */}
+      <div className="bingo-main-area">
+        <div className={`bingo-board-wrap${!targetDim?" bingo-board-locked":""}`}>
+          {!targetDim&&(
+            <p className="bingo-board-hint-top">{t({en:"Choose a Stage Caller dimension first. Cards unlock after the call.",th:"เลือกมิติจากผู้ประกาศก่อน แล้วการ์ดจึงจะเปิดให้เล่น",zh:"请先选择舞台主持的维度，之后卡片才会解锁。"})}</p>
+          )}
+          {feedback&&(
+            <div className={`bingo-feedback${feedback.correct?" bingo-feedback-correct":" bingo-feedback-wrong"}`}>
+              <span className="bingo-feedback-icon">{feedback.correct?"✓":"✗"}</span>
+              <div className="bingo-feedback-body">
+                {feedback.correct?(
+                  <><strong>{t(feedback.cell.label)}</strong>{" "}{t({en:`belongs to Smart ${t(DIM_LABELS[feedback.cell.dim])}.`,th:`อยู่ใน Smart ${t(DIM_LABELS[feedback.cell.dim])}`,zh:`属于Smart ${t(DIM_LABELS[feedback.cell.dim])}。`})}{" · "}<span className="bingo-feedback-hint">{t(feedback.cell.hint)}</span></>
+                ):(
+                  <><strong>{t(feedback.cell.label)}</strong>{" "}{t({en:`is Smart ${t(DIM_LABELS[feedback.cell.dim])}, not the current call.`,th:`อยู่ใน Smart ${t(DIM_LABELS[feedback.cell.dim])} ไม่ใช่ที่ประกาศ`,zh:`属于Smart ${t(DIM_LABELS[feedback.cell.dim])}，不符合当前呼叫。`})}{" "}<span className="bingo-feedback-hint">{t({en:"Hint:",th:"คำใบ้:",zh:"提示："})}{" "}{t(feedback.cell.hint)}</span></>
+                )}
+              </div>
             </div>
           )}
-          {targetDim && (
+          {grid}
+          <p className="bingo-board-hint">{t({en:"Match cards to the moderator's call.",th:"จับคู่การ์ดกับที่ผู้ประกาศบอก",zh:"将卡片与主持人的呼叫匹配。"})}</p>
+        </div>
+
+        {/* ── DESKTOP SIDEBAR ── */}
+        <aside className="bingo-sidebar">
+          <p className="bingo-stage-eyebrow">{t({en:"STAGE CALLER",th:"ผู้ประกาศเวที",zh:"舞台主持"})}</p>
+          {!targetDim&&<div className="bingo-call-status">{t({en:"Choose the first dimension to start.",th:"เลือกมิติแรกเพื่อเริ่ม",zh:"选择第一个维度后开始。"})}</div>}
+          {targetDim&&(
             <div className="bingo-last-called" style={{background:DIM_COLORS[targetDim]}}>
               <span className="bingo-last-emoji">{DIM_EMOJIS[targetDim]}</span>
               <div>
@@ -227,7 +326,9 @@ export default function ScitiBingoPage({ locale }: Props) {
           )}
           <div className="bingo-dim-buttons">
             {DIMS.map(dim=>{const called=calledDims.includes(dim);const active=targetDim===dim;return(
-              <button key={dim} className={`bingo-dim-btn${called?" bingo-dim-btn-called":""}${active?" bingo-dim-btn-active":""}`} style={called?{background:DIM_COLORS[dim],borderColor:DIM_COLORS[dim],color:"#fff",opacity:active?1:.42}:{borderColor:DIM_COLORS[dim],color:DIM_COLORS[dim]}} onClick={()=>callDimension(dim)} disabled={called || won}>
+              <button key={dim} className={`bingo-dim-btn${called?" bingo-dim-btn-called":""}${active?" bingo-dim-btn-active":""}`}
+                style={called?{background:DIM_COLORS[dim],borderColor:DIM_COLORS[dim],color:"#fff",opacity:active?1:.42}:{borderColor:DIM_COLORS[dim],color:DIM_COLORS[dim]}}
+                onClick={()=>callDim(dim)} disabled={called||won}>
                 <span className="bingo-dim-emoji">{DIM_EMOJIS[dim]}</span>
                 <span className="bingo-dim-name">Smart {t(DIM_LABELS[dim])}</span>
                 {called&&<span className="bingo-dim-tick">✓</span>}
@@ -238,8 +339,61 @@ export default function ScitiBingoPage({ locale }: Props) {
             <span className="bingo-progress-label">{t({en:`${calledDims.length} / 7 called`,th:`ประกาศแล้ว ${calledDims.length} / 7`,zh:`已呼叫 ${calledDims.length} / 7`})}</span>
             <div className="bingo-progress-bar"><div className="bingo-progress-fill" style={{width:`${(calledDims.length/7)*100}%`}}/></div>
           </div>
+          {(gameStarted||won)&&(
+            <div className={`bingo-timer${won?" bingo-timer-stopped":""}`}>
+              <span className="bingo-timer-digits">{formatTimeFull(elapsed)}</span>
+              <span className="bingo-timer-label">{won?t({en:"FINAL TIME",th:"เวลาสุดท้าย",zh:"最终用时"}):t({en:"ELAPSED",th:"เวลา",zh:"用时"})}</span>
+            </div>
+          )}
         </aside>
       </div>
+
+      {/* ── MOBILE DIM STRIP (row 4) ── */}
+      <div className="bingo-mobile-dims">
+        {DIMS.map(dim=>{const called=calledDims.includes(dim);const active=targetDim===dim;return(
+          <button key={dim}
+            className={`bingo-dim-strip-btn${called?" bingo-dim-strip-called":""}${active?" bingo-dim-strip-active":""}`}
+            style={{background:called?DIM_COLORS[dim]:"transparent",borderColor:DIM_COLORS[dim],opacity:called&&!active?.5:1}}
+            onClick={()=>callDim(dim)} disabled={called||won}>
+            <span className="bingo-dim-strip-emoji">{DIM_EMOJIS[dim]}</span>
+          </button>
+        );})}
+      </div>
+
+      {/* ── DESKTOP HEADER + WIN BANNER (hidden on mobile) ── */}
+      <div className="bingo-desktop-chrome">
+        <section className="section bingo-header">
+          <p className="eyebrow">SCITI 2026 · {t({en:"Workshop Game",th:"เกมเวิร์กช็อป",zh:"工作坊游戏"})}</p>
+          <h1 className="bingo-title">SCITI Bingo</h1>
+          <p className="bingo-sub">{t({en:"Use Stage Caller first. Correct cards stay open; wrong cards flip back.",th:"เริ่มจาก Stage Caller ก่อน การ์ดที่ถูกจะค้างไว้ การ์ดที่ผิดจะพลิกกลับ",zh:"先使用舞台主持。正确卡片保持打开，错误卡片会翻回。"})}</p>
+          <div className="bingo-header-actions">
+            <button className="cta-button" onClick={()=>reset()}>↻ {t({en:"New Card",th:"การ์ดใหม่",zh:"新棋盘"})}</button>
+            <span className="bingo-seed">{seedLabel}</span>
+            <div className="bingo-size-tabs">{sizeTabs}</div>
+          </div>
+        </section>
+        {won&&(
+          <div className="bingo-win-banner">
+            <span className="bingo-win-text">🎉 BINGO! 🎉</span>
+            <div className="bingo-win-score">
+              <div className="bingo-win-stat">
+                <span className="bingo-win-stat-n">{formatTimeFull(elapsed)}</span>
+                <span className="bingo-win-stat-l">{t({en:"TIME",th:"เวลา",zh:"用时"})}</span>
+              </div>
+              <div className="bingo-win-divider">·</div>
+              <div className="bingo-win-stat">
+                <span className="bingo-win-stat-n">{clickCount}</span>
+                <span className="bingo-win-stat-l">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
+              </div>
+            </div>
+            <p className="bingo-win-rule">{t({en:"Fewer clicks, faster time = better score.",th:"คลิกน้อยกว่า เวลาสั้นกว่า = คะแนนดีกว่า",zh:"点击次数越少、用时越短 = 分数越高"})}</p>
+            <button className="bingo-win-reset" onClick={()=>reset()}>{t({en:"Play again",th:"เล่นอีกครั้ง",zh:"再玩"})}</button>
+          </div>
+        )}
+      </div>
+
     </div>
   );
+
+  return isMobile ? createPortal(content, document.body) : content;
 }
