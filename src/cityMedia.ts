@@ -86,24 +86,22 @@ export const HOME_HERO_ASSETS: HeroAsset[] = [
     objectPosition: "center 50%",
     label: "Bangkok · BTS Skytrain",
   },
-  // Khon Kaen aerial — Isan's economic capital, the BRT corridor city.
-  // Authored photo (2024).
+  // Khon Kaen cityscape — new authored photo 2022, iPhone X.
+  // enc() only; assetUrl applied by ResponsiveImage internally.
   {
-    src: assetUrl(enc("/Khon Kaen/IMG_4264.JPG")),
+    src: enc("/Khon Kaen/cityscape-khonkaen.jpg"),
     objectPosition: "center 50%",
     label: "Khon Kaen",
   },
-  // NST temple compound at dusk — ancient southern capital, telemetry-monitored.
-  // Authored photo.
+  // NST temple compound at dusk — enc() only; assetUrl applied by ResponsiveImage.
   {
-    src: assetUrl(enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg")),
+    src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"),
     objectPosition: "center 50%",
     label: "Nakhon Si Thammarat",
   },
-  // Chiang Mai at night — the north's cultural capital, burning-season caveat.
-  // Authored photo.
+  // Chiang Mai at night — enc() only; assetUrl applied by ResponsiveImage.
   {
-    src: assetUrl(enc("/Chiang Mai/IMG_20251218_190749854.jpg")),
+    src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"),
     objectPosition: "center 58%",
     label: "Chiang Mai",
   },
@@ -127,11 +125,13 @@ const REGION_FALLBACKS: Record<SmartCity["region"], CityPhotoAsset> = {
 
 const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   // ─── Real, authored city photos in capitalised folders (Phase 16+) ───
-  // All use assetUrl() to handle GitHub Pages /smart-city-thailand-index/ base path.
-  "chiang-mai-old-town": { src: assetUrl(enc("/Chiang Mai/IMG_20251218_190749854.jpg")), objectPosition: "center 58%" },
-  "cmu-smart-city": { src: assetUrl(enc("/CMU Smart City/P1210289.JPG")), objectPosition: "center 45%" },
-  "khon-kaen": { src: assetUrl(enc("/Khon Kaen/IMG_4264.JPG")), objectPosition: "center 50%" },
-  "nakhon-si-thammarat": { src: assetUrl(enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg")), objectPosition: "center 50%" },
+  // IMPORTANT: enc() only — do NOT wrap with assetUrl() here.
+  // ResponsiveImage.getResponsiveMediaAsset() calls assetUrl() internally.
+  // Double-wrapping with assetUrl() produces /base/base/ double-prefix → 404.
+  "chiang-mai-old-town": { src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"), objectPosition: "center 58%" },
+  "cmu-smart-city": { src: enc("/Chiang Mai/cityscape-cmu.jpg"), objectPosition: "center 45%" },
+  "khon-kaen": { src: enc("/Khon Kaen/cityscape-khonkaen.jpg"), objectPosition: "center 50%" },
+  "nakhon-si-thammarat": { src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"), objectPosition: "center 50%" },
 
   // ─── Authored project photos in /photos/ ───
   "samyan": { src: "/photos/samyan-smart-city.jpg", objectPosition: "center 45%" },
@@ -224,21 +224,21 @@ const CITY_CHAPTER_BREAKS: Record<string, CityChapterBreak[]> = {
   "nakhon-si-thammarat": [
     {
       after: "who",
-      asset: { src: assetUrl(enc("/Nakhon Si Thammarat/FB_IMG_1763702950339.jpg")), objectPosition: "center 50%" },
+      asset: { src: enc("/Nakhon Si Thammarat/FB_IMG_1763702950339.jpg"), objectPosition: "center 50%" },
       captionEn: "ASEAN CSCO delegates at the ICT & CCTV Command Centre — the nerve centre of NST's real-time city intelligence.",
       captionTh: "คณะ ASEAN CSCO ที่ศูนย์บัญชาการ ICT และ CCTV — หัวใจของระบบข่าวกรองเมืองแบบเรียลไทม์ของนครศรีธรรมราช",
       captionZh: "ASEAN CSCO 代表团在 ICT 与 CCTV 指挥中心——NST 实时城市智能的神经枢纽。",
     },
     {
       after: "what",
-      asset: { src: assetUrl(enc("/Nakhon Si Thammarat/1763875143668.jpg")), objectPosition: "center 50%" },
+      asset: { src: enc("/Nakhon Si Thammarat/1763875143668.jpg"), objectPosition: "center 50%" },
       captionEn: "Live flood CCTV monitoring. 10-hour advance warning. Zero fatalities since 2021.",
       captionTh: "เฝ้าระวัง CCTV น้ำท่วมสด เตือนล่วงหน้า 10 ชั่วโมง ไม่มีผู้เสียชีวิตตั้งแต่ปี 2564",
       captionZh: "洪涝 CCTV 实时监控。提前 10 小时预警。2021 年起零死亡。",
     },
     {
       after: "how",
-      asset: { src: assetUrl(enc("/Nakhon Si Thammarat/1763875144974.jpg")), objectPosition: "center 50%" },
+      asset: { src: enc("/Nakhon Si Thammarat/1763875144974.jpg"), objectPosition: "center 50%" },
       captionEn: "The hydrological dashboard — every sensor in the field feeds this screen. Decisions run from data, not intuition.",
       captionTh: "แดชบอร์ดอุทกวิทยา — ทุกเซนเซอร์ในพื้นที่ส่งข้อมูลมาที่หน้าจอนี้ การตัดสินใจมาจากข้อมูล ไม่ใช่ความรู้สึก",
       captionZh: "水文仪表板——现场每个传感器的数据都汇聚于此。决策来自数据，而非直觉。",
