@@ -5,12 +5,12 @@ import type { Locale, SmartDimension } from "./types";
 
 const DIM_LOGOS: Record<SmartDimension, string> = {
   environment: assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-01.png")),
-  governance:  assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-02.png")),
-  mobility:    assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-03.png")),
-  energy:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-04.png")),
-  economy:     assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-05.png")),
-  living:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-06.png")),
-  people:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-07.png")),
+  mobility:    assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-02.png")),
+  living:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-03.png")),
+  people:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-04.png")),
+  energy:      assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-05.png")),
+  economy:     assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-06.png")),
+  governance:  assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-07.png")),
 };
 
 interface Props { locale: Locale; }
@@ -35,20 +35,20 @@ const POOL: BingoTerm[] = [
   { id:"eco7", dim:"economy", emoji:"💰", label:{ en:"FDI Gateway", th:"ดึงดูด FDI", zh:"外资门户" }, hint:{ en:"makes foreign investment fast and easy", th:"ทำให้การลงทุนต่างชาติรวดเร็วง่ายดาย", zh:"让外资投资变得快捷简便" } },
   { id:"eco8", dim:"economy", emoji:"💳", label:{ en:"Cashless Society", th:"ไร้เงินสด", zh:"无现金社会" }, hint:{ en:"pay with QR — no coins, no wallets", th:"จ่ายด้วย QR ไม่ต้องใช้เหรียญ", zh:"扫码支付，无需现金和钱包" } },
   { id:"mob1", dim:"mobility", emoji:"🚍", label:{ en:"BRT Corridor", th:"รถ BRT", zh:"快速公交" }, hint:{ en:"dedicated fast lane for buses only", th:"เลนด่วนเฉพาะรถโดยสาร", zh:"专供公交的快速专用道" } },
-  { id:"mob2", dim:"energy", emoji:"⚡", label:{ en:"EV Charging", th:"จุดชาร์จ EV", zh:"电动车充电" }, hint:{ en:"plug-in stops spread across the city", th:"จุดชาร์จกระจายทั่วเมือง", zh:"遍布全城的充电站点" } },
+  { id:"mob2", dim:"mobility", emoji:"⚡", label:{ en:"EV Charging", th:"จุดชาร์จ EV", zh:"电动车充电" }, hint:{ en:"plug-in stops spread across the city", th:"จุดชาร์จกระจายทั่วเมือง", zh:"遍布全城的充电站点" } },
   { id:"mob3", dim:"mobility", emoji:"🚦", label:{ en:"AI Traffic Light", th:"ไฟจราจร AI", zh:"AI交通灯" }, hint:{ en:"adjusts green/red to live traffic conditions", th:"ปรับเขียว-แดงตามสภาพจราจรจริง", zh:"根据实时路况调节红绿灯" } },
-  { id:"mob4", dim:"living", emoji:"🅿️", label:{ en:"Smart Parking", th:"จอดรถอัจฉริยะ", zh:"智能停车" }, hint:{ en:"find an empty space before you arrive", th:"หาที่ว่างก่อนถึงที่หมาย", zh:"到达前就找好空车位" } },
+  { id:"mob4", dim:"mobility", emoji:"🅿️", label:{ en:"Smart Parking", th:"จอดรถอัจฉริยะ", zh:"智能停车" }, hint:{ en:"find an empty space before you arrive", th:"หาที่ว่างก่อนถึงที่หมาย", zh:"到达前就找好空车位" } },
   { id:"mob5", dim:"mobility", emoji:"🗺️", label:{ en:"MaaS Platform", th:"แพลตฟอร์ม MaaS", zh:"出行即服务" }, hint:{ en:"one app for bus, train, bike and taxi", th:"แอปเดียวครบทุกการเดินทาง", zh:"一个应用涵盖所有出行方式" } },
   { id:"mob6", dim:"mobility", emoji:"🚲", label:{ en:"Bike Share", th:"จักรยานสาธารณะ", zh:"共享单车" }, hint:{ en:"borrow a bicycle, return it anywhere", th:"ยืมจักรยานและคืนได้ทุกที่", zh:"随借随还的共享单车" } },
   { id:"mob7", dim:"mobility", emoji:"🚋", label:{ en:"LRT Transit", th:"รถไฟฟ้า LRT", zh:"轻轨" }, hint:{ en:"light rail connecting districts quietly", th:"รางเบาเชื่อมย่านต่างๆ อย่างเงียบ", zh:"轻轨静静连接各个街区" } },
-  { id:"mob8", dim:"living", emoji:"🚶", label:{ en:"Pedestrian Path", th:"ทางเดินคนเดิน", zh:"步行道" }, hint:{ en:"safe, shaded routes just for walking", th:"ทางเดินปลอดภัยมีร่มเงา", zh:"专为步行设计的安全遮阳路线" } },
+  { id:"mob8", dim:"mobility", emoji:"🚶", label:{ en:"Pedestrian Path", th:"ทางเดินคนเดิน", zh:"步行道" }, hint:{ en:"safe, shaded routes just for walking", th:"ทางเดินปลอดภัยมีร่มเงา", zh:"专为步行设计的安全遮阳路线" } },
   { id:"enr1", dim:"energy", emoji:"☀️", label:{ en:"Solar ≥50%", th:"พลังงานแสงอาทิตย์", zh:"太阳能≥50%" }, hint:{ en:"half the city's power comes from the sun", th:"ครึ่งหนึ่งของพลังงานมาจากแสงอาทิตย์", zh:"城市一半电力来自太阳" } },
   { id:"enr2", dim:"energy", emoji:"🔌", label:{ en:"Smart Grid", th:"กริดอัจฉริยะ", zh:"智能电网" }, hint:{ en:"power re-routes automatically when cut", th:"ไฟฟ้าเบี่ยงเส้นทางอัตโนมัติเมื่อดับ", zh:"断电时电力自动改道" } },
   { id:"enr3", dim:"energy", emoji:"💨", label:{ en:"Wind Energy", th:"พลังงานลม", zh:"风力发电" }, hint:{ en:"turbines turn breeze into electricity", th:"กังหันเปลี่ยนลมเป็นไฟฟ้า", zh:"风机把风变成电" } },
   { id:"enr4", dim:"environment", emoji:"🎯", label:{ en:"Net Zero Target", th:"เป้า Net Zero", zh:"净零目标" }, hint:{ en:"whatever you emit, you must absorb", th:"ปล่อยเท่าไหร่ต้องดูดซับเท่านั้น", zh:"排放多少就要吸收多少" } },
   { id:"enr5", dim:"energy", emoji:"🔋", label:{ en:"Energy Storage 30%", th:"เก็บพลังงาน ≥30%", zh:"储能≥30%" }, hint:{ en:"stores daytime solar for the night", th:"เก็บพลังงานกลางวันไว้ใช้ตอนกลางคืน", zh:"把白天太阳能存起来夜晚用" } },
   { id:"enr6", dim:"energy", emoji:"📊", label:{ en:"Smart Meter 100%", th:"มิเตอร์ 100%", zh:"智能电表100%" }, hint:{ en:"every home tracked in real-time", th:"ทุกบ้านถูกติดตามแบบเรียลไทม์", zh:"每家每户实时监测用电量" } },
-  { id:"enr7", dim:"living", emoji:"🏘️", label:{ en:"Smart Home/Building", th:"Smart Home", zh:"智慧楼宇" }, hint:{ en:"buildings manage their own power use", th:"อาคารบริหารการใช้พลังงานตัวเอง", zh:"建筑自主管理自身能耗" } },
+  { id:"enr7", dim:"energy", emoji:"🏘️", label:{ en:"Smart Home/Building", th:"Smart Home", zh:"智慧楼宇" }, hint:{ en:"buildings manage their own power use", th:"อาคารบริหารการใช้พลังงานตัวเอง", zh:"建筑自主管理自身能耗" } },
   { id:"enr8", dim:"energy", emoji:"🏝️", label:{ en:"Micro-grid 24hr", th:"ไมโครกริด 24 ชม.", zh:"微电网24小时" }, hint:{ en:"city runs off the national grid for a full day", th:"เมืองทำงานโดยไม่พึ่งสายส่งหลักได้ 24 ชม.", zh:"城市可独立运行整整一天" } },
   { id:"ppl1", dim:"people", emoji:"📱", label:{ en:"Digital Literacy", th:"การรู้ดิจิทัล", zh:"数字素养" }, hint:{ en:"everyone can use the internet safely", th:"ทุกคนใช้อินเทอร์เน็ตได้อย่างปลอดภัย", zh:"每个人都能安全使用互联网" } },
   { id:"ppl2", dim:"people", emoji:"📚", label:{ en:"Lifelong Learning", th:"เรียนรู้ตลอดชีวิต", zh:"终身学习" }, hint:{ en:"education doesn't stop after school", th:"การศึกษาไม่จบแค่ในโรงเรียน", zh:"学习不因毕业而停止" } },
@@ -150,7 +150,7 @@ export default function ScitiBingoPage({ locale }: Props) {
       <section className="section bingo-header">
         <p className="eyebrow">SCITI 2026 · {t({en:"Workshop Game",th:"เกมเวิร์กช็อป",zh:"工作坊游戏"})}</p>
         <h1 className="bingo-title">SCITI Bingo</h1>
-        <p className="bingo-sub">{t({en:"Moderator calls a dimension. Players pick cards they believe match that call. Correct cards stay open; wrong cards reveal the actual Smart dimension, then flip back. The free square counts every scored flip attempt. Lowest-click bingo wins.",th:"ผู้ประกาศจะบอกมิติ Smart ผู้เล่นเลือกการ์ดที่คิดว่าตรงกับมิตินั้น ถ้าถูกการ์ดจะค้างไว้ ถ้าผิดจะเผยว่าจริง ๆ เป็นมิติอะไรแล้วพลิกกลับ ช่องฟรีตรงกลางนับทุกครั้งที่พยายามพลิก ใครบิงโกด้วยจำนวนคลิกน้อยที่สุดชนะ",zh:"主持人呼叫一个 Smart 维度。玩家选择自己认为匹配的卡片。猜对的卡片保持打开；猜错的会显示真实维度，然后翻回。中间自由格记录每次有效翻牌尝试。点击数最少完成宾果者获胜。"})}</p>
+        <p className="bingo-sub">{t({en:"Use Stage Caller first. Correct cards stay open; wrong cards flip back. The center square counts every scored click.",th:"เริ่มจาก Stage Caller ก่อน การ์ดที่ถูกจะค้างไว้ การ์ดที่ผิดจะพลิกกลับ ช่องกลางนับทุกคลิกที่ใช้เล่น",zh:"先使用 Stage Caller。正确卡片保持打开，错误卡片会翻回；中央格记录每次有效点击。"})}</p>
         <div className="bingo-header-actions">
           <button className="cta-button" onClick={resetBoard}>↻ {t({en:"New Card",th:"การ์ดใหม่",zh:"新棋盘"})}</button>
           <span className="bingo-seed">#{seed.toString(16).toUpperCase().padStart(5,"0")}</span>
@@ -158,14 +158,19 @@ export default function ScitiBingoPage({ locale }: Props) {
       </section>
       {won&&(<div className="bingo-win-banner"><span className="bingo-win-text">🎉 BINGO! 🎉</span><span className="bingo-win-sub">{t({en:`Completed in ${clickCount} clicks`,th:`จบเกมใน ${clickCount} คลิก`,zh:`在 ${clickCount} 次点击中完成`})}</span><button className="bingo-win-reset" onClick={resetBoard}>{t({en:"Play again",th:"เล่นอีกครั้ง",zh:"再玩"})}</button></div>)}
       <div className="bingo-layout">
-        <div className="bingo-board-wrapper">
+        <div className={`bingo-board-wrapper${!targetDim ? " bingo-board-wrapper-locked" : ""}`}>
+          {!targetDim && (
+            <p className="bingo-board-hint bingo-board-hint-top">
+              {t({en:"Choose a Stage Caller dimension first. The cards unlock after the call.",th:"เลือกมิติจากผู้ประกาศก่อน แล้วการ์ดจึงจะเปิดให้เล่น",zh:"请先选择舞台主持呼叫的维度，之后卡片才会解锁。"})}
+            </p>
+          )}
           <div className="bingo-grid-5x5">
             {board.map((cell)=>{
               const isFlipped=flippedIds.has(cell.id);
               const isAnimating=animatingId===cell.id;
               const isFree=cell.id==="FREE";
               const color=DIM_COLORS[cell.dim];
-              const showBack = isFlipped || isAnimating;
+              const showBack = !isFree && (isFlipped || isAnimating);
               const disabled = isFree || !targetDim || isFlipped || Boolean(animatingId) || won;
 
               return (
@@ -195,6 +200,7 @@ export default function ScitiBingoPage({ locale }: Props) {
                   {!isFree && (
                     <div className="bingo-card-back" style={{background:color}}>
                       <img src={DIM_LOGOS[cell.dim]} alt={`Smart ${t(DIM_LABELS[cell.dim])}`} className="bingo-logo-img" loading="lazy"/>
+                      <span className="bingo-back-label">Smart {t(DIM_LABELS[cell.dim])}</span>
                     </div>
                   )}
                 </button>

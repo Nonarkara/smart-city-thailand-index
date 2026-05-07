@@ -78,6 +78,114 @@ const SLIC_LOGO = {
   height: 200,
 };
 
+type PageHeroCopy = { en: string; th: string; zh: string };
+type StaticHeroKind = Exclude<Route["kind"], "home" | "city">;
+type PageHeroAsset = {
+  src: string;
+  objectPosition?: string;
+  title: PageHeroCopy;
+  place: string;
+};
+
+const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
+  rankings: {
+    src: "/photos/khonkaen-aerial.jpg",
+    objectPosition: "center 48%",
+    title: { en: "Rankings", th: "อันดับเมือง", zh: "城市排名" },
+    place: "Khon Kaen",
+  },
+  discover: {
+    src: "/photos/wp-songkhla.jpg",
+    objectPosition: "center 52%",
+    title: { en: "Find Your City", th: "ค้นหาเมืองของคุณ", zh: "寻找你的城市" },
+    place: "Songkhla",
+  },
+  program: {
+    src: "/photos/wp-samut-prakan.jpg",
+    objectPosition: "center 50%",
+    title: { en: "Smart City Program", th: "โครงการเมืองอัจฉริยะ", zh: "智慧城市计划" },
+    place: "Samut Prakan",
+  },
+  methodology: {
+    src: "/photos/wiki-bangkok-bts.jpg",
+    objectPosition: "center 52%",
+    title: { en: "Methodology", th: "วิธีการประเมิน", zh: "评估方法" },
+    place: "Bangkok",
+  },
+  story: {
+    src: "/photos/chiangmai-night.jpg",
+    objectPosition: "center 44%",
+    title: { en: "Story", th: "เรื่องราว", zh: "故事" },
+    place: "Chiang Mai",
+  },
+  why: {
+    src: "/photos/report-city-night.jpg",
+    objectPosition: "center 55%",
+    title: { en: "Why SCITI", th: "ทำไมต้อง SCITI", zh: "为什么是 SCITI" },
+    place: "Bangkok",
+  },
+  showcase: {
+    src: "/Nakhon%20Si%20Thammarat/Z03A4010-3946608958.jpg",
+    objectPosition: "center 50%",
+    title: { en: "Nakhon Si Thammarat", th: "นครศรีธรรมราช", zh: "洛坤府" },
+    place: "Nakhon Si Thammarat",
+  },
+  partners: {
+    src: "/photos/wp-rattanakosin.jpg",
+    objectPosition: "center 54%",
+    title: { en: "Partners", th: "พันธมิตร", zh: "伙伴" },
+    place: "Rattanakosin",
+  },
+  map: {
+    src: "/photos/wp-makkasan.jpg",
+    objectPosition: "center 50%",
+    title: { en: "National Map", th: "แผนที่ประเทศ", zh: "全国地图" },
+    place: "Makkasan",
+  },
+  asus: {
+    src: "/photos/phuket-smart-city.jpg",
+    objectPosition: "center 48%",
+    title: { en: "ASUS Collaboration", th: "ความร่วมมือ ASUS", zh: "ASUS 合作" },
+    place: "Phuket",
+  },
+  audit: {
+    src: "/photos/wp-chanthaburi.jpg",
+    objectPosition: "center 45%",
+    title: { en: "Audit", th: "การตรวจสอบ", zh: "审计" },
+    place: "Chanthaburi",
+  },
+  references: {
+    src: "/photos/samyan-smart-city.jpg",
+    objectPosition: "center 45%",
+    title: { en: "References", th: "แหล่งอ้างอิง", zh: "参考资料" },
+    place: "Samyan",
+  },
+  knowledge: {
+    src: "/photos/cmu-doiSuthep.jpg",
+    objectPosition: "center 45%",
+    title: { en: "Knowledge Base", th: "คลังความรู้", zh: "知识库" },
+    place: "Chiang Mai",
+  },
+  invest: {
+    src: "/photos/phuket-smart-city.jpg",
+    objectPosition: "center 50%",
+    title: { en: "Invest", th: "ลงทุน", zh: "投资" },
+    place: "Phuket",
+  },
+  compare: {
+    src: "/photos/wiki-wat-arun.jpg",
+    objectPosition: "center 58%",
+    title: { en: "Compare Cities", th: "เปรียบเทียบเมือง", zh: "城市对比" },
+    place: "Bangkok",
+  },
+  bingo: {
+    src: "/photos/khonkaen-smart-city.jpg",
+    objectPosition: "center 50%",
+    title: { en: "SCITI Bingo", th: "SCITI บิงโก", zh: "SCITI 宾果" },
+    place: "Khon Kaen",
+  },
+};
+
 const newsItems = [
   {
     date: "2026-03-18",
@@ -135,6 +243,28 @@ function getInitialLocale(): Locale {
     return stored;
   }
   return "en";
+}
+
+function PagePhotoHero({ route, locale }: { route: Route; locale: Locale }) {
+  if (route.kind === "home" || route.kind === "city") return null;
+  const hero = PAGE_HERO_ASSETS[route.kind];
+  if (!hero) return null;
+
+  return (
+    <section className={`route-photo-hero route-photo-hero-${route.kind}`} aria-label={hero.title[locale]}>
+      <ResponsiveImage
+        src={hero.src}
+        alt={hero.place}
+        className="route-photo-hero-img"
+        style={{ objectPosition: hero.objectPosition ?? "center center" }}
+        loading="eager"
+      />
+      <div className="route-photo-hero-overlay">
+        <span className="route-photo-hero-place">{hero.place}</span>
+        <p className="route-photo-hero-title">{hero.title[locale]}</p>
+      </div>
+    </section>
+  );
 }
 
 export default function App() {
@@ -299,6 +429,7 @@ export default function App() {
 
       {/* ─── CONTENT ─── */}
       <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""}`} key={getRouteKey(route)}>
+        <PagePhotoHero route={route} locale={locale} />
         <ErrorBoundary locale={locale}>
           <Suspense fallback={<div className="loading">Loading...</div>}>
             {route.kind === "rankings" ? (
