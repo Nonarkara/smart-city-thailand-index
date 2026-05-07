@@ -7997,13 +7997,16 @@ body:has(.bingo-page) { overflow: hidden; }
   .bingo-card-front { gap: 4px; }
   .bingo-logo-img   { width: 64%; height: 64%; }
   .bingo-back-label { font-size: clamp(.38rem,1.1vw,.62rem); }
-  /* 6×6 desktop: cells ~1/6 grid width — trim emoji and hint slightly */
-  .bingo-grid-6x6 .bingo-cell-emoji { font-size: clamp(.95rem, 2vw, 1.65rem); }
-  .bingo-grid-6x6 .bingo-cell-hint  { font-size: clamp(4px, .58vw, 6px); }
-  /* 7×7 desktop: cells ~1/7 grid width — significant reduction needed */
-  .bingo-grid-7x7 .bingo-cell-emoji { font-size: clamp(.85rem, 1.6vw, 1.3rem); }
-  .bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(.3rem, .68vw, .5rem); }
-  .bingo-grid-7x7 .bingo-cell-hint  { font-size: clamp(4px, .5vw, 5px); }
+  /* 6×6 desktop: hint is unreadable at this density and causes overflow — hide it */
+  .bingo-grid-6x6 .bingo-card-front { overflow: hidden; }
+  .bingo-grid-6x6 .bingo-cell-emoji { font-size: clamp(.75rem, 1.35vw, 1rem); }
+  .bingo-grid-6x6 .bingo-cell-text  { font-size: clamp(.32rem, .65vw, .5rem); }
+  .bingo-grid-6x6 .bingo-cell-hint  { display: none; }
+  /* 7×7 desktop: hide hint, tighten gap, further downsize emoji/text */
+  .bingo-grid-7x7 .bingo-card-front { gap: 2px; overflow: hidden; }
+  .bingo-grid-7x7 .bingo-cell-emoji { font-size: clamp(.6rem, 1.0vw, .875rem); }
+  .bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(.26rem, .55vw, .44rem); }
+  .bingo-grid-7x7 .bingo-cell-hint  { display: none; }
   .bingo-click-count { font-size: 1.8rem; }
   .bingo-free-label  { font-size: .55rem; }
 
