@@ -7881,6 +7881,9 @@ body:has(.bingo-page) { overflow: hidden; }
 /* Cell back */
 .bingo-logo-img   { width: 60%; height: 60%; object-fit: contain; display: block; }
 .bingo-back-label { color: #fff; font: 800 clamp(.28rem, 1.2vw, .52rem)/1 var(--mono); letter-spacing: .05em; margin-top: .1rem; text-transform: uppercase; }
+/* 7×7 mobile: cells ≈ 14vw — scale content down proportionally */
+.bingo-grid-7x7 .bingo-cell-emoji { font-size: clamp(.5rem, 2.8vw, .9rem); }
+.bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(.22rem, 1.3vw, .4rem); }
 
 /* ── Mobile dim strip (row 4) ── */
 .bingo-mobile-dims {
@@ -7994,6 +7997,13 @@ body:has(.bingo-page) { overflow: hidden; }
   .bingo-card-front { gap: 4px; }
   .bingo-logo-img   { width: 64%; height: 64%; }
   .bingo-back-label { font-size: clamp(.38rem,1.1vw,.62rem); }
+  /* 6×6 desktop: cells ~1/6 grid width — trim emoji and hint slightly */
+  .bingo-grid-6x6 .bingo-cell-emoji { font-size: clamp(.95rem, 2vw, 1.65rem); }
+  .bingo-grid-6x6 .bingo-cell-hint  { font-size: clamp(4px, .58vw, 6px); }
+  /* 7×7 desktop: cells ~1/7 grid width — significant reduction needed */
+  .bingo-grid-7x7 .bingo-cell-emoji { font-size: clamp(.85rem, 1.6vw, 1.3rem); }
+  .bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(.3rem, .68vw, .5rem); }
+  .bingo-grid-7x7 .bingo-cell-hint  { font-size: clamp(4px, .5vw, 5px); }
   .bingo-click-count { font-size: 1.8rem; }
   .bingo-free-label  { font-size: .55rem; }
 
