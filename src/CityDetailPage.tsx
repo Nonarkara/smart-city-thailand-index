@@ -1248,7 +1248,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
             }
           }}
         >
-          ← {locale === "th" ? "กลับ" : locale === "zh" ? "返回" : "Back"}
+          ← {translate(locale, { en: "Back to rankings", th: "กลับไปอันดับ", zh: "返回排名" })}
         </button>
 
         <div className="city-detail-header">
@@ -1341,7 +1341,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
                 className="depa-official-source"
                 target="_blank"
                 rel="noopener noreferrer"
-                download
               >
                 {translate(locale, { en: "Official certification plan", th: "แผนพัฒนาเมืองอัจฉริยะอย่างเป็นทางการ", zh: "官方城市认证计划" })}
               </a>

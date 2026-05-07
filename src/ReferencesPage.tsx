@@ -90,7 +90,7 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
         <p className="hero-strapline">
           {t(locale, {
             en: `SCITI runs on a research layer plus a deterministic aggregation layer. This page shows the provenance registry, the exact composite equation, and the evidence rules behind method ${SCITI_METHOD_CODE}.`,
-            th: `SCITI ทำงานด้วยชั้นวิจัยและชั้นการรวมคะแนนแบบกำหนดแน่นอน หน้านี้แสดงทะเบียนหลักฐาน สมการคะแนนรวมแบบตรงตัว และกฎหลักฐานของวิธี ${SCITI_METHOD_CODE}`,
+            th: `SCITI ประกอบด้วยชั้นวิจัยและชั้นรวมคะแนนเชิงกำหนด หน้านี้แสดงทะเบียนแหล่งที่มา สมการคะแนนรวม และกฎหลักฐานของวิธี ${SCITI_METHOD_CODE}`,
             zh: `SCITI 由研究层和确定性汇总层共同构成。本页展示溯源名录、精确综合公式，以及方法 ${SCITI_METHOD_CODE} 背后的证据规则。`,
           })}
         </p>
@@ -133,7 +133,7 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
           <p style={{ fontSize: ".72rem", color: "var(--2)", lineHeight: 1.65, marginTop: "1rem" }}>
             {t(locale, {
               en: `Once the seven pillar scores are fixed, the composite is fully deterministic. Confidence is computed separately and does not secretly alter the score. Tier thresholds are fixed at Alpha ≥ ${TIER_THRESHOLDS.alpha}, Beta ≥ ${TIER_THRESHOLDS.beta}, Gamma < ${TIER_THRESHOLDS.beta}.`,
-              th: `เมื่อคะแนน 7 เสาหลักถูกตรึงแล้ว คะแนนรวมจะถูกคำนวณแบบกำหนดแน่นอนทั้งหมด ส่วนความเชื่อมั่นคำนวณแยกและไม่แอบเปลี่ยนคะแนน ระดับถูกตรึงที่ Alpha ≥ ${TIER_THRESHOLDS.alpha}, Beta ≥ ${TIER_THRESHOLDS.beta}, Gamma < ${TIER_THRESHOLDS.beta}`,
+              th: `เมื่อคะแนน 7 เสาหลักล็อกแล้ว คะแนนรวมจะถูกคำนวณเชิงกำหนดทั้งหมด ความเชื่อมั่นคำนวณแยกต่างหากและไม่แอบปรับคะแนน เกณฑ์ระดับคงที่: Alpha ≥ ${TIER_THRESHOLDS.alpha}, Beta ≥ ${TIER_THRESHOLDS.beta}, Gamma < ${TIER_THRESHOLDS.beta}`,
               zh: `一旦七个支柱分固定，综合分即完全由确定性公式计算。置信度单独计算，不会暗中改写分数。层级阈值固定为 Alpha ≥ ${TIER_THRESHOLDS.alpha}、Beta ≥ ${TIER_THRESHOLDS.beta}、Gamma < ${TIER_THRESHOLDS.beta}。`,
             })}
           </p>
@@ -199,7 +199,7 @@ export default function ReferencesPage({ locale, onNavigate }: Props) {
               <span className="c-label">{t(locale, { en: "Source scope", th: "ขอบเขตแหล่งข้อมูล", zh: "来源范围" })}</span>
               <span className="c-value">{t(locale, {
                 en: `${EVIDENCE_SOURCE_FAMILY_COUNT} evidence source families + ${CDP_PLATFORM_COUNT} mapped public endpoints`,
-                th: `${EVIDENCE_SOURCE_FAMILY_COUNT} ตระกูลแหล่งหลักฐาน + ${CDP_PLATFORM_COUNT} ปลายทางสาธารณะที่แม็ปไว้`,
+                th: `${EVIDENCE_SOURCE_FAMILY_COUNT} กลุ่มแหล่งหลักฐาน + ${CDP_PLATFORM_COUNT} จุดเชื่อมต่อข้อมูลสาธารณะ`,
                 zh: `${EVIDENCE_SOURCE_FAMILY_COUNT} 个证据来源族群 + ${CDP_PLATFORM_COUNT} 个已映射公开端点`,
               })}</span>
             </div>

@@ -14,7 +14,7 @@ interface Props {
 type Grade = "A" | "B" | "C";
 
 const GRADE_LABELS: Record<Grade, { en: string; th: string; zh: string; min: number }> = {
-  A: { en: "Strong (65+)", th: "แข็ง (65+)", zh: "强 (65+)", min: 65 },
+  A: { en: "Strong (65+)", th: "สูง (65+)", zh: "强 (65+)", min: 65 },
   B: { en: "Moderate (45-64)", th: "ปานกลาง (45-64)", zh: "中等 (45-64)", min: 45 },
   C: { en: "Any level", th: "ทุกระดับ", zh: "任何水平", min: 0 },
 };
@@ -89,7 +89,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
         <p className="hero-strapline">
           {translate(locale, {
             en: "Set your priorities across 7 pillars. We'll find which Thai smart cities match what you care about. Click a pillar to cycle: A (strong) → B (moderate) → C (any).",
-            th: "ตั้งค่าลำดับความสำคัญใน 7 เสาหลัก เราจะหาว่าเมืองอัจฉริยะไทยเมืองไหนตรงกับสิ่งที่คุณสนใจ คลิกเสาหลักเพื่อเปลี่ยน: A (แข็ง) → B (ปานกลาง) → C (ทุกระดับ)",
+            th: "ตั้งลำดับความสำคัญใน 7 เสาหลัก แล้วเราจะจับคู่เมืองอัจฉริยะที่ตรงกับสิ่งที่คุณให้ค่า คลิกเสาหลักเพื่อสลับ: A (สูง) → B (ปานกลาง) → C (ทุกระดับ)",
             zh: "在7个支柱上设定你的优先级。我们将找出哪些泰国智慧城市最匹配你的关注点。点击支柱循环：A(强) → B(中等) → C(任意)。",
           })}
         </p>
@@ -118,7 +118,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
         <div className="mixer-summary">
           <span>{gradeCount.A} A</span> · <span>{gradeCount.B} B</span> · <span>{gradeCount.C} C</span>
           {" · "}
-          <span>{translate(locale, { en: "14 buttons, 21 slots", th: "14 ปุ่ม 21 ช่อง", zh: "14按钮，21插槽" })}</span>
+          <span>{translate(locale, { en: "7 pillars, 3 levels each", th: "7 เสาหลัก 3 ระดับ", zh: "7支柱，各3级" })}</span>
         </div>
       </section>
 

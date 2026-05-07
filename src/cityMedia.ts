@@ -144,7 +144,7 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "bang-saray": { src: "/photos/slic-waterfront.jpg", objectPosition: "center 55%" },          // coast stand-in (was sharing wp-saensuk.jpg)
   "phitsanulok-nu": { src: "/photos/f4b929dc011fb96fba76c9618ca6b93e.jpg", objectPosition: "center 50%" },  // campus stand-in (was sharing wp-phitsanulok.jpg)
   "phitsanulok-ppao": { src: "/photos/report-city-night.jpg", objectPosition: "center 55%" }, // civic stand-in (was sharing wp-phitsanulok.jpg)
-  "ubon-muni": { src: enc("/photos/depa x korea SBAU2019.jpg"), objectPosition: "center 50%" },   // civic event stand-in (was sharing wp-ubon.jpg)
+  "ubon-muni": { src: assetUrl(enc("/photos/depa x korea SBAU2019.jpg")), objectPosition: "center 50%" },   // civic event stand-in (was sharing wp-ubon.jpg)
   "wangchan-valley": { src: "/photos/khonkaen-smart-city.jpg", objectPosition: "center 50%" },    // corporate-campus stand-in (was sharing wp-rayong.jpg)
   // 2026-04-28 audit: these seven full dossiers still lacked explicit
   // heroes and were falling through to broad regional images. They now use
