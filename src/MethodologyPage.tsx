@@ -562,8 +562,8 @@ export default function MethodologyPage({ locale }: Props) {
       </section>
 
       {/* ─── DETERMINISTIC vs JUDGMENT ─── */}
-      <section className="reveal stagger-4 visible" style={{ marginTop: "3rem", borderTop: "1px solid var(--5)", paddingTop: "2rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+      <section className="section methodology-judgment-section reveal stagger-4 visible">
+        <div className="methodology-judgment-grid">
           <div>
             <h3>{t("What is deterministic", "สิ่งที่กำหนดแน่นอน", "哪些部分是确定性的")}</h3>
             <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6 }}>

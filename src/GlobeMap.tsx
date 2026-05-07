@@ -229,6 +229,13 @@ export default function GlobeMap({ locale }: Props) {
           return (
             <g key={p.id} tabIndex={0} role="button"
               aria-label={`${p.name}, ${p.country} — ${p.type}`}
+              onClick={() => setHovered(p)}
+              onKeyDown={event => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setHovered(p);
+                }
+              }}
               onFocus={() => setHovered(p)} onBlur={() => setHovered(null)}>
               <circle cx={pt[0] + off} cy={pt[1]} r="12" fill="transparent" style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHovered(p)} onMouseLeave={() => setHovered(null)} />

@@ -184,11 +184,11 @@ export default function AuditPage({ locale, onNavigate }: Props) {
         <div className="audit-rec-grid">
           <div className="audit-rec-card shadow-premium">
             <div className="audit-rec-type audit-rec-more">DO MORE</div>
-            <div onClick={() => onNavigate("/why")}>
+            <button type="button" className="audit-rec-action" onClick={() => onNavigate("/why")}>
               <h3 className="audit-rec-title">{translate(locale, { en: "Human Infrastructure", th: "โครงสร้างพื้นฐานมนุษย์", zh: "人文基础设施" })}</h3>
               <p className="audit-rec-body">{translate(locale, { en: "Invest in training municipal staff before buying dashboards. A smart city is an operational skill, not a software license.", th: "ลงทุนในการฝึกอบรมเจ้าหน้าที่เทศบาลก่อนซื้อแดชบอร์ด เมืองอัจฉริยะคือทักษะการปฏิบัติงาน ไม่ใช่แค่ใบอนุญาตซอฟต์แวร์", zh: "在购买仪表板之前，先投资于市政职员培训。智慧城市是一项运维技能，而非软件许可证。" })}</p>
               <div className="audit-rec-evidence">{translate(locale, { en: "Based on success in Khon Kaen local consortium models.", th: "อ้างอิงจากความสำเร็จในโมเดล KKTS ที่ขอนแก่น", zh: "基于孔敬地方联盟模式的成功经验。" })}</div>
-            </div>
+            </button>
           </div>
           <div className="audit-rec-card shadow-premium">
             <div className="audit-rec-type audit-rec-less">DO LESS</div>

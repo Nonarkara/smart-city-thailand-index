@@ -99,11 +99,11 @@ export const HOME_HERO_ASSETS: HeroAsset[] = [
     objectPosition: "center 50%",
     label: "Nakhon Si Thammarat",
   },
-  // Chiang Mai at night — enc() only; assetUrl applied by ResponsiveImage.
+  // Chiang Rai cityscape — Wikimedia CC BY-SA. Represents northern Thailand.
   {
-    src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"),
-    objectPosition: "center 58%",
-    label: "Chiang Mai",
+    src: "/photos/wp-chiang-rai.jpg",
+    objectPosition: "center 45%",
+    label: "Chiang Rai",
   },
 ];
 
@@ -128,7 +128,7 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   // IMPORTANT: enc() only — do NOT wrap with assetUrl() here.
   // ResponsiveImage.getResponsiveMediaAsset() calls assetUrl() internally.
   // Double-wrapping with assetUrl() produces /base/base/ double-prefix → 404.
-  "chiang-mai-old-town": { src: enc("/Chiang Mai/IMG_20251218_190749854.jpg"), objectPosition: "center 58%" },
+  "chiang-mai-old-town": { src: "/photos/chiangmai-night.jpg", objectPosition: "center 40%" },
   "cmu-smart-city": { src: enc("/Chiang Mai/cityscape-cmu.jpg"), objectPosition: "center 45%" },
   "khon-kaen": { src: enc("/Khon Kaen/cityscape-khonkaen.jpg"), objectPosition: "center 50%" },
   "nakhon-si-thammarat": { src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"), objectPosition: "center 50%" },
@@ -278,10 +278,10 @@ const CITY_CHAPTER_BREAKS: Record<string, CityChapterBreak[]> = {
   "chiang-mai-old-town": [
     {
       after: "why",
-      asset: { src: "/photos/chiangmai-night.jpg", objectPosition: "center 50%" },
-      captionEn: "Old Town at night, post-burning-season. The hospitality score lives here; the environment score does not.",
-      captionTh: "เมืองเก่ายามค่ำคืน หลังหมดฤดูหมอกควัน คะแนนอัธยาศัยอยู่ที่นี่ คะแนนสิ่งแวดล้อมไม่ได้อยู่",
-      captionZh: "雨后夜晚的清迈古城——人文分数在这里，环境分数却不在。",
+      asset: { src: "/photos/wp-chiang-rai.jpg", objectPosition: "center 45%" },
+      captionEn: "Chiang Rai — the broader northern corridor. Old Town's hospitality tradition extends across the region.",
+      captionTh: "เชียงราย — ระเบียงภาคเหนือที่กว้างกว่า ประเพณีอัธยาศัยของเมืองเก่าแผ่ขยายทั่วภูมิภาค",
+      captionZh: "清莱——更广阔的北部走廊。古城的好客传统延伸至整个地区。",
     },
   ],
 
