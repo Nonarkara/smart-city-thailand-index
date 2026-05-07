@@ -1,7 +1,7 @@
 import type { WeeklyDigest } from "./weeklyDigest";
 
 export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
-  weekOf: "2026-04-20",
+  weekOf: "2026-05-05",
   trendingCity: {
     cityId: "khon-kaen",
     note: {
@@ -13,8 +13,8 @@ export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
   trendingSearch: {
     phrase: {
       en: '"smart city thailand retirement"',
-      th: '"smart city thailand retirement"',
-      zh: '"smart city thailand retirement"',
+      th: '"เมืองอัจฉริยะไทยเพื่อการเกษียณ"',
+      zh: '"泰国智慧城市养老"',
     },
     deltaLabel: {
       en: "↑ 38% vs last week",
