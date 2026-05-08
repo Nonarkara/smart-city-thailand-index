@@ -56,6 +56,8 @@ export async function trackVisitor(page = "/") {
     ua: navigator.userAgent.slice(0, 150),
     ref: (document.referrer || "Direct").slice(0, 150),
     page: window.location.pathname,
+    hostname: window.location.hostname,    // sciti.nonarkara.org now (was nonarkara.github.io)
+    dashboard: "SCITI",
     v: "sciti-2026",
   });
   const sep = TRACKING_URL.includes("?") ? "&" : "?";
@@ -66,7 +68,18 @@ export async function trackVisitor(page = "/") {
     method: "POST",
     mode: "no-cors",
     headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify({ ...geo, userAgent: navigator.userAgent, referrer: document.referrer || "Direct", page: window.location.href, version: "sciti-2026" }),
+    body: JSON.stringify({
+      ...geo,
+      userAgent: navigator.userAgent,
+      referrer: document.referrer || "Direct",
+      dashboard: "SCITI",
+      hostname: window.location.hostname,
+      page: window.location.href,
+      language: navigator.language,
+      screen: `${screen.width}x${screen.height}`,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      version: "sciti-2026",
+    }),
   }).catch(() => {});
 }
 
