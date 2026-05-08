@@ -2114,6 +2114,8 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
   letter-spacing: -.035em;
   font-weight: 800;
 }
+/* Section headings sit next to mono eyebrows — use neutral system-ui, not Josefin */
+h2, h3 { font-family: var(--font); }
 .pullquote {
   font-family: var(--font);
   font-size: 1.3rem;
@@ -7115,6 +7117,8 @@ h1, h2, h3,
 .cinematic-hero-title { font-size: clamp(2rem, 6vw, 4rem) !important; }
 .dashboard-title { font-size: clamp(1.5rem, 4vw, 3.25rem); }
 .home-section-title { font-size: clamp(1.4rem, 3vw, 2.4rem); }
+/* Section headings sit below mono eyebrows — use system-ui so they don't clash */
+h2, h3, .home-section-title { font-family: var(--font); }
 
 /* Regional champions — six tiles, one per Thai region */
 .regional-champions {
