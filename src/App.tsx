@@ -126,7 +126,7 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
   },
   showcase: {
     src: "/Nakhon%20Si%20Thammarat/Z03A4010-3946608958.jpg",
-    objectPosition: "center 15%",
+    objectPosition: "center 10%",
     title: { en: "Nakhon Si Thammarat", th: "นครศรีธรรมราช", zh: "洛坤府" },
     place: "Nakhon Si Thammarat",
   },
