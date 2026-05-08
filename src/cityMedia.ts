@@ -131,7 +131,7 @@ const CITY_PHOTO_ASSETS: Record<string, CityPhotoAsset> = {
   "chiang-mai-old-town": { src: "/photos/chiangmai-night.jpg", objectPosition: "center 40%" },
   "cmu-smart-city": { src: enc("/Chiang Mai/cityscape-cmu.jpg"), objectPosition: "center 45%" },
   "khon-kaen": { src: enc("/Khon Kaen/cityscape-khonkaen.jpg"), objectPosition: "center 50%" },
-  "nakhon-si-thammarat": { src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"), objectPosition: "center 50%" },
+  "nakhon-si-thammarat": { src: enc("/Nakhon Si Thammarat/Nakhon-Si-Thammarat.jpg"), objectPosition: "center 50%" },
 
   // ─── Authored project photos in /photos/ ───
   "samyan": { src: "/photos/samyan-smart-city.jpg", objectPosition: "center 45%" },
