@@ -341,7 +341,7 @@ export default function ScitiBingoPage({ locale }: Props) {
           </div>
           {(gameStarted||won)&&(
             <div className={`bingo-timer${won?" bingo-timer-stopped":""}`}>
-              <span className="bingo-timer-digits">{formatTimeFull(elapsed)}</span>
+              <span className="bingo-timer-digits">{won?formatTimeFull(elapsed):formatTimeShort(elapsed)}</span>
               <span className="bingo-timer-label">{won?t({en:"FINAL TIME",th:"เวลาสุดท้าย",zh:"最终用时"}):t({en:"ELAPSED",th:"เวลา",zh:"用时"})}</span>
             </div>
           )}

@@ -8,7 +8,7 @@
 
 :root {
   --font: system-ui, -apple-system, "Segoe UI", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
-  --font-heading: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Josefin Sans", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
   --sans: var(--font);
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
 
@@ -2114,6 +2114,8 @@ h1, h2, h3, .hero-title, .dashboard-title, .cinematic-hero-title, .timeline-titl
   letter-spacing: -.035em;
   font-weight: 800;
 }
+/* Section headings sit next to mono eyebrows — use neutral system-ui, not Josefin */
+h2, h3 { font-family: var(--font); }
 .pullquote {
   font-family: var(--font);
   font-size: 1.3rem;
@@ -7115,6 +7117,8 @@ h1, h2, h3,
 .cinematic-hero-title { font-size: clamp(2rem, 6vw, 4rem) !important; }
 .dashboard-title { font-size: clamp(1.5rem, 4vw, 3.25rem); }
 .home-section-title { font-size: clamp(1.4rem, 3vw, 2.4rem); }
+/* Section headings sit below mono eyebrows — use system-ui so they don't clash */
+h2, h3, .home-section-title { font-family: var(--font); }
 
 /* Regional champions — six tiles, one per Thai region */
 .regional-champions {
@@ -7881,6 +7885,9 @@ body:has(.bingo-page) { overflow: hidden; }
 /* Cell back */
 .bingo-logo-img   { width: 60%; height: 60%; object-fit: contain; display: block; }
 .bingo-back-label { color: #fff; font: 800 clamp(.28rem, 1.2vw, .52rem)/1 var(--mono); letter-spacing: .05em; margin-top: .1rem; text-transform: uppercase; }
+/* 7×7 mobile: cells ≈ 14vw — scale content down proportionally */
+.bingo-grid-7x7 .bingo-cell-emoji { font-size: clamp(.5rem, 2.8vw, .9rem); }
+.bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(.22rem, 1.3vw, .4rem); }
 
 /* ── Mobile dim strip (row 4) ── */
 .bingo-mobile-dims {
@@ -7994,6 +8001,16 @@ body:has(.bingo-page) { overflow: hidden; }
   .bingo-card-front { gap: 4px; }
   .bingo-logo-img   { width: 64%; height: 64%; }
   .bingo-back-label { font-size: clamp(.38rem,1.1vw,.62rem); }
+  /* 6×6 desktop: hint is unreadable at this density and causes overflow — hide it */
+  .bingo-grid-6x6 .bingo-card-front { overflow: hidden; }
+  .bingo-grid-6x6 .bingo-cell-emoji { font-size: clamp(.75rem, 1.35vw, 1rem); }
+  .bingo-grid-6x6 .bingo-cell-text  { font-size: clamp(.32rem, .65vw, .5rem); }
+  .bingo-grid-6x6 .bingo-cell-hint  { display: none; }
+  /* 7×7 desktop: hide hint, tighten gap, further downsize emoji/text */
+  .bingo-grid-7x7 .bingo-card-front { gap: 2px; overflow: hidden; }
+  .bingo-grid-7x7 .bingo-cell-emoji { font-size: clamp(.6rem, 1.0vw, .875rem); }
+  .bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(.26rem, .55vw, .44rem); }
+  .bingo-grid-7x7 .bingo-cell-hint  { display: none; }
   .bingo-click-count { font-size: 1.8rem; }
   .bingo-free-label  { font-size: .55rem; }
 
