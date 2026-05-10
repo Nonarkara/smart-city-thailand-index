@@ -11,7 +11,7 @@
 const TRACKING_URL = import.meta.env.VITE_SCITI_TRACKING_URL?.trim() ?? "";
 
 // Also log to the SLIC Index shared visitor sheet for consolidated analytics
-const SLIC_TRACKING_URL = "https://script.google.com/macros/s/AKfycbzSIskjTOoavYg6U_uLgG9xjRY4FLuv2tuYhT-FGuHE1aSt6-rdqnu_u_-49eMBslZQ/exec";
+const SLIC_TRACKING_URL = "https://script.google.com/macros/s/AKfycbwzTwBNOseKkvkkjD-LH6B3GWrsFcwS6MTDbn7W5eb3zHxA-swtlHYuwJ3w5PAVXDhU7Q/exec";
 
 interface GeoData {
   ip: string;
@@ -85,7 +85,7 @@ export async function trackVisitor(page = "/") {
 
 /** Send textual feedback to the editorial team. */
 export async function sendFeedback(text: string, page: string) {
-  const FEEDBACK_URL = "https://script.google.com/macros/s/AKfycbzSIskjTOoavYg6U_uLgG9xjRY4FLuv2tuYhT-FGuHE1aSt6-rdqnu_u_-49eMBslZQ/exec";
+  const FEEDBACK_URL = "https://script.google.com/macros/s/AKfycbwzTwBNOseKkvkkjD-LH6B3GWrsFcwS6MTDbn7W5eb3zHxA-swtlHYuwJ3w5PAVXDhU7Q/exec";
   
   // Use no-cors for Apps Script POSTs
   return fetch(FEEDBACK_URL, {
