@@ -36,7 +36,7 @@ export type DataConfidence = "high" | "medium" | "low";
 export type CityReality = "operational" | "partial" | "planned";
 
 export interface CityScores {
-  livability: number;    // 0-100: housing, infrastructure, daily life quality
+  livability: number;    // 0-100: housing/infra/daily-life (75%) + GISTDA flood-frequency factor (25%)
   economy: number;       // 0-100: jobs, GPP, growth, affordability
   safety: number;        // 0-100: road fatality rate (30%) + crime exposure (40%) + disaster resilience (30%)
   wellbeing: number;     // 0-100: healthcare, education, optimism, family-friendliness
@@ -64,6 +64,10 @@ export interface CityMetrics {
   dataLastUpdated?: string;      // ISO date of most recent data sync
   landAreaKm2?: number;          // optional land area override from dataset
   roadFatalityRate?: number;     // annual road deaths per 100,000 pop — provincial level (thairsc.com)
+  // Phase 19 — GISTDA flood-frequency factor for the Livability pillar.
+  // 0-100, HIGHER = less flood-prone. Sourced from GISTDA repeat-flood
+  // 2005-2016 + DDPM. See src/provincialFloodData.ts for the table.
+  floodFrequencyScore?: number;
 }
 
 export type CityLeague =

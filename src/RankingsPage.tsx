@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import ComparisonGrid from "./ComparisonGrid";
+import RankingsMapView from "./RankingsMapView";
 import { useCitySummaries } from "./cityApi";
 import { computeDevelopability, getMoneyballProfile } from "./cityAnalytics";
 import {
@@ -216,7 +217,7 @@ function MoneyballPicksStrip({
 
 export default function RankingsPage({ locale, onNavigate }: Props) {
   const { data: cities } = useCitySummaries();
-  const [viewMode, setViewMode] = useState<"directory" | "compare">("directory");
+  const [viewMode, setViewMode] = useState<"directory" | "compare" | "map">("directory");
   const [lensId, setLensId] = useState<string>("balanced");
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
@@ -377,6 +378,33 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
         </section>
 
         <section className="section reveal visible">
+          {/* View-mode tabs — Phase 19 added the "map" view backed by GISTDA layers */}
+          <div className="ranking-view-tabs" role="tablist" aria-label={t({ en: "View mode", th: "โหมดการดู", zh: "视图模式" })}>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={viewMode === "directory"}
+              className={`ranking-view-tab ${viewMode === "directory" ? "active" : ""}`}
+              onClick={() => setViewMode("directory")}
+            >
+              <span className="ranking-view-tab-icon" aria-hidden="true">▌▍▎</span>
+              {t({ en: "Capacities", th: "ขีดความสามารถ", zh: "能力" })}
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={viewMode === "map"}
+              className={`ranking-view-tab ${viewMode === "map" ? "active" : ""}`}
+              onClick={() => setViewMode("map")}
+            >
+              <span className="ranking-view-tab-icon" aria-hidden="true">⌖</span>
+              {t({ en: "Map", th: "แผนที่", zh: "地图" })}
+            </button>
+          </div>
+
+          {viewMode === "map" ? (
+            <RankingsMapView locale={locale} cities={cities} onNavigate={onNavigate} />
+          ) : (<>
           <div className="directory-toolbar">
             <input
               type="search"
@@ -524,6 +552,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               <ComparisonGrid locale={locale} onNavigate={onNavigate} preselectedIds={selectedIds} />
             </div>
           )}
+          </>)}
         </section>
       </div>
     </div>

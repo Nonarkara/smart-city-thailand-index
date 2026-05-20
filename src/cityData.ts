@@ -6,10 +6,11 @@
 // A city where people actually live well scores high.
 // ---------------------------------------------------------------------------
 
-import { assignTier, computeComposite } from "./scoring.ts";
+import { assignTier, blendLivabilityScore, computeComposite } from "./scoring.ts";
 import { classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import type { SmartCity, CityScores } from "./types.ts";
 import { RANKING_OVERRIDES } from "./dynamicCityData.ts";
+import { getFloodScore } from "./provincialFloodData.ts";
 
 export { assignTier, computeComposite } from "./scoring.ts";
 
@@ -30,10 +31,18 @@ function city(
   taglineTh: string,
   highlights: string[],
 ): SmartCity {
-  const finalScores = RANKING_OVERRIDES[id] ? { ...scores, ...RANKING_OVERRIDES[id] } : scores;
+  // Phase 19 — apply GISTDA flood-frequency factor to livability (75% existing
+  // + 25% flood). Flood data is provincial; sourced from PROVINCIAL_FLOOD_SCORE
+  // (GISTDA repeat-flood polygons 2005-2016 + DDPM annual records).
+  const floodScore = getFloodScore(province);
+  const blendedLivability = blendLivabilityScore(scores.livability, floodScore);
+  const adjustedScores: CityScores = { ...scores, livability: blendedLivability };
+  const enrichedMetrics = { ...metrics, floodFrequencyScore: floodScore };
+
+  const finalScores = RANKING_OVERRIDES[id] ? { ...adjustedScores, ...RANKING_OVERRIDES[id] } : adjustedScores;
   const compositeScore = computeComposite(finalScores);
   const dataConfidence = classifyDataConfidence(
-    computeDataConfidenceScore({ metrics }),
+    computeDataConfidenceScore({ metrics: enrichedMetrics }),
   );
 
   return {
@@ -48,7 +57,7 @@ function city(
     batch,
     smartDimensions,
     scores: finalScores,
-    metrics,
+    metrics: enrichedMetrics,
     compositeScore,
     tier: assignTier(compositeScore),
     tagline,

@@ -104,6 +104,27 @@ export function blendSafetyScore(existingScore: number, roadFatalityRate: number
   return Math.round(0.7 * existingScore + 0.3 * computeRoadSafetyScore(roadFatalityRate));
 }
 
+/**
+ * Blends the existing manual livability score (housing, infra, daily life — 75 %)
+ * with the GISTDA flood-frequency factor (25 %). Phase 19 doctrine.
+ *
+ * Flood-prone provinces have a structural drag on livability that no amount
+ * of urban infrastructure investment can fully erase — annual September
+ * inundation in Nakhon Sawan or Dec-Jan flooding in Narathiwat shapes the
+ * lived experience as much as housing stock or transit. The factor is
+ * documented per-province in src/provincialFloodData.ts with a one-line
+ * source note for every entry.
+ *
+ * @param existingLivability Hand-curated livability score
+ * @param floodScore         0-100 from PROVINCIAL_FLOOD_SCORE (higher = less flood-prone)
+ *                           If undefined, returns existingLivability unchanged.
+ * @returns Blended livability score 0–100
+ */
+export function blendLivabilityScore(existingLivability: number, floodScore: number | undefined): number {
+  if (floodScore == null) return existingLivability;
+  return Math.round(0.75 * existingLivability + 0.25 * floodScore);
+}
+
 export function getCompositeBreakdown(scores: CityScores) {
   const terms = buildCompositeScoreTerms(scores);
   const totalWeight = terms.reduce((sum, term) => sum + term.weight, 0);
