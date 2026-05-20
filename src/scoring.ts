@@ -74,6 +74,36 @@ export function assignTier(composite: number): CityTier {
   return "gamma";
 }
 
+/**
+ * Converts a provincial road fatality rate (deaths per 100,000 population)
+ * into a 0–100 safety sub-score using a linear scale anchored to:
+ *   ≤ 5  → 100  (WHO Decade of Action target)
+ *   20   →  57  (Thai national average, thairsc 2023–24)
+ *   ≥ 40 →   0  (extreme danger zone)
+ *
+ * Source: thairsc.com provincial annual data + PMC/Nature academic validation
+ * Weight in safety pillar: 30% (road safety) of the full safety score.
+ * Remaining 70% reflects crime exposure (40%) and disaster resilience (30%).
+ *
+ * @param ratePerHundredK Annual road deaths per 100,000 population
+ * @returns Road safety sub-score 0–100
+ */
+export function computeRoadSafetyScore(ratePerHundredK: number): number {
+  return Math.max(0, Math.min(100, Math.round(100 * (40 - ratePerHundredK) / 35)));
+}
+
+/**
+ * Blends the existing manual safety score (crime + resilience, 70 %) with
+ * the data-driven road safety sub-score from thairsc (30 %).
+ *
+ * @param existingScore Current manually-assessed safety score (crime + resilience)
+ * @param roadFatalityRate Annual road deaths per 100,000 population
+ * @returns Blended safety score 0–100
+ */
+export function blendSafetyScore(existingScore: number, roadFatalityRate: number): number {
+  return Math.round(0.7 * existingScore + 0.3 * computeRoadSafetyScore(roadFatalityRate));
+}
+
 export function getCompositeBreakdown(scores: CityScores) {
   const terms = buildCompositeScoreTerms(scores);
   const totalWeight = terms.reduce((sum, term) => sum + term.weight, 0);

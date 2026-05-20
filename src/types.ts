@@ -38,7 +38,7 @@ export type CityReality = "operational" | "partial" | "planned";
 export interface CityScores {
   livability: number;    // 0-100: housing, infrastructure, daily life quality
   economy: number;       // 0-100: jobs, GPP, growth, affordability
-  safety: number;        // 0-100: crime rate, disaster resilience
+  safety: number;        // 0-100: road fatality rate (30%) + crime exposure (40%) + disaster resilience (30%)
   wellbeing: number;     // 0-100: healthcare, education, optimism, family-friendliness
   environment: number;   // 0-100: air quality, green space, sustainability
   hospitality: number;   // 0-100: culture, tourism, community warmth, belonging
@@ -63,6 +63,7 @@ export interface CityMetrics {
   fdiInflow?: number;            // million baht (BOI)
   dataLastUpdated?: string;      // ISO date of most recent data sync
   landAreaKm2?: number;          // optional land area override from dataset
+  roadFatalityRate?: number;     // annual road deaths per 100,000 pop — provincial level (thairsc.com)
 }
 
 export type CityLeague =
