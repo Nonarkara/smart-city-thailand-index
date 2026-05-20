@@ -1681,6 +1681,36 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </div>
         </div>
 
+        {/* Road safety context note — Bangkok province only.
+            Bangkok leads Thailand at 14 deaths/100k but the absolute
+            number still far exceeds the WHO target of ≤5/100k.
+            Not shown for cities worse than Bangkok (e.g. Phuket 22/100k). */}
+        {city.province === "Bangkok" && city.metrics.roadFatalityRate != null && (
+          <div className="triptych-subsection road-safety-note">
+            <h3 className="triptych-subtitle">
+              {translate(locale, {
+                en: "Road safety — Bangkok's concern, and it's improving",
+                th: "ความปลอดภัยทางถนน — ความกังวลของกรุงเทพฯ ที่กำลังดีขึ้น",
+                zh: "道路安全——曼谷的隐患，正在改善",
+              })}
+            </h3>
+            <p className="road-safety-note-body">
+              {translate(locale, {
+                en: `Bangkok province records ${city.metrics.roadFatalityRate} road deaths per 100,000 population per year — the lowest rate in Thailand and well below the national average of ~25/100k. That ranking is real, but context matters: Thailand's rate remains among the world's highest, and 14 deaths per 100k still means thousands of preventable fatalities annually across the city. Traffic enforcement campaigns, road infrastructure upgrades, and motorcycle helmet compliance programmes have driven consistent improvement over the past decade. The trend is down. The work is not finished.`,
+                th: `กรุงเทพมหานครบันทึกการเสียชีวิตบนท้องถนน ${city.metrics.roadFatalityRate} รายต่อแสนคนต่อปี — ต่ำที่สุดในประเทศไทย และต่ำกว่าค่าเฉลี่ยประเทศที่ ~25 ต่อแสนคนอย่างชัดเจน การจัดอันดับนี้เป็นจริง แต่ต้องอ่านในบริบท: อัตราของไทยยังคงอยู่ในกลุ่มสูงที่สุดในโลก และ 14 รายต่อแสนยังหมายถึงการเสียชีวิตที่ป้องกันได้หลายพันรายต่อปีทั่วเมือง แคมเปญบังคับใช้กฎจราจร การปรับปรุงโครงสร้างพื้นฐาน และโครงการสวมหมวกกันน็อคขับเคลื่อนให้ดีขึ้นอย่างต่อเนื่องในช่วงทศวรรษที่ผ่านมา แนวโน้มลดลง งานยังไม่เสร็จ`,
+                zh: `曼谷省每年每十万人口道路死亡${city.metrics.roadFatalityRate}人——泰国最低，远低于全国平均约25/10万的水平。这个排名是真实的，但背景同样重要：泰国的道路死亡率仍属全球最高之列，每十万人14人意味着全市每年仍有数千起本可避免的死亡。交通执法运动、道路基础设施改造和摩托车头盔佩戴项目推动了过去十年的持续改善。趋势在向下。工作尚未完成。`,
+              })}
+            </p>
+            <p className="road-safety-note-source">
+              {translate(locale, {
+                en: "Source: thairsc.com — Accident Data Center of Thailand, provincial annual data.",
+                th: "ที่มา: thairsc.com — ศูนย์ข้อมูลอุบัติเหตุแห่งประเทศไทย ข้อมูลรายปีรายจังหวัด",
+                zh: "来源：thairsc.com — 泰国事故数据中心，省级年度数据。",
+              })}
+            </p>
+          </div>
+        )}
+
         <div className="triptych-subsection">
           <h3 className="triptych-subtitle">{locale === "th" ? "ตัวเลขมาจากไหน" : locale === "zh" ? "这些数字怎么来的" : "Where the numbers come from"}</h3>
           <ScoreBreakdown scores={city.scores} locale={locale} />

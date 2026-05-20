@@ -6055,6 +6055,20 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   margin: 0 0 .9rem;
 }
 
+/* --- Road safety note (Bangkok city dossiers) --- */
+.road-safety-note-body {
+  font-size: var(--text-body);
+  color: var(--ink);
+  line-height: 1.6;
+  margin: 0 0 0.5rem;
+}
+.road-safety-note-source {
+  font-size: var(--text-micro);
+  color: var(--3);
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
 /* ========================================================================
    PHASE 10 — Moneyball Directory + Fixed-scale bars
    ======================================================================== */
@@ -6753,6 +6767,14 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 @media (min-width: 720px) {
   .home-section-title { font-size: 1.4rem; }
+}
+
+/* --- Home section note (attribution / footnote line beneath a champions list) --- */
+.home-section-note {
+  margin-top: 0.6rem;
+  font-size: var(--text-micro);
+  color: var(--3);
+  letter-spacing: 0.01em;
 }
 
 /* --- Pillar champions strip (mobile: stacked 1 col, desktop: 4 cols) --- */

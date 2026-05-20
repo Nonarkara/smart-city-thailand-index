@@ -114,6 +114,22 @@ export default function HomePage({ locale, onNavigate }: Props) {
     [cities],
   );
 
+  // Road safety champions — cities with the lowest provincial road fatality
+  // rate (deaths per 100,000 pop, source: thairsc.com). De-duplicated by
+  // province so Bangkok doesn't fill all 5 slots. Max 5 entries.
+  const roadSafetyChampions = useMemo(() => {
+    const seen = new Set<string>();
+    return [...cities]
+      .filter(c => c.metrics.roadFatalityRate != null)
+      .sort((a, b) => (a.metrics.roadFatalityRate ?? 99) - (b.metrics.roadFatalityRate ?? 99))
+      .filter(c => {
+        if (seen.has(c.province)) return false;
+        seen.add(c.province);
+        return true;
+      })
+      .slice(0, 5);
+  }, [cities]);
+
   // Phase 14 — regional champions. One highest-composite city per region,
   // in canonical north→south order. Gives the homepage a geographic read
   // that the global composite sort hides.
@@ -303,6 +319,52 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 </li>
               ))}
             </ul>
+          </section>
+        )}
+
+        {/* ─── ROAD SAFETY CHAMPIONS ─── */}
+        {roadSafetyChampions.length > 0 && (
+          <section
+            className="section reveal visible"
+            aria-label={t({ en: "Road safety leaders", th: "เมืองผู้นำความปลอดภัยทางถนน", zh: "道路安全领先城市" })}
+          >
+            <p className="eyebrow">{t({ en: "Road safety · Source: thairsc.com", th: "ความปลอดภัยทางถนน · ที่มา: thairsc.com", zh: "道路安全 · 来源：thairsc.com" })}</p>
+            <h2 className="home-section-title">
+              {t({
+                en: "Lowest road fatality rate in Thailand",
+                th: "อัตราการเสียชีวิตบนท้องถนนต่ำที่สุดในประเทศไทย",
+                zh: "全泰国道路死亡率最低城市",
+              })}
+            </h2>
+            <ul className="regional-champions road-safety-champions">
+              {roadSafetyChampions.map(city => (
+                <li key={city.id}>
+                  <button
+                    type="button"
+                    className="regional-champion-btn"
+                    onClick={() => onNavigate(`/city/${city.id}`)}
+                  >
+                    <span className="regional-champion-region" style={{ color: "var(--amber)" }}>
+                      {city.metrics.roadFatalityRate}/100K
+                    </span>
+                    <span className="regional-champion-city">{getCityName(city, locale)}</span>
+                    <span className="regional-champion-meta">
+                      <span>{getProvinceName(city, locale)}</span>
+                      <span className="regional-champion-score" style={{ color: "var(--amber)" }}>
+                        {t({ en: "deaths/yr", th: "เสียชีวิต/ปี", zh: "死亡/年" })}
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <p className="home-section-note">
+              {t({
+                en: "Thai national average: ~25 deaths per 100,000. WHO target: ≤5. Source: thairsc.com provincial annual data.",
+                th: "ค่าเฉลี่ยประเทศไทย: ~25 ต่อแสนคน เป้าหมาย WHO: ≤5 ที่มา: ข้อมูลรายปีรายจังหวัด thairsc.com",
+                zh: "泰国全国平均：约每十万人25人死亡。WHO目标：≤5。来源：thairsc.com 省级年度数据。",
+              })}
+            </p>
           </section>
         )}
 
