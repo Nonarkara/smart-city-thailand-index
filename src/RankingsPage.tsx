@@ -20,6 +20,7 @@ import {
 import type { CityTier, Locale, ScoringPillar, SmartCity } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LABELS, LEAGUE_LABELS } from "./types";
 import { REGION_LABELS } from "./regions";
+import { toAppPath } from "./routing";
 
 interface Props {
   locale: Locale;
@@ -42,12 +43,6 @@ const PILLAR_ORDER: ScoringPillar[] = [
 
 // REGION_LABELS lives in regions.ts so HomePage + RankingsPage + future
 // surfaces share one trilingual source.
-
-function toAppPath(path: string): string {
-  const base = import.meta.env.BASE_URL || "/";
-  const prefix = base === "/" ? "" : base.replace(/\/$/, "");
-  return path === "/" ? `${prefix}/` : `${prefix}${path}`;
-}
 
 function percentile(value: number, all: number[]): number {
   if (all.length <= 1) return 100;

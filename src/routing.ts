@@ -52,3 +52,10 @@ export function parseRoute(rawPathname: string): Route {
 export function getRouteKey(route: Route): string {
   return route.path;
 }
+
+/** Prepends Vite BASE_URL so hrefs work on GitHub Pages subpaths. */
+export function toAppPath(path: string): string {
+  const base = import.meta.env.BASE_URL || "/";
+  const prefix = base === "/" ? "" : base.replace(/\/$/, "");
+  return path === "/" ? `${prefix}/` : `${prefix}${path}`;
+}

@@ -12,8 +12,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { getCityCoords } from "./cityCoordinates";
 import { getCityName, getProvinceName, translate } from "./cityPresentation";
-import { PROVINCIAL_FLOOD_SCORE, getFloodNote } from "./provincialFloodData";
+import { PROVINCIAL_FLOOD_SCORE, getFloodScore, getFloodNote } from "./provincialFloodData";
 import { PILLAR_COLORS } from "./types";
+import { toAppPath } from "./routing";
 import type { Locale, SmartCity } from "./types";
 
 // Minimal Leaflet type declaration (CDN-loaded global)
@@ -266,7 +267,13 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
 
   const headerCity = hoveredCity;
   const headerProvince = hoveredCity ? hoveredCity.province : null;
-  const floodEntry = headerProvince ? PROVINCIAL_FLOOD_SCORE[headerProvince] : undefined;
+  // getFloodScore() falls back to 60 (Thailand average) for provinces
+  // without explicit GISTDA records. We want to show the numeric pill
+  // ONLY for provinces with real data, but always show the methodology
+  // note (dimmed if it's the fallback). So track the explicit-data flag
+  // separately from the score itself.
+  const hasExplicitFloodData = headerProvince ? !!PROVINCIAL_FLOOD_SCORE[headerProvince] : false;
+  const floodScore = hasExplicitFloodData && headerProvince ? getFloodScore(headerProvince) : undefined;
 
   return (
     <div className="ranking-map-view">
@@ -303,7 +310,7 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
             return (
               <li key={city.id} className={`ranking-map-list-row ${isHovered ? "is-hovered" : ""}`}>
                 <a
-                  href={`/city/${city.id}`}
+                  href={toAppPath(`/city/${city.id}`)}
                   className="ranking-map-list-link"
                   onClick={(e) => { e.preventDefault(); onNavigate(`/city/${city.id}`); }}
                   onMouseEnter={() => setHoveredCity(city)}
@@ -355,7 +362,7 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
             return (
               <li key={city.id} className={`ranking-map-list-row ${isHovered ? "is-hovered" : ""}`}>
                 <a
-                  href={`/city/${city.id}`}
+                  href={toAppPath(`/city/${city.id}`)}
                   className="ranking-map-list-link"
                   onClick={(e) => { e.preventDefault(); onNavigate(`/city/${city.id}`); }}
                   onMouseEnter={() => setHoveredCity(city)}
@@ -373,21 +380,25 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
       </div>
 
       {/* Hover detail card */}
-      {headerCity && floodEntry && (
+      {headerCity && (
         <div className="ranking-map-hover-card">
           <div className="ranking-map-hover-name">{getCityName(headerCity, locale)}</div>
           <div className="ranking-map-hover-meta">
             {getProvinceName(headerCity, locale)} · composite {headerCity.compositeScore.toFixed(1)}
           </div>
-          <div className="ranking-map-hover-flood">
-            <span className="ranking-map-hover-flood-label">
-              {t({ en: "Flood factor", th: "ปัจจัยน้ำท่วม", zh: "洪水因子" })}
-            </span>
-            <span className="ranking-map-hover-flood-value" style={{ color: floodEntry.score >= 70 ? "#2D8C5C" : floodEntry.score >= 50 ? "#C77A00" : "#C12F2F" }}>
-              {floodEntry.score}/100
-            </span>
+          {floodScore != null && (
+            <div className="ranking-map-hover-flood">
+              <span className="ranking-map-hover-flood-label">
+                {t({ en: "Flood factor", th: "ปัจจัยน้ำท่วม", zh: "洪水因子" })}
+              </span>
+              <span className="ranking-map-hover-flood-value" style={{ color: floodScore >= 70 ? "#2D8C5C" : floodScore >= 50 ? "#C77A00" : "#C12F2F" }}>
+                {floodScore}/100
+              </span>
+            </div>
+          )}
+          <div className="ranking-map-hover-note" style={{ opacity: hasExplicitFloodData ? 1 : 0.7 }}>
+            {getFloodNote(headerCity.province)}
           </div>
-          <div className="ranking-map-hover-note">{getFloodNote(headerCity.province)}</div>
         </div>
       )}
 
