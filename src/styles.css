@@ -304,6 +304,110 @@ ul, ol { list-style: none; }
 }
 .nav-link:hover { color: var(--ink); background: rgba(0,0,0,.03); }
 .nav-link.active { color: var(--ink); font-weight: 600; background: var(--surface); }
+
+/* ─── Phase 2.4 — 5-group dropdown nav (TopbarNav.tsx) ─── */
+.nav-groups {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.nav-group {
+  position: relative;
+  display: inline-block;
+}
+.nav-group-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.nav-group-caret {
+  display: inline-block;
+  font-size: 0.7em;
+  color: var(--3);
+  transform: rotate(90deg);
+  transition: transform 0.18s var(--ease, ease);
+}
+.nav-group-open .nav-group-caret {
+  transform: rotate(-90deg);
+  color: var(--ink);
+}
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  min-width: 180px;
+  display: none;
+  flex-direction: column;
+  background: var(--surface, #fff);
+  border: 1px solid var(--ink);
+  z-index: 200;
+  /* Hairline borders only — no drop-shadow per Anti-Regression §11 */
+}
+.nav-group-open .nav-dropdown { display: flex; }
+.nav-dropdown-item {
+  padding: 0.6rem 0.9rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--5);
+  color: var(--ink);
+  font: 500 var(--text-body) var(--font);
+  text-align: left;
+  cursor: pointer;
+  min-height: 44px;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.nav-dropdown-item:last-child { border-bottom: 0; }
+.nav-dropdown-item:hover {
+  background: var(--ink);
+  color: var(--bg, #fff);
+}
+.nav-dropdown-item.active {
+  color: var(--ink);
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.08);
+  border-left: 2px solid var(--amber, #f59e0b);
+  padding-left: calc(0.9rem - 2px);
+}
+
+/* Mobile: full-screen menu — collapse dropdowns into a stacked list */
+@media (max-width: 768px) {
+  .nav-groups {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .nav-group {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid var(--5);
+  }
+  .nav-group-trigger {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.85rem 0.5rem;
+    min-height: 44px;
+  }
+  .nav-group-caret { transform: rotate(90deg); font-size: 1rem; }
+  .nav-group-open .nav-group-caret { transform: rotate(-90deg); }
+  .nav-dropdown {
+    position: static;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid var(--5);
+    background: rgba(0, 0, 0, 0.02);
+  }
+  .nav-dropdown-item {
+    padding: 0.7rem 1.4rem;
+    border-bottom-color: var(--5);
+  }
+}
+
 .theme-toggle {
   margin-left: .2rem; padding: .18rem .4rem; font-size: .85rem; line-height: 1;
   color: var(--3); border-radius: 0; transition: all .2s var(--ease);

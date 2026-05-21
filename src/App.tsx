@@ -2,6 +2,7 @@ import { useEffect, lazy, Suspense, useState } from "react";
 import { parseRoute, getRouteKey, type Route } from "./routing";
 import { syncDocumentMeta } from "./siteMeta";
 import { ResponsiveImage } from "./mediaAssets";
+import TopbarNav from "./TopbarNav";
 import type { Locale } from "./types";
 import { trackVisitor } from "./visitorTracking";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -38,21 +39,9 @@ function getInitialTheme(): Theme {
   return "light";
 }
 
-const NAV_ITEMS = [
-  { kind: "home", path: "/", label: { en: "Home", th: "หน้าหลัก", zh: "首页" } },
-  { kind: "rankings", path: "/rankings", label: { en: "Rankings", th: "อันดับ", zh: "排名" } },
-  { kind: "discover", path: "/discover", label: { en: "Your City", th: "เมืองคุณ", zh: "你的城市" } },
-  { kind: "program", path: "/program", label: { en: "Program", th: "โครงการ", zh: "计划" } },
-  { kind: "methodology", path: "/methodology", label: { en: "Method", th: "วิธีการ", zh: "方法" } },
-  { kind: "story", path: "/story", label: { en: "Story", th: "เรื่องราว", zh: "故事" } },
-  { kind: "showcase", path: "/showcase", label: { en: "NST", th: "ต้นแบบ", zh: "样板" } },
-  { kind: "partners", path: "/partners", label: { en: "Partners", th: "พันธมิตร", zh: "伙伴" } },
-  { kind: "audit", path: "/audit", label: { en: "Audit", th: "ตรวจสอบ", zh: "审计" } },
-  { kind: "knowledge", path: "/knowledge", label: { en: "KB", th: "คลังรู้", zh: "知识库" } },
-  { kind: "invest", path: "/invest", label: { en: "Invest", th: "ลงทุน", zh: "投资" } },
-  { kind: "compare", path: "/compare", label: { en: "Compare", th: "เทียบ", zh: "对比" } },
-  { kind: "bingo", path: "/bingo", label: { en: "Bingo", th: "บิงโก", zh: "宾果" } },
-] as const;
+// Phase 2.4 — NAV_ITEMS replaced by NAV_GROUPS in src/TopbarNav.tsx,
+// which consolidates 13 flat nav items into 5 grouped dropdowns
+// (Home · Rankings · Method · Stories · Network).
 
 const MDES_LOGO = {
   src: "/mdes_logo.jpg",
@@ -396,17 +385,14 @@ export default function App() {
             <span />
           </button>
           <div className={`nav-links ${mobileMenuOpen ? "nav-links-open" : ""}`}>
-            {NAV_ITEMS.map(item => (
-              <button
-                key={item.kind}
-                type="button"
-                className={`nav-link ${route.kind === item.kind ? "active" : ""}`}
-                aria-current={route.kind === item.kind ? "page" : undefined}
-                onClick={() => navigate(item.path)}
-              >
-                {item.label[locale]}
-              </button>
-            ))}
+            {/* Phase 2.4 \u2014 13 flat items consolidated into 5 grouped dropdowns */}
+            <TopbarNav
+              locale={locale}
+              currentKind={route.kind}
+              onNavigate={navigate}
+              mobileOpen={mobileMenuOpen}
+              onClose={() => setMobileMenuOpen(false)}
+            />
             <button
               type="button"
               className="theme-toggle"
