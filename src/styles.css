@@ -16,7 +16,7 @@
   --ink: #0C2F53;
   --bg: #FFFFFF;
   --2: #3D5068;
-  --3: #607890;
+  --3: #4A6078;
   --4: #C8D5E0;
   --5: #EDF2F7;
   --surface: #F5F8FB;
@@ -142,8 +142,7 @@ ul, ol { list-style: none; }
 /* Layout */
 .section, .S { width: min(var(--w), calc(100% - 2.5rem)); margin-inline: auto; }
 .page-shell { min-height: 100vh; background: var(--bg); }
-.page-frame { animation: pageEnter .4s var(--ease) both; }
-@keyframes pageEnter { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.page-frame { opacity: 1; }
 .loading {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   min-height: 50vh; gap: 1rem;
@@ -269,6 +268,7 @@ ul, ol { list-style: none; }
   mix-blend-mode: multiply; /* white → transparent on light bar */
   height: auto;
   object-fit: contain;
+  aspect-ratio: attr(width) / attr(height);
 }
 
 /* ─── ACCESSIBILITY ─── */
@@ -293,7 +293,7 @@ ul, ol { list-style: none; }
 .brand-lockup { display: flex; align-items: center; gap: .6rem; transition: opacity .2s; }
 .brand-lockup picture { display: block; }
 .brand-lockup:hover { opacity: .8; }
-.brand-logo { width: auto; height: 28px; border-radius: var(--radius-xs); }
+.brand-logo { width: auto; height: 28px; border-radius: var(--radius-xs); aspect-ratio: 1; }
 .brand-mark { display: none; }
 .brand-name { font-weight: 650; font-size: .76rem; color: var(--ink); letter-spacing: -.02em; opacity: .8; }
 .nav-links { display: flex; align-items: center; gap: 0; }
@@ -324,7 +324,7 @@ ul, ol { list-style: none; }
 }
 .institutional-logos { display: flex; align-items: center; gap: .5rem; }
 .institutional-logos picture { display: block; }
-.institutional-logo { width: auto; height: 24px; border-radius: 0; opacity: .75; transition: opacity .2s; }
+.institutional-logo { width: auto; height: 24px; border-radius: 0; opacity: .75; transition: opacity .2s; aspect-ratio: attr(width) / attr(height); }
 .institutional-logo:hover { opacity: 1; }
 @media (max-width: 768px) {
   .institutional-logo { height: 20px; }
@@ -640,6 +640,17 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .reality-planned { background: var(--gamma-bg); color: var(--gamma); }
 .city-detail-tagline { font-size: var(--text-body); line-height: 1.7; color: var(--2); margin-top: .75rem; max-width: 520px; }
 
+/* ─── DOSSIER TABS ─── */
+.dossier-tabs { width: min(var(--w), calc(100% - 1.5rem)); margin: 0 auto; }
+.dossier-tab-list { display: flex; gap: .25rem; border-bottom: 1px solid var(--5); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.dossier-tab-list::-webkit-scrollbar { display: none; }
+.dossier-tab { flex: 0 0 auto; padding: .55rem .9rem; font: 600 var(--text-micro) var(--font); color: var(--3); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; }
+.dossier-tab:hover { color: var(--teal); }
+.dossier-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.dossier-tab-panel { padding: 1.25rem 0; }
+.dossier-tab-content { animation: tabFade .2s ease; }
+@keyframes tabFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
 /* ─── depa Official Recognition block ──────────────────────────────────────
    Appears in the WHO chapter for certified cities.
    Design rules per workspace CLAUDE.md §11.6:
@@ -772,7 +783,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .rpg-section { margin-bottom: 1.25rem; }
 .rpg-layout { display: grid; grid-template-columns: 200px 1fr; gap: 1.25rem; align-items: start; margin-top: .6rem; }
 .rpg-radar-panel { position: relative; }
-.radar-chart { width: 100%; }
+.radar-chart { width: 280px; height: 280px; }
 .rpg-overall-grade { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; }
 .rpg-grade-label { display: block; font: 700 .4rem var(--mono); letter-spacing: .12em; color: var(--3); }
 .rpg-grade-letter { font: 700 1.4rem var(--mono); }
@@ -1037,7 +1048,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .footer-partner-sub { font-size: .5rem; color: var(--3); }
 .footer-logos { display: flex; align-items: center; gap: .8rem; padding: .5rem 0; border-bottom: 1px solid var(--5); margin-bottom: .5rem; }
 .footer-logos picture { display: block; }
-.footer-logo { width: auto; height: 22px; opacity: .4; filter: grayscale(100%); transition: all .15s; }
+.footer-logo { width: auto; height: 22px; opacity: .4; filter: grayscale(100%); transition: all .15s; aspect-ratio: attr(width) / attr(height); }
 .footer-logo:hover { opacity: .85; filter: none; }
 .footer-bottom { display: flex; flex-direction: column; gap: .08rem; }
 .footer-copy { font: 500 .44rem var(--mono); color: var(--4); letter-spacing: .01em; }
@@ -1610,7 +1621,8 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   gap: .35rem;
 }
 .ranking-pillar-label {
-  font: 700 var(--text-xs) var(--mono);
+  font: 700 0.75rem var(--mono);
+  min-width: 2rem;
   width: 1.8rem;
   text-align: right;
   flex-shrink: 0;
@@ -1630,7 +1642,9 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   transition: width .6s var(--ease, ease);
 }
 .ranking-pillar-value {
-  font: 600 var(--text-xs) var(--mono);
+  font: 600 0.75rem var(--mono);
+  min-width: 1.5rem;
+  text-align: right;
   color: var(--3);
   width: 1.5rem;
   text-align: right;
@@ -1656,7 +1670,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 }
 
 .dashboard-ranking-vibe {
-  font: 600 var(--text-xs) var(--mono, monospace); letter-spacing: .02em;
+  font: 600 .75rem var(--mono, monospace); letter-spacing: .02em;
   white-space: nowrap;
 }
 .dashboard-ranking-vibe-operational { color: var(--alpha, #1A8A72); }
@@ -3001,7 +3015,7 @@ h2, h3 { font-family: var(--font); }
 .podium-photo-card-name { font-size: var(--text-md); font-weight: 700; color: #fff; letter-spacing: -.02em; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
 .podium-photo-card-score { font: 700 1.3rem var(--mono); color: var(--gold); letter-spacing: -.03em; line-height: 1; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
 .podium-photo-card-stats { display: flex; flex-wrap: wrap; gap: .2rem; margin: .2rem 0; }
-.podium-photo-card-vibe { font: 600 var(--text-xs) var(--mono); }
+.podium-photo-card-vibe { font: 600 .75rem var(--mono); }
 
 @media (max-width: 768px) {
   .podium-photo-layout { grid-template-columns: 1fr; }
@@ -3104,11 +3118,11 @@ h2, h3 { font-family: var(--font); }
   font: 700 .56rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.72);
 }
 .action-atlas-stage-note {
-  font-size: .82rem; line-height: 1.62; color: rgba(255,255,255,.92);
+  font-size: .9rem; line-height: 1.62; color: rgba(255,255,255,.92);
   max-width: 48ch; margin-top: .7rem;
 }
 .action-atlas-stage-signal {
-  font: 600 .68rem var(--mono); line-height: 1.58; letter-spacing: .02em;
+  font: 600 .8rem var(--mono); line-height: 1.58; letter-spacing: .02em;
   color: var(--gold); max-width: 52ch; margin-top: .65rem;
 }
 .action-atlas-stage-metrics {
@@ -3142,12 +3156,12 @@ h2, h3 { font-family: var(--font); }
 }
 .action-atlas-copy-grid span,
 .action-atlas-note-card span {
-  display: block; font: 700 .56rem var(--mono); letter-spacing: .1em;
+  display: block; font: 700 .65rem var(--mono); letter-spacing: .1em;
   text-transform: uppercase; color: var(--2); margin-bottom: .18rem;
 }
 .action-atlas-copy-grid p,
 .action-atlas-note-card p {
-  font-size: .72rem; color: var(--2); line-height: 1.58;
+  font-size: .85rem; color: var(--2); line-height: 1.58;
 }
 .action-atlas-actions { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .8rem; }
 .action-atlas-note-stack { display: grid; gap: .55rem; }
@@ -4226,6 +4240,43 @@ details[open] .kb-question::before { content: "−"; }
 .city-hero-photo-title { font-size: 1.8rem; font-weight: 700; color: #fff; letter-spacing: -.03em; }
 .city-hero-photo-score { font: 700 2rem var(--mono); color: var(--gold); margin-left: auto; }
 
+/* ─── DOSSIER TABS ─── */
+.dossier-tabs { margin-top: -1rem; }
+.dossier-tab-list {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--5);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  position: sticky;
+  top: 48px;
+  z-index: 50;
+  background: var(--bg);
+}
+.dossier-tab-list::-webkit-scrollbar { display: none; }
+.dossier-tab {
+  flex: 1 1 auto;
+  min-width: max-content;
+  padding: .65rem .9rem;
+  font: 600 .72rem var(--font);
+  color: var(--3);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 150ms var(--ease), border-color 150ms var(--ease), background 150ms var(--ease);
+  white-space: nowrap;
+  letter-spacing: -.01em;
+}
+.dossier-tab:hover { color: var(--ink); background: var(--surface); }
+.dossier-tab.active { color: var(--ink); border-bottom-color: var(--teal); background: var(--surface); }
+.dossier-tab:focus-visible { outline: 1px solid var(--teal); outline-offset: -1px; }
+.dossier-tab-panel { padding-top: 1.25rem; }
+@media (max-width: 640px) {
+  .dossier-tab { padding: .5rem .65rem; font-size: .68rem; }
+}
+
 /* 5. Accessibility — skip link */
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 9999;
@@ -4267,10 +4318,10 @@ details[open] .kb-question::before { content: "−"; }
   .cinematic-hero-actions .ghost-button:last-child { display: none; }
 
   .guide-strip-inner { flex-direction: column; gap: .25rem; }
-  .guide-item { font-size: .72rem; }
+  .guide-item { font-size: .85rem; }
 
-  .action-atlas-stage-note { font-size: .76rem; }
-  .action-atlas-stage-signal { font-size: .62rem; }
+  .action-atlas-stage-note { font-size: .85rem; }
+  .action-atlas-stage-signal { font-size: .75rem; }
   .action-atlas-metric-pill strong { font-size: .78rem; }
   .action-atlas-map-panel { padding: .8rem; }
 
@@ -4298,7 +4349,7 @@ details[open] .kb-question::before { content: "−"; }
   .city-hero-photo-title { font-size: 1.3rem; }
 
   .fieldboard-title { font-size: .9rem; }
-  .dashboard-ranking-name { font-size: .72rem; }
+  .dashboard-ranking-name { font-size: .85rem; }
   .dashboard-ranking-score { font-size: .76rem; }
 
   .footer-fineprint p { font-size: .56rem; }
@@ -4318,7 +4369,7 @@ details[open] .kb-question::before { content: "−"; }
   letter-spacing: .1em; color: var(--3); margin-bottom: .15rem;
 }
 .dashboard-fp-col p {
-  font: 400 .42rem/1.55 var(--font); color: var(--4);
+  font: 400 .75rem/1.55 var(--font); color: var(--4);
 }
 @media (max-width: 768px) {
   .dashboard-fineprint-inner { grid-template-columns: 1fr 1fr; }
@@ -5456,6 +5507,10 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     background: var(--surface);
   }
 
+  [data-theme="dark"] .dossier-tab-list { border-bottom-color: rgba(255, 255, 255, .08); }
+  [data-theme="dark"] .dossier-tab { color: var(--3); }
+  [data-theme="dark"] .dossier-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
   .city-detail-header {
     grid-template-columns: minmax(0, 1fr) minmax(188px, auto);
     align-items: start;
@@ -5811,6 +5866,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .city-hero-photo-title { font-size: clamp(2.15rem, 14vw, 3.8rem); }
   .city-hero-photo-subtitle { font-size: .76rem; }
   .city-hero-photo-score-card { padding: .82rem .9rem; border-radius: 0; }
+
+  .dossier-tab { padding: .45rem .65rem; font-size: .7rem; }
+  .dossier-tab-panel { padding: .85rem 0; }
 
   .city-detail-hero { padding: .95rem; }
   .city-detail-tagline { font-size: .92rem; }

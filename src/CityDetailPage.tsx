@@ -21,6 +21,7 @@ import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LA
 import { computeDevelopability, getGlobalComparison, getMoneyballProfile, getTailoredSteps, getFinancingAdvice } from "./cityAnalytics";
 import { allCities } from "./cityData";
 import { getCityFacts } from "./cityFacts";
+import DossierTabs from "./DossierTabs";
 
 interface Props {
   cityId: string;
@@ -1188,10 +1189,19 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     },
   ];
 
+const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
+  en: ["Overview", "Analysis", "Execution", "Evidence", "Next Steps"],
+  th: ["ภาพรวม", "วิเคราะห์", "ดำเนินการ", "หลักฐาน", "ก้าวต่อไป"],
+  zh: ["概览", "分析", "执行", "证据", "下一步"],
+};
+
+
   return (
+
     <>
-      {/* ─── CHAPTER 1 · WHO ─── City identity: hero photo, tier/score/rank, tagline, decision strip, at-a-glance facts. */}
-      <div id="who" className="city-chapter city-chapter-who">
+
+      {/* ─── HERO ─── Always-visible city identity */}
+
       {cityPhoto ? (
         <div className="city-hero-photo">
           <ResponsiveImage
@@ -1235,6 +1245,20 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </div>
         </div>
       )}
+
+
+
+      <DossierTabs
+
+        locale={locale}
+
+        labels={DOSSIER_TAB_LABELS[locale]}
+
+      >
+
+        {/* ─── TAB 1 · Overview ─── */}
+
+        <div className="dossier-tab-content">
 
       <section className="section city-detail-hero">
         <button
@@ -1500,12 +1524,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </section>
         );
       })()}
-      </div>
+        </div>
 
-      {renderChapterBreak("who", 1)}
+        {/* ─── TAB 2 · Analysis ─── */}
 
-      {/* ─── CHAPTER 2 · WHAT ─── The substance: reality-gap dossier, Moneyball band, performance triptych, analog comparison, factbook, city research. */}
-      <div id="what" className="city-chapter city-chapter-what">
+        <div className="dossier-tab-content">
+
       {dossier && (
         <section className="section city-dossier-section">
           <p className="eyebrow">{translate(locale, { en: "Reality gap dossier", th: "แฟ้มช่องว่างระหว่างแผนกับความจริง", zh: "现实缺口档案" })}</p>
@@ -1921,12 +1945,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </div>
         </div>
       </section>
-      </div>
+        </div>
 
-      {renderChapterBreak("what", 2)}
+        {/* ─── TAB 3 · Execution ─── */}
 
-      {/* ─── CHAPTER 3 · HOW ─── Execution path: delivery profile (five steps from logo to operating city) and tailored finance stack. */}
-      <div id="how" className="city-chapter city-chapter-how">
+        <div className="dossier-tab-content">
+
       <section className="section city-print-hide">
         <div className="planning-section-header">
           <div>
@@ -2074,12 +2098,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           })}
         </div>
       </section>
-      </div>
+        </div>
 
-      {renderChapterBreak("how", 3)}
+        {/* ─── TAB 4 · Evidence ─── */}
 
-      {/* ─── CHAPTER 4 · WHY ─── The evidence backbone: metric blocks, data rails, proof points, and the source trail that makes every claim audit-ready. */}
-      <div id="why" className="city-chapter city-chapter-why">
+        <div className="dossier-tab-content">
+
       <section className="section city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "Metric blocks", th: "ชุดตัวชี้วัด", zh: "指标模块" })}</p>
         <h2>{translate(locale, { en: "The evidence backbone", th: "โครงหลักฐานของเมือง", zh: "证据骨架" })}</h2>
@@ -2188,12 +2212,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           </div>
         </section>
       )}
-      </div>
+        </div>
 
-      {renderChapterBreak("why", 4)}
+        {/* ─── TAB 5 · Next Steps ─── */}
 
-      {/* ─── CHAPTER 5 · NEXT ─── The move: tailored action steps, research links for deeper work, and the depa dimensions in scope. */}
-      <div id="next" className="city-chapter city-chapter-next">
+        <div className="dossier-tab-content">
+
       <section className="section city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "What to do next", th: "ก้าวต่อไป", zh: "下一步行动" })}</p>
         <h2>{translate(locale, { en: "Tailored action steps", th: "ขั้นตอนปฏิบัติเฉพาะเมืองนี้", zh: "定制行动步骤" })}</h2>
@@ -2242,7 +2266,13 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           ))}
         </div>
       </section>
-      </div>
+        </div>
+
+      </DossierTabs>
+
     </>
+
   );
+
 }
+
