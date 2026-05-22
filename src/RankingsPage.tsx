@@ -55,17 +55,28 @@ function tierSymbol(tier: CityTier): string {
 }
 
 // ---------------------------------------------------------------------------
-// IndividualPillarBars — 7 segments, each a separate bar for easy comparison
+// CityScoreSparkline — composite bar with expand-to-pillars on interaction
 // ---------------------------------------------------------------------------
-function IndividualPillarBars({
+function CityScoreSparkline({
   city,
   locale,
 }: {
   city: SmartCity;
   locale: Locale;
 }) {
+  const [expanded, setExpanded] = useState(false);
+
+  const composite = useMemo(() => {
+    return PILLAR_ORDER.reduce((sum, p) => sum + city.scores[p] * (PILLAR_WEIGHTS[p] / 100), 0);
+  }, [city.scores]);
+
+  const tierColor = city.tier === "alpha"
+    ? "var(--teal, #2BA89C)"
+    : city.tier === "beta"
+      ? "var(--gold-text, #946B0C)"
+      : "var(--gamma, #B03030)";
+
   const getShort = (pillar: ScoringPillar): string => {
-    // We use standard 3-letter codes for the mono-interface look
     const map: Record<ScoringPillar, string> = {
       livability: "LIV",
       economy: "ECO",
@@ -79,22 +90,60 @@ function IndividualPillarBars({
   };
 
   return (
-    <div className="ranking-pillar-grid" aria-hidden="true">
-      {PILLAR_ORDER.map(pillar => {
-        const value = city.scores[pillar];
-        return (
-          <div key={pillar} className="ranking-pillar-row">
-            <span className="ranking-pillar-label">{getShort(pillar)}</span>
-            <div className="ranking-pillar-track">
-              <div
-                className="ranking-pillar-fill"
-                style={{ width: `${value}%`, background: PILLAR_COLORS[pillar] }}
-              />
-            </div>
-            <span className="ranking-pillar-value">{value}</span>
-          </div>
-        );
+    <div
+      className={`sparkline-wrap ${expanded ? "is-expanded" : ""}`}
+      onMouseEnter={() => setExpanded(true)}
+      onMouseLeave={() => setExpanded(false)}
+      onFocus={() => setExpanded(true)}
+      onBlur={() => setExpanded(false)}
+      tabIndex={0}
+      role="button"
+      aria-expanded={expanded}
+      aria-label={translate(locale, {
+        en: `Composite score ${composite.toFixed(1)}. Press to ${expanded ? "collapse" : "expand"} pillar breakdown.`,
+        th: `คะแนนรวม ${composite.toFixed(1)} กดเพื่อ${expanded ? "ยุบ" : "ขยาย"}รายละเอียดเสาหลัก`,
+        zh: `综合得分 ${composite.toFixed(1)}，按${expanded ? "收起" : "展开"}支柱详情`,
       })}
+      onClick={() => setExpanded(v => !v)}
+      onKeyDown={e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setExpanded(v => !v);
+        }
+      }}
+    >
+      {/* Composite bar */}
+      <div className="sparkline-composite" aria-hidden="true">
+        <span className="sparkline-composite-label">{composite.toFixed(1)}</span>
+        <div className="sparkline-composite-track">
+          <div
+            className="sparkline-composite-fill"
+            style={{ width: `${composite}%`, background: tierColor }}
+          />
+        </div>
+        <span className="sparkline-composite-hint">
+          {translate(locale, { en: "Score", th: "คะแนน", zh: "得分" })}
+        </span>
+      </div>
+
+      {/* Expanded pillar breakdown */}
+      <div className="sparkline-pillar-grid" aria-hidden="true">
+        {PILLAR_ORDER.map(pillar => {
+          const value = city.scores[pillar];
+          return (
+            <div key={pillar} className="sparkline-pillar-row">
+              <span className="sparkline-pillar-label">{getShort(pillar)}</span>
+              <div className="sparkline-pillar-track">
+                <div
+                  className="sparkline-pillar-fill"
+                  style={{ width: `${value}%`, background: PILLAR_COLORS[pillar] }}
+                />
+              </div>
+              <span className="sparkline-pillar-value">{value}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -504,7 +553,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                               </>
                             ) : null}
                           </span>
-                          <IndividualPillarBars city={city} locale={locale} />
+                          <CityScoreSparkline city={city} locale={locale} />
                         </span>
                         <span className="rank-row-meta">
                           <span className="rank-row-score">{lensScore.toFixed(1)}</span>

@@ -1,5 +1,6 @@
 import { translate } from "./cityPresentation";
-import type { Locale } from "./types";
+import type { Locale, ScoringPillar } from "./types";
+import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS } from "./types";
 import { ResponsiveImage } from "./mediaAssets";
 import { useInView } from "./useInView";
 
@@ -172,6 +173,55 @@ const beforeAfterRows = [
   },
 ];
 
+const PILLAR_ORDER: ScoringPillar[] = [
+  "livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital",
+];
+
+/** Nakhon Si Thammarat SCITI 2026 pillar scores */
+const NST_SCORES: Record<ScoringPillar, number> = {
+  livability: 64, economy: 58, safety: 61, wellbeing: 62,
+  environment: 62, hospitality: 74, digital: 50,
+};
+
+function ShowcasePillarProfile({ locale }: { locale: Locale }) {
+  const composite = PILLAR_ORDER.reduce(
+    (sum, p) => sum + NST_SCORES[p] * (PILLAR_WEIGHTS[p] / 100), 0
+  );
+
+  return (
+    <div className="showcase-pillar-profile">
+      <div className="showcase-pillar-header">
+        <span className="showcase-pillar-tier">α</span>
+        <span className="showcase-pillar-composite">
+          {composite.toFixed(1)}
+        </span>
+        <span className="showcase-pillar-tier-label">
+          {translate(locale, { en: "Alpha tier", th: "ระดับอัลฟา", zh: "Alpha 层级" })}
+        </span>
+      </div>
+      <div className="showcase-pillar-bars">
+        {PILLAR_ORDER.map(pillar => (
+          <div key={pillar} className="showcase-pillar-row">
+            <span className="showcase-pillar-name">
+              {PILLAR_LABELS[locale][pillar]}
+            </span>
+            <div className="showcase-pillar-track">
+              <div
+                className="showcase-pillar-fill"
+                style={{
+                  width: `${NST_SCORES[pillar]}%`,
+                  background: PILLAR_COLORS[pillar],
+                }}
+              />
+            </div>
+            <span className="showcase-pillar-value">{NST_SCORES[pillar]}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function ShowcasePage({ locale, onNavigate }: Props) {
   const [heroRef, heroVisible] = useInView(0.1);
   const [metricRef, metricVisible] = useInView(0.1);
@@ -261,6 +311,12 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Mini pillar profile — Nakhon Si Thammarat SCITI scores */}
+      <section className="section showcase-pillar-section reveal stagger-1">
+        <p className="eyebrow">{translate(locale, { en: "SCITI 2026 pillar profile", th: "โปรไฟล์เสาหลัก SCITI 2026", zh: "SCITI 2026 支柱画像" })}</p>
+        <ShowcasePillarProfile locale={locale} />
       </section>
 
       <section ref={summaryRef} className={`section showcase-summary-section reveal stagger-2 ${summaryVisible ? "visible" : ""}`}>
