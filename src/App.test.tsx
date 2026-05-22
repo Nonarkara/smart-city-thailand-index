@@ -56,7 +56,10 @@ describe("App", () => {
     const navLinks = container.querySelector(".nav-links");
     expect(navLinks).toHaveClass("nav-links-open");
 
-    await user.click(screen.getByRole("button", { name: "Rankings" }));
+    // Click the Rankings group trigger to open the dropdown, then click the item
+    const rankingsItems = screen.getAllByRole("menuitem", { name: "Rankings" });
+    await user.click(rankingsItems[0]); // group trigger
+    await user.click(rankingsItems[1]); // dropdown item
     await vi.dynamicImportSettled();
     await screen.findByRole("heading", { name: /the moneyball of thai city investment/i });
 

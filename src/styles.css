@@ -1885,6 +1885,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 
 /* Partnerships page */
 .partnerships-hero { padding-top: 3.5rem; padding-bottom: 1rem; }
+.partnerships-section-gap { margin-bottom: 2rem; }
 .partnerships-summary-section, .partnerships-reading-section, .partnerships-list-section, .partnerships-closing-section { margin-bottom: 1.25rem; }
 .partnerships-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0; border: 1px solid var(--5, #E5E5E5); }
 .partnerships-summary-card { padding: .6rem .5rem; text-align: center; border-right: 1px solid var(--5, #E5E5E5); }
@@ -9179,12 +9180,43 @@ body:has(.bingo-page) { overflow: hidden; }
   z-index: 20;
   width: 320px;
   background: var(--bg);
-  border: 1px solid var(--5);
+  border: 1px solid var(--ink);
   border-left: 3px solid var(--teal);
-  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  /* No box-shadow per §11 Anti-Regression. Ink border gives visual weight. */
   padding: 1rem;
   pointer-events: none;
-  animation: vibeCardIn .2s ease-out;
+  animation: vibeCardIn .18s ease-out;
+}
+/* Mobile: full-width fixed panel at bottom, dismissable */
+.vibe-map-card-mobile {
+  position: fixed;
+  inset: auto 0 0 0;
+  width: 100%;
+  max-height: 70vh;
+  overflow-y: auto;
+  border-left: 1px solid var(--ink);
+  border-top: 3px solid var(--teal);
+  z-index: 100;
+  pointer-events: all;
+  animation: vibeCardSlideUp .2s ease-out;
+}
+.vibe-card-close {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--5);
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font: 600 1rem var(--font);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+@keyframes vibeCardSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes vibeCardIn {
@@ -9383,13 +9415,14 @@ body:has(.bingo-page) { overflow: hidden; }
   padding: 1rem;
   background: var(--surface);
   border: 1px solid var(--5);
-  transition: transform .2s, box-shadow .2s;
+  transition: transform .2s, border-color .2s;
   overflow: hidden;
 }
 
+/* Lift on hover — no box-shadow (§11 Anti-Regression) */
 .partner-visual-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(0,0,0,.08);
+  border-color: var(--3);
 }
 
 .partner-visual-card::before {

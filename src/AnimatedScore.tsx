@@ -37,6 +37,7 @@ export default function AnimatedScore({
     const prefersReduced =
       reduced ||
       (typeof window !== "undefined" &&
+        typeof window.matchMedia === "function" &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     if (prefersReduced) {
