@@ -1897,6 +1897,19 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 
 /* Showcase page */
 .showcase-metric-section, .showcase-summary-section, .showcase-practice-section, .showcase-proof-section, .showcase-sources-section, .showcase-closing-section { margin-bottom: 1.25rem; }
+
+/* Tab panel wrapper — consistent padding between tabs */
+.showcase-tab-panel { padding: 0; }
+.showcase-tab-panel .section { padding-top: 1.25rem; }
+
+/* Mayor photo — constrain height so the pink-background image doesn't blow up */
+.showcase-mayor-photo {
+  max-height: 280px;
+  overflow: hidden;
+  margin-bottom: .75rem;
+}
+.showcase-mayor-photo img,
+.showcase-mayor-photo picture { height: 100%; width: 100%; object-fit: cover; object-position: center top; }
 .showcase-metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0; border: 1px solid var(--5, #E5E5E5); }
 
 /* Showcase pillar profile */

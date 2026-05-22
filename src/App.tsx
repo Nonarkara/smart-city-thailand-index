@@ -235,7 +235,7 @@ function getInitialLocale(): Locale {
 }
 
 function PagePhotoHero({ route, locale }: { route: Route; locale: Locale }) {
-  if (route.kind === "home" || route.kind === "city") return null;
+  if (route.kind === "home" || route.kind === "city" || route.kind === "showcase") return null;
   const hero = PAGE_HERO_ASSETS[route.kind];
   if (!hero) return null;
 
@@ -533,6 +533,14 @@ export default function App() {
               </div>
 
               <div className="footer-bottom">
+                <p className="footer-copy" style={{ opacity: 0.5, fontSize: "0.65rem", letterSpacing: "0.06em" }}
+                   title="UNDP-JTC Digital Twins for Cities (Jul 2025) · ADB Digital Twin Framework (May 2025)">
+                  {locale === "th"
+                    ? "SCITI คือฐาน Level 1 — Descriptive ของ Digital Twin ระดับชาติ · สอดคล้องกับ UNDP · ADB 2025"
+                    : locale === "zh"
+                      ? "SCITI 构成国家数字孪生的 Level 1 — Descriptive 基础层 · 与 UNDP · ADB 2025 框架对齐"
+                      : "SCITI forms the Level 1 — Descriptive foundation of a national digital twin · Aligned with UNDP · ADB 2025"}
+                </p>
                 <p className="footer-copy">
                   {locale === "th"
                     ? "ดัชนีเมืองอัจฉริยะประเทศไทย 2026 · วัดจากความเป็นจริง ไม่ใช่แผนบนกระดาษ"
