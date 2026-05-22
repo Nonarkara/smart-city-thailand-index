@@ -116,9 +116,9 @@ export const certifiedCities: SmartCity[] = [
     ["energy", "environment", "governance", "living"],
     { livability: 62, economy: 58, safety: 56, wellbeing: 60, environment: 55, hospitality: 65, digital: 48 },
     { population: 268, gppPerCapita: 138000, avgMonthlyIncome: 20400, pm25Annual: 28.5, hospitalBedsPer10k: 22, crimeRatePer100k: 165, greenCoverage: 40, gppGrowthRate: 1.9, pm25Trend: "stable", waterQuality: 65, forestCoverage: 28, fdiInflow: 480, industryComposition: "agriculture 32%, services 42%, manufacturing 26%", laborForce: 540, roadFatalityRate: 30 },
-    "River junction city with smart flood management. Real IoT flood sensors work, but broader digital adoption is still early.",
-    "เมืองจุดบรรจบแม่น้ำที่มีการจัดการน้ำท่วมอัจฉริยะ เซ็นเซอร์น้ำท่วม IoT ทำงานจริง แต่การนำดิจิทัลไปใช้ในวงกว้างยังอยู่ในช่วงเริ่มต้น",
-    ["IoT flood monitoring with 30+ river sensors", "Smart governance platform for citizen complaints", "Digital agriculture pilot for rice farmers"],
+    "Where four rivers become one. Ping, Wang, Yom, and Nan converge here before forming the Chao Phraya — making Nakhon Sawan the gateway through which the 2011 catastrophe flowed (12.6% of GDP, USD 46.5B). World Bank CCDR 2025: the Chao Phraya basin holds 40% of Thailand's population, 78% of its workforce, 66% of its GDP — and the current 120-year flood is projected to return every 18 years by 2040 under moderate emissions, or every 5.4 years under high. The IoT flood sensors here are not a smart city project. They are survival infrastructure for the national economy.",
+    "จุดที่แม่น้ำสี่สายกลายเป็นสายเดียว ปิง วัง ยม และน่านมาบรรจบกันที่นี่ก่อนกลายเป็นเจ้าพระยา — ทำให้นครสวรรค์เป็นประตูที่มหาอุทกภัยปี 2554 ไหลผ่าน (12.6% ของ GDP, 4.65 หมื่นล้านดอลลาร์) ธนาคารโลก CCDR 2025: แอ่งเจ้าพระยามีประชากร 40% แรงงาน 78% และ GDP 66% ของประเทศ — น้ำท่วมรอบ 120 ปีในปัจจุบันอาจเกิดซ้ำทุก 18 ปีในปี 2583 ภายใต้ การปล่อยก๊าซปานกลาง หรือทุก 5.4 ปีในกรณีสูง",
+    ["IoT flood monitoring with 30+ river sensors — Chao Phraya gateway for national flood risk", "Smart governance platform for citizen complaints", "Digital agriculture pilot for rice farmers", "World Bank 2025: Chao Phraya basin = 66% of Thailand GDP; 120-year flood returning every 5–18 years by 2050"],
   ),
 
   city(
@@ -127,9 +127,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 72, economy: 70, safety: 60, wellbeing: 72, environment: 58, hospitality: 74, digital: 70 },
     { population: 1800, gppPerCapita: 155000, avgMonthlyIncome: 22100, pm25Annual: 26.3, hospitalBedsPer10k: 28, crimeRatePer100k: 138, greenCoverage: 35, gppGrowthRate: 3.5, pm25Trend: "improving", waterQuality: 70, forestCoverage: 15, fdiInflow: 2800, industryComposition: "services 48%, manufacturing 28%, agriculture 24%", laborForce: 980, roadFatalityRate: 28 },
-    "Isan's economic capital. Operating genuinely smart initiatives — LRT under construction, smart bus system running, university-industry corridor active. A compelling model in the northeast.",
-    "เมืองหลวงเศรษฐกิจอีสาน อัจฉริยะจริง — LRT กำลังก่อสร้าง ระบบรถบัสอัจฉริยะวิ่งแล้ว ระเบียงมหาวิทยาลัย-อุตสาหกรรมทำงานจริง",
-    ["Smart bus rapid transit system operational", "LRT construction underway with digital twin planning", "Khon Kaen Innovation Center driving startup ecosystem", "Smart healthcare network connecting 6 hospitals"],
+    "Isan's economic capital — and the city the World Bank's water security team chose for in-depth fieldwork for its 2025 CCDR, interviewing the Governor and provincial administrative team directly. Finding: Khon Kaen's main water resilience barriers are institutional, not technical — limited authority for local governments to conduct integrated provincial water planning and mobilize small-scale retention pond financing. The LRT and smart bus are real. The water governance gap is equally real, and the World Bank named it.",
+    "เมืองหลวงเศรษฐกิจอีสาน และเมืองที่ทีมความมั่นคงทางน้ำของธนาคารโลกเลือกสำหรับงานภาคสนามเชิงลึกใน CCDR 2025 โดยสัมภาษณ์ผู้ว่าราชการและทีมบริหารจังหวัดโดยตรง การค้นพบ: อุปสรรคหลักด้านความยืดหยุ่นทางน้ำของขอนแก่นเป็นเรื่องสถาบัน ไม่ใช่เทคนิค — อำนาจจำกัดในการดำเนินการวางแผนน้ำแบบบูรณาการระดับจังหวัดและระดมเงินทุน",
+    ["Smart bus rapid transit system operational", "LRT construction underway with digital twin planning", "Khon Kaen Innovation Center driving startup ecosystem", "Smart healthcare network connecting 6 hospitals", "World Bank CCDR 2025: named Khon Kaen as water governance case study — institutional reform is the bottleneck, not infrastructure"],
   ),
 
   city(
@@ -138,9 +138,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 76, economy: 82, safety: 68, wellbeing: 74, environment: 48, hospitality: 72, digital: 82 },
     { population: 85, gppPerCapita: 628000, avgMonthlyIncome: 40200, pm25Annual: 32.4, hospitalBedsPer10k: 42, crimeRatePer100k: 285, greenCoverage: 14, gppGrowthRate: 2.1, pm25Trend: "stable", waterQuality: 55, forestCoverage: 11, fdiInflow: 12500, industryComposition: "services 72%, manufacturing 18%, agriculture 1%, other 9%", laborForce: 4200, roadFatalityRate: 14 },
-    "Bangkok's innovation district. High-functioning smart city around Chulalongkorn University. Real smart parking, energy management, and innovation hub.",
-    "ย่านนวัตกรรมของกรุงเทพฯ เมืองอัจฉริยะที่ทำงานได้ดีรอบจุฬาฯ ที่จอดรถอัจฉริยะ การจัดการพลังงาน และศูนย์นวัตกรรมเป็นจริง",
-    ["Smart parking system with real-time availability", "Building energy management across Samyan Mitrtown complex", "Innovation hub supporting 200+ startups", "5G testbed for smart city applications"],
+    "Bangkok's highest-functioning smart district — and the most invested in answering whether the capital can outrun its climate tail risks. World Bank CCDR 2025: Bangkok faces land subsidence compounded by sea level rise and intensifying storm surges, with scenarios where the capital region — accounting for half of national GDP — becomes substantially more flood-prone. The BMA responded in 2024 with a four-phase Urban Heat Management Framework (monitoring phase 27–32.9°C, warning 33–41.9°C, critical 42–51.9°C, extreme beyond 52°C), two million trees planted, and a 15-minute parks programme. Samyan is where the evidence of Bangkok's intent lives.",
+    "ย่านที่ทำงานได้ดีที่สุดของกรุงเทพฯ — และลงทุนมากที่สุดในการตอบว่าเมืองหลวงจะรับมือความเสี่ยงด้านภูมิอากาศได้หรือไม่ ธนาคารโลก CCDR 2025: กรุงเทพฯ เผชิญกับการทรุดตัวของดินบวกกับระดับน้ำทะเลที่สูงขึ้น และพายุที่รุนแรงขึ้น — BMA ตอบสนองในปี 2567 ด้วยกรอบการจัดการความร้อนในเมือง 4 ระยะ ปลูกต้นไม้สองล้านต้น และโปรแกรมสวน 15 นาที",
+    ["Smart parking system with real-time availability", "Building energy management across Samyan Mitrtown complex", "Innovation hub supporting 200+ startups", "5G testbed for smart city applications", "BMA 2024 Urban Heat Framework: 4-phase alert system (27°C–52°C+), 2M trees, 15-minute parks", "World Bank 2025: Bangkok climate tail risk — capital region = 50% of national GDP"],
   ),
 
   city(
@@ -149,9 +149,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "living", "mobility"],
     { livability: 70, economy: 78, safety: 66, wellbeing: 68, environment: 44, hospitality: 65, digital: 68 },
     { population: 120, gppPerCapita: 628000, avgMonthlyIncome: 40200, pm25Annual: 32.4, hospitalBedsPer10k: 42, crimeRatePer100k: 285, greenCoverage: 12, gppGrowthRate: 2.1, pm25Trend: "stable", waterQuality: 55, forestCoverage: 11, fdiInflow: 12500, industryComposition: "services 72%, manufacturing 18%, agriculture 1%, other 9%", laborForce: 4200, roadFatalityRate: 14 },
-    "Bangkok's CBD corridor. Smart traffic and commercial district tech are real, but air quality and congestion remain brutal.",
-    "ระเบียง CBD ของกรุงเทพฯ ระบบจราจรอัจฉริยะและเทคโนโลยีย่านการค้าเป็นจริง แต่คุณภาพอากาศและการจราจรติดขัดยังรุนแรง",
-    ["Smart traffic signal optimization along 4km corridor", "Digital commercial district management", "Air quality monitoring network"],
+    "Bangkok's CBD corridor — where smart infrastructure investment and climate adaptation are converging. The World Bank CCDR 2025 documents elevated flood-resistant designs like IconSiam's elevated structures as early evidence of private-sector climate proofing. Bangkok's road fatality rate of 14 per 100k is Thailand's lowest — dense urban environments can outperform national norms. Air quality and congestion remain the unsolved problems.",
+    "ระเบียง CBD ของกรุงเทพฯ — ที่การลงทุนโครงสร้างพื้นฐานอัจฉริยะและการปรับตัวต่อสภาพภูมิอากาศกำลังบรรจบกัน ธนาคารโลก CCDR 2025 บันทึกการออกแบบต้านน้ำท่วมแบบยกพื้นอย่างไอคอนสยามเป็นหลักฐานแรกของการปรับตัวของภาคเอกชน",
+    ["Smart traffic signal optimization along 4km corridor", "Digital commercial district management", "Air quality monitoring network", "World Bank 2025: Bangkok private sector adopting flood-resistant elevated design (IconSiam cited as example)"],
   ),
 
   city(
@@ -182,9 +182,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 68, economy: 72, safety: 58, wellbeing: 64, environment: 56, hospitality: 62, digital: 62 },
     { population: 710, gppPerCapita: 422000, avgMonthlyIncome: 26800, pm25Annual: 24.1, hospitalBedsPer10k: 18, crimeRatePer100k: 125, greenCoverage: 42, gppGrowthRate: 4.2, pm25Trend: "stable", waterQuality: 58, forestCoverage: 22, fdiInflow: 4200, industryComposition: "manufacturing 52%, services 30%, agriculture 18%", laborForce: 370, roadFatalityRate: 30 },
-    "EEC gateway city with genuine smart infrastructure. Industrial growth is real, livability improvements visible, good transit connections.",
-    "เมืองประตู EEC ที่มีโครงสร้างพื้นฐานอัจฉริยะจริง การเติบโตอุตสาหกรรมเป็นจริง ปรับปรุงความน่าอยู่มองเห็นได้ การเชื่อมต่อขนส่งดี",
-    ["Smart industrial zone management system", "Digital citizen services portal", "Smart flood early warning system", "EEC-connected 5G infrastructure"],
+    "EEC gateway city with genuine smart infrastructure — and dual climate exposure now precisely quantified. World Bank CCDR 2025 names Chachoengsao as both a priority zone for upper Gulf coastal mud-beach protection AND the EEC province with the largest projected water deficit (897 MCM by 2037, the biggest of the three EEC provinces). The smart flood early warning system is not optional infrastructure here. It is the most important operational system Chachoengsao runs.",
+    "เมืองประตู EEC ที่มีโครงสร้างพื้นฐานอัจฉริยะจริง — และการเปิดรับสภาพภูมิอากาศสองด้านที่ถูกวัดแบบแม่นยำแล้ว ธนาคารโลก CCDR 2025 ระบุฉะเชิงเทราเป็นทั้งพื้นที่ลำดับความสำคัญสำหรับการปกป้องชายฝั่งอ่าวบน และจังหวัด EEC ที่มีการขาดแคลนน้ำมากที่สุด (897 ล้านลบ.ม. ปี 2580)",
+    ["Smart industrial zone management system", "Digital citizen services portal", "Smart flood early warning system — most critical infrastructure in the EEC water-deficit zone", "EEC-connected 5G infrastructure", "World Bank CCDR 2025: Chachoengsao = largest EEC water deficit (897 MCM by 2037) + upper Gulf coastal erosion priority zone"],
   ),
 
   city(
@@ -204,9 +204,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 18, economy: 22, safety: 46, wellbeing: 15, environment: 50, hospitality: 10, digital: 55 },
     { population: 0, gppPerCapita: 1020000, avgMonthlyIncome: 32400, pm25Annual: 26.5, hospitalBedsPer10k: 18, crimeRatePer100k: 155, greenCoverage: 38, gppGrowthRate: 2.5, pm25Trend: "stable", waterQuality: 55, forestCoverage: 25, fdiInflow: 5800, industryComposition: "petrochemical/manufacturing 55%, services 30%, agriculture 15%", laborForce: 420, roadFatalityRate: 55 },
-    "DEPA 2023 ranked it Thailand's #1 city-based smart city (83.55%) — on governance vision metrics, not delivery. The PTT-owned campus covers 3,454 rai in Rayong's EEC zone. VISTEC university and KVIS science high school are operational. The biorefinery was 'almost 50% complete' in 2024, two years past its promised date. Zero residential occupancy data has ever been published.",
-    "depa 2566 จัดอันดับเป็นเมืองอัจฉริยะ #1 ระดับเมือง (83.55%) — บนตัวชี้วัดวิสัยทัศน์การกำกับดูแล ไม่ใช่การส่งมอบจริง วิทยาเขต PTT ครอบคลุม 3,454 ไร่ในเขต EEC ระยอง VISTEC และ KVIS เปิดดำเนินการแล้ว โรงกลั่นชีวภาพ 'เกือบ 50%' เสร็จในปี 2567 ช้ากว่าที่กำหนดสองปี ไม่เคยมีข้อมูลการอยู่อาศัยจริงถูกเปิดเผย",
-    ["VISTEC research university + KVIS science high school operational", "Biorefinery ~50% complete as of 2024 (promised 2022)", "PTT invested ฿4.5B Phase 1 — oil price crash 2020 slowed momentum"],
+    "Thailand's #1-ranked smart city on paper — PTT's 3,454-rai EEC campus with VISTEC and KVIS operational, but the biorefinery is two years delayed and zero residential occupancy has been published. The structural question underlying everything: World Bank CCDR 2025 documents the EEC facing a 40% water supply shortfall by 2037 under average hydrology — 72% in dry years — even after 32 planned infrastructure investments. Wangchan Valley's development thesis depends on EEC water security that does not yet exist.",
+    "เมืองอัจฉริยะอันดับ 1 บนกระดาษ — วิทยาเขต PTT 3,454 ไร่ใน EEC มี VISTEC และ KVIS เปิดดำเนินการแล้ว แต่โรงกลั่นชีวภาพล่าช้าสองปีและไม่มีข้อมูลการอยู่อาศัยจริง ธนาคารโลก CCDR 2025: EEC เผชิญกับการขาดแคลนน้ำ 40% ภายในปี 2580 ภายใต้อุทกวิทยาเฉลี่ย — 72% ในปีที่แห้งแล้ง วิสัยทัศน์การพัฒนาวังจันทร์วัลเลย์ขึ้นอยู่กับความมั่นคงทางน้ำ EEC ที่ยังไม่มีอยู่จริง",
+    ["VISTEC research university + KVIS science high school operational", "Biorefinery ~50% complete as of 2024 (promised 2022)", "PTT invested ฿4.5B Phase 1 — oil price crash 2020 slowed momentum", "World Bank CCDR 2025: EEC water shortfall 40% by 2037 (average), 72% in dry years — the constraint Wangchan Valley does not talk about"],
   ),
 
   city(
@@ -215,9 +215,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 74, economy: 80, safety: 59, wellbeing: 68, environment: 64, hospitality: 88, digital: 72 },
     { population: 418, gppPerCapita: 492000, avgMonthlyIncome: 34600, pm25Annual: 18.2, hospitalBedsPer10k: 25, crimeRatePer100k: 198, greenCoverage: 44, gppGrowthRate: 5.2, pm25Trend: "improving", waterQuality: 72, forestCoverage: 42, fdiInflow: 3200, industryComposition: "tourism/services 75%, construction 12%, agriculture 8%, other 5%", laborForce: 280, roadFatalityRate: 22 },
-    "Thailand's most functional smart tourism city. Real smart traffic, tourist safety systems, marine monitoring. Lives up to the hype — mostly.",
-    "เมืองท่องเที่ยวอัจฉริยะที่ทำงานได้ดีที่สุดของไทย ระบบจราจรอัจฉริยะ ความปลอดภัยนักท่องเที่ยว ติดตามทะเลเป็นจริง สมชื่อ — เป็นส่วนใหญ่",
-    ["Smart traffic management reducing congestion 25%", "Tourist safety alert system with multilingual support", "Marine environmental monitoring with 20+ buoys", "Smart waste and water management island-wide"],
+    "Thailand's most functional smart tourism city — and one of three coastal provinces (with Pattaya and Krabi) explicitly named in the World Bank CCDR 2025 as particularly vulnerable to heat stress shortening outdoor tourism seasons and shifting visitor preferences toward cooler destinations. On private-sector climate response: 695 hotels have joined TAT's CF-Hotels sustainability platform, but only 160 self-reported emissions data in 2024. Coastal resorts are co-financing mangrove restoration to prevent erosion and storm surge damage. The smart infrastructure is real. The climate resilience investment is real but still front-loaded toward hardware.",
+    "เมืองท่องเที่ยวอัจฉริยะที่ทำงานได้ดีที่สุดของไทย — และหนึ่งในสามจังหวัดชายฝั่ง (ร่วมกับพัทยาและกระบี่) ที่ถูกระบุชื่อโดยเฉพาะใน CCDR ธนาคารโลก 2025 ว่าเปราะบางต่อความเครียดจากความร้อนที่ย่นฤดูท่องเที่ยวกลางแจ้ง โรงแรม 695 แห่งเข้าร่วมแพลตฟอร์ม CF-Hotels ของ ททท. แต่มีเพียง 160 แห่งที่รายงานข้อมูลการปล่อยก๊าซในปี 2567",
+    ["Smart traffic management reducing congestion 25%", "Tourist safety alert system with multilingual support", "Marine environmental monitoring with 20+ buoys", "Smart waste and water management island-wide", "World Bank 2025: Phuket named as heat-vulnerable tourism province; 695 hotels on CF-Hotels platform, only 160 self-reporting"],
   ),
 
   city(
@@ -250,9 +250,9 @@ export const certifiedCities: SmartCity[] = [
     ["energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 66, economy: 74, safety: 46, wellbeing: 62, environment: 52, hospitality: 58, digital: 58 },
     { population: 740, gppPerCapita: 1020000, avgMonthlyIncome: 32400, pm25Annual: 26.5, hospitalBedsPer10k: 18, crimeRatePer100k: 155, greenCoverage: 38, gppGrowthRate: 2.5, pm25Trend: "stable", waterQuality: 55, forestCoverage: 25, fdiInflow: 5800, industryComposition: "petrochemical/manufacturing 55%, services 30%, agriculture 15%", laborForce: 420, roadFatalityRate: 55 },
-    "Industrial powerhouse in EEC with highest GPP. Smart environmental monitoring around industrial zones is genuinely useful.",
-    "เมืองอุตสาหกรรมหลักใน EEC ที่มี GPP สูงสุด การเฝ้าระวังสิ่งแวดล้อมอัจฉริยะรอบเขตอุตสาหกรรมมีประโยชน์จริง",
-    ["Environmental monitoring around Map Ta Phut industrial zone", "Smart energy management for petrochemical corridor", "Digital citizen reporting for pollution complaints"],
+    "EEC's industrial powerhouse — highest provincial GPP per capita in Thailand. Smart environmental monitoring around Map Ta Phut is genuinely useful and necessary. The structural constraint: World Bank CCDR 2025 projects Rayong's water supply deficit growing from 170 MCM in 2024 to 292 MCM by 2037. Only 37% of EEC wastewater is currently treated — the largest untapped source of new supply. Water recycling and industrial efficiency are the next competitive edge for this corridor, not expansion.",
+    "เมืองอุตสาหกรรมหลักของ EEC — GPP ต่อหัวสูงสุดของประเทศ ธนาคารโลก CCDR 2025: การขาดแคลนน้ำของระยองเพิ่มจาก 170 ล้านลบ.ม. ในปี 2567 เป็น 292 ล้านลบ.ม. ในปี 2580 มีเพียง 37% ของน้ำเสีย EEC ที่ผ่านการบำบัด — แหล่งน้ำใหม่ที่ใหญ่ที่สุดที่ยังไม่ได้ใช้",
+    ["Environmental monitoring around Map Ta Phut industrial zone", "Smart energy management for petrochemical corridor", "Digital citizen reporting for pollution complaints", "World Bank CCDR 2025: Rayong water deficit 292 MCM by 2037 — water recycling is the industrial growth constraint"],
   ),
 
   city(
@@ -338,9 +338,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "living", "mobility"],
     { livability: 66, economy: 64, safety: 61, wellbeing: 60, environment: 72, hospitality: 84, digital: 48 },
     { population: 468, gppPerCapita: 198000, avgMonthlyIncome: 22600, pm25Annual: 14.5, hospitalBedsPer10k: 18, crimeRatePer100k: 125, greenCoverage: 55, gppGrowthRate: 4.5, pm25Trend: "improving", waterQuality: 75, forestCoverage: 52, fdiInflow: 1800, industryComposition: "tourism/services 62%, agriculture 22%, fishery 16%", laborForce: 240, roadFatalityRate: 24 },
-    "Andaman tourism hub with genuine marine conservation tech. Smart environmental monitoring protects islands. Tourism-economy tension is real.",
-    "ศูนย์ท่องเที่ยวอันดามันที่มีเทคโนโลยีอนุรักษ์ทะเลจริง เฝ้าระวังสิ่งแวดล้อมอัจฉริยะปกป้องเกาะ ความขัดแย้งท่องเที่ยว-เศรษฐกิจเป็นจริง",
-    ["Marine conservation monitoring for Phi Phi islands", "Smart tourism crowd management", "Renewable energy integration pilot"],
+    "Andaman tourism hub cited by name in the World Bank CCDR 2025 for two things: heat stress vulnerability reducing beach tourism seasons, and the Nai Nang Apiculture Group — a World-Bank-documented example of mangrove restoration paired with beekeeping, supported by Marriott Hotels and selling honey in hotel restaurants. That is nature-based coastal protection with a revenue model attached. Krabi's most valuable smart city investment may be its ecosystem services, not its digital infrastructure — and the World Bank just put that in writing.",
+    "ศูนย์ท่องเที่ยวอันดามันที่ถูกกล่าวถึงชื่อใน CCDR ธนาคารโลก 2025 สองเรื่อง: ความเสี่ยงจากความร้อนที่ลดฤดูท่องเที่ยวชายหาด และกลุ่มผึ้งไนนาง — ตัวอย่างที่ธนาคารโลกบันทึกของการปลูกป่าชายเลนควบคู่กับการเลี้ยงผึ้ง ได้รับการสนับสนุนจาก Marriott Hotels และขายน้ำผึ้งในร้านอาหารของโรงแรม",
+    ["Marine conservation monitoring for Phi Phi islands", "Smart tourism crowd management", "Renewable energy integration pilot", "World Bank CCDR 2025: Krabi's Nai Nang Apiculture Group (mangrove + beekeeping + Marriott) cited as model nature-based coastal protection with revenue"],
   ),
 
   city(
@@ -439,9 +439,9 @@ export const certifiedCities: SmartCity[] = [
     ["environment", "governance", "living"],
     { livability: 52, economy: 48, safety: 59, wellbeing: 50, environment: 58, hospitality: 55, digital: 38 },
     { population: 22, gppPerCapita: 422000, avgMonthlyIncome: 26800, pm25Annual: 24.1, hospitalBedsPer10k: 18, crimeRatePer100k: 125, greenCoverage: 42, gppGrowthRate: 4.2, pm25Trend: "stable", waterQuality: 58, forestCoverage: 22, fdiInflow: 4200, industryComposition: "manufacturing 52%, services 30%, agriculture 18%", laborForce: 370, roadFatalityRate: 30 },
-    "Small EEC sub-district with smart agriculture focus. Some IoT deployment but still very early.",
-    "ตำบลเล็กใน EEC ที่เน้นเกษตรอัจฉริยะ มีการใช้ IoT บ้างแต่ยังเริ่มต้นมาก",
-    ["Smart agriculture IoT pilot", "Digital community governance"],
+    "Small EEC sub-district in Chachoengsao — the EEC province with the largest projected water deficit (897 MCM by 2037). Smart agriculture IoT here has a real mandate beyond productivity: water efficiency in an area facing 60%+ supply gaps is not a differentiator. It is the survival condition.",
+    "ตำบลเล็กใน EEC ฉะเชิงเทรา — จังหวัด EEC ที่มีการขาดแคลนน้ำมากที่สุด (897 ล้านลบ.ม. ปี 2580) IoT เกษตรอัจฉริยะที่นี่มีคำสั่งจริงนอกเหนือจากผลผลิต: ประสิทธิภาพการใช้น้ำในพื้นที่ที่เผชิญกับช่องว่างอุปทาน 60%+ ไม่ใช่ความได้เปรียบ แต่เป็นเงื่อนไขการอยู่รอด",
+    ["Smart agriculture IoT pilot — water efficiency mandate in EEC water-deficit zone", "Digital community governance"],
   ),
 
   city(
@@ -450,9 +450,9 @@ export const certifiedCities: SmartCity[] = [
     ["environment", "governance", "living"],
     { livability: 50, economy: 55, safety: 49, wellbeing: 48, environment: 52, hospitality: 45, digital: 40 },
     { population: 45, gppPerCapita: 1020000, avgMonthlyIncome: 32400, pm25Annual: 26.5, hospitalBedsPer10k: 18, crimeRatePer100k: 155, greenCoverage: 28, gppGrowthRate: 2.5, pm25Trend: "stable", waterQuality: 55, forestCoverage: 25, fdiInflow: 5800, industryComposition: "petrochemical/manufacturing 55%, services 30%, agriculture 15%", laborForce: 420, roadFatalityRate: 55 },
-    "Industrial district near Map Ta Phut. Environmental monitoring is the key smart tech here — necessary given the chemical industry.",
-    "เขตอุตสาหกรรมใกล้มาบตาพุด การเฝ้าระวังสิ่งแวดล้อมเป็นเทคโนโลยีอัจฉริยะหลัก — จำเป็นเนื่องจากอุตสาหกรรมเคมี",
-    ["Industrial environmental monitoring network", "Chemical spill early warning system"],
+    "Industrial district adjacent to Map Ta Phut. Environmental monitoring is essential — and the EEC water deficit makes water recycling the next critical technology. World Bank CCDR 2025: Rayong faces a 292 MCM water deficit by 2037, with only 37% of EEC wastewater currently treated. For an industrial district producing petrochemicals, water circularity is not optional.",
+    "เขตอุตสาหกรรมติดกับมาบตาพุด การเฝ้าระวังสิ่งแวดล้อมเป็นสิ่งจำเป็น ธนาคารโลก CCDR 2025: ระยองเผชิญกับการขาดแคลนน้ำ 292 ล้านลบ.ม. ภายในปี 2580 โดยมีเพียง 37% ของน้ำเสีย EEC ที่ผ่านการบำบัด",
+    ["Industrial environmental monitoring network", "Chemical spill early warning system", "World Bank CCDR 2025: EEC water circularity imperative — 37% wastewater treatment is insufficient for industrial scale-up"],
   ),
 
   city(
@@ -515,9 +515,9 @@ export const promotionZoneCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 68, economy: 72, safety: 63, wellbeing: 66, environment: 46, hospitality: 82, digital: 62 },
     { population: 200, gppPerCapita: 628000, avgMonthlyIncome: 40200, pm25Annual: 32.4, hospitalBedsPer10k: 42, crimeRatePer100k: 285, greenCoverage: 18, gppGrowthRate: 2.1, pm25Trend: "stable", waterQuality: 55, forestCoverage: 11, fdiInflow: 12500, industryComposition: "services 72%, manufacturing 18%, agriculture 1%, other 9%", laborForce: 4200, roadFatalityRate: 14 },
-    "Bangkok's historic core with genuine heritage-tech fusion. Smart canal management and cultural preservation.",
-    "ใจกลางประวัติศาสตร์กรุงเทพฯ ที่มีการผสมผสานมรดก-เทคโนโลยีจริง จัดการคลองอัจฉริยะและอนุรักษ์วัฒนธรรม",
-    ["Smart heritage preservation for Grand Palace district", "Canal water quality monitoring", "Digital cultural tourism platform"],
+    "Bangkok's historic core — named in the World Bank CCDR 2025 alongside Ayutthaya as heritage areas requiring portable flood barriers similar to those used in Venice. Canal water quality monitoring here is not an aesthetic choice: Rattanakosin sits at the heart of the Chao Phraya basin, home to 66% of Thailand's GDP, where the 120-year flood is projected to return every 5–18 years by 2050. Heritage protection and climate adaptation have become the same investment.",
+    "ใจกลางประวัติศาสตร์กรุงเทพฯ — ถูกกล่าวถึงใน CCDR ธนาคารโลก 2025 ควบคู่กับอยุธยาในฐานะพื้นที่มรดกที่ต้องการกำแพงกั้นน้ำแบบพกพาคล้ายกับที่ใช้ในเวนิส การติดตามคุณภาพน้ำในคลองที่นี่ไม่ใช่เรื่องสุนทรียะ: รัตนโกสินทร์อยู่ที่ใจกลางแอ่งเจ้าพระยาซึ่งมี GDP 66% ของประเทศ",
+    ["Smart heritage preservation for Grand Palace district", "Canal water quality monitoring — flood resilience for Chao Phraya basin", "Digital cultural tourism platform", "World Bank 2025: Rattanakosin named alongside Ayutthaya as needing Venice-style portable flood barriers"],
   ),
 
   city(

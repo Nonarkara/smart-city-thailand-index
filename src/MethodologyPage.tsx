@@ -73,14 +73,15 @@ const pillarDescriptions: Record<ScoringPillar, TriLingual & { signals: TriLingu
     ],
   },
   environment: {
-    en: "Environmental stress and resilience: air, water, green coverage, and whether the ecological baseline supports healthy urban life.",
-    th: "ความกดดันและความยืดหยุ่นด้านสิ่งแวดล้อม: อากาศ น้ำ พื้นที่สีเขียว และฐานนิเวศรองรับชีวิตเมืองที่ดีหรือไม่",
-    zh: "环境压力与韧性：空气、水、绿地，以及生态底盘是否支撑健康的城市生活。",
+    en: "Environmental stress and resilience: air, water, green coverage, and whether the ecological baseline supports healthy urban life. World Bank CCDR 2025 quantifies the cost of inaction at 7–14% of GDP by 2050 under business-as-usual — making the environment pillar an investment signal, not just a sustainability score. Cities with stronger environmental baselines face lower climate adaptation costs and smaller economic drag from flood damage, heat stress, and water scarcity.",
+    th: "ความกดดันและความยืดหยุ่นด้านสิ่งแวดล้อม: อากาศ น้ำ พื้นที่สีเขียว และฐานนิเวศรองรับชีวิตเมืองที่ดีหรือไม่ ธนาคารโลก CCDR 2025 วัดค่าต้นทุนของการไม่ดำเนินการที่ 7-14% ของ GDP ภายในปี 2593 ภายใต้สถานการณ์ปกติ ทำให้เสาหลักสิ่งแวดล้อมเป็นสัญญาณการลงทุน ไม่ใช่แค่คะแนนความยั่งยืน",
+    zh: "环境压力与韧性：空气、水、绿地，以及生态底盘是否支撑健康的城市生活。世界银行CCDR 2025将不作为的代价量化为2050年前占GDP7-14%——使环境支柱成为投资信号，而非仅仅是可持续发展评分。环境基线更强的城市面临更低的气候适应成本和更小的洪水、热应力和水资源短缺造成的经济拖累。",
     signals: [
-      { en: "Annual PM2.5", th: "PM2.5 รายปี", zh: "年均 PM2.5" },
-      { en: "Water quality", th: "คุณภาพน้ำ", zh: "水质" },
-      { en: "Green and forest coverage", th: "พื้นที่สีเขียวและป่าไม้", zh: "绿地与森林覆盖" },
+      { en: "Annual PM2.5 (GISTDA live stations)", th: "PM2.5 รายปี (สถานีสด GISTDA)", zh: "年均 PM2.5（GISTDA实时站）" },
+      { en: "Water quality + EEC water security risk", th: "คุณภาพน้ำ + ความเสี่ยงความมั่นคงทางน้ำ EEC", zh: "水质 + EEC水安全风险" },
+      { en: "Green and forest coverage (GISTDA 50k)", th: "พื้นที่สีเขียวและป่าไม้ (GISTDA 50k)", zh: "绿地与森林覆盖（GISTDA 50k）" },
       { en: "Observed environmental trajectory", th: "ทิศทางสิ่งแวดล้อมที่สังเกตได้", zh: "可观察的环境趋势" },
+      { en: "Flood-frequency factor (GISTDA + World Bank CCDR)", th: "ปัจจัยความถี่น้ำท่วม (GISTDA + ธนาคารโลก CCDR)", zh: "洪水频率因子（GISTDA + 世界银行CCDR）" },
     ],
   },
   hospitality: {
@@ -106,6 +107,11 @@ const pillarDescriptions: Record<ScoringPillar, TriLingual & { signals: TriLingu
     ],
   },
 };
+
+// World Bank CCDR 2025 urgency — added to the method snapshot ribbon so
+// the investment cost of inaction is visible at the top of the methodology page.
+const CCDR_GDP_RISK = "7–14% GDP by 2050";
+const CCDR_INVESTMENT_NEED = "$219B / 25 yr";
 
 const methodSnapshots: Array<{ label: TriLingual; value: TriLingual }> = [
   {
@@ -151,6 +157,15 @@ const methodSnapshots: Array<{ label: TriLingual; value: TriLingual }> = [
       th: `α >= ${TIER_THRESHOLDS.alpha}, β >= ${TIER_THRESHOLDS.beta}`,
       zh: `α >= ${TIER_THRESHOLDS.alpha}, β >= ${TIER_THRESHOLDS.beta}`,
     },
+  },
+  // World Bank CCDR 2025 — climate cost of inaction shown in the method header
+  {
+    label: { en: "Climate cost of inaction", th: "ต้นทุนของการไม่ดำเนินการด้านภูมิอากาศ", zh: "不作为的气候代价" },
+    value: { en: CCDR_GDP_RISK, th: CCDR_GDP_RISK, zh: CCDR_GDP_RISK },
+  },
+  {
+    label: { en: "Climate investment needed", th: "การลงทุนด้านภูมิอากาศที่ต้องการ", zh: "所需气候投资" },
+    value: { en: CCDR_INVESTMENT_NEED, th: CCDR_INVESTMENT_NEED, zh: CCDR_INVESTMENT_NEED },
   },
 ];
 

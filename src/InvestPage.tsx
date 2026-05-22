@@ -46,6 +46,16 @@ const macroStats: MacroStat[] = [
     value: "$43B",
     sub: { en: "Eastern Economic Corridor", th: "ระเบียงเศรษฐกิจพิเศษภาคตะวันออก", zh: "东部经济走廊" },
   },
+  {
+    label: { en: "Climate Investment Needed", th: "การลงทุนด้านภูมิอากาศที่ต้องการ", zh: "所需气候投资" },
+    value: "$219B",
+    sub: { en: "over 25 years · World Bank CCDR 2025", th: "ใน 25 ปี · ธนาคารโลก CCDR 2568", zh: "25年内 · 世界银行CCDR 2025" },
+  },
+  {
+    label: { en: "GDP at Risk by 2050", th: "GDP ที่เสี่ยงภายในปี 2593", zh: "2050年GDP风险" },
+    value: "7–14%",
+    sub: { en: "BAU climate scenario · World Bank CCDR 2025", th: "กรณีฐานภูมิอากาศ · ธนาคารโลก CCDR 2568", zh: "常规气候情景 · 世界银行CCDR 2025" },
+  },
 ];
 
 interface InsightCard {
@@ -353,6 +363,34 @@ const mechanisms: Mechanism[] = [
     },
     tag: "UN",
   },
+  // ─── World Bank CCDR 2025 — three additional mechanisms from the climate finance analysis ───
+  {
+    name: { en: "Carbon Pricing Revenue Mechanism", th: "กลไกรายได้จากราคาคาร์บอน", zh: "碳定价收入机制" },
+    desc: {
+      en: "World Bank CCDR 2025: carbon pricing could generate revenue equivalent to ~1% of GDP annually. Thailand's voluntary carbon market and emerging carbon tax framework create early-mover positioning for climate-smart city bonds and green project finance.",
+      th: "ธนาคารโลก CCDR 2025: การกำหนดราคาคาร์บอนสามารถสร้างรายได้เทียบเท่า ~1% ของ GDP ต่อปี ตลาดคาร์บอนโดยสมัครใจของไทยและกรอบภาษีคาร์บอนที่กำลังเกิดขึ้นสร้างตำแหน่งผู้เข้าก่อนสำหรับพันธบัตรเมืองอัจฉริยะที่เป็นมิตรกับสภาพภูมิอากาศ",
+      zh: "世银CCDR 2025：碳定价每年可产生约1% GDP的收入。泰国自愿碳市场和新兴碳税框架为气候智慧城市债券和绿色项目融资创造了先发优势。",
+    },
+    tag: "Carbon",
+  },
+  {
+    name: { en: "Concessional Co-Finance (Climate Resilience)", th: "การร่วมจัดหาเงินทุนแบบผ่อนปรน (ความยืดหยุ่นด้านสภาพภูมิอากาศ)", zh: "优惠联合融资（气候韧性）" },
+    desc: {
+      en: "World Bank CCDR 2025 recommends concessional loans, results-based subsidies, and co-financing tied explicitly to climate resilience outcomes — particularly for nature-based solutions (coastal mangroves, watershed management) where private returns are below social returns. ADB, World Bank, and bilateral donors are actively deploying in Thailand.",
+      th: "ธนาคารโลก CCDR 2025 แนะนำเงินกู้ผ่อนปรน เงินอุดหนุนตามผลลัพธ์ และการร่วมจัดหาเงินทุนที่ผูกโยงกับผลลัพธ์ความยืดหยุ่นด้านสภาพภูมิอากาศโดยเฉพาะ — โดยเฉพาะสำหรับโซลูชันที่อิงธรรมชาติที่ผลตอบแทนส่วนตัวต่ำกว่าผลตอบแทนทางสังคม",
+      zh: "世银CCDR 2025建议优惠贷款、基于结果的补贴和与气候韧性成效明确挂钩的联合融资——特别是对于自然解决方案（滨海红树林、流域管理），这些领域私人回报低于社会回报。",
+    },
+    tag: "Blended",
+  },
+  {
+    name: { en: "Catastrophe Bonds + Climate Insurance", th: "พันธบัตรหายนะ + ประกันสภาพภูมิอากาศ", zh: "巨灾债券 + 气候保险" },
+    desc: {
+      en: "World Bank CCDR 2025 explicitly recommends catastrophe bonds, biodiversity bonds, and climate insurance as financial instruments that need to be scaled in Thailand. The 2011 floods (USD 46.5B damage, 12.6% of GDP) with a 50% chance of recurrence by 2050 make parametric flood insurance and cat bonds a structurally necessary risk-transfer instrument — not a niche product.",
+      th: "ธนาคารโลก CCDR 2025 แนะนำพันธบัตรหายนะ พันธบัตรความหลากหลายทางชีวภาพ และประกันสภาพภูมิอากาศเป็นเครื่องมือทางการเงินที่ต้องขยายใหญ่ขึ้นในไทย น้ำท่วมปี 2554 (เสียหาย 4.65 หมื่นล้าน USD, 12.6% ของ GDP) ที่มีโอกาสเกิดซ้ำ 50% ภายในปี 2593 ทำให้ประกันน้ำท่วมแบบพารามิเตอร์และ cat bonds เป็นเครื่องมือโอนความเสี่ยงที่จำเป็นเชิงโครงสร้าง",
+      zh: "世银CCDR 2025明确建议将巨灾债券、生物多样性债券和气候保险作为需要在泰国扩大规模的金融工具。2011年洪灾（损失465亿美元，占GDP12.6%）到2050年有50%的复发概率，使得参数化洪水保险和巨灾债券成为结构性必要的风险转移工具——而非利基产品。",
+    },
+    tag: "Risk",
+  },
 ];
 
 interface Risk {
@@ -525,6 +563,7 @@ const sources: Source[] = [
   { name: "SEC Thailand Green Bond Framework", desc: { en: "Municipal bond issuance guidelines, sustainable finance taxonomy", th: "แนวทางการออกพันธบัตรเทศบาล, อนุกรมวิธานการเงินอย่างยั่งยืน", zh: "市政债券发行指引、可持续金融分类法" } },
   { name: "IMF World Economic Outlook", desc: { en: "Thailand macroeconomic context, ASEAN growth projections", th: "บริบทเศรษฐกิจมหภาคไทย, ประมาณการเติบโต ASEAN", zh: "泰国宏观经济背景、东盟增长预测" } },
   { name: "UNCTAD World Investment Report", desc: { en: "Cross-border FDI trends, ASEAN investment competitiveness", th: "แนวโน้ม FDI ข้ามพรมแดน, ความสามารถแข่งขันด้านการลงทุน ASEAN", zh: "跨境FDI趋势、东盟投资竞争力" } },
+  { name: "World Bank Thailand Country Climate & Development Report (CCDR) 2025", desc: { en: "Climate-economy modelling, $219B investment needs, EEC water security, flood risk projections, coastal erosion, heat stress, carbon pricing mechanisms, financing instruments. Primary source for climate risk data in city dossiers.", th: "แบบจำลองภูมิอากาศ-เศรษฐกิจ, ความต้องการลงทุน 2.19 แสนล้าน USD, ความมั่นคงทางน้ำ EEC, การคาดการณ์ความเสี่ยงน้ำท่วม, การกัดเซาะชายฝั่ง, ความเครียดจากความร้อน, กลไกราคาคาร์บอน, เครื่องมือทางการเงิน แหล่งข้อมูลหลักสำหรับข้อมูลความเสี่ยงด้านภูมิอากาศในแฟ้มเมือง", zh: "气候-经济模型，2190亿美元投资需求，EEC水安全，洪水风险预测，海岸侵蚀，热应力，碳定价机制，金融工具。城市档案气候风险数据的主要来源。" } },
 ];
 
 /* ─── COMPONENT ─── */
@@ -571,6 +610,58 @@ export default function InvestPage({ locale, onNavigate }: Props) {
           })}
         </p>
       </section>
+
+      {/* ═══════════ WORLD BANK CCDR 2025 URGENCY PANEL ═══════════ */}
+      <div className="invest-ccdr-panel">
+        <div className="invest-ccdr-inner">
+          <p className="invest-ccdr-source">
+            {translate(locale, {
+              en: "World Bank Country Climate & Development Report — Thailand 2025",
+              th: "รายงานสภาพภูมิอากาศและการพัฒนาประเทศ ธนาคารโลก — ประเทศไทย 2568",
+              zh: "世界银行泰国国别气候与发展报告 2025",
+            })}
+          </p>
+          <div className="invest-ccdr-grid">
+            <div className="invest-ccdr-stat">
+              <span className="invest-ccdr-num">7–14%</span>
+              <p className="invest-ccdr-copy">
+                {translate(locale, {
+                  en: "GDP loss by 2050 under business-as-usual. Climate change halves annual growth rates. High-income status by 2037 becomes structurally impossible.",
+                  th: "การสูญเสีย GDP ภายในปี 2593 ภายใต้สถานการณ์ปกติ การเปลี่ยนแปลงสภาพภูมิอากาศลดอัตราการเติบโตต่อปีลงครึ่งหนึ่ง สถานะรายได้สูงภายในปี 2580 กลายเป็นสิ่งที่เป็นไปไม่ได้เชิงโครงสร้าง",
+                  zh: "常规情景下2050年GDP损失。气候变化使年增长率减半。2037年前实现高收入国家地位在结构上成为不可能。",
+                })}
+              </p>
+            </div>
+            <div className="invest-ccdr-stat">
+              <span className="invest-ccdr-num">$219B</span>
+              <p className="invest-ccdr-copy">
+                {translate(locale, {
+                  en: "climate investment needed over 25 years — $105B adaptation, $96B emissions reduction, $19B climate-smart agriculture. Cost of inaction is multiples larger.",
+                  th: "การลงทุนด้านภูมิอากาศที่ต้องการใน 25 ปี — 105 พันล้าน USD การปรับตัว, 96 พันล้าน USD ลดการปล่อยก๊าซ, 19 พันล้าน USD เกษตรอัจฉริยะ ต้นทุนของการไม่ดำเนินการมากกว่าหลายเท่า",
+                  zh: "25年内所需气候投资——1050亿美元适应，960亿美元减排，190亿美元气候智慧农业。不作为的代价是其数倍。",
+                })}
+              </p>
+            </div>
+            <div className="invest-ccdr-stat">
+              <span className="invest-ccdr-num">50%</span>
+              <p className="invest-ccdr-copy">
+                {translate(locale, {
+                  en: "chance the 2011 flood recurs by 2050. That event cost 12.6% of GDP (USD 46.5B) in a single year. The Chao Phraya basin holds 66% of Thailand's GDP.",
+                  th: "โอกาสที่น้ำท่วมปี 2554 จะเกิดซ้ำภายในปี 2593 เหตุการณ์นั้นทำให้ GDP สูญเสีย 12.6% (4.65 หมื่นล้าน USD) ในปีเดียว แอ่งเจ้าพระยาถือ 66% ของ GDP ประเทศไทย",
+                  zh: "2050年前2011年洪灾重演的概率。那次事件造成单年GDP损失12.6%（465亿美元）。昭披耶流域占泰国GDP的66%。",
+                })}
+              </p>
+            </div>
+          </div>
+          <p className="invest-ccdr-thesis">
+            {translate(locale, {
+              en: "Adaptation investments in flood mitigation, coastal protection, water security, and cooling could raise annual GDP by 4–5% by 2050 relative to business-as-usual — at a cost of slightly over 1% of GDP per year. This is not a climate argument. It is a return-on-investment argument.",
+              th: "การลงทุนด้านการปรับตัวในการบรรเทาน้ำท่วม การปกป้องชายฝั่ง ความมั่นคงทางน้ำ และการทำให้เย็นขึ้น สามารถเพิ่ม GDP รายปีได้ 4-5% ภายในปี 2593 เมื่อเทียบกับสถานการณ์ปกติ — ด้วยต้นทุนเกินกว่า 1% ของ GDP ต่อปีเล็กน้อย นี่ไม่ใช่ข้อโต้แย้งด้านภูมิอากาศ แต่เป็นข้อโต้แย้งเรื่องผลตอบแทนการลงทุน",
+              zh: "洪水缓解、海岸保护、水安全和降温方面的适应性投资，相较常规情景可在2050年前将年均GDP提高4-5%——成本略超每年GDP的1%。这不是气候论点，这是投资回报论点。",
+            })}
+          </p>
+        </div>
+      </div>
 
       {/* ═══════════ 2. THAILAND MACRO SNAPSHOT ═══════════ */}
       <section ref={macroRef} className={`section reveal stagger-1 ${macroVisible ? "visible" : ""}`}>
