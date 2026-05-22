@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
 import ComparisonGrid from "./ComparisonGrid";
+import CityFingerprint from "./CityFingerprint";
 import RankingsMapView from "./RankingsMapView";
+import { getCityPhotoAsset } from "./cityMedia";
+import { ResponsiveImage } from "./mediaAssets";
 import { useCitySummaries } from "./cityApi";
 import { computeDevelopability, getMoneyballProfile } from "./cityAnalytics";
 import {
@@ -261,7 +264,7 @@ function MoneyballPicksStrip({
 
 export default function RankingsPage({ locale, onNavigate }: Props) {
   const { data: cities } = useCitySummaries();
-  const [viewMode, setViewMode] = useState<"directory" | "compare" | "map">("directory");
+  const [viewMode, setViewMode] = useState<"directory" | "compare" | "map" | "gallery">("directory");
   const [lensId, setLensId] = useState<string>("balanced");
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
@@ -437,6 +440,16 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             <button
               type="button"
               role="tab"
+              aria-selected={viewMode === "gallery"}
+              className={`ranking-view-tab ${viewMode === "gallery" ? "active" : ""}`}
+              onClick={() => setViewMode("gallery")}
+            >
+              <span className="ranking-view-tab-icon" aria-hidden="true">⊞</span>
+              {t({ en: "Gallery", th: "แกลเลอรี", zh: "图册" })}
+            </button>
+            <button
+              type="button"
+              role="tab"
               aria-selected={viewMode === "map"}
               className={`ranking-view-tab ${viewMode === "map" ? "active" : ""}`}
               onClick={() => setViewMode("map")}
@@ -448,6 +461,59 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
 
           {viewMode === "map" ? (
             <RankingsMapView locale={locale} cities={cities} onNavigate={onNavigate} />
+          ) : viewMode === "gallery" ? (
+            /* ─── GALLERY VIEW — editorial photo + fingerprint cards ─── */
+            <div className="rankings-gallery">
+              {sorted.map(({ city, lensScore }, idx) => {
+                const photo = getCityPhotoAsset(city);
+                const provinceName = getProvinceName(city, locale);
+                const cityName = getCityName(city, locale);
+                const tierSym = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
+                return (
+                  <button
+                    key={city.id}
+                    type="button"
+                    className="gallery-card"
+                    onClick={() => onNavigate(`/city/${city.id}`)}
+                    aria-label={`${cityName} — ${provinceName} — ${lensScore.toFixed(1)}`}
+                  >
+                    <div className="gallery-card-photo-wrap">
+                      <ResponsiveImage
+                        src={photo.src}
+                        alt={cityName}
+                        className="gallery-card-photo"
+                        sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
+                        style={{ objectPosition: photo.objectPosition }}
+                      />
+                      <div className="gallery-card-overlay">
+                        <span className="gallery-card-rank">
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                        <CityFingerprint
+                          scores={city.scores}
+                          size={72}
+                          fillOpacity={0.22}
+                          showDots={true}
+                          showGrid={true}
+                          cityName={cityName}
+                          className="gallery-card-fingerprint"
+                        />
+                      </div>
+                    </div>
+                    <div className="gallery-card-body">
+                      <div className="gallery-card-head">
+                        <span className="gallery-card-name">{cityName}</span>
+                        <span className="gallery-card-score">{lensScore.toFixed(1)}</span>
+                      </div>
+                      <div className="gallery-card-meta">
+                        <span className="gallery-card-province">{provinceName}</span>
+                        <span className={`gallery-card-tier gallery-card-tier-${city.tier}`}>{tierSym} {TIER_LABELS[locale][city.tier]}</span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           ) : (<>
           <div className="directory-toolbar">
             <input
@@ -536,6 +602,16 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                         onClick={handleClick}
                       >
                         <span className="rank-row-num">{String(idx + 1).padStart(2, "0")}</span>
+                        {/* xs fingerprint — unique per-city visual marker */}
+                        <CityFingerprint
+                          scores={city.scores}
+                          size={32}
+                          fillOpacity={0.14}
+                          showDots={false}
+                          showGrid={false}
+                          cityName={getCityName(city, locale)}
+                          className="rank-row-fingerprint"
+                        />
                         <span className="rank-row-body">
                           <span className="rank-row-head">
                             <span className="rank-row-name">

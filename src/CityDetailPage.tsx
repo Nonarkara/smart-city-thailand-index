@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import AnimatedScore from "./AnimatedScore";
+import CityFingerprint from "./CityFingerprint";
 import { getDepaOfficial } from "./depaOfficialData";
 import { getPopulationDensityPerKm2, getResolvedLandAreaKm2, getResolvedPopulationThousand } from "./adminBaselines";
 import { getCityContext } from "./cityContext";
@@ -1222,9 +1224,18 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             </div>
             <div className="city-hero-photo-score-card" aria-label={translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}>
               <span className="city-hero-photo-score-label">{translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合" })}</span>
-              <span className="city-hero-photo-score">{city.compositeScore.toFixed(1)}</span>
+              <AnimatedScore target={city.compositeScore} className="city-hero-photo-score" />
               <span className="city-hero-photo-score-note">{tierSymbol} {TIER_LABELS[locale][city.tier]}</span>
             </div>
+            {/* City fingerprint — unique 7-pillar visual DNA, positioned bottom-right */}
+            <CityFingerprint
+              scores={city.scores}
+              size={120}
+              fillOpacity={0.18}
+              cityName={cityName}
+              className="city-hero-fingerprint"
+              showGrid={true}
+            />
           </div>
         </div>
       ) : (
@@ -1239,9 +1250,17 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             </div>
             <div className="city-hero-photo-score-card" aria-label={translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}>
               <span className="city-hero-photo-score-label">{translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合" })}</span>
-              <span className="city-hero-photo-score city-hero-gradient-score">{city.compositeScore.toFixed(1)}</span>
+              <AnimatedScore target={city.compositeScore} className="city-hero-photo-score city-hero-gradient-score" />
               <span className="city-hero-photo-score-note">{tierSymbol} {TIER_LABELS[locale][city.tier]}</span>
             </div>
+            <CityFingerprint
+              scores={city.scores}
+              size={120}
+              fillOpacity={0.22}
+              cityName={cityName}
+              className="city-hero-fingerprint city-hero-fingerprint-gradient"
+              showGrid={true}
+            />
           </div>
         </div>
       )}
