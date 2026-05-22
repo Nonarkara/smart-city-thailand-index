@@ -7734,6 +7734,108 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 
 /* 3. Full-bleed stat ribbon — bridges hero into column content */
+/* ========================================================================
+   OPENING ARGUMENT — editorial dark panel, full-width
+   The "why" that precedes every ranking. Large monospaced numbers anchor
+   three hard claims; thesis closes the argument before the directory opens.
+   Ink background reversed to white text. Amber eyebrow. Zero radius.
+   ======================================================================== */
+.opening-argument {
+  width: 100%;
+  background: var(--ink, #0C2F53);
+  color: #fff;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.opening-argument-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2.5rem);
+}
+.opening-argument-eyebrow {
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber, #f59e0b);
+  margin: 0 0 1.25rem;
+}
+.opening-argument-headline {
+  font: 700 clamp(1.8rem, 5vw, 3.2rem)/1.08 var(--font);
+  color: #fff;
+  letter-spacing: -0.03em;
+  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
+  max-width: 720px;
+}
+.opening-argument-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid rgba(255,255,255,0.14);
+  padding-top: clamp(1.5rem, 4vw, 2.5rem);
+}
+@media (min-width: 720px) {
+  .opening-argument-grid { grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .opening-argument-block { padding-right: 2rem; border-right: 1px solid rgba(255,255,255,0.1); }
+  .opening-argument-block:last-child { padding-right: 0; border-right: 0; padding-left: 2rem; }
+  .opening-argument-block:nth-child(2) { padding-left: 2rem; }
+}
+.opening-argument-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.opening-argument-num {
+  font: 800 clamp(4rem, 10vw, 6.5rem)/1 var(--mono);
+  color: #fff;
+  letter-spacing: -0.04em;
+  display: block;
+  /* Amber underline accent — the equals-key on the Braun ET66 */
+  border-bottom: 3px solid var(--amber, #f59e0b);
+  padding-bottom: 0.5rem;
+  width: fit-content;
+  margin-bottom: 0.25rem;
+}
+.opening-argument-copy {
+  font: 400 var(--text-body)/1.65 var(--font);
+  color: rgba(255,255,255,0.72);
+  margin: 0;
+  max-width: 32ch;
+}
+.opening-argument-thesis {
+  font: 500 clamp(1rem, 2.5vw, 1.25rem)/1.55 var(--font);
+  color: rgba(255,255,255,0.9);
+  margin: 0 0 2rem;
+  max-width: 680px;
+  letter-spacing: -0.01em;
+  border-left: 3px solid var(--amber, #f59e0b);
+  padding-left: 1.25rem;
+}
+.opening-argument-cta {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.85);
+  padding: 0.65rem 1.25rem;
+  font: 600 var(--text-body) var(--font);
+  cursor: pointer;
+  min-height: 44px;
+  letter-spacing: 0.01em;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+.opening-argument-cta:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.7);
+  color: #fff;
+}
+/* Mobile: compress vertical padding */
+@media (max-width: 480px) {
+  .opening-argument-num { font-size: 3.5rem; }
+  .opening-argument-headline { font-size: 1.6rem; }
+  .opening-argument-copy { max-width: 100%; }
+}
+
 .home-stat-ribbon {
   width: 100%;
   background: var(--depa-blue, #0C2F53);

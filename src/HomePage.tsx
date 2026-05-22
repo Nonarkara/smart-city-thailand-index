@@ -250,6 +250,77 @@ export default function HomePage({ locale, onNavigate }: Props) {
         <span>{t({ en: "Research by Dr. Non A · depa · SLIC Methodology · Peer-reviewed at SCSE Taipei 2026", th: "งานวิจัยโดย ดร.ณณ · depa · ระเบียบวิธี SLIC · ผ่านการพิจารณาของผู้ทรงคุณวุฒิที่ SCSE ไทเป 2026", zh: "研究：Non A博士 · depa · SLIC方法论 · 2026台北SCSE同行评审" })}</span>
       </div>
 
+      {/* ─── OPENING ARGUMENT ─── */}
+      {/* The editorial heart of SCITI: why it exists, what makes it honest,
+          what the user is about to see. Dark panel, ink-on-white reversed,
+          large monospaced numbers anchoring three hard claims. */}
+      <section className="opening-argument" aria-label={t({ en: "Opening argument", th: "ข้อโต้แย้งเปิด", zh: "开篇论点" })}>
+        <div className="opening-argument-inner">
+          <p className="opening-argument-eyebrow">
+            {t({ en: "Opening argument", th: "ข้อโต้แย้งเปิด", zh: "开篇论点" })}
+          </p>
+          <h2 className="opening-argument-headline">
+            {locale === "th"
+              ? <>118 เมือง. 37 รับรองแล้ว.<br />นี่คือสิ่งที่แยกพวกเขาออกจากกัน</>
+              : locale === "zh"
+                ? <>118 座城市。37 座已认证。<br />这就是区别它们的东西。</>
+                : <>118 cities. 37 certified.<br />Here is what separates them.</>
+            }
+          </h2>
+
+          <div className="opening-argument-grid">
+            <div className="opening-argument-block">
+              <span className="opening-argument-num">{stats.total}</span>
+              <p className="opening-argument-copy">
+                {t({
+                  en: "cities measured across every depa smart city zone and registered promotion area. The index begins with the complete picture — no cherry-picking.",
+                  th: "เมืองที่วัดในทุกเขตเมืองอัจฉริยะ depa และพื้นที่ส่งเสริมที่จดทะเบียน ดัชนีเริ่มต้นจากภาพรวมที่สมบูรณ์ ไม่คัดเลือกเฉพาะ",
+                  zh: "座城市——覆盖 depa 每一个智慧城市区域和已登记促进区。指数从完整图景出发，无一遗漏。",
+                })}
+              </p>
+            </div>
+
+            <div className="opening-argument-block">
+              <span className="opening-argument-num">{stats.certified}</span>
+              <p className="opening-argument-copy">
+                {t({
+                  en: "cities hold depa certification. Fewer than half have operational systems as of 2026. The certification measures intent. This index measures outcomes.",
+                  th: "เมืองถือครองการรับรอง depa น้อยกว่าครึ่งหนึ่งมีระบบปฏิบัติการจริงในปี 2569 การรับรองวัดเจตนา ดัชนีนี้วัดผลลัพธ์",
+                  zh: "座城市持有 depa 认证。截至 2026 年，有实际运营系统的不到一半。认证衡量意图，本指数衡量结果。",
+                })}
+              </p>
+            </div>
+
+            <div className="opening-argument-block">
+              <span className="opening-argument-num">{SCORING_PILLARS.length}</span>
+              <p className="opening-argument-copy">
+                {t({
+                  en: "pillars scored from real provincial data. Road fatalities from thairsc.com. Flood frequency from GISTDA 2005–2016. PM2.5 from live stations. No proxies. No interpolation. No null treated as zero.",
+                  th: "เสาหลักที่ประเมินจากข้อมูลจังหวัดจริง อัตราเสียชีวิตบนถนนจาก thairsc.com ความถี่น้ำท่วมจาก GISTDA ปี 2548–2559 PM2.5 จากสถานีสด ไม่มีตัวแทน ไม่มีการประมาณ ไม่มีค่า null ที่ถือเป็นศูนย์",
+                  zh: "个支柱，基于真实省级数据评分。道路死亡率来自 thairsc.com，洪水频率来自 GISTDA 2005-2016，PM2.5 来自实时站点。无代理数据，无插值，不以零代替空值。",
+                })}
+              </p>
+            </div>
+          </div>
+
+          <p className="opening-argument-thesis">
+            {t({
+              en: "The city that buys hardware and cuts the ribbon scores the same as the city that never bothers — unless the data says otherwise. That is the only rule this index follows.",
+              th: "เมืองที่ซื้อฮาร์ดแวร์และตัดริบบิ้นได้คะแนนเท่ากับเมืองที่ไม่สนใจ — เว้นเสียแต่ข้อมูลจะบอกเป็นอย่างอื่น นั่นคือกฎเดียวที่ดัชนีนี้ยึดถือ",
+              zh: "买了设备、剪了彩的城市，与根本没有努力的城市，得分相同——除非数据另有说法。这是本指数遵守的唯一规则。",
+            })}
+          </p>
+
+          <button
+            type="button"
+            className="opening-argument-cta"
+            onClick={() => onNavigate("/methodology")}
+          >
+            {t({ en: "Read the full methodology →", th: "อ่านระเบียบวิธีทั้งหมด →", zh: "阅读完整方法论 →" })}
+          </button>
+        </div>
+      </section>
+
       <div className="home-column">
         {/* ─── PILLAR CHAMPIONS ─── */}
         <section
