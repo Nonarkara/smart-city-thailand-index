@@ -369,7 +369,7 @@ export default function PartnerVibeMap({ locale }: Props) {
             </div>
 
             <div className="vibe-card-section">
-              <span className="vibe-card-section-title">{t(locale, { en: "What Thailand learns", th: "สิ่งที่ไทยได้เรียนรู้", zh: "泰国学到的" })}</span>
+              <span className="vibe-card-section-title">{t(locale, { en: "Samastiti Insight", th: "ข้อคิดจากชุมชน Samastiti", zh: "Samastiti 洞察" })}</span>
               <p className="vibe-card-community">{t(locale, hovered.community)}</p>
             </div>
           </div>
