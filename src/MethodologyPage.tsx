@@ -290,6 +290,27 @@ export default function MethodologyPage({ locale }: Props) {
         </p>
       </section>
 
+      {/* ─── NAME ETYMOLOGY ─── */}
+      <section className="section meth-etymology reveal visible">
+        <div className="meth-etymology-block">
+          <div className="meth-etymology-row">
+            <span className="meth-ety-form">SCITI</span>
+            <span className="meth-ety-eq">=</span>
+            <span className="meth-ety-def">{t("Smart City Thailand Index", "ดัชนีเมืองอัจฉริยะไทย", "泰国智慧城市指数")}</span>
+          </div>
+          <div className="meth-etymology-row">
+            <span className="meth-ety-form"><span className="meth-ety-sma">Sma</span><span className="meth-ety-sciti">SCITI</span></span>
+            <span className="meth-ety-eq">=</span>
+            <span className="meth-ety-def">{t("Sma- (Smart) + SCITI — same index, compressed", "Sma- (Smart) + SCITI — ดัชนีเดิม ในรูปย่อ", "Sma-（Smart）+ SCITI——同一指数，压缩形式")}</span>
+          </div>
+          <div className="meth-etymology-row">
+            <span className="meth-ety-form meth-ety-samastiti">Samastiti</span>
+            <span className="meth-ety-eq">≈</span>
+            <span className="meth-ety-def">{t("สมาร์ทซิตี้ — Thai phonetic for Smart City · all three are one", "สมาร์ทซิตี้ — การออกเสียงภาษาไทยของ Smart City · ทั้งสามคือหนึ่ง", "สมาร์ทซิตี้——Smart City的泰语音译 · 三形同一")}</span>
+          </div>
+        </div>
+      </section>
+
       {/* ─── VERSION JOURNEY ─── */}
       <section className="section reveal visible">
         <p className="eyebrow">{t("Version history", "ประวัติเวอร์ชัน", "版本历史")}</p>

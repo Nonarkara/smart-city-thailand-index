@@ -182,7 +182,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </span>
         )}
         <div className="cinematic-hero-overlay">
-          <p className="cinematic-hero-eyebrow">SCITI 2026 — {t({ en: "pronounced \"City\"", th: "อ่านว่า \"ซิตี้\"", zh: "读作 \"City\"" })}</p>
+          <p className="cinematic-hero-eyebrow">
+            SCITI 2026 — {t({ en: "pronounced \"City\"", th: "อ่านว่า \"ซิตี้\"", zh: "读作 \"City\"" })}
+            <span className="cinematic-hero-wordplay" aria-label="SmaSCITI equals Samastiti"> · <span className="cinematic-hero-wordplay-sma">Sma</span><span className="cinematic-hero-wordplay-sciti">SCITI</span> = Samastiti</span>
+          </p>
           <h1 className="cinematic-hero-title">
             {locale === "th" ? <>เอาความจริง<br />ไม่เอาพิธีตัดริบบิ้น</> : locale === "zh" ? <>看现实<br />不看剪彩</> : <>Reality, not<br />ribbon&#8209;cutting.</>}
           </h1>

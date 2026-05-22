@@ -7519,6 +7519,59 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .invest-ccdr-copy { max-width: 100%; }
 }
 
+/* ─── SCITI name etymology block (Methodology page) ─── */
+.meth-etymology { padding-top: 0; padding-bottom: 0; }
+.meth-etymology-block {
+  border: 1px solid var(--5);
+  border-left: 3px solid var(--amber, #f59e0b);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.meth-etymology-row {
+  display: grid;
+  grid-template-columns: 11rem 1.5rem 1fr;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid var(--5);
+}
+.meth-etymology-row:last-child { border-bottom: 0; }
+.meth-ety-form {
+  font: 700 var(--text-body) var(--mono);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.meth-ety-sma { color: var(--amber, #f59e0b); }
+.meth-ety-sciti { color: var(--ink); }
+.meth-ety-samastiti {
+  color: var(--teal);
+  font-style: italic;
+}
+.meth-ety-eq {
+  font: 400 var(--text-body) var(--mono);
+  color: var(--3);
+  text-align: center;
+}
+.meth-ety-def {
+  font: 400 var(--text-body) var(--font);
+  color: var(--2);
+  line-height: 1.4;
+}
+@media (max-width: 480px) {
+  .meth-etymology-row { grid-template-columns: 8rem 1.2rem 1fr; }
+  .meth-ety-form { font-size: var(--text-micro); }
+}
+
+/* ─── Homepage cinematic hero wordplay ─── */
+.cinematic-hero-wordplay {
+  opacity: 0.55;
+  font-size: 0.9em;
+  letter-spacing: 0.01em;
+}
+.cinematic-hero-wordplay-sma { color: var(--amber, #f59e0b); font-weight: 700; }
+.cinematic-hero-wordplay-sciti { color: #fff; font-weight: 700; }
+
 /* --- Home section note (attribution / footnote line beneath a champions list) --- */
 .home-section-note {
   margin-top: 0.6rem;
