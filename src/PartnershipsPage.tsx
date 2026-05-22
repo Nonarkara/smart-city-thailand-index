@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import type { Locale } from "./types";
 
 const GlobeMap = lazy(() => import("./GlobeMap"));
-const PartnerVibeMap = lazy(() => import("./PartnerVibeMap"));
 
 interface Props {
   locale: Locale;
@@ -155,6 +154,106 @@ const partnerships: Partnership[] = [
     sourceLabel: "OpenGov Asia",
     accent: "#C45C1A",
   },
+  {
+    id: "china",
+    flag: "🇨🇳",
+    country: { en: "China", th: "จีน", zh: "中国" },
+    program: "ASEAN-China Centre Field Visit",
+    year: "2019",
+    investment: "Knowledge exchange",
+    cities: "Nanning (field visit)",
+    focus: { en: "Smart city, digital urban management, smart agriculture", th: "เมืองอัจฉริยะ การจัดการเมืองดิจิทัล เกษตรอัจฉริยะ", zh: "智慧城市、数字化城市管理、智慧农业" },
+    status: "completed",
+    vibe: { en: "The Scale Demonstrator — what urban tech looks like at Chinese scale", th: "ผู้แสดงมาตราส่วน — เทคโนโลยีเมืองระดับจีนหน้าตาเป็นยังไง", zh: "规模示范者——城市科技在中国尺度下的面貌" },
+    body: {
+      en: "ASEAN Leadership Programme Field Visit to Nanning, 2019 — ASEAN city leaders observed smart city deployment and digital technology in urban management and agriculture at scale. The learning direction was clear: China shows what full-stack urban digitalization looks like when implementation speed is the primary variable.",
+      th: "ASEAN Leadership Programme Field Visit ที่หนานหนิง ปี 2019 — ผู้นำเมืองอาเซียนสังเกตการณ์การใช้งานเมืองอัจฉริยะและเทคโนโลยีดิจิทัลในการบริหารจัดการเมืองและการเกษตรในมาตราส่วนใหญ่ ทิศทางการเรียนรู้ชัดเจน: จีนแสดงให้เห็นว่าการดิจิทัลไลซ์เมืองแบบครบชั้นหน้าตาเป็นอย่างไรเมื่อความเร็วในการดำเนินการเป็นตัวแปรหลัก",
+      zh: "2019年亚洲领导力计划赴南宁考察——东盟城市领导人实地观摩大规模智慧城市部署与城市管理、农业领域的数字技术应用。学习方向明确：当实施速度是主要变量时，中国展示了全栈式城市数字化的真实面貌。",
+    },
+    lesson: {
+      en: "Speed is a design variable. Chinese smart city deployment operates at a pace that forces ASEAN partners to ask which parts of the stack are truly necessary versus which parts are just slow.",
+      th: "ความเร็วคือตัวแปรการออกแบบ การใช้งานเมืองอัจฉริยะของจีนดำเนินในจังหวะที่บังคับให้พันธมิตรอาเซียนถามว่าส่วนใดของ stack ที่จำเป็นจริงๆ กับส่วนใดที่แค่ช้า",
+      zh: "速度是设计变量。中国智慧城市部署的节奏迫使东盟伙伴思考：技术栈的哪些部分是真正必要的，哪些只是拖慢了进度。",
+    },
+    sourceUrl: "https://www.asean-china-center.org/",
+    sourceLabel: "ASEAN-China Centre",
+    accent: "#C53939",
+  },
+  {
+    id: "newzealand",
+    flag: "🇳🇿",
+    country: { en: "New Zealand", th: "นิวซีแลนด์", zh: "新西兰" },
+    program: "ASCN Showcase + ALGIM Annual Conference",
+    year: "2024",
+    investment: "Knowledge exchange",
+    cities: "National-level",
+    focus: { en: "Local government digital services, civic tech, smart city initiatives", th: "บริการดิจิทัลของรัฐบาลท้องถิ่น เทคโนโลยีพลเมือง", zh: "地方政府数字服务、公民科技、智慧城市举措" },
+    status: "completed",
+    vibe: { en: "The Civic Technologist — local government digital done quietly well", th: "นักเทคโนโลยีพลเมือง — ดิจิทัลรัฐบาลท้องถิ่นที่ทำได้ดีอย่างเงียบๆ", zh: "公民技术实践者——悄然做好地方政府数字化" },
+    body: {
+      en: "ASCN Showcase of New Zealand Initiatives at the 2024 ALGIM Annual Conference. ALGIM (the Association of Local Government Information Management) is New Zealand's primary network for municipal digital transformation. The showcase surfaced how NZ local governments build citizen-facing digital services — a model with direct relevance to Thailand's tiered city structure.",
+      th: "ASCN Showcase ของความคิดริเริ่มนิวซีแลนด์ที่งาน ALGIM Annual Conference 2024 ALGIM คือเครือข่ายหลักของนิวซีแลนด์สำหรับการเปลี่ยนแปลงดิจิทัลของเทศบาล การจัดแสดงแสดงให้เห็นวิธีที่รัฐบาลท้องถิ่น NZ สร้างบริการดิจิทัลสำหรับประชาชน ซึ่งมีความเกี่ยวข้องโดยตรงกับโครงสร้างเมืองระดับของไทย",
+      zh: "2024年ALGIM年度会议上的ASCN新西兰倡议展示。ALGIM是新西兰地方政府信息管理的主要网络。展示揭示了新西兰地方政府如何构建面向市民的数字服务——这一模式与泰国分层城市结构直接相关。",
+    },
+    lesson: {
+      en: "Citizen-facing digital services don't require a smart city label to work. New Zealand's local government approach shows that quiet, consistent service delivery compounds over time more effectively than headline technology announcements.",
+      th: "บริการดิจิทัลสำหรับพลเมืองไม่จำเป็นต้องมีป้ายเมืองอัจฉริยะเพื่อให้ใช้งานได้ แนวทางรัฐบาลท้องถิ่นของนิวซีแลนด์แสดงให้เห็นว่าการให้บริการที่เงียบและสม่ำเสมอสะสมได้อย่างมีประสิทธิภาพมากกว่าการประกาศเทคโนโลยีที่เป็นข่าว",
+      zh: "面向市民的数字服务不需要智慧城市标签就能运作。新西兰地方政府的做法表明，安静而持续的服务交付，比轰动的技术发布更能积累长期成效。",
+    },
+    sourceUrl: "https://www.algim.org.nz/",
+    sourceLabel: "ALGIM",
+    accent: "#1A6B3A",
+  },
+  {
+    id: "solomon",
+    flag: "🇸🇧",
+    country: { en: "Solomon Islands", th: "หมู่เกาะโซโลมอน", zh: "所罗门群岛" },
+    program: "Empowering Digital Transformation in SIDS",
+    year: "2025",
+    investment: "Capacity building",
+    cities: "National public sector",
+    focus: { en: "Public sector digitalization, small island developing states", th: "การดิจิทัลไลซ์ภาครัฐ รัฐเกาะขนาดเล็กที่กำลังพัฒนา", zh: "公共部门数字化、小岛屿发展中国家" },
+    status: "active",
+    vibe: { en: "The SIDS Pioneer — proving that geography is not destiny", th: "ผู้บุกเบิก SIDS — พิสูจน์ว่าภูมิศาสตร์ไม่ใช่โชคชะตา", zh: "小岛屿先驱——证明地理不是命运" },
+    body: {
+      en: "Empowering Digital Transformation in Small Island Developing States: Digitalization of Public Sector in the Solomon Islands, 2025. Thailand's engagement in this work positions SCITI's methodology as applicable beyond its own borders — the same logic of measuring outcomes over announcements applies to any government attempting genuine digital transition regardless of scale.",
+      th: "การส่งเสริมการเปลี่ยนแปลงดิจิทัลในรัฐเกาะขนาดเล็กที่กำลังพัฒนา: การดิจิทัลไลซ์ภาครัฐในหมู่เกาะโซโลมอน 2025 การมีส่วนร่วมของไทยในงานนี้วางตำแหน่งระเบียบวิธีของ SCITI ว่าสามารถนำไปใช้ได้นอกเขตแดนของตัวเอง",
+      zh: "赋权小岛屿发展中国家数字化转型：所罗门群岛公共部门数字化，2025年。泰国在此项工作中的参与，使SCITI方法论的适用性超越本国边界——以结果衡量而非以公告衡量的逻辑，适用于任何规模的政府数字转型。",
+    },
+    lesson: {
+      en: "Digital governance methodology exports. The SIDS context reveals which parts of Thailand's smart city framework are genuinely transferable — and which parts depend on infrastructure that small island nations don't have yet.",
+      th: "ระเบียบวิธีการกำกับดูแลดิจิทัลส่งออกได้ บริบท SIDS เผยให้เห็นว่าส่วนใดของกรอบเมืองอัจฉริยะของไทยที่ถ่ายโอนได้จริง และส่วนใดที่ขึ้นอยู่กับโครงสร้างพื้นฐานที่รัฐเกาะขนาดเล็กยังไม่มี",
+      zh: "数字治理方法论可以出口。SIDS背景揭示了泰国智慧城市框架中哪些部分真正可以转移——以及哪些部分依赖于小岛屿国家尚不具备的基础设施。",
+    },
+    sourceUrl: "https://publicadministration.un.org/",
+    sourceLabel: "UN DESA",
+    accent: "#1A6B9A",
+  },
+  {
+    id: "russia",
+    flag: "🇷🇺",
+    country: { en: "Russia", th: "รัสเซีย", zh: "俄罗斯" },
+    program: "Global Digital Forum + BRICS Cloud Forum",
+    year: "2025",
+    investment: "Forum participation",
+    cities: "National-level",
+    focus: { en: "Digital governance, cloud infrastructure, BRICS digital economy", th: "การกำกับดูแลดิจิทัล โครงสร้างพื้นฐานคลาวด์ เศรษฐกิจดิจิทัล BRICS", zh: "数字治理、云基础设施、金砖国家数字经济" },
+    status: "active",
+    vibe: { en: "The Multipolar Platform — digital governance outside the Western stack", th: "แพลตฟอร์มหลายขั้ว — การกำกับดูแลดิจิทัลนอก stack ตะวันตก", zh: "多极平台——西方技术栈之外的数字治理" },
+    body: {
+      en: "Global Digital Forum and BRICS Cloud Forum, 2025. Thailand's participation in BRICS-adjacent digital forums is a signal of the multipolar context in which SCITI operates. The country's smart city programme receives input from both Western (US, EU, Japan, New Zealand) and Global South (China, Russia, SIDS) knowledge networks — which is accurate to how Thai policy actually works.",
+      th: "Global Digital Forum และ BRICS Cloud Forum 2025 การมีส่วนร่วมของไทยในฟอรัมดิจิทัลที่เกี่ยวข้องกับ BRICS เป็นสัญญาณของบริบทหลายขั้วที่ SCITI ดำเนินการอยู่ โครงการเมืองอัจฉริยะของไทยได้รับข้อมูลจากทั้งเครือข่ายความรู้ตะวันตกและ Global South",
+      zh: "2025年全球数字论坛与金砖国家云论坛。泰国参与金砖相关数字论坛，标志着SCITI所处的多极背景。泰国智慧城市计划同时接受西方（美国、欧盟、日本、新西兰）和全球南方（中国、俄罗斯、小岛屿国家）知识网络的输入——这与泰国政策实际运作方式相符。",
+    },
+    lesson: {
+      en: "Smart city knowledge is not geopolitically neutral. Thailand's position in both Western and non-Western digital forums is an asset — it means the country can evaluate approaches rather than simply adopt any single country's stack.",
+      th: "ความรู้เมืองอัจฉริยะไม่ได้เป็นกลางทางภูมิรัฐศาสตร์ ตำแหน่งของไทยในฟอรัมดิจิทัลทั้งตะวันตกและไม่ใช่ตะวันตกเป็นสินทรัพย์ หมายความว่าประเทศสามารถประเมินแนวทางต่างๆ แทนที่จะเพียงแค่นำ stack ของประเทศใดประเทศหนึ่งมาใช้",
+      zh: "智慧城市知识不是地缘政治中立的。泰国同时活跃于西方和非西方数字论坛的地位是一种资产——这意味着该国可以评估各种方案，而不是简单地采用某一国的技术栈。",
+    },
+    sourceUrl: "https://globaldigitalforum.ru/",
+    sourceLabel: "Global Digital Forum",
+    accent: "#6B3FA0",
+  },
 ];
 
 const statusLabels: Record<Partnership["status"], { en: string; th: string; zh: string }> = {
@@ -207,18 +306,11 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
         </p>
       </section>
 
-      {/* ─── VIBE MAP (new interactive section) ─── */}
-      <section className="section partnerships-section-gap">
-        <Suspense fallback={<div className="loading" style={{ minHeight: "300px" }}>Loading map…</div>}>
-          <PartnerVibeMap locale={locale} />
-        </Suspense>
-      </section>
-
       {/* ─── SUMMARY STATS ─── */}
       <section className="section partnerships-summary-section">
         <div className="partnerships-summary-grid">
           <div className="partnerships-summary-card">
-            <div className="partnerships-summary-value">6</div>
+            <div className="partnerships-summary-value">9</div>
             <div className="partnerships-summary-label">{t(locale, { en: "Partnership tracks", th: "เส้นความร่วมมือ", zh: "合作轨道" })}</div>
           </div>
           <div className="partnerships-summary-card">
@@ -362,9 +454,9 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
           })}</h2>
           <p>
             {t(locale, {
-              en: "Japan and the UK show the clearest programme architecture. The U.S. contribution is narrower but technically concrete. South Korea shows how good planning can still hit execution walls. Austria is a reminder that a smart-city MOU is not the same thing as delivery.",
-              th: "ญี่ปุ่นกับสหราชอาณาจักรให้ภาพของสถาปัตยกรรมโปรแกรมชัดที่สุด สหรัฐอเมริกามาแบบแคบกว่าแต่เฉพาะทางกว่า เกาหลีใต้แสดงให้เห็นว่าการวางแผนดีแค่ไหนก็ยังชนกำแพงการลงมือทำได้ ส่วนออสเตรียเตือนว่า MOU ไม่เท่ากับการส่งมอบ",
-              zh: "日本与英国呈现了最清晰的项目架构；美国的贡献更窄，但技术上更具体；韩国说明再好的规划也会撞上执行墙；奥地利则提醒我们，智慧城市MOU不等于交付。",
+              en: "Japan and the UK show the clearest programme architecture. The U.S. contribution is narrower but technically concrete. South Korea shows how good planning can still hit execution walls. Austria is a reminder that a smart-city MOU is not the same thing as delivery. China demonstrates what full-stack implementation looks like at speed. New Zealand shows that quiet civic-tech compounds. The Solomon Islands engagement tests whether Thailand's methodology travels. Russia and the BRICS forums confirm that smart city knowledge is not geopolitically neutral — and Thailand's position in both worlds is itself a strategic asset.",
+              th: "ญี่ปุ่นกับสหราชอาณาจักรให้ภาพสถาปัตยกรรมโปรแกรมชัดที่สุด สหรัฐฯ แคบกว่าแต่เฉพาะทางกว่า เกาหลีใต้แสดงว่าวางแผนดีแค่ไหนก็ชนกำแพงได้ ออสเตรียเตือนว่า MOU ไม่ใช่การส่งมอบ จีนแสดง full-stack ที่ความเร็ว นิวซีแลนด์แสดงว่า civic-tech ที่เงียบสะสมได้ หมู่เกาะโซโลมอนทดสอบว่าระเบียบวิธีของไทยเดินทางได้หรือเปล่า รัสเซียและ BRICS ยืนยันว่าความรู้เมืองอัจฉริยะไม่ใช่กลางทางภูมิรัฐศาสตร์",
+              zh: "日本与英国呈现最清晰的项目架构。美国贡献更窄但技术更具体。韩国说明好规划也会撞上执行墙。奥地利提醒MOU不等于交付。中国以速度展示全栈实施。新西兰证明安静的公民科技能积累成效。所罗门群岛参与检验了泰国方法论的可移植性。俄罗斯与金砖论坛确认了智慧城市知识并非地缘政治中立——而泰国在两个世界中的位置本身就是战略资产。",
             })}
           </p>
           <button type="button" className="cta-button" onClick={() => onNavigate("/rankings")}>
