@@ -410,11 +410,13 @@ ul, ol { list-style: none; }
 
 .theme-toggle {
   margin-left: .2rem; padding: .18rem .4rem; font-size: .85rem; line-height: 1;
+  min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
   color: var(--3); border-radius: 0; transition: all .2s var(--ease);
 }
 .theme-toggle:hover { color: var(--ink); background: rgba(0,0,0,.04); }
 .locale-toggle {
   margin-left: .1rem; padding: .2rem .5rem; font: 600 .5rem var(--mono);
+  min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
   color: var(--3); background: var(--surface); border-radius: 0;
   transition: all .2s var(--ease);
 }
@@ -7176,7 +7178,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   text-transform: uppercase;
   color: var(--2);
   background: transparent;
-  border: 1px solid transparent;
+  border: 1px solid var(--5);
   cursor: pointer;
   transition: all 0.15s var(--ease, ease);
   white-space: nowrap;
