@@ -17,6 +17,30 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "sciti-red-dot-2026",
+    title: {
+      en: "SCITI 2026 Smart City Thailand Index submitted to Red Dot Design Award — data transparency focus",
+      th: "SCITI 2026 ดัชนีเมืองอัจฉริยะไทย ส่งเข้าประกวด Red Dot Design Award — เน้นความโปร่งใสด้านข้อมูล",
+      zh: "SCITI 2026 泰国智慧城市指数提交红点设计奖——聚焦数据透明度",
+    },
+    source: "depa Smart City Promotion Department",
+    url: "https://www.depa.or.th/en/smartcity",
+    date: "2026-05-20",
+    tag: "thailand",
+  },
+  {
+    id: "depa-q1-2026-progress",
+    title: {
+      en: "depa Q1 2026 report: 118 cities indexed, 39 operational — Northeast cities lead growth momentum",
+      th: "รายงานไตรมาส 1 ปี 2569 ของ depa: 118 เมืองในดัชนี — 39 เดินระบบจริง เมืองภาคอีสานโตแรง",
+      zh: "depa 2026 年第一季度报告：已收录 118 座城市，39 座运营中——东北部城市增势领跑",
+    },
+    source: "depa.or.th",
+    url: "https://www.depa.or.th/en/smartcity",
+    date: "2026-05-05",
+    tag: "thailand",
+  },
+  {
     id: "depa-2026-certification",
     title: {
       en: "depa shortlists 12 sub-districts for 2026 Smart City Promotion Zone certification",

@@ -177,6 +177,14 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
 
 const newsItems = [
   {
+    date: "2026-05-20",
+    titleEn: "SCITI 2026 submitted to Red Dot Design Award — open-data scorecard for 118 Thai cities",
+    titleTh: "SCITI 2026 ส่งเข้าประกวด Red Dot Design Award — ตารางคะแนนข้อมูลเปิดสำหรับ 118 เมือง",
+    titleZh: "SCITI 2026 提交红点设计奖——覆盖 118 座泰国城市的开放数据评分卡",
+    url: "https://www.depa.or.th/en/smartcity",
+    source: "depa / SCITI",
+  },
+  {
     date: "2026-03-18",
     titleEn: "SLIC Index V2 launched at Smart City Summit & Expo 2026 in Taipei",
     titleTh: "SLIC Index V2 เปิดตัวบนเวที SCSE 2026 ไทเป",
