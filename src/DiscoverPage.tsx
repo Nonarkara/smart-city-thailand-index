@@ -25,7 +25,6 @@ function gradeColor(g: Grade): string {
 
 export default function DiscoverPage({ locale, onNavigate }: Props) {
   const { data: cities } = useCitySummaries();
-  const [heroRef, heroVisible] = useInView(0.1);
   const [resultsRef, resultsVisible] = useInView(0.1);
 
   // 7 pillars × A/B/C preference — default all to B (moderate)
@@ -81,7 +80,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
   return (
     <div className="discover-page">
       {/* ─── HERO ─── */}
-      <section ref={heroRef} className={`section rankings-hero reveal ${heroVisible ? "visible" : ""}`}>
+      <section className="section rankings-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "City matcher", th: "จับคู่เมือง", zh: "城市匹配" })}</p>
         <h1 className="hero-title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)" }}>
           {translate(locale, { en: "What is your city?", th: "เมืองของคุณคือเมืองไหน?", zh: "你的城市是哪座？" })}

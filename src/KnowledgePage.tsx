@@ -717,7 +717,6 @@ const CATEGORIES = [...new Set(FAQS.map(f => f.category))];
 export default function KnowledgePage({ locale }: Props) {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
-  const [heroRef, heroVisible] = useInView(0.1);
   const [listRef, listVisible] = useInView(0.1);
 
   const filtered = useMemo(() => {
@@ -733,7 +732,7 @@ export default function KnowledgePage({ locale }: Props) {
 
   return (
     <div className="knowledge-page">
-      <section ref={heroRef} className={`section rankings-hero reveal ${heroVisible ? "visible" : ""}`}>
+      <section className="section rankings-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "SCITI Knowledge Base", th: "คลังความรู้ SCITI", zh: "SCITI 知识库" })}</p>
         <h1 className="hero-title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)" }}>
           {locale === "th" ? "คลังความรู้เมืองอัจฉริยะ" : locale === "zh" ? "智慧城市知识库" : "Smart City Knowledge Base"}

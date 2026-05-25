@@ -230,13 +230,13 @@ function formatPerHundredThousand(value: number): string {
 
 function getContextText(
   locale: Locale,
-  contextText: { en: string; th: string } | undefined,
+  contextText: { en: string; th: string; zh?: string } | undefined,
   zhFallback: string,
   defaultValue?: string,
 ): string {
   if (contextText) {
     if (locale === "th") return contextText.th;
-    if (locale === "zh") return zhFallback;
+    if (locale === "zh") return contextText.zh ?? zhFallback;
     return contextText.en;
   }
   return defaultValue ?? zhFallback;

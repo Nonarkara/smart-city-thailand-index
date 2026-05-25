@@ -283,9 +283,9 @@ export default function MethodologyPage({ locale }: Props) {
         </h1>
         <p className="hero-strapline">
           {t(
-            "SCITI is a two-layer model. Research assigns seven pillar scores from auditable metrics, evidence items, and field verification. Deterministic mathematics then aggregates those pillar scores into a composite, tier, and contribution breakdown.",
-            "SCITI เป็นโมเดลสองชั้น งานวิจัยกำหนดคะแนน 7 เสาหลักจากตัวชี้วัดที่ตรวจสอบได้ หลักฐาน และการยืนยันภาคสนาม จากนั้นคณิตศาสตร์แบบกำหนดแน่นอนจะรวมคะแนนเหล่านั้นเป็นคะแนนรวม ระดับ และการแยกส่วนการมีส่วนร่วม",
-            "SCITI 是一个双层模型。研究层先根据可审计指标、证据项与实地核验给出七个支柱分数；随后由确定性的数学层将这些分数汇总为综合分、层级和贡献分解。",
+            "Seven pillars. One composite. Zero black boxes.",
+            "เจ็ดเสาหลัก คะแนนรวมหนึ่งเดียว ไม่มีกล่องดำ",
+            "七个支柱，一个综合分，没有黑箱。",
           )}
         </p>
       </section>

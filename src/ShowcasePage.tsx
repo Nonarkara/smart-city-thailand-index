@@ -2,7 +2,6 @@ import { translate } from "./cityPresentation";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS } from "./types";
 import { ResponsiveImage } from "./mediaAssets";
-import { useInView } from "./useInView";
 import DossierTabs from "./DossierTabs";
 
 interface Props {
@@ -224,11 +223,9 @@ function ShowcasePillarProfile({ locale }: { locale: Locale }) {
 }
 
 export default function ShowcasePage({ locale, onNavigate }: Props) {
-  const [heroRef, heroVisible] = useInView(0.1);
-
   return (
     <div className="showcase-page">
-      <section ref={heroRef} className={`section showcase-hero reveal ${heroVisible ? "visible" : ""}`}>
+      <section className="section showcase-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "Case study", th: "กรณีศึกษา", zh: "案例研究" })}</p>
         <h1 className="hero-title showcase-title">
           {translate(locale, {

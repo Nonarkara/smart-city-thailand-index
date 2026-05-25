@@ -155,7 +155,6 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
   const stats = useMemo(() => summarizeCities(cities), [cities]);
   const dimensions: SmartDimension[] = ["environment", "economy", "mobility", "energy", "people", "living", "governance"];
 
-  const [heroRef, heroVisible] = useInView(0.1);
   const [dnaRef, dnaVisible] = useInView(0.1);
   const [mref257, visible257] = useInView(0.1);
   const [certRef, certVisible] = useInView(0.1);
@@ -168,7 +167,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section ref={heroRef} className={`section rankings-hero reveal ${heroVisible ? "visible" : ""}`}>
+      <section className="section rankings-hero reveal visible">
         <p className="eyebrow">{translate(locale, { 
           en: "depa \u00b7 MDES \u00b7 Kingdom of Thailand", 
           th: "depa · กระทรวง DE · ราชอาณาจักรไทย", 

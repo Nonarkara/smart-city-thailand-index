@@ -77,7 +77,6 @@ const references = [
 ];
 
 export default function WhyPage({ locale, onNavigate }: Props) {
-  const [heroRef, heroVisible] = useInView(0.1);
   const [metricRef, metricVisible] = useInView(0.1);
   const [benefitRef, benefitVisible] = useInView(0.1);
   const [sourceRef, sourceVisible] = useInView(0.1);
@@ -85,7 +84,7 @@ export default function WhyPage({ locale, onNavigate }: Props) {
 
   return (
     <div className="why-page">
-      <section ref={heroRef} className={`section reveal ${heroVisible ? "visible" : ""}`} style={{ paddingTop: "7rem", paddingBottom: "1.5rem" }}>
+      <section className="section reveal visible" style={{ paddingTop: "7rem", paddingBottom: "1.5rem" }}>
         <p className="eyebrow">{translate(locale, { en: "Why this index", th: "ทำไมดัชนีนี้", zh: "为什么需要这个指数" })}</p>
         <h1 className="hero-title">
           {translate(locale, {

@@ -1,5 +1,6 @@
 import { DIMENSION_LABELS } from "./types";
 import type { CityReality, CityStatus, Locale, SmartCity, SmartDimension } from "./types";
+import { CITY_NAME_ZH, CITY_TAGLINE_ZH, PROVINCE_ZH } from "./cityNamesZh";
 
 export function translate(
   locale: Locale,
@@ -11,15 +12,28 @@ export function translate(
 }
 
 export function getCityName(city: SmartCity, locale: Locale): string {
-  return locale === "th" ? city.nameTh : city.nameEn;
+  if (locale === "th") return city.nameTh;
+  if (locale === "zh") return CITY_NAME_ZH[city.id] ?? city.nameEn;
+  return city.nameEn;
 }
 
 export function getProvinceName(city: SmartCity, locale: Locale): string {
-  return locale === "th" ? city.provinceTh : city.province;
+  if (locale === "th") return city.provinceTh;
+  if (locale === "zh") return PROVINCE_ZH[city.province] ?? city.province;
+  return city.province;
 }
 
+const REGISTERED_TAGLINE_EN = "Promotion zone — awaiting sufficient data for full assessment.";
+const REGISTERED_TAGLINE_ZH = "推广区域——等待充足数据进行全面评估。";
+
 export function getCityTagline(city: SmartCity, locale: Locale): string {
-  return locale === "th" ? city.taglineTh : city.tagline;
+  if (locale === "th") return city.taglineTh;
+  if (locale === "zh") {
+    if (CITY_TAGLINE_ZH[city.id]) return CITY_TAGLINE_ZH[city.id];
+    if (city.tagline === REGISTERED_TAGLINE_EN) return REGISTERED_TAGLINE_ZH;
+    return city.tagline;
+  }
+  return city.tagline;
 }
 
 export function getCityStatusLabel(status: CityStatus, locale: Locale): string {

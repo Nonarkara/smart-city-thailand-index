@@ -26,8 +26,9 @@ export default function AnimatedScore({
   className,
   reduced,
 }: Props) {
+  const from = Math.max(0, target - 3);
   const [displayed, setDisplayed] = useState<number>(
-    reduced ? target : 0,
+    reduced ? target : from,
   );
   const rafRef = useRef<number | null>(null);
   const startRef = useRef<number | null>(null);
@@ -49,13 +50,14 @@ export default function AnimatedScore({
     if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
     startRef.current = null;
 
+    const startVal = Math.max(0, target - 3);
     const tick = (now: number) => {
       if (startRef.current == null) startRef.current = now;
       const elapsed = now - startRef.current;
       const t = Math.min(elapsed / duration, 1);
       // Cubic ease-out: 1 − (1 − t)³
       const eased = 1 - Math.pow(1 - t, 3);
-      setDisplayed(Math.round(eased * target * 10 ** decimals) / 10 ** decimals);
+      setDisplayed(Math.round((startVal + eased * (target - startVal)) * 10 ** decimals) / 10 ** decimals);
       if (t < 1) rafRef.current = requestAnimationFrame(tick);
     };
 

@@ -215,9 +215,9 @@ const corridors: Corridor[] = [
     tag: "Alpha/Beta",
     tagColor: "var(--gold)",
     name: {
-      en: "Khon Kaen -- Isan Gateway",
-      th: "ขอนแก่น -- ประตูอีสาน",
-      zh: "孔敬 -- 伊森门户",
+      en: "Khon Kaen — Isan Gateway",
+      th: "ขอนแก่น — ประตูอีสาน",
+      zh: "孔敬 — 伊森门户",
     },
     subtitle: {
       en: "Private consortium model. Community-led LRT. 20M underserved market.",
@@ -225,7 +225,7 @@ const corridors: Corridor[] = [
       zh: "民间联盟模式。社区主导轻轨。2000万人的待开发市场。",
     },
     body: {
-      en: "Khon Kaen's KKTS (Khon Kaen Think Tank) is Thailand's most remarkable public-private consortium. They're building LRT without waiting for central government. The 6-hospital digital health network covers the Isan corridor. With 20M population in the Northeast, this is the largest underserved market in Thailand -- and the consortium model is replicable.",
+      en: "Khon Kaen's KKTS (Khon Kaen Think Tank) is Thailand's most remarkable public-private consortium. They're building LRT without waiting for central government. The 6-hospital digital health network covers the Isan corridor. With 20M population in the Northeast, this is the largest underserved market in Thailand — and the consortium model is replicable.",
       th: "KKTS (Khon Kaen Think Tank) ของขอนแก่นเป็นกลุ่มความร่วมมือรัฐ-เอกชนที่น่าทึ่งที่สุดในไทย พวกเขากำลังสร้าง LRT โดยไม่ต้องรอรัฐบาลกลาง เครือข่ายสุขภาพดิจิทัล 6 โรงพยาบาลครอบคลุมระเบียงอีสาน ด้วยประชากร 20 ล้านคนในภาคตะวันออกเฉียงเหนือ นี่คือตลาดที่ยังไม่ได้รับบริการที่ใหญ่ที่สุดในไทย และโมเดลกลุ่มเอกชนนี้สามารถจำลองได้",
       zh: "孔敬的KKTS（孔敬智库）是泰国最杰出的公私合作联盟。他们不等中央政府，自主建设轻轨。6家医院的数字健康网络覆盖伊森走廊。东北地区拥有2000万人口，是泰国最大的待开发市场——而这一联盟模式可被复制。",
     },
@@ -423,7 +423,7 @@ const risks: Risk[] = [
       zh: "数字鸿沟",
     },
     body: {
-      en: "Only 21% household computer ownership outside Bangkok (NSO 2023). Smart city platforms assume connectivity that doesn't exist in target populations. Mobile-first is not a choice -- it's a constraint.",
+      en: "Only 21% household computer ownership outside Bangkok (NSO 2023). Smart city platforms assume connectivity that doesn't exist in target populations. Mobile-first is not a choice — it's a constraint.",
       th: "ครัวเรือนที่มีคอมพิวเตอร์นอกกรุงเทพฯ เพียง 21% (สสช. 2566) แพลตฟอร์มเมืองอัจฉริยะสมมติว่ามีการเชื่อมต่อที่ไม่มีอยู่จริงในกลุ่มเป้าหมาย Mobile-first ไม่ใช่ทางเลือก แต่เป็นข้อจำกัด",
       zh: "曼谷以外家庭电脑拥有率仅21%（NSO 2023）。智慧城市平台假设了目标人群中不存在的连接性。移动优先不是选择——而是约束条件。",
     },
@@ -479,7 +479,7 @@ const risks: Risk[] = [
       zh: "汇率风险 (泰铢)",
     },
     body: {
-      en: "THB has shown 8-12% volatility against USD over 5-year periods. Revenue in baht, returns expected in hard currency -- the mismatch can erode margins on infrastructure-scale investments.",
+      en: "THB has shown 8-12% volatility against USD over 5-year periods. Revenue in baht, returns expected in hard currency — the mismatch can erode margins on infrastructure-scale investments.",
       th: "เงินบาทมีความผันผวน 8-12% เทียบกับดอลลาร์สหรัฐในช่วง 5 ปี รายได้เป็นบาท ผลตอบแทนคาดหวังเป็นสกุลเงินแข็ง ความไม่สอดคล้องกันนี้สามารถกัดกร่อนมาร์จินของการลงทุนระดับโครงสร้างพื้นฐาน",
       zh: "泰铢兑美元在5年期间波动率为8-12%。收入以泰铢计，回报以硬通货预期——这种不匹配可能侵蚀基础设施规模投资的利润率。",
     },
@@ -542,7 +542,7 @@ const checklist: ChecklistItem[] = [
   {
     num: "10",
     title: { en: "Benchmark against SCITI, not marketing decks", th: "เปรียบเทียบกับ SCITI ไม่ใช่สไลด์การตลาด", zh: "以SCITI为基准，而非营销材料" },
-    desc: { en: "Our index is designed to be the brutally honest mirror. Use the pillar scores, data confidence ratings, and tier classifications as your baseline -- not the city's own promotional material.", th: "ดัชนีของเราถูกออกแบบให้เป็นกระจกสะท้อนความจริงอย่างตรงไปตรงมา ใช้คะแนนเสาหลัก ระดับความเชื่อมั่นข้อมูล และการจัดระดับเป็นพื้นฐาน ไม่ใช่สื่อโฆษณาของเมืองเอง", zh: "我们的指数旨在成为残酷诚实的镜子。以支柱评分、数据置信度评级和层级分类作为基准——而非城市自身的宣传材料。" },
+    desc: { en: "Our index is designed to be the brutally honest mirror. Use the pillar scores, data confidence ratings, and tier classifications as your baseline — not the city's own promotional material.", th: "ดัชนีของเราถูกออกแบบให้เป็นกระจกสะท้อนความจริงอย่างตรงไปตรงมา ใช้คะแนนเสาหลัก ระดับความเชื่อมั่นข้อมูล และการจัดระดับเป็นพื้นฐาน ไม่ใช่สื่อโฆษณาของเมืองเอง", zh: "我们的指数旨在成为残酷诚实的镜子。以支柱评分、数据置信度评级和层级分类作为基准——而非城市自身的宣传材料。" },
   },
 ];
 
@@ -569,7 +569,6 @@ const sources: Source[] = [
 /* ─── COMPONENT ─── */
 
 export default function InvestPage({ locale, onNavigate }: Props) {
-  const [heroRef, heroVisible] = useInView(0.1);
   const [macroRef, macroVisible] = useInView(0.1);
   const [insightRef, insightVisible] = useInView(0.1);
   const [corridorRef, corridorVisible] = useInView(0.1);
@@ -593,7 +592,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
     <div className="invest-page">
 
       {/* ═══════════ 1. HERO / THESIS ═══════════ */}
-      <section ref={heroRef} className={`section story-hero reveal ${heroVisible ? "visible" : ""}`}>
+      <section className="section story-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "Invest Thailand", th: "ลงทุนไทย", zh: "投资泰国" })}</p>
         <h1 className="hero-title">
           {translate(locale, {
@@ -604,7 +603,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         </h1>
         <p className="hero-strapline">
           {translate(locale, {
-            en: "Data from the SCITI index reveals where the real opportunities are -- and where the risks hide.",
+            en: "Data from the SCITI index reveals where the real opportunities are — and where the risks hide.",
             th: "ข้อมูลจากดัชนี SCITI เผยให้เห็นว่าโอกาสที่แท้จริงอยู่ที่ไหน และความเสี่ยงซ่อนอยู่ตรงไหน",
             zh: "SCITI指数的数据揭示了真正的机会所在——以及风险隐藏之处。",
           })}
@@ -673,7 +672,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         })}</h2>
         <p className="section-intro">
           {translate(locale, {
-            en: "Real numbers from real institutions. No forecasts, no fluff -- the baseline for any investment thesis in Thai smart cities.",
+            en: "Real numbers from real institutions. No forecasts, no fluff — the baseline for any investment thesis in Thai smart cities.",
             th: "ตัวเลขจริงจากสถาบันจริง ไม่มีการคาดการณ์ ไม่มีสิ่งฟุ่มเฟือย พื้นฐานสำหรับวิทยานิพนธ์การลงทุนในเมืองอัจฉริยะไทย",
             zh: "来自真实机构的真实数据。没有预测，没有虚言——泰国智慧城市投资论点的基准线。",
           })}
@@ -1056,7 +1055,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             zh: "该指数是此前缺失的尽职调查层。",
           })}</h2>
           <p>{translate(locale, {
-            en: "SCITI scores cities on operational reality -- not marketing decks, not ribbon-cutting ceremonies. Use it as your baseline.",
+            en: "SCITI scores cities on operational reality — not marketing decks, not ribbon-cutting ceremonies. Use it as your baseline.",
             th: "SCITI ให้คะแนนเมืองจากความเป็นจริงในการดำเนินงาน ไม่ใช่สไลด์การตลาด ไม่ใช่พิธีตัดริบบิ้น ใช้มันเป็นพื้นฐานของคุณ",
             zh: "SCITI根据运营现实为城市评分——而非营销材料，也非剪彩仪式。以此作为您的基准线。",
           })}</p>

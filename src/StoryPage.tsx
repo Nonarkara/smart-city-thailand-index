@@ -116,7 +116,6 @@ const spotlights: Spotlight[] = [
 ];
 
 export default function StoryPage({ locale, onNavigate }: Props) {
-  const [heroRef, heroVisible] = useInView(0.1);
   const [spotlightRef, spotlightVisible] = useInView(0.1);
   const [quoteRef, quoteVisible] = useInView(0.1);
   const [timelineRef, timelineVisible] = useInView(0.1);
@@ -126,7 +125,7 @@ export default function StoryPage({ locale, onNavigate }: Props) {
 
   return (
     <div className="story-page">
-      <section ref={heroRef} className={`section story-hero reveal ${heroVisible ? "visible" : ""}`}>
+      <section className="section story-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "Storytelling", th: "เรื่องเล่า", zh: "故事" })}</p>
         <h1 className="hero-title">{translate(locale, { en: "From Sensors to Citizens", th: "จากเซ็นเซอร์สู่พลเมือง", zh: "从传感器到公民" })}</h1>
         <p className="hero-strapline">

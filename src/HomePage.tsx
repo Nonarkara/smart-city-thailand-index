@@ -65,7 +65,6 @@ interface Props {
 }
 
 export default function HomePage({ locale, onNavigate }: Props) {
-  const [heroRef, heroVisible] = useInView(0.1);
   const [championsRef, championsVisible] = useInView(0.1);
   const [podiumRef, podiumVisible] = useInView(0.1);
   const [collectionsRef, collectionsVisible] = useInView(0.1);
@@ -147,7 +146,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
   return (
     <div className="dashboard-home">
       {/* ─── CINEMATIC HERO ─── */}
-      <section ref={heroRef} className={`cinematic-hero reveal ${heroVisible ? "visible" : ""}`}>
+      <section className="cinematic-hero reveal visible">
         {(HOME_HERO_ASSETS as HeroAsset[]).map((asset, index) => {
           const active = index === heroIndex;
           return (

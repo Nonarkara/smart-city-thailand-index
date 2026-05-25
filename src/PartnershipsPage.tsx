@@ -292,10 +292,10 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
         <p className="eyebrow">{t(locale, { en: "International", th: "ระหว่างประเทศ", zh: "国际合作" })}</p>
         <h1 className="hero-title partnerships-title">
           {locale === "th"
-            ? <>5 ประเทศ 4 สถานะ:<br />ใครทำอะไรจริง</>
+            ? <>9 ความร่วมมือ 4 สถานะ:<br />ใครทำอะไรจริง</>
             : locale === "zh"
-              ? <>5 个国家，4 种状态：<br />谁真的做了事</>
-              : <>5 countries, 4 statuses:<br />who actually delivered.</>}
+              ? <>9 项合作，4 种状态：<br />谁真的做了事</>
+              : <>9 partnerships, 4 statuses:<br />who actually delivered.</>}
         </h1>
         <p className="hero-strapline partnerships-strapline">
           {t(locale, {

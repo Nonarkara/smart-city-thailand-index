@@ -34,7 +34,6 @@ const domains = [
 ];
 
 export default function AuditPage({ locale, onNavigate }: Props) {
-  const [heroRef, heroVisible] = useInView(0.1);
   const [timelineRef, timelineVisible] = useInView(0.1);
   const [kpiRef, kpiVisible] = useInView(0.1);
   const [domainRef, domainVisible] = useInView(0.1);
@@ -43,7 +42,7 @@ export default function AuditPage({ locale, onNavigate }: Props) {
 
   return (
     <div className="audit-page">
-      <section ref={heroRef} className={`section audit-hero reveal ${heroVisible ? "visible" : ""}`}>
+      <section className="section audit-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "Technical Audit", th: "การตรวจสอบทางเทคนิค", zh: "技术审计" })}</p>
         <h1 className="hero-title">{translate(locale, { en: "Institutional Honesty.", th: "ความซื่อสัตย์ของสถาบัน", zh: "体制诚信。" })}</h1>
         <p className="hero-strapline">
