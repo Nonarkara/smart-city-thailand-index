@@ -750,7 +750,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .dossier-tabs { width: min(var(--w), calc(100% - 1.5rem)); margin: 0 auto; }
 .dossier-tab-list { display: flex; gap: .25rem; border-bottom: 1px solid var(--5); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .dossier-tab-list::-webkit-scrollbar { display: none; }
-.dossier-tab { flex: 0 0 auto; padding: .55rem .9rem; font: 600 var(--text-micro) var(--font); color: var(--3); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; }
+.dossier-tab { flex: 0 0 auto; min-height: 44px; display: inline-flex; align-items: center; padding: .55rem .9rem; font: 600 var(--text-micro) var(--font); color: var(--3); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; }
 .dossier-tab:hover { color: var(--teal); }
 .dossier-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
 .dossier-tab-panel { padding: 1.25rem 0; }
@@ -1174,7 +1174,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .chat-header { display: flex; align-items: center; gap: .3rem; padding: .4rem .6rem; border-bottom: 1px solid var(--5); }
 .chat-title { font-weight: 700; font-size: .68rem; }
 .chat-powered { font: 500 .45rem var(--mono); color: var(--3); margin-left: auto; }
-.chat-close { font-size: 1.1rem; padding: 0 .2rem; color: var(--3); }
+.chat-close { font-size: 1.1rem; padding: 0; min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; color: var(--3); }
 .chat-messages { flex: 1; overflow-y: auto; padding: .6rem; min-height: 180px; max-height: 320px; }
 .chat-welcome { font-size: .65rem; color: var(--2); }
 .chat-suggestions { display: flex; flex-wrap: wrap; gap: 3px; margin-top: .35rem; }
@@ -1186,7 +1186,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .chat-typing { opacity: .4; }
 .chat-input-row { display: flex; border-top: 1px solid var(--5); }
 .chat-input { flex: 1; padding: .4rem .6rem; border: 0; font-size: .65rem; background: 0; color: inherit; outline: 0; }
-.chat-send { padding: .4rem .6rem; background: var(--teal); color: #fff; font-weight: 700; font-size: .78rem; }
+.chat-send { padding: .4rem .6rem; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; background: var(--teal); color: #fff; font-weight: 700; font-size: .78rem; }
 .chat-send:disabled { opacity: .25; }
 
 /* ─── RESPONSIVE ─── */
@@ -1943,7 +1943,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .trend-intelligence-panel { display: none !important; }
 
 @media (max-width: 900px) {
-  .nav-toggle { display: inline-flex; flex-direction: column; gap: .2rem; width: 2.5rem; min-height: 2.5rem; padding: .6rem; border: 1px solid var(--5); border-radius: var(--radius-sm); }
+  .nav-toggle { display: inline-flex; flex-direction: column; gap: .2rem; width: 44px; min-height: 44px; padding: .6rem; border: 1px solid var(--5); border-radius: var(--radius-sm); }
   .nav-toggle span { display: block; width: 100%; height: 2px; background: var(--ink); border-radius: 0; }
   .nav-links { position: absolute; top: calc(100% + .35rem); right: .75rem; left: .75rem; display: none; flex-direction: column; padding: .75rem; border: 1px solid var(--5); background: rgba(250,251,252,.98); backdrop-filter: blur(20px); box-shadow: none; border-radius: var(--radius); }
   .nav-links.nav-links-open { display: flex; }
@@ -4598,6 +4598,8 @@ details[open] .kb-question::before { content: "−"; }
 .dossier-tab {
   flex: 1 1 auto;
   min-width: max-content;
+  min-height: 44px;
+  display: inline-flex; align-items: center;
   padding: .65rem .9rem;
   font: 600 .72rem var(--font);
   color: var(--3);
@@ -5228,6 +5230,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .cinematic-hero-eyebrow, .podium-rank,
 .program-concept-num, .program-257-num, .program-source,
 .ct-rr-score, .ct-bar-clock { color: var(--gold-text); }
+/* cinematic-hero-eyebrow sits on a dark photo overlay — restore gold-ink (lighter) for contrast */
+.cinematic-hero-eyebrow { color: var(--gold-ink); }
 [data-theme="dark"] .cinematic-hero-eyebrow { color: #C49A2A; }
 
 /* P4: Mobile 640px gap */
