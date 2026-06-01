@@ -7004,6 +7004,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .filter-chip {
   padding: 0.3rem 0.6rem;
+  min-height: 44px;
+  display: inline-flex; align-items: center;
   font: 600 0.62rem var(--mono);
   letter-spacing: 0.04em;
   color: var(--3);
@@ -7322,7 +7324,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   display: grid;
   grid-template-columns: 52px 1fr auto;
   gap: 0.5rem;
-  align-items: baseline;
+  align-items: center;
+  min-height: 44px;
   padding: 0.4rem 0.5rem;
   background: var(--surface);
   border: 1px solid var(--5);
