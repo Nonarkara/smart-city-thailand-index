@@ -6,11 +6,12 @@
 // A city where people actually live well scores high.
 // ---------------------------------------------------------------------------
 
-import { assignTier, blendLivabilityScore, computeComposite } from "./scoring.ts";
+import { assignTier, blendLivabilityScore, blendSafetyScore, computeComposite } from "./scoring.ts";
 import { classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import type { SmartCity, CityScores } from "./types.ts";
 import { RANKING_OVERRIDES } from "./dynamicCityData.ts";
 import { getFloodScore } from "./provincialFloodData.ts";
+import { getLandPrice, getLandPriceSource } from "./provincialLandPriceData.ts";
 
 export { assignTier, computeComposite } from "./scoring.ts";
 
@@ -35,9 +36,17 @@ function city(
   // + 25% flood). Flood data is provincial; sourced from PROVINCIAL_FLOOD_SCORE
   // (GISTDA repeat-flood polygons 2005-2016 + DDPM annual records).
   const floodScore = getFloodScore(province);
+  const landPrice = getLandPrice(province);
+  const landPriceSrc = getLandPriceSource(province);
   const blendedLivability = blendLivabilityScore(scores.livability, floodScore);
-  const adjustedScores: CityScores = { ...scores, livability: blendedLivability };
-  const enrichedMetrics = { ...metrics, floodFrequencyScore: floodScore };
+  const blendedSafety = blendSafetyScore(scores.safety, metrics.roadFatalityRate ?? 25);
+  const adjustedScores: CityScores = { ...scores, livability: blendedLivability, safety: blendedSafety };
+  const enrichedMetrics = {
+    ...metrics,
+    floodFrequencyScore: floodScore,
+    landPriceBaht: landPrice,
+    landPriceSource: landPriceSrc,
+  };
 
   const finalScores = RANKING_OVERRIDES[id] ? { ...adjustedScores, ...RANKING_OVERRIDES[id] } : adjustedScores;
   const compositeScore = computeComposite(finalScores);

@@ -17,6 +17,19 @@ describe("RankingsPage", () => {
     expect(firstRowAfter?.textContent).not.toBe(initialText);
   });
 
+  it("shows the seven pillar bars directly in each ranking row", () => {
+    const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
+
+    const firstRow = container.querySelector(".rank-row-link");
+    expect(firstRow).not.toBeNull();
+    expect(firstRow?.querySelector(".sparkline-composite")).not.toBeInTheDocument();
+    expect(firstRow?.querySelectorAll(".rank-pillar-bar")).toHaveLength(7);
+    expect(firstRow?.querySelector(".rank-pillar-bars")).toHaveAttribute(
+      "aria-label",
+      expect.stringContaining("Seven-pillar score breakdown"),
+    );
+  });
+
   it("enters compare view after selecting cities in compare mode", async () => {
     const user = userEvent.setup();
     const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);

@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useCallback } from "react";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import type { Locale } from "./types";
 
 interface Props {
@@ -171,6 +171,19 @@ export default function PartnerVibeMap({ locale }: Props) {
   const [hovered, setHovered] = useState<CountryVibe | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [mPos, setMPos] = useState({ x: 0, y: 0 });
+  const [containerWidth, setContainerWidth] = useState(1000);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const updateSize = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.clientWidth);
+      }
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   const onMove = useCallback((e: React.MouseEvent) => {
     const r = containerRef.current?.getBoundingClientRect();
@@ -321,11 +334,10 @@ export default function PartnerVibeMap({ locale }: Props) {
 
       {/* Hover card — floats near cursor on desktop, fixed bottom panel on mobile */}
       {hovered && (() => {
-        const containerW = containerRef.current?.clientWidth ?? 1000;
-        const isMobile = containerW < 640;
+        const isMobile = containerWidth < 640;
         const cardW = 320;
         const rawLeft = mPos.x + 24;
-        const clampedLeft = Math.min(rawLeft, containerW - cardW - 8);
+        const clampedLeft = Math.min(rawLeft, containerWidth - cardW - 8);
         const above = mPos.y > 220;
         return (
           <div

@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { translate } from "./cityPresentation";
-import { assetUrl } from "./mediaAssets";
+import { assetUrl } from "./assetUtils";
 import type { Locale, SmartDimension } from "./types";
 
 const DIM_LOGOS: Record<SmartDimension, string> = {
@@ -129,10 +129,9 @@ export default function ScitiBingoPage({ locale }: Props) {
   const t=(copy:T3)=>translate(locale,copy);
 
   // Portal to body on mobile to bypass page-frame transform that breaks position:fixed
-  const [isMobile, setIsMobile] = useState(()=>window.innerWidth<=640);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 640px)").matches);
   useEffect(()=>{
     const mq=window.matchMedia('(max-width: 640px)');
-    setIsMobile(mq.matches);
     const h=(e:MediaQueryListEvent)=>setIsMobile(e.matches);
     mq.addEventListener('change',h);
     return ()=>mq.removeEventListener('change',h);

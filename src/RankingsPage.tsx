@@ -57,96 +57,86 @@ function tierSymbol(tier: CityTier): string {
   return tier === "alpha" ? "α" : tier === "beta" ? "β" : "γ";
 }
 
+const PILLAR_SHORT_LABELS: Record<Locale, Record<ScoringPillar, string>> = {
+  en: {
+    livability: "LIV",
+    economy: "ECO",
+    safety: "SAF",
+    wellbeing: "WEL",
+    environment: "ENV",
+    hospitality: "HOS",
+    digital: "DIG",
+  },
+  th: {
+    livability: "อยู่",
+    economy: "ศก.",
+    safety: "ปลอด",
+    wellbeing: "สุข",
+    environment: "สิ่ง",
+    hospitality: "ไมตรี",
+    digital: "ดิจิ",
+  },
+  zh: {
+    livability: "宜居",
+    economy: "经济",
+    safety: "安全",
+    wellbeing: "福祉",
+    environment: "环境",
+    hospitality: "人文",
+    digital: "数字",
+  },
+};
+
 // ---------------------------------------------------------------------------
-// CityScoreSparkline — composite bar with expand-to-pillars on interaction
+// CityPillarBars — all seven pillar scores, always visible for fair comparison
 // ---------------------------------------------------------------------------
-function CityScoreSparkline({
+function CityPillarBars({
   city,
   locale,
 }: {
   city: SmartCity;
   locale: Locale;
 }) {
-  const [expanded, setExpanded] = useState(false);
-
-  const composite = useMemo(() => {
-    return PILLAR_ORDER.reduce((sum, p) => sum + city.scores[p] * (PILLAR_WEIGHTS[p] / 100), 0);
-  }, [city.scores]);
-
-  const tierColor = city.tier === "alpha"
-    ? "var(--teal, #2BA89C)"
-    : city.tier === "beta"
-      ? "var(--gold-text, #946B0C)"
-      : "var(--gamma, #B03030)";
-
-  const getShort = (pillar: ScoringPillar): string => {
-    const map: Record<ScoringPillar, string> = {
-      livability: "LIV",
-      economy: "ECO",
-      safety: "SAF",
-      wellbeing: "WEL",
-      environment: "ENV",
-      hospitality: "HOS",
-      digital: "DIG",
-    };
-    return map[pillar];
-  };
+  const ariaSummary = PILLAR_ORDER.map(pillar => {
+    const label = PILLAR_LABELS[locale][pillar];
+    const value = city.scores[pillar];
+    const weight = PILLAR_WEIGHTS[pillar];
+    if (locale === "th") return `${label} ${value}, น้ำหนัก ${weight}%`;
+    if (locale === "zh") return `${label} ${value}，权重 ${weight}%`;
+    return `${label} ${value}, ${weight}% weight`;
+  }).join("; ");
 
   return (
     <div
-      className={`sparkline-wrap ${expanded ? "is-expanded" : ""}`}
-      onMouseEnter={() => setExpanded(true)}
-      onMouseLeave={() => setExpanded(false)}
-      onFocus={() => setExpanded(true)}
-      onBlur={() => setExpanded(false)}
-      tabIndex={0}
-      role="button"
-      aria-expanded={expanded}
+      className="rank-pillar-bars"
+      role="img"
       aria-label={translate(locale, {
-        en: `Composite score ${composite.toFixed(1)}. Press to ${expanded ? "collapse" : "expand"} pillar breakdown.`,
-        th: `คะแนนรวม ${composite.toFixed(1)} กดเพื่อ${expanded ? "ยุบ" : "ขยาย"}รายละเอียดเสาหลัก`,
-        zh: `综合得分 ${composite.toFixed(1)}，按${expanded ? "收起" : "展开"}支柱详情`,
+        en: `Seven-pillar score breakdown: ${ariaSummary}`,
+        th: `รายละเอียดคะแนนทั้งเจ็ดเสาหลัก: ${ariaSummary}`,
+        zh: `七项支柱得分明细：${ariaSummary}`,
       })}
-      onClick={() => setExpanded(v => !v)}
-      onKeyDown={e => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          setExpanded(v => !v);
-        }
-      }}
     >
-      {/* Composite bar */}
-      <div className="sparkline-composite" aria-hidden="true">
-        <span className="sparkline-composite-label">{composite.toFixed(1)}</span>
-        <div className="sparkline-composite-track">
+      {PILLAR_ORDER.map(pillar => {
+        const value = city.scores[pillar];
+        return (
           <div
-            className="sparkline-composite-fill"
-            style={{ width: `${composite}%`, background: tierColor }}
-          />
-        </div>
-        <span className="sparkline-composite-hint">
-          {translate(locale, { en: "Score", th: "คะแนน", zh: "得分" })}
-        </span>
-      </div>
-
-      {/* Expanded pillar breakdown */}
-      <div className="sparkline-pillar-grid" aria-hidden="true">
-        {PILLAR_ORDER.map(pillar => {
-          const value = city.scores[pillar];
-          return (
-            <div key={pillar} className="sparkline-pillar-row">
-              <span className="sparkline-pillar-label">{getShort(pillar)}</span>
-              <div className="sparkline-pillar-track">
-                <div
-                  className="sparkline-pillar-fill"
-                  style={{ width: `${value}%`, background: PILLAR_COLORS[pillar] }}
-                />
-              </div>
-              <span className="sparkline-pillar-value">{value}</span>
+            key={pillar}
+            className="rank-pillar-bar"
+            title={`${PILLAR_LABELS[locale][pillar]}: ${value} / 100 (${PILLAR_WEIGHTS[pillar]}%)`}
+          >
+            <span className="rank-pillar-bar-head">
+              <span className="rank-pillar-bar-label">{PILLAR_SHORT_LABELS[locale][pillar]}</span>
+              <span className="rank-pillar-bar-value">{value}</span>
+            </span>
+            <div className="rank-pillar-bar-track" aria-hidden="true">
+              <div
+                className="rank-pillar-bar-fill"
+                style={{ width: `${value}%`, background: PILLAR_COLORS[pillar] }}
+              />
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -276,7 +266,6 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
   const lens = getPresetById(lensId);
   const isBalanced = lens.id === "balanced";
-  const activeWeights = isBalanced ? PILLAR_WEIGHTS : lens.weights;
 
   const enriched = useMemo(
     () =>
@@ -612,25 +601,25 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                           cityName={getCityName(city, locale)}
                           className="rank-row-fingerprint"
                         />
-                        <span className="rank-row-body">
-                          <span className="rank-row-head">
+                        <div className="rank-row-body">
+                          <div className="rank-row-head">
                             <span className="rank-row-name">
                               {getCityName(city, locale)}
                               <span className="rank-row-tier" aria-hidden="true">
                                 {" "}· {tierSymbol(city.tier)}
                               </span>
                             </span>
-                          </span>
-                          <span className="rank-row-caption">
+                          </div>
+                          <div className="rank-row-caption">
                             {getProvinceName(city, locale)} · {getCityStatusLabel(city.status, locale)} · {getCityRealityLabel(city.reality, locale)}
                             {city.league ? (
                               <>
                                 {" "}· <span className="league-badge">{LEAGUE_LABELS[locale][city.league]}</span>
                               </>
                             ) : null}
-                          </span>
-                          <CityScoreSparkline city={city} locale={locale} />
-                        </span>
+                          </div>
+                          <CityPillarBars city={city} locale={locale} />
+                        </div>
                         <span className="rank-row-meta">
                           <span className="rank-row-score">{lensScore.toFixed(1)}</span>
                           <span className="rank-row-pct">p{pct}</span>

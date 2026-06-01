@@ -20,6 +20,7 @@ import type { Locale, SmartCity } from "./types";
 // Minimal Leaflet type declaration (CDN-loaded global)
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     L?: any;
   }
 }
@@ -123,8 +124,11 @@ function markerSize(score: number): number {
 
 export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
   const mapEl = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const markersRef = useRef<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const layersRef = useRef<Record<LayerKey, any>>({} as Record<LayerKey, any>);
   const [activeLayers, setActiveLayers] = useState<Set<LayerKey>>(new Set());
   const [hoveredCity, setHoveredCity] = useState<SmartCity | null>(null);

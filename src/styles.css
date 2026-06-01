@@ -1714,102 +1714,46 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   border-radius: 0;
 }
 
-/* ── City Score Sparkline (composite + expand-to-pillars) ── */
-.sparkline-wrap {
-  cursor: pointer;
-  outline: none;
-  padding: .35rem 0;
-  transition: background .15s ease;
-}
-.sparkline-wrap:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 2px;
-}
-
-/* Composite bar */
-.sparkline-composite {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-}
-.sparkline-composite-label {
-  font: 700 0.75rem var(--mono);
-  min-width: 2.2rem;
-  text-align: right;
-  color: var(--ink);
-  flex-shrink: 0;
-  letter-spacing: .02em;
-}
-.sparkline-composite-track {
-  flex: 1;
-  height: 8px;
-  background: var(--5, #F4F4F5);
-  border-radius: 0;
-  overflow: hidden;
-  min-width: 4rem;
-}
-.sparkline-composite-fill {
-  height: 100%;
-  border-radius: 0;
-  transition: width .6s var(--ease, ease);
-}
-.sparkline-composite-hint {
-  font: 500 0.68rem var(--font);
-  color: var(--3);
-  flex-shrink: 0;
-  letter-spacing: .02em;
-}
-
-/* Expanded pillar grid */
-.sparkline-pillar-grid {
+/* ── City Pillar Bars: seven visible dimensions, never a hidden composite ── */
+.rank-pillar-bars {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: .2rem .6rem;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height .25s ease, opacity .2s ease, padding .2s ease;
-  padding-top: 0;
+  grid-template-columns: repeat(7, minmax(38px, 1fr));
+  gap: .25rem;
+  padding-top: .15rem;
 }
-.sparkline-wrap.is-expanded .sparkline-pillar-grid {
-  max-height: 200px;
-  opacity: 1;
-  padding-top: .5rem;
+.rank-pillar-bar {
+  min-width: 0;
 }
-
-.sparkline-pillar-row {
+.rank-pillar-bar-head {
   display: flex;
-  align-items: center;
-  gap: .3rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .18rem;
+  min-height: 1rem;
 }
-.sparkline-pillar-label {
-  font: 700 0.68rem var(--mono);
-  min-width: 1.8rem;
-  width: 1.6rem;
-  text-align: right;
-  flex-shrink: 0;
-  letter-spacing: .04em;
-  color: var(--3);
-}
-.sparkline-pillar-track {
-  flex: 1;
-  height: 5px;
-  background: var(--5, #F4F4F5);
-  border-radius: 0;
+.rank-pillar-bar-label {
+  min-width: 0;
   overflow: hidden;
-  min-width: 2.5rem;
-}
-.sparkline-pillar-fill {
-  height: 100%;
-  border-radius: 0;
-  transition: width .6s var(--ease, ease);
-}
-.sparkline-pillar-value {
-  font: 600 0.68rem var(--mono);
-  min-width: 1.3rem;
-  text-align: right;
+  text-overflow: ellipsis;
+  font: 700 .52rem var(--mono);
+  letter-spacing: .05em;
+  text-transform: uppercase;
   color: var(--3);
-  flex-shrink: 0;
+}
+.rank-pillar-bar-value {
+  font: 700 .58rem var(--mono);
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+.rank-pillar-bar-track {
+  height: 6px;
+  overflow: hidden;
+  background: var(--5, #F4F4F5);
+}
+.rank-pillar-bar-fill {
+  height: 100%;
+  min-width: 1px;
+  transition: width .55s var(--ease, ease);
 }
 
 /* Tier badge inline */
@@ -1825,12 +1769,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .dashboard-ranking-tier.tier-gamma { color: var(--gamma); background: var(--gamma-bg); }
 
 @media (max-width: 480px) {
-  .sparkline-pillar-grid {
-    grid-template-columns: 1fr;
-  }
-  .sparkline-composite-label {
-    min-width: 2rem;
-  }
+  .rank-pillar-bars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .dashboard-ranking-vibe {
@@ -3059,6 +2998,128 @@ h2, h3 { font-family: var(--font); }
 .program-cert-label { font-size: .72rem; font-weight: 700; margin-bottom: .15rem; }
 .program-cert-desc { font-size: .52rem; color: var(--2); line-height: 1.45; }
 .program-cert-arrow { position: absolute; right: -.5rem; top: 50%; transform: translateY(-50%); font: 700 .85rem var(--mono); color: var(--4); }
+.program-section-intro {
+  max-width: 760px;
+  margin: .35rem 0 1rem;
+  color: var(--2);
+  font-size: .78rem;
+  line-height: 1.65;
+}
+.program-logo-guideline {
+  display: grid;
+  grid-template-columns: minmax(260px, .9fr) minmax(320px, 1.1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--5);
+}
+.program-logo-guideline-copy h3 {
+  margin: .2rem 0 .45rem;
+  font-size: 1rem;
+  letter-spacing: -.015em;
+}
+.program-logo-guideline-copy p {
+  max-width: 520px;
+  color: var(--2);
+  font-size: .68rem;
+  line-height: 1.65;
+}
+.program-guideline-actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+  margin-top: .85rem;
+}
+.program-guideline-file {
+  max-width: 320px;
+  color: var(--3);
+  font: 600 .52rem/1.5 var(--mono);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.program-logo-requirements {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .35rem;
+}
+.program-logo-requirement {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: .6rem;
+  padding: .65rem;
+  background: var(--bg);
+  border: 1px solid var(--5);
+}
+.program-logo-requirement-num {
+  color: var(--gold-text, #946B0C);
+  font: 700 .74rem var(--mono);
+  letter-spacing: .06em;
+}
+.program-logo-requirement h4 {
+  margin-bottom: .18rem;
+  font-size: .7rem;
+  letter-spacing: -.005em;
+}
+.program-logo-requirement p {
+  color: var(--2);
+  font-size: .58rem;
+  line-height: 1.55;
+}
+.program-catalog-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  gap: 1rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+.program-catalog-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .5rem;
+}
+.program-catalog-card,
+.program-catalog-download,
+.program-catalog-usecase {
+  background: var(--surface);
+  border: 1px solid var(--5);
+}
+.program-catalog-card {
+  padding: .8rem;
+}
+.program-catalog-card h3,
+.program-catalog-download h3,
+.program-catalog-usecase h3 {
+  margin: .2rem 0 .32rem;
+  font-size: .78rem;
+  letter-spacing: -.01em;
+}
+.program-catalog-card p,
+.program-catalog-download p,
+.program-catalog-usecase p {
+  color: var(--2);
+  font-size: .6rem;
+  line-height: 1.6;
+}
+.program-catalog-download {
+  padding: .9rem;
+  position: sticky;
+  top: 5rem;
+}
+.program-catalog-download .program-guideline-file {
+  display: block;
+  margin-top: .6rem;
+}
+.program-catalog-usecases {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem;
+  margin-top: .7rem;
+}
+.program-catalog-usecase {
+  padding: .75rem;
+}
 
 .program-batch-grid { display: flex; gap: .5rem; margin-top: .6rem; }
 .program-batch-card { flex: 1; padding: .65rem .55rem; background: var(--surface); text-align: center; }
@@ -3085,6 +3146,12 @@ h2, h3 { font-family: var(--font); }
   .dashboard-map-layout { flex-direction: column; }
   .dashboard-map-wrap { flex: none; width: 100%; max-width: 240px; }
   .program-cert-flow { flex-direction: column; }
+  .program-cert-arrow { display: none; }
+  .program-logo-guideline { grid-template-columns: 1fr; padding: .8rem; }
+  .program-catalog-panel,
+  .program-catalog-summary,
+  .program-catalog-usecases { grid-template-columns: 1fr; }
+  .program-catalog-download { position: static; }
   .program-batch-grid { flex-wrap: wrap; }
   .program-stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -4459,6 +4526,7 @@ details[open] .kb-question::before { content: "−"; }
 
 /* Rank-row xs fingerprint (32px) */
 .rank-row-fingerprint {
+  grid-area: fingerprint;
   flex: 0 0 auto;
   align-self: center;
   opacity: 0.7;
@@ -7312,6 +7380,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   display: grid;
   /* num | fingerprint | body | meta */
   grid-template-columns: 32px 32px 1fr auto;
+  grid-template-areas: "num fingerprint body meta";
   gap: 0.6rem;
   align-items: center;
   padding: 0.9rem 1rem;
@@ -7320,12 +7389,14 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   min-height: 64px;
 }
 .rank-row-num {
+  grid-area: num;
   font: 700 0.95rem var(--mono);
   letter-spacing: 0.02em;
   color: var(--3);
   text-align: right;
 }
 .rank-row-body {
+  grid-area: body;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -7349,6 +7420,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   color: var(--3);
 }
 .rank-row-meta {
+  grid-area: meta;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -7400,10 +7472,12 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 @media (max-width: 720px) {
   .rank-row-link {
-    grid-template-columns: 32px 1fr auto;
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+    grid-template-areas: "num body meta";
     gap: 0.65rem;
     padding: 0.75rem 0.75rem;
   }
+  .rank-row-fingerprint { display: none; }
   .pillar-strip { width: 180px; }
   .rank-row-score { font-size: 0.92rem; }
 }
@@ -9688,5 +9762,90 @@ body:has(.bingo-page) { overflow: hidden; }
   }
   .partner-tl-country {
     display: none;
+  }
+}
+
+/* ─── PHASE 13 LAND PRICE AND INVESTABILITY ─── */
+.dev-investability-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: .6rem;
+}
+.dev-panel, .investability-panel {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  padding: 1.2rem;
+  border: 1px solid var(--5);
+}
+.dev-panel {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.investability-details {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  justify-content: center;
+}
+.investability-formula-desc {
+  font-size: .62rem;
+  line-height: 1.5;
+  color: var(--2);
+  margin: 0;
+}
+.investability-source-note {
+  font-size: .55rem;
+  line-height: 1.4;
+  color: var(--3);
+  margin: 0;
+  border-top: 1px dashed var(--5);
+  padding-top: .4rem;
+}
+.investability-source-note strong {
+  color: var(--ink);
+}
+
+.compare-col-investment {
+  margin-top: .85rem;
+  padding-top: .85rem;
+  border-top: 1px solid var(--5);
+}
+.compare-col-investment-label {
+  font: 700 .56rem var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin-bottom: .4rem;
+}
+.compare-col-investment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+.compare-col-investment-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: .65rem;
+}
+.compare-col-investment-list li .label {
+  color: var(--2);
+}
+.compare-col-investment-list li .value {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+@media (max-width: 820px) {
+  .dev-investability-split {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }

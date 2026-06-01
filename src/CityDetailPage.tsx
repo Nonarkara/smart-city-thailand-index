@@ -7,7 +7,7 @@ import { getCityContext } from "./cityContext";
 import { getCityExternalResearchLinks, getCityFactsCsv, getCitySummariesCsv } from "./cityCdp";
 import { downloadCsv } from "./csvDownload";
 import { useCityDetail } from "./cityApi";
-import { getCityPhotoSet, getChapterBreakCaption, type CityChapterBreak } from "./cityMedia";
+import { getCityPhotoSet } from "./cityMedia";
 import { getCityResearchSources, getLocalizedList, getLocalizedText, resolveCityResearch } from "./cityResearch";
 import {
   getCityName,
@@ -31,42 +31,7 @@ interface Props {
   onNavigate: (path: string) => void;
 }
 
-/**
- * Chapter-break editorial photo block — appears between dossier chapters.
- * Per workspace CLAUDE.md §11.6 — the four-cliche check:
- *   - Hard-edged rectangle (no rounding)
- *   - Single legitimate gradient: dark vertical legibility overlay only
- *   - System-ui caption typography (mono micro kicker, body caption)
- *   - No drop shadow
- */
-function ChapterBreakBlock({
-  brk,
-  index,
-  locale,
-}: {
-  brk: CityChapterBreak;
-  /** 1-based position of the chapter this break closes (1=WHO, 2=WHAT, 3=HOW, 4=WHY). */
-  index: number;
-  locale: Locale;
-}) {
-  const positionLabel = `${String(index).padStart(2, "0")} / 05`;
-  const caption = getChapterBreakCaption(brk, locale);
-  return (
-    <div className="city-chapter-break" aria-hidden="false">
-      <ResponsiveImage
-        src={brk.asset.src}
-        alt={caption}
-        loading="lazy"
-        sizes="100vw"
-        style={{ objectPosition: brk.asset.objectPosition }}
-      />
-      <div className="city-chapter-break-overlay">
-        <span className="city-chapter-break-kicker">{positionLabel}</span>
-        <p className="city-chapter-break-caption">{caption}</p>
-      </div>
-    </div>
-  );
-}
+
 
 const DELIVERY_STEPS = [
   {
@@ -719,15 +684,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const overallGrade = statGrade(city.compositeScore);
   const photoSet = getCityPhotoSet(city);
   const cityPhoto = photoSet.hero;
-  // Chapter-break renderer — returns the JSX for a break image after the
-  // named chapter, or null if no break is registered for that slot.
-  const renderChapterBreak = (
-    after: CityChapterBreak["after"],
-    index: number,
-  ) => {
-    const brk = photoSet.breaks?.find(b => b.after === after);
-    return brk ? <ChapterBreakBlock brk={brk} index={index} locale={locale} /> : null;
-  };
   const cityContext = getCityContext(city.id);
   const research = resolveCityResearch(city);
   const comparison = getGlobalComparison(city.id);
@@ -1034,6 +990,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           ? {
               label: translate(locale, { en: "GPP per capita", th: "GPP ต่อหัว", zh: "人均GPP" }),
               value: formatBahtCompact(city.metrics.gppPerCapita),
+            }
+          : null,
+        city.metrics.landPriceBaht
+          ? {
+              label: translate(locale, { en: "Land appraisal price", th: "ราคาประเมินที่ดิน", zh: "土地评估价" }),
+              value: `฿${city.metrics.landPriceBaht.toLocaleString()}/m²`,
             }
           : null,
         city.metrics.gppGrowthRate != null
@@ -1684,15 +1646,17 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
               })}
             </h2>
             <p className="moneyball-headline">
-              {locale === "th" ? moneyball.headlineTh : moneyball.headline}
+              {locale === "th" ? moneyball.headlineTh : locale === "zh" ? moneyball.headlineZh : moneyball.headline}
             </p>
             <div className="moneyball-edge-list">
               {topEdges.map((edge, idx) => (
                 <div key={idx} className="moneyball-edge-row">
                   <span className="moneyball-edge-label">
-                    {locale === "th" ? edge.labelTh : edge.label}
+                    {locale === "th" ? edge.labelTh : locale === "zh" ? edge.labelZh : edge.label}
                   </span>
-                  <span className="moneyball-edge-value">{edge.value}</span>
+                  <span className="moneyball-edge-value">
+                    {locale === "th" ? edge.valueTh : locale === "zh" ? edge.valueZh : edge.value}
+                  </span>
                 </div>
               ))}
             </div>
@@ -1760,22 +1724,64 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         </div>
 
         <div className="triptych-subsection">
-          <h3 className="triptych-subtitle">{translate(locale, { en: "Developability assessment", th: "การประเมินความสามารถในการพัฒนา", zh: "可开发性评估" })}</h3>
-          <div className="dev-score-grid">
-            <div className="dev-score-main">
-              <span className="dev-score-pct">{developability.total}%</span>
-              <span className="dev-score-label">{locale === "zh" ? developability.labelZh : locale === "th" ? developability.labelTh : developability.label}</span>
-              {tierMedianDelta != null && (
-                <span className={`dev-score-delta dev-score-delta-${tierMedianDelta >= 0 ? "pos" : "neg"}`}>
-                  {tierMedianDelta >= 0 ? "+" : ""}{tierMedianDelta} {translate(locale, { en: `vs ${tierSymbolForMedian} median`, th: `เทียบค่ากลาง ${tierSymbolForMedian}`, zh: `对比 ${tierSymbolForMedian} 中位` })}
-                </span>
-              )}
+          <div className="dev-investability-split">
+            <div className="dev-panel">
+              <h3 className="triptych-subtitle">{translate(locale, { en: "Developability assessment", th: "การประเมินความสามารถในการพัฒนา", zh: "可开发性评估" })}</h3>
+              <div className="dev-score-grid">
+                <div className="dev-score-main">
+                  <span className="dev-score-pct">{developability.total}%</span>
+                  <span className="dev-score-label">{locale === "zh" ? developability.labelZh : locale === "th" ? developability.labelTh : developability.label}</span>
+                  {tierMedianDelta != null && (
+                    <span className={`dev-score-delta dev-score-delta-${tierMedianDelta >= 0 ? "pos" : "neg"}`}>
+                      {tierMedianDelta >= 0 ? "+" : ""}{tierMedianDelta} {translate(locale, { en: `vs ${tierSymbolForMedian} median`, th: `เทียบค่ากลาง ${tierSymbolForMedian}`, zh: `对比 ${tierSymbolForMedian} 中位` })}
+                    </span>
+                  )}
+                </div>
+                <div className="dev-score-breakdown">
+                  <div className="dev-metric"><span className="dev-metric-val">{developability.growthCapacity}%</span><span className="dev-metric-lab">{translate(locale, { en: "Growth capacity", th: "ศักยภาพเติบโต", zh: "增长能力" })}</span></div>
+                  <div className="dev-metric"><span className="dev-metric-val">{developability.infraReadiness}%</span><span className="dev-metric-lab">{translate(locale, { en: "Infra readiness", th: "ความพร้อมโครงสร้าง", zh: "基础设施就绪度" })}</span></div>
+                  <div className="dev-metric"><span className="dev-metric-val">{developability.livabilityBase}%</span><span className="dev-metric-lab">{translate(locale, { en: "Livability base", th: "ฐานความน่าอยู่", zh: "宜居基础" })}</span></div>
+                </div>
+              </div>
             </div>
-            <div className="dev-score-breakdown">
-              <div className="dev-metric"><span className="dev-metric-val">{developability.growthCapacity}%</span><span className="dev-metric-lab">{translate(locale, { en: "Growth capacity", th: "ศักยภาพเติบโต", zh: "增长能力" })}</span></div>
-              <div className="dev-metric"><span className="dev-metric-val">{developability.infraReadiness}%</span><span className="dev-metric-lab">{translate(locale, { en: "Infra readiness", th: "ความพร้อมโครงสร้าง", zh: "基础设施就绪度" })}</span></div>
-              <div className="dev-metric"><span className="dev-metric-val">{developability.livabilityBase}%</span><span className="dev-metric-lab">{translate(locale, { en: "Livability base", th: "ฐานความน่าอยู่", zh: "宜居基础" })}</span></div>
-            </div>
+
+            {developability.investabilityScore !== null && developability.investabilityScore !== undefined && (
+              <div className="investability-panel">
+                <h3 className="triptych-subtitle">{translate(locale, { en: "Moneyball Investability Index", th: "ดัชนีน่าลงทุนมันนี่บอล", zh: "钱球投资吸引力指数" })}</h3>
+                <div className="dev-score-grid">
+                  <div className="dev-score-main">
+                    <span className="dev-score-pct" style={{ color: "var(--gold-text)" }}>{developability.investabilityScore}%</span>
+                    <span className="dev-score-label">
+                      {locale === "zh" ? developability.investabilityLabelZh : locale === "th" ? developability.investabilityLabelTh : developability.investabilityLabel}
+                    </span>
+                    <span className="dev-score-delta dev-score-delta-pos" style={{ background: "rgba(232, 145, 58, 0.08)", color: "var(--gold-text)", marginTop: "0.25rem", whiteSpace: "normal" }}>
+                      {translate(locale, {
+                        en: `Land: ฿${developability.landPriceBaht?.toLocaleString()}/m²`,
+                        th: `ที่ดิน: ฿${developability.landPriceBaht?.toLocaleString()}/ม.²`,
+                        zh: `地价: ฿${developability.landPriceBaht?.toLocaleString()}/米²`,
+                      })}
+                    </span>
+                  </div>
+                  <div className="investability-details">
+                    <p className="investability-formula-desc">
+                      {translate(locale, {
+                        en: "Asymmetric leverage formula: Developability score multiplied by land-price value factor relative to Bangkok's commercial peak.",
+                        th: "สูตรเลเวอเรจแบบอสมมาตร: คะแนนความพร้อมพัฒนาคูณด้วยตัวแปรส่วนลดราคาประเมินที่ดินเทียบกับเกณฑ์ราคากรุงเทพฯ",
+                        zh: "非对称杠杆公式：可开发性得分根据与曼谷峰值地价相比的土地成本折扣系数进行折算。",
+                      })}
+                    </p>
+                    <p className="investability-source-note">
+                      <strong>{translate(locale, { en: "Source:", th: "แหล่งข้อมูล:", zh: "来源:" })}</strong>{" "}
+                      {translate(locale, {
+                        en: `${developability.landPriceSource} (${developability.landPriceNoteEn})`,
+                        th: `${developability.landPriceSource} (${developability.landPriceNoteTh})`,
+                        zh: `${developability.landPriceSource} (${developability.landPriceNoteZh})`,
+                      })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

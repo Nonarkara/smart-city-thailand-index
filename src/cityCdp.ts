@@ -440,6 +440,7 @@ const METRIC_SOURCE_LOOKUP: Record<string, string> = {
   forestCoverage: "rfd",
   fdiInflow: "boi",
   dataLastUpdated: "citydata",
+  landPriceBaht: "treasury",
 };
 
 type CityDetailBuild = {
@@ -495,7 +496,10 @@ function formatMetricValue(metricKey: string, value: number | string | undefined
     }
     return { text: `${value.toLocaleString()}K`, unit: "people" };
   }
-  if (metricKey === "gppPerCapita" || metricKey === "avgMonthlyIncome" || metricKey === "fdiInflow") {
+  if (metricKey === "gppPerCapita" || metricKey === "avgMonthlyIncome" || metricKey === "fdiInflow" || metricKey === "landPriceBaht") {
+    if (metricKey === "landPriceBaht") {
+      return { text: `฿${value.toLocaleString()}`, unit: "THB/m²" };
+    }
     return { text: `฿${value.toLocaleString()}`, unit: "THB" };
   }
   if (metricKey === "pm25Annual") {
@@ -655,6 +659,8 @@ function metricLabel(metricKey: string): LocalizedText {
       return localized("Industry mix", "สัดส่วนอุตสาหกรรม", "产业结构");
     case "laborForce":
       return localized("Labor force", "กำลังแรงงาน", "劳动力");
+    case "landPriceBaht":
+      return localized("Land appraisal price", "ราคาประเมินที่ดิน", "土地评估价");
     default:
       return localized(metricKey, metricKey, metricKey);
   }
@@ -690,6 +696,8 @@ function metricMethod(metricKey: string): string {
       return "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.";
     case "laborForce":
       return "NSO provincial employed population (thousands); human-scale economic capacity measure.";
+    case "landPriceBaht":
+      return "Treasury Department official land appraisal values per square meter. Acts as investment entry-barrier signal.";
     default:
       return "Derived from the city baseline dataset.";
   }
@@ -697,7 +705,7 @@ function metricMethod(metricKey: string): string {
 
 function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
   const metrics = city.metrics;
-  const keepZeroMetrics = new Set(["population", "gppPerCapita", "avgMonthlyIncome"]);
+  const keepZeroMetrics = new Set(["population", "gppPerCapita", "avgMonthlyIncome", "landPriceBaht"]);
   const entries: Array<[string, number | string | undefined]> = [
     ["population", metrics.population],
     ["gppPerCapita", metrics.gppPerCapita],
@@ -714,6 +722,7 @@ function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
     ["fdiInflow", metrics.fdiInflow],
     ["industryComposition", metrics.industryComposition],
     ["laborForce", metrics.laborForce],
+    ["landPriceBaht", metrics.landPriceBaht ?? undefined],
   ];
 
   return entries
@@ -746,7 +755,7 @@ function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
 }
 
 function buildMetricBlocks(city: SmartCity, observations: CityMetricObservation[]): CityMetricBlock[] {
-  const economic = observations.filter(item => ["population", "gppPerCapita", "avgMonthlyIncome"].includes(item.metricKey));
+  const economic = observations.filter(item => ["population", "gppPerCapita", "avgMonthlyIncome", "landPriceBaht"].includes(item.metricKey));
   const risk = observations.filter(item => ["pm25Annual", "crimeRatePer100k", "greenCoverage"].includes(item.metricKey));
   const service = observations.filter(item => ["hospitalBedsPer10k"].includes(item.metricKey));
 

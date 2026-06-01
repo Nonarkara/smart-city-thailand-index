@@ -1,14 +1,11 @@
-import { dataSources } from "./evidenceData";
-import { instruments } from "./financialToolkit";
 import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_DATA_CUTOFF_ISO, SCITI_METHOD_CODE, TIER_THRESHOLDS } from "./methodologySpec";
-import { SCORING_PILLARS, computeComposite, assignTier, roundScore } from "./scoring";
+import { SCORING_PILLARS } from "./scoring";
 import { PILLAR_LABELS, PILLAR_WEIGHTS, PILLAR_COLORS } from "./types";
 import { WIKIMEDIA_PHOTO_CREDITS } from "./photoCredits";
-import type { Locale, CityScores } from "./types";
+import type { Locale } from "./types";
 
 interface Props {
   locale: Locale;
-  onNavigate: (path: string) => void;
 }
 
 interface LocalizedItem {
@@ -81,7 +78,7 @@ const API_ENDPOINTS = [
   },
 ];
 
-export default function ReferencesPage({ locale, onNavigate }: Props) {
+export default function ReferencesPage({ locale }: Props) {
   return (
     <div className="references-page">
       <section className="section rankings-hero reveal visible">

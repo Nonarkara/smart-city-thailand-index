@@ -19,7 +19,7 @@ import { SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS } from "./types";
 import { translate } from "./cityPresentation";
-import { assetUrl } from "./mediaAssets";
+import { assetUrl } from "./assetUtils";
 
 interface Props {
   locale: Locale;

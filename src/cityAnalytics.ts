@@ -6,8 +6,8 @@
 // ---------------------------------------------------------------------------
 
 import type { SmartCity, ScoringPillar } from "./types";
-import { PILLAR_WEIGHTS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
+import { PROVINCIAL_LAND_PRICE_SCORE } from "./provincialLandPriceData.ts";
 
 // ─── DEVELOPABILITY SCORE ───
 // Measures: growth capacity (30%), infrastructure readiness (40%), livability (30%)
@@ -21,6 +21,16 @@ export interface DevelopabilityScore {
   label: string;
   labelTh: string;
   labelZh: string;
+  // Phase 13 land price and investability
+  landPriceBaht?: number | null;
+  landPriceSource?: string;
+  landPriceNoteEn?: string;
+  landPriceNoteTh?: string;
+  landPriceNoteZh?: string;
+  investabilityScore?: number | null;
+  investabilityLabel?: string;
+  investabilityLabelTh?: string;
+  investabilityLabelZh?: string;
 }
 
 export function computeDevelopability(city: SmartCity): DevelopabilityScore {
@@ -44,7 +54,68 @@ export function computeDevelopability(city: SmartCity): DevelopabilityScore {
   else if (total >= 40) { label = "Needs capacity building"; labelTh = "ต้องสร้างศักยภาพ"; labelZh = "需要能力建设"; }
   else { label = "Foundation stage"; labelTh = "ระยะวางรากฐาน"; labelZh = "基础阶段"; }
 
-  return { total, growthCapacity: Math.round(growthCapacity), infraReadiness: Math.round(infraReadiness), livabilityBase: Math.round(livabilityBase), label, labelTh, labelZh };
+  const landPriceBaht = city.metrics.landPriceBaht ?? null;
+  const landPriceSource = city.metrics.landPriceSource;
+
+  let landPriceNoteEn = "";
+  let landPriceNoteTh = "";
+  let landPriceNoteZh = "";
+  let investabilityScore: number | null = null;
+  let investabilityLabel = "";
+  let investabilityLabelTh = "";
+  let investabilityLabelZh = "";
+
+  if (landPriceBaht !== null) {
+    const entry = PROVINCIAL_LAND_PRICE_SCORE[city.province];
+    if (entry) {
+      landPriceNoteEn = entry.note.en;
+      landPriceNoteTh = entry.note.th;
+      landPriceNoteZh = entry.note.zh;
+    }
+
+    // Normalised price based on Bangkok Rama IV commercial peak (250,000 Baht/sq.m)
+    const normalisedPrice = Math.min(1, landPriceBaht / 250000);
+    // Asymmetric opportunity multiplier math
+    investabilityScore = Math.round(total * (1.2 - 0.8 * normalisedPrice));
+    investabilityScore = Math.min(100, Math.max(0, investabilityScore));
+
+    if (investabilityScore >= 75) {
+      investabilityLabel = "Asymmetric Gem";
+      investabilityLabelTh = "โอกาสทองแบบอสมมาตร";
+      investabilityLabelZh = "非对称黄金机遇";
+    } else if (investabilityScore >= 60) {
+      investabilityLabel = "High Yield Potential";
+      investabilityLabelTh = "ศักยภาพผลตอบแทนสูง";
+      investabilityLabelZh = "高收益潜力";
+    } else if (investabilityScore >= 45) {
+      investabilityLabel = "Balanced Entry";
+      investabilityLabelTh = "ทางเข้าที่สมดุล";
+      investabilityLabelZh = "平衡入口";
+    } else {
+      investabilityLabel = "Premium / High Barrier";
+      investabilityLabelTh = "ระดับพรีเมียม / กำแพงสูง";
+      investabilityLabelZh = "溢价 / 高壁垒";
+    }
+  }
+
+  return {
+    total,
+    growthCapacity: Math.round(growthCapacity),
+    infraReadiness: Math.round(infraReadiness),
+    livabilityBase: Math.round(livabilityBase),
+    label,
+    labelTh,
+    labelZh,
+    landPriceBaht,
+    landPriceSource,
+    landPriceNoteEn,
+    landPriceNoteTh,
+    landPriceNoteZh,
+    investabilityScore,
+    investabilityLabel,
+    investabilityLabelTh,
+    investabilityLabelZh,
+  };
 }
 
 // ─── GLOBAL CITY COMPARISON ───
@@ -354,7 +425,10 @@ export function getFinancingAdvice(city: SmartCity): FinancingAdvice {
 export interface MoneyballEdge {
   label: string;
   labelTh: string;
+  labelZh: string;
   value: string;
+  valueTh: string;
+  valueZh: string;
   advantage: boolean; // true = beats the Big 3 average
 }
 
@@ -362,6 +436,7 @@ export interface MoneyballProfile {
   edges: MoneyballEdge[];
   headline: string;
   headlineTh: string;
+  headlineZh: string;
 }
 
 // Big 3 benchmarks (Bangkok/Phuket/Chiang Mai averages)
@@ -380,70 +455,148 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
 
   // Air quality edge
   if (pm < BIG3_AVG.pm25) {
-    edges.push({ label: "Cleaner air", labelTh: "อากาศสะอาดกว่า", value: `PM2.5 ${pm} vs Big 3 avg ${BIG3_AVG.pm25}`, advantage: true });
+    edges.push({
+      label: "Cleaner air",
+      labelTh: "อากาศสะอาดกว่า",
+      labelZh: "空气更洁净",
+      value: `PM2.5 ${pm} vs Big 3 avg ${BIG3_AVG.pm25}`,
+      valueTh: `PM2.5 ${pm} เทียบกับค่าเฉลี่ย 3 เมืองใหญ่ที่ ${BIG3_AVG.pm25}`,
+      valueZh: `PM2.5 为 ${pm}，低于三大核心城市均值 ${BIG3_AVG.pm25}`,
+      advantage: true
+    });
   }
 
   // Safety edge
   if (crime < BIG3_AVG.crime) {
-    edges.push({ label: "Lower crime", labelTh: "อาชญากรรมต่ำกว่า", value: `${crime}/100K vs Big 3 avg ${BIG3_AVG.crime}`, advantage: true });
+    edges.push({
+      label: "Lower crime",
+      labelTh: "อาชญากรรมต่ำกว่า",
+      labelZh: "犯罪率更低",
+      value: `${crime}/100K vs Big 3 avg ${BIG3_AVG.crime}`,
+      valueTh: `${crime} ต่อแสนคน เทียบกับค่าเฉลี่ย 3 เมืองใหญ่ที่ ${BIG3_AVG.crime}`,
+      valueZh: `十万人犯罪率为 ${crime}，低于三大核心城市均值 ${BIG3_AVG.crime}`,
+      advantage: true
+    });
   }
 
   // Green coverage edge
   if (green > BIG3_AVG.green) {
-    edges.push({ label: "More green space", labelTh: "พื้นที่สีเขียวมากกว่า", value: `${green}% vs Big 3 avg ${BIG3_AVG.green}%`, advantage: true });
+    edges.push({
+      label: "More green space",
+      labelTh: "พื้นที่สีเขียวมากกว่า",
+      labelZh: "绿化率更高",
+      value: `${green}% vs Big 3 avg ${BIG3_AVG.green}%`,
+      valueTh: `${green}% เทียบกับค่าเฉลี่ย 3 เมืองใหญ่ที่ ${BIG3_AVG.green}%`,
+      valueZh: `绿化覆盖率为 ${green}%，高于三大核心城市均值 ${BIG3_AVG.green}%`,
+      advantage: true
+    });
   }
 
   // Healthcare edge
   if (beds > 20) {
-    edges.push({ label: "Healthcare access", labelTh: "เข้าถึงสาธารณสุข", value: `${beds} beds/10K`, advantage: beds >= BIG3_AVG.beds });
+    edges.push({
+      label: "Healthcare access",
+      labelTh: "เข้าถึงสาธารณสุข",
+      labelZh: "医疗保障更佳",
+      value: `${beds} beds/10K`,
+      valueTh: `${beds} เตียงต่อหมื่นประชากร`,
+      valueZh: `每万人床位数为 ${beds} 张`,
+      advantage: beds >= BIG3_AVG.beds
+    });
   }
 
   // BOI incentive edge
   if (hasBOI) {
     const boiYears = isEEC ? "8-15 year CIT exemption (EEC zone)" : "3-8 year CIT exemption (S-Curve)";
     const boiYearsTh = isEEC ? "ยกเว้น CIT 8-15 ปี (เขต EEC)" : "ยกเว้น CIT 3-8 ปี (S-Curve)";
-    edges.push({ label: "BOI tax incentive", labelTh: "สิทธิประโยชน์ภาษี BOI", value: boiYears, advantage: true });
+    const boiYearsZh = isEEC ? "免征企业所得税 8-15 年（EEC 特区）" : "免征企业所得税 3-8 年（S曲线产业）";
+    edges.push({
+      label: "BOI tax incentive",
+      labelTh: "สิทธิประโยชน์ภาษี BOI",
+      labelZh: "BOI 税收优惠",
+      value: boiYears,
+      valueTh: boiYearsTh,
+      valueZh: boiYearsZh,
+      advantage: true
+    });
   }
 
   // Cost advantage (lower GPP = lower labor/rent costs)
   if (gpp > 0 && gpp < 200000) {
-    edges.push({ label: "Lower operating costs", labelTh: "ต้นทุนดำเนินการต่ำกว่า", value: `GPP ฿${(gpp/1000).toFixed(0)}K — labor and rent 2-4x cheaper than Bangkok`, advantage: true });
+    edges.push({
+      label: "Lower operating costs",
+      labelTh: "ต้นทุนดำเนินการต่ำกว่า",
+      labelZh: "运营成本更低",
+      value: `GPP ฿${(gpp/1000).toFixed(0)}K — labor and rent 2-4x cheaper than Bangkok`,
+      valueTh: `GPP ฿${(gpp/1000).toFixed(0)}K — ค่าแรงและค่าเช่าถูกกว่ากรุงเทพฯ 2-4 เท่า`,
+      valueZh: `人均GPP为 ฿${(gpp/1000).toFixed(0)}K——劳动力和租金成本比曼谷便宜 2-4 倍`,
+      advantage: true
+    });
   }
 
   // University pipeline
   const hasUni = city.id.includes("cmu") || city.id.includes("phitsanulok") || city.id === "khon-kaen" || city.id === "korat" || city.id === "samyan" || city.id === "chiang-rai" || city.id === "ubon";
   if (hasUni) {
-    edges.push({ label: "University talent pipeline", labelTh: "สายพานบุคลากรจากมหาวิทยาลัย", value: "Local university provides graduate recruitment pool", advantage: true });
+    edges.push({
+      label: "University talent pipeline",
+      labelTh: "สายพานบุคลากรจากมหาวิทยาลัย",
+      labelZh: "高校人才输送",
+      value: "Local university provides graduate recruitment pool",
+      valueTh: "มหาวิทยาลัยในท้องถิ่นเป็นแหล่งสรรหาบัณฑิตจบใหม่",
+      valueZh: "本地大学可直接提供优秀的毕业生人才池",
+      advantage: true
+    });
   }
 
   // Digital readiness
   if (city.scores.digital >= 55) {
-    edges.push({ label: "Digital infrastructure ready", labelTh: "โครงสร้างพื้นฐานดิจิทัลพร้อม", value: `Digital score ${city.scores.digital}/100 — IoT, data platforms operational`, advantage: true });
+    edges.push({
+      label: "Digital infrastructure ready",
+      labelTh: "โครงสร้างพื้นฐานดิจิทัลพร้อม",
+      labelZh: "数字基础设施就绪",
+      value: `Digital score ${city.scores.digital}/100 — IoT, data platforms operational`,
+      valueTh: `คะแนนดิจิทัล ${city.scores.digital}/100 — IoT และแพลตฟอร์มข้อมูลเปิดใช้งานจริง`,
+      valueZh: `数字得分 ${city.scores.digital}/100——物联网及数据平台均已投入运行`,
+      advantage: true
+    });
   }
 
   // Hospitality/tourism edge
   if (city.scores.hospitality >= 75 && city.id !== "phuket" && city.id !== "chiang-mai-old-town") {
-    edges.push({ label: "Tourism economy without Big 3 competition", labelTh: "เศรษฐกิจท่องเที่ยวโดยไม่แข่งกับ Big 3", value: `Hospitality ${city.scores.hospitality}/100 — strong but less saturated market`, advantage: true });
+    edges.push({
+      label: "Tourism economy without Big 3 competition",
+      labelTh: "เศรษฐกิจท่องเที่ยวโดยไม่แข่งกับ Big 3",
+      labelZh: "避开三大核心城市竞争的旅游经济",
+      value: `Hospitality ${city.scores.hospitality}/100 — strong but less saturated market`,
+      valueTh: `คะแนนต้อนรับ ${city.scores.hospitality}/100 — ตลาดแข็งแกร่งแต่ยังไม่ล้นตัว`,
+      valueZh: `文旅得分 ${city.scores.hospitality}/100——市场强劲且尚未饱和`,
+      advantage: true
+    });
   }
 
   // Generate headline
   const edgeCount = edges.filter(e => e.advantage).length;
   let headline = "";
   let headlineTh = "";
+  let headlineZh = "";
 
   if (edgeCount >= 5) {
     headline = `${edgeCount} advantages over Bangkok/Phuket/Chiang Mai. This is a moneyball city — undervalued by the market, strong on fundamentals.`;
     headlineTh = `${edgeCount} ข้อได้เปรียบเหนือกรุงเทพฯ/ภูเก็ต/เชียงใหม่ นี่คือเมือง moneyball — ตลาดประเมินต่ำ แต่พื้นฐานแข็ง`;
+    headlineZh = `相较于曼谷/普吉/清迈拥有 ${edgeCount} 项优势。这是一座典型的“点球成金”式城市——被市场低估，但基本面极其扎实。`;
   } else if (edgeCount >= 3) {
     headline = `${edgeCount} clear edges. Not the obvious choice, but the smart one — lower cost, less competition, real infrastructure.`;
     headlineTh = `${edgeCount} จุดแข็งชัด ไม่ใช่ตัวเลือกที่เห็นชัด แต่เป็นตัวเลือกที่ฉลาด — ต้นทุนต่ำ แข่งขันน้อย โครงสร้างพื้นฐานจริง`;
+    headlineZh = `具备 ${edgeCount} 项明确优势。虽然不是最显眼的选择，但绝对是明智之选——成本更低、竞争更少、基础设施扎实。`;
   } else if (edgeCount >= 1) {
     headline = `Niche opportunity. Specific advantages in ${edges.filter(e => e.advantage).map(e => e.label.toLowerCase()).join(", ")}. Not for every investor, but right for the right one.`;
     headlineTh = `โอกาสเฉพาะทาง จุดแข็งเฉพาะด้าน ไม่ใช่สำหรับทุกนักลงทุน แต่ใช่สำหรับคนที่ใช่`;
+    headlineZh = `利基市场机遇。在特定领域具备独特优势。并非适合所有投资者，但完美契合对口资本的需求。`;
   } else {
     headline = `Early-stage opportunity. Fundamentals still building. Best suited for impact investors and development finance, not commercial returns yet.`;
     headlineTh = `โอกาสระยะเริ่มต้น พื้นฐานยังอยู่ระหว่างสร้าง เหมาะกับนักลงทุนเพื่อผลกระทบและการเงินเพื่อพัฒนา ยังไม่ใช่ผลตอบแทนเชิงพาณิชย์`;
+    headlineZh = `早期投资机遇。基本面仍在构建中。最适合影响力投资者和开发性金融机构，目前尚不适合追求商业回报的资金。`;
   }
 
-  return { edges, headline, headlineTh };
+  return { edges, headline, headlineTh, headlineZh };
 }

@@ -1,5 +1,5 @@
 import type { Locale, SmartCity } from "./types";
-import { assetUrl } from "./mediaAssets";
+import { assetUrl } from "./assetUtils";
 
 // ---------------------------------------------------------------------------
 // Photo registry — Phase 18 (overnight 2026-04-27)

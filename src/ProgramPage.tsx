@@ -1,11 +1,11 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useCitySummaries } from "./cityApi";
 import { summarizeCities } from "./cityCollections";
 import { translate } from "./cityPresentation";
 import type { Locale, SmartDimension } from "./types";
 import { DIMENSION_LABELS } from "./types";
 import { useInView } from "./useInView";
-import { assetUrl } from "./mediaAssets";
+import { assetUrl } from "./assetUtils";
 
 interface Props {
   locale: Locale;
@@ -57,36 +57,160 @@ const DIMENSION_DESCS: Record<SmartDimension, { en: string; th: string; zh: stri
 
 const CERT_STEPS = [
   { 
-    en: "Apply", th: "สมัคร", zh: "申请",
+    en: "Submit", th: "ยื่นเอกสาร", zh: "提交材料",
     desc: { 
-      en: "Municipality submits proposal with city master plan and smart city project blueprint.", 
-      th: "เทศบาลยื่นข้อเสนอพร้อมแผนแม่บทเมืองและพิมพ์เขียวโครงการเมืองอัจฉริยะ",
-      zh: "市政当局提交包含城市总体规划和智慧城市项目蓝图的提案。"
+      en: "Send the smart city proposal to the Smart City Thailand Office, hosted by depa.", 
+      th: "ยื่นข้อเสนอแผนพัฒนาเมืองอัจฉริยะต่อสำนักงานเมืองอัจฉริยะประเทศไทย ซึ่งอยู่ภายใต้ depa",
+      zh: "向设于 depa 的泰国智慧城市办公室提交智慧城市发展提案。"
     } 
   },
   { 
-    en: "Evaluate", th: "ประเมิน", zh: "评估",
+    en: "Screen", th: "คัดกรอง", zh: "筛选",
     desc: { 
-      en: "depa technical committee reviews across 7 dimensions. Field visits verify claims.", 
-      th: "คณะกรรมการเทคนิค depa ตรวจสอบ 7 มิติ ลงพื้นที่ตรวจสอบข้อเท็จจริง",
-      zh: "depa 技术委员会对 7 个维度进行评审。实地考察以验证陈述。"
+      en: "SCTO checks eligibility, consults with the city, and prepares the proposal for promotion-zone consideration.", 
+      th: "สำนักงานฯ ตรวจสอบคุณสมบัติ ให้คำปรึกษา และเตรียมข้อเสนอเพื่อเข้าสู่การพิจารณาเป็นเขตส่งเสริมเมืองอัจฉริยะ",
+      zh: "办公室核验资格、提供咨询，并协助城市进入智慧城市推广区审议。"
     } 
   },
   { 
-    en: "Approve", th: "อนุมัติ", zh: "批准",
+    en: "Improve", th: "ปรับข้อเสนอ", zh: "完善提案",
     desc: { 
-      en: "National Smart City Committee chaired by Deputy PM reviews and approves.", 
-      th: "คณะกรรมการเมืองอัจฉริยะแห่งชาติ มีรองนายกรัฐมนตรีเป็นประธาน พิจารณาและอนุมัติ",
-      zh: "由副总理主持的国家智慧城市委员会进行审查并批准。"
+      en: "The city revises its plan so the area, infrastructure, data platform, services, budget, KPIs, and management model line up.", 
+      th: "เมืองปรับแผนให้พื้นที่ โครงสร้างพื้นฐาน แพลตฟอร์มข้อมูล บริการ งบประมาณ ตัวชี้วัด และรูปแบบบริหารจัดการสอดคล้องกัน",
+      zh: "城市完善方案，使范围、基础设施、数据平台、服务、预算、指标和治理模式相互一致。"
     } 
   },
   { 
-    en: "Certify", th: "รับรอง", zh: "认证",
+    en: "Review", th: "พิจารณา", zh: "评审",
     desc: { 
-      en: "City receives Smart City Local logo. Annual outcome reporting begins.", 
-      th: "เมืองได้รับตราสัญลักษณ์ Smart City Local เริ่มรายงานผลลัพธ์ประจำปี",
-      zh: "城市获得“智慧城市地方”标志。开始年度成果报告。"
+      en: "Screening committees and subcommittees evaluate the proposal, give suggestions, and send qualified cities to national approval.", 
+      th: "คณะคัดกรองและคณะอนุกรรมการประเมินข้อเสนอ ให้ข้อเสนอแนะ และส่งเมืองที่ผ่านเกณฑ์เข้าสู่การอนุมัติระดับชาติ",
+      zh: "筛选委员会和小组委员会评估提案、提出建议，并将符合条件的城市送交国家层面批准。"
     } 
+  },
+  {
+    en: "Approve",
+    th: "อนุมัติ",
+    zh: "批准",
+    desc: {
+      en: "The national digital-economy committees consider the city and announce the approved smart city status.",
+      th: "คณะกรรมการระดับชาติดิจิทัลฯ พิจารณาและประกาศผลเมืองที่ได้รับสถานะเมืองอัจฉริยะ",
+      zh: "国家数字经济相关委员会审议城市，并公布获批的智慧城市名单。"
+    }
+  },
+  {
+    en: "Award + follow up",
+    th: "มอบตรา + ติดตามผล",
+    zh: "授标与跟踪",
+    desc: {
+      en: "The city receives the Smart City Thailand logo, then enters monitoring, evaluation, and a two-year follow-up cycle.",
+      th: "เมืองได้รับตราสัญลักษณ์ Smart City Thailand จากนั้นเข้าสู่การติดตาม ประเมินผล และติดตามต่อเนื่อง 2 ปี",
+      zh: "城市获得泰国智慧城市标识，并进入监测、评估和两年跟踪周期。"
+    }
+  },
+];
+
+const SMART_CITY_GUIDELINE_PDF = "/downloads/smart-city-local-proposal-guideline-scl6-2026.pdf";
+const DIGITAL_CATALOG_PDF = "/downloads/thailand-digital-catalog-scl6-2026.pdf";
+const DIGITAL_CATALOG_OFFICIAL_URL = "https://www.depa.or.th/th/thailanddigitalcatalog/about";
+const TECHHUNT_URL = "https://techhunt.depa.or.th/";
+
+const LOGO_PROPOSAL_REQUIREMENTS = [
+  {
+    title: { en: "Target area", th: "พื้นที่เป้าหมาย", zh: "目标区域" },
+    body: {
+      en: "Define the boundary, vision, objectives, city type, ownership, population or user base, and citizen participation.",
+      th: "กำหนดขอบเขต วิสัยทัศน์ วัตถุประสงค์ ประเภทเมือง ความเป็นเจ้าของพื้นที่ จำนวนประชากรหรือผู้ใช้งาน และการมีส่วนร่วมของประชาชน",
+      zh: "明确边界、愿景、目标、城市类型、土地或区域权属、人口或使用者规模，以及公众参与。",
+    },
+  },
+  {
+    title: { en: "Physical + digital infrastructure", th: "โครงสร้างพื้นฐานกายภาพ + ดิจิทัล", zh: "实体与数字基础设施" },
+    body: {
+      en: "Show infrastructure plans, investment model, budget, funding sources, and implementation method.",
+      th: "แสดงแผนโครงสร้างพื้นฐาน รูปแบบการลงทุน งบประมาณ แหล่งทุน และวิธีดำเนินการ",
+      zh: "说明基础设施计划、投资模式、预算、资金来源和实施方式。",
+    },
+  },
+  {
+    title: { en: "City Data Platform", th: "แพลตฟอร์มข้อมูลเมือง", zh: "城市数据平台" },
+    body: {
+      en: "Describe data catalog, data exchange, governance, cybersecurity, privacy, and how data will support decisions.",
+      th: "อธิบาย Data Catalog, Data Exchange, Data Governance ความมั่นคงปลอดภัยไซเบอร์ ความเป็นส่วนตัว และการใช้ข้อมูลเพื่อการตัดสินใจ",
+      zh: "说明数据目录、数据交换、数据治理、网络安全、隐私保护，以及数据如何支持决策。",
+    },
+  },
+  {
+    title: { en: "Smart services", th: "บริการเมืองอัจฉริยะ", zh: "智慧服务" },
+    body: {
+      en: "Provide at least two smart-city service dimensions. Smart Environment is mandatory, and each dimension needs goals, projects, and KPIs.",
+      th: "มีบริการเมืองอัจฉริยะอย่างน้อย 2 ด้าน โดย Smart Environment เป็นด้านบังคับ และแต่ละด้านต้องมีเป้าหมาย โครงการ และตัวชี้วัด",
+      zh: "至少提出两个智慧服务维度，其中智慧环境为必选项；每个维度都需有目标、项目和指标。",
+    },
+  },
+  {
+    title: { en: "Sustainable management", th: "การบริหารจัดการอย่างยั่งยืน", zh: "可持续治理" },
+    body: {
+      en: "Name responsible agencies, partnerships, operating model, budget discipline, and reporting mechanism after approval.",
+      th: "ระบุหน่วยงานรับผิดชอบ หุ้นส่วน รูปแบบการดำเนินงาน วินัยงบประมาณ และกลไกรายงานผลหลังได้รับการอนุมัติ",
+      zh: "列明负责机构、合作伙伴、运营模式、预算纪律，以及获批后的报告机制。",
+    },
+  },
+];
+
+const DIGITAL_CATALOG_CARDS = [
+  {
+    title: { en: "What it is", th: "คืออะไร", zh: "它是什么" },
+    body: {
+      en: "Thailand Digital Catalog is depa's vetted registry of Thai digital products and services. It turns qualified software, SaaS, cloud, smart-device, hardware/firmware, and digital-content providers into discoverable options for public and private buyers.",
+      th: "Thailand Digital Catalog คือบัญชีบริการดิจิทัลที่ depa ตรวจสอบและรับรอง เพื่อให้สินค้าและบริการดิจิทัลไทย ทั้งซอฟต์แวร์ SaaS คลาวด์ อุปกรณ์อัจฉริยะ ฮาร์ดแวร์/เฟิร์มแวร์ และดิจิทัลคอนเทนต์ ถูกค้นหาและเลือกใช้ได้ง่ายทั้งในตลาดภาครัฐและเอกชน",
+      zh: "Thailand Digital Catalog 是 depa 审核认证的泰国数字产品与服务名录，让合格的软件、SaaS、云服务、智能设备、硬件/固件和数字内容供应商更容易被政府和企业采购方发现。",
+    },
+  },
+  {
+    title: { en: "Why cities should care", th: "ทำไมเมืองควรสนใจ", zh: "城市为什么需要它" },
+    body: {
+      en: "For cities, it shortens the path from plan to deployment. A municipality looking for e-office, queue, complaint, health, carbon, data, or smart-city services can start from a vetted pool instead of writing every solution from scratch.",
+      th: "สำหรับเมือง เครื่องมือนี้ช่วยย่นระยะจากแผนสู่การใช้งานจริง เทศบาลที่ต้องการ e-office ระบบคิว รับเรื่องร้องเรียน สุขภาพ คาร์บอน ข้อมูล หรือบริการเมืองอัจฉริยะ สามารถเริ่มจากกลุ่มผู้ให้บริการที่ผ่านการตรวจสอบแล้ว แทนที่จะต้องออกแบบทุกอย่างใหม่เอง",
+      zh: "对城市而言，它缩短了从计划到落地的路径。需要电子办公、排队、投诉、健康、碳管理、数据或智慧城市服务的地方政府，可先从已审核的供应商池中选择，而不必从零设计每个方案。",
+    },
+  },
+  {
+    title: { en: "Market gateway", th: "ประตูสู่ตลาด", zh: "市场入口" },
+    body: {
+      en: "The Catalog links Thai digital providers to special public procurement, TECHHUNT discovery, private-sector adoption, Tax200%, BOI measures, depa Transformation Fund, mini Transformation Voucher, and Local Government Transformation Cloud.",
+      th: "บัญชีนี้เชื่อมผู้ประกอบการดิจิทัลไทยเข้ากับการจัดซื้อจัดจ้างภาครัฐแบบพิเศษ การค้นหาผ่าน TECHHUNT การใช้งานในภาคเอกชน มาตรการ Tax200% มาตรการ BOI กองทุน Transformation Fund, mini Transformation Voucher และ Local Government Transformation Cloud",
+      zh: "该名录把泰国数字服务商连接到政府特殊采购、TECHHUNT 搜索、私营部门采用、Tax200%、BOI 措施、depa Transformation Fund、mini Transformation Voucher 以及 Local Government Transformation Cloud。",
+    },
+  },
+  {
+    title: { en: "How to register", th: "ขึ้นทะเบียนอย่างไร", zh: "如何登记" },
+    body: {
+      en: "A provider needs a Thai legal entity, a relevant digital business scope, quality certification or accepted standards, product details, price, functions, images, sales channel, warranty/service process, real-use evidence, and development-process documents.",
+      th: "ผู้ให้บริการต้องเป็นนิติบุคคลไทย มีวัตถุประสงค์ธุรกิจดิจิทัลที่เกี่ยวข้อง มีมาตรฐานหรือการรับรองคุณภาพ รายละเอียดสินค้า ราคา ฟังก์ชัน รูปภาพ ช่องทางจำหน่าย ขั้นตอนรับประกัน/บริการ หลักฐานการใช้งานจริง และเอกสารกระบวนการพัฒนาผลิตภัณฑ์",
+      zh: "供应商需为泰国法人，经营范围与数字业务相关，并准备质量认证或认可标准、产品详情、价格、功能、图片、销售渠道、保修/服务流程、真实使用证明和开发流程文件。",
+    },
+  },
+];
+
+const DIGITAL_CATALOG_USE_CASES = [
+  {
+    en: "Public-facing services",
+    th: "บริการประชาชน",
+    zh: "面向公众的服务",
+    detail: { en: "e-ticket, queue, complaint, local service, health, environmental and carbon systems", th: "e-ticket ระบบคิว รับเรื่องร้องเรียน บริการท้องถิ่น สุขภาพ สิ่งแวดล้อม และคาร์บอน", zh: "电子票务、排队、投诉、地方服务、健康、环境与碳管理系统" },
+  },
+  {
+    en: "Internal government work",
+    th: "งานภายในหน่วยงานรัฐ",
+    zh: "政府内部工作",
+    detail: { en: "e-office, ERP, HR, payroll, accounting, document flow and cloud-based collaboration", th: "e-office, ERP, HR, เงินเดือน บัญชี งานสารบรรณ และการทำงานร่วมกันบนคลาวด์", zh: "电子办公、ERP、人事、薪资、会计、公文流转与云端协作" },
+  },
+  {
+    en: "Local smart-city foundation",
+    th: "ฐานเมืองอัจฉริยะท้องถิ่น",
+    zh: "地方智慧城市基础",
+    detail: { en: "city data, cloud, sensors, smart environment, smart governance and smart living services", th: "ข้อมูลเมือง คลาวด์ เซนเซอร์ สิ่งแวดล้อมอัจฉริยะ การบริหารภาครัฐอัจฉริยะ และบริการคุณภาพชีวิต", zh: "城市数据、云、传感器、智慧环境、智慧治理与智慧生活服务" },
   },
 ];
 
@@ -158,11 +282,21 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
   const [dnaRef, dnaVisible] = useInView(0.1);
   const [mref257, visible257] = useInView(0.1);
   const [certRef, certVisible] = useInView(0.1);
+  const [catalogRef, catalogVisible] = useInView(0.1);
   const [measureRef, measureVisible] = useInView(0.1);
   const [batchRef, batchVisible] = useInView(0.1);
   const [cdpRef, cdpVisible] = useInView(0.1);
   const [incentivesRef, incentivesVisible] = useInView(0.1);
   const [sourcesRef, sourcesVisible] = useInView(0.1);
+
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    if (!id) return;
+    const timeout = window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ block: "start" });
+    }, 120);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
   return (
     <>
@@ -290,9 +424,16 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </div>
 
       {/* ─── CERTIFICATION PROCESS ─── */}
-      <section ref={certRef} className={`section reveal stagger-3 ${certVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+      <section id="smart-city-logo-guideline" ref={certRef} className={`section reveal stagger-3 ${certVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
         <p className="eyebrow">{translate(locale, { en: "Process", th: "กระบวนการ", zh: "流程" })}</p>
         <h2>{translate(locale, { en: "How a city gets the logo", th: "เมืองได้ตราสัญลักษณ์อย่างไร", zh: "城市如何获得标识" })}</h2>
+        <p className="program-section-intro">
+          {translate(locale, {
+            en: "The logo is not a design asset handed out at the start. It is the visible end of a public approval pathway: proposal, promotion-zone screening, committee review, national approval, award, and follow-up.",
+            th: "ตราสัญลักษณ์ไม่ใช่ไฟล์ออกแบบที่มอบให้ตั้งแต่ต้น แต่เป็นผลปลายทางที่มองเห็นได้ของกระบวนการอนุมัติสาธารณะ ตั้งแต่การยื่นข้อเสนอ การคัดกรองเขตส่งเสริม การพิจารณาของคณะกรรมการ การอนุมัติระดับชาติ การมอบตรา และการติดตามผล",
+            zh: "标识不是一开始就发放的设计素材，而是公共审批路径的可见结果：提交提案、推广区筛选、委员会评审、国家批准、授予标识，以及后续跟踪。",
+          })}
+        </p>
         <div className="program-cert-flow">
           {CERT_STEPS.map((step, i) => (
             <div key={i} className="program-cert-step">
@@ -303,6 +444,137 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
             </div>
           ))}
         </div>
+        <div className="program-logo-guideline">
+          <div className="program-logo-guideline-copy">
+            <p className="eyebrow">{translate(locale, { en: "Proposal guideline", th: "คู่มือจัดทำข้อเสนอ", zh: "提案指南" })}</p>
+            <h3>
+              {translate(locale, {
+                en: "What the proposal must make clear",
+                th: "ข้อเสนอควรทำให้ชัดเจนเรื่องใด",
+                zh: "提案必须讲清楚什么",
+              })}
+            </h3>
+            <p>
+              {translate(locale, {
+                en: "The SCL6 guideline frames a smart city plan around five practical tests: a defined area, infrastructure, data foundation, services, and a sustainable management model. The aim is not paperwork for its own sake, but a plan that can be evaluated, implemented, monitored, and improved.",
+                th: "คู่มือ SCL6 วางกรอบแผนเมืองอัจฉริยะผ่านการตรวจสอบเชิงปฏิบัติ 5 เรื่อง ได้แก่ พื้นที่ โครงสร้างพื้นฐาน ฐานข้อมูล บริการ และรูปแบบบริหารจัดการที่ยั่งยืน เป้าหมายไม่ใช่เอกสารเพื่อให้ครบขั้นตอน แต่คือแผนที่ประเมินได้ ทำได้จริง ติดตามได้ และปรับปรุงได้",
+                zh: "SCL6 指南把智慧城市计划归纳为五项实际检验：明确区域、基础设施、数据基础、城市服务，以及可持续治理模式。重点不是为了完成文件，而是形成可评估、可实施、可监测、可改进的计划。",
+              })}
+            </p>
+            <div className="program-guideline-actions">
+              <a
+                href={assetUrl(SMART_CITY_GUIDELINE_PDF)}
+                download
+                className="cta-button"
+              >
+                {translate(locale, { en: "Download guideline PDF", th: "ดาวน์โหลดคู่มือ PDF", zh: "下载指南 PDF" })}
+              </a>
+              <span className="program-guideline-file">
+                {translate(locale, {
+                  en: "Smart City Plan proposal guideline · SCL6 · 26 May 2026 · PDF 8.4 MB",
+                  th: "คู่มือการเขียนแผนพัฒนาเมืองอัจฉริยะ · SCL6 · 26 พฤษภาคม 2569 · PDF 8.4 MB",
+                  zh: "智慧城市计划提案指南 · SCL6 · 2026年5月26日 · PDF 8.4 MB",
+                })}
+              </span>
+            </div>
+          </div>
+          <div className="program-logo-requirements">
+            {LOGO_PROPOSAL_REQUIREMENTS.map((item, i) => (
+              <div key={i} className="program-logo-requirement">
+                <span className="program-logo-requirement-num">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h4>{translate(locale, item.title)}</h4>
+                  <p>{translate(locale, item.body)}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <p className="program-source" style={{ marginTop: "1rem" }}>
+          {translate(locale, {
+            en: "Source: Smart City Plan proposal guideline, Smart City Developer Course SCL6, 26 May 2026, depa Smart City Promotion Department.",
+            th: "ที่มา: คู่มือการเขียนแผนพัฒนาเมืองอัจฉริยะ หลักสูตรนักพัฒนาเมืองรุ่นที่ 6 วันที่ 26 พฤษภาคม 2569 ฝ่ายส่งเสริมเมืองอัจฉริยะ depa",
+            zh: "来源：智慧城市计划提案指南，智慧城市开发者课程 SCL6，2026年5月26日，depa 智慧城市促进部门。",
+          })}
+        </p>
+      </section>
+
+      {/* ─── THAILAND DIGITAL CATALOG ─── */}
+      <section id="thailand-digital-catalog" ref={catalogRef} className={`section reveal stagger-3 ${catalogVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+        <p className="eyebrow">{translate(locale, { en: "Procurement gateway", th: "ประตูสู่การจัดซื้อจัดจ้าง", zh: "采购入口" })}</p>
+        <h2>{translate(locale, { en: "Thailand Digital Catalog", th: "บัญชีบริการดิจิทัล", zh: "泰国数字服务名录" })}</h2>
+        <p className="program-section-intro">
+          {translate(locale, {
+            en: "The Catalog is the bridge between smart-city plans and real Thai digital solutions. It helps cities find vetted providers, helps Thai digital companies reach government and private buyers, and gives procurement teams a cleaner route to services that already passed depa screening.",
+            th: "บัญชีบริการดิจิทัลคือสะพานระหว่างแผนเมืองอัจฉริยะกับโซลูชันดิจิทัลไทยที่ใช้งานได้จริง ช่วยให้เมืองพบผู้ให้บริการที่ผ่านการตรวจสอบ ช่วยผู้ประกอบการไทยเข้าถึงผู้ซื้อภาครัฐและเอกชน และช่วยฝ่ายจัดซื้อมีเส้นทางที่ชัดเจนขึ้นในการเลือกบริการที่ผ่านการคัดกรองโดย depa แล้ว",
+            zh: "该名录连接智慧城市计划与可落地的泰国数字解决方案。它帮助城市找到已审核的供应商，帮助泰国数字企业接触政府和企业买方，也让采购团队更清晰地选择已通过 depa 筛选的服务。",
+          })}
+        </p>
+
+        <div className="program-catalog-panel">
+          <div className="program-catalog-summary">
+            {DIGITAL_CATALOG_CARDS.map((card, i) => (
+              <article key={i} className="program-catalog-card">
+                <span className="program-logo-requirement-num">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{translate(locale, card.title)}</h3>
+                <p>{translate(locale, card.body)}</p>
+              </article>
+            ))}
+          </div>
+
+          <aside className="program-catalog-download">
+            <p className="eyebrow">{translate(locale, { en: "SCL6 deck", th: "เอกสาร SCL6", zh: "SCL6 讲义" })}</p>
+            <h3>
+              {translate(locale, {
+                en: "Digital Catalog, in practice",
+                th: "บัญชีบริการดิจิทัลในทางปฏิบัติ",
+                zh: "数字服务名录的实际用法",
+              })}
+            </h3>
+            <p>
+              {translate(locale, {
+                en: "The PDF explains the incentive stack, procurement route, Local Government Transformation Cloud, product categories, use cases, and registration evidence for Thai digital providers.",
+                th: "PDF นี้อธิบายชุดสิทธิประโยชน์ เส้นทางจัดซื้อจัดจ้าง Local Government Transformation Cloud กลุ่มสินค้า กรณีใช้งานจริง และหลักฐานที่ผู้ประกอบการดิจิทัลไทยต้องใช้ในการขึ้นทะเบียน",
+                zh: "该 PDF 说明激励组合、采购路径、Local Government Transformation Cloud、产品类别、实际案例，以及泰国数字供应商登记所需证据。",
+              })}
+            </p>
+            <div className="program-guideline-actions">
+              <a href={assetUrl(DIGITAL_CATALOG_PDF)} download className="cta-button">
+                {translate(locale, { en: "Download Digital Catalog PDF", th: "ดาวน์โหลด PDF บัญชีบริการดิจิทัล", zh: "下载数字服务名录 PDF" })}
+              </a>
+              <a href={DIGITAL_CATALOG_OFFICIAL_URL} target="_blank" rel="noopener noreferrer" className="ghost-button">
+                {translate(locale, { en: "Official depa page", th: "หน้า depa ทางการ", zh: "depa 官方页面" })}
+              </a>
+              <a href={TECHHUNT_URL} target="_blank" rel="noopener noreferrer" className="ghost-button">
+                TECHHUNT
+              </a>
+            </div>
+            <span className="program-guideline-file">
+              {translate(locale, {
+                en: "Thailand Digital Catalog · SCL6 · PDF 25 MB",
+                th: "Thailand Digital Catalog · SCL6 · PDF 25 MB",
+                zh: "Thailand Digital Catalog · SCL6 · PDF 25 MB",
+              })}
+            </span>
+          </aside>
+        </div>
+
+        <div className="program-catalog-usecases">
+          {DIGITAL_CATALOG_USE_CASES.map(item => (
+            <div key={item.en} className="program-catalog-usecase">
+              <h3>{translate(locale, { en: item.en, th: item.th, zh: item.zh })}</h3>
+              <p>{translate(locale, item.detail)}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="program-source" style={{ marginTop: "1rem" }}>
+          {translate(locale, {
+            en: "Sources: Thailand Digital Catalog SCL6 deck; depa Thailand Digital Catalog page; depa articles on 6 May 2026, 10 March 2026, and 18 November 2024.",
+            th: "ที่มา: เอกสาร Thailand Digital Catalog SCL6; หน้า Thailand Digital Catalog ของ depa; ข่าว depa วันที่ 6 พฤษภาคม 2569, 10 มีนาคม 2569 และ 18 พฤศจิกายน 2567",
+            zh: "来源：Thailand Digital Catalog SCL6 讲义；depa Thailand Digital Catalog 页面；depa 2026年5月6日、2026年3月10日与2024年11月18日新闻。",
+          })}
+        </p>
       </section>
 
       {/* ─── MEASUREMENT FRAMEWORK ─── */}

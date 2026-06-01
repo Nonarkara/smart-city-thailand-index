@@ -26,25 +26,30 @@ export default function AnimatedScore({
   className,
   reduced,
 }: Props) {
+  const isReducedMotion = () => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  };
+
   const from = Math.max(0, target - 3);
-  const [displayed, setDisplayed] = useState<number>(
-    reduced ? target : from,
-  );
+  const [displayed, setDisplayed] = useState<number>(() => {
+    const prefersReduced = reduced || isReducedMotion();
+    return prefersReduced ? target : from;
+  });
+  const [prevTarget, setPrevTarget] = useState(target);
+
+  if (target !== prevTarget) {
+    setPrevTarget(target);
+    const prefersReduced = reduced || isReducedMotion();
+    setDisplayed(prefersReduced ? target : Math.max(0, target - 3));
+  }
+
   const rafRef = useRef<number | null>(null);
   const startRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Respect prefers-reduced-motion at the system level too
-    const prefersReduced =
-      reduced ||
-      (typeof window !== "undefined" &&
-        typeof window.matchMedia === "function" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-
-    if (prefersReduced) {
-      setDisplayed(target);
-      return;
-    }
+    const prefersReduced = reduced || isReducedMotion();
+    if (prefersReduced) return;
 
     // Cancel any in-flight animation before starting
     if (rafRef.current != null) cancelAnimationFrame(rafRef.current);

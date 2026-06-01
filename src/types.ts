@@ -68,6 +68,10 @@ export interface CityMetrics {
   // 0-100, HIGHER = less flood-prone. Sourced from GISTDA repeat-flood
   // 2005-2016 + DDPM. See src/provincialFloodData.ts for the table.
   floodFrequencyScore?: number;
+  // Phase 13 — Land Price as an Investability Signal.
+  // Sourced from Treasury Department official appraisal values per square meter.
+  landPriceBaht?: number | null;
+  landPriceSource?: string;
 }
 
 export type CityLeague =

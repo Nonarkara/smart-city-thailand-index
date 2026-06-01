@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useInView } from "./useInView";
 import { NEWS_ITEMS, TAG_COLORS, TAG_LABELS } from "./newsData";
 import { translate } from "./cityPresentation";

@@ -15,15 +15,11 @@ export default function DataFeedback({ locale }: Props) {
     if (!text.trim() || loading) return;
     setLoading(true);
     
-    // We'll use the same tracking mechanism or a similar fetch to a sheet
-    // This URL matches the one in visitorTracking.ts for consolidated logging
-    const FEEDBACK_URL = "https://script.google.com/macros/s/AKfycbxvOCOjlsYHF7qwWEXEYyDM8CeoLfT2asWRwaa171evuRoa-HubOkliqG3GPNyshUE4mw/exec";
-    
     try {
       await sendFeedback(text, window.location.pathname);
       setSent(true);
       setText("");
-    } catch (e) {
+    } catch {
       // Fallback: mailto if the script fails or network is down
       window.location.href = `mailto:non.ar@depa.or.th?subject=SCITI Feedback&body=${encodeURIComponent(text)}`;
     } finally {

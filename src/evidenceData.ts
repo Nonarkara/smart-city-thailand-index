@@ -191,6 +191,17 @@ export const dataSources: DataSource[] = [
     updateFrequency: "Ongoing",
     metrics: ["reality", "citizenUsage", "infrastructureCompletion"],
   },
+  {
+    id: "treasury",
+    name: "Treasury Department",
+    type: "government",
+    descEn: "Ministry of Finance. Publishes official land appraisal values for Thailand, updated every 4 years. Primary baseline for real estate valuation.",
+    descTh: "กรมธนารักษ์ กระทรวงการคลัง เผยแพร่ราคาประเมินทุนทรัพย์ที่ดินอย่างเป็นทางการของประเทศไทย ปรับปรุงทุก 4 ปี",
+    descZh: "财政部财政厅。发布泰国官方土地评估价值，每 4 年更新一次。房地产估值的主要基准。",
+    url: "https://www.treasury.go.th",
+    updateFrequency: "Every 4 years",
+    metrics: ["landPriceBaht"],
+  },
 ];
 
 // Evidence items — real news and data points backing city scores

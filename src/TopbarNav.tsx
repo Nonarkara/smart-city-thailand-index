@@ -39,7 +39,7 @@ interface NavGroup {
  * Home is a direct link (no dropdown). The other four each carry related
  * pages that previously cluttered the topbar.
  */
-export const NAV_GROUPS: NavGroup[] = [
+const NAV_GROUPS: NavGroup[] = [
   {
     id: "home",
     label: { en: "Home", th: "หน้าหลัก", zh: "首页" },
@@ -130,10 +130,11 @@ export default function TopbarNav({ locale, currentKind, onNavigate, mobileOpen,
     };
   }, [openGroup]);
 
-  // Close any open dropdown when the route actually changes
-  useEffect(() => {
+  const [prevKind, setPrevKind] = useState(currentKind);
+  if (currentKind !== prevKind) {
+    setPrevKind(currentKind);
     setOpenGroup(null);
-  }, [currentKind]);
+  }
 
   const handleItemClick = (path: string) => {
     setOpenGroup(null);
@@ -180,7 +181,7 @@ export default function TopbarNav({ locale, currentKind, onNavigate, mobileOpen,
               onClick={() => setOpenGroup(isOpen ? null : group.id)}
               onMouseEnter={() => {
                 // Hover-open on desktop only — mobile uses click
-                if (window.matchMedia("(hover: hover)").matches) {
+                if (typeof window !== "undefined" && typeof window.matchMedia === "function" && window.matchMedia("(hover: hover)").matches) {
                   setOpenGroup(group.id);
                 }
               }}
@@ -193,7 +194,7 @@ export default function TopbarNav({ locale, currentKind, onNavigate, mobileOpen,
               role="menu"
               aria-label={group.label[locale]}
               onMouseLeave={() => {
-                if (window.matchMedia("(hover: hover)").matches) {
+                if (typeof window !== "undefined" && typeof window.matchMedia === "function" && window.matchMedia("(hover: hover)").matches) {
                   setOpenGroup(null);
                 }
               }}

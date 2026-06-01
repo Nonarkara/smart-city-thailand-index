@@ -295,7 +295,7 @@ export default function App() {
   }, [locale, route]);
 
   // Track visitor once per session (fire-and-forget to Google Sheets)
-  useEffect(() => { trackVisitor(route.path); }, []);
+  useEffect(() => { trackVisitor(window.location.pathname); }, []);
 
   const navigate = (path: string) => {
     const base = import.meta.env.BASE_URL || "/";
@@ -445,7 +445,7 @@ export default function App() {
             ) : route.kind === "audit" ? (
               <AuditPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "references" ? (
-              <ReferencesPage locale={locale} onNavigate={navigate} />
+              <ReferencesPage locale={locale} />
             ) : route.kind === "program" ? (
               <ProgramPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "knowledge" ? (

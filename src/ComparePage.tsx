@@ -404,6 +404,42 @@ export default function ComparePage({ locale, onNavigate }: Props) {
                   ))}
                 </ul>
 
+                <div className="compare-col-investment">
+                  <p className="compare-col-investment-label">
+                    {translate(locale, {
+                      en: "Investment metrics",
+                      th: "ตัวชี้วัดการลงทุน",
+                      zh: "投资指标",
+                    })}
+                  </p>
+                  <ul className="compare-col-investment-list">
+                    <li>
+                      <span className="label">
+                        {translate(locale, { en: "Land Price", th: "ราคาประเมินที่ดิน", zh: "土地评估价" })}
+                      </span>
+                      <span className="value">
+                        {city.metrics.landPriceBaht ? `฿${city.metrics.landPriceBaht.toLocaleString()}/m²` : "—"}
+                      </span>
+                    </li>
+                    <li>
+                      <span className="label">
+                        {translate(locale, { en: "GPP per capita", th: "GPP ต่อหัว", zh: "人均 GPP" })}
+                      </span>
+                      <span className="value">
+                        {city.metrics.gppPerCapita ? `฿${city.metrics.gppPerCapita.toLocaleString()}` : "—"}
+                      </span>
+                    </li>
+                    <li>
+                      <span className="label">
+                        {translate(locale, { en: "FDI inflow", th: "FDI สะสม", zh: "外资流入" })}
+                      </span>
+                      <span className="value">
+                        {city.metrics.fdiInflow ? `฿${city.metrics.fdiInflow.toLocaleString()}M` : "—"}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
                 {topHighlights.length > 0 && (
                   <div className="compare-col-highlights">
                     <p className="compare-col-highlights-label">

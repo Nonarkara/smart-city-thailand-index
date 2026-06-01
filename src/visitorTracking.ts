@@ -55,7 +55,7 @@ export async function trackVisitor(page = "/") {
     city: geo.city,
     ua: navigator.userAgent.slice(0, 150),
     ref: (document.referrer || "Direct").slice(0, 150),
-    page: window.location.pathname,
+    page: page,
     hostname: window.location.hostname,    // sciti.nonarkara.org now (was nonarkara.github.io)
     dashboard: "SCITI",
     v: "sciti-2026",
@@ -64,6 +64,7 @@ export async function trackVisitor(page = "/") {
   fetch(`${TRACKING_URL}${sep}${params.toString()}`, { mode: "no-cors" }).catch(() => {});
 
   // Dual-write to SLIC shared sheet (POST, same format as SLIC index)
+  const fullPageUrl = `${window.location.origin}${page.startsWith("/") ? "" : "/"}${page}`;
   fetch(SLIC_TRACKING_URL, {
     method: "POST",
     mode: "no-cors",
@@ -74,7 +75,7 @@ export async function trackVisitor(page = "/") {
       referrer: document.referrer || "Direct",
       dashboard: "SCITI",
       hostname: window.location.hostname,
-      page: window.location.href,
+      page: fullPageUrl,
       language: navigator.language,
       screen: `${screen.width}x${screen.height}`,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
