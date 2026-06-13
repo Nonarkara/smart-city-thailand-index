@@ -160,7 +160,7 @@ export const certifiedCities: SmartCity[] = [
     { population: 120, gppPerCapita: 628000, avgMonthlyIncome: 40200, pm25Annual: 32.4, hospitalBedsPer10k: 42, crimeRatePer100k: 285, greenCoverage: 12, gppGrowthRate: 2.1, pm25Trend: "stable", waterQuality: 55, forestCoverage: 11, fdiInflow: 12500, industryComposition: "services 72%, manufacturing 18%, agriculture 1%, other 9%", laborForce: 4200, roadFatalityRate: 14 },
     "Bangkok's CBD corridor — where smart infrastructure investment and climate adaptation are converging. The World Bank CCDR 2025 documents elevated flood-resistant designs like IconSiam's elevated structures as early evidence of private-sector climate proofing. Bangkok's road fatality rate of 14 per 100k is Thailand's lowest — dense urban environments can outperform national norms. Air quality and congestion remain the unsolved problems.",
     "ระเบียง CBD ของกรุงเทพฯ — ที่การลงทุนโครงสร้างพื้นฐานอัจฉริยะและการปรับตัวต่อสภาพภูมิอากาศกำลังบรรจบกัน ธนาคารโลก CCDR 2025 บันทึกการออกแบบต้านน้ำท่วมแบบยกพื้นอย่างไอคอนสยามเป็นหลักฐานแรกของการปรับตัวของภาคเอกชน",
-    ["Smart traffic signal optimization along 4km corridor", "Digital commercial district management", "Air quality monitoring network", "World Bank 2025: Bangkok private sector adopting flood-resistant elevated design (IconSiam cited as example)"],
+    ["Smart traffic signal optimization along 4km corridor", "Integrated smart parking platform — real-time bay availability across MahaNakhon and Chong Nonsi commercial zone", "Air quality monitoring network", "World Bank 2025: Bangkok private sector adopting flood-resistant elevated design (IconSiam cited as example)"],
   ),
 
   city(
@@ -393,7 +393,7 @@ export const certifiedCities: SmartCity[] = [
     { population: 158, gppPerCapita: 165000, avgMonthlyIncome: 23400, pm25Annual: 18.5, hospitalBedsPer10k: 28, crimeRatePer100k: 168, greenCoverage: 32, gppGrowthRate: 2.2, pm25Trend: "stable", waterQuality: 68, forestCoverage: 35, fdiInflow: 1100, industryComposition: "services 45%, rubber/agriculture 30%, manufacturing 25%", laborForce: 820, roadFatalityRate: 21 },
     "Southern commercial hub with genuine smart city infrastructure. Smart flood management critical for this flood-prone city.",
     "ศูนย์กลางการค้าใต้ที่มีโครงสร้างพื้นฐานเมืองอัจฉริยะจริง การจัดการน้ำท่วมอัจฉริยะสำคัญสำหรับเมืองที่เสี่ยงน้ำท่วม",
-    ["Smart flood management system — critical infrastructure", "Digital commercial district management", "Cross-border trade digitization with Malaysia"],
+    ["Smart flood management system — critical infrastructure", "Smart street lighting — 1,200 LED nodes with centralised energy management", "Cross-border trade digitization with Malaysia"],
   ),
 
   city(

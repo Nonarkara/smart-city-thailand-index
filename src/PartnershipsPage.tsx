@@ -21,7 +21,7 @@ interface Partnership {
   vibe: { en: string; th: string; zh: string };
   body: { en: string; th: string; zh: string };
   lesson: { en: string; th: string; zh: string };
-  sourceUrl: string;
+  sourceUrl?: string;
   sourceLabel: string;
   accent: string;
   action?: { path: string; label: { en: string; th: string; zh: string } };
@@ -150,8 +150,8 @@ const partnerships: Partnership[] = [
       th: "MOU ด้านสมาร์ตซิตี้ไม่เท่ากับการส่งมอบ มีเจตนา แต่ประวัติการส่งมอบยังบาง",
       zh: "智慧城市MOU不等于交付。意向存在，但交付记录仍然偏薄。",
     },
-    sourceUrl: "https://archive.opengovasia.com/2022/01/20/thailand-and-austrian-trade-group-sign-smart-city-mou/",
-    sourceLabel: "OpenGov Asia",
+    sourceUrl: "https://web.archive.org/web/2022/https://opengovasia.com/2022/01/20/thailand-and-austrian-trade-group-sign-smart-city-mou/",
+    sourceLabel: "OpenGov Asia (archived)",
     accent: "#C45C1A",
   },
   {
@@ -250,7 +250,6 @@ const partnerships: Partnership[] = [
       th: "ความรู้เมืองอัจฉริยะไม่ได้เป็นกลางทางภูมิรัฐศาสตร์ ตำแหน่งของไทยในฟอรัมดิจิทัลทั้งตะวันตกและไม่ใช่ตะวันตกเป็นสินทรัพย์ หมายความว่าประเทศสามารถประเมินแนวทางต่างๆ แทนที่จะเพียงแค่นำ stack ของประเทศใดประเทศหนึ่งมาใช้",
       zh: "智慧城市知识不是地缘政治中立的。泰国同时活跃于西方和非西方数字论坛的地位是一种资产——这意味着该国可以评估各种方案，而不是简单地采用某一国的技术栈。",
     },
-    sourceUrl: "https://globaldigitalforum.ru/",
     sourceLabel: "Global Digital Forum",
     accent: "#6B3FA0",
   },
@@ -372,9 +371,13 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
               </div>
 
               <div className="partner-visual-footer">
-                <a href={p.sourceUrl} target="_blank" rel="noopener noreferrer" className="partner-visual-link">
-                  {p.sourceLabel} →
-                </a>
+                {p.sourceUrl ? (
+                  <a href={p.sourceUrl} target="_blank" rel="noopener noreferrer" className="partner-visual-link">
+                    {p.sourceLabel} →
+                  </a>
+                ) : (
+                  <span className="partner-visual-link" style={{ opacity: 0.4, cursor: "default" }}>{p.sourceLabel}</span>
+                )}
                 {p.action && (
                   <button
                     type="button"

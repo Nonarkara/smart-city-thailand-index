@@ -9,7 +9,7 @@ interface Props {
 
 // ─── INDEX META ───
 const INDEX_META = {
-  lastUpdated: "2026-04-15",
+  lastUpdated: "2026-06-09",
   citiesTracked: 48,
   dataSources: 6,
   totalSignals: 420,

@@ -31,7 +31,7 @@ const pillarDescriptions: Record<ScoringPillar, TriLingual & { signals: TriLingu
   livability: {
     en: "Two-component doctrine: housing/infra/daily-life (75%) + GISTDA flood-frequency factor (25%). A province repeatedly inundated by floods cannot be called livable, no matter how good its housing stock or transit — the lived experience of September Chao Phraya overflow in Nakhon Sawan or December monsoon in Narathiwat is part of the score. Flood data is sourced from GISTDA repeat-flood polygons 2005–2016 and DDPM annual records, with a per-province note documenting the recurrence pattern.",
     th: "หลักคิดสองส่วน: ที่อยู่/โครงสร้างพื้นฐาน/ชีวิตประจำวัน (75%) + ปัจจัยน้ำท่วมจาก GISTDA (25%) จังหวัดที่ท่วมซ้ำซากเรียกว่าน่าอยู่ไม่ได้ ไม่ว่าที่อยู่อาศัยจะดีหรือขนส่งจะสะดวกเพียงใด ประสบการณ์จริงของน้ำท่วมเจ้าพระยาที่นครสวรรค์ทุกกันยายนหรือมรสุมธันวาคมที่นราธิวาส เป็นส่วนหนึ่งของคะแนน ข้อมูลน้ำท่วมมาจากชั้นข้อมูลน้ำท่วมซ้ำซาก GISTDA ปี 2548-2559 บวกข้อมูลกรมป้องกันและบรรเทาสาธารณภัย (ปภ.) พร้อมหมายเหตุรายจังหวัด",
-    zh: "两段式：住房/基础设施/日常生活（75%）+ GISTDA 洪水频率因子（25%）。反复被淹的省份不能称为宜居，无论住房或交通多好——那空沙旺九月昭披耶河泛滥、那拉提瓦十二月季风带来的真实经验同样是分数的一部分。洪水数据来源：GISTDA 2005-2016 重复洪水图层 + DDPM 年度记录，每个省份附有出处说明。",
+    zh: "两段式：住房/基础设施/日常生活（75%）+ GISTDA 洪水频率因子（25%）。反复被淹的省份不能称为宜居，无论住房或交通多好——那空沙旺九月昭披耶河泛滥、那拉提瓦十二月季风带来的真实经验同样是分数的一部分。洪水数据来源：GISTDA 2005–2016 重复洪水图层 + DDPM 年度记录，每个省份附有出处说明。",
     signals: [
       { en: "Housing and affordability", th: "ที่อยู่อาศัยและความสามารถในการจ่าย", zh: "住房与可负担性" },
       { en: "Transit access", th: "การเข้าถึงขนส่ง", zh: "交通可达性" },

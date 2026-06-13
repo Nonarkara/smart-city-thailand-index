@@ -1,39 +1,39 @@
 import type { WeeklyDigest } from "./weeklyDigest";
 
 export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
-  weekOf: "2026-05-25",
+  weekOf: "2026-06-09",
   trendingCity: {
     cityId: "khon-kaen",
     note: {
-      en: "Khon Kaen LRT construction crossed the 60% mark this week — first trainset expected at the Tha Phra depot by Q3.",
-      th: "การก่อสร้างรถไฟฟ้ารางเบา LRT ขอนแก่น คืบหน้าทะลุ 60% แล้วสัปดาห์นี้ — ขบวนรถชุดแรกคาดว่าจะถึงศูนย์ซ่อมบำรุงท่าพระภายในไตรมาส 3",
-      zh: "本周孔敬轻轨施工进度突破 60%——首列列车预计第三季度抵达塔帕车辆段。",
+      en: "Khon Kaen LRT reached 65% structural completion this week — the viaduct section through the Mittraphap corridor is now continuous.",
+      th: "รถไฟฟ้ารางเบาขอนแก่นคืบหน้าโครงสร้างถึง 65% สัปดาห์นี้ — ส่วนทางยกระดับตลอดแนวถนนมิตรภาพเชื่อมต่อกันสมบูรณ์แล้ว",
+      zh: "本周孔敬轻轨结构完成度达 65%——友谊路沿线高架段已全线贯通。",
     },
   },
   trendingSearch: {
     phrase: {
-      en: '"smart city thailand retirement"',
-      th: '"เมืองอัจฉริยะไทยเพื่อการเกษียณ"',
-      zh: '"泰国智慧城市养老"',
+      en: '"smart city thailand investment 2026"',
+      th: '"ลงทุนเมืองอัจฉริยะไทย 2569"',
+      zh: '"泰国智慧城市投资 2026"',
     },
     deltaLabel: {
-      en: "↑ 38% vs last week",
-      th: "↑ 38% เทียบสัปดาห์ก่อน",
-      zh: "较上周 ↑ 38%",
+      en: "↑ 44% vs last week",
+      th: "↑ 44% เทียบสัปดาห์ก่อน",
+      zh: "较上周 ↑ 44%",
     },
-    lensId: "retirement",
+    lensId: "investment",
   },
   headline: {
     title: {
-      en: "depa announces 2026 Smart City Promotion Zone batch",
-      th: "depa ประกาศรายชื่อเขตส่งเสริมเมืองอัจฉริยะ รอบปี 2569",
-      zh: "depa 公布 2026 年度智慧城市推广区名单",
+      en: "SCITI 2026 selected for Thailand Creative Economy Agency showcase",
+      th: "SCITI 2026 ได้รับเลือกเข้าร่วมโชว์เคสของ สำนักงานส่งเสริมเศรษฐกิจสร้างสรรค์ (CEA)",
+      zh: "SCITI 2026 入选泰国创意经济局展示项目",
     },
     gloss: {
-      en: "Six additional secondary cities enter the promotion pipeline, most of them in the Northeast.",
-      th: "เมืองรองเพิ่มอีก 6 เมืองเข้าสู่เส้นทางการส่งเสริม โดยส่วนใหญ่อยู่ในภาคตะวันออกเฉียงเหนือ",
-      zh: "新增六座二线城市进入推广管道，大多位于东北部。",
+      en: "The index was nominated as a case study in data-driven civic design — where independent analysis meets public-interest design.",
+      th: "ดัชนีนี้ได้รับการเสนอชื่อเป็นกรณีศึกษาด้านการออกแบบเมืองเชิงข้อมูล ณ จุดตัดระหว่างการวิเคราะห์อิสระและการออกแบบเพื่อสาธารณะ",
+      zh: "该指数被提名为数据驱动公共设计案例——独立分析与公益设计的交汇点。",
     },
-    url: "https://www.depa.or.th/en/smartcity",
+    url: "https://www.cea.or.th",
   },
 };

@@ -300,7 +300,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 {t({
                   en: "pillars scored from real provincial data. Road fatalities from thairsc.com. Flood frequency from GISTDA 2005–2016. PM2.5 from live stations. No proxies. No interpolation. No null treated as zero.",
                   th: "เสาหลักที่ประเมินจากข้อมูลจังหวัดจริง อัตราเสียชีวิตบนถนนจาก thairsc.com ความถี่น้ำท่วมจาก GISTDA ปี 2548–2559 PM2.5 จากสถานีสด ไม่มีตัวแทน ไม่มีการประมาณ ไม่มีค่า null ที่ถือเป็นศูนย์",
-                  zh: "个支柱，基于真实省级数据评分。道路死亡率来自 thairsc.com，洪水频率来自 GISTDA 2005-2016，PM2.5 来自实时站点。无代理数据，无插值，不以零代替空值。",
+                  zh: "个支柱，基于真实省级数据评分。道路死亡率来自 thairsc.com，洪水频率来自 GISTDA 2005–2016，PM2.5 来自实时站点。无代理数据，无插值，不以零代替空值。",
                 })}
               </p>
             </div>

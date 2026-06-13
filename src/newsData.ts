@@ -17,6 +17,18 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "sciti-cea-2026",
+    title: {
+      en: "SCITI 2026 nominated for Thailand Creative Economy Agency showcase — data-driven civic design",
+      th: "SCITI 2026 ได้รับการเสนอชื่อเข้าโชว์เคส CEA — การออกแบบเมืองเชิงข้อมูลเพื่อสาธารณะ",
+      zh: "SCITI 2026 获提名进入泰国创意经济局展示——数据驱动的公民设计",
+    },
+    source: "Thailand Creative Economy Agency (CEA)",
+    url: "https://www.cea.or.th",
+    date: "2026-06-09",
+    tag: "thailand",
+  },
+  {
     id: "sciti-red-dot-2026",
     title: {
       en: "SCITI 2026 Smart City Thailand Index submitted to Red Dot Design Award — data transparency focus",
