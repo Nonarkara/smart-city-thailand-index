@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import AnimatedScore from "./AnimatedScore";
 import CityFingerprint from "./CityFingerprint";
 import { getDepaOfficial } from "./depaOfficialData";
 import { getPopulationDensityPerKm2, getResolvedLandAreaKm2, getResolvedPopulationThousand } from "./adminBaselines";
@@ -1186,7 +1185,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             </div>
             <div className="city-hero-photo-score-card" aria-label={translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}>
               <span className="city-hero-photo-score-label">{translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合" })}</span>
-              <AnimatedScore target={city.compositeScore} className="city-hero-photo-score" />
+              <span className="city-hero-photo-score">{city.compositeScore.toFixed(1)}</span>
               <span className="city-hero-photo-score-note">{tierSymbol} {TIER_LABELS[locale][city.tier]}</span>
             </div>
             {/* City fingerprint — unique 7-pillar visual DNA, positioned bottom-right */}
@@ -1212,7 +1211,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             </div>
             <div className="city-hero-photo-score-card" aria-label={translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}>
               <span className="city-hero-photo-score-label">{translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合" })}</span>
-              <AnimatedScore target={city.compositeScore} className="city-hero-photo-score city-hero-gradient-score" />
+              <span className="city-hero-photo-score city-hero-gradient-score">{city.compositeScore.toFixed(1)}</span>
               <span className="city-hero-photo-score-note">{tierSymbol} {TIER_LABELS[locale][city.tier]}</span>
             </div>
             <CityFingerprint
@@ -1242,19 +1241,30 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         <div className="dossier-tab-content">
 
       <section className="section city-detail-hero">
-        <button
-          className="back-link"
-          role="link"
-          onClick={() => onNavigate("/rankings")}
-          onKeyDown={event => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              onNavigate("/rankings");
-            }
-          }}
-        >
-          ← {translate(locale, { en: "Back to rankings", th: "กลับไปอันดับ", zh: "返回排名" })}
-        </button>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+          <button
+            className="back-link"
+            role="link"
+            onClick={() => onNavigate("/rankings")}
+            onKeyDown={event => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onNavigate("/rankings");
+              }
+            }}
+            style={{ margin: 0 }}
+          >
+            ← {translate(locale, { en: "Back to rankings", th: "กลับไปอันดับ", zh: "返回排名" })}
+          </button>
+          
+          <button
+            className="btn btn-secondary"
+            onClick={() => onNavigate(`/canvas/${cityId}`)}
+            style={{ fontSize: "0.85rem", padding: "0.4rem 0.8rem", borderRadius: "var(--radius-sm)", minHeight: "44px", display: "inline-flex", alignItems: "center" }}
+          >
+            {translate(locale, { en: "Print City Canvas", th: "พิมพ์แคนวาสเมือง", zh: "打印城市画布" })}
+          </button>
+        </div>
 
         <div className="city-detail-header">
           <div>
@@ -2300,4 +2310,3 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
   );
 
 }
-

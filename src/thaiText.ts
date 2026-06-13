@@ -59,7 +59,7 @@ export function polishThaiText(text: string): string {
   normalized = normalized.replace(/\bB(\d+(?:\.\d+)?)K\b/g, (_match, value: string) => formatCompactThousands(value));
   normalized = normalized.replace(/\b(\d+(?:\.\d+)?)M\b/g, (_match, value: string) => formatCompactMillions(value));
   normalized = normalized.replace(/\b(\d+(?:\.\d+)?)K\b/g, (_match, value: string) => formatCompactThousands(value));
-  normalized = normalized.replace(/\b(\d+)\+\b/g, (_match, value: string) => `กว่า ${value}`);
+  normalized = normalized.replace(/\b(\d+)\+(?!\w)/g, (_match, value: string) => `กว่า ${value}`);
 
   for (const [pattern, replacement] of DIRECT_REPLACEMENTS) {
     normalized = normalized.replace(pattern, replacement);

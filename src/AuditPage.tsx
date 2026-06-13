@@ -47,9 +47,9 @@ export default function AuditPage({ locale, onNavigate }: Props) {
         <h1 className="hero-title">{translate(locale, { en: "Institutional Honesty.", th: "ความซื่อสัตย์ของสถาบัน", zh: "体制诚信。" })}</h1>
         <p className="hero-strapline">
           {translate(locale, {
-            en: "This is the 'No-BS' layer. We map PR announcements to technical infrastructure logs. If the dashboard is black, we report it.",
-            th: "นี่คือชั้นความจริง เราจับคู่คำแถลง PR กับบันทึกโครงสร้างพื้นฐานทางเทคนิค ถ้าแดชบอร์ดดับ เราก็รายงานตามนั้น",
-            zh: "这是“拒绝废话”层。我们将公关公告与技术基础设施日志进行对比映射。如果仪表板是黑屏的，我们就如实报告。",
+            en: "This is the evidence layer. We map public announcements to technical infrastructure logs and report gaps plainly when systems are offline.",
+            th: "นี่คือชั้นหลักฐาน เราจับคู่คำแถลงสาธารณะกับบันทึกโครงสร้างพื้นฐานทางเทคนิค และรายงานช่องว่างอย่างตรงไปตรงมาเมื่อระบบไม่พร้อมใช้งาน",
+            zh: "这是证据层。我们将公开公告与技术基础设施日志对应，并在系统离线时清楚说明差距。",
           })}
         </p>
       </section>

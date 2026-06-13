@@ -122,5 +122,6 @@ describe("city dossier content integrity", () => {
     expect(polishThaiText("กลุ่ม tech และ digital nomad")).toBe("กลุ่มเทคโนโลยีและกลุ่มคนทำงานทางไกล");
     expect(polishThaiText("5G testbed ใช้งานจริง")).toBe("สนามทดสอบ 5G ใช้งานจริง");
     expect(polishThaiText("ประชากร 25K และนักท่องเที่ยว 30M+")).toBe("ประชากร 25,000 และนักท่องเที่ยว กว่า 30 ล้าน");
+    expect(polishThaiText("มีระบบกล้อง 100+ จุด")).toBe("มีระบบกล้อง กว่า 100 จุด");
   });
 });

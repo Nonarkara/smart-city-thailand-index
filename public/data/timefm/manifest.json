@@ -1,0 +1,10 @@
+[
+  {
+    "id": "forecast-city-score-chiang-mai",
+    "file": "forecast-city-score-chiang-mai.json",
+    "label": "city-score",
+    "aoi": "chiang-mai",
+    "horizon": 12,
+    "model": "google/timesfm-2.5-200m-pytorch"
+  }
+]

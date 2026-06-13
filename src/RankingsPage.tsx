@@ -333,13 +333,38 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
       <div className="rankings-column">
         <section className="section reveal visible">
           <p className="eyebrow">{t({ en: "Directory", th: "สารบบ", zh: "名录" })}</p>
-          <h1 className="hero-title">
-            {t({
-              en: "The Moneyball of Thai city investment",
-              th: "มันนี่บอลของการลงทุนในเมืองไทย",
-              zh: "泰国城市投资的点球成金",
-            })}
-          </h1>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "1rem", marginBottom: "1rem" }}>
+            <h1 className="hero-title" style={{ margin: 0 }}>
+              {t({
+                en: "The Moneyball of Thai city investment",
+                th: "มันนี่บอลของการลงทุนในเมืองไทย",
+                zh: "泰国城市投资的点球成金",
+              })}
+            </h1>
+            <button
+              className="btn"
+              onClick={() => onNavigate(`/canvas/top10`)}
+              style={{
+                fontSize: "0.85rem",
+                padding: "0.4rem 0.8rem",
+                borderRadius: "var(--radius-sm)",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                minHeight: "44px",
+                background: "var(--surface)",
+                border: "1px solid var(--5)",
+                color: "var(--ink)"
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              {t({ en: "Download Top 10 Canvas", th: "ดาวน์โหลดแคนวาส 10 อันดับ", zh: "下载前十名画布" })}
+            </button>
+          </div>
           <p className="hero-strapline">
             {t({
               en: "You already know Bangkok, Chiang Mai, and Phuket. Pick a lens and the directory re-ranks under that worldview — growth at all costs, retirement paradise, climate refuge. The spider shows the shape of each lens.",

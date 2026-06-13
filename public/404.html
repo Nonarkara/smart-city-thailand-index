@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <title>SCITI 2026</title>
   <script>
-    // GitHub Pages SPA redirect — pathSegmentsToKeep = 1 for /repo-name/
-    var pathSegmentsToKeep = 1;
+    // GitHub Pages SPA redirect — pathSegmentsToKeep = 1 for /repo-name/, 0 for custom domains
     var l = window.location;
+    var pathSegmentsToKeep = l.pathname.startsWith('/smart-city-thailand-index/') ? 1 : 0;
     l.replace(
       l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
       l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +

@@ -267,7 +267,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
               ? <>118 เมือง. 37 รับรองแล้ว.<br />นี่คือสิ่งที่แยกพวกเขาออกจากกัน</>
               : locale === "zh"
                 ? <>118 座城市。37 座已认证。<br />这就是区别它们的东西。</>
-                : <>118 cities. 37 certified.<br />Here is what separates them.</>
+                : <>118 cities, 37 certified.<br />Here is what separates them.</>
             }
           </h2>
 

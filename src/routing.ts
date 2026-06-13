@@ -1,4 +1,4 @@
-export type StaticRoutePath = "/" | "/rankings" | "/methodology" | "/story" | "/why" | "/showcase" | "/partners" | "/map" | "/asus" | "/audit" | "/references" | "/program" | "/knowledge" | "/discover" | "/invest" | "/compare" | "/bingo";
+export type StaticRoutePath = "/" | "/rankings" | "/methodology" | "/story" | "/why" | "/showcase" | "/partners" | "/map" | "/asus" | "/audit" | "/references" | "/program" | "/knowledge" | "/discover" | "/invest" | "/compare" | "/bingo" | "/canvas";
 
 export type Route =
   | { kind: "home"; path: "/" }
@@ -18,7 +18,8 @@ export type Route =
   | { kind: "invest"; path: "/invest" }
   | { kind: "compare"; path: "/compare" }
   | { kind: "bingo"; path: "/bingo" }
-  | { kind: "city"; path: `/city/${string}`; cityId: string };
+  | { kind: "city"; path: `/city/${string}`; cityId: string }
+  | { kind: "canvas"; path: `/canvas/${string}`; cityId: string };
 
 export function parseRoute(rawPathname: string): Route {
   // Strip Vite BASE_URL prefix (e.g., /smart-city-thailand-index/) for GitHub Pages
@@ -44,6 +45,12 @@ export function parseRoute(rawPathname: string): Route {
     const cityId = pathname.slice("/city/".length).trim();
     if (cityId) {
       return { kind: "city", cityId, path: `/city/${cityId}` };
+    }
+  }
+  if (pathname.startsWith("/canvas/")) {
+    const cityId = pathname.slice("/canvas/".length).trim();
+    if (cityId) {
+      return { kind: "canvas", cityId, path: `/canvas/${cityId}` };
     }
   }
   return { kind: "home", path: "/" };

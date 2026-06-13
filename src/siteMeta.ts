@@ -102,23 +102,13 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | SCITI บิงโก`,
     zh: `${SITE_NAME} | SCITI 宾果`,
   },
+  canvas: {
+    en: `${SITE_NAME} | City Canvas`,
+    th: `${SITE_NAME} | แคนวาสเมือง`,
+    zh: `${SITE_NAME} | 城市画布`,
+  },
 };
 
-export type ApiResponse = {
-  setHeader: (name: string, value: string) => void;
-  status: (code: number) => {
-    json: (body: ApiEnvelope<unknown>) => void;
-    send?: (body: string) => void;
-  };
-};
-
-export type ApiEnvelope<T = unknown> = {
-  success: boolean;
-  data?: T;
-  error?: string;
-  requestId: string;
-  timestamp: string;
-};
 
 function ensureMeta(selector: string, create: () => HTMLElement): HTMLElement {
   let element = document.head.querySelector<HTMLElement>(selector);
@@ -171,7 +161,7 @@ function buildMeta(route: Route, locale: Locale) {
   const path = route.path === "/" ? "" : route.path;
   const canonicalUrl = `${siteUrl}${path}`;
 
-  if (route.kind !== "city") {
+  if (route.kind !== "city" && route.kind !== "canvas") {
     return { title, description, canonicalUrl };
   }
 
@@ -239,7 +229,7 @@ export function syncDocumentMeta(pathname: string, locale: Locale) {
     "inLanguage": [locale]
   };
 
-  if (route.kind === "city") {
+  if (route.kind === "city" || route.kind === "canvas") {
     const city = getCitySummaryById(route.cityId);
     if (city) {
       jsonLd["@type"] = "Place";

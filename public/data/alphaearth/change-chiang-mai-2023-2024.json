@@ -1,0 +1,23 @@
+{
+  "image": "change-chiang-mai-2023-2024.png",
+  "bounds": {
+    "west": 98.93954707763999,
+    "south": 18.739575478960514,
+    "east": 99.06028065182565,
+    "north": 18.840366453838726
+  },
+  "years": {
+    "a": 2023,
+    "b": 2024
+  },
+  "stats": {
+    "p_low": 0.20237156748771667,
+    "p_high": 0.5541884899139404,
+    "ramp_low_pctile": 50.0,
+    "ramp_high_pctile": 99.0,
+    "pixel_count": 41888,
+    "max_l2": 0.9398645758628845,
+    "median_l2": 0.04087621718645096
+  },
+  "dataset": "GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL"
+}

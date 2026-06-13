@@ -44,7 +44,7 @@ describe("content page mechanics", () => {
     const onNavigate = vi.fn();
     render(<PartnershipsPage locale="en" onNavigate={onNavigate} />);
 
-    expect(screen.getByRole("heading", { name: /9 partnerships, 4 statuses:.*who actually delivered/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /9 partnerships, 4 statuses:.*what actually delivered/i })).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "See the city rankings" }));
     expect(onNavigate).toHaveBeenCalledWith("/rankings");

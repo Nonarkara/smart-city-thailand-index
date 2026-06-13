@@ -294,14 +294,14 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
           {locale === "th"
             ? <>9 ความร่วมมือ 4 สถานะ:<br />ใครทำอะไรจริง</>
             : locale === "zh"
-              ? <>9 项合作，4 种状态：<br />谁真的做了事</>
-              : <>9 partnerships, 4 statuses:<br />who actually delivered.</>}
+              ? <>9 项合作，4 种状态：<br />哪些真正落地</>
+              : <>9 partnerships, 4 statuses:<br />what actually delivered.</>}
         </h1>
         <p className="hero-strapline partnerships-strapline">
           {t(locale, {
-            en: "This page reads Thailand's international smart-city partnerships as delivery signals, not diplomatic theatre. Big numbers matter, but only when they connect to visible projects, city capability, or technical blueprints.",
-            th: "หน้านี้อ่านความร่วมมือระหว่างประเทศของไทยในฐานะสัญญาณการส่งมอบ ไม่ใช่ละครการทูต ตัวเลขใหญ่มีความหมาย ก็ต่อเมื่อมันเชื่อมกับโครงการที่เห็นได้",
-            zh: "本页把泰国的国际智慧城市合作当成交付信号来读，而不是外交表演。大数字只有在连到可见项目、城市能力或技术蓝图时才有意义。",
+            en: "This page reads Thailand's international smart-city partnerships as delivery signals. Large commitments matter when they connect to visible projects, city capability, or technical blueprints.",
+            th: "หน้านี้อ่านความร่วมมือระหว่างประเทศของไทยในฐานะสัญญาณการส่งมอบ ตัวเลขใหญ่มีความหมายเมื่อเชื่อมกับโครงการที่เห็นได้ ความสามารถของเมือง หรือพิมพ์เขียวทางเทคนิค",
+            zh: "本页把泰国的国际智慧城市合作视为交付信号。大型承诺只有在连接到可见项目、城市能力或技术蓝图时才真正有意义。",
           })}
         </p>
       </section>

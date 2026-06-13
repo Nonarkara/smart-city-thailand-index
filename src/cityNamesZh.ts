@@ -45,7 +45,7 @@ export const PROVINCE_ZH: Record<string, string> = {
   "Sukhothai": "素可泰府",
   "Tak": "达府",
   "Uthai Thani": "乌泰他尼府",
-  "Uttaradit": "乌泰他尼府",
+  "Uttaradit": "程逸府",
   // Northeast (Isan)
   "Amnat Charoen": "阿默那察隆府",
   "Bueng Kan": "汶坎府",
@@ -151,7 +151,7 @@ export const CITY_NAME_ZH: Record<string, string> = {
   "reg-chiang-mai-pao": "清迈府行政组织",
   "reg-lamphun": "南奔市政府",
   "reg-lampang-pao": "南邦府行政组织",
-  "reg-uttaradit": "乌泰他尼市政府",
+  "reg-uttaradit": "程逸市政府",
   "reg-sukhothai": "素可泰市政府",
   "reg-phrae": "帕市政府",
   "reg-phayao": "帕尧市政府",

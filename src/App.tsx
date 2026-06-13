@@ -27,6 +27,7 @@ const DiscoverPage = lazy(() => import("./DiscoverPage"));
 const InvestPage = lazy(() => import("./InvestPage"));
 const ComparePage = lazy(() => import("./ComparePage"));
 const ScitiBingoPage = lazy(() => import("./ScitiBingoPage"));
+const CityCanvasPage = lazy(() => import("./CityCanvasPage"));
 import DataFeedback from "./DataFeedback";
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
@@ -68,7 +69,7 @@ const SLIC_LOGO = {
 };
 
 type PageHeroCopy = { en: string; th: string; zh: string };
-type StaticHeroKind = Exclude<Route["kind"], "home" | "city">;
+type StaticHeroKind = Exclude<Route["kind"], "home" | "city" | "canvas">;
 type PageHeroAsset = {
   src: string;
   objectPosition?: string;
@@ -243,8 +244,8 @@ function getInitialLocale(): Locale {
 }
 
 function PagePhotoHero({ route, locale }: { route: Route; locale: Locale }) {
-  if (route.kind === "home" || route.kind === "city" || route.kind === "showcase") return null;
-  const hero = PAGE_HERO_ASSETS[route.kind];
+  if (route.kind === "home" || route.kind === "city" || route.kind === "showcase" || route.kind === "canvas") return null;
+  const hero = PAGE_HERO_ASSETS[route.kind as StaticHeroKind];
   if (!hero) return null;
 
   return (
@@ -270,6 +271,7 @@ export default function App() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isDashboardRoute = route.kind === "home";
+  const isCanvasRoute = route.kind === "canvas";
 
   useEffect(() => {
     const sync = () => {
@@ -312,10 +314,11 @@ export default function App() {
   const toggleTheme = () => setTheme(t => t === "light" ? "dark" : "light");
 
   return (
-    <div className={`page-shell ${isDashboardRoute ? "page-shell-dashboard" : ""}`}>
+    <div className={`page-shell ${isDashboardRoute ? "page-shell-dashboard" : ""} ${isCanvasRoute ? "page-shell-canvas" : ""}`}>
       {/* ─── INSTITUTIONAL BANNER ─── */}
       <a href="#main-content" className="skip-link">Skip to content</a>
-      <div className="institutional-banner">
+      {!isCanvasRoute && (
+        <div className="institutional-banner">
         <div className="institutional-logos">
           <div className="institutional-logo-container">
             <ResponsiveImage
@@ -349,9 +352,11 @@ export default function App() {
           </div>
         </div>
       </div>
+      )}
 
       {/* ─── TOPBAR ─── */}
-      <nav className="topbar">
+      {!isCanvasRoute && (
+        <nav className="topbar">
         <button type="button" className="brand-lockup" onClick={() => navigate("/")}>
           <div className="institutional-logo-container" style={{ padding: '2px', marginRight: '8px' }}>
             <ResponsiveImage
@@ -420,10 +425,11 @@ export default function App() {
           </div>
         </div>
       </nav>
+      )}
 
       {/* ─── CONTENT ─── */}
-      <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""}`} key={getRouteKey(route)}>
-        <PagePhotoHero route={route} locale={locale} />
+      <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""} ${isCanvasRoute ? "page-frame-canvas" : ""}`} key={getRouteKey(route)}>
+        {!isCanvasRoute && <PagePhotoHero route={route} locale={locale} />}
         <ErrorBoundary locale={locale}>
           <Suspense fallback={<div className="loading">Loading...</div>}>
             {route.kind === "rankings" ? (
@@ -460,16 +466,18 @@ export default function App() {
               <ScitiBingoPage locale={locale} />
             ) : route.kind === "city" ? (
               <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
+            ) : route.kind === "canvas" ? (
+              <CityCanvasPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
             ) : (
               <HomePage locale={locale} onNavigate={navigate} />
             )}
           </Suspense>
         </ErrorBoundary>
         
-        <DataFeedback locale={locale} />
+        {!isCanvasRoute && <DataFeedback locale={locale} />}
       </main>
 
-      {!isDashboardRoute && (
+      {(!isDashboardRoute && !isCanvasRoute) && (
         <>
           {/* ─── NEWS FEED ─── */}
           <section className="news-section">
@@ -620,9 +628,11 @@ export default function App() {
       )}
 
       {/* ─── GEMINI CHATBOT ─── */}
-      <Suspense fallback={null}>
-        <GeminiChat locale={locale} />
-      </Suspense>
+      {!isCanvasRoute && (
+        <Suspense fallback={null}>
+          <GeminiChat locale={locale} />
+        </Suspense>
+      )}
     </div>
   );
 }

@@ -485,6 +485,7 @@ async function handleInsert(signal: SignalRecord): Promise<InsertResponse> {
 export default async function handler(req: ApiRequest, res: ApiResponse) {
   const requestId = createRequestId();
 
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Request-Id", requestId);
 

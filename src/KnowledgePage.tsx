@@ -742,7 +742,7 @@ export default function KnowledgePage({ locale }: Props) {
             ? `คำถามที่พบบ่อย กลั่นจากข้อเท็จจริงเชิงสถาบันและความโปร่งใสของข้อมูล`
             : locale === "zh"
               ? `基于机构真实性和数据透明度的常见问题解答`
-            : "No-BS FAQ distilled from institutional reality and data transparency."}
+            : "Practical FAQ distilled from institutional reality and data transparency."}
         </p>
       </section>
 

@@ -67,7 +67,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
           }
         });
 
-        return { city, matchScore: Math.round((matchScore / totalWeight) * 100) };
+        return { city, matchScore: Math.min(100, Math.round((matchScore / totalWeight) * 100)) };
       })
       .sort((a, b) => b.matchScore - a.matchScore)
       .slice(0, 10);

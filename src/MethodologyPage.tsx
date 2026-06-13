@@ -314,7 +314,7 @@ export default function MethodologyPage({ locale }: Props) {
       {/* ─── VERSION JOURNEY ─── */}
       <section className="section reveal visible">
         <p className="eyebrow">{t("Version history", "ประวัติเวอร์ชัน", "版本历史")}</p>
-        <h2>{t("From a LinkedIn rant to a Red Dot submission", "จากบ่นบน LinkedIn สู่การส่ง Red Dot", "从 LinkedIn 的一声抱怨到红点奖参赛作品")}</h2>
+        <h2>{t("From a public question to a Red Dot submission", "จากคำถามสาธารณะสู่การส่ง Red Dot", "从一个公开问题到红点奖参赛作品")}</h2>
         <p className="section-intro" style={{ marginBottom: "1.5rem" }}>
           {t(
             "This is version 2026.04 — the fourth major iteration. Each version asked a harder question than the last.",
@@ -328,9 +328,9 @@ export default function MethodologyPage({ locale }: Props) {
               ver: "v0", date: "2024",
               label: { en: "The provocation", th: "การตั้งคำถาม", zh: "一声质疑" },
               desc: {
-                en: "A LinkedIn post that said, simply: Thailand has certified 30 smart cities. Which of them actually work? No index. No scoring. Just the question — which turned out to be enough to start a conversation.",
-                th: "โพสต์ LinkedIn ที่บอกตรงๆ ว่า ไทยรับรองเมืองอัจฉริยะ 30 แห่ง มีกี่แห่งที่เดินจริง? ไม่มีดัชนี ไม่มีคะแนน มีแค่คำถาม — ซึ่งปรากฏว่าพอแล้วสำหรับเริ่มต้นการสนทนา",
-                zh: "一条 LinkedIn 帖子，直白地问：泰国认证了 30 座智慧城市，哪些真的在运转？没有指数，没有评分，只有这个问题——事实证明，这已经足以引发一场对话。",
+                en: "A public post asked a simple question: Thailand had certified 30 smart cities. Which of them actually worked? No index. No scoring. Just the question, which proved enough to start a serious conversation.",
+                th: "โพสต์สาธารณะตั้งคำถามง่ายๆ ว่า ไทยรับรองเมืองอัจฉริยะ 30 แห่งแล้ว มีกี่แห่งที่เดินจริง? ยังไม่มีดัชนี ยังไม่มีคะแนน มีเพียงคำถาม ซึ่งเพียงพอที่จะเริ่มบทสนทนาที่จริงจัง",
+                zh: "一篇公开帖提出了一个简单问题：泰国已认证 30 座智慧城市，哪些真正运转？当时没有指数，也没有评分，只有这个问题，却足以开启一场严肃讨论。",
               },
             },
             {
