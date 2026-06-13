@@ -51,3 +51,19 @@ Per §13: the same mistake never happens twice.
 - **Correct behaviour:** ...
 - **How to recognise this pattern:** ...
 -->
+
+---
+
+## 2026-06-14 · CI used vite build directly, bypassing postbuild hook
+
+- **What went wrong:** `.github/workflows/cloudflare-pages.yml` ran `npx tsc -b && npx vite build` directly. The `postbuild` script in `package.json` (`node scripts/generate-city-og-pages.mjs`) only fires for `npm run build`, not for `npx vite build`. City OG pages were never generated in CI.
+- **Correct behaviour:** CI must use `npm run build` (or explicitly append `&& node scripts/generate-city-og-pages.mjs`) so the postbuild hook fires.
+- **How to recognise:** When adding a `postbuild` or `prebuild` hook, immediately check the CI workflow — if it calls `vite build`/`tsc`/etc. directly instead of `npm run build`, the hook will silently not fire. grep `.github/` for `npx vite` after adding any npm lifecycle hooks.
+
+---
+
+## 2026-06-14 · preview_eval window.innerWidth=0 after scrollIntoView — viewport is 0x0
+
+- **What went wrong:** After calling `scrollIntoView()` in preview_eval, subsequent screenshot showed blank white. Root cause: `window.innerWidth` / `window.innerHeight` reported 0x0 even though the screenshot tool renders at full size. `window.scrollTo(0, n)` silently does nothing in this state.
+- **Correct behaviour:** Use `document.documentElement.scrollTo({ top: n, behavior: 'instant' })` to scroll (not `window.scrollTo`). Use `preview_resize` to reset the viewport if `window.innerWidth` reports 0. The actual screenshot tool renders at full desktop size regardless of `window.innerWidth`.
+- **How to recognise:** `window.innerWidth + 'x' + window.innerHeight` returns "0x0" → call `preview_resize` with a preset before proceeding. If `document.documentElement.scrollTop` won't change, the page may use `html { overflow: visible }` — use `document.documentElement.scrollTo()` with `behavior: 'instant'` instead.
