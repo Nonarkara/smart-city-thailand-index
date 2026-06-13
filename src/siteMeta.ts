@@ -1,4 +1,5 @@
 import { getCitySummaryById } from "./cityCdp";
+import { getCityPhotoAsset } from "./cityMedia";
 import { parseRoute, type Route } from "./routing";
 import type { Locale } from "./types";
 
@@ -160,14 +161,16 @@ function buildMeta(route: Route, locale: Locale) {
   const siteUrl = getSiteUrl();
   const path = route.path === "/" ? "" : route.path;
   const canonicalUrl = `${siteUrl}${path}`;
+  // Default share image — square logo
+  let imageUrl = `${siteUrl}/smart_city_thailand_logo.jpg`;
 
   if (route.kind !== "city" && route.kind !== "canvas") {
-    return { title, description, canonicalUrl };
+    return { title, description, canonicalUrl, imageUrl };
   }
 
   const city = getCitySummaryById(route.cityId);
   if (!city) {
-    return { title, description, canonicalUrl };
+    return { title, description, canonicalUrl, imageUrl };
   }
 
   const cityName = locale === "th" ? city.nameTh : city.nameEn;
@@ -178,10 +181,23 @@ function buildMeta(route: Route, locale: Locale) {
         ? `${city.nameEn} 城市档案，含评分、维度、原始数据与可追溯证据。`
         : `${city.nameEn} city profile with scores, pillar breakdown, raw metrics, and traceable evidence.`;
 
+  // Use the city's primary photo for social sharing — much richer than the logo
+  try {
+    const photo = getCityPhotoAsset(city);
+    if (photo?.src && !photo.src.startsWith("http")) {
+      imageUrl = `${siteUrl}${photo.src}`;
+    } else if (photo?.src) {
+      imageUrl = photo.src;
+    }
+  } catch {
+    // cityMedia may throw for cities without photos — keep default logo
+  }
+
   return {
     title: `${cityName} | ${SITE_NAME}`,
     description: cityDescription,
     canonicalUrl,
+    imageUrl,
   };
 }
 
@@ -200,13 +216,12 @@ function setJsonLd(data: object) {
 
 export function syncDocumentMeta(pathname: string, locale: Locale) {
   const route = parseRoute(pathname);
-  const { title, description, canonicalUrl } = buildMeta(route, locale);
-  const imageUrl = `${getSiteUrl()}${SHARE_IMAGE_PATH}`;
+  const { title, description, canonicalUrl, imageUrl } = buildMeta(route, locale);
 
   document.title = title;
   setCanonical(canonicalUrl);
   setMetaByName("description", description);
-  setMetaByName("theme-color", "#1A1612");
+  setMetaByName("theme-color", "#0C2F53");
   setMetaByProperty("og:type", "website");
   setMetaByProperty("og:site_name", SITE_NAME);
   setMetaByProperty("og:title", title);
@@ -219,28 +234,84 @@ export function syncDocumentMeta(pathname: string, locale: Locale) {
   setMetaByName("twitter:image", imageUrl);
 
   // JSON-LD Structured Data
-  const jsonLd: Record<string, unknown> = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": SITE_NAME,
-    "alternateName": ["SCITI", "Smart City Thailand Index"],
-    "url": getSiteUrl(),
-    "description": description,
-    "inLanguage": [locale]
+  const siteUrl = getSiteUrl();
+  const publisher = {
+    "@type": "Organization",
+    "name": "Digital Economy Promotion Agency (depa)",
+    "alternateName": "depa",
+    "url": "https://www.depa.or.th",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/depa_logo.jpg`
+    }
   };
 
-  if (route.kind === "city" || route.kind === "canvas") {
+  let jsonLd: Record<string, unknown>;
+
+  if (route.kind === "home") {
+    jsonLd = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": SITE_NAME,
+          "alternateName": ["SCITI", "Smart City Thailand Index"],
+          "url": siteUrl,
+          "description": description,
+          "inLanguage": ["en", "th", "zh-Hans"],
+          "publisher": publisher,
+        },
+        {
+          "@type": "WebApplication",
+          "name": SITE_NAME,
+          "url": siteUrl,
+          "applicationCategory": "GovernmentApplication",
+          "description": description,
+          "inLanguage": ["en", "th", "zh-Hans"],
+          "publisher": publisher,
+          "operatingSystem": "Any",
+        }
+      ]
+    };
+  } else if (route.kind === "city" || route.kind === "canvas") {
     const city = getCitySummaryById(route.cityId);
     if (city) {
-      jsonLd["@type"] = "Place";
-      jsonLd["name"] = locale === "th" ? city.nameTh : city.nameEn;
-      jsonLd["description"] = description;
-      jsonLd["address"] = {
-        "@type": "PostalAddress",
-        "addressLocality": locale === "th" ? city.provinceTh : city.province,
-        "addressCountry": "TH"
+      jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Place",
+        "name": locale === "th" ? city.nameTh : city.nameEn,
+        "description": description,
+        "url": canonicalUrl,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": locale === "th" ? city.provinceTh : city.province,
+          "addressCountry": "TH"
+        },
+        "containedInPlace": {
+          "@type": "Country",
+          "name": "Thailand"
+        }
+      };
+    } else {
+      jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": title,
+        "description": description,
+        "url": canonicalUrl,
+        "publisher": publisher,
       };
     }
+  } else {
+    jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": title,
+      "description": description,
+      "url": canonicalUrl,
+      "inLanguage": locale === "zh" ? "zh-Hans" : locale,
+      "publisher": publisher,
+    };
   }
 
   setJsonLd(jsonLd);

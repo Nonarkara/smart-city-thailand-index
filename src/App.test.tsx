@@ -14,7 +14,7 @@ describe("App", () => {
     render(<App />);
 
     await screen.findByText("泰国智慧城市指数");
-    expect(document.documentElement.lang).toBe("zh");
+    expect(document.documentElement.lang).toBe("zh-Hans");
   });
 
   it("updates city detail content when the route changes between city pages", async () => {

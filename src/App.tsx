@@ -270,6 +270,7 @@ export default function App() {
   const [locale, setLocale] = useState<Locale>(getInitialLocale);
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [topbarScrolled, setTopbarScrolled] = useState(false);
   const isDashboardRoute = route.kind === "home";
   const isCanvasRoute = route.kind === "canvas";
 
@@ -284,7 +285,8 @@ export default function App() {
 
   useEffect(() => {
     window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
-    document.documentElement.lang = locale;
+    // Use more specific BCP-47 tags — zh-Hans for Simplified Chinese
+    document.documentElement.lang = locale === "zh" ? "zh-Hans" : locale;
   }, [locale]);
 
   useEffect(() => {
@@ -295,6 +297,13 @@ export default function App() {
   useEffect(() => {
     syncDocumentMeta(route.path, locale);
   }, [locale, route]);
+
+  // Scroll-aware topbar: add .topbar-scrolled after 4 px to reveal a subtle separator
+  useEffect(() => {
+    const handleScroll = () => setTopbarScrolled(window.scrollY > 4);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Track visitor once per session (fire-and-forget to Google Sheets)
   useEffect(() => { trackVisitor(window.location.pathname); }, []);
@@ -356,7 +365,7 @@ export default function App() {
 
       {/* ─── TOPBAR ─── */}
       {!isCanvasRoute && (
-        <nav className="topbar">
+        <nav className={`topbar${topbarScrolled ? " topbar-scrolled" : ""}`}>
         <button type="button" className="brand-lockup" onClick={() => navigate("/")}>
           <div className="institutional-logo-container" style={{ padding: '2px', marginRight: '8px' }}>
             <ResponsiveImage
@@ -431,7 +440,7 @@ export default function App() {
       <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""} ${isCanvasRoute ? "page-frame-canvas" : ""}`} key={getRouteKey(route)}>
         {!isCanvasRoute && <PagePhotoHero route={route} locale={locale} />}
         <ErrorBoundary locale={locale}>
-          <Suspense fallback={<div className="loading">Loading...</div>}>
+          <Suspense fallback={<div className="loading" role="status" aria-live="polite" aria-label="Loading page" />}>
             {route.kind === "rankings" ? (
               <RankingsPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "methodology" ? (
