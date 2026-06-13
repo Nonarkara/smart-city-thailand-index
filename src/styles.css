@@ -4,7 +4,6 @@
  * IBM Plex Mono for numerics and mono labels.
  * NO Libre Baskerville, NO Montserrat, NO Noto Serif — the fat-serif and cliché
  * instincts are the Codex Incident. They are banned. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
   --font: system-ui, -apple-system, "Segoe UI", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
