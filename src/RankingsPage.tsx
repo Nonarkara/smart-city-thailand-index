@@ -145,7 +145,7 @@ function CityPillarBars({
 // LensRadar — 140×140 heptagon spider visualising lens weights
 // ---------------------------------------------------------------------------
 function LensRadar({ lens, locale }: { lens: PresetLens; locale: Locale }) {
-  const SIZE = 140;
+  const SIZE = 160;
   const CX = SIZE / 2;
   const CY = SIZE / 2;
   const R = 52;
@@ -408,7 +408,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               <p className="lens-panel-flavour">{translate(locale, lens.flavour)}</p>
             </div>
             <div className="lens-panel-radar">
-              <LensRadar lens={lens} locale={locale} />
+              <LensRadar key={lens.id} lens={lens} locale={locale} />
             </div>
             <div className="lens-panel-top">
               <p className="lens-panel-top-label">

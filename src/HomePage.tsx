@@ -197,9 +197,18 @@ export default function HomePage({ locale, onNavigate }: Props) {
             })}
           </p>
           <div className="cinematic-hero-stats">
-            <span>{stats.total} {t({ en: "cities", th: "เมือง", zh: "城市" })}</span>
-            <span>{stats.operational} {t({ en: "operational", th: "เดินระบบแล้ว", zh: "运营中" })}</span>
-            <span>{stats.certified} {t({ en: "certified", th: "ได้รับการรับรอง", zh: "已认证" })}</span>
+            <div className="hero-stat-cell">
+              <span className="hero-stat-num">{stats.total}</span>
+              <span className="hero-stat-label">{t({ en: "cities", th: "เมือง", zh: "城市" })}</span>
+            </div>
+            <div className="hero-stat-cell">
+              <span className="hero-stat-num">{stats.operational}</span>
+              <span className="hero-stat-label">{t({ en: "operational", th: "เดินระบบแล้ว", zh: "运营中" })}</span>
+            </div>
+            <div className="hero-stat-cell">
+              <span className="hero-stat-num">{stats.certified}</span>
+              <span className="hero-stat-label">{t({ en: "depa-certified", th: "รับรองโดย depa", zh: "depa 认证" })}</span>
+            </div>
           </div>
           <div className="cinematic-hero-actions">
             <button className="cta-button" onClick={() => onNavigate("/rankings")}>
