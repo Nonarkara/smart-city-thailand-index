@@ -5399,14 +5399,14 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .export-btn-icon { font-size: 1.2rem; flex-shrink: 0; }
 .export-btn-text { display: flex; flex-direction: column; gap: .1rem; }
 .export-btn-text strong { font-size: var(--text-base); font-weight: 700; }
-.export-btn-text span { font-size: var(--text-sm); color: rgba(255,255,255,.6); }
+.export-btn-text span { font-size: var(--text-sm); color: rgba(255,255,255,.82); }
 .export-btn-primary .export-btn-text span { color: rgba(255,255,255,.8); }
 
 .export-docs { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; }
 .export-doc-link {
-  font: 500 .5rem var(--mono); color: rgba(255,255,255,.5);
-  text-decoration: none; padding: .2rem .4rem; background: rgba(255,255,255,.04);
-  transition: color .15s;
+  font: 500 var(--text-micro) var(--mono); color: rgba(255,255,255,.78);
+  text-decoration: none; padding: .2rem .6rem; background: rgba(255,255,255,.04);
+  transition: color .15s; min-height: 44px; display: inline-flex; align-items: center;
 }
 .export-doc-link:hover { color: var(--teal); }
 
@@ -8698,10 +8698,9 @@ h2, h3, .home-section-title { font-family: var(--font); }
 .feedback-button:disabled { opacity: 0.3; cursor: not-allowed; }
 
 .feedback-meta {
-  font: 600 .5rem var(--mono);
+  font: 600 var(--text-micro) var(--mono);
   color: var(--3);
   letter-spacing: .05em;
-  opacity: 0.8;
 }
 
 .feedback-success {
