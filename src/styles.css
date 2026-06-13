@@ -5400,7 +5400,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .export-btn-text { display: flex; flex-direction: column; gap: .1rem; }
 .export-btn-text strong { font-size: var(--text-base); font-weight: 700; }
 .export-btn-text span { font-size: var(--text-sm); color: rgba(255,255,255,.82); }
-.export-btn-primary .export-btn-text span { color: rgba(255,255,255,.8); }
+.export-btn-primary .export-btn-text span { color: rgba(12,47,83,.72); }
 
 .export-docs { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; }
 .export-doc-link {
