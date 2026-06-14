@@ -248,6 +248,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           <a href="https://nonarkara.github.io/asean-csco-app/#manifesto" target="_blank" rel="noopener noreferrer" className="ghost-button">
             {translate(locale, { en: "Open ASEAN CSCO Handbook", th: "เปิดคู่มือ ASEAN CSCO", zh: "打开 ASEAN CSCO 手册" })}
           </a>
+          <a href={`${import.meta.env.BASE_URL}nst-checklist.pdf`} download="NST-Checklist-Smart-Cities.pdf" className="ghost-button">
+            {translate(locale, { en: "↓ Download NST Checklist (PDF)", th: "↓ ดาวน์โหลด NST Checklist (PDF)", zh: "↓ 下载 NST 清单 (PDF)" })}
+          </a>
         </div>
         {/* NST Photo Strip — ASEAN CSCO workshop photos + field shots */}
         <div className="photo-strip" style={{ marginTop: "1.25rem" }}>
@@ -374,6 +377,94 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   })}
                 </p>
               </article>
+            </div>
+          </section>
+
+          {/* ── Progress metrics ── */}
+          <section className="section showcase-progress-section">
+            <p className="eyebrow">{translate(locale, { en: "Measured progress", th: "ความก้าวหน้าที่วัดได้", zh: "可量化的进展" })}</p>
+            <h2>{translate(locale, { en: "Before and after, in numbers", th: "ก่อนและหลัง เป็นตัวเลข", zh: "用数字看前后" })}</h2>
+            <div className="showcase-progress-grid">
+              {/* Citizen trust: 41% → 70% */}
+              <div className="showcase-progress-block">
+                <div className="showcase-progress-label">{translate(locale, { en: "Citizen trust", th: "ความไว้วางใจประชาชน", zh: "市民信任度" })}</div>
+                <svg className="showcase-progress-svg" viewBox="0 0 220 66" aria-hidden="true">
+                  <text x="0" y="11" style={{font:"500 8px var(--mono)",fill:"var(--3)"}}>BEFORE</text>
+                  <rect x="0" y="16" width="220" height="9" fill="var(--5,#E5E5E5)"/>
+                  <rect x="0" y="16" width="90" height="9" fill="var(--3,#9b9b9b)"/>
+                  <text x="94" y="24" style={{font:"600 8px var(--mono)",fill:"var(--3)"}}>41%</text>
+                  <text x="0" y="43" style={{font:"500 8px var(--mono)",fill:"var(--3)"}}>AFTER</text>
+                  <rect x="0" y="48" width="220" height="9" fill="var(--5,#E5E5E5)"/>
+                  <rect x="0" y="48" width="154" height="9" fill="var(--amber,#f59e0b)"/>
+                  <text x="158" y="56" style={{font:"700 8px var(--mono)",fill:"var(--ink)"}}>70%</text>
+                </svg>
+                <div className="showcase-progress-delta">+29 pts</div>
+              </div>
+
+              {/* Resolution time: 6.2 → 2.7 days */}
+              <div className="showcase-progress-block">
+                <div className="showcase-progress-label">{translate(locale, { en: "Avg resolution time", th: "เวลาแก้ปัญหาเฉลี่ย", zh: "平均处理时间" })}</div>
+                <svg className="showcase-progress-svg" viewBox="0 0 220 66" aria-hidden="true">
+                  <text x="0" y="11" style={{font:"500 8px var(--mono)",fill:"var(--3)"}}>BEFORE</text>
+                  <rect x="0" y="16" width="220" height="9" fill="var(--3,#9b9b9b)"/>
+                  <text x="224" y="24" style={{font:"600 8px var(--mono)",fill:"var(--3)"}}>6.2d</text>
+                  <text x="0" y="43" style={{font:"500 8px var(--mono)",fill:"var(--3)"}}>AFTER</text>
+                  <rect x="0" y="48" width="220" height="9" fill="var(--5,#E5E5E5)"/>
+                  <rect x="0" y="48" width="96" height="9" fill="var(--amber,#f59e0b)"/>
+                  <text x="100" y="56" style={{font:"700 8px var(--mono)",fill:"var(--ink)"}}>2.7d</text>
+                </svg>
+                <div className="showcase-progress-delta">−56%</div>
+              </div>
+
+              {/* Flood fatalities */}
+              <div className="showcase-progress-block">
+                <div className="showcase-progress-label">{translate(locale, { en: "Flood fatalities", th: "ผู้เสียชีวิตจากน้ำท่วม", zh: "洪灾死亡人数" })}</div>
+                <div className="showcase-zero-stat">
+                  <span className="showcase-zero-num">0</span>
+                  <span className="showcase-zero-sub">{translate(locale, { en: "since 2021 — 10-hour warning live", th: "ตั้งแต่ปี 2564 — ระบบเตือน 10 ชั่วโมงทำงาน", zh: "自 2021 年预警系统上线以来" })}</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ── Milestones timeline ── */}
+          <section className="section showcase-milestones-section">
+            <p className="eyebrow">{translate(locale, { en: "Timeline", th: "ไทม์ไลน์", zh: "时间线" })}</p>
+            <h2>{translate(locale, { en: "How the transformation unfolded", th: "ความเปลี่ยนแปลงเกิดขึ้นอย่างไร", zh: "变革如何一步步展开" })}</h2>
+            <div className="showcase-timeline">
+              <div className="showcase-timeline-item">
+                <span className="showcase-timeline-year">2019</span>
+                <span className="showcase-timeline-text">{translate(locale, { en: "@NakhonCity LINE OA launched — first government-citizen real-time channel in the city", th: "@NakhonCity LINE OA เปิดตัว — ช่องทางแบบเรียลไทม์ระหว่างรัฐกับประชาชนแห่งแรกของเมือง", zh: "@NakhonCity LINE OA 上线 — 城市首个政府与市民实时沟通渠道" })}</span>
+              </div>
+              <div className="showcase-timeline-item">
+                <span className="showcase-timeline-year">2021</span>
+                <span className="showcase-timeline-text">{translate(locale, { en: "10-hour flood early-warning system goes live; zero flood fatalities from this point forward", th: "ระบบเตือนน้ำท่วมล่วงหน้า 10 ชั่วโมงเริ่มใช้งาน ไม่มีผู้เสียชีวิตจากน้ำท่วมนับจากนั้น", zh: "10 小时洪水预警系统上线；此后洪灾死亡人数归零" })}</span>
+              </div>
+              <div className="showcase-timeline-item">
+                <span className="showcase-timeline-year">2022</span>
+                <span className="showcase-timeline-text">
+                  {translate(locale, { en: "Thailand Smart City Solutions Award — Innovative Flood Control", th: "รางวัล Thailand Smart City Solutions Award ประเภทนวัตกรรมควบคุมน้ำท่วม", zh: "泰国智慧城市解决方案奖：创新防洪" })}
+                  <span className="showcase-timeline-badge">Award</span>
+                </span>
+              </div>
+              <div className="showcase-timeline-item">
+                <span className="showcase-timeline-year">2023</span>
+                <span className="showcase-timeline-text">
+                  {translate(locale, { en: "Best Partnership Award — World Smart City Expo Korea (with depa) · Batch 3 Smart City Local certification", th: "Best Partnership Award — World Smart City Expo Korea (ร่วมกับ depa) · ได้รับตราสัญลักษณ์ Smart City Local รุ่น 3", zh: "韩国世界智慧城市博览会最佳合作奖（与 depa）· 第 3 批 Smart City Local 认证" })}
+                  <span className="showcase-timeline-badge">2× Award</span>
+                </span>
+              </div>
+              <div className="showcase-timeline-item">
+                <span className="showcase-timeline-year">2024</span>
+                <span className="showcase-timeline-text">{translate(locale, { en: "112,000+ active app users · 38,000 complaints resolved · citizen trust reaches 70%", th: "ผู้ใช้แอปกว่า 112,000 คน · แก้ปัญหาร้องเรียนกว่า 38,000 เรื่อง · ความไว้วางใจประชาชน 70%", zh: "活跃用户突破 112,000 · 处理投诉 38,000 件 · 市民信任度达到 70%" })}</span>
+              </div>
+              <div className="showcase-timeline-item">
+                <span className="showcase-timeline-year">2025</span>
+                <span className="showcase-timeline-text">
+                  {translate(locale, { en: "Selected as model-city case study in the ASEAN CSCO Handbook", th: "ได้รับเลือกเป็นกรณีศึกษาเมืองต้นแบบใน ASEAN CSCO Handbook", zh: "入选 ASEAN CSCO Handbook 示范城市案例" })}
+                  <span className="showcase-timeline-badge">ASEAN</span>
+                </span>
+              </div>
             </div>
           </section>
         </div>
