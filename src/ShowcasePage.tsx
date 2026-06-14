@@ -332,9 +332,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="showcase-leader-intro">
               <div className="showcase-mayor-photo">
                 <ResponsiveImage
-                  src="/Nakhon Si Thammarat/FB_IMG_1769074736483.jpg"
+                  src="/Nakhon Si Thammarat/wsce_1421.jpg"
                   alt={translate(locale, { en: "Dr. Kanop Ketchart, Mayor of Nakhon Si Thammarat Municipality", th: "ดร.กณพ เกตุชาติ นายกเทศมนตรีนครนครศรีธรรมราช", zh: "กณพ เกตุชาติ博士，那空是贪玛叻市市长" })}
-                  sizes="(max-width: 640px) 100vw, 300px"
+                  sizes="100vw"
                 />
               </div>
               <div>
@@ -591,40 +591,89 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           {/* ── Milestones timeline ── */}
           <section className="section showcase-milestones-section">
             <p className="eyebrow">{translate(locale, { en: "Timeline", th: "ไทม์ไลน์", zh: "时间线" })}</p>
-            <h2>{translate(locale, { en: "How the transformation unfolded", th: "ความเปลี่ยนแปลงเกิดขึ้นอย่างไร", zh: "变革如何一步步展开" })}</h2>
-            <div className="showcase-timeline">
-              <div className="showcase-timeline-item">
-                <span className="showcase-timeline-year">2019</span>
-                <span className="showcase-timeline-text">{translate(locale, { en: "@NakhonCity LINE OA launched — first government-citizen real-time channel in the city", th: "@NakhonCity LINE OA เปิดตัว — ช่องทางแบบเรียลไทม์ระหว่างรัฐกับประชาชนแห่งแรกของเมือง", zh: "@NakhonCity LINE OA 上线 — 城市首个政府与市民实时沟通渠道" })}</span>
+            <h2>{translate(locale, { en: "The Transformation Playbook", th: "เพลย์บุ๊กแห่งการเปลี่ยนแปลง", zh: "转型指南" })}</h2>
+            
+            <div className="showcase-timeline-arc">
+              {/* 2022 */}
+              <div className="timeline-arc-node">
+                <div className="timeline-arc-year">2022</div>
+                <div className="timeline-arc-content">
+                  <div className="timeline-arc-text">
+                    <h3 className="timeline-arc-title">{translate(locale, { en: "Ground Truth & Infrastructure", th: "เข้าถึงพื้นที่และสร้างโครงสร้างพื้นฐาน", zh: "实地调研与基础设施" })}</h3>
+                    <p className="timeline-arc-desc">{translate(locale, { en: "The work began on the street. Mayor Kanop instituted morning runs with the firefighting teams and city staff to discuss operations informally. At the Town Hall, the strategy was set: the city would build its own smart infrastructure, not wait for national grants.", th: "งานเริ่มขึ้นบนถนน นายกกณพเริ่มวิ่งตอนเช้ากับทีมดับเพลิงและเจ้าหน้าที่เทศบาลเพื่อหารือเรื่องงานแบบไม่เป็นทางการ ที่ศาลาว่าการ กลยุทธ์ถูกวางไว้: เมืองจะสร้างโครงสร้างพื้นฐานอัจฉริยะของตัวเอง ไม่รอเงินอุดหนุนจากส่วนกลาง", zh: "工作从街头开始。市长Kanop与消防队和市政工作人员进行晨跑，在非正式场合讨论运营问题。在市政厅，战略已定：城市将建立自己的智能基础设施，而不是等待国家拨款。" })}</p>
+                  </div>
+                  <div className="timeline-arc-gallery">
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/morning-run-with-mayor-and-firefighting-team-nst.webp" alt="Morning Run" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/nst-cultural-heritage-it-forum-2022.webp" alt="IT Forum" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/dr-non-x-dr-kanop-first-meeting-nst-town-hall-2022.webp" alt="Town Hall" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="showcase-timeline-item">
-                <span className="showcase-timeline-year">2021</span>
-                <span className="showcase-timeline-text">{translate(locale, { en: "10-hour flood early-warning system goes live; zero flood fatalities from this point forward", th: "ระบบเตือนน้ำท่วมล่วงหน้า 10 ชั่วโมงเริ่มใช้งาน ไม่มีผู้เสียชีวิตจากน้ำท่วมนับจากนั้น", zh: "10 小时洪水预警系统上线；此后洪灾死亡人数归零" })}</span>
+
+              {/* 2023 */}
+              <div className="timeline-arc-node">
+                <div className="timeline-arc-year">2023</div>
+                <div className="timeline-arc-content">
+                  <div className="timeline-arc-text">
+                    <h3 className="timeline-arc-title">{translate(locale, { en: "Partnerships & First Recognition", th: "เครือข่ายพันธมิตรและการยอมรับครั้งแรก", zh: "伙伴关系与初步认可" })}</h3>
+                    <p className="timeline-arc-desc">{translate(locale, { en: "The 10-hour flood warning system went live. Instead of buying expensive proprietary platforms, the city partnered with KMITL for hardware and depa for standards. This citizen-first approach won the Best Partnership Award at the World Smart City Expo in Goyang, Korea.", th: "ระบบเตือนน้ำท่วม 10 ชั่วโมงเริ่มใช้งาน แทนที่จะซื้อแพลตฟอร์มราคาแพง เมืองจับมือกับ สจล. สำหรับฮาร์ดแวร์ และ depa สำหรับมาตรฐาน แนวทางนี้ทำให้ได้รับรางวัล Best Partnership Award ที่ World Smart City Expo เกาหลีใต้", zh: "10小时洪水预警系统上线。城市没有购买昂贵的专有平台，而是与KMITL在硬件上合作，与depa在标准上合作。这种以市民为中心的方法赢得了韩国高阳世界智慧城市博览会的最佳合作奖。" })}</p>
+                  </div>
+                  <div className="timeline-arc-gallery">
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2023.webp" alt="World Smart City Expo" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/kmitl-expo-with-dr-supakorn.webp" alt="KMITL Expo" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2023-award-photo-2.webp" alt="Goyang Award" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="showcase-timeline-item">
-                <span className="showcase-timeline-year">2022</span>
-                <span className="showcase-timeline-text">
-                  {translate(locale, { en: "Thailand Smart City Solutions Award — Innovative Flood Control", th: "รางวัล Thailand Smart City Solutions Award ประเภทนวัตกรรมควบคุมน้ำท่วม", zh: "泰国智慧城市解决方案奖：创新防洪" })}
-                  <span className="showcase-timeline-badge">Award</span>
-                </span>
+
+              {/* 2024 */}
+              <div className="timeline-arc-node">
+                <div className="timeline-arc-year">2024</div>
+                <div className="timeline-arc-content">
+                  <div className="timeline-arc-text">
+                    <h3 className="timeline-arc-title">{translate(locale, { en: "Operational Command", th: "ศูนย์บัญชาการปฏิบัติการ", zh: "运营指挥" })}</h3>
+                    <p className="timeline-arc-desc">{translate(locale, { en: "With over 112,000 citizens connected to the LINE OA, the IOC (Intelligent Operation Center) became the true brain of the city. Resolving over 38,000 complaints directly, the CCTV wall driven by live sensor data reduced resolution time by 56%.", th: "ด้วยประชาชนกว่า 112,000 คนบน LINE OA ศูนย์ IOC กลายเป็นสมองของเมืองอย่างแท้จริง การแก้ปัญหาไปแล้วกว่า 38,000 เรื่อง กำแพง CCTV ที่ขับเคลื่อนด้วยข้อมูลสดลดเวลาแก้ปัญหาลง 56%", zh: "随着超过112,000名市民连接到LINE OA，IOC（智能运营中心）成为了城市真正的大脑。通过实时传感器数据驱动的CCTV监控墙，直接解决了38,000多起投诉，将解决时间缩短了56%。" })}</p>
+                  </div>
+                  <div className="timeline-arc-gallery">
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/nst-ioc-with-dr-kanop-2024.webp" alt="IOC Command Center" sizes="(max-width: 640px) 100vw, 800px" />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="showcase-timeline-item">
-                <span className="showcase-timeline-year">2023</span>
-                <span className="showcase-timeline-text">
-                  {translate(locale, { en: "Best Partnership Award — World Smart City Expo Korea (with depa) · Batch 3 Smart City Local certification", th: "Best Partnership Award — World Smart City Expo Korea (ร่วมกับ depa) · ได้รับตราสัญลักษณ์ Smart City Local รุ่น 3", zh: "韩国世界智慧城市博览会最佳合作奖（与 depa）· 第 3 批 Smart City Local 认证" })}
-                  <span className="showcase-timeline-badge">2× Award</span>
-                </span>
-              </div>
-              <div className="showcase-timeline-item">
-                <span className="showcase-timeline-year">2024</span>
-                <span className="showcase-timeline-text">{translate(locale, { en: "112,000+ active app users · 38,000 complaints resolved · citizen trust reaches 70%", th: "ผู้ใช้แอปกว่า 112,000 คน · แก้ปัญหาร้องเรียนกว่า 38,000 เรื่อง · ความไว้วางใจประชาชน 70%", zh: "活跃用户突破 112,000 · 处理投诉 38,000 件 · 市民信任度达到 70%" })}</span>
-              </div>
-              <div className="showcase-timeline-item">
-                <span className="showcase-timeline-year">2025</span>
-                <span className="showcase-timeline-text">
-                  {translate(locale, { en: "Selected as model-city case study in the ASEAN CSCO Handbook", th: "ได้รับเลือกเป็นกรณีศึกษาเมืองต้นแบบใน ASEAN CSCO Handbook", zh: "入选 ASEAN CSCO Handbook 示范城市案例" })}
-                  <span className="showcase-timeline-badge">ASEAN</span>
-                </span>
+
+              {/* 2025 */}
+              <div className="timeline-arc-node">
+                <div className="timeline-arc-year">2025</div>
+                <div className="timeline-arc-content">
+                  <div className="timeline-arc-text">
+                    <h3 className="timeline-arc-title">{translate(locale, { en: "International Leadership", th: "ความเป็นผู้นำระดับนานาชาติ", zh: "国际领导力" })}</h3>
+                    <p className="timeline-arc-desc">{translate(locale, { en: "Nakhon Si Thammarat was selected as the model-city case study for the ASEAN CSCO Handbook. Dr. Kanop represented Thailand at multiple global summits, including the Busan Metaverse Expo and returning to Goyang, sharing the playbook of how a mid-sized city outperformed metropolitan giants.", th: "นครศรีธรรมราชได้รับเลือกเป็นเมืองต้นแบบใน ASEAN CSCO Handbook ดร.กณพ เป็นตัวแทนไทยในเวทีโลกหลายแห่ง รวมถึง Busan Metaverse Expo และ Goyang เพื่อแชร์ว่าเมืองขนาดกลางเอาชนะเมืองหลวงได้อย่างไร", zh: "那空是贪玛叻被选为ASEAN CSCO手册的示范城市案例。Kanop博士代表泰国出席了多个全球峰会，分享了一座中等规模城市如何超越大都市巨头的经验。" })}</p>
+                  </div>
+                  <div className="timeline-arc-gallery">
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/busan-x-nst-meeting-2025.webp" alt="Busan Meeting 2025" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2025:2.webp" alt="Goyang 2025" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2025:3.webp" alt="Goyang 2025 Panel" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -656,6 +705,55 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   </div>
                 </article>
               ))}
+            </div>
+          </section>
+
+          {/* ── Interactive SVG Flowchart ── */}
+          <section className="section">
+            <p className="eyebrow">{translate(locale, { en: "System Architecture", th: "สถาปัตยกรรมระบบ", zh: "系统架构" })}</p>
+            <h2>{translate(locale, { en: "The 10-Hour Flood Warning Workflow", th: "กระบวนการเตือนน้ำท่วม 10 ชั่วโมง", zh: "10小时洪水预警工作流" })}</h2>
+            <p className="section-intro">
+              {translate(locale, {
+                en: "This is not a theoretical diagram. This is the exact data path that reduced flood fatalities from a statistical certainty to absolute zero since 2021.",
+                th: "นี่ไม่ใช่แผนภาพทฤษฎี นี่คือเส้นทางข้อมูลจริงที่ลดผู้เสียชีวิตจากน้ำท่วมให้เหลือศูนย์ตั้งแต่ปี 2564",
+                zh: "这不是一个理论图表。这正是自2021年以来将洪水死亡人数降至绝对零的数据路径。",
+              })}
+            </p>
+            
+            <div className="showcase-interactive-flow">
+              <div className="flow-connection"></div>
+              
+              <div className="flow-node">
+                <div className="flow-node-icon">🌊</div>
+                <div className="flow-node-content">
+                  <div className="flow-node-title">{translate(locale, { en: "1. Upstream Sensors (Input)", th: "1. เซ็นเซอร์ต้นน้ำ (รับข้อมูล)", zh: "1. 上游传感器（输入）" })}</div>
+                  <div className="flow-node-desc">{translate(locale, { en: "Water-level sensors at Kiriwong village detect anomalies 10 hours before the water hits the city limits.", th: "เซ็นเซอร์วัดระดับน้ำที่หมู่บ้านคีรีวงตรวจพบความผิดปกติ 10 ชั่วโมงก่อนน้ำถึงเขตเมือง", zh: "位于Kiriwong村的水位传感器在水流到达市区前10小时检测到异常。" })}</div>
+                </div>
+              </div>
+
+              <div className="flow-node">
+                <div className="flow-node-icon">🖥️</div>
+                <div className="flow-node-content">
+                  <div className="flow-node-title">{translate(locale, { en: "2. IOC Command Center (Processing)", th: "2. ศูนย์ IOC (ประมวลผล)", zh: "2. IOC指挥中心（处理）" })}</div>
+                  <div className="flow-node-desc">{translate(locale, { en: "The telemetry triggers the CCTV wall. Human operators verify the flow rate and confirm the threat level instantly.", th: "ข้อมูลไปกระตุ้นกำแพง CCTV เจ้าหน้าที่ตรวจสอบอัตราการไหลและยืนยันระดับภัยคุกคามทันที", zh: "遥测数据触发CCTV监控墙。操作员立即验证流速并确认威胁等级。" })}</div>
+                </div>
+              </div>
+
+              <div className="flow-node">
+                <div className="flow-node-icon">📱</div>
+                <div className="flow-node-content">
+                  <div className="flow-node-title">{translate(locale, { en: "3. LINE OA Broadcast (Output)", th: "3. แจ้งเตือนผ่าน LINE OA (ส่งออก)", zh: "3. LINE OA广播（输出）" })}</div>
+                  <div className="flow-node-desc">{translate(locale, { en: "A push notification hits the phones of 112,000 residents in targeted zones. Citizens move vehicles and elderly relatives to high ground.", th: "ข้อความแจ้งเตือนถูกส่งเข้ามือถือประชาชน 112,000 คนในพื้นที่เป้าหมาย ประชาชนย้ายรถและผู้สูงอายุขึ้นที่สูง", zh: "推送通知直接发送到目标区域112,000名居民的手机上。市民将车辆和老人转移到高处。" })}</div>
+                </div>
+              </div>
+
+              <div className="flow-node" style={{ borderColor: 'var(--amber)' }}>
+                <div className="flow-node-icon">✅</div>
+                <div className="flow-node-content">
+                  <div className="flow-node-title" style={{ color: 'var(--amber)' }}>{translate(locale, { en: "4. Zero Fatalities (Outcome)", th: "4. ไม่มีผู้เสียชีวิต (ผลลัพธ์)", zh: "4. 零伤亡（结果）" })}</div>
+                  <div className="flow-node-desc">{translate(locale, { en: "The physical flood still happens, but the human disaster is averted. Technology bought the city time.", th: "น้ำท่วมทางกายภาพยังคงเกิดขึ้น แต่หายนะต่อชีวิตถูกป้องกันไว้ เทคโนโลยีช่วยซื้อเวลาให้เมือง", zh: "物理上的洪水依然发生，但人类的灾难被避免了。技术为城市赢得了时间。" })}</div>
+                </div>
+              </div>
             </div>
           </section>
 
