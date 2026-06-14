@@ -53,6 +53,9 @@ export default function NewsStrip({ locale }: Props) {
                 {TAG_LABELS[item.tag][locale]}
               </div>
               <p className="news-card-title">{item.title[locale]}</p>
+              {item.summary && (
+                <p className="news-card-summary">{item.summary[locale]}</p>
+              )}
               <div className="news-card-meta">
                 <span className="news-card-source">{item.source}</span>
                 <span className="news-card-date">{item.date}</span>

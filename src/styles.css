@@ -5763,7 +5763,11 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .news-card-title {
   font: 600 .8rem var(--font); line-height: 1.45; color: var(--ink);
+}
+.news-card-summary {
+  font: 400 var(--text-micro, .68rem)/1.55 var(--font); color: var(--3);
   flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 .news-card-meta {
   display: flex; align-items: center; justify-content: space-between;
