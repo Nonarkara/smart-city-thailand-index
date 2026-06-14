@@ -24,7 +24,12 @@ export type Route =
 export function parseRoute(rawPathname: string): Route {
   // Strip Vite BASE_URL prefix (e.g., /smart-city-thailand-index/) for GitHub Pages
   const base = import.meta.env.BASE_URL || "/";
-  const pathname = rawPathname.startsWith(base) ? rawPathname.slice(base.length - 1) || "/" : rawPathname;
+  const afterBase = rawPathname.startsWith(base) ? rawPathname.slice(base.length - 1) || "/" : rawPathname;
+  // Strip trailing slash(es) so directory-style URLs resolve. Cloudflare Pages
+  // 308-redirects /city/<id> -> /city/<id>/ (the OG static dir), and a shared
+  // /rankings/ link arrives with a slash too; without this, cityId parses as
+  // "<id>/" and the page shows "City not found". Root "/" is preserved.
+  const pathname = afterBase !== "/" ? afterBase.replace(/\/+$/, "") : "/";
   if (pathname === "/rankings") return { kind: "rankings", path: "/rankings" };
   if (pathname === "/methodology") return { kind: "methodology", path: "/methodology" };
   if (pathname === "/story") return { kind: "story", path: "/story" };

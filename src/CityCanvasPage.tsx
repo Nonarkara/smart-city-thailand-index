@@ -57,7 +57,7 @@ function CityCanvasSheet({ city }: { city: SmartCity }) {
             <div className="canvas-metric">
               <span className="cm-label">Population <span style={{ opacity: 0.5, fontSize: "0.8em" }}>| ประชากร</span></span>
               <span className="cm-value">
-                {city.metrics.population ? city.metrics.population.toLocaleString() : "—"}
+                {city.metrics.population ? (city.metrics.population * 1000).toLocaleString() : "—"}
               </span>
             </div>
             <div className="canvas-metric">

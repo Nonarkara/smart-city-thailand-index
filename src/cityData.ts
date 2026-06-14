@@ -94,7 +94,7 @@ export const certifiedCities: SmartCity[] = [
     { population: 130, gppPerCapita: 168000, avgMonthlyIncome: 24800, pm25Annual: 46.1, hospitalBedsPer10k: 32, crimeRatePer100k: 142, greenCoverage: 68, gppGrowthRate: 2.8, pm25Trend: "stable", waterQuality: 62, forestCoverage: 64, fdiInflow: 850, industryComposition: "services 52%, agriculture 18%, manufacturing 30%", laborForce: 920, roadFatalityRate: 24 },
     "Cultural heart of the north. Real smart city with heritage preservation tech and digital tourism, held back by seasonal burning haze.",
     "หัวใจวัฒนธรรมแห่งภาคเหนือ เมืองอัจฉริยะจริงที่ใช้เทคโนโลยีอนุรักษ์มรดกและท่องเที่ยวดิจิทัล แต่ถูกจำกัดด้วยหมอกควันตามฤดู",
-    ["Digital tourism platform serving 200K+ visitors/year", "Smart heritage preservation using IoT sensors on 300+ temples", "Air quality monitoring network with 50+ stations"],
+    ["Digital tourism platform serving 200K+ visitors/year", "Smart heritage preservation using IoT sensors at old-city temple sites", "City-wide air quality monitoring network"],
   ),
 
   city(
