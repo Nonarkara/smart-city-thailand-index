@@ -11,7 +11,7 @@ const timelineEvents = [
   { year: "2018", type: "pos", text: { en: "National Smart City Committee formed. Vision of 100+ cities.", th: "จัดตั้งคณะกรรมการเมืองอัจฉริยะแห่งชาติ วางวิสัยทัศน์ 100+ เมือง", zh: "国家智慧城市委员会成立。愿景 100+ 城市。" } },
   { year: "2019", type: "pos", text: { en: "Smart City Thailand Office (depa) formally opens.", th: "เปิดสำนักงานเมืองอัจฉริยะประเทศไทย (depa) อย่างเป็นทางการ", zh: "泰国智慧城市办公室 (depa) 正式启用。" } },
   { year: "2020", type: "neu", text: { en: "Pandemic shifts focus to health-tech and contact tracing.", th: "โรคระบาดเปลี่ยนโฟกัสไปที่ health-tech และการติดตามผู้สัมผัส", zh: "疫情使重点转向健康科技和接触者追踪。" } },
-  { year: "2021", type: "neg", text: { en: "First wave of certification. Criticism over 'marketing-first' approach.", th: "การรับรองระลอกแรก เริ่มมีข้อวิจารณ์เรื่อง 'การตลาดนำ'", zh: "第一波认证。对“营销优先”模式ของ批评。" } },
+  { year: "2021", type: "neg", text: { en: "First wave of certification. Criticism over 'marketing-first' approach.", th: "การรับรองระลอกแรก เริ่มมีข้อวิจารณ์เรื่อง 'การตลาดนำ'", zh: "第一波认证。对“营销优先”模式的批评。" } },
   { year: "2023", type: "neu", text: { en: "Integration with ASEAN Smart Cities Network. Standards tightening.", th: "บูรณาการกับ ASEAN Smart Cities Network เริ่มคุมมาตรฐานเข้มขึ้น", zh: "融入东盟智慧城市网络。标准收紧。" } },
   { year: "2025", type: "neg", text: { en: "Audit phase begins. High delta found between plans and reality.", th: "เริ่มเฟสการตรวจสอบ พบช่องว่างขนาดใหญ่ระหว่างแผนกับความจริง", zh: "审计阶段开始。发现规划与现实之间存在巨大差距。" } },
 ];

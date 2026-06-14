@@ -176,7 +176,7 @@ export default function TrendIntelligencePanel({ locale }: Props) {
             {translate(locale, {
               en: "Supabase is the clean path. Google Sheets via Apps Script is the pragmatic fallback. This panel shows which one is actually alive and lets the team log incoming signals fast.",
               th: "เส้นทางหลักคือ Supabase ถ้าไม่พร้อมก็ใช้ Google Sheets ผ่าน Apps Script แบบใช้งานจริง หน้านี้บอกว่าระบบไหนยังหายใจอยู่และให้ทีมบันทึกสัญญาณใหม่ได้ทันที",
-              zh: "首选是 Supabase，不พร้อม时就用 Google Sheets + Apps Script 作为务实备援。这个面板会直接告诉你现在到底是哪套后端在工作。",
+              zh: "首选是 Supabase，未就绪时则用 Google Sheets + Apps Script 作为务实备援。这个面板会直接告诉你现在到底是哪套后端在工作。",
             })}
           </p>
         </div>
