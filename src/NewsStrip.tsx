@@ -139,9 +139,9 @@ export default function NewsStrip({ locale }: Props) {
               <span className="legal-badge legal-badge-pdpa">PDPA B.E. 2562</span>
               <p className="legal-text">
                 {translate(locale, {
-                  en: "No personal data collected. No cookies. No trackers. This is a static site — your data stays yours.",
-                  th: "ไม่เก็บข้อมูลส่วนบุคคล ไม่มีคุกกี้ ไม่มีตัวติดตาม นี่คือเว็บไซต์สแตติก — ข้อมูลของคุณยังเป็นของคุณ",
-                  zh: "不收集个人数据。无Cookie。无跟踪器。这是静态网站——您的数据属于您。",
+                  en: "No cookies. No ad trackers. We log anonymous visit analytics — approximate location and page — to measure reach. Never sold, never shared.",
+                  th: "ไม่มีคุกกี้ ไม่มีตัวติดตามโฆษณา เราเก็บสถิติการเข้าชมแบบไม่ระบุตัวตน — ตำแหน่งโดยประมาณและหน้าที่เข้าชม — เพื่อวัดการเข้าถึง ไม่ขาย ไม่แบ่งปัน",
+                  zh: "无Cookie。无广告追踪器。我们仅记录匿名访问统计——大致位置与访问页面——以衡量触达。绝不出售，绝不共享。",
                 })}
               </p>
             </div>
