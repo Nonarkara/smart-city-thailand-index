@@ -23,7 +23,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     title: {
       en: "GovMesh 4.0 — Dr. Non speaks alongside digital leaders from Sri Lanka, Uzbekistan & beyond",
       th: "GovMesh 4.0 — ดร.นนท์ร่วมพูดกับผู้นำดิจิทัลจากศรีลังกา อุซเบกิสถาน และอื่นๆ",
-      zh: "GovMesh 4.0 — ดร.นนท์与来自斯里兰卡、乌兹别克斯坦等国的数字领导人共同发言",
+      zh: "GovMesh 4.0 — Non Arkara 博士与来自斯里兰卡、乌兹别克斯坦等国的数字领导人共同发言",
     },
     summary: {
       en: "Invitation-only gathering of emerging digital governments in Singapore (March 2026), convened by GovInsider & interweave.gov. Themes: smart city deployment, data governance, and candid knowledge exchange between countries that rarely share a stage.",
@@ -45,7 +45,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     summary: {
       en: "Thailand's depa teams up with New Zealand startup JIX Reality to launch the Smart and Liveable City Lab. Dr. Non argues this model — starting from community problems rather than pre-built products — cuts procurement costs, reduces R&D time, and earns broader public support than conventional top-down mandates.",
       th: "depa ของไทยจับมือ JIX Reality สตาร์ทอัพจากนิวซีแลนด์เปิดตัว Smart and Liveable City Lab ดร.นนท์ชี้ว่าโมเดลนี้ — เริ่มจากปัญหาชุมชนก่อน ไม่ใช่ผลิตภัณฑ์สำเร็จรูป — ลดต้นทุนจัดซื้อ ย่น R&D และได้รับการสนับสนุนจากสาธารณะมากกว่านโยบายจากบนลงล่างแบบเดิม",
-      zh: "泰国depa与新西兰初创企业JIX Reality联合推出智慧宜居城市实验室。ดร.นนท์认为，从社区问题出发而非强推现成产品的模式，可降低采购成本、缩短研发周期，并比传统自上而下的指令获得更广泛的公众支持。",
+      zh: "泰国depa与新西兰初创企业JIX Reality联合推出智慧宜居城市实验室。Non Arkara 博士认为，从社区问题出发而非强推现成产品的模式，可降低采购成本、缩短研发周期，并比传统自上而下的指令获得更广泛的公众支持。",
     },
     source: "GovInsider",
     url: "https://govinsider.asia/intl-en/article/can-innovation-as-a-service-close-the-gap-between-policy-and-implementation",
@@ -62,7 +62,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     summary: {
       en: "Dr. Non Arkara presented to the International Smart City Network on citizen-centric urban innovation, using NST's crowdsourced flood-response system as the central case. Core argument: 'Smart cities are not only about technology and funding, but about citizen participation and data — and innovative solutions can be simple.'",
       th: "ดร.นนท์ อาคารา นำเสนอต่อเครือข่ายเมืองอัจฉริยะนานาชาติเรื่องนวัตกรรมเมืองที่เน้นประชาชน โดยใช้ระบบรับมือน้ำท่วมแบบ crowdsource ของนครศรีธรรมราชเป็นกรณีหลัก ประเด็นสำคัญ: 'สมาร์ทซิตี้ไม่ใช่แค่เรื่องเทคโนโลยีและเงิน แต่คือการมีส่วนร่วมของประชาชนและข้อมูล — และนวัตกรรมที่ดีอาจเรียบง่ายมาก'",
-      zh: "ดร.นนท์ อาคารา在国际智慧城市网络上发表演讲，聚焦以市民为核心的城市创新，以那空是贪玛叻的众包洪水响应系统为核心案例。核心论点：'智慧城市不仅关乎技术和资金，更关乎公民参与和数据——而好的创新解决方案往往很简单。'",
+      zh: "Non Arkara 博士在国际智慧城市网络上发表演讲，聚焦以市民为核心的城市创新，以那空是贪玛叻的众包洪水响应系统为核心案例。核心论点：'智慧城市不仅关乎技术和资金，更关乎公民参与和数据——而好的创新解决方案往往很简单。'",
     },
     source: "Smart City Dialog · ISCN",
     url: "https://www.smart-city-dialog.de/en/latest/events/iscn-global-mixer-rethinking-smart-insights-community-driven-innovation-thailand",
@@ -79,7 +79,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     summary: {
       en: "TechNode Global interview with Dr. Non Arkaraprasertkul on Thailand's dual strategy: upgrading existing cities alongside building new high-tech urban centres to attract global investment. He argues technological advances foster stronger trust between citizens and institutions — but only when built around local community needs.",
       th: "สัมภาษณ์ TechNode Global กับ ดร.นนท์ อาคารา เรื่องกลยุทธ์คู่ขนานของไทย: พัฒนาเมืองที่มีอยู่แล้วควบคู่กับการสร้างศูนย์กลางเมืองไฮเทคใหม่เพื่อดึงดูดการลงทุนทั่วโลก เขาชี้ว่าความก้าวหน้าทางเทคโนโลยีสร้างความไว้วางใจระหว่างประชาชนกับสถาบันได้มากขึ้น — แต่ต้องสร้างรอบความต้องการของชุมชนท้องถิ่น",
-      zh: "TechNode Global对ดร.นนท์ อาคารา的专访，探讨泰国的双轨战略：在升级现有城市的同时建设新型高科技城市中心以吸引全球投资。他认为，技术进步可增进公民与机构之间的信任——但前提是围绕本地社区需求构建。",
+      zh: "TechNode Global对Non Arkara 博士的专访，探讨泰国的双轨战略：在升级现有城市的同时建设新型高科技城市中心以吸引全球投资。他认为，技术进步可增进公民与机构之间的信任——但前提是围绕本地社区需求构建。",
     },
     source: "TechNode Global",
     url: "https://technode.global/2023/01/18/a-smart-city-cannot-exist-without-its-citizens-and-technological-advances-will-foster-stronger-trust-between-citizens-and-institutions-and-encourage-civic-participation-says-dr-non-arkaraprasertkul/",
@@ -91,12 +91,12 @@ export const NEWS_ITEMS: NewsItem[] = [
     title: {
       en: "The ASEAN Magazine profiles Dr. Non Arkaraprasertkul — digital transformation requires more than infrastructure",
       th: "The ASEAN Magazine สัมภาษณ์ ดร.นนท์ อาคารา — การเปลี่ยนแปลงดิจิทัลต้องการมากกว่าโครงสร้างพื้นฐาน",
-      zh: "《东盟杂志》专访ดร.นนท์ อาคารา——数字化转型需要的不只是基础设施",
+      zh: "《东盟杂志》专访Non Arkara 博士——数字化转型需要的不只是基础设施",
     },
     summary: {
       en: "Profile of Dr. Non — Harvard-trained architect and anthropologist at depa — arguing that digital transformation requires three things ecosystem, viable markets, and open innovation platforms. He warns technology can both unite and divide societies depending on how nations build digital ecosystems that include, not just connect.",
       th: "โปรไฟล์ของ ดร.นนท์ — นักสถาปัตยกรรมและมานุษยวิทยาจาก Harvard ที่ depa — ชี้ว่าการเปลี่ยนแปลงดิจิทัลต้องมีสามสิ่ง: ระบบนิเวศที่สนับสนุน ตลาดที่มีศักยภาพ และแพลตฟอร์มนวัตกรรมแบบเปิด เขาเตือนว่าเทคโนโลยีอาจรวมหรือแบ่งแยกสังคมได้ ขึ้นอยู่กับว่าประเทศสร้างระบบนิเวศดิจิทัลที่รวมทุกคนไว้จริงหรือเปล่า",
-      zh: "哈佛培养的建筑师兼人类学家、depa专家ดร.นนท์的人物专访，主张成功的数字化转型需要三要素：有利的生态系统、可行的市场以及开放创新平台。他警告，技术可以联结或分裂社会——取决于各国构建的数字生态系统是否真正包容，而非仅仅连接。",
+      zh: "哈佛培养的建筑师兼人类学家、depa专家Non Arkara 博士的人物专访，主张成功的数字化转型需要三要素：有利的生态系统、可行的市场以及开放创新平台。他警告，技术可以联结或分裂社会——取决于各国构建的数字生态系统是否真正包容，而非仅仅连接。",
     },
     source: "The ASEAN Magazine",
     url: "https://theaseanmagazine.asean.org/article/non-arkaraprasertkul-phd/",

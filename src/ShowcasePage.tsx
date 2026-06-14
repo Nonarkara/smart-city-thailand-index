@@ -350,7 +350,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               <div className="showcase-mayor-photo">
                 <ResponsiveImage
                   src="/Nakhon Si Thammarat/nst-town-hall-with-dr-non.jpg"
-                  alt={translate(locale, { en: "Dr. Kanop Ketchart at a Nakhon Si Thammarat community town hall — the participatory governance style that defines his tenure", th: "ดร.กณพ เกตุชาติ ในเวทีประชาคมนครศรีธรรมราช — รูปแบบการปกครองแบบมีส่วนร่วมที่เป็นเอกลักษณ์ของวาระนี้", zh: "กณพ เกตุชาติ博士在那空是贪玛叻社区市政厅——其任期内标志性的参与式治理风格" })}
+                  alt={translate(locale, { en: "Dr. Kanop Ketchart at a Nakhon Si Thammarat community town hall — the participatory governance style that defines his tenure", th: "ดร.กณพ เกตุชาติ ในเวทีประชาคมนครศรีธรรมราช — รูปแบบการปกครองแบบมีส่วนร่วมที่เป็นเอกลักษณ์ของวาระนี้", zh: "Kanop Ketchart 博士在那空是贪玛叻社区市政厅——其任期内标志性的参与式治理风格" })}
                   sizes="100vw"
                   style={{ objectPosition: "center 40%" }}
                 />
@@ -358,7 +358,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               <div>
                 <p className="eyebrow">{translate(locale, { en: "Leader", th: "ผู้นำ", zh: "领导人" })}</p>
                 <h2 className="showcase-leader-name">
-                  {translate(locale, { en: "Dr. Kanop Ketchart", th: "ดร.กณพ เกตุชาติ", zh: "กณพ เกตุชาติ博士" })}
+                  {translate(locale, { en: "Dr. Kanop Ketchart", th: "ดร.กณพ เกตุชาติ", zh: "Kanop Ketchart 博士" })}
                 </h2>
                 <p className="showcase-leader-title-sub">
                   {translate(locale, {
@@ -381,7 +381,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   {translate(locale, {
                     en: "Dr. Kanop Ketchart took office in a city that had the infrastructure for smart governance and no pathway to it. The LINE OA account existed. The CCTV cameras existed. The waterworks that kept prices lower than any other city in the South existed. What was missing was a commitment to connect them, explain them, and maintain them as a public service rather than a set of government projects.",
                     th: "ดร.กณพ เกตุชาติ เข้ารับตำแหน่งในเมืองที่มีโครงสร้างพื้นฐานพร้อมสำหรับธรรมาภิบาลอัจฉริยะ แต่ยังไม่มีทางไปถึงมัน บัญชี LINE OA ทางการมีอยู่แล้ว กล้องวงจรปิดมีอยู่แล้ว ระบบประปาที่ทำให้ราคาน้ำถูกที่สุดในภาคใต้มีอยู่แล้ว สิ่งที่ขาดหายไปคือความมุ่งมั่นที่จะเชื่อมโยงสิ่งเหล่านี้ อธิบายมัน และดูแลรักษาในฐานะบริการสาธารณะ ไม่ใช่แค่ชุดโครงการของรัฐ",
-                    zh: "กณพ เกตุชาติ博士上任时，这座城市已拥有智慧治理的基础设施，却缺少通往它的路径。官方LINE OA已经存在，监控摄像头已经存在，让水价低于南部所有城市的自来水厂也已经存在。缺少的是一种承诺——将它们连接起来、解释清楚，并作为公共服务持续维护，而不只是一批政府项目。",
+                    zh: "Kanop Ketchart 博士上任时，这座城市已拥有智慧治理的基础设施，却缺少通往它的路径。官方LINE OA已经存在，监控摄像头已经存在，让水价低于南部所有城市的自来水厂也已经存在。缺少的是一种承诺——将它们连接起来、解释清楚，并作为公共服务持续维护，而不只是一批政府项目。",
                   })}
                 </p>
               </div>
@@ -433,7 +433,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 })}
               </p>
               <p className="showcase-pull-source">
-                {translate(locale, { en: "Dr. Kanop Ketchart · WeCitizens Thailand interview, 2025", th: "ดร.กณพ เกตุชาติ · สัมภาษณ์ WeCitizens Thailand, 2568", zh: "กณพ เกตุชาติ博士 · WeCitizens Thailand 专访，2025" })}
+                {translate(locale, { en: "Dr. Kanop Ketchart · WeCitizens Thailand interview, 2025", th: "ดร.กณพ เกตุชาติ · สัมภาษณ์ WeCitizens Thailand, 2568", zh: "Kanop Ketchart 博士 · WeCitizens Thailand 专访，2025" })}
               </p>
             </div>
           </section>
@@ -443,7 +443,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
               <ResponsiveImage
                 src="/Nakhon Si Thammarat/mayor-kanop-running.jpg"
-                alt={translate(locale, { en: "Dr. Kanop on his morning run with city staff — a weekly ritual for informal operations discussion", th: "ดร.กณพ วิ่งตอนเช้ากับเจ้าหน้าที่เทศบาล — กิจกรรมรายสัปดาห์สำหรับหารืองานแบบไม่เป็นทางการ", zh: "กณพ博士与市政工作人员的晨跑——每周例行非正式城务讨论" })}
+                alt={translate(locale, { en: "Dr. Kanop on his morning run with city staff — a weekly ritual for informal operations discussion", th: "ดร.กณพ วิ่งตอนเช้ากับเจ้าหน้าที่เทศบาล — กิจกรรมรายสัปดาห์สำหรับหารืองานแบบไม่เป็นทางการ", zh: "Kanop Ketchart 博士与市政工作人员的晨跑——每周例行非正式城务讨论" })}
                 sizes="280px"
               />
               <span className="photo-strip-label">{translate(locale, { en: "Weekly morning run", th: "วิ่งตอนเช้ารายสัปดาห์", zh: "每周晨跑" })}</span>
@@ -459,7 +459,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
               <ResponsiveImage
                 src="/Nakhon Si Thammarat/mayor-kanop-town-hall.jpg"
-                alt={translate(locale, { en: "Mayor Kanop and Dr. Non Arkara at a city-hall strategic review — where the ASEAN CSCO case study framework was discussed", th: "นายกกณพและ ดร.นนท์ อาคารา ในการประชุมทบทวนกลยุทธ์ที่ศาลาว่าการ — ที่กรอบ ASEAN CSCO ถูกหารือ", zh: "กณพ市长与 ดร.นนท์ 在市政厅战略评审——讨论 ASEAN CSCO 框架的会议" })}
+                alt={translate(locale, { en: "Mayor Kanop and Dr. Non Arkara at a city-hall strategic review — where the ASEAN CSCO case study framework was discussed", th: "นายกกณพและ ดร.นนท์ อาคารา ในการประชุมทบทวนกลยุทธ์ที่ศาลาว่าการ — ที่กรอบ ASEAN CSCO ถูกหารือ", zh: "Kanop Ketchart 市长与 Non Arkara 博士 在市政厅战略评审——讨论 ASEAN CSCO 框架的会议" })}
                 sizes="280px"
               />
               <span className="photo-strip-label">{translate(locale, { en: "Strategic review", th: "ประชุมทบทวนกลยุทธ์", zh: "战略评审" })}</span>
@@ -467,7 +467,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
               <ResponsiveImage
                 src="/Nakhon Si Thammarat/mayor-kanop-speaking-depa-session.jpg"
-                alt={translate(locale, { en: "Dr. Kanop mid-argument at a depa session — hands moving, explaining the people-centric model with characteristic directness", th: "ดร.กณพ กำลังอธิบายในงาน depa — มือเคลื่อนไหว อธิบายแบบจำลองที่เน้นประชาชนด้วยความตรงไปตรงมา", zh: "กณพ博士在 depa 会议上发言——边打手势边以一贯的直接风格阐释以人为中心的模式" })}
+                alt={translate(locale, { en: "Dr. Kanop mid-argument at a depa session — hands moving, explaining the people-centric model with characteristic directness", th: "ดร.กณพ กำลังอธิบายในงาน depa — มือเคลื่อนไหว อธิบายแบบจำลองที่เน้นประชาชนด้วยความตรงไปตรงมา", zh: "Kanop Ketchart 博士在 depa 会议上发言——边打手势边以一贯的直接风格阐释以人为中心的模式" })}
                 sizes="280px"
               />
               <span className="photo-strip-label">{translate(locale, { en: "People-centric argument", th: "อธิบายแนวคิดเน้นประชาชน", zh: "以人为中心的阐述" })}</span>
@@ -536,13 +536,13 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               {translate(locale, {
                 en: "When the 10-hour warning window closes and water reaches the streets, Dr. Kanop goes in. Hard hat, SLIC jacket, rubber boots — wading through the same water his residents are moving out of. The command center buys time. The mayor's presence buys trust.",
                 th: "เมื่อหน้าต่างเตือน 10 ชั่วโมงหมดลงและน้ำมาถึงถนน ดร.กณพ ลงไปในพื้นที่ หมวกนิรภัย เสื้อแจ็คเก็ต SLIC รองเท้าบูท — ลุยน้ำเดียวกับที่ประชาชนกำลังอพยพออก ศูนย์บัญชาการซื้อเวลา การที่นายกฯ ออกพื้นที่ซื้อความไว้วางใจ",
-                zh: "当10小时预警窗口关闭、洪水涌上街头，กณพ博士走入其中。安全帽、SLIC夹克、橡皮靴——趟过的水，正是居民们正在撤离的那些。指挥中心买来时间，市长的出现买来信任。",
+                zh: "当10小时预警窗口关闭、洪水涌上街头，Kanop Ketchart 博士走入其中。安全帽、SLIC夹克、橡皮靴——趟过的水，正是居民们正在撤离的那些。指挥中心买来时间，市长的出现买来信任。",
               })}
             </p>
             <div className="showcase-mayor-photo" style={{ height: "360px", marginTop: "1rem" }}>
               <ResponsiveImage
                 src="/Nakhon Si Thammarat/mayor-kanop-flood-zone.jpg"
-                alt={translate(locale, { en: "Dr. Kanop Ketchart wading through floodwater in Nakhon Si Thammarat — hard hat, SLIC jacket, on the street with residents", th: "ดร.กณพ เกตุชาติ ลุยน้ำท่วมในนครศรีธรรมราช — หมวกนิรภัย เสื้อ SLIC อยู่บนถนนกับประชาชน", zh: "กณพ เกตุชาติ博士趟过那空是贪玛叻的洪水——戴安全帽、穿SLIC夹克，与居民同在街头" })}
+                alt={translate(locale, { en: "Dr. Kanop Ketchart wading through floodwater in Nakhon Si Thammarat — hard hat, SLIC jacket, on the street with residents", th: "ดร.กณพ เกตุชาติ ลุยน้ำท่วมในนครศรีธรรมราช — หมวกนิรภัย เสื้อ SLIC อยู่บนถนนกับประชาชน", zh: "Kanop Ketchart 博士趟过那空是贪玛叻的洪水——戴安全帽、穿SLIC夹克，与居民同在街头" })}
                 sizes="100vw"
               />
             </div>
@@ -576,7 +576,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <div className="showcase-award-photo-block">
                   <ResponsiveImage
                     src="/Nakhon Si Thammarat/mayor-kanop-goyang-2025.jpg"
-                    alt={translate(locale, { en: "Dr. Kanop at the World Smart City Expo 2025 — returning to Goyang as Thailand's ASEAN smart city representative", th: "ดร.กณพ ที่ World Smart City Expo 2025 — กลับโกยังในฐานะตัวแทนสมาร์ทซิตี้ ASEAN ของไทย", zh: "กณพ博士在2025年世界智慧城市博览会——以泰国ASEAN智慧城市代表身份重返高阳" })}
+                    alt={translate(locale, { en: "Dr. Kanop at the World Smart City Expo 2025 — returning to Goyang as Thailand's ASEAN smart city representative", th: "ดร.กณพ ที่ World Smart City Expo 2025 — กลับโกยังในฐานะตัวแทนสมาร์ทซิตี้ ASEAN ของไทย", zh: "Kanop Ketchart 博士在2025年世界智慧城市博览会——以泰国ASEAN智慧城市代表身份重返高阳" })}
                     sizes="(max-width: 640px) 100vw, 340px"
                   />
                 </div>
@@ -588,7 +588,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <div className="showcase-award-photo-block">
                   <ResponsiveImage
                     src="/Nakhon Si Thammarat/mayor-kanop-tomorrow-city-shanghai.jpg"
-                    alt={translate(locale, { en: "Dr. Kanop speaking at Tomorrow.City Shanghai — presenting NST's citizen-centric model to urban investors across East Asia", th: "ดร.กณพ บรรยายที่ Tomorrow.City Shanghai — นำเสนอแบบจำลองที่เน้นประชาชนของนครฯ ต่อนักลงทุนเมืองทั่วเอเชียตะวันออก", zh: "กณพ博士在Tomorrow.City上海发言——向东亚城市投资者展示NST的以人为中心模式" })}
+                    alt={translate(locale, { en: "Dr. Kanop speaking at Tomorrow.City Shanghai — presenting NST's citizen-centric model to urban investors across East Asia", th: "ดร.กณพ บรรยายที่ Tomorrow.City Shanghai — นำเสนอแบบจำลองที่เน้นประชาชนของนครฯ ต่อนักลงทุนเมืองทั่วเอเชียตะวันออก", zh: "Kanop Ketchart 博士在Tomorrow.City上海发言——向东亚城市投资者展示NST的以人为中心模式" })}
                     sizes="(max-width: 640px) 100vw, 340px"
                   />
                 </div>
