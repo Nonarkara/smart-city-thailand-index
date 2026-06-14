@@ -750,6 +750,14 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 })}
               </p>
             </div>
+            <div className="showcase-mayor-photo" style={{ marginBottom: "2rem" }}>
+              <picture style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+                <source srcSet="/Nakhon Si Thammarat/mayor-kanop-town-hall-speaking.webp" type="image/webp" />
+                <img src="/Nakhon Si Thammarat/mayor-kanop-town-hall-speaking.jpg" alt={translate(locale, { en: "Mayor Kanop speaking at a community town hall — explaining the smart city programme directly to residents", th: "นายกกณพบรรยายที่ประชุมประชาคม — อธิบายโครงการเมืองอัจฉริยะให้ชาวบ้านโดยตรง", zh: "市长Kanop在社区市政厅讲话——直接向居民解释智慧城市计划" })} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+              </picture>
+              <div className="showcase-cinematic-caption">{translate(locale, { en: "Community town hall — NST", th: "ประชาคมชุมชน — นครศรีธรรมราช", zh: "社区市政厅 — 那空是贪玛叻" })}</div>
+            </div>
+
             <div className="showcase-idea-grid">
               {ideas.map(idea => (
                 <article key={idea.id} className="showcase-idea-card">
