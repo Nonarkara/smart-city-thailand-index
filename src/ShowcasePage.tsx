@@ -145,9 +145,10 @@ const sourceFiles: ShowcaseSource[] = [
 
 const awards = [
   { year: "2022", title: { en: "Thailand Smart City Solutions Award — Innovative Flood Control", th: "Thailand Smart City Solutions Award — นวัตกรรมควบคุมน้ำท่วม", zh: "泰国智慧城市解决方案奖：创新防洪" } },
-  { year: "2023", title: { en: "Best Partnership Award — World Smart City Expo Korea (with depa)", th: "Best Partnership Award — World Smart City Expo Korea (ร่วมกับ depa)", zh: "最佳合作奖：韩国世界智慧城市博览会（与 depa）" } },
-  { year: "2023", title: { en: "Batch 3 Smart City Local certification", th: "ได้รับตราสัญลักษณ์ Smart City Local รุ่น 3", zh: "第 3 批 Smart City Local 认证" } },
-  { year: "2025", title: { en: "ASEAN CSCO Handbook model-city case study", th: "กรณีศึกษาเมืองต้นแบบใน ASEAN CSCO Handbook", zh: "入选 ASEAN CSCO Handbook 示范城市案例" } },
+  { year: "2023", title: { en: "Best Partnership Award — World Smart City Expo, Goyang, Korea (with depa)", th: "Best Partnership Award — World Smart City Expo, โกยัง, เกาหลีใต้ (ร่วมกับ depa)", zh: "最佳合作奖：韩国高阳世界智慧城市博览会（与 depa）" } },
+  { year: "2023", title: { en: "Batch 3 Smart City Local certification — depa", th: "ตราสัญลักษณ์ Smart City Local รุ่น 3 — depa", zh: "第 3 批 Smart City Local 认证 — depa" } },
+  { year: "2025", title: { en: "ASEAN CSCO Handbook — model-city case study", th: "ASEAN CSCO Handbook — กรณีศึกษาเมืองต้นแบบ", zh: "ASEAN CSCO Handbook — 示范城市案例" } },
+  { year: "2025", title: { en: "Tomorrow.City Shanghai — Thailand's featured smart city", th: "Tomorrow.City Shanghai — เมืองอัจฉริยะตัวแทนไทย", zh: "Tomorrow.City 上海 — 泰国代表智慧城市" } },
 ];
 
 const beforeAfterRows = [
@@ -285,6 +286,14 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               sizes="240px"
             />
             <span className="photo-strip-label">{translate(locale, { en: "ASEAN CSCO workshop", th: "อบรม ASEAN CSCO", zh: "ASEAN CSCO 研讨" })}</span>
+          </div>
+          <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
+            <ResponsiveImage
+              src="/Nakhon Si Thammarat/asean-csco-hydro-data-wall.jpg"
+              alt={translate(locale, { en: "ASEAN CSCO delegation viewing real-time hydrological data on the NST CCTV command wall — the exact system that drives the 10-hour flood warning", th: "คณะ ASEAN CSCO ชมข้อมูลอุทกวิทยาแบบเรียลไทม์บนกำแพง CCTV ของนครฯ ซึ่งเป็นระบบเดียวกับที่ขับเคลื่อนการเตือนน้ำท่วม 10 ชั่วโมง", zh: "ASEAN CSCO 代表团查看 NST CCTV 指挥墙上的实时水文数据——正是驱动 10 小时洪水预警的系统" })}
+              sizes="240px"
+            />
+            <span className="photo-strip-label">{translate(locale, { en: "Real-time hydrology wall", th: "กำแพงข้อมูลน้ำแบบสด", zh: "实时水文数据墙" })}</span>
           </div>
         </div>
         <p className="showcase-source-note">
@@ -425,7 +434,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
               <ResponsiveImage
                 src="/Nakhon Si Thammarat/mayor-kanop-running.jpg"
-                alt={translate(locale, { en: "Dr. Kanop Ketchart on his morning run with city staff — a weekly ritual he uses to discuss city operations informally", th: "ดร.กณพ เกตุชาติ วิ่งตอนเช้ากับเจ้าหน้าที่เทศบาล — กิจกรรมรายสัปดาห์ที่ใช้พูดคุยงานเมืองแบบไม่เป็นทางการ", zh: "กณพ เกตุชาติ博士与市政工作人员的晨跑——每周例行活动，也是非正式讨论城市事务的场合" })}
+                alt={translate(locale, { en: "Dr. Kanop on his morning run with city staff — a weekly ritual for informal operations discussion", th: "ดร.กณพ วิ่งตอนเช้ากับเจ้าหน้าที่เทศบาล — กิจกรรมรายสัปดาห์สำหรับหารืองานแบบไม่เป็นทางการ", zh: "กณพ博士与市政工作人员的晨跑——每周例行非正式城务讨论" })}
                 sizes="280px"
               />
               <span className="photo-strip-label">{translate(locale, { en: "Weekly morning run", th: "วิ่งตอนเช้ารายสัปดาห์", zh: "每周晨跑" })}</span>
@@ -433,7 +442,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
               <ResponsiveImage
                 src="/Nakhon Si Thammarat/mayor-kanop-ioc-2024.jpg"
-                alt={translate(locale, { en: "Inside the @NakhonCity IOC command centre — the CCTV wall that drives both flood monitoring and real-time city operations", th: "ภายในศูนย์ IOC @NakhonCity — กำแพง CCTV ที่ขับเคลื่อนทั้งการเฝ้าระวังน้ำท่วมและการปฏิบัติงานเมืองแบบเรียลไทม์", zh: "@NakhonCity IOC 指挥中心内部——驱动洪水监控与实时城市运营的CCTV监控墙" })}
+                alt={translate(locale, { en: "Inside the @NakhonCity IOC — the CCTV wall driving both flood monitoring and real-time city operations", th: "ภายในศูนย์ IOC @NakhonCity — กำแพง CCTV ที่ขับเคลื่อนการเฝ้าระวังน้ำท่วมและปฏิบัติการเมืองแบบเรียลไทม์", zh: "@NakhonCity IOC 内部——驱动洪水监控与实时城市运营的监控墙" })}
                 sizes="280px"
               />
               <span className="photo-strip-label">{translate(locale, { en: "@NakhonCity IOC, 2024", th: "ศูนย์ IOC @NakhonCity, 2567", zh: "@NakhonCity IOC，2024" })}</span>
@@ -441,10 +450,18 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
               <ResponsiveImage
                 src="/Nakhon Si Thammarat/mayor-kanop-town-hall.jpg"
-                alt={translate(locale, { en: "Mayor Kanop (left) and Dr. Non Arkara at a city-hall strategic review — the meeting where the ASEAN CSCO case study framework was discussed", th: "นายกกณพ (ซ้าย) และ ดร.นนท์ อาคารา ในการประชุมทบทวนเชิงกลยุทธ์ที่ศาลาว่าการ — เวทีที่กรอบกรณีศึกษา ASEAN CSCO ถูกหารือ", zh: "กณพ市长（左）与 ดร.นนท์ อาคารา 在市政厅战略评审会议上——正是讨论 ASEAN CSCO 案例研究框架的场合" })}
+                alt={translate(locale, { en: "Mayor Kanop and Dr. Non Arkara at a city-hall strategic review — where the ASEAN CSCO case study framework was discussed", th: "นายกกณพและ ดร.นนท์ อาคารา ในการประชุมทบทวนกลยุทธ์ที่ศาลาว่าการ — ที่กรอบ ASEAN CSCO ถูกหารือ", zh: "กณพ市长与 ดร.นนท์ 在市政厅战略评审——讨论 ASEAN CSCO 框架的会议" })}
                 sizes="280px"
               />
-              <span className="photo-strip-label">{translate(locale, { en: "Strategic review", th: "การประชุมทบทวนกลยุทธ์", zh: "战略评审会议" })}</span>
+              <span className="photo-strip-label">{translate(locale, { en: "Strategic review", th: "ประชุมทบทวนกลยุทธ์", zh: "战略评审" })}</span>
+            </div>
+            <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
+              <ResponsiveImage
+                src="/Nakhon Si Thammarat/mayor-kanop-speaking-depa-session.jpg"
+                alt={translate(locale, { en: "Dr. Kanop mid-argument at a depa session — hands moving, explaining the people-centric model with characteristic directness", th: "ดร.กณพ กำลังอธิบายในงาน depa — มือเคลื่อนไหว อธิบายแบบจำลองที่เน้นประชาชนด้วยความตรงไปตรงมา", zh: "กณพ博士在 depa 会议上发言——边打手势边以一贯的直接风格阐释以人为中心的模式" })}
+                sizes="280px"
+              />
+              <span className="photo-strip-label">{translate(locale, { en: "People-centric argument", th: "อธิบายแนวคิดเน้นประชาชน", zh: "以人为中心的阐述" })}</span>
             </div>
           </div>
 
@@ -502,24 +519,44 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </p>
           </section>
 
+          {/* ── Mayor in the flood ── */}
+          <section className="section">
+            <p className="eyebrow">{translate(locale, { en: "Ground truth", th: "ความจริงในพื้นที่", zh: "一线实情" })}</p>
+            <h2>{translate(locale, { en: "The mayor doesn't watch from the command center", th: "นายกฯ ไม่ได้ดูจากศูนย์บัญชาการ", zh: "市长不在指挥中心里看" })}</h2>
+            <p>
+              {translate(locale, {
+                en: "When the 10-hour warning window closes and water reaches the streets, Dr. Kanop goes in. Hard hat, SLIC jacket, rubber boots — wading through the same water his residents are moving out of. The command center buys time. The mayor's presence buys trust.",
+                th: "เมื่อหน้าต่างเตือน 10 ชั่วโมงหมดลงและน้ำมาถึงถนน ดร.กณพ ลงไปในพื้นที่ หมวกนิรภัย เสื้อแจ็คเก็ต SLIC รองเท้าบูท — ลุยน้ำเดียวกับที่ประชาชนกำลังอพยพออก ศูนย์บัญชาการซื้อเวลา การที่นายกฯ ออกพื้นที่ซื้อความไว้วางใจ",
+                zh: "当10小时预警窗口关闭、洪水涌上街头，กณพ博士走入其中。安全帽、SLIC夹克、橡皮靴——趟过的水，正是居民们正在撤离的那些。指挥中心买来时间，市长的出现买来信任。",
+              })}
+            </p>
+            <div className="showcase-mayor-photo" style={{ height: "360px", marginTop: "1rem" }}>
+              <ResponsiveImage
+                src="/Nakhon Si Thammarat/mayor-kanop-flood-zone.jpg"
+                alt={translate(locale, { en: "Dr. Kanop Ketchart wading through floodwater in Nakhon Si Thammarat — hard hat, SLIC jacket, on the street with residents", th: "ดร.กณพ เกตุชาติ ลุยน้ำท่วมในนครศรีธรรมราช — หมวกนิรภัย เสื้อ SLIC อยู่บนถนนกับประชาชน", zh: "กณพ เกตุชาติ博士趟过那空是贪玛叻的洪水——戴安全帽、穿SLIC夹克，与居民同在街头" })}
+                sizes="100vw"
+              />
+            </div>
+          </section>
+
           {/* ── International awards ── */}
           <section className="section">
             <p className="eyebrow">{translate(locale, { en: "International recognition", th: "การยอมรับในระดับนานาชาติ", zh: "国际认可" })}</p>
-            <h2>{translate(locale, { en: "From Goyang to the ASEAN stage", th: "จากโกยังสู่เวที ASEAN", zh: "从高阳到 ASEAN 舞台" })}</h2>
+            <h2>{translate(locale, { en: "From Goyang to Shanghai", th: "จากโกยังถึงเซี่ยงไฮ้", zh: "从高阳到上海" })}</h2>
             <p>
               {translate(locale, {
-                en: "In 2023, Nakhon Si Thammarat won the Best Partnership Award at the World Smart City Expo in Goyang, South Korea — in partnership with depa, Thailand's Digital Economy Promotion Agency. The award recognised the city's approach to citizen-led digital adoption, not just the technology deployed. In 2025, the city returned to the same international stage to represent Thailand's smart city programme at the ASEAN level.",
-                th: "ในปี 2566 นครศรีธรรมราชได้รับรางวัล Best Partnership Award ในงาน World Smart City Expo ที่เมืองโกยัง ประเทศเกาหลีใต้ ร่วมกับ depa สำนักงานส่งเสริมเศรษฐกิจดิจิทัล รางวัลนี้ยกย่องแนวทางการนำเทคโนโลยีดิจิทัลโดยการขับเคลื่อนของประชาชน ไม่ใช่แค่เทคโนโลยีที่ใช้งาน ในปี 2568 เมืองกลับสู่เวทีนานาชาติเดิม เพื่อเป็นตัวแทนโปรแกรมสมาร์ทซิตี้ของไทยในระดับ ASEAN",
-                zh: "2023年，那空是贪玛叻与泰国数字经济促进局（depa）合作，在韩国高阳世界智慧城市博览会上荣获最佳合作奖。这一奖项表彰的是这座城市以市民为驱动力推动数字化应用的方式，而不仅仅是部署的技术。2025年，城市再度登上同一国际舞台，在 ASEAN 层面代表泰国智慧城市计划。",
+                en: "In 2023, Nakhon Si Thammarat won the Best Partnership Award at the World Smart City Expo in Goyang, South Korea — in partnership with depa. The award recognised the city's approach to citizen-led digital adoption, not just the technology deployed. In 2025, the city returned to Goyang to represent Thailand's smart city programme at the ASEAN level, then carried the story further — to Tomorrow.City Shanghai, where it was presented as Thailand's featured smart city to an audience of urban investors and policymakers from across East Asia.",
+                th: "ในปี 2566 นครศรีธรรมราชได้รับรางวัล Best Partnership Award ในงาน World Smart City Expo ที่โกยัง ร่วมกับ depa รางวัลนี้ยกย่องแนวทางการนำดิจิทัลโดยประชาชน ไม่ใช่แค่เทคโนโลยี ปี 2568 เมืองกลับโกยังเพื่อเป็นตัวแทนไทยในระดับ ASEAN แล้วนำเรื่องราวไปต่อที่ Tomorrow.City Shanghai ซึ่งถูกนำเสนอในฐานะเมืองอัจฉริยะตัวแทนไทยต่อนักลงทุนและผู้กำหนดนโยบายทั่วเอเชียตะวันออก",
+                zh: "2023年，那空是贪玛叻与depa合作，在韩国高阳世界智慧城市博览会荣获最佳合作奖。2025年，城市再度赴高阳代表泰国出席ASEAN级别的活动，随后将这个故事带到了更远的地方——Tomorrow.City上海，作为泰国代表智慧城市向东亚各地的城市投资者和政策制定者展示。",
               })}
             </p>
-            <div className="showcase-award-photo-grid">
+            <div className="showcase-award-photo-grid showcase-award-photo-grid--3">
               <div>
                 <div className="showcase-award-photo-block">
                   <ResponsiveImage
                     src="/Nakhon Si Thammarat/mayor-kanop-goyang-award-2023.jpg"
-                    alt={translate(locale, { en: "Nakhon Si Thammarat delegation receiving the Best Partnership Award at WSCE Goyang 2023 with depa", th: "คณะนครศรีธรรมราชรับรางวัล Best Partnership Award ที่ WSCE โกยัง 2566 ร่วมกับ depa", zh: "那空是贪玛叻代表团与depa在2023年高阳WSCE共同领取最佳合作奖" })}
-                    sizes="(max-width: 640px) 100vw, 400px"
+                    alt={translate(locale, { en: "NST delegation receiving the Best Partnership Award at WSCE Goyang 2023 with depa", th: "คณะนครศรีธรรมราชรับรางวัล Best Partnership Award ที่ WSCE โกยัง 2566", zh: "NST代表团在2023年高阳WSCE与depa共同领取最佳合作奖" })}
+                    sizes="(max-width: 640px) 100vw, 340px"
                   />
                 </div>
                 <p className="showcase-award-photo-caption">
@@ -530,12 +567,24 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <div className="showcase-award-photo-block">
                   <ResponsiveImage
                     src="/Nakhon Si Thammarat/mayor-kanop-goyang-2025.jpg"
-                    alt={translate(locale, { en: "Dr. Kanop Ketchart representing Thailand's smart city programme at the international expo stage in 2025", th: "ดร.กณพ เกตุชาติ เป็นตัวแทนโปรแกรมสมาร์ทซิตี้ของไทยบนเวทีงานแสดงสินค้านานาชาติในปี 2568", zh: "กณพ เกตุชาติ博士在2025年国际博览会上代表泰国智慧城市计划" })}
-                    sizes="(max-width: 640px) 100vw, 400px"
+                    alt={translate(locale, { en: "Dr. Kanop at the World Smart City Expo 2025 — returning to Goyang as Thailand's ASEAN smart city representative", th: "ดร.กณพ ที่ World Smart City Expo 2025 — กลับโกยังในฐานะตัวแทนสมาร์ทซิตี้ ASEAN ของไทย", zh: "กณพ博士在2025年世界智慧城市博览会——以泰国ASEAN智慧城市代表身份重返高阳" })}
+                    sizes="(max-width: 640px) 100vw, 340px"
                   />
                 </div>
                 <p className="showcase-award-photo-caption">
-                  {translate(locale, { en: "International stage · 2025", th: "เวทีนานาชาติ · 2568", zh: "国际舞台 · 2025" })}
+                  {translate(locale, { en: "ASEAN representative · WSCE Goyang 2025", th: "ตัวแทน ASEAN · WSCE โกยัง 2568", zh: "ASEAN 代表 · 高阳 WSCE 2025" })}
+                </p>
+              </div>
+              <div>
+                <div className="showcase-award-photo-block">
+                  <ResponsiveImage
+                    src="/Nakhon Si Thammarat/mayor-kanop-tomorrow-city-shanghai.jpg"
+                    alt={translate(locale, { en: "Dr. Kanop speaking at Tomorrow.City Shanghai — presenting NST's citizen-centric model to urban investors across East Asia", th: "ดร.กณพ บรรยายที่ Tomorrow.City Shanghai — นำเสนอแบบจำลองที่เน้นประชาชนของนครฯ ต่อนักลงทุนเมืองทั่วเอเชียตะวันออก", zh: "กณพ博士在Tomorrow.City上海发言——向东亚城市投资者展示NST的以人为中心模式" })}
+                    sizes="(max-width: 640px) 100vw, 340px"
+                  />
+                </div>
+                <p className="showcase-award-photo-caption">
+                  {translate(locale, { en: "Tomorrow.City Shanghai · 2025", th: "Tomorrow.City Shanghai · 2568", zh: "Tomorrow.City 上海 · 2025" })}
                 </p>
               </div>
             </div>
@@ -671,6 +720,12 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                     </div>
                     <div className="timeline-arc-photo">
                       <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2025:3.webp" alt="Goyang 2025 Panel" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/mayor-kanop-tomorrow-city-shanghai.webp" alt="Tomorrow.City Shanghai 2025" sizes="(max-width: 640px) 100vw, 300px" />
+                    </div>
+                    <div className="timeline-arc-photo">
+                      <ResponsiveImage src="/Nakhon Si Thammarat/mayor-kanop-dr-non-shanghai.webp" alt="Dr. Non and Dr. Kanop at Tomorrow.City Shanghai" sizes="(max-width: 640px) 100vw, 300px" />
                     </div>
                   </div>
                 </div>
