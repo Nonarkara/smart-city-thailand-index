@@ -349,10 +349,10 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="showcase-leader-intro">
               <div className="showcase-mayor-photo">
                 <ResponsiveImage
-                  src="/Nakhon Si Thammarat/wsce_1421.jpg"
-                  alt={translate(locale, { en: "Dr. Kanop Ketchart, Mayor of Nakhon Si Thammarat Municipality", th: "ดร.กณพ เกตุชาติ นายกเทศมนตรีนครนครศรีธรรมราช", zh: "กณพ เกตุชาติ博士，那空是贪玛叻市市长" })}
+                  src="/Nakhon Si Thammarat/nst-town-hall-with-dr-non.jpg"
+                  alt={translate(locale, { en: "Dr. Kanop Ketchart at a Nakhon Si Thammarat community town hall — the participatory governance style that defines his tenure", th: "ดร.กณพ เกตุชาติ ในเวทีประชาคมนครศรีธรรมราช — รูปแบบการปกครองแบบมีส่วนร่วมที่เป็นเอกลักษณ์ของวาระนี้", zh: "กณพ เกตุชาติ博士在那空是贪玛叻社区市政厅——其任期内标志性的参与式治理风格" })}
                   sizes="100vw"
-                  style={{ objectPosition: "center 22%" }}
+                  style={{ objectPosition: "center 40%" }}
                 />
               </div>
               <div>
@@ -766,10 +766,10 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </div>
             <div className="showcase-mayor-photo" style={{ marginBottom: "2rem" }}>
               <picture style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-                <source srcSet="/Nakhon Si Thammarat/mayor-kanop-town-hall-speaking.webp" type="image/webp" />
-                <img src="/Nakhon Si Thammarat/mayor-kanop-town-hall-speaking.jpg" alt={translate(locale, { en: "Mayor Kanop speaking at a community town hall — explaining the smart city programme directly to residents", th: "นายกกณพบรรยายที่ประชุมประชาคม — อธิบายโครงการเมืองอัจฉริยะให้ชาวบ้านโดยตรง", zh: "市长Kanop在社区市政厅讲话——直接向居民解释智慧城市计划" })} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+                <source srcSet="/Nakhon Si Thammarat/asean-csco-city-map-demo.webp" type="image/webp" />
+                <img src="/Nakhon Si Thammarat/asean-csco-city-map-demo.jpg" alt={translate(locale, { en: "ASEAN CSCO city map demonstration at the Nakhon Si Thammarat IOC — the geospatial layer that connects flood sensors, CCTV, and service routing", th: "การสาธิตแผนที่เมือง ASEAN CSCO ที่ศูนย์ IOC นครศรีธรรมราช — ชั้นข้อมูลภูมิสารสนเทศที่เชื่อมเซ็นเซอร์น้ำท่วม กล้อง CCTV และการจัดเส้นทางบริการ", zh: "ASEAN CSCO 城市地图在那空是贪玛叻 IOC 的演示——连接洪水传感器、CCTV 与服务路由的地理空间层" })} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
               </picture>
-              <div className="showcase-cinematic-caption">{translate(locale, { en: "Community town hall — NST", th: "ประชาคมชุมชน — นครศรีธรรมราช", zh: "社区市政厅 — 那空是贪玛叻" })}</div>
+              <div className="showcase-cinematic-caption">{translate(locale, { en: "ASEAN CSCO city map demo — NST IOC", th: "การสาธิตแผนที่เมือง ASEAN CSCO — ศูนย์ IOC นครศรี", zh: "ASEAN CSCO 城市地图演示 — 那空是贪玛叻 IOC" })}</div>
             </div>
 
             <div className="showcase-idea-grid">
