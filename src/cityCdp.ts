@@ -568,7 +568,7 @@ function citySpecificOpportunity(city: SmartCity, context?: CityContext): Locali
 
 function citySpecificConstraint(city: SmartCity, context?: CityContext): LocalizedText {
   if (context) {
-    return localized(context.theCatch.en, context.theCatch.th, context.theCatch.en);
+    return localized(context.theCatch.en, context.theCatch.th, context.theCatch.zh);
   }
 
   const [weakest] = weakestPillars(city);

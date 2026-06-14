@@ -118,6 +118,14 @@ const sourceFiles: ShowcaseSource[] = [
     },
   },
   {
+    title: "public/NST Report.docx",
+    note: {
+      en: "Detailed municipal case-study report detailing AI healthcare, personalized STEM education initiatives, civic feedback loops, and alternative OPEX financing strategies.",
+      th: "รายงานกรณีศึกษาเทศบาลอย่างละเอียด ครอบคลุมระบบสุขภาพ AI, นวัตกรรมระบบการเรียนรู้ STEM เฉพาะบุคคล, วงจรสะท้อนข้อมูลประชาชน และกลยุทธ์การเงินแบบ OPEX",
+      zh: "详细的市政案例研究报告，阐述了 AI 医疗保健、个性化 STEM 教育倡议、市民反馈闭环以及替代性 OPEX 融资策略。",
+    },
+  },
+  {
     title: "เทศบาลนครนครศรีธรรมราช 12-03-67.pdf",
     note: {
       en: "Local presentation material grounding service-delivery claims.",
@@ -698,7 +706,12 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   </div>
                   <div className="timeline-arc-gallery">
                     <div className="timeline-arc-photo">
-                      <ResponsiveImage src="/Nakhon Si Thammarat/nst-ioc-with-dr-kanop-2024.webp" alt="IOC Command Center" sizes="(max-width: 640px) 100vw, 800px" />
+                      <ResponsiveImage
+                        src="/Nakhon Si Thammarat/nst-ioc-with-dr-kanop-2024.webp"
+                        alt="IOC Command Center"
+                        sizes="(max-width: 640px) 100vw, 800px"
+                        style={{ objectPosition: "center 38%" }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -856,6 +869,162 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               </a>
             </div>
           </section>
+
+          <section className="section showcase-practice-detail-section">
+            <p className="eyebrow">{translate(locale, { en: "Operational deep dives", th: "เจาะลึกการดำเนินงานจริง", zh: "实操深度解析" })}</p>
+            <h2>{translate(locale, { en: "Case Studies in Digital Delivery", th: "กรณีศึกษาการส่งมอบบริการดิจิทัล", zh: "数字交付案例研究" })}</h2>
+            <div className="showcase-detail-grid" style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginTop: "1rem" }}>
+
+              {/* Case Study I */}
+              <article className="glass-card" style={{ padding: "1.5rem", border: "1px solid var(--border)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                  <h3 style={{ margin: 0, fontWeight: 700 }}>
+                    {translate(locale, {
+                      en: "Case Study I — @NakhonCity: The Civic Feedback Loop",
+                      th: "กรณีศึกษาที่ 1 — @NakhonCity: วงจรสะท้อนข้อมูลจากประชาชน",
+                      zh: "案例研究一 — @NakhonCity：市民反馈闭环",
+                    })}
+                  </h3>
+                  <span className="eyebrow" style={{ margin: 0 }}>
+                    {translate(locale, { en: "Civic Participation · Ch. 3 & 6", th: "การมีส่วนร่วมของประชาชน · บทที่ 3 & 6", zh: "市民参与 · 第 3、6 章" })}
+                  </span>
+                </div>
+                <p style={{ margin: "0 0 1rem", color: "var(--2)", lineHeight: 1.6 }}>
+                  {translate(locale, {
+                    en: "A pothole in NST no longer disappears into a phone queue. It gets photographed, geotagged, timestamped, and routed to the right maintenance crew via LINE — the messaging app 85% of Thais already use. The city rebuilt @NakhonCity twice in three years based on live usage data. Recurring complaint clusters became infrastructure budget signals: when the same street floods repeatedly in reports, it moves to the front of the pipe-replacement queue. Governance shifted from reactive to predictive.",
+                    th: "หลุมบ่อในนครศรีธรรมราชไม่ได้หายไปในคิวโทรศัพท์อีกต่อไป แต่ถูกถ่ายภาพ ระบุพิกัด ประทับเวลา และส่งถึงทีมช่างที่รับผิดชอบทาง LINE ซึ่งเป็นแอปที่คนไทย 85% ใช้อยู่แล้ว เทศบาลปรับปรุง @NakhonCity ถึงสองครั้งในสามปีจากข้อมูลการใช้งานจริง กลุ่มร้องเรียนซ้ำๆ กลายเป็นสัญญาณงบประมาณโครงสร้างพื้นฐาน: เมื่อถนนสายเดิมถูกรายงานน้ำท่วมซ้ำในรายงาน ก็จะถูกเลื่อนขึ้นมาอยู่ต้นแถวของโครงการเปลี่ยนท่อ การบริหารเมืองเปลี่ยนจากตั้งรับเป็นเชิงรุก",
+                    zh: "那空是贪玛叻的一个路面坑洼，不会再消失于电话排队等待中。它会被拍照、标记地理位置和时间戳，然后通过 LINE——泰国 85% 人口已在使用的即时通讯软件——分配给对应的维修团队。市政府在三年内根据实时使用数据两次重建 @NakhonCity。反复出现的投诉热点成为基础设施预算的信号：当同一条街道在报告中反复出现积水，它便被提前列入换管计划。城市治理从被动应对转向主动预测。",
+                  })}
+                </p>
+                <div className="showcase-pull-block">
+                  <p className="showcase-pull-quote">
+                    {translate(locale, {
+                      en: "\"I don't think anyone ever asked us what we needed before.\"",
+                      th: "\"ผมคิดว่าไม่เคยมีใครถามเราเลยว่าเราต้องการอะไร\"",
+                      zh: "「我想从来没有人问过我们需要什么。」",
+                    })}
+                  </p>
+                  <p className="showcase-pull-source">{translate(locale, { en: "— Secondary school teacher, NST stakeholder dialogue 2023", th: "— ครูมัธยม, เวทีผู้มีส่วนได้ส่วนเสีย นครฯ ปี 2566", zh: "— 中学教师，那空是贪玛叻利益相关方对话 2023" })}</p>
+                </div>
+                <div className="showcase-data-callout" style={{ margin: 0 }}>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">31,000+</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "Reports by 16,000 residents (2021–2024)", th: "รายงานจากประชาชน 16,000 คน (2564–2567)", zh: "16,000 位居民提交的投诉报告 (2021–2024)" })}
+                    </span>
+                  </div>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">84%</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "Resolved within 5 days (up from 58%)", th: "แก้ไขเสร็จใน 5 วัน (จาก 58%)", zh: "5 天内解决率（从 58% 提升）" })}
+                    </span>
+                  </div>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">92%</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "User satisfaction 2024 (was 68% in 2022)", th: "ความพึงพอใจ 2567 (จาก 68% ในปี 2565)", zh: "2024 年用户满意度（2022 年为 68%）" })}
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              {/* Case Study II */}
+              <article className="glass-card" style={{ padding: "1.5rem", border: "1px solid var(--border)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                  <h3 style={{ margin: 0, fontWeight: 700 }}>
+                    {translate(locale, {
+                      en: "Case Study II — Hospital on Wheels: AI in Rural Healthcare",
+                      th: "กรณีศึกษาที่ 2 — โรงพยาบาลเคลื่อนที่: AI ในสาธารณสุขชนบท",
+                      zh: "案例研究二 — 移动医院：农村医疗中的人工智能",
+                    })}
+                  </h3>
+                  <span className="eyebrow" style={{ margin: 0 }}>
+                    {translate(locale, { en: "Public Health · Ch. 5 & 7", th: "สาธารณสุข · บทที่ 5 & 7", zh: "公共卫生 · 第 5、7 章" })}
+                  </span>
+                </div>
+                <p style={{ margin: "0 0 1rem", color: "var(--2)", lineHeight: 1.6 }}>
+                  {translate(locale, {
+                    en: "For elderly and bed-ridden villagers, a hospital used to mean a half-day journey. NST co-designed a mobile diagnostics van — with the local hospital — that brings AI-assisted chest X-ray screening directly into remote communities. Images are processed instantly by an AI trained on thousands of cases. A doctor reviews, but the AI is usually faster. The program was inspired by a study trip to South Korea and re-engineered for NST's specific geography and budget using a Build-Own-Operate (BOO) private-financing model, so the city pays monthly, not upfront.",
+                    th: "สำหรับผู้สูงอายุและผู้ป่วยติดเตียงในชนบท การไปโรงพยาบาลหมายถึงการเดินทางครึ่งวัน เทศบาลนครฯ ร่วมออกแบบรถวินิจฉัยโรคเคลื่อนที่กับโรงพยาบาลในพื้นที่ เพื่อนำการตรวจ X-ray ทรวงอกด้วย AI ไปถึงชุมชนห่างไกลโดยตรง ภาพถ่ายจะถูกประมวลผลทันทีด้วย AI ที่เทรนมาจากเคสนับพัน แพทย์จะตรวจสอบซ้ำ แต่ AI มักจะเร็วกว่า โครงการนี้ได้แรงบันดาลใจจากการศึกษาดูงานที่เกาหลีใต้ และปรับให้เหมาะกับภูมิศาสตร์และงบประมาณของนครฯ ผ่านรูปแบบการเงิน BOO (Build-Own-Operate) ซึ่งทำให้เทศบาลจ่ายรายเดือนแทนการจ่ายก้อนล่วงหน้า",
+                    zh: "对农村地区的老人和卧床患者而言，去医院意味着半天的路程。那空是贪玛叻与当地医院共同设计了一辆移动诊疗车，将 AI 辅助胸部 X 光筛查直接带入偏远社区。图像由经过数千个病例训练的 AI 即时处理。医生负责复核，但 AI 通常更快。该项目受韩国考察之旅启发，根据那空是贪玛叻的地理条件和预算重新设计，采用建设-拥有-经营 (BOO) 私人融资模式，使市政府按月付款而非前期一次性投入。",
+                  })}
+                </p>
+                <div className="showcase-pull-block">
+                  <p className="showcase-pull-quote">
+                    {translate(locale, {
+                      en: "\"It's not about replacing the doctor. It's about reaching more people before it's too late.\"",
+                      th: "\"ไม่ใช่การแทนที่หมอ แต่คือการเข้าถึงคนให้มากขึ้นก่อนที่จะสายเกินไป\"",
+                      zh: "「这不是为了取代医生，而是在为时未晚之前接触到更多的人。」",
+                    })}
+                  </p>
+                  <p className="showcase-pull-source">{translate(locale, { en: "— Health worker, Hospital on Wheels programme", th: "— เจ้าหน้าที่สาธารณสุข โครงการโรงพยาบาลเคลื่อนที่", zh: "— 医务工作者，移动医院项目" })}</p>
+                </div>
+                <div className="showcase-data-callout" style={{ margin: 0 }}>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">+30%</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "Early TB detection in rural zones (2022–2024)", th: "ตรวจพบวัณโรคระยะแรกในชนบท (2565–2567)", zh: "农村地区早期肺结核检出率 (2022–2024)" })}
+                    </span>
+                  </div>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">BOO</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "Build-Own-Operate: private pays upfront, city pays monthly", th: "BOO: เอกชนลงทุน รัฐจ่ายรายเดือน", zh: "建设-拥有-经营：私方先行投入，市政按月付费" })}
+                    </span>
+                  </div>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">Same visit</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "Preliminary result — no more waiting days for a radiologist", th: "รู้ผลเบื้องต้นในวันเดียวกัน ไม่ต้องรอรังสีแพทย์หลายวัน", zh: "初步结果即时出具——无需等待放射科医生数天" })}
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              {/* Case Study III */}
+              <article className="glass-card" style={{ padding: "1.5rem", border: "1px solid var(--border)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                  <h3 style={{ margin: 0, fontWeight: 700 }}>
+                    {translate(locale, {
+                      en: "Case Study III — AI School as-a-Service: Adaptive STEM Learning",
+                      th: "กรณีศึกษาที่ 3 — โรงเรียน AI ในรูปแบบบริการ: การเรียนรู้ STEM แบบปรับตัว",
+                      zh: "案例研究三 — AI 学校即服务：自适应 STEM 学习",
+                    })}
+                  </h3>
+                  <span className="eyebrow" style={{ margin: 0 }}>
+                    {translate(locale, { en: "Education · Ch. 5 & 7", th: "การศึกษา · บทที่ 5 & 7", zh: "教育 · 第 5、7 章" })}
+                  </span>
+                </div>
+                <p style={{ margin: "0 0 1rem", color: "var(--2)", lineHeight: 1.6 }}>
+                  {translate(locale, {
+                    en: "NST's AI School was not imported. It was reverse-engineered from a South Korean model, then rebuilt for Thai public school classrooms where class sizes are large and exams are the only feedback loop. The platform detects hesitation patterns and topic fatigue in real time — teachers see which students are memorizing versus actually understanding, before any test. When the first school got internet as part of the pilot, the first thing students asked was: \"Can we learn how to make games?\" The platform procured at per-student OPEX rates, which means no upfront hardware debt and no stranded assets if the software improves.",
+                    th: "โรงเรียน AI ของนครฯ ไม่ได้นำเข้ามาตรงๆ แต่ถอดแบบจากโมเดลเกาหลีใต้ แล้วสร้างใหม่ให้เหมาะกับห้องเรียนโรงเรียนของรัฐไทยที่มีนักเรียนจำนวนมากและใช้การสอบเป็นวงจรสะท้อนข้อมูลหลักเพียงอย่างเดียว แพลตฟอร์มตรวจจับรูปแบบความลังเลและความล้าในหัวข้อแบบเรียลไทม์ ครูเห็นว่านักเรียนคนไหนท่องจำแบบผิวเผินและคนไหนเข้าใจจริงๆ ก่อนสอบ เมื่อโรงเรียนแรกได้รับอินเทอร์เน็ตในโครงการนำร่อง สิ่งแรกที่นักเรียนถามคือ: \"เราเรียนทำเกมได้ไหม?\" ระบบจัดซื้อในราคา OPEX ต่อนักเรียน หมายความว่าไม่มีหนี้ฮาร์ดแวร์ล่วงหน้าและไม่มีสินทรัพย์ค้างอยู่หากซอฟต์แวร์พัฒนาขึ้น",
+                    zh: "那空是贪玛叻的 AI 学校并非照搬引进，而是以韩国模式为蓝本，重新为泰国公立学校的课堂量身定制——这里班级规模庞大，考试是唯一的反馈回路。平台能实时检测犹豫模式和知识疲劳点——教师在任何考试前便能看到哪些学生只是在死记硬背、哪些学生真正理解了。当第一所学校通过试点项目接入互联网时，学生们第一个问题是：「我们能学做游戏吗？」该平台按每生 OPEX 费率采购，意味着没有前期硬件债务，若软件迭代升级也不会产生搁置资产。",
+                  })}
+                </p>
+                <div className="showcase-data-callout" style={{ margin: 0 }}>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">6,000+</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "Students on platform by 2024", th: "นักเรียนในระบบภายในปี 2567", zh: "2024 年平台学生用户数" })}
+                    </span>
+                  </div>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">10–15 pts</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "Math & science comprehension score gains", th: "คะแนนความเข้าใจคณิตและวิทย์ดีขึ้น", zh: "数学与科学理解成绩提升幅度" })}
+                    </span>
+                  </div>
+                  <div className="showcase-data-callout-cell">
+                    <span className="showcase-data-callout-num">OPEX</span>
+                    <span className="showcase-data-callout-label">
+                      {translate(locale, { en: "Per-student licensing — no hardware capex", th: "ค่าบริการต่อนักเรียน — ไม่มีงบ CAPEX ฮาร์ดแวร์", zh: "按生收费许可证——无硬件资本支出" })}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
         </div>
 
         {/* ── TAB 4: Evidence ── */}
@@ -887,6 +1056,62 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                     </div>
                   ))}
                 </div>
+              </article>
+            </div>
+          </section>
+
+          <section className="section showcase-financing-section">
+            <p className="eyebrow">{translate(locale, { en: "Sustainable Finance", th: "การเงินที่ยั่งยืน", zh: "可持续财务" })}</p>
+            <h2>{translate(locale, { en: "Financing & Procurement Strategy", th: "ยุทธศาสตร์การเงินและการจัดซื้อจัดจ้าง", zh: "融资与采购战略" })}</h2>
+            <p className="section-intro">
+              {translate(locale, {
+                en: "Nakhon Si Thammarat operates under a mid-tier municipal budget constraint of ฿500–700 million annually. Scaling smart services required moving away from high-debt upfront assets to agile, outcome-linked investments.",
+                th: "เทศบาลนครนครศรีธรรมราชดำเนินการภายใต้ข้อจำกัดงบประมาณระดับกลางที่ 500–700 ล้านบาทต่อปี การขยายบริการอัจฉริยะจึงจำเป็นต้องเปลี่ยนจากการซื้อสินทรัพย์ราคาแพงล่วงหน้า ไปสู่การลงทุนที่ยืดหยุ่นและผูกพันกับผลสัมฤทธิ์",
+                zh: "那空是贪玛叻每年在 5.00-7.00 亿泰铢的中等市政预算限制下运行。扩展智能服务需要从前期的高债务资产购建转向灵活的、与成果挂钩的投资。",
+              })}
+            </p>
+
+            <div className="showcase-csco-grid" style={{ marginTop: "1rem" }}>
+              <article className="showcase-csco-card glass-card" style={{ padding: "1.25rem 1rem" }}>
+                <p className="eyebrow" style={{ margin: "0 0 0.5rem" }}>01</p>
+                <h3 style={{ fontWeight: 700, margin: "0 0 0.5rem" }}>
+                  {translate(locale, { en: "CAPEX-to-OPEX Transition", th: "การเปลี่ยนจาก CAPEX เป็น OPEX", zh: "建设支出向运营支出转型" })}
+                </h3>
+                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-micro)" }}>
+                  {translate(locale, {
+                    en: "Instead of borrowing heavy capital for short-lived software, NST procures services as operational expenditure. Payments run on monthly per-student licenses or outcome-based triggers, keeping the budget elastic without accumulating stranded hardware debt.",
+                    th: "แทนที่จะก่อหนี้กู้ยืมงบลงทุนไปกับซอฟต์แวร์ที่มีอายุการใช้งานสั้น นครฯ เลือกจัดซื้อในลักษณะค่าใช้จ่ายดำเนินงาน การจ่ายเงินรายเดือนตามจำนวนสิทธิ์ใช้งานต่อนักเรียนหรือตามผลสัมฤทธิ์ ทำให้งบประมาณยืดหยุ่นโดยไม่สะสมหนี้ฮาร์ดแวร์ค้างอยู่",
+                    zh: "那空是贪玛叻不再为寿命较短的软件申请大额建设性贷款，而是将采购结构调整为运营性支出。付款按月度每生许可证或基于成果的触发机制进行，保持预算弹性，避免积累搁置硬件债务。",
+                  })}
+                </p>
+              </article>
+
+              <article className="showcase-csco-card glass-card" style={{ padding: "1.25rem 1rem" }}>
+                <p className="eyebrow" style={{ margin: "0 0 0.5rem" }}>02</p>
+                <h3 style={{ fontWeight: 700, margin: "0 0 0.5rem" }}>
+                  {translate(locale, { en: "depa Digital Catalog", th: "แคตตาล็อกดิจิทัลของ depa", zh: "depa 数字名录" })}
+                </h3>
+                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-micro)" }}>
+                  {translate(locale, {
+                    en: "NST procures via depa's pre-vetted Digital Catalog — a national registry of software vendors that have passed ISO/IEC 29110 quality audits. Bypassing standard procurement approval cycles reduced ICT acquisition lead times significantly while eliminating compliance risk at the city level.",
+                    th: "เทศบาลจัดซื้อผ่านแคตตาล็อกบัญชีบริการดิจิทัลของ depa ซึ่งเป็นทะเบียนแห่งชาติของผู้ให้บริการซอฟต์แวร์ที่ผ่านการตรวจสอบ ISO/IEC 29110 แล้ว การข้ามขั้นตอนอนุมัติจัดซื้อมาตรฐานช่วยลดระยะเวลารับซอฟต์แวร์อย่างมีนัย พร้อมลดความเสี่ยงด้านกฎระเบียบในระดับเมือง",
+                    zh: "那空是贪玛叻通过 depa 预先审核的数字名录进行采购——这是一份已通过 ISO/IEC 29110 质量审计的软件供应商国家名录。跳过标准采购审批流程，显著缩短了 ICT 采购周期，同时消除了城市层面的合规风险。",
+                  })}
+                </p>
+              </article>
+
+              <article className="showcase-csco-card glass-card" style={{ padding: "1.25rem 1rem" }}>
+                <p className="eyebrow" style={{ margin: "0 0 0.5rem" }}>03</p>
+                <h3 style={{ fontWeight: 700, margin: "0 0 0.5rem" }}>
+                  {translate(locale, { en: "ASCN Financing Toolkit", th: "เครื่องมือการเงินของ ASCN", zh: "ASCN 融资工具包" })}
+                </h3>
+                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-micro)" }}>
+                  {translate(locale, {
+                    en: "Using the ASEAN Smart Cities Network toolkit — active in 75% of ASEAN smart city pilots — NST matches each project to the right funding structure: grants for civic tech with no revenue, BOO for infrastructure with a private operator, and PPP for shared-cost services. The toolkit prevents cities from over-relying on the wrong instrument.",
+                    th: "โดยอ้างอิงเครื่องมือการเงินของ ASCN ซึ่งใช้งานในโครงการนำร่องสมาร์ทซิตี้ 75% ของภูมิภาค นครฯ จับคู่แต่ละโครงการกับโครงสร้างการเงินที่เหมาะสม: เงินอุดหนุนสำหรับเทคโนโลยีพลเมืองที่ไม่มีรายได้ BOO สำหรับโครงสร้างพื้นฐานที่มีผู้ดำเนินงานเอกชน และ PPP สำหรับบริการร่วมทุน เครื่องมือนี้ป้องกันไม่ให้เมืองพึ่งพาเครื่องมือที่ไม่ถูกต้อง",
+                    zh: "借助东盟智慧城市网络工具包——该工具包活跃于 75% 的东盟智慧城市试点——那空是贪玛叻将每个项目与合适的资金结构匹配：无收入的市民科技项目使用赠款，有私营运营商的基础设施使用 BOO，成本共担服务使用 PPP。该工具包防止城市过度依赖错误的融资工具。",
+                  })}
+                </p>
               </article>
             </div>
           </section>
