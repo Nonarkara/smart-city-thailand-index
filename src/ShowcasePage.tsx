@@ -326,57 +326,218 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
 
         {/* ── TAB 2: Leadership ── */}
         <div className="showcase-tab-panel">
-          <section className="section showcase-summary-section">
-            <div className="showcase-summary-grid">
-              <article className="showcase-summary-card">
-                <p className="showcase-card-kicker">{translate(locale, { en: "Leadership", th: "ภาวะผู้นำ", zh: "领导力" })}</p>
-                <h2>{translate(locale, { en: "Mayor Kanop Ketchart", th: "นายกกณพ เกตุชาติ", zh: "กณพ เกตุชาติ 市长" })}</h2>
-                <div className="showcase-mayor-photo">
-                  <ResponsiveImage
-                    src="/Nakhon Si Thammarat/FB_IMG_1769074736483.jpg"
-                    alt={translate(locale, { en: "Mayor Kanop Ketchart at Nakhon Si Thammarat City Hall", th: "นายกกณพ เกตุชาติ ณ เทศบาลนครนครศรีธรรมราช", zh: "กณพ เกตุชาติ 市长在那空是贪玛叻市政厅" })}
-                    sizes="(max-width: 600px) 100vw, 420px"
-                  />
+
+          {/* ── Portrait intro ── */}
+          <section className="section">
+            <div className="showcase-leader-intro">
+              <div className="showcase-mayor-photo">
+                <ResponsiveImage
+                  src="/Nakhon Si Thammarat/FB_IMG_1769074736483.jpg"
+                  alt={translate(locale, { en: "Dr. Kanop Ketchart, Mayor of Nakhon Si Thammarat Municipality", th: "ดร.กณพ เกตุชาติ นายกเทศมนตรีนครนครศรีธรรมราช", zh: "กณพ เกตุชาติ博士，那空是贪玛叻市市长" })}
+                  sizes="(max-width: 640px) 100vw, 300px"
+                />
+              </div>
+              <div>
+                <p className="eyebrow">{translate(locale, { en: "Leader", th: "ผู้นำ", zh: "领导人" })}</p>
+                <h2 className="showcase-leader-name">
+                  {translate(locale, { en: "Dr. Kanop Ketchart", th: "ดร.กณพ เกตุชาติ", zh: "กณพ เกตุชาติ博士" })}
+                </h2>
+                <p className="showcase-leader-title-sub">
+                  {translate(locale, {
+                    en: "Mayor, Nakhon Si Thammarat Municipality · In office since 2020",
+                    th: "นายกเทศมนตรีนครนครศรีธรรมราช · ดำรงตำแหน่งตั้งแต่ปี 2563",
+                    zh: "那空是贪玛叻市长 · 自 2020 年起任职",
+                  })}
+                </p>
+                <div className="showcase-pull-block">
+                  <p className="showcase-pull-quote">
+                    {translate(locale, {
+                      en: "If you build something residents don't use, you haven't solved anything. The technology is not the product. The trust is the product.",
+                      th: "ถ้าคุณสร้างสิ่งที่ชาวบ้านไม่ใช้ คุณก็ยังไม่ได้แก้อะไร เทคโนโลยีไม่ใช่ผลิตภัณฑ์ ความไว้วางใจต่างหากที่คือผลิตภัณฑ์",
+                      zh: "如果你建了一个居民不用的东西，你什么都没解决。科技不是产品，信任才是。",
+                    })}
+                  </p>
+                  <p className="showcase-pull-source">WeCitizens Thailand, March 2025</p>
                 </div>
                 <p>
                   {translate(locale, {
-                    en: "The city story only makes sense if leadership is understood as a listening system. The mayor's role here is not technological heroism. It is repeated contact, direct explanation, and willingness to make the service loop visible.",
-                    th: "เรื่องของเมืองนี้จะเข้าใจไม่ได้เลย ถ้าไม่มองผู้นำเป็นระบบการฟัง บทบาทของนายกที่นี่ไม่ใช่วีรกรรมทางเทคโนโลยี แต่คือการลงไปสัมผัสซ้ำๆ อธิบายตรงๆ และยอมให้วงจรบริการถูกมองเห็น",
-                    zh: "如果不把领导力理解成一种「倾听系统」，这座城市的故事就讲不通。这里的市长角色不是技术英雄，而是反复接触、直接解释，并愿意把服务闭环摆到明面上。",
+                    en: "Dr. Kanop Ketchart took office in a city that had the infrastructure for smart governance and no pathway to it. The LINE OA account existed. The CCTV cameras existed. The waterworks that kept prices lower than any other city in the South existed. What was missing was a commitment to connect them, explain them, and maintain them as a public service rather than a set of government projects.",
+                    th: "ดร.กณพ เกตุชาติ เข้ารับตำแหน่งในเมืองที่มีโครงสร้างพื้นฐานพร้อมสำหรับธรรมาภิบาลอัจฉริยะ แต่ยังไม่มีทางไปถึงมัน บัญชี LINE OA ทางการมีอยู่แล้ว กล้องวงจรปิดมีอยู่แล้ว ระบบประปาที่ทำให้ราคาน้ำถูกที่สุดในภาคใต้มีอยู่แล้ว สิ่งที่ขาดหายไปคือความมุ่งมั่นที่จะเชื่อมโยงสิ่งเหล่านี้ อธิบายมัน และดูแลรักษาในฐานะบริการสาธารณะ ไม่ใช่แค่ชุดโครงการของรัฐ",
+                    zh: "กณพ เกตุชาติ博士上任时，这座城市已拥有智慧治理的基础设施，却缺少通往它的路径。官方LINE OA已经存在，监控摄像头已经存在，让水价低于南部所有城市的自来水厂也已经存在。缺少的是一种承诺——将它们连接起来、解释清楚，并作为公共服务持续维护，而不只是一批政府项目。",
                   })}
                 </p>
-                <blockquote className="showcase-quote">
-                  {translate(locale, {
-                    en: "\"You don't push high technology to people. Show them the benefit. They decide.\"",
-                    th: "\"คุณไม่ผลักเทคโนโลยีสูงให้คน แสดงประโยชน์ให้เขาเห็น แล้วให้เขาตัดสินใจ\"",
-                    zh: "\"你不能把高科技硬塞给人。先让他们看到好处，再由他们自己决定。\"",
-                  })}
-                </blockquote>
-              </article>
+              </div>
+            </div>
+          </section>
 
-              <article className="showcase-summary-card">
-                <p className="showcase-card-kicker">{translate(locale, { en: "Why it works", th: "ทำไมมันเวิร์ก", zh: "为什么有效" })}</p>
-                <h2>{translate(locale, { en: "The system closes the loop", th: "ระบบมันปิดลูปได้", zh: "这套系统能闭环" })}</h2>
-                <p>
-                  {translate(locale, {
-                    en: "The interesting part is not that the city has an app. Plenty of cities have apps. The interesting part is that reports, ratings, flood alerts, service teams, and public communication are tied together tightly enough to change behavior.",
-                    th: "จุดที่น่าสนใจไม่ใช่ว่าเมืองนี้มีแอป เพราะหลายเมืองก็มีแอป จุดที่น่าสนใจคือการที่รายงาน คะแนน เตือนน้ำท่วม ทีมปฏิบัติงาน และการสื่อสารสาธารณะ ถูกมัดเข้าด้วยกันแน่นพอที่จะเปลี่ยนพฤติกรรมได้",
-                    zh: "真正有意思的不是这座城市「有一个应用」，因为很多城市都有。关键在于报修、评分、洪水预警、执行团队与公共沟通被绑得足够紧，足以改变行为。",
-                  })}
-                </p>
-              </article>
+          {/* ── 99,918 users ── */}
+          <section className="section">
+            <p className="eyebrow">{translate(locale, { en: "Near-saturation", th: "เกือบครบทุกคน", zh: "近乎全覆盖" })}</p>
+            <h2>{translate(locale, { en: "99,918 users in a city of 110,000", th: "99,918 ผู้ใช้ในเมืองที่มีประชากร 110,000 คน", zh: "11 万人口，9.9 万用户" })}</h2>
+            <div className="showcase-data-callout">
+              <div className="showcase-data-callout-cell">
+                <span className="showcase-data-callout-num">99,918</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "LINE OA subscribers, March 2025", th: "ผู้ติดตาม LINE OA มีนาคม 2568", zh: "LINE OA 订阅用户（2025年3月）" })}</span>
+              </div>
+              <div className="showcase-data-callout-cell">
+                <span className="showcase-data-callout-num">110k</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Total city population", th: "ประชากรในเขตเทศบาล", zh: "城市人口总数" })}</span>
+              </div>
+              <div className="showcase-data-callout-cell">
+                <span className="showcase-data-callout-num">80%+</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Adoption vs 20% industry avg", th: "สัดส่วนการใช้งาน เทียบ 20% ค่าเฉลี่ยอุตสาหกรรม", zh: "采用率，行业均值仅 20%" })}</span>
+              </div>
+              <div className="showcase-data-callout-cell">
+                <span className="showcase-data-callout-num">48h</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Guaranteed response with photo proof", th: "รับประกันการตอบสนองพร้อมหลักฐานภาพ", zh: "承诺响应时限，附修复照片为证" })}</span>
+              </div>
+            </div>
+            <p>
+              {translate(locale, {
+                en: "This number — recorded in March 2025 — describes near-saturation. In most Thai cities, government digital platforms reach 20% of residents at best. In Nakhon Si Thammarat, it is above 80% of eligible adults. Nearly every adult in the city has the municipality in their pocket: not a forgotten app, but an active daily channel for real-time flood warnings, queue bookings, road repair reports, and live CCTV access.",
+                th: "ตัวเลขนี้ — บันทึกในเดือนมีนาคม 2568 — สะท้อนสภาพที่เกือบครบทุกคนแล้ว ในเมืองส่วนใหญ่ของไทย แพลตฟอร์มดิจิทัลของรัฐเข้าถึงประชาชนได้ดีที่สุดเพียง 20% ที่นครศรีธรรมราช ตัวเลขนี้อยู่ที่กว่า 80% ของผู้ใหญ่ที่มีสิทธิ์ใช้งาน แทบทุกผู้ใหญ่ในเมืองมีเทศบาลฯ อยู่ในมือถือ ไม่ใช่แอปที่โหลดแล้วลืม แต่เป็นช่องทางที่ใช้งานทุกวัน สำหรับรับการแจ้งเตือนน้ำท่วมแบบเรียลไทม์ จองคิวทำธุรกรรม แจ้งซ่อมถนน และดูกล้องวงจรปิดสด",
+                zh: "这个数字——记录于2025年3月——描绘的是接近饱和的状态。泰国多数城市的政府数字平台顶多覆盖20%的居民。那空是贪玛叻的覆盖率超过适龄成人的80%。几乎每位成年人的手机里都装着市政府——不是装了就忘的应用，而是每天使用的活跃渠道：实时洪水预警、事务预约、道路修缮报告和实时监控画面。",
+              })}
+            </p>
+            <p>
+              {translate(locale, {
+                en: "The gap between 80% and 20% is not explained by demographics, digital literacy, or city size. It is explained by one commitment the mayor made publicly and kept consistently: every complaint submitted through the system gets a response within 48 hours, with a photograph of the completed fix sent back to the resident. The service loop is visible and closed.",
+                th: "ช่องว่างระหว่าง 80% กับ 20% ไม่ได้อธิบายด้วยโครงสร้างประชากร ความรู้ด้านดิจิทัล หรือขนาดของเมือง แต่อธิบายด้วยพันธสัญญาหนึ่งที่นายกฯ ประกาศต่อสาธารณะและรักษาอย่างสม่ำเสมอ: ทุกปัญหาที่ส่งผ่านระบบจะได้รับการตอบสนองภายใน 48 ชั่วโมง พร้อมถ่ายรูปแก้ไขส่งกลับให้ประชาชน วงจรบริการมองเห็นได้และปิดครบ",
+                zh: "80%与20%的差距，不能用人口结构、数字素养或城市规模来解释。解释它的，是市长公开承诺并始终兑现的一件事：通过系统提交的每一条投诉，48小时内必有回复，并附上修复完成的照片发回给居民。服务闭环清晰可见，且真正闭合。",
+              })}
+            </p>
+            <div className="showcase-pull-block">
+              <p className="showcase-pull-quote">
+                {translate(locale, {
+                  en: "We will resolve every complaint within 48 hours — with a photo of the fix sent back. That is not a slogan. That is a contract.",
+                  th: "เราจะแก้ข้อร้องเรียนทุกเรื่องภายใน 48 ชั่วโมง พร้อมถ่ายรูปส่งกลับ นั่นไม่ใช่สโลแกน นั่นคือสัญญา",
+                  zh: "我们将在48小时内解决每一条投诉——并附上修复照片回传。这不是口号，这是契约。",
+                })}
+              </p>
+              <p className="showcase-pull-source">
+                {translate(locale, { en: "Dr. Kanop Ketchart · WeCitizens Thailand interview, 2025", th: "ดร.กณพ เกตุชาติ · สัมภาษณ์ WeCitizens Thailand, 2568", zh: "กณพ เกตุชาติ博士 · WeCitizens Thailand 专访，2025" })}
+              </p>
+            </div>
+          </section>
 
-              <article className="showcase-summary-card">
-                <p className="showcase-card-kicker">{translate(locale, { en: "Why it matters", th: "ทำไมมันสำคัญ", zh: "为什么重要" })}</p>
-                <h2>{translate(locale, { en: "This is a copyable model", th: "นี่คือโมเดลที่ลอกได้", zh: "这是一个可复制模型" })}</h2>
-                <p>
-                  {translate(locale, {
-                    en: "Nothing on this page depends on being Bangkok, being rich, or buying exotic infrastructure first. That is why this city shows up as a showcase: the logic is modular, local-government scale, and teachable.",
-                    th: "ไม่มีอะไรบนหน้านี้ที่ต้องอาศัยการเป็นกรุงเทพฯ การมีเงินหนา หรือการซื้อโครงสร้างพื้นฐานแปลกๆ ก่อน นี่แหละเหตุผลที่เมืองนี้ถูกยกเป็นต้นแบบ: ตรรกะมันเป็นโมดูล ขนาดเหมาะกับท้องถิ่น และสอนต่อได้",
-                    zh: "本页没有任何一件事要求你必须是曼谷、必须很有钱，或必须先买一堆稀奇基础设施。这正是它成为样板的原因：逻辑是模块化的，适合地方政府规模，而且可以教、可以学、可以复制。",
-                  })}
+          {/* ── Mayor photo strip ── */}
+          <div className="photo-strip" style={{ marginBottom: "0" }}>
+            <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
+              <ResponsiveImage
+                src="/Nakhon Si Thammarat/mayor-kanop-running.jpg"
+                alt={translate(locale, { en: "Dr. Kanop Ketchart on his morning run with city staff — a weekly ritual he uses to discuss city operations informally", th: "ดร.กณพ เกตุชาติ วิ่งตอนเช้ากับเจ้าหน้าที่เทศบาล — กิจกรรมรายสัปดาห์ที่ใช้พูดคุยงานเมืองแบบไม่เป็นทางการ", zh: "กณพ เกตุชาติ博士与市政工作人员的晨跑——每周例行活动，也是非正式讨论城市事务的场合" })}
+                sizes="280px"
+              />
+              <span className="photo-strip-label">{translate(locale, { en: "Weekly morning run", th: "วิ่งตอนเช้ารายสัปดาห์", zh: "每周晨跑" })}</span>
+            </div>
+            <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
+              <ResponsiveImage
+                src="/Nakhon Si Thammarat/mayor-kanop-ioc-2024.jpg"
+                alt={translate(locale, { en: "Inside the @NakhonCity IOC command centre — the CCTV wall that drives both flood monitoring and real-time city operations", th: "ภายในศูนย์ IOC @NakhonCity — กำแพง CCTV ที่ขับเคลื่อนทั้งการเฝ้าระวังน้ำท่วมและการปฏิบัติงานเมืองแบบเรียลไทม์", zh: "@NakhonCity IOC 指挥中心内部——驱动洪水监控与实时城市运营的CCTV监控墙" })}
+                sizes="280px"
+              />
+              <span className="photo-strip-label">{translate(locale, { en: "@NakhonCity IOC, 2024", th: "ศูนย์ IOC @NakhonCity, 2567", zh: "@NakhonCity IOC，2024" })}</span>
+            </div>
+            <div className="photo-strip-item" style={{ width: "280px", height: "180px" }}>
+              <ResponsiveImage
+                src="/Nakhon Si Thammarat/mayor-kanop-town-hall.jpg"
+                alt={translate(locale, { en: "Mayor Kanop (left) and Dr. Non Arkara at a city-hall strategic review — the meeting where the ASEAN CSCO case study framework was discussed", th: "นายกกณพ (ซ้าย) และ ดร.นนท์ อาคารา ในการประชุมทบทวนเชิงกลยุทธ์ที่ศาลาว่าการ — เวทีที่กรอบกรณีศึกษา ASEAN CSCO ถูกหารือ", zh: "กณพ市长（左）与 ดร.นนท์ อาคารา 在市政厅战略评审会议上——正是讨论 ASEAN CSCO 案例研究框架的场合" })}
+                sizes="280px"
+              />
+              <span className="photo-strip-label">{translate(locale, { en: "Strategic review", th: "การประชุมทบทวนกลยุทธ์", zh: "战略评审会议" })}</span>
+            </div>
+          </div>
+
+          {/* ── Why LINE, not an app ── */}
+          <section className="section">
+            <p className="eyebrow">{translate(locale, { en: "Design decision", th: "การตัดสินใจออกแบบ", zh: "设计决策" })}</p>
+            <h2>{translate(locale, { en: "Meet residents where they already are", th: "ไปหาประชาชนในที่ที่เขาอยู่อยู่แล้ว", zh: "去居民本就在的地方" })}</h2>
+            <div className="showcase-data-callout">
+              <div className="showcase-data-callout-cell">
+                <span className="showcase-data-callout-num">฿2.50</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Water per unit — city waterworks", th: "ค่าน้ำต่อหน่วย — ประปาเทศบาล", zh: "每单位水价——市营自来水" })}</span>
+              </div>
+              <div className="showcase-data-callout-cell">
+                <span className="showcase-data-callout-num">฿11</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Water per unit — regional authority", th: "ค่าน้ำต่อหน่วย — องค์กรส่วนภูมิภาค", zh: "每单位水价——区域机构" })}</span>
+              </div>
+              <div className="showcase-data-callout-cell">
+                <span className="showcase-data-callout-num">67→20</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Vet field rounds per cycle after going online", th: "รอบออกพื้นที่ของสัตวแพทย์ หลังย้ายออนไลน์", zh: "在线化后兽医现场出勤次数/轮" })}</span>
+              </div>
+            </div>
+            <p>
+              {translate(locale, {
+                en: "Other provinces had built custom apps for citizen reporting. Most of those apps sat unused. They required downloads, logins, and learning a new interface — friction that government enthusiasm generated but resident attention would not pay. Nakhon Si Thammarat chose the platform with 70 million Thai users already on it.",
+                th: "จังหวัดอื่นๆ ได้สร้างแอปเฉพาะสำหรับรายงานของประชาชน แอปส่วนใหญ่ไม่ถูกใช้งาน ต้องการการดาวน์โหลด การล็อกอิน และการเรียนรู้อินเทอร์เฟซใหม่ — ความยุ่งยากที่ความกระตือรือร้นของรัฐสร้างขึ้น แต่ความสนใจของประชาชนไม่ยอมจ่าย นครศรีธรรมราชเลือกแพลตฟอร์มที่คนไทยกว่า 70 ล้านคนอยู่บนนั้นแล้ว",
+                zh: "其他省份建了专属市民报告应用，大多数无人问津。它们需要下载、注册、学习新界面——政府的热情制造了摩擦，居民的注意力不会为此买单。那空是贪玛叻选择了一个已有7000万泰国用户的平台。",
+              })}
+            </p>
+            <p>
+              {translate(locale, {
+                en: "The same logic extended to water pricing and veterinary services. The city's self-operated waterworks were already cheaper than the regional authority at ฿2.50 versus ฿11 per unit, but most residents did not know it. Field rounds for government vets dropped from 67 per cycle to 20 after the service moved online. The technology did not create the benefit. It made the existing benefit legible.",
+                th: "ตรรกะเดียวกันนี้ขยายไปถึงราคาน้ำและบริการสัตวแพทย์ ระบบประปาที่ดำเนินการเองของเมืองถูกกว่าองค์กรส่วนภูมิภาคอยู่แล้ว ที่ ฿2.50 เทียบกับ ฿11 ต่อหน่วย แต่ประชาชนส่วนใหญ่ไม่รู้ รอบการออกพื้นที่ของสัตวแพทย์รัฐลดลงจาก 67 ครั้งต่อรอบเหลือ 20 ครั้ง หลังบริการย้ายไปออนไลน์ เทคโนโลยีไม่ได้สร้างประโยชน์ขึ้นมา แต่ทำให้ประโยชน์ที่มีอยู่แล้วมองเห็นได้",
+                zh: "同样的逻辑延伸到水价和兽医服务。市营自来水本就比区域机构便宜——每单位฿2.50对฿11，但大多数居民并不知道。服务移至线上后，政府兽医每轮现场出勤次数从67次降至20次。技术没有创造效益，而是让原本存在的效益变得清晰可见。",
+              })}
+            </p>
+          </section>
+
+          {/* ── Flood zero ── */}
+          <section className="section">
+            <p className="eyebrow">{translate(locale, { en: "Flood intelligence", th: "ระบบข้อมูลน้ำท่วม", zh: "洪水预警系统" })}</p>
+            <h2>{translate(locale, { en: "A 10-hour warning window that changed everything", th: "หน้าต่างเตือนภัย 10 ชั่วโมงที่เปลี่ยนทุกอย่าง", zh: "10 小时预警窗口，改变了一切" })}</h2>
+            <p>
+              {translate(locale, {
+                en: "Before 2021, a flood event in Nakhon Si Thammarat meant four days of water. The city responded after the fact — assessing damage, deploying teams, waiting for levels to drop. The data that changed this was already there. Traffic CCTV cameras were redirected to monitor canals, flood-prone intersections, and upstream water gates. Upstream sensors provided the trigger points. The LINE OA channel already reached virtually every resident.",
+                th: "ก่อนปี 2564 เหตุการณ์น้ำท่วมในนครศรีธรรมราชหมายถึงสี่วันของการแช่น้ำ เมืองตอบสนองหลังเหตุการณ์เกิดขึ้น — ประเมินความเสียหาย ส่งทีมลงพื้นที่ รอให้ระดับน้ำลง ข้อมูลที่เปลี่ยนทุกอย่างนั้นมีอยู่แล้ว กล้องวงจรปิดถูกหันไปส่องคลอง จุดน้ำท่วมซ้ำซาก และประตูน้ำต้นน้ำ เซ็นเซอร์ต้นน้ำให้จุดกระตุ้น และช่อง LINE OA เข้าถึงประชาชนเกือบทุกคนอยู่แล้ว",
+                zh: "2021年之前，那空是贪玛叻的洪水事件意味着泡在水里整整四天。城市被动应对——评估损失、派遣队伍、等待水位下降。改变这一切的数据早已存在。交通摄像头被重新定向，用于监控河渠、易涝路口和上游水闸；上游传感器提供触发节点；LINE OA频道已经覆盖了几乎所有居民。",
+              })}
+            </p>
+            <p>
+              {translate(locale, {
+                en: "When these three were connected — sensor to camera to alert — the city gained a 10-hour warning window before flood levels became dangerous. Enough time for residents to move vehicles, secure property, and evacuate the elderly. The 2020 flood lasted four days. Every flood since 2021 has produced zero fatalities. The cameras did not change the weather. They changed what the city knew, and when it knew it.",
+                th: "เมื่อสามสิ่งนี้ถูกเชื่อมเข้าหากัน — เซ็นเซอร์ กล้อง การแจ้งเตือน — เมืองได้หน้าต่างเตือนภัย 10 ชั่วโมงก่อนระดับน้ำจะอันตราย เพียงพอสำหรับให้ประชาชนย้ายรถ เก็บทรัพย์สิน และพาผู้สูงอายุออกจากพื้นที่ น้ำท่วมปี 2563 กินเวลาสี่วัน ทุกน้ำท่วมตั้งแต่ปี 2564 มีผู้เสียชีวิตเป็นศูนย์ กล้องไม่ได้เปลี่ยนอากาศ มันเปลี่ยนสิ่งที่เมืองรู้ และรู้เมื่อไหร่",
+                zh: "当这三者被连接起来——传感器、摄像头、预警——城市获得了10小时的预警窗口，在洪水达到危险水位之前。足够居民转移车辆、保护财产、撤离老人。2020年的洪水持续了四天。2021年以来的每次洪水，死亡人数均为零。摄像头没有改变天气，它改变了城市知道什么、以及什么时候知道。",
+              })}
+            </p>
+          </section>
+
+          {/* ── International awards ── */}
+          <section className="section">
+            <p className="eyebrow">{translate(locale, { en: "International recognition", th: "การยอมรับในระดับนานาชาติ", zh: "国际认可" })}</p>
+            <h2>{translate(locale, { en: "From Goyang to the ASEAN stage", th: "จากโกยังสู่เวที ASEAN", zh: "从高阳到 ASEAN 舞台" })}</h2>
+            <p>
+              {translate(locale, {
+                en: "In 2023, Nakhon Si Thammarat won the Best Partnership Award at the World Smart City Expo in Goyang, South Korea — in partnership with depa, Thailand's Digital Economy Promotion Agency. The award recognised the city's approach to citizen-led digital adoption, not just the technology deployed. In 2025, the city returned to the same international stage to represent Thailand's smart city programme at the ASEAN level.",
+                th: "ในปี 2566 นครศรีธรรมราชได้รับรางวัล Best Partnership Award ในงาน World Smart City Expo ที่เมืองโกยัง ประเทศเกาหลีใต้ ร่วมกับ depa สำนักงานส่งเสริมเศรษฐกิจดิจิทัล รางวัลนี้ยกย่องแนวทางการนำเทคโนโลยีดิจิทัลโดยการขับเคลื่อนของประชาชน ไม่ใช่แค่เทคโนโลยีที่ใช้งาน ในปี 2568 เมืองกลับสู่เวทีนานาชาติเดิม เพื่อเป็นตัวแทนโปรแกรมสมาร์ทซิตี้ของไทยในระดับ ASEAN",
+                zh: "2023年，那空是贪玛叻与泰国数字经济促进局（depa）合作，在韩国高阳世界智慧城市博览会上荣获最佳合作奖。这一奖项表彰的是这座城市以市民为驱动力推动数字化应用的方式，而不仅仅是部署的技术。2025年，城市再度登上同一国际舞台，在 ASEAN 层面代表泰国智慧城市计划。",
+              })}
+            </p>
+            <div className="showcase-award-photo-grid">
+              <div>
+                <div className="showcase-award-photo-block">
+                  <ResponsiveImage
+                    src="/Nakhon Si Thammarat/mayor-kanop-goyang-award-2023.jpg"
+                    alt={translate(locale, { en: "Nakhon Si Thammarat delegation receiving the Best Partnership Award at WSCE Goyang 2023 with depa", th: "คณะนครศรีธรรมราชรับรางวัล Best Partnership Award ที่ WSCE โกยัง 2566 ร่วมกับ depa", zh: "那空是贪玛叻代表团与depa在2023年高阳WSCE共同领取最佳合作奖" })}
+                    sizes="(max-width: 640px) 100vw, 400px"
+                  />
+                </div>
+                <p className="showcase-award-photo-caption">
+                  {translate(locale, { en: "Best Partnership Award · WSCE Goyang 2023", th: "รางวัล Best Partnership Award · WSCE โกยัง 2566", zh: "最佳合作奖 · 高阳 WSCE 2023" })}
                 </p>
-              </article>
+              </div>
+              <div>
+                <div className="showcase-award-photo-block">
+                  <ResponsiveImage
+                    src="/Nakhon Si Thammarat/mayor-kanop-goyang-2025.jpg"
+                    alt={translate(locale, { en: "Dr. Kanop Ketchart representing Thailand's smart city programme at the international expo stage in 2025", th: "ดร.กณพ เกตุชาติ เป็นตัวแทนโปรแกรมสมาร์ทซิตี้ของไทยบนเวทีงานแสดงสินค้านานาชาติในปี 2568", zh: "กณพ เกตุชาติ博士在2025年国际博览会上代表泰国智慧城市计划" })}
+                    sizes="(max-width: 640px) 100vw, 400px"
+                  />
+                </div>
+                <p className="showcase-award-photo-caption">
+                  {translate(locale, { en: "International stage · 2025", th: "เวทีนานาชาติ · 2568", zh: "国际舞台 · 2025" })}
+                </p>
+              </div>
             </div>
           </section>
 
