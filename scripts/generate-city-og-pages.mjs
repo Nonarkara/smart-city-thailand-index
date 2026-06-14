@@ -129,3 +129,32 @@ for (const city of allCities) {
 }
 
 console.log(`✓ Generated ${count} city OG pages in dist/city/`);
+
+// ---------------------------------------------------------------------------
+// 4. Emit sitemap.xml — indexable static routes + every city profile.
+//    Kept in sync with cities automatically (same allCities source).
+//    Utility/easter-egg routes (/asus, /bingo, /canvas/*) are intentionally
+//    excluded — they are not public content surfaces.
+// ---------------------------------------------------------------------------
+const STATIC_ROUTES = [
+  "/", "/rankings", "/methodology", "/story", "/why", "/showcase",
+  "/partners", "/map", "/program", "/knowledge", "/discover", "/invest",
+  "/compare", "/references", "/audit",
+];
+const lastmod = new Date().toISOString().slice(0, 10);
+const urls = [
+  ...STATIC_ROUTES.map((p) => ({ loc: p === "/" ? `${BASE_URL}/` : `${BASE_URL}${p}`, priority: p === "/" ? "1.0" : "0.8" })),
+  ...allCities.map((c) => ({ loc: `${BASE_URL}/city/${c.id}`, priority: "0.6" })),
+];
+const sitemap =
+  `<?xml version="1.0" encoding="UTF-8"?>\n` +
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  urls
+    .map(
+      (u) =>
+        `  <url>\n    <loc>${escHtml(u.loc)}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <priority>${u.priority}</priority>\n  </url>`
+    )
+    .join("\n") +
+  `\n</urlset>\n`;
+writeFileSync(join(root, "dist/sitemap.xml"), sitemap);
+console.log(`✓ Generated sitemap.xml with ${urls.length} URLs`);

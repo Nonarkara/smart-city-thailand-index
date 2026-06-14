@@ -1,0 +1,7 @@
+# Cloudflare Pages SPA fallback.
+# Static assets (/assets/*, /city/<id>/index.html OG pages, images, PDFs) are
+# served directly because they match real files BEFORE this rule is consulted.
+# Any client-only route (e.g. /rankings, /compare, /city/<id> without a static
+# page) falls through to here and is REWRITTEN (200, not redirected) to the SPA
+# shell so src/routing.ts can resolve it. Fixes deep-link/shared-link 404s.
+/*    /index.html    200

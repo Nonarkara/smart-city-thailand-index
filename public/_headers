@@ -1,0 +1,22 @@
+# Cloudflare Pages response headers.
+# Every external origin the site actually loads is whitelisted in the CSP:
+#   unpkg.com .............. Leaflet JS + CSS (Rankings map)
+#   fonts.googleapis.com ... Google Fonts stylesheet (IBM Plex Sans Thai etc.)
+#   fonts.gstatic.com ...... Google Fonts woff2 files
+#   cloudflareinsights.com . CF Web Analytics beacon
+#   https: (img) ........... map tiles (Carto, GISTDA, OSM), Wikimedia, NASA photos
+#   https: (connect) ....... ipapi.co geo, script.google.com logging, gov-data APIs
+# 'unsafe-inline' is required for the two first-party inline <script> blocks in
+# index.html (dark-mode flash guard + SPA path restore) and for React inline
+# style={{}} attributes. Tightening to hashes would break on any byte change.
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+
+# Content-hashed bundles never change under their hash — cache them forever.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
