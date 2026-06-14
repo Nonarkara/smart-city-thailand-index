@@ -8,6 +8,11 @@ export default defineConfig(({ mode }) => {
     base: env.VITE_BASE_PATH || "/",
     plugins: [react()],
     build: {
+      // Emit hashed bundles under /static/ (not the default /assets/). A prior
+      // deploy poisoned some /assets/<hash>.js URLs with the SPA HTML fallback
+      // cached as immutable; moving to a fresh namespace orphans those dead
+      // entries so production references only clean URLs.
+      assetsDir: "static",
       rollupOptions: {
         output: {
           manualChunks: {
