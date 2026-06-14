@@ -344,6 +344,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   src="/Nakhon Si Thammarat/wsce_1421.jpg"
                   alt={translate(locale, { en: "Dr. Kanop Ketchart, Mayor of Nakhon Si Thammarat Municipality", th: "ดร.กณพ เกตุชาติ นายกเทศมนตรีนครนครศรีธรรมราช", zh: "กณพ เกตุชาติ博士，那空是贪玛叻市市长" })}
                   sizes="100vw"
+                  style={{ objectPosition: "center 22%" }}
                 />
               </div>
               <div>
