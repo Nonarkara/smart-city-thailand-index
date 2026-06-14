@@ -2653,6 +2653,14 @@ h2, h3 { font-family: var(--font); }
   transition: box-shadow .2s var(--ease), transform .2s var(--ease);
 }
 
+/* Idea-card index: mono numeral, not a pictograph (geometric house style) */
+.showcase-idea-icon {
+  font: 600 var(--text-display) var(--mono);
+  color: var(--3);
+  line-height: 1;
+  margin-bottom: .5rem;
+}
+
 /* Pillar bars: opacity dim on container hover = contextual grouping */
 .pillar-bar { transition: opacity .15s; }
 .pillar-bars-cell:hover .pillar-bar { opacity: .7; }

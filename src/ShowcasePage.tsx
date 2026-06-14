@@ -40,7 +40,7 @@ const metrics: ShowcaseMetric[] = [
 const ideas: ShowcaseIdea[] = [
   {
     id: "hospital-on-wheels",
-    icon: "🏥",
+    icon: "01",
     title: { en: "Hospital on Wheels", th: "โรงพยาบาลเคลื่อนที่", zh: "移动医院" },
     desc: {
       en: "A mobile medical unit with doctors, nurses, pharmacists, and telemedicine support. It reaches underserved neighborhoods without waiting for a new clinic building.",
@@ -50,7 +50,7 @@ const ideas: ShowcaseIdea[] = [
   },
   {
     id: "digital-catalog",
-    icon: "📱",
+    icon: "02",
     title: { en: "Digital catalog for street vendors", th: "แคตตาล็อกดิจิทัลสำหรับพ่อค้าแม่ค้า", zh: "街头商贩数字目录" },
     desc: {
       en: "A QR-based storefront layer for local merchants. The point is not e-commerce theatre; it is giving informal vendors a low-friction way into the digital economy.",
@@ -60,7 +60,7 @@ const ideas: ShowcaseIdea[] = [
   },
   {
     id: "mayors-classroom",
-    icon: "🎓",
+    icon: "03",
     title: { en: "Mayor's classroom", th: "ห้องเรียนนายก", zh: "市长课堂" },
     desc: {
       en: "A recurring live Q&A on LINE where the mayor answers residents directly. It matters because the digital channel is used for accountability, not just announcements.",
@@ -70,7 +70,7 @@ const ideas: ShowcaseIdea[] = [
   },
   {
     id: "citizen-rating",
-    icon: "⭐",
+    icon: "04",
     title: { en: "5-star citizen rating", th: "คะแนนบริการ 5 ดาว", zh: "五星市民评分" },
     desc: {
       en: "Residents rate service interactions in real time. That turns satisfaction from a ceremonial survey into an operating metric staff have to look at.",
@@ -80,7 +80,7 @@ const ideas: ShowcaseIdea[] = [
   },
   {
     id: "metaverse-classroom",
-    icon: "🥽",
+    icon: "05",
     title: { en: "Metaverse classroom", th: "ห้องเรียนเมตาเวิร์ส", zh: "元宇宙课堂" },
     desc: {
       en: "AR and VR were pushed into an actual school system with trained teachers and repeatable digital lesson content. That makes it a curriculum decision, not a gadget demo.",
@@ -90,7 +90,7 @@ const ideas: ShowcaseIdea[] = [
   },
   {
     id: "flood-warning",
-    icon: "🌊",
+    icon: "06",
     title: { en: "10-hour flood warning system", th: "ระบบเตือนน้ำท่วมล่วงหน้า 10 ชั่วโมง", zh: "10 小时洪灾预警系统" },
     desc: {
       en: "Upstream sensors, CCTV, and automatic LINE alerts create lead time before floodwater hits the city. This is the clearest proof on the page that smart-city systems can save lives.",
@@ -118,7 +118,7 @@ const sourceFiles: ShowcaseSource[] = [
     },
   },
   {
-    title: "public/NST Report.docx",
+    title: "NST Report.docx",
     note: {
       en: "Detailed municipal case-study report detailing AI healthcare, personalized STEM education initiatives, civic feedback loops, and alternative OPEX financing strategies.",
       th: "รายงานกรณีศึกษาเทศบาลอย่างละเอียด ครอบคลุมระบบสุขภาพ AI, นวัตกรรมระบบการเรียนรู้ STEM เฉพาะบุคคล, วงจรสะท้อนข้อมูลประชาชน และกลยุทธ์การเงินแบบ OPEX",
@@ -801,7 +801,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               <div className="flow-connection"></div>
               
               <div className="flow-node">
-                <div className="flow-node-icon">🌊</div>
+                <div className="flow-node-icon">1</div>
                 <div className="flow-node-content">
                   <div className="flow-node-title">{translate(locale, { en: "1. Upstream Sensors (Input)", th: "1. เซ็นเซอร์ต้นน้ำ (รับข้อมูล)", zh: "1. 上游传感器（输入）" })}</div>
                   <div className="flow-node-desc">{translate(locale, { en: "Water-level sensors at Kiriwong village detect anomalies 10 hours before the water hits the city limits.", th: "เซ็นเซอร์วัดระดับน้ำที่หมู่บ้านคีรีวงตรวจพบความผิดปกติ 10 ชั่วโมงก่อนน้ำถึงเขตเมือง", zh: "位于Kiriwong村的水位传感器在水流到达市区前10小时检测到异常。" })}</div>
@@ -809,7 +809,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               </div>
 
               <div className="flow-node">
-                <div className="flow-node-icon">🖥️</div>
+                <div className="flow-node-icon">2</div>
                 <div className="flow-node-content">
                   <div className="flow-node-title">{translate(locale, { en: "2. IOC Command Center (Processing)", th: "2. ศูนย์ IOC (ประมวลผล)", zh: "2. IOC指挥中心（处理）" })}</div>
                   <div className="flow-node-desc">{translate(locale, { en: "The telemetry triggers the CCTV wall. Human operators verify the flow rate and confirm the threat level instantly.", th: "ข้อมูลไปกระตุ้นกำแพง CCTV เจ้าหน้าที่ตรวจสอบอัตราการไหลและยืนยันระดับภัยคุกคามทันที", zh: "遥测数据触发CCTV监控墙。操作员立即验证流速并确认威胁等级。" })}</div>
@@ -817,7 +817,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               </div>
 
               <div className="flow-node">
-                <div className="flow-node-icon">📱</div>
+                <div className="flow-node-icon">3</div>
                 <div className="flow-node-content">
                   <div className="flow-node-title">{translate(locale, { en: "3. LINE OA Broadcast (Output)", th: "3. แจ้งเตือนผ่าน LINE OA (ส่งออก)", zh: "3. LINE OA广播（输出）" })}</div>
                   <div className="flow-node-desc">{translate(locale, { en: "A push notification hits the phones of 112,000 residents in targeted zones. Citizens move vehicles and elderly relatives to high ground.", th: "ข้อความแจ้งเตือนถูกส่งเข้ามือถือประชาชน 112,000 คนในพื้นที่เป้าหมาย ประชาชนย้ายรถและผู้สูงอายุขึ้นที่สูง", zh: "推送通知直接发送到目标区域112,000名居民的手机上。市民将车辆和老人转移到高处。" })}</div>
@@ -825,7 +825,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               </div>
 
               <div className="flow-node" style={{ borderColor: 'var(--amber)' }}>
-                <div className="flow-node-icon">✅</div>
+                <div className="flow-node-icon" style={{ color: "var(--amber)" }}>4</div>
                 <div className="flow-node-content">
                   <div className="flow-node-title" style={{ color: 'var(--amber)' }}>{translate(locale, { en: "4. Zero Fatalities (Outcome)", th: "4. ไม่มีผู้เสียชีวิต (ผลลัพธ์)", zh: "4. 零伤亡（结果）" })}</div>
                   <div className="flow-node-desc">{translate(locale, { en: "The physical flood still happens, but the human disaster is averted. Technology bought the city time.", th: "น้ำท่วมทางกายภาพยังคงเกิดขึ้น แต่หายนะต่อชีวิตถูกป้องกันไว้ เทคโนโลยีช่วยซื้อเวลาให้เมือง", zh: "物理上的洪水依然发生，但人类的灾难被避免了。技术为城市赢得了时间。" })}</div>
@@ -1006,13 +1006,13 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   <div className="showcase-data-callout-cell">
                     <span className="showcase-data-callout-num">6,000+</span>
                     <span className="showcase-data-callout-label">
-                      {translate(locale, { en: "Students on platform by 2024", th: "นักเรียนในระบบภายในปี 2567", zh: "2024 年平台学生用户数" })}
+                      {translate(locale, { en: "Students reached in 2023", th: "นักเรียนที่เข้าถึงในปี 2566", zh: "2023 年覆盖的学生人数" })}
                     </span>
                   </div>
                   <div className="showcase-data-callout-cell">
-                    <span className="showcase-data-callout-num">10–15 pts</span>
+                    <span className="showcase-data-callout-num">STEM</span>
                     <span className="showcase-data-callout-label">
-                      {translate(locale, { en: "Math & science comprehension score gains", th: "คะแนนความเข้าใจคณิตและวิทย์ดีขึ้น", zh: "数学与科学理解成绩提升幅度" })}
+                      {translate(locale, { en: "Notable math & science comprehension gains, strongest among students who previously underperformed", th: "คะแนนความเข้าใจคณิตและวิทย์ดีขึ้นชัดเจน โดยเฉพาะในกลุ่มนักเรียนที่เคยเรียนอ่อน", zh: "数学与科学理解成绩明显提升，在原本成绩落后的学生中尤为显著" })}
                     </span>
                   </div>
                   <div className="showcase-data-callout-cell">
@@ -1093,9 +1093,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 </h3>
                 <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-micro)" }}>
                   {translate(locale, {
-                    en: "NST procures via depa's pre-vetted Digital Catalog — a national registry of software vendors that have passed ISO/IEC 29110 quality audits. Bypassing standard procurement approval cycles reduced ICT acquisition lead times significantly while eliminating compliance risk at the city level.",
-                    th: "เทศบาลจัดซื้อผ่านแคตตาล็อกบัญชีบริการดิจิทัลของ depa ซึ่งเป็นทะเบียนแห่งชาติของผู้ให้บริการซอฟต์แวร์ที่ผ่านการตรวจสอบ ISO/IEC 29110 แล้ว การข้ามขั้นตอนอนุมัติจัดซื้อมาตรฐานช่วยลดระยะเวลารับซอฟต์แวร์อย่างมีนัย พร้อมลดความเสี่ยงด้านกฎระเบียบในระดับเมือง",
-                    zh: "那空是贪玛叻通过 depa 预先审核的数字名录进行采购——这是一份已通过 ISO/IEC 29110 质量审计的软件供应商国家名录。跳过标准采购审批流程，显著缩短了 ICT 采购周期，同时消除了城市层面的合规风险。",
+                    en: "NST procures via depa's Digital Catalog — a pre-vetted national registry of Thai tech vendors, service providers, and digital solutions. Combined with streamlined TOR templates, it cut procurement lead time from an average of 14 months in 2019 to 6.5 months in 2024, while removing compliance risk at the city level.",
+                    th: "เทศบาลจัดซื้อผ่านแคตตาล็อกดิจิทัลของ depa ซึ่งเป็นทะเบียนแห่งชาติของผู้ให้บริการเทคโนโลยีไทย ผู้ให้บริการ และโซลูชันดิจิทัลที่ผ่านการคัดกรองล่วงหน้า เมื่อรวมกับการปรับแบบ TOR ให้กระชับ ช่วยลดระยะเวลาจัดซื้อจากเฉลี่ย 14 เดือนในปี 2562 เหลือ 6.5 เดือนในปี 2567 พร้อมลดความเสี่ยงด้านกฎระเบียบในระดับเมือง",
+                    zh: "那空是贪玛叻通过 depa 数字名录进行采购——这是一份预先审核的泰国科技供应商、服务商及数字解决方案国家名录。配合精简的 TOR 模板，采购周期从 2019 年平均 14 个月缩短至 2024 年的 6.5 个月，同时消除了城市层面的合规风险。",
                   })}
                 </p>
               </article>
@@ -1107,9 +1107,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 </h3>
                 <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-micro)" }}>
                   {translate(locale, {
-                    en: "Using the ASEAN Smart Cities Network toolkit — active in 75% of ASEAN smart city pilots — NST matches each project to the right funding structure: grants for civic tech with no revenue, BOO for infrastructure with a private operator, and PPP for shared-cost services. The toolkit prevents cities from over-relying on the wrong instrument.",
-                    th: "โดยอ้างอิงเครื่องมือการเงินของ ASCN ซึ่งใช้งานในโครงการนำร่องสมาร์ทซิตี้ 75% ของภูมิภาค นครฯ จับคู่แต่ละโครงการกับโครงสร้างการเงินที่เหมาะสม: เงินอุดหนุนสำหรับเทคโนโลยีพลเมืองที่ไม่มีรายได้ BOO สำหรับโครงสร้างพื้นฐานที่มีผู้ดำเนินงานเอกชน และ PPP สำหรับบริการร่วมทุน เครื่องมือนี้ป้องกันไม่ให้เมืองพึ่งพาเครื่องมือที่ไม่ถูกต้อง",
-                    zh: "借助东盟智慧城市网络工具包——该工具包活跃于 75% 的东盟智慧城市试点——那空是贪玛叻将每个项目与合适的资金结构匹配：无收入的市民科技项目使用赠款，有私营运营商的基础设施使用 BOO，成本共担服务使用 PPP。该工具包防止城市过度依赖错误的融资工具。",
+                    en: "NST maps each project onto the ASEAN Smart Cities Network toolkit's funding structures: grants for civic tech with no revenue, BOO for infrastructure with a private operator, and PPP for shared-cost services. Across the region, 75% of smart city projects are now in some stage of implementation — the toolkit keeps cities from over-relying on the wrong instrument.",
+                    th: "นครฯ จับคู่แต่ละโครงการกับโครงสร้างการเงินในเครื่องมือของเครือข่ายเมืองอัจฉริยะอาเซียน: เงินอุดหนุนสำหรับเทคโนโลยีพลเมืองที่ไม่มีรายได้ BOO สำหรับโครงสร้างพื้นฐานที่มีผู้ดำเนินงานเอกชน และ PPP สำหรับบริการร่วมทุน ทั่วทั้งภูมิภาค 75% ของโครงการสมาร์ทซิตี้อยู่ระหว่างการดำเนินงานในขั้นใดขั้นหนึ่งแล้ว เครื่องมือนี้ช่วยไม่ให้เมืองพึ่งพาเครื่องมือที่ไม่ถูกต้อง",
+                    zh: "那空是贪玛叻将每个项目对应到东盟智慧城市网络工具包的资金结构上：无收入的市民科技项目使用赠款，有私营运营商的基础设施使用 BOO，成本共担服务使用 PPP。放眼整个区域，75% 的智慧城市项目目前正处于某一实施阶段——该工具包帮助城市避免过度依赖错误的融资工具。",
                   })}
                 </p>
               </article>
