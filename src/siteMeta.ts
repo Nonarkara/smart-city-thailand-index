@@ -162,7 +162,7 @@ function buildMeta(route: Route, locale: Locale) {
   const path = route.path === "/" ? "" : route.path;
   const canonicalUrl = `${siteUrl}${path}`;
   // Default share image — square logo
-  let imageUrl = `${siteUrl}/smart_city_thailand_logo.jpg`;
+  let imageUrl = `${siteUrl}${SHARE_IMAGE_PATH}`;
 
   if (route.kind !== "city" && route.kind !== "canvas") {
     return { title, description, canonicalUrl, imageUrl };
