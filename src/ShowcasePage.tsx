@@ -3,6 +3,9 @@ import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS } from "./types";
 import { ResponsiveImage } from "./mediaAssets";
 import DossierTabs from "./DossierTabs";
+import ShowcaseLocatorMap from "./ShowcaseLocatorMap";
+
+type TL = { en: string; th: string; zh: string };
 
 interface Props {
   locale: Locale;
@@ -35,6 +38,37 @@ const metrics: ShowcaseMetric[] = [
   { value: "฿2.3M", label: { en: "Reported annual savings", th: "มูลค่าประหยัดต่อปีที่รายงาน", zh: "报告中的年度节省" } },
   { value: "2.7d", label: { en: "Avg resolution, from 6.2 days", th: "เวลาแก้ปัญหาเฉลี่ย จาก 6.2 วัน", zh: "平均处理时间（原 6.2 天）" } },
   { value: "92%", label: { en: "Citizen satisfaction", th: "ความพึงพอใจประชาชน", zh: "市民满意度" } },
+];
+
+// City-introduction data for the At-a-Glance entry. Basics mirror the sourced
+// values in cityFacts.ts ("nakhon-si-thammarat"); cultural facts are widely
+// documented (Wat Phra Mahathat, Nora ICH 2021, Khao Luang 1,835 m, Tambralinga).
+const nstBasics: { label: TL; value: TL }[] = [
+  { label: { en: "Native name", th: "ชื่อภาษาไทย", zh: "泰文名" }, value: { en: "นครศรีธรรมราช", th: "นครศรีธรรมราช", zh: "นครศรีธรรมราช" } },
+  { label: { en: "Region", th: "ภูมิภาค", zh: "地区" }, value: { en: "Southern Thailand · Gulf coast", th: "ภาคใต้ · ชายฝั่งอ่าวไทย", zh: "泰国南部 · 湾岸" } },
+  { label: { en: "Population", th: "ประชากร", zh: "人口" }, value: { en: "≈1.5M province · ≈110K municipality", th: "≈1.5 ล้าน (จังหวัด) · ≈110,000 (เทศบาลนคร)", zh: "≈150 万（府）· ≈11 万（市）" } },
+  { label: { en: "Founded", th: "ก่อตั้ง", zh: "建城" }, value: { en: "Srivijaya-era port, 7th century", th: "ท่าเรือสมัยศรีวิชัย คริสต์ศตวรรษที่ 7", zh: "7 世纪室利佛逝时期港口" } },
+  { label: { en: "Geography", th: "ภูมิประเทศ", zh: "地形" }, value: { en: "Coastal plain between the Gulf and the Khao Luang range", th: "ที่ราบชายฝั่งระหว่างอ่าวไทยและเทือกเขาหลวง", zh: "泰国湾与銮山山脉之间的海岸平原" } },
+  { label: { en: "Sacred heart", th: "ศูนย์กลางศรัทธา", zh: "信仰核心" }, value: { en: "Wat Phra Mahathat Woramahawihan", th: "วัดพระมหาธาตุวรมหาวิหาร", zh: "帕玛哈塔寺" } },
+  { label: { en: "From Bangkok", th: "จากกรุงเทพฯ", zh: "距曼谷" }, value: { en: "780 km · 10 h drive / 1 h 20 m flight", th: "780 กม. · ขับ 10 ชม. / บิน 1 ชม. 20 น.", zh: "780 公里 · 车程 10 小时 / 飞行 1 小时 20 分" } },
+  { label: { en: "Language", th: "ภาษา", zh: "语言" }, value: { en: "Southern Thai (Pak Tai)", th: "ภาษาไทยถิ่นใต้ (ปักษ์ใต้)", zh: "南部泰语（巴泰）" } },
+];
+
+const nstIdentity: TL[] = [
+  { en: "Wat Phra Mahathat", th: "วัดพระมหาธาตุ", zh: "帕玛哈塔寺" },
+  { en: "Nora dance (โนรา)", th: "โนรา", zh: "诺拉舞 (โนรา)" },
+  { en: "Nang Talung shadow play", th: "หนังตะลุง", zh: "南部皮影戏" },
+  { en: "Nielloware silver", th: "เครื่องถม", zh: "乌银工艺" },
+  { en: "Tambralinga kingdom", th: "อาณาจักรตามพรลิงค์", zh: "单马令古国" },
+  { en: "Khao Luang", th: "เขาหลวง", zh: "銮山" },
+];
+
+const nstDidYouKnow: TL[] = [
+  { en: "The name comes from the Pali-Sanskrit Nagara Sri Dhammaraja — 'City of the Sacred Dharma King.'", th: "ชื่อเมืองมาจากภาษาบาลี-สันสกฤต 'นครศรีธรรมราช' — 'เมืองแห่งพระราชาผู้ทรงธรรมอันศักดิ์สิทธิ์'", zh: "城名源自巴利—梵语 Nagara Sri Dhammaraja，意为'神圣法王之城'。" },
+  { en: "Wat Phra Mahathat's golden-spired chedi sits on Thailand's UNESCO World Heritage tentative list.", th: "พระบรมธาตุเจดีย์ยอดทองของวัดพระมหาธาตุ อยู่ในบัญชีรายชื่อเบื้องต้นมรดกโลก UNESCO ของไทย", zh: "帕玛哈塔寺的金顶佛塔已列入泰国的联合国教科文组织世界遗产预备名录。" },
+  { en: "Nora, the southern dance-drama rooted here, joined UNESCO's Intangible Cultural Heritage list in 2021.", th: "โนรา การแสดงของภาคใต้ที่หยั่งรากที่นี่ ได้รับการขึ้นทะเบียนมรดกภูมิปัญญาทางวัฒนธรรมของ UNESCO ในปี 2564", zh: "扎根于此的南部歌舞剧'诺拉'于 2021 年入选联合国教科文组织非物质文化遗产名录。" },
+  { en: "Just west rises Khao Luang — at 1,835 m, the highest peak in southern Thailand.", th: "ทางทิศตะวันตกคือเขาหลวง สูง 1,835 เมตร ยอดเขาที่สูงที่สุดในภาคใต้ของไทย", zh: "城西矗立着銮山——海拔 1,835 米，是泰国南部最高峰。" },
+  { en: "It was the seat of Tambralinga and head of the south's twelve naksat (zodiac) cities.", th: "ที่นี่เคยเป็นศูนย์กลางของอาณาจักรตามพรลิงค์ และเป็นเมืองหลักของเมืองสิบสองนักษัตรแห่งภาคใต้", zh: "它曾是单马令古国的中心，也是南部'十二生肖城邦'之首。" },
 ];
 
 const ideas: ShowcaseIdea[] = [
@@ -325,7 +359,61 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
       >
         {/* ── TAB 1: At a Glance ── */}
         <div className="showcase-tab-panel">
+
+          {/* City introduction — the first entry into the story */}
+          <section className="section showcase-intro">
+            <p className="eyebrow">{translate(locale, { en: "Before the dashboard", th: "ก่อนจะมีแดชบอร์ด", zh: "在仪表盘之前" })}</p>
+            <div className="showcase-intro-hero">
+              <ResponsiveImage src="/Nakhon Si Thammarat/Nakhon-Si-Thammarat.jpg" alt={translate(locale, { en: "Wat Phra Mahathat Woramahawihan during Hae Pha Khuen That — pilgrims carry a sacred cloth to wrap the great chedi", th: "วัดพระมหาธาตุวรมหาวิหารในงานแห่ผ้าขึ้นธาตุ — ผู้ศรัทธาอัญเชิญผ้าพระบฏขึ้นห่มองค์พระบรมธาตุเจดีย์", zh: "帕玛哈塔寺的裹塔布朝圣仪式——信众抬着圣布缠绕大佛塔" })} sizes="100vw" />
+              <div className="showcase-intro-hero-caption">{translate(locale, { en: "Wat Phra Mahathat Woramahawihan — the Hae Pha Khuen That pilgrimage", th: "วัดพระมหาธาตุวรมหาวิหาร — ประเพณีแห่ผ้าขึ้นธาตุ", zh: "帕玛哈塔寺 — 裹塔布朝圣节" })}</div>
+            </div>
+            <p className="showcase-intro-lead">{translate(locale, { en: "Long before it ran a flood-sensor network or a citizen app, Nakhon Si Thammarat was a sacred capital on the Gulf — a city pilgrims walked toward, not past. To see why its smart-city turn matters, start with the place Thais already carry in their heads.", th: "ก่อนจะมีเครือข่ายเซ็นเซอร์น้ำท่วมหรือแอปสำหรับประชาชน นครศรีธรรมราชคือเมืองศักดิ์สิทธิ์ริมอ่าวไทย — เมืองที่ผู้คนเดินทางไปแสวงบุญ ไม่ใช่เมืองที่ผ่านเลย หากอยากเข้าใจว่าทำไมการก้าวสู่เมืองอัจฉริยะของที่นี่จึงสำคัญ ต้องเริ่มจากภาพเมืองที่คนไทยจดจำอยู่แล้ว", zh: "早在拥有洪水传感网络或市民应用之前，那空是贪玛叻就已是湾岸边的一座圣城——人们朝它跋涉而来，而非匆匆而过。要理解它迈向智慧城市为何重要，得先从泰国人心中早已熟知的这座城说起。" })}</p>
+          </section>
+
+          {/* Place — locator map + basic facts */}
+          <section className="section showcase-place">
+            <div className="showcase-place-grid">
+              <div className="showcase-place-map">
+                <ShowcaseLocatorMap locale={locale} />
+              </div>
+              <div className="showcase-place-facts">
+                <p className="eyebrow">{translate(locale, { en: "The basics", th: "ข้อมูลพื้นฐาน", zh: "基本信息" })}</p>
+                <dl className="showcase-facts">
+                  {nstBasics.map(f => (
+                    <div key={f.label.en} className="showcase-fact-row">
+                      <dt className="showcase-fact-key">{translate(locale, f.label)}</dt>
+                      <dd className="showcase-fact-val">{translate(locale, f.value)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+          </section>
+
+          {/* Identity — what comes to mind */}
+          <section className="section showcase-identity">
+            <p className="eyebrow">{translate(locale, { en: "What comes to mind", th: "ภาพที่คนนึกถึง", zh: "人们的印象" })}</p>
+            <p className="showcase-identity-text">{translate(locale, { en: "Ask anyone in Thailand about Nakhon Si Thammarat and the first answer is rarely technology. It is the great golden chedi of Wat Phra Mahathat, believed to enshrine a relic of the Buddha and among the most revered pilgrimage sites in the south. It is the hypnotic Nora dance and the lamplit screens of Nang Talung shadow play; nielloware silver and centuries of monastic scholarship — a city whose name itself means 'City of the Sacred Dharma King.'", th: "ถามคนไทยคนไหนถึงนครศรีธรรมราช คำตอบแรกมักไม่ใช่เรื่องเทคโนโลยี แต่คือองค์พระบรมธาตุเจดีย์สีทองของวัดพระมหาธาตุ ที่เชื่อกันว่าประดิษฐานพระบรมสารีริกธาตุ และเป็นหนึ่งในศาสนสถานที่ผู้คนเคารพศรัทธามากที่สุดของภาคใต้ คือท่วงท่าของโนราและจอหนังตะลุงยามค่ำ คือเครื่องถมเงินและภูมิปัญญาทางศาสนาที่สืบทอดมาหลายศตวรรษ — เมืองที่แม้แต่ชื่อก็แปลว่า 'เมืองแห่งพระราชาผู้ทรงธรรมอันศักดิ์สิทธิ์'", zh: "随便问一个泰国人对那空是贪玛叻的印象，第一反应很少是科技。是帕玛哈塔寺那座金顶大佛塔——相传供奉佛陀舍利，为南部最受尊崇的朝圣地之一；是令人入神的诺拉舞与夜色中皮影戏的灯影；是乌银工艺，以及绵延数百年的佛门学问——一座连名字都意为'神圣法王之城'的城市。" })}</p>
+            <ul className="showcase-identity-tags">
+              {nstIdentity.map(tag => (<li key={tag.en} className="showcase-identity-tag">{translate(locale, tag)}</li>))}
+            </ul>
+          </section>
+
+          {/* Did you know */}
+          <section className="section showcase-dyk">
+            <p className="eyebrow">{translate(locale, { en: "Did you know", th: "รู้หรือไม่", zh: "你知道吗" })}</p>
+            <ul className="showcase-dyk-list">
+              {nstDidYouKnow.map((f, i) => (
+                <li key={i} className="showcase-dyk-item">
+                  <span className="showcase-dyk-mark" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="showcase-dyk-text">{translate(locale, f)}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           <section className="section showcase-metric-section">
+            <p className="eyebrow">{translate(locale, { en: "The outcomes", th: "ผลลัพธ์", zh: "成效" })}</p>
             <div className="showcase-metric-grid">
               {metrics.map(metric => (
                 <div key={metric.value + metric.label.en} className="showcase-metric-card">
@@ -338,6 +426,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           <section className="section showcase-pillar-section">
             <p className="eyebrow">{translate(locale, { en: "SCITI 2026 pillar profile", th: "โปรไฟล์เสาหลัก SCITI 2026", zh: "SCITI 2026 支柱画像" })}</p>
             <ShowcasePillarProfile locale={locale} />
+          </section>
+          <section className="section showcase-bridge">
+            <p className="showcase-bridge-text">{translate(locale, { en: "A city this old rarely rewrites how it governs. This one did — quietly, from the street up. The rest of this page is how.", th: "เมืองเก่าแก่ขนาดนี้ ไม่ค่อยเขียนวิธีปกครองตัวเองขึ้นใหม่ แต่เมืองนี้ทำ — อย่างเงียบ ๆ และเริ่มจากท้องถนน ส่วนที่เหลือของหน้านี้คือเรื่องราวนั้น", zh: "如此古老的城市，鲜少重写自己的治理方式。但这座城做到了——静悄悄地，从街头做起。本页接下来讲的就是它如何做到。" })}</p>
           </section>
         </div>
 
