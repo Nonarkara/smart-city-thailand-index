@@ -1897,7 +1897,16 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   object-fit: cover;
   object-position: center 35%;
 }
-.showcase-metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0; border: 1px solid var(--5, #E5E5E5); }
+/* At-a-Glance stat board — hairline grid, mono numerals (composite-numeral
+   exception, §11.7), label in micro. Mirrors the .showcase-data-callout vocab. */
+.showcase-metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--5); border: 1px solid var(--5); }
+.showcase-metric-card { background: var(--surface); padding: 1.15rem 1.2rem; display: flex; flex-direction: column; gap: .45rem; }
+.showcase-metric-value { font-family: var(--mono), "IBM Plex Sans Thai", monospace; font-weight: 600; font-size: clamp(1.35rem, 4.5vw, 2rem); line-height: 1; letter-spacing: -.01em; color: var(--ink); }
+.showcase-metric-label { font: 400 var(--text-micro)/1.4 var(--font); color: var(--3); }
+@media (max-width: 640px) {
+  .showcase-metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .showcase-metric-card { padding: .9rem .95rem; }
+}
 
 /* Showcase pillar profile */
 .showcase-pillar-section { margin-bottom: 1.25rem; }

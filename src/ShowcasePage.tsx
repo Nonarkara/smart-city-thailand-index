@@ -30,10 +30,10 @@ const metrics: ShowcaseMetric[] = [
   { value: "112,000+", label: { en: "Active app users", th: "ผู้ใช้แอปที่ใช้งานจริง", zh: "活跃应用用户" } },
   { value: "< 48h", label: { en: "Issue resolution target", th: "เป้าเวลาแก้ปัญหา", zh: "问题处理目标" } },
   { value: "38,000", label: { en: "Complaints resolved in 3 years", th: "เรื่องร้องเรียนที่แก้ใน 3 ปี", zh: "3 年内已处理投诉" } },
-  { value: "10h", label: { en: "Flood warning window", th: "เวลานำเตือนน้ำท่วม", zh: "洪灾预警窗口" } },
+  { value: "37%", label: { en: "Call-center workload cut", th: "ปริมาณงานคอลเซ็นเตอร์ที่ลดลง", zh: "呼叫中心工作量下降" } },
   { value: "70%", label: { en: "Population adoption", th: "สัดส่วนประชากรที่ใช้งาน", zh: "人口采用率" } },
   { value: "฿2.3M", label: { en: "Reported annual savings", th: "มูลค่าประหยัดต่อปีที่รายงาน", zh: "报告中的年度节省" } },
-  { value: "0", label: { en: "Flood fatalities since 2021", th: "ผู้เสียชีวิตจากน้ำท่วมตั้งแต่ปี 2564", zh: "2021 年以来洪灾死亡数" } },
+  { value: "2.7d", label: { en: "Avg resolution, from 6.2 days", th: "เวลาแก้ปัญหาเฉลี่ย จาก 6.2 วัน", zh: "平均处理时间（原 6.2 天）" } },
   { value: "92%", label: { en: "Citizen satisfaction", th: "ความพึงพอใจประชาชน", zh: "市民满意度" } },
 ];
 
