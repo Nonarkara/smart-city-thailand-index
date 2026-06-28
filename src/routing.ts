@@ -1,7 +1,9 @@
-export type StaticRoutePath = "/" | "/rankings" | "/methodology" | "/story" | "/why" | "/showcase" | "/partners" | "/map" | "/asus" | "/audit" | "/references" | "/program" | "/knowledge" | "/discover" | "/invest" | "/compare" | "/bingo" | "/canvas";
+export type StaticRoutePath = "/" | "/about" | "/creative-economy" | "/rankings" | "/methodology" | "/story" | "/why" | "/showcase" | "/partners" | "/map" | "/asus" | "/audit" | "/references" | "/program" | "/knowledge" | "/discover" | "/invest" | "/compare" | "/bingo" | "/canvas";
 
 export type Route =
   | { kind: "home"; path: "/" }
+  | { kind: "about"; path: "/about" }
+  | { kind: "creative-economy"; path: "/creative-economy" }
   | { kind: "rankings"; path: "/rankings" }
   | { kind: "methodology"; path: "/methodology" }
   | { kind: "story"; path: "/story" }
@@ -30,6 +32,8 @@ export function parseRoute(rawPathname: string): Route {
   // /rankings/ link arrives with a slash too; without this, cityId parses as
   // "<id>/" and the page shows "City not found". Root "/" is preserved.
   const pathname = afterBase !== "/" ? afterBase.replace(/\/+$/, "") : "/";
+  if (pathname === "/about") return { kind: "about", path: "/about" };
+  if (pathname === "/creative-economy") return { kind: "creative-economy", path: "/creative-economy" };
   if (pathname === "/rankings") return { kind: "rankings", path: "/rankings" };
   if (pathname === "/methodology") return { kind: "methodology", path: "/methodology" };
   if (pathname === "/story") return { kind: "story", path: "/story" };

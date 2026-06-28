@@ -38,8 +38,10 @@ describe("App", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    const toggle = await screen.findByRole("button", { name: "Switch language to Thai" });
-    await user.click(toggle);
+    // Direct locale selector: click TH to switch to Thai (replaces the old
+    // cycling button which used aria-label "Switch language to Thai").
+    const thButton = await screen.findByRole("button", { name: "ภาษาไทย" });
+    await user.click(thButton);
 
     await waitFor(() => {
       expect(document.documentElement.lang).toBe("th");

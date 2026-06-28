@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SCITI 2026 — Moneyball Province Factsheets</title>
+    <meta name="description" content="Investor factsheets for 10 high-potential Thai provinces: Lamphun, Khon Kaen, Chanthaburi, Chiang Mai, Nakhon Ratchasima, Songkhla, Chiang Rai, Udon Thani, Ayutthaya, Phuket.">
+    <meta name="author" content="depa — Digital Economy Promotion Agency">
+    <meta name="keywords" content="Thailand, smart city, provincial investment, GPP, BOI, Moneyball, Lamphun, Khon Kaen, Chiang Mai, Phuket, CEA, UNESCO">
+    <meta property="og:title" content="SCITI 2026 Moneyball Province Factsheets">
+    <meta property="og:description" content="10 undervalued Thai provinces ranked by cost-to-productivity ratio. Open data under CC BY 4.0.">
+    <style>
+      :root {
+        --paper: #ffffff;
+        --ink: #0a0a0a;
+        --muted: #4a4a4a;
+        --rule: #d9d9d9;
+        --accent: #0c2f53;
+        --good: #1f6b3a;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #f5f5f5;
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+        background: var(--paper);
+        padding: 32px 28px 48px;
+      }
+      h1, h2, h3 { margin: 0; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+      h1 { font-size: 28px; margin-bottom: 8px; }
+      h2 { font-size: 18px; margin-top: 32px; margin-bottom: 8px; padding-top: 16px; border-top: 1px solid var(--rule); }
+      h3 { font-size: 14px; margin-top: 16px; margin-bottom: 4px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; }
+      p { margin: 0 0 10px; }
+      ul { margin: 0 0 12px; padding-left: 20px; }
+      li { margin-bottom: 4px; }
+      .eyebrow {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .lede { font-size: 15px; color: var(--muted); max-width: 60ch; margin-bottom: 12px; }
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        padding: 8px 0;
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        margin: 12px 0 16px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .meta-row strong { color: var(--ink); font-weight: 600; }
+      .score-pill {
+        display: inline-block;
+        padding: 2px 10px;
+        border: 1px solid var(--ink);
+        font-weight: 700;
+        font-size: 13px;
+        margin-left: 6px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0 24px;
+        font-size: 12px;
+      }
+      th, td {
+        text-align: left;
+        padding: 6px 8px;
+        border-bottom: 1px solid var(--rule);
+      }
+      th {
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        font-size: 10px;
+      }
+      td.num { font-variant-numeric: tabular-nums; }
+      tr:hover { background: #fafafa; }
+      footer {
+        margin-top: 40px;
+        padding-top: 16px;
+        border-top: 1px solid var(--rule);
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      @media print {
+        body { background: white; }
+        main { padding: 18mm 16mm; max-width: none; }
+        h2 { page-break-before: always; }
+        h2:first-of-type { page-break-before: avoid; }
+      }
+      @media (max-width: 600px) {
+        main { padding: 24px 18px; }
+        h1 { font-size: 24px; }
+        .meta-row { font-size: 11px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">SCITI 2026 · Investor Brief</p>
+      <h1>Moneyball Province Factsheets</h1>
+      <p class="lede">Ten Thai provinces ranked by cost-to-productivity ratio — the asymmetric opportunity set the market has not yet fully priced in. Use these as a starting point for due diligence; the underlying GPP, wage, and infrastructure data live in <code>sciti.nonarkara.org/data/cities.json</code>.</p>
+      <div class="meta-row">
+        <span><strong>Edition</strong> SCITI 2026</span>
+        <span><strong>License</strong> CC BY 4.0</span>
+        <span><strong>Sources</strong> NESDC, BOI, Ministry of Labour, CEA, UNESCO</span>
+        <span><strong>Author</strong> Dr. Non · depa · SLIC Methodology</span>
+      </div>
+
+      <h2>Lamphun <span class="score-pill">8.7</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Northern</span>
+        <span><strong>BOI Zone</strong> NEC Creative Lanna + 20 Low-Income Provinces (stacked)</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Lamphun is the ultimate Moneyball pick: GPP/Capita of 191,568 THB (higher than Chiang Mai) at minimum wage of just 350 THB/day — among the lowest in Thailand. Located 30km from Chiang Mai's creative ecosystem, Lamphun captures all the spillover benefits — talent, connectivity, creative energy — at a fraction of the cost. Dual BOI status provides the most generous incentive stack available outside SEZ zones.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 77.85 B THB</li>
+        <li><strong>GPP/Capita:</strong> 191,568 THB (84% above Northern average)</li>
+        <li><strong>Min Wage:</strong> 350 THB/day (Tier 4 — lowest cost)</li>
+        <li><strong>Population:</strong> 0.406M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>Northern Economic Corridor Creative Lanna zone · Hariphunchai traditional textile and weaving heritage · Longan Festival (creative agriculture event) · Lamphun Night Market creative retail · direct spillover from Chiang Mai Design Week · scenic mountainous landscape for creative retreat development.</p>
+      <h3>Infrastructure</h3>
+      <p>30km from Chiang Mai International Airport (CNX) · Chiang Mai-Lamphun dual-track rail · direct highway to Chiang Mai (20 min) · 5G coverage &gt;85% · no major university (relies on Chiang Mai 30km away) · small population requires targeted workforce development.</p>
+      <h3>Investment Angle</h3>
+      <p>Back-office and creative production for Chiang Mai businesses · craft manufacturing at scale · creative retreat and wellness center · agricultural creative branding (longan, durian) · light manufacturing. The cost arbitrage is extraordinary: Chiang Mai talent, Lamphun costs.</p>
+
+      <h2>Khon Kaen <span class="score-pill">8.5</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Northeastern (Isan)</span>
+        <span><strong>BOI Zone</strong> NeEC Bioeconomy Corridor</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Khon Kaen is the undisputed capital of Northeastern Thailand — a region of 18.5M people that contributes 9.4% of national GPP but receives far less investment attention than its scale warrants. As a university city (Khon Kaen University, 40,000+ students), a logistics hub on the Northeastern Economic Corridor, and the home of the Isan Creative Festival (151,000 participants, 309.8M THB economic value), Khon Kaen combines talent density with cultural vibrancy at a labor cost 30% below Bangkok.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 204.12 B THB (#2 in NE)</li>
+        <li><strong>GPP/Capita:</strong> 117,560 THB</li>
+        <li><strong>Min Wage:</strong> 357 THB/day (Tier 3)</li>
+        <li><strong>Population:</strong> 1.736M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>Isan Creative Festival hub · CEA regional office · Srichan creative district · Molam Crossover Project (traditional music modernization) · NE cultural capital with strong traditional performing arts, silk weaving, and culinary heritage.</p>
+      <h3>Infrastructure</h3>
+      <p>Domestic airport (KKC) with connections to Bangkok and Phuket · Northeastern rail line to Bangkok · 5G coverage &gt;85% · Khon Kaen University (40,000+ students) · NE highway network hub.</p>
+      <h3>Investment Angle</h3>
+      <p>Food processing and creative food industries · logistics and distribution · bioeconomy R&amp;D · creative content production (music, media) · education and training centers. The NeEC corridor designation provides targeted BOI incentives.</p>
+
+      <h2>Chanthaburi <span class="score-pill">8.3</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Eastern</span>
+        <span><strong>BOI Zone</strong> SEZ (Cambodia Border)</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Chanthaburi is Thailand's hidden eastern gem — literally, as the world's colored gemstone trading capital (B5B+ annual trade). SEZ status on the Cambodia border, adjacency to the EEC (Rayong is 100km away), and GPP/Capita of 254,582 THB create an unusual profile: border-trade access at non-EEC costs. The gem and jewelry creative cluster, combined with fruit agriculture creative branding potential, gives Chanthaburi two distinct creative economy angles.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 138.44 B THB</li>
+        <li><strong>GPP/Capita:</strong> 254,582 THB</li>
+        <li><strong>Min Wage:</strong> 354 THB/day (Tier 3)</li>
+        <li><strong>Population:</strong> 0.553M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>World colored gemstone trading center · gem cutting and jewelry design cluster · Noen Wong Fortress and Catholic historic district · Cathedral of the Immaculate Conception · durian and tropical fruit creative agriculture · Chanthaburi Fruit Festival · proximity to Koh Chang island tourism circuit.</p>
+      <h3>Infrastructure</h3>
+      <p>No airport (Trat 70km, Utapao 100km) · Cambodia border crossing (Ban Pakard) · Highway 3 (Sukhumvit) direct to Bangkok · EEC highway connectivity · 5G coverage &gt;85% · gem trading infrastructure (world's largest colored gem market).</p>
+      <h3>Investment Angle</h3>
+      <p>Gem and jewelry creative design and e-commerce · cross-border trade with Cambodia · creative food branding and export · boutique tourism circuit linking gems + fruit + heritage · light manufacturing for EEC supply chain. SEZ provides 8-year CIT exemption with potential extension to 13 years.</p>
+
+      <h2>Chiang Mai <span class="score-pill">8.2</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Northern</span>
+        <span><strong>BOI Zone</strong> NEC Creative Lanna</span>
+        <span><strong>UNESCO</strong> Crafts &amp; Folk Art</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Chiang Mai is Thailand's most established creative city outside Bangkok and the only ASEAN city to hold simultaneous UNESCO Creative City (Crafts &amp; Folk Art) status. With 50,000+ university students, a thriving digital nomad ecosystem, and the Chiang Mai Design Week pulling 105,000 visitors generating 493.7M THB in economic value, this is the proof-of-concept for provincial creative economy investment.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 231.73 B THB</li>
+        <li><strong>GPP/Capita:</strong> 135,991 THB</li>
+        <li><strong>Min Wage:</strong> 357 THB/day (Tier 3)</li>
+        <li><strong>Population:</strong> 1.805M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>UNESCO Creative City (Crafts &amp; Folk Art) · Chiang Mai Design Week (105k visitors, 493.7M THB) · CEA regional office · Old City creative district · 1,757 youth entrepreneurs trained through CEA programs · hub for crafts, digital creative, wellness tourism.</p>
+      <h3>Infrastructure</h3>
+      <p>International airport (CNX) with direct flights to China, Korea, Japan, Singapore · Chiang Mai-Lamphun dual-track rail under development · 5G coverage &gt;90% · fiber broadband &gt;85% · Chiang Mai University + Maejo University (50,000+ students combined).</p>
+      <h3>Investment Angle</h3>
+      <p>Creative industries · digital nomad infrastructure · wellness tourism · craft export · creative education. The Chiang Mai-Lamphun corridor offers adjacent low-cost expansion opportunities.</p>
+
+      <h2>Nakhon Ratchasima <span class="score-pill">8.0</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Northeastern (Isan)</span>
+        <span><strong>BOI Zone</strong> NeEC Bioeconomy Corridor</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>"Korat" is the largest city in Northeastern Thailand by both population (2.515M) and economic output (274.9B THB GPP). It is the logistics gateway to Isan, the junction point for northeastern rail and highway networks, and home to Suranaree University of Technology (20,000+ students). Despite its scale, Korat receives a fraction of the investment attention that much smaller cities in the Central region attract.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 274.90 B THB (#1 in NE)</li>
+        <li><strong>GPP/Capita:</strong> 110,301 THB</li>
+        <li><strong>Min Wage:</strong> 359 THB/day (Tier 3)</li>
+        <li><strong>Population:</strong> 2.515M (largest NE city)</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>Gateway to Isan cultural region · Khorat silk and weaving tradition · Thao Suranari cultural heritage · Suranaree University of Technology innovation hub · emerging food and agriculture creative industries · Save One Market — one of NE's largest creative retail spaces.</p>
+      <h3>Infrastructure</h3>
+      <p>Domestic airport (NAK) with Bangkok connections · northeastern rail junction · Mittraphap Highway (Bangkok-Isan main artery) · 5G coverage &gt;85% · Suranaree University of Technology (20,000+ students) · High Speed Rail (under construction, ~2030).</p>
+      <h3>Investment Angle</h3>
+      <p>Logistics and warehousing · food processing creative branding · automotive parts (proximity to Nakhon Ratchasima industrial estates) · wholesale and distribution for Isan region · agri-tech and bioeconomy. Massive labor pool at below-Bangkok cost.</p>
+
+      <h2>Songkhla <span class="score-pill">7.9</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Southern</span>
+        <span><strong>BOI Zone</strong> SEZ (Malaysia Border)</span>
+        <span><strong>UNESCO</strong> Gastronomy (2025)</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Songkhla anchors Southern Thailand's creative economy as a newly designated UNESCO City of Gastronomy and the host of Pakk Taii Design Week. Its deep-water port, Malaysia border Special Economic Zone status, and proximity to the massive Southern Economic Corridor make it a strategic logistics-creative hybrid. With Prince of Songkla University (40,000+ students) feeding talent into the ecosystem, Songkhla is Southern Thailand's most undervalued creative hub.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 241.84 B THB (#1 in South excl. Surat Thani)</li>
+        <li><strong>GPP/Capita:</strong> 156,245 THB</li>
+        <li><strong>Min Wage:</strong> 352 THB/day (Tier 3)</li>
+        <li><strong>Population:</strong> 1.635M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>UNESCO Creative City of Gastronomy (2025) · Pakk Taii Design Week · CEA Songkhla office under construction · traditional southern cuisine, fishing culture, Peranakan heritage · Hat Yai International Airport provides regional connectivity.</p>
+      <h3>Infrastructure</h3>
+      <p>Hat Yai International Airport (HDY) · Songkhla deep-water port · Southern rail hub connecting to Malaysia · 5G coverage &gt;85% · Prince of Songkla University (40,000+ students) · SEZ one-stop service center.</p>
+      <h3>Investment Angle</h3>
+      <p>Gastronomy tourism and food export · cross-border trade with Malaysia · seafood processing creative branding · logistics and cold chain · creative education. SEZ status provides 8-year CIT exemption (extendable to 13 years).</p>
+
+      <h2>Chiang Rai <span class="score-pill">7.8</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Northern</span>
+        <span><strong>BOI Zone</strong> SEZ (Laos/Myanmar) + NEC Creative Lanna</span>
+        <span><strong>UNESCO</strong> Design</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Chiang Rai is Thailand's most strategically positioned creative city for cross-border creative economy development. Its UNESCO City of Design status, combined with SEZ access to both Laos and Myanmar, the Mae Fah Luang University creative talent pipeline (15,000+ students), and proximity to Chiang Mai's creative ecosystem, creates a unique "creative border economy" profile. GPP/Capita at 91,308 THB with minimum wage at 352 THB/day signals strong productivity-cost arbitrage.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 104.44 B THB</li>
+        <li><strong>GPP/Capita:</strong> 91,308 THB</li>
+        <li><strong>Min Wage:</strong> 352 THB/day (Tier 3)</li>
+        <li><strong>Population:</strong> 1.156M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>UNESCO City of Design · Mae Fah Luang University art and design programs · Doi Tung creative development model · traditional Tai Lue weaving, hill tribe crafts, tea culture · Chiang Rai Design Week emerging · CEA Creative Lanna corridor member.</p>
+      <h3>Infrastructure</h3>
+      <p>Mae Fah Luang International Airport (CEI) with flights to China · Mae Sai border crossing (Myanmar) · Chiang Khong (Laos Friendship Bridge) · Chiang Mai-Chiang Rai expressway · Mae Fah Luang University (15,000+ students).</p>
+      <h3>Investment Angle</h3>
+      <p>Cross-border creative trade · design and branding services · artisan craft export · tea and specialty food creative branding · border tourism. Dual SEZ+NEC status provides exceptional BOI incentive stacking.</p>
+
+      <h2>Udon Thani <span class="score-pill">7.8</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Northeastern (Isan)</span>
+        <span><strong>BOI Zone</strong> NeEC Bioeconomy Corridor + Laos Border</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Udon Thani sits at the crossroads of the Northeastern Economic Corridor and the Greater Mekong Subregion, with a direct road and rail connection to Vientiane, Laos, and onward to China's Belt and Road network. Its domestic airport has international potential (Laos and Vietnam routes), and the province's 88,673 THB GPP/Capita with 347 THB/day minimum wage creates a compelling value proposition.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 111.26 B THB</li>
+        <li><strong>GPP/Capita:</strong> 88,673 THB</li>
+        <li><strong>Min Wage:</strong> 347 THB/day (Tier 4)</li>
+        <li><strong>Population:</strong> 1.255M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>NE cultural crossroads · Ban Chiang UNESCO World Heritage Site (prehistoric civilization) · Udon Thani Rajabhat University creative programs · strong local food culture (Vietnamese-Thai fusion) · UD Town creative retail complex · close cultural ties with Laos · gateway to Northern Laos and Vietnam.</p>
+      <h3>Infrastructure</h3>
+      <p>Domestic airport (UTH) with Bangkok, Chiang Mai, Phuket connections and potential for Laos/Vietnam international routes · Northeastern rail line · Friendship Highway 2 to Nong Khai and Laos border · 5G coverage &gt;85% · Udon Thani Rajabhat University (10,000+ students).</p>
+      <h3>Investment Angle</h3>
+      <p>Cross-border logistics and distribution · heritage tourism (Ban Chiang) · creative food and beverage (Vietnamese-Thai fusion cuisine) · education and training services for Laos market · GMS creative content production. Lowest-cost major city in the NeEC corridor.</p>
+
+      <h2>Ayutthaya <span class="score-pill">7.6</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Central</span>
+        <span><strong>BOI Zone</strong> CWEC (Central-Western Economic Corridor)</span>
+        <span><strong>UNESCO</strong> World Heritage</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Ayutthaya combines the highest GPP of any non-BMR, non-EEC province (403.6B THB) with extraordinary cultural capital as a UNESCO World Heritage Site and the former capital of Siam. Its GPP/Capita of 465,972 THB is among the highest outside Bangkok, driven by heavy industry estates, automotive manufacturing (Honda), and electronics. The creative economy angle is cultural heritage tourism — 2.5M+ annual visitors — combined with industrial design and creative manufacturing.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 403.60 B THB</li>
+        <li><strong>GPP/Capita:</strong> 465,972 THB</li>
+        <li><strong>Min Wage:</strong> 357 THB/day (Tier 3)</li>
+        <li><strong>Population:</strong> 0.907M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>UNESCO World Heritage Site (Historic City of Ayutthaya) · 2.5M+ heritage tourists annually · traditional boat noodles, roti sai mai sweets — iconic Thai culinary heritage · Japanese-Thai industrial design corridor · creative manufacturing base · 67 temples and historical sites.</p>
+      <h3>Infrastructure</h3>
+      <p>Northern/Northeastern rail hub (Bangkok-Chiang Mai/Isan lines) · 90 minutes from Bangkok by car · no airport (relies on Don Mueang 70km away) · 5G coverage &gt;90% · Rajamangala University of Technology (25,000+ students) · industrial estates with full infrastructure.</p>
+      <h3>Investment Angle</h3>
+      <p>Heritage tourism infrastructure · creative manufacturing · Japanese-Thai joint ventures · food heritage branding and export · cultural education and interpretation services. The GPP/Capita to wage ratio is among the most favorable in Thailand.</p>
+
+      <h2>Phuket <span class="score-pill">7.5</span></h2>
+      <div class="meta-row">
+        <span><strong>Region</strong> Southern</span>
+        <span><strong>BOI Zone</strong> SEC (Southern Economic Corridor)</span>
+        <span><strong>UNESCO</strong> Gastronomy</span>
+      </div>
+      <h3>Why It Matters</h3>
+      <p>Phuket is Thailand's most internationally recognized non-Bangkok destination — and its GPP/Capita of 388,559 THB proves it. As a UNESCO City of Gastronomy with an international airport handling 15M+ passengers pre-pandemic, Phuket is the beachhead for creative tourism investment in Thailand. The shift from mass tourism to "high-value, low-impact" creative tourism aligns perfectly with Phuket's next development phase.</p>
+      <h3>Key Metrics</h3>
+      <ul>
+        <li><strong>GPP:</strong> 209.01 B THB</li>
+        <li><strong>GPP/Capita:</strong> 388,559 THB (#1 among island provinces)</li>
+        <li><strong>Min Wage:</strong> 400 THB/day (Tier 1 — highest)</li>
+        <li><strong>Population:</strong> 0.580M</li>
+      </ul>
+      <h3>Creative Economy Edge</h3>
+      <p>UNESCO City of Gastronomy · international events calendar (Honda LPGA, King's Cup Regatta, Phuket Vegetarian Festival) · Peranakan (Baba) cultural heritage · Old Phuket Town creative district · digital nomad hub ranking top 5 in Southeast Asia · yachting and marine tourism · wellness retreat cluster.</p>
+      <h3>Infrastructure</h3>
+      <p>Phuket International Airport (HKT) — Thailand's second-busiest · deep sea port · 5G coverage &gt;90% · fiber broadband &gt;85% · Prince of Songkla University Phuket campus · Andaman coastal highway connectivity.</p>
+      <h3>Investment Angle</h3>
+      <p>Creative tourism and hospitality · wellness and medical tourism · yachting and marine lifestyle · digital nomad infrastructure · gastronomy tourism · Peranakan heritage branding. Higher labor costs are offset by revenue premiums from international visitors.</p>
+
+      <h2>Quick Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Province</th>
+            <th>Score</th>
+            <th>Region</th>
+            <th class="num">GPP/Capita</th>
+            <th class="num">Min Wage</th>
+            <th>BOI Zone</th>
+            <th>UNESCO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Lamphun</strong></td><td>8.7</td><td>North</td><td class="num">191,568</td><td class="num">350</td><td>NEC + Low-Income</td><td>—</td></tr>
+          <tr><td><strong>Khon Kaen</strong></td><td>8.5</td><td>NE</td><td class="num">117,560</td><td class="num">357</td><td>NeEC</td><td>—</td></tr>
+          <tr><td><strong>Chanthaburi</strong></td><td>8.3</td><td>East</td><td class="num">254,582</td><td class="num">354</td><td>SEZ</td><td>—</td></tr>
+          <tr><td><strong>Chiang Mai</strong></td><td>8.2</td><td>North</td><td class="num">135,991</td><td class="num">357</td><td>NEC</td><td>Crafts</td></tr>
+          <tr><td><strong>Nakhon Ratchasima</strong></td><td>8.0</td><td>NE</td><td class="num">110,301</td><td class="num">359</td><td>NeEC</td><td>—</td></tr>
+          <tr><td><strong>Songkhla</strong></td><td>7.9</td><td>South</td><td class="num">156,245</td><td class="num">352</td><td>SEZ</td><td>Gastronomy</td></tr>
+          <tr><td><strong>Chiang Rai</strong></td><td>7.8</td><td>North</td><td class="num">91,308</td><td class="num">352</td><td>SEZ + NEC</td><td>Design</td></tr>
+          <tr><td><strong>Udon Thani</strong></td><td>7.8</td><td>NE</td><td class="num">88,673</td><td class="num">347</td><td>NeEC</td><td>—</td></tr>
+          <tr><td><strong>Ayutthaya</strong></td><td>7.6</td><td>Central</td><td class="num">465,972</td><td class="num">357</td><td>CWEC</td><td>World Heritage</td></tr>
+          <tr><td><strong>Phuket</strong></td><td>7.5</td><td>South</td><td class="num">388,559</td><td class="num">400</td><td>SEC</td><td>Gastronomy</td></tr>
+        </tbody>
+      </table>
+
+      <footer>
+        <p><strong>Data sources:</strong> NESDC Gross Regional and Provincial Product (chain-volume measures, 2019 base) · Board of Investment promotion guide · Ministry of Labour wage committee · NBTC operator coverage maps · UNESCO Creative Cities Network official designations.</p>
+        <p><strong>Methodology:</strong> SCITI 2026 SLIC composite (LIV 25% + ECO 20% + SAF 15% + WEL 15% + ENV 10% + HOS 10% + DIG 5%) plus Moneyball adjustments for cost-to-productivity ratio, BOI stacking, and creative-economy concentration. Full formula: <code>sciti.nonarkara.org/methodology</code>.</p>
+        <p>© 2026 Digital Economy Promotion Agency (depa) · Research by Dr. Non · SLIC Methodology · Data published under CC BY 4.0.</p>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -28,6 +28,8 @@ const InvestPage = lazy(() => import("./InvestPage"));
 const ComparePage = lazy(() => import("./ComparePage"));
 const ScitiBingoPage = lazy(() => import("./ScitiBingoPage"));
 const CityCanvasPage = lazy(() => import("./CityCanvasPage"));
+const AboutPage = lazy(() => import("./AboutPage"));
+const CreativeEconomyPage = lazy(() => import("./CreativeEconomyPage"));
 import DataFeedback from "./DataFeedback";
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
@@ -174,6 +176,18 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
     title: { en: "SCITI Bingo", th: "SCITI บิงโก", zh: "SCITI 宾果" },
     place: "Khon Kaen",
   },
+  about: {
+    src: "/photos/chiangmai-night.jpg",
+    objectPosition: "center 50%",
+    title: { en: "Mission", th: "พันธกิจ", zh: "使命" },
+    place: "Chiang Mai",
+  },
+  "creative-economy": {
+    src: "/photos/wp-songkhla.jpg",
+    objectPosition: "center 50%",
+    title: { en: "Creative Economy", th: "เศรษฐกิจสร้างสรรค์", zh: "创意经济" },
+    place: "Songkhla",
+  },
 };
 
 const newsItems = [
@@ -319,11 +333,27 @@ export default function App() {
     setMobileMenuOpen(false);
   };
 
-  const cycleLocale = () => setLocale(l => l === "en" ? "th" : l === "th" ? "zh" : "en");
   const toggleTheme = () => setTheme(t => t === "light" ? "dark" : "light");
 
   return (
     <div className={`page-shell ${isDashboardRoute ? "page-shell-dashboard" : ""} ${isCanvasRoute ? "page-shell-canvas" : ""}`}>
+      {isDashboardRoute && (
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "name": "SCITI - Smart City Thailand Index",
+            "description": "Thailand's Provincial Creative Economy Data Platform. Aggregates Gross Provincial Product, FDI flows, BOI incentive zones, infrastructure readiness, creative economy indicators, labor costs, and cultural asset data across Thailand's 77 provinces.",
+            "url": "https://sciti.nonarkara.org/",
+            "creator": {
+              "@type": "Organization",
+              "name": "Digital Economy Promotion Agency (depa)"
+            },
+            "license": "https://creativecommons.org/licenses/by/4.0/",
+            "keywords": ["Thailand", "Smart City", "Creative Economy", "Provincial Data", "Investment"]
+          })}
+        </script>
+      )}
       {/* ─── INSTITUTIONAL BANNER ─── */}
       <a href="#main-content" className="skip-link">Skip to content</a>
       {!isCanvasRoute && (
@@ -423,14 +453,39 @@ export default function App() {
             >
               {theme === "light" ? "\u263E" : "\u2600"}
             </button>
-            <button
-              type="button"
-              className="locale-toggle"
-              aria-label={locale === "en" ? "Switch language to Thai" : locale === "th" ? "Switch language to Chinese" : "Switch language to English"}
-              onClick={cycleLocale}
+            <div
+              className="locale-segmented"
+              role="group"
+              aria-label={locale === "th" ? "เลือกภาษา" : locale === "zh" ? "选择语言" : "Select language"}
             >
-              {locale === "en" ? "TH" : locale === "th" ? "CN" : "EN"}
-            </button>
+              <button
+                type="button"
+                className="locale-segmented-btn"
+                aria-pressed={locale === "en"}
+                aria-label="English"
+                onClick={() => setLocale("en")}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                className="locale-segmented-btn"
+                aria-pressed={locale === "th"}
+                aria-label="ภาษาไทย"
+                onClick={() => setLocale("th")}
+              >
+                TH
+              </button>
+              <button
+                type="button"
+                className="locale-segmented-btn"
+                aria-pressed={locale === "zh"}
+                aria-label="中文"
+                onClick={() => setLocale("zh")}
+              >
+                CN
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -477,6 +532,10 @@ export default function App() {
               <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
             ) : route.kind === "canvas" ? (
               <CityCanvasPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
+            ) : route.kind === "about" ? (
+              <AboutPage locale={locale} onNavigate={navigate} />
+            ) : route.kind === "creative-economy" ? (
+              <CreativeEconomyPage locale={locale} onNavigate={navigate} />
             ) : (
               <HomePage locale={locale} onNavigate={navigate} />
             )}
@@ -505,130 +564,87 @@ export default function App() {
             </div>
           </section>
 
-          {/* ─── PARTNERS FOOTER ─── */}
-          <footer className="site-footer">
-            <div className="section">
-              <div className="footer-partners">
-                <div className="footer-partner-block">
-                  <p className="footer-partner-label">{locale === "th" ? "จัดทำโดย" : locale === "zh" ? "出品机构" : "Produced by"}</p>
-                  <p className="footer-partner-name">
-                    {locale === "th"
-                      ? "สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa)"
-                      : locale === "zh"
-                        ? "数字经济促进局（depa）"
-                        : "Digital Economy Promotion Agency (depa)"}
-                  </p>
-                  <p className="footer-partner-sub">
-                    {locale === "th"
-                      ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม"
-                      : locale === "zh"
-                        ? "泰国数字经济与社会部"
-                        : "Ministry of Digital Economy and Society"}
-                  </p>
-                </div>
-                <div className="footer-partner-block">
-                  <p className="footer-partner-label">{locale === "th" ? "วิธีการโดย" : locale === "zh" ? "方法论来源" : "Methodology by"}</p>
-                  <p className="footer-partner-name">SLIC — Smart Liveable Cities Index</p>
-                  <p className="footer-partner-sub">
-                    {locale === "th"
-                      ? "เปิดตัว SCSE 2026 ไทเป · 174 เมือง 53 ประเทศ"
-                      : locale === "zh"
-                        ? "于 2026 台北 SCSE 发布 · 53 个国家的 174 座城市"
-                        : "Launched at SCSE 2026 Taipei · 174 cities across 53 countries"}
-                  </p>
-                </div>
-                <div className="footer-partner-block">
-                  <p className="footer-partner-label">{locale === "th" ? "แหล่งข้อมูล" : locale === "zh" ? "数据来源" : "Data from"}</p>
-                  <p className="footer-partner-name">NSO · World Bank · Open-Meteo · GISTDA</p>
-                  <p className="footer-partner-sub">
-                    {locale === "th"
-                      ? "Copernicus Sentinel Hub · สำนักงานตำรวจแห่งชาติ · depa"
-                      : locale === "zh"
-                        ? "Copernicus Sentinel Hub · 泰国皇家警察 · depa"
-                        : "Copernicus Sentinel Hub · Royal Thai Police · depa"}
-                  </p>
-                </div>
-              </div>
+          {/* ─── NEWSLETTER SIGNUP ─── */}
+          <section className="newsletter-section" style={{ background: "var(--2)", padding: "3rem 1rem", textAlign: "center" }}>
+            <div className="section" style={{ maxWidth: "600px", margin: "0 auto" }}>
+              <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "0.5rem" }}>
+                {locale === "th" ? "สมัครรับข้อมูลข่าวสาร" : locale === "zh" ? "订阅简报" : "Subscribe to SCITI Data Insights"}
+              </h3>
+              <p style={{ marginBottom: "1.5rem", color: "var(--4)" }}>
+                {locale === "th" 
+                  ? "รับข้อมูลเชิงลึกเศรษฐกิจสร้างสรรค์ระดับจังหวัดรายเดือน ส่งตรงถึงอีเมลคุณ" 
+                  : locale === "zh" 
+                    ? "获取每月省级创意经济数据洞察，直接发送到您的收件箱。" 
+                    : "Get monthly provincial creative economy data insights straight to your inbox."}
+              </p>
+              <form onSubmit={e => e.preventDefault()} style={{ display: "flex", gap: "0.5rem", justifyContent: "center", flexWrap: "wrap" }}>
+                <input 
+                  type="email" 
+                  placeholder={locale === "th" ? "อีเมลของคุณ" : locale === "zh" ? "您的电子邮件" : "Your email address"} 
+                  style={{ padding: "0.75rem 1rem", borderRadius: "4px", border: "1px solid var(--border)", flex: "1", maxWidth: "300px", background: "var(--1)", color: "var(--text)" }}
+                  required
+                />
+                <button type="submit" className="cta-button" style={{ padding: "0.75rem 1.5rem", border: "none" }}>
+                  {locale === "th" ? "ติดตาม" : locale === "zh" ? "订阅" : "Subscribe"}
+                </button>
+              </form>
+            </div>
+          </section>
 
-              <div className="footer-logos">
+          {/* ─── NEW FOOTER ─── */}
+          <footer className="site-footer">
+            <div className="section" style={{ paddingBottom: "2rem" }}>
+              <div className="footer-logos" style={{ marginBottom: "2rem" }}>
                 <div className="institutional-logo-container"><ResponsiveImage src={MDES_LOGO.src} alt="MDES" className="footer-logo" width={MDES_LOGO.width} height={MDES_LOGO.height} /></div>
                 <div className="institutional-logo-container"><ResponsiveImage src={DEPA_LOGO.src} alt="depa" className="footer-logo" width={DEPA_LOGO.width} height={DEPA_LOGO.height} /></div>
                 <div className="institutional-logo-container"><ResponsiveImage src={SMART_CITY_LOGO.src} alt="Smart City Thailand" className="footer-logo" width={SMART_CITY_LOGO.width} height={SMART_CITY_LOGO.height} /></div>
                 <div className="institutional-logo-container"><ResponsiveImage src={SLIC_LOGO.src} alt="SLIC Index" className="footer-logo" width={SLIC_LOGO.width} height={SLIC_LOGO.height} /></div>
               </div>
 
-              <div className="footer-bottom">
-                <p className="footer-copy" style={{ opacity: 0.5, fontSize: "0.65rem", letterSpacing: "0.06em" }}
-                   title="UNDP-JTC Digital Twins for Cities (Jul 2025) · ADB Digital Twin Framework (May 2025)">
-                  {locale === "th"
-                    ? "SCITI คือฐาน Level 1 — Descriptive ของ Digital Twin ระดับชาติ · สอดคล้องกับ UNDP · ADB 2025"
-                    : locale === "zh"
-                      ? "SCITI 构成国家数字孪生的 Level 1 — Descriptive 基础层 · 与 UNDP · ADB 2025 框架对齐"
-                      : "SCITI forms the Level 1 — Descriptive foundation of a national digital twin · Aligned with UNDP · ADB 2025"}
-                </p>
-                <p className="footer-copy">
-                  {locale === "th"
-                    ? "ดัชนีเมืองอัจฉริยะประเทศไทย 2026 · วัดจากความเป็นจริง ไม่ใช่แผนบนกระดาษ"
-                    : locale === "zh"
-                      ? "2026 泰国智慧城市指数 · 衡量现实，而非纸上规划"
-                      : "Smart City Thailand Index 2026 · Measuring reality, not paper plans"}
-                </p>
-                <p className="footer-copy">
-                  {locale === "th"
-                    ? "สร้างด้วยวิธีการ SLIC · ข้อมูลเปิดเผย ตรวจสอบได้"
-                    : locale === "zh"
-                      ? "基于 SLIC 方法论构建 · 开放数据，可追溯可审计"
-                      : "Built on SLIC methodology · Open data, fully auditable"}
-                </p>
-                <button
-                  type="button"
-                  className="footer-ref-link"
-                  onClick={() => navigate("/references")}
-                  style={{ background: "none", border: "none", font: "600 .42rem var(--mono)", color: "var(--teal)", cursor: "pointer", marginTop: ".15rem", padding: 0 }}
-                >
-                  {locale === "th" ? "API แหล่งข้อมูล และมาตรฐาน →" : locale === "zh" ? "API、数据来源与标准 →" : "APIs, Data Sources & Standards →"}
-                </button>
-              </div>
-
-              {/* ─── FINE PRINT: Standards, Compliance & Accessibility ─── */}
               <div className="footer-fineprint">
-                <p style={{ fontWeight: 600, color: "var(--3)", marginBottom: ".15rem", fontSize: ".44rem", letterSpacing: ".06em", textTransform: "uppercase" as const, fontFamily: "var(--mono)" }}>
-                  {locale === "th" ? "เอกสารอ้างอิง SCITI-2026-R1 · ปรับปรุงล่าสุด เมษายน 2026" : locale === "zh" ? "参考文件 SCITI-2026-R1 · 最后更新：2026 年 4 月" : "Document ref. SCITI-2026-R1 · Last updated April 2026"}
+                <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: "0.5rem", fontSize: "1rem" }}>
+                  {locale === "th" ? "SCITI (sciti.nonarkara.org) -- แพลตฟอร์มข้อมูลเศรษฐกิจสร้างสรรค์ระดับจังหวัดของไทย" : locale === "zh" ? "SCITI (sciti.nonarkara.org) —— 泰国省级创意经济数据平台" : "SCITI (sciti.nonarkara.org) -- Thailand's Provincial Creative Economy Data Platform"}
                 </p>
-                <p>
-                  {locale === "th"
-                    ? "มาตรฐาน: ดัชนีนี้จัดทำขึ้นตามแนวทาง UN-Habitat City Prosperity Initiative (CPI), ISO 37122:2019 Sustainable Cities — Indicators for Smart Cities, เป้าหมาย SDG 11 (เมืองและชุมชนที่ยั่งยืน), กรอบ ASEAN Smart Cities Framework (ASCF) 2018, แผนปฏิบัติการ ASCAP 2021–2025, และ New Urban Agenda 2016."
-                    : locale === "zh"
-                      ? "标准：本指数参照 UN-Habitat CPI、ISO 37122:2019 智慧城市指标、SDG 11（可持续城市与社区）、ASCF 2018、ASCAP 2021–2025 及 2016 年《新城市议程》编制。"
-                      : "Standards alignment: UN-Habitat City Prosperity Initiative (CPI) · ISO 37122:2019 Sustainable Cities — Indicators for Smart Cities · UN SDG 11 (Sustainable Cities and Communities) · ASEAN Smart Cities Framework (ASCF) 2018 · ASCAP 2021–2025 · New Urban Agenda 2016."}
+                <p style={{ fontWeight: 600, color: "var(--teal)", marginBottom: "1rem", fontSize: "0.85rem", letterSpacing: "0.05em", textTransform: "uppercase" as const }}>
+                  {locale === "th" ? "การสมัคร CEA Creative Excellence Awards 2026 | รางวัลนโยบายเมืองสร้างสรรค์ (ประเภท 1.3)" : locale === "zh" ? "CEA 创意卓越奖 2026 申请 | 创意城市政策奖（1.3 类）" : "CEA Creative Excellence Awards 2026 Application | Creative City Policy Award (Category 1.3)"}
                 </p>
-                <p>
+                <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
                   {locale === "th"
-                    ? "แหล่งข้อมูลคะแนน: สำนักงานสถิติแห่งชาติ (NSO) · สภาพัฒน์ (NESDC) · กรมควบคุมมลพิษ (PCD/Air4Thai) · GISTDA · สำนักงานตำรวจแห่งชาติ · กรมการปกครอง (DOPA) · depa registry · citydata.in.th · กระทรวงสาธารณสุข (MOPH) · BOI · ONEP · กรมป่าไม้ · Open-Meteo/Copernicus · การยืนยันภาคสนาม"
+                    ? "SCITI เป็นเครื่องมือนโยบายสาธารณะดิจิทัลที่นำตัวชี้วัด Culture|2030 ของยูเนสโกมาปฏิบัติจริงในระดับจังหวัด สนับสนุนเครือข่ายย่านเศรษฐกิจสร้างสรรค์ประเทศไทย (TCDN) ของ CEA, โมเดลเศรษฐกิจ BCG ของไทย, และยุทธศาสตร์ชาติ 1 ครอบครัว 1 ซอฟต์พาวเวอร์ (OFOS) SCITI สอดคล้องกับเป้าหมายของแผนพัฒนาเศรษฐกิจและสังคมแห่งชาติ ฉบับที่ 13 สำหรับย่านสร้างสรรค์ เมืองอัจฉริยะ และการกระจายโอกาสทางเศรษฐกิจ"
                     : locale === "zh"
-                      ? "评分来源：NSO · NESDC · PCD/Air4Thai · GISTDA · 泰国皇家警察 · DOPA · depa 名录 · citydata.in.th · 公共卫生部 · BOI · ONEP · 皇家森林局 · Open-Meteo/Copernicus · 实地核验。"
-                      : "Scoring sources: NSO · NESDC · PCD/Air4Thai · GISTDA · Royal Thai Police · DOPA · depa registry · citydata.in.th · Ministry of Public Health · BOI · ONEP · Royal Forest Department · Open-Meteo/Copernicus · field verification."}
+                      ? "SCITI 是一个数字公共政策工具，在省级层面实操联合国教科文组织“文化|2030”指标。它支持 CEA 的泰国创意街区网络 (TCDN)、泰国的 BCG 经济模型，以及“一个家庭一个软实力 (OFOS)”国家战略。SCITI 与第十三个国家经济和社会发展计划关于创意街区、智慧城市和权力下放经济机会的目标相一致。"
+                      : "SCITI is a digital public policy instrument that operationalizes UNESCO Culture|2030 Indicators at provincial scale. It supports the Creative Economy Agency's Thailand Creative District Network (TCDN), Thailand's Bio-Circular-Green (BCG) Economic Model, and the One Family One Soft Power (OFOS) national strategy. SCITI aligns with the 13th National Economic and Social Development Plan's targets for creative districts, smart cities, and decentralized economic opportunity."}
                 </p>
-                <p>
+                <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
+                  <strong style={{ color: "var(--3)" }}>{locale === "th" ? "การอ้างอิงข้อมูล: " : locale === "zh" ? "数据归属： " : "Data Attribution: "}</strong>
                   {locale === "th"
-                    ? "การเงิน: กลไกที่แนะนำอ้างอิงจาก ASEAN Smart City Financing Toolkit (smartcitytoolkit.asean.org) · กองทุน ACGF ของ ADB · กรอบพันธบัตรสีเขียวของ ก.ล.ต. · สิทธิประโยชน์ BOI ภายใต้นโยบาย S-Curve · UNCDF Smart Green ASEAN Cities (SGAC)"
+                    ? "ข้อมูลเศรษฐกิจระดับจังหวัดจากสภาพัฒน์ (NESDC) ข้อมูลส่งเสริมการลงทุนจาก BOI ข้อมูลค่าจ้างจากกระทรวงแรงงาน ข้อมูลโครงสร้างพื้นฐานดิจิทัลจาก กสทช. ตัวชี้วัดเศรษฐกิจสร้างสรรค์จาก CEA สถานะเครือข่ายเมืองสร้างสรรค์ของยูเนสโกจากการประกาศอย่างเป็นทางการ ข้อมูลทั้งหมดเป็นข้อมูลเปิดภาครัฐ"
                     : locale === "zh"
-                      ? "金融机制：东盟融资工具箱 · ADB ACGF · 泰国 SEC 绿色债券框架 · BOI S-Curve 激励 · UNCDF SGAC。"
-                      : "Financial mechanisms: ASEAN Smart City Financing Toolkit (smartcitytoolkit.asean.org) · ADB ACGF · Thailand SEC Green Bond Framework · BOI S-Curve incentives · UNCDF Smart Green ASEAN Cities (SGAC)."}
+                      ? "省级经济数据来自 NESDC。投资激励数据来自 BOI。工资数据来自劳工部。数字基础设施数据来自 NBTC。创意经济指标来自 CEA。联合国教科文组织创意城市网络地位来自官方指定。所有数据均为根据《泰国官方信息法》发布的开放政府数据。"
+                      : "Provincial economic data sourced from NESDC Gross Regional and Provincial Product (chain volume measures, 2019 base). Investment incentive data from Board of Investment. Wage data from Ministry of Labour. Digital infrastructure data from NBTC. Creative economy indicators from CEA. UNESCO Creative Cities Network status from UNESCO official designations. All data is open government data published under Thai Official Information Act."}
                 </p>
-                <p>
+                <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
+                  <strong style={{ color: "var(--3)" }}>{locale === "th" ? "กิตติกรรมประกาศ: " : locale === "zh" ? "致谢： " : "Acknowledgments: "}</strong>
                   {locale === "th"
-                    ? "การเข้าถึง: ออกแบบตาม WCAG 2.1 AA · รองรับคีย์บอร์ด · ภาพมี alt text · ตารางใช้ semantic HTML · รองรับ 3 ภาษา (EN/TH/CN) · Focus visible สำหรับ keyboard navigation"
+                    ? "SCITI พัฒนาขึ้นโดยสอดคล้องกับกรอบนโยบายเศรษฐกิจสร้างสรรค์แห่งชาติของไทย และแนวทางปฏิบัติที่ดีที่สุดระดับโลกในการกำกับดูแลข้อมูลวัฒนธรรม รวมถึง Amsterdam Cultural Infrastructure Mapping, Barcelona CityOS, Buenos Aires Data Cultura, Seoul Open Data Plaza และ Singapore Cultural Statistics"
                     : locale === "zh"
-                      ? "无障碍：遵循 WCAG 2.1 AA · 支持键盘导航 · 图片含 alt 文本 · 语义化表格 · 三语支持 (EN/TH/CN)"
-                      : "Accessibility: WCAG 2.1 AA compliant · Keyboard navigable · Alt text on images · Semantic HTML tables · Trilingual (EN/TH/CN) · Focus-visible indicators for assistive technology."}
+                      ? "SCITI 的开发符合泰国国家创意经济政策框架以及文化数据治理的全球最佳实践，包括阿姆斯特丹文化基础设施地图、巴塞罗那 CityOS、布宜诺斯艾利斯 Data Cultura、首尔开放数据广场和新加坡文化统计。"
+                      : "SCITI is developed in alignment with Thailand's national creative economy policy framework and global best practices in cultural data governance, including Amsterdam Cultural Infrastructure Mapping, Barcelona CityOS, Buenos Aires Data Cultura, Seoul Open Data Plaza, and Singapore Cultural Statistics."}
                 </p>
-                <p style={{ borderTop: "1px solid var(--5)", paddingTop: ".35rem", marginTop: ".25rem" }}>
+                <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
+                  <strong style={{ color: "var(--3)" }}>{locale === "th" ? "ติดต่อ: " : locale === "zh" ? "联系方式： " : "Contact: "}</strong>
                   {locale === "th"
-                    ? "© 2026 สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa) กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม ราชอาณาจักรไทย · วิธีการ SLIC (Smart Liveable Cities Index) · สงวนลิขสิทธิ์ · ข้อมูลเปิดเผยภายใต้สัญญาอนุญาต Creative Commons Attribution 4.0 International (CC BY 4.0) · คะแนนสะท้อนสภาพ ณ เวลาที่ประเมิน ไม่ใช่คำแนะนำการลงทุน"
+                    ? "สอบถามข้อมูล เสนอความร่วมมือ หรือแจ้งแก้ไข ติดต่อทีม SCITI ได้ทาง sciti.nonarkara.org"
                     : locale === "zh"
-                      ? "© 2026 数字经济促进局（depa），泰国数字经济与社会部 · SLIC 方法论 · 版权所有 · 数据依据 CC BY 4.0 许可公开 · 评分反映评估时状况，不构成投资建议。"
-                      : "© 2026 Digital Economy Promotion Agency (depa), Ministry of Digital Economy and Society, Kingdom of Thailand · SLIC (Smart Liveable Cities Index) methodology · All rights reserved · Data published under Creative Commons Attribution 4.0 International (CC BY 4.0) · Scores reflect conditions at time of assessment and do not constitute investment advice."}
+                      ? "有关数据查询、合作提案或更正，请通过 sciti.nonarkara.org 联系 SCITI 团队。"
+                      : "For data inquiries, partnership proposals, or corrections, contact the SCITI team via sciti.nonarkara.org"}
+                </p>
+                <p style={{ borderTop: "1px solid var(--5)", paddingTop: ".5rem", marginTop: "1rem", fontSize: "0.75rem" }}>
+                  {locale === "th"
+                    ? "© 2026 สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa) · วิธีการ SLIC · ข้อมูลเปิดเผยภายใต้ CC BY 4.0"
+                    : locale === "zh"
+                      ? "© 2026 数字经济促进局（depa） · SLIC 方法论 · 数据依据 CC BY 4.0 许可公开"
+                      : "© 2026 Digital Economy Promotion Agency (depa) · SLIC methodology · Data published under CC BY 4.0"}
                 </p>
               </div>
             </div>

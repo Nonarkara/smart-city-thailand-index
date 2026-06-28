@@ -187,13 +187,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="cinematic-hero-wordplay" aria-label="SmaSCITI equals Samastiti"> · <span className="cinematic-hero-wordplay-sma">Sma</span><span className="cinematic-hero-wordplay-sciti">SCITI</span> = Samastiti</span>
           </p>
           <h1 className="cinematic-hero-title">
-            {locale === "th" ? <>เอาความจริง<br />ไม่เอาพิธีตัดริบบิ้น</> : locale === "zh" ? <>看现实<br />不看剪彩</> : <>Reality, not<br />ribbon&#8209;cutting.</>}
+            {locale === "th" ? <>Moneyball<br />สำหรับเศรษฐกิจสร้างสรรค์ไทย</> : locale === "zh" ? <>泰国创意经济的<br />Moneyball</> : <>Moneyball for Thailand's<br />Creative Economy</>}
           </h1>
           <p className="cinematic-hero-why">
             {t({
-              en: "Thailand has certified 37 smart cities. But how many of them actually work? This index exists because the gap between announcements and outcomes needed measuring.",
-              th: "ประเทศไทยรับรองเมืองอัจฉริยะไปแล้ว 37 เมือง แต่มีกี่เมืองที่เดินระบบได้จริง? ดัชนีนี้เกิดขึ้นเพราะช่องว่างระหว่างคำประกาศกับผลลัพธ์ที่จับต้องได้ ต้องมีใครสักคนลงมือวัด",
-              zh: "泰国已认证37座智慧城市。但其中有多少真正在运转？这个指数的存在，是因为公告与结果之间的差距需要被衡量。",
+              en: "The Moneyball approach to Thailand's provinces — find undervalued creative assets before the market does.",
+              th: "แนวทาง Moneyball สำหรับจังหวัดในไทย — ค้นหาสินทรัพย์สร้างสรรค์ที่ถูกประเมินต่ำไป ก่อนที่ตลาดจะรู้ตัว",
+              zh: "泰国各府的 Moneyball 方法——在市场发现之前找到被低估的创意资产。",
             })}
           </p>
           <div className="cinematic-hero-stats">

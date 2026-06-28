@@ -429,6 +429,60 @@ ul, ol { list-style: none; }
 }
 .locale-toggle:hover { color: var(--ink); background: var(--surface-hover); }
 
+/* ─── LANGUAGE SEGMENTED CONTROL ─── */
+/* Replaces the cycling "TH/CN/EN" button (audit issue: clicking "TH" sent users
+   to Chinese). Now shows all three locales side-by-side with the active one
+   inverted — no more guessing which language is next. */
+.locale-segmented {
+  display: inline-flex;
+  align-items: stretch;
+  margin-left: .1rem;
+  min-height: 44px;
+  background: var(--surface);
+  border: 1px solid var(--5);
+  border-radius: 0;
+  overflow: hidden;
+}
+.locale-segmented-btn {
+  font: 600 .5rem var(--mono);
+  padding: .2rem .5rem;
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--3);
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--5);
+  cursor: pointer;
+  transition: all .2s var(--ease);
+}
+.locale-segmented-btn:first-child { border-left: 0; }
+.locale-segmented-btn:hover { color: var(--ink); background: var(--surface-hover); }
+.locale-segmented-btn[aria-pressed="true"] {
+  color: var(--bg);
+  background: var(--ink);
+}
+[data-theme="dark"] .locale-segmented-btn[aria-pressed="true"] {
+  color: var(--depa-blue);
+  background: rgba(255, 255, 255, 0.92);
+}
+@media (max-width: 768px) {
+  .locale-segmented-btn { padding: .18rem .4rem; font-size: .48rem; }
+  .nav-links.nav-links-open .locale-segmented {
+    width: 100%;
+    margin: 0;
+  }
+  .nav-links.nav-links-open .locale-segmented-btn {
+    flex: 1;
+    width: auto;
+    padding: .55rem .45rem;
+    border: 1px solid var(--5);
+  }
+  .nav-links.nav-links-open .locale-segmented-btn:first-child { border-left: 1px solid var(--5); }
+}
+
 /* ─── INSTITUTIONAL BANNER ─── */
 .institutional-banner {
   background: var(--surface);

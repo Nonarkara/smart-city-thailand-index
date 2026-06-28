@@ -2,6 +2,7 @@ import { translate } from "./cityPresentation";
 import InvestCityDirectory from "./InvestCityDirectory";
 import type { Locale } from "./types";
 import { useInView } from "./useInView";
+import { assetUrl } from "./assetUtils";
 
 interface Props {
   locale: Locale;
@@ -444,6 +445,93 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             zh: "SCITI指数的数据揭示了真正的机会所在——以及风险隐藏之处。",
           })}
         </p>
+      </section>
+
+      {/* ═══════════ SECTION 3: LOOK BEYOND BANGKOK ═══════════ */}
+      <section className="section reveal visible" style={{ paddingTop: 0 }}>
+        <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
+          <div className="invest-ccdr-inner">
+            <h2 style={{ fontSize: "var(--text-3xl)", marginBottom: "1rem" }}>
+              {translate(locale, {
+                en: "For Investors: Look Beyond Bangkok",
+                th: "สำหรับนักลงทุน: มองข้ามกรุงเทพฯ ไปอีกขั้น",
+                zh: "致投资者：把目光投向曼谷之外",
+              })}
+            </h2>
+            <p style={{ fontSize: "var(--text-lg)", color: "var(--4)", marginBottom: "2rem", lineHeight: 1.6 }}>
+              {translate(locale, {
+                en: "If you are making location decisions in Thailand, you face an information asymmetry. Everyone knows Bangkok. Everyone knows the Eastern Economic Corridor. But what about the provinces where your capital goes 3x further and the talent competition is half as fierce?",
+                th: "หากคุณกำลังตัดสินใจเลือกสถานที่ลงทุนในไทย คุณจะพบกับความไม่สมมาตรของข้อมูล ทุกคนรู้จักกรุงเทพฯ ทุกคนรู้จักเขตพัฒนาพิเศษภาคตะวันออก (EEC) แต่จังหวัดที่เงินทุนของคุณมีค่ามากกว่า 3 เท่าและการแข่งขันแย่งบุคลากรน้อยกว่าครึ่งหนึ่งล่ะ?",
+                zh: "如果您正在泰国做选址决定，您会面临信息不对称。每个人都知道曼谷。每个人都知道东部经济走廊。但在那些您的资本能发挥3倍作用，且人才竞争只有一半激烈的省份呢？",
+              })}
+            </p>
+
+            <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>
+              {translate(locale, { en: "What SCITI Gives You", th: "สิ่งที่ SCITI มอบให้คุณ", zh: "SCITI 能给您什么" })}
+            </h3>
+            
+            <div className="invest-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
+              <div className="glass-card" style={{ padding: "1.5rem" }}>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>GPP & GPP/Capita</h4>
+                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Provincial productivity and economic scale (NESDC).", th: "ผลิตภาพและขนาดเศรษฐกิจระดับจังหวัด (สภาพัฒน์)", zh: "省级生产力和经济规模 (NESDC)。" })}</p>
+              </div>
+              <div className="glass-card" style={{ padding: "1.5rem" }}>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>BOI Incentive Zones</h4>
+                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Tax holidays and special privileges (BOI).", th: "การยกเว้นภาษีและสิทธิพิเศษ (BOI)", zh: "免税期和特殊待遇 (BOI)。" })}</p>
+              </div>
+              <div className="glass-card" style={{ padding: "1.5rem" }}>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>Minimum Wage Tiers</h4>
+                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Labor cost benchmarking (Min. of Labour).", th: "การเปรียบเทียบต้นทุนแรงงาน (กระทรวงแรงงาน)", zh: "劳动力成本基准 (劳工部)。" })}</p>
+              </div>
+              <div className="glass-card" style={{ padding: "1.5rem" }}>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>Infrastructure Scorecard</h4>
+                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Airport, rail, port, 5G, and broadband.", th: "สนามบิน รถไฟ ท่าเรือ 5G และบรอดแบนด์", zh: "机场、铁路、港口、5G和宽带。" })}</p>
+              </div>
+              <div className="glass-card" style={{ padding: "1.5rem" }}>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>Creative Economy Heatmap</h4>
+                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "15 creative industries by province.", th: "15 อุตสาหกรรมสร้างสรรค์แยกตามจังหวัด", zh: "按省份划分的15个创意产业。" })}</p>
+              </div>
+              <div className="glass-card" style={{ padding: "1.5rem" }}>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>Moneyball Score</h4>
+                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Composite: growth + cost + infra + creative.", th: "คะแนนรวม: การเติบโต + ต้นทุน + โครงสร้างพื้นฐาน + สร้างสรรค์", zh: "综合：增长 + 成本 + 基础设施 + 创意。" })}</p>
+              </div>
+            </div>
+
+            <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>
+              {translate(locale, { en: "How to Read the Data", th: "วิธีอ่านข้อมูล", zh: "如何解读数据" })}
+            </h3>
+            <p style={{ fontSize: "1rem", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.6 }}>
+              {translate(locale, {
+                en: "A high GPP/Capita relative to minimum wage means strong productivity at low cost — the classic \"value play.\" A province with a domestic airport, 5G coverage above 85%, and a university population over 20,000 has the infrastructure to support creative and knowledge industries today, not someday. A UNESCO Creative City designation or CEA-backed creative district signals policy tailwinds and potential access to grants, training, and international networks.",
+                th: "GPP ต่อหัวที่สูงเมื่อเทียบกับค่าแรงขั้นต่ำหมายถึงผลิตภาพที่แข็งแกร่งในต้นทุนที่ต่ำ — นี่คือ \"value play\" แบบคลาสสิก จังหวัดที่มีสนามบินภายในประเทศ ความครอบคลุม 5G เกิน 85% และประชากรมหาวิทยาลัยกว่า 20,000 คน มีโครงสร้างพื้นฐานรองรับอุตสาหกรรมสร้างสรรค์และความรู้ได้ตั้งแต่วันนี้ ไม่ใช่วันหน้า การได้รับการรับรองจากยูเนสโกหรือเขตสร้างสรรค์ที่สนับสนุนโดย CEA เป็นสัญญาณบ่งบอกถึงนโยบายที่เอื้ออำนวยและโอกาสในการเข้าถึงเงินทุนสนับสนุน",
+                zh: "高人均GPP相对于最低工资意味着低成本下的高生产力——经典的“价值投资”。拥有国内机场、5G覆盖率超过85%、大学人口超过2万人的省份，今天（而不是未来某天）就具备支持创意和知识产业的基础设施。联合国教科文组织创意城市称号或CEA支持的创意街区标志着政策顺风，以及获得资助、培训和国际网络的潜力。",
+              })}
+            </p>
+            <p style={{ fontSize: "1rem", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.6 }}>
+              {translate(locale, {
+                en: "The provinces ranked highest on our Moneyball composite — Lamphun, Khon Kaen, Chanthaburi, Nakhon Ratchasima, Chiang Rai — share a pattern: strong fundamentals, low entry cost, and creative assets that the market has not yet fully priced in.",
+                th: "จังหวัดที่ได้คะแนนสูงสุดในคะแนน Moneyball รวมของเรา — ลำพูน, ขอนแก่น, จันทบุรี, นครราชสีมา, เชียงราย — มีรูปแบบที่เหมือนกัน: พื้นฐานแข็งแกร่ง ต้นทุนเข้าถึงต่ำ และสินทรัพย์สร้างสรรค์ที่ตลาดยังประเมินมูลค่าไม่เต็มที่",
+                zh: "在我们的Moneyball综合指数上排名最高的省份——南奔、孔敬、尖竹汶、呵叻、清莱——都有一个共同点：基本面强劲、进入成本低，以及市场尚未完全定价的创意资产。",
+              })}
+            </p>
+            <p style={{ fontSize: "1rem", color: "var(--text)", fontWeight: 600, marginTop: "2rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem" }}>
+              {translate(locale, {
+                en: "SCITI does not give investment advice. It gives you the data to make your own call — with the same rigor you would apply to any other asset class.",
+                th: "SCITI ไม่ได้ให้คำแนะนำการลงทุน แต่ให้ข้อมูลเพื่อให้คุณตัดสินใจด้วยตัวเอง — ด้วยความรัดกุมเช่นเดียวกับที่คุณใช้กับสินทรัพย์ประเภทอื่น",
+                zh: "SCITI 不提供投资建议。它为您提供数据，让您做出自己的判断——就像您对待任何其他资产类别一样严谨。",
+              })}
+            </p>
+            <div className="export-docs" style={{ marginTop: "1.5rem" }}>
+              <a href={assetUrl("/downloads/SCITI-2026-Moneyball-Factsheets.html")} download className="export-doc-link">
+                {translate(locale, {
+                  en: "Moneyball Province Factsheets (HTML, print-ready)",
+                  th: "ข้อมูลจังหวัด Moneyball (HTML, พิมพ์ได้)",
+                  zh: "Moneyball 省份资料 (HTML，可打印)",
+                })}
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ═══════════ WORLD BANK CCDR 2025 URGENCY PANEL ═══════════ */}

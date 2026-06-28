@@ -108,6 +108,16 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | แคนวาสเมือง`,
     zh: `${SITE_NAME} | 城市画布`,
   },
+  about: {
+    en: `${SITE_NAME} | Mission — Why SCITI Exists`,
+    th: `${SITE_NAME} | พันธกิจ — ทำไม SCITI จึงถือกำเนิดขึ้น`,
+    zh: `${SITE_NAME} | 使命 — SCITI为何存在`,
+  },
+  "creative-economy": {
+    en: `${SITE_NAME} | Creative Economy, Provincial Scale`,
+    th: `${SITE_NAME} | เศรษฐกิจสร้างสรรค์ระดับจังหวัด`,
+    zh: `${SITE_NAME} | 省级规模的创意经济`,
+  },
 };
 
 

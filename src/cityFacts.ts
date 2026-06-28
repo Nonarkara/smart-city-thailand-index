@@ -26,6 +26,8 @@ export interface CityFacts {
   notableInstitution?: LocalizedText;
   dialect?: LocalizedText;       // regional Thai variant or minority language
   geography?: LocalizedText;     // one-line landform description
+  creativeEconomyEdge?: LocalizedText; // creative economy context for investors
+  investmentAngle?: LocalizedText;     // SCITI investment insight
   sources?: CityResearchSource[];
 }
 

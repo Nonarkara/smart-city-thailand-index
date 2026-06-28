@@ -694,6 +694,66 @@ export default function MethodologyPage({ locale }: Props) {
         </div>
       </section>
 
+      {/* ─── CREATIVE ECONOMY METHODOLOGY ─── */}
+      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+        <p className="eyebrow">{t("Creative Economy", "เศรษฐกิจสร้างสรรค์", "创意经济")}</p>
+        <h2>{t("Creative Economy Indicators", "ตัวชี้วัดเศรษฐกิจสร้างสรรค์", "创意经济指标")}</h2>
+        <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginBottom: "2rem" }}>
+          {translate(locale, {
+            en: "SCITI's creative economy indicators are constructed from multiple validated sources and follow the UNESCO Culture|2030 Indicators framework across four thematic dimensions.",
+            th: "ตัวชี้วัดเศรษฐกิจสร้างสรรค์ของ SCITI สร้างขึ้นจากแหล่งข้อมูลที่ผ่านการตรวจสอบหลายแหล่ง และทำตามกรอบตัวชี้วัด UNESCO Culture|2030 ในสี่มิติหลัก",
+            zh: "SCITI的创意经济指标由多个经验证的数据源构建，并遵循联合国教科文组织文化|2030指标框架的四个主题维度。",
+          })}
+        </p>
+
+        <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>{t("The Moneyball Score: Composite", "คะแนน Moneyball: การคำนวณรวม", "Moneyball评分：综合计算")}</h3>
+        <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginBottom: "1rem" }}>
+          {translate(locale, {
+            en: "The SCITI Moneyball Score is a weighted composite index calculated as follows:",
+            th: "คะแนน SCITI Moneyball เป็นดัชนีชี้วัดแบบถ่วงน้ำหนักที่คำนวณดังนี้:",
+            zh: "SCITI Moneyball评分是一个加权综合指数，计算如下：",
+          })}
+        </p>
+        <ul style={{ listStyle: "decimal", paddingLeft: "2rem", marginBottom: "2rem", color: "var(--2)", fontSize: "0.95rem" }}>
+          <li style={{ marginBottom: "0.5rem" }}><strong>{t("GPP Growth Potential (30%)", "ศักยภาพการเติบโต GPP (30%)", "GPP增长潜力 (30%)")}</strong> — {t("GPP/capita relative to regional average", "GPP ต่อหัวเทียบกับค่าเฉลี่ยภูมิภาค", "相对于区域平均水平的人均GPP")}</li>
+          <li style={{ marginBottom: "0.5rem" }}><strong>{t("Cost Advantage (25%)", "ข้อได้เปรียบด้านต้นทุน (25%)", "成本优势 (25%)")}</strong> — {t("Inverse ranking of minimum wage tier", "อันดับผกผันของอัตราค่าจ้างขั้นต่ำ", "最低工资等级的反向排名")}</li>
+          <li style={{ marginBottom: "0.5rem" }}><strong>{t("Infrastructure Readiness (20%)", "ความพร้อมของโครงสร้างพื้นฐาน (20%)", "基础设施就绪度 (20%)")}</strong> — {t("Binary scoring across 6 dimensions (airport, rail, port, highway, 5G, university)", "การให้คะแนนแบบทวิวิภาคใน 6 มิติ (สนามบิน รถไฟ ท่าเรือ ทางหลวง 5G มหาวิทยาลัย)", "跨6个维度的二元评分 (机场、铁路、港口、高速公路、5G、大学)")}</li>
+          <li style={{ marginBottom: "0.5rem" }}><strong>{t("Creative/Talent Index (15%)", "ดัชนีสร้างสรรค์และบุคลากร (15%)", "创意/人才指数 (15%)")}</strong> — {t("University students, UNESCO City status, CEA district, festival economy", "นักศึกษามหาวิทยาลัย สถานะเมืองยูเนสโก เขต CEA เศรษฐกิจเทศกาล", "大学生人数、联合国教科文组织城市地位、CEA街区、节日经济")}</li>
+          <li style={{ marginBottom: "0.5rem" }}><strong>{t("Policy Support (10%)", "การสนับสนุนทางนโยบาย (10%)", "政策支持 (10%)")}</strong> — {t("BOI zone classification (EEC, SEZ, Corridors)", "การจัดกลุ่มเขต BOI (EEC, SEZ, ระเบียงเศรษฐกิจ)", "BOI区域分类 (EEC, SEZ, 经济走廊)")}</li>
+        </ul>
+        <p style={{ fontSize: "0.95rem", color: "var(--3)", marginBottom: "2rem" }}>
+          {translate(locale, {
+            en: "Scores are normalized to a 0-10 scale. >7.5 is \"Strong Buy\" (Tier 1), 6.5-7.5 is \"Buy\" (Tier 2), and <6.5 is \"Emerging\" (Tier 3).",
+            th: "คะแนนถูกปรับให้เป็นสเกล 0-10 >7.5 คือ \"ซื้อแข็งแกร่ง\" (กลุ่ม 1), 6.5-7.5 คือ \"ซื้อ\" (กลุ่ม 2) และ <6.5 คือ \"ตลาดเกิดใหม่\" (กลุ่ม 3)",
+            zh: "分数标准化为0-10分制。>7.5 为“强力推荐”（第一梯队），6.5-7.5 为“推荐”（第二梯队），<6.5 为“新兴”（第三梯队）。",
+          })}
+        </p>
+
+        <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>{t("Limitations & Transparency", "ข้อจำกัดและความโปร่งใส", "局限性与透明度")}</h3>
+        <ul style={{ paddingLeft: "1.5rem", marginBottom: "2rem", color: "var(--3)", fontSize: "0.9rem" }}>
+          <li style={{ marginBottom: "0.5rem", listStyleType: "square" }}>{translate(locale, {
+            en: "GPP data reflects 2019 chain-volume measures and may not capture post-pandemic recovery dynamics in real time.",
+            th: "ข้อมูล GPP สะท้อนมูลค่า ณ ราคาปี 62 และอาจไม่สามารถจับทิศทางการฟื้นตัวหลังโรคระบาดแบบเรียลไทม์ได้",
+            zh: "GPP数据反映的是2019年的环比物量测算，可能无法实时反映疫情后的复苏动态。",
+          })}</li>
+          <li style={{ marginBottom: "0.5rem", listStyleType: "square" }}>{translate(locale, {
+            en: "Creative economy employment data at provincial level is estimated from national samples and should be treated as directional.",
+            th: "ข้อมูลการจ้างงานเศรษฐกิจสร้างสรรค์ระดับจังหวัดถูกประเมินจากกลุ่มตัวอย่างระดับชาติและควรใช้เป็นเพียงทิศทาง",
+            zh: "省级层面的创意经济就业数据是根据全国样本估算的，应作为方向性参考。",
+          })}</li>
+          <li style={{ marginBottom: "0.5rem", listStyleType: "square" }}>{translate(locale, {
+            en: "Digital infrastructure coverage is based on operator-reported data, not independent measurement.",
+            th: "ความครอบคลุมของโครงสร้างพื้นฐานดิจิทัลอิงตามข้อมูลที่ผู้ให้บริการรายงาน ไม่ใช่การวัดที่เป็นอิสระ",
+            zh: "数字基础设施的覆盖范围是基于运营商报告的数据，而非独立测量。",
+          })}</li>
+          <li style={{ marginBottom: "0.5rem", listStyleType: "square" }}>{translate(locale, {
+            en: "Cultural heritage asset inventory is incomplete; SCITI catalogs major registered sites but does not claim comprehensive coverage.",
+            th: "บัญชีสินทรัพย์มรดกทางวัฒนธรรมยังไม่สมบูรณ์ SCITI จัดทำแคตตาล็อกสถานที่จดทะเบียนหลัก แต่ไม่ครอบคลุมทั้งหมด",
+            zh: "文化遗产资产清单尚不完整；SCITI 收录了主要的注册遗址，但不代表全面覆盖。",
+          })}</li>
+        </ul>
+      </section>
+
       {/* ─── DOWNLOADS ─── */}
       <section className="section reveal visible" style={{ marginTop: "2rem" }}>
         <p className="eyebrow">{t("Downloads", "ดาวน์โหลด", "下载")}</p>

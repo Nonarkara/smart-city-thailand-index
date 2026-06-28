@@ -70,6 +70,8 @@ const NAV_GROUPS: NavGroup[] = [
     id: "stories",
     label: { en: "Stories", th: "เรื่องราว", zh: "故事" },
     items: [
+      { kind: "about", path: "/about", label: { en: "Mission", th: "พันธกิจ", zh: "使命" } },
+      { kind: "creative-economy", path: "/creative-economy", label: { en: "Creative Economy", th: "เศรษฐกิจสร้างสรรค์", zh: "创意经济" } },
       { kind: "story", path: "/story", label: { en: "Manifesto", th: "ปฏิญญา", zh: "宣言" } },
       { kind: "showcase", path: "/showcase", label: { en: "NST showcase", th: "นครศรีต้นแบบ", zh: "那空是贪玛叻样板" } },
       { kind: "program", path: "/program", label: { en: "Program", th: "โครงการ", zh: "计划" } },
