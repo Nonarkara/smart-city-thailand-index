@@ -522,7 +522,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               })}
             </p>
             <div className="export-docs" style={{ marginTop: "1.5rem" }}>
-              <a href={assetUrl("/downloads/SCITI-2026-Moneyball-Factsheets.html")} download className="export-doc-link">
+              <a href={assetUrl("/SCITI-2026-Moneyball-Factsheets.html")} download className="export-doc-link">
                 {translate(locale, {
                   en: "Moneyball Province Factsheets (HTML, print-ready)",
                   th: "ข้อมูลจังหวัด Moneyball (HTML, พิมพ์ได้)",

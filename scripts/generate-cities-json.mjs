@@ -89,4 +89,12 @@ mkdirSync(outDir, { recursive: true });
 const outFile = join(outDir, "cities.json");
 writeFileSync(outFile, JSON.stringify(output, null, 2));
 
-console.log(`✓ cities.json written — ${cities.length} cities → dist/data/cities.json`);
+// Also write to dist/cities.json (root). The /data/cities.json path has been
+// observed returning the SPA shell on the live Cloudflare-fronted deploy
+// (likely the catch-all /* → /index.html 200 rule from public/_redirects
+// winning over the static file lookup). Root-level static files
+// (/favicon.svg, /robots.txt) serve correctly, so this is the safe URL.
+const rootFile = join(root, "dist", "cities.json");
+writeFileSync(rootFile, JSON.stringify(output, null, 2));
+
+console.log(`✓ cities.json written — ${cities.length} cities → dist/data/cities.json + dist/cities.json`);
