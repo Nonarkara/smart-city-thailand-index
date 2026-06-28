@@ -187,7 +187,7 @@ function bibliographySources(city: SmartCity, curatedSources: CityResearchSource
   return [...deduped.values()];
 }
 
-const CITY_INDUSTRY_TAGS: Record<string, TrilingualList> = {
+export const CITY_INDUSTRY_TAGS: Record<string, TrilingualList> = {
   phuket: {
     en: ["Tourism", "Marine leisure", "Food", "Wellness"],
     th: ["ท่องเที่ยว", "เศรษฐกิจทางทะเล", "อาหาร", "เวลเนส"],

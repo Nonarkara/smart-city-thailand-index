@@ -479,22 +479,22 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </div>
           </section>
 
-          {/* ── 99,918 users ── */}
+          {/* ── 131,908 friends ── */}
           <section className="section">
-            <p className="eyebrow">{translate(locale, { en: "Near-saturation", th: "เกือบครบทุกคน", zh: "近乎全覆盖" })}</p>
-            <h2>{translate(locale, { en: "99,918 users in a city of 110,000", th: "99,918 ผู้ใช้ในเมืองที่มีประชากร 110,000 คน", zh: "11 万人口，9.9 万用户" })}</h2>
+            <p className="eyebrow">{translate(locale, { en: "Beyond city limits", th: "เกินขอบเขตเมือง", zh: "已超出城市边界" })}</p>
+            <h2>{translate(locale, { en: "131,908 friends. More than the city itself.", th: "131,908 เพื่อน — มากกว่าประชากรในเมือง", zh: "131,908 好友，超过城市本身" })}</h2>
             <div className="showcase-data-callout">
               <div className="showcase-data-callout-cell">
-                <span className="showcase-data-callout-num">99,918</span>
-                <span className="showcase-data-callout-label">{translate(locale, { en: "LINE OA subscribers, March 2025", th: "ผู้ติดตาม LINE OA มีนาคม 2568", zh: "LINE OA 订阅用户（2025年3月）" })}</span>
+                <span className="showcase-data-callout-num">131,908</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "LINE friends, June 2026", th: "เพื่อน LINE, มิถุนายน 2569", zh: "LINE 好友（2026年6月）" })}</span>
               </div>
               <div className="showcase-data-callout-cell">
                 <span className="showcase-data-callout-num">110k</span>
                 <span className="showcase-data-callout-label">{translate(locale, { en: "Total city population", th: "ประชากรในเขตเทศบาล", zh: "城市人口总数" })}</span>
               </div>
               <div className="showcase-data-callout-cell">
-                <span className="showcase-data-callout-num">80%+</span>
-                <span className="showcase-data-callout-label">{translate(locale, { en: "Adoption vs 20% industry avg", th: "สัดส่วนการใช้งาน เทียบ 20% ค่าเฉลี่ยอุตสาหกรรม", zh: "采用率，行业均值仅 20%" })}</span>
+                <span className="showcase-data-callout-num">50,860</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "LINE post followers", th: "ผู้ติดตาม LINE", zh: "LINE 帖子关注者" })}</span>
               </div>
               <div className="showcase-data-callout-cell">
                 <span className="showcase-data-callout-num">48h</span>
@@ -503,9 +503,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </div>
             <p>
               {translate(locale, {
-                en: "This number — recorded in March 2025 — describes near-saturation. In most Thai cities, government digital platforms reach 20% of residents at best. In Nakhon Si Thammarat, it is above 80% of eligible adults. Nearly every adult in the city has the municipality in their pocket: not a forgotten app, but an active daily channel for real-time flood warnings, queue bookings, road repair reports, and live CCTV access.",
-                th: "ตัวเลขนี้ — บันทึกในเดือนมีนาคม 2568 — สะท้อนสภาพที่เกือบครบทุกคนแล้ว ในเมืองส่วนใหญ่ของไทย แพลตฟอร์มดิจิทัลของรัฐเข้าถึงประชาชนได้ดีที่สุดเพียง 20% ที่นครศรีธรรมราช ตัวเลขนี้อยู่ที่กว่า 80% ของผู้ใหญ่ที่มีสิทธิ์ใช้งาน แทบทุกผู้ใหญ่ในเมืองมีเทศบาลฯ อยู่ในมือถือ ไม่ใช่แอปที่โหลดแล้วลืม แต่เป็นช่องทางที่ใช้งานทุกวัน สำหรับรับการแจ้งเตือนน้ำท่วมแบบเรียลไทม์ จองคิวทำธุรกรรม แจ้งซ่อมถนน และดูกล้องวงจรปิดสด",
-                zh: "这个数字——记录于2025年3月——描绘的是接近饱和的状态。泰国多数城市的政府数字平台顶多覆盖20%的居民。那空是贪玛叻的覆盖率超过适龄成人的80%。几乎每位成年人的手机里都装着市政府——不是装了就忘的应用，而是每天使用的活跃渠道：实时洪水预警、事务预约、道路修缮报告和实时监控画面。",
+                en: "This number — verified June 2026 — has crossed a threshold no Thai city government has reached before. In most Thai cities, government digital platforms reach 20% of residents at best. Nakhon Si Thammarat's @Nakhoncity LINE account now has 131,908 friends: more than the city's own population of 110,000. The account has outgrown the city. People from across Nakhon Si Thammarat province follow it as the most reliable government communication channel in the region — for real-time flood warnings, queue bookings, road repair reports, and live CCTV access.",
+                th: "ตัวเลขนี้ — ยืนยัน ณ มิถุนายน 2569 — ได้ก้าวข้ามเส้นที่ไม่มีรัฐบาลเมืองไทยใดเคยทำได้มาก่อน ในเมืองส่วนใหญ่ของไทย แพลตฟอร์มดิจิทัลของรัฐเข้าถึงประชาชนได้ดีที่สุดเพียง 20% LINE OA @Nakhoncity ของนครศรีธรรมราชมีเพื่อนแล้ว 131,908 ราย — มากกว่าประชากรในเขตเทศบาลที่มีอยู่ 110,000 คน บัญชีนี้โตเกินเมืองไปแล้ว ประชาชนทั่วทั้งจังหวัดนครศรีธรรมราชต่างติดตามเพราะมันคือช่องทางสื่อสารของรัฐที่น่าเชื่อถือที่สุดในภูมิภาค — สำหรับแจ้งเตือนน้ำท่วมเรียลไทม์ จองคิว รายงานซ่อมถนน และดูกล้องวงจรปิดสด",
+                zh: "这个数字——于2026年6月确认——越过了泰国任何一座城市政府从未到达的门槛。泰国多数城市的政府数字平台顶多覆盖20%的居民。那空是贪玛叻的@Nakhoncity LINE账户目前拥有131,908位好友：超过了这座城市自身11万人口的总量。账户的覆盖已经超出城市本身。来自那空是贪玛叻全省的民众将其视为整个地区最可靠的政府沟通渠道——用于实时洪水预警、事务预约、道路修缮报告和实时监控画面。",
               })}
             </p>
             <p>

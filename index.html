@@ -38,6 +38,57 @@
     <meta name="twitter:description" content="Thailand's smart city index focused on real outcomes, not paper plans. Explore rankings, methodology, and detailed city profiles." />
     <meta name="twitter:image" content="https://sciti.nonarkara.org/smart_city_thailand_logo.jpg" />
     <title>Smart City Thailand Index (SCITI)</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "SCITI 2026 — Smart City Thailand Index",
+      "description": "Rankings and scores for 118 Thai smart cities across 7 pillars (livability, economy, safety, wellbeing, environment, hospitality, digital). Open data under CC BY 4.0.",
+      "url": "https://sciti.nonarkara.org",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creator": {
+        "@type": "Organization",
+        "name": "depa — Digital Economy Promotion Agency",
+        "url": "https://www.depa.or.th"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "depa — Digital Economy Promotion Agency"
+      },
+      "datePublished": "2026-04",
+      "dateModified": "2026-06",
+      "version": "2026",
+      "inLanguage": ["th", "en", "zh"],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Thailand",
+        "geo": { "@type": "GeoShape", "polygon": "5.5 97.5 20.5 97.5 20.5 105.7 5.5 105.7 5.5 97.5" }
+      },
+      "variableMeasured": [
+        { "@type": "PropertyValue", "name": "Livability", "unitText": "score 0–100", "valueReference": "weight 25%" },
+        { "@type": "PropertyValue", "name": "Economy",    "unitText": "score 0–100", "valueReference": "weight 20%" },
+        { "@type": "PropertyValue", "name": "Safety",     "unitText": "score 0–100", "valueReference": "weight 15%" },
+        { "@type": "PropertyValue", "name": "Wellbeing",  "unitText": "score 0–100", "valueReference": "weight 15%" },
+        { "@type": "PropertyValue", "name": "Environment","unitText": "score 0–100", "valueReference": "weight 10%" },
+        { "@type": "PropertyValue", "name": "Hospitality","unitText": "score 0–100", "valueReference": "weight 10%" },
+        { "@type": "PropertyValue", "name": "Digital",    "unitText": "score 0–100", "valueReference": "weight 5%" }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://sciti.nonarkara.org/data/cities.json",
+          "description": "All 118 cities with composite scores and pillar breakdowns (JSON)"
+        },
+        {
+          "@type": "DataDownload",
+          "encodingFormat": "text/csv",
+          "description": "CSV export available via the Rankings page download button"
+        }
+      ],
+      "keywords": ["smart city", "Thailand", "city index", "urban data", "depa", "livability", "investment", "SCITI"]
+    }
+    </script>
 </head>
   <body>
     <script>

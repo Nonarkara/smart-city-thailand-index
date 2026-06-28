@@ -1,4 +1,5 @@
 import { translate } from "./cityPresentation";
+import InvestCityDirectory from "./InvestCityDirectory";
 import type { Locale } from "./types";
 import { useInView } from "./useInView";
 
@@ -134,170 +135,6 @@ const insightCards: InsightCard[] = [
       en: "Only 5% weight, but diagnostic. Cities that score high on Digital today are building the infrastructure for tomorrow's services. Low digital + high livability = a city coasting on legacy. High digital + low livability = investment thesis in motion.",
       th: "มีน้ำหนักเพียง 5% แต่เป็นตัวชี้วัดสำคัญ เมืองที่ได้คะแนน Digital สูงวันนี้กำลังสร้างโครงสร้างพื้นฐานเพื่อบริการในอนาคต Digital ต่ำ + ความน่าอยู่สูง = เมืองที่พึ่งพามรดกเดิม Digital สูง + ความน่าอยู่ต่ำ = วิทยานิพนธ์การลงทุนที่กำลังเคลื่อนไหว",
       zh: "仅占5%权重，但具诊断性。今天数字评分高的城市正在为明天的服务构建基础设施。低数字+高宜居=依赖存量的城市。高数字+低宜居=正在验证中的投资论点。",
-    },
-  },
-];
-
-interface Corridor {
-  id: string;
-  tag: string;
-  tagColor: string;
-  name: { en: string; th: string; zh: string };
-  subtitle: { en: string; th: string; zh: string };
-  body: { en: string; th: string; zh: string };
-  stats: { label: { en: string; th: string; zh: string }; value: string }[];
-  opportunities: { en: string; th: string; zh: string };
-}
-
-const corridors: Corridor[] = [
-  {
-    id: "phuket",
-    tag: "Alpha",
-    tagColor: "var(--teal)",
-    name: {
-      en: "Phuket Tourism-Tech Corridor",
-      th: "ระเบียงเทคโนโลยีท่องเที่ยวภูเก็ต",
-      zh: "普吉旅游科技走廊",
-    },
-    subtitle: {
-      en: "Thailand's most data-mature smart city. Real sensors, real revenue.",
-      th: "เมืองอัจฉริยะที่มีข้อมูลสมบูรณ์ที่สุดของไทย เซ็นเซอร์จริง รายได้จริง",
-      zh: "泰国数据最成熟的智慧城市。真实传感器，真实收入。",
-    },
-    body: {
-      en: "Phuket's tourism economy generates over 400B baht annually. Fujitsu AI traffic management has cut congestion on key corridors. The hospitality score of 88% reflects a city that knows how to monetize visitor experience. BOI zone benefits apply to digital and tourism tech ventures.",
-      th: "เศรษฐกิจการท่องเที่ยวภูเก็ตสร้างรายได้กว่า 400,000 ล้านบาทต่อปี ระบบ AI จัดการจราจรของ Fujitsu ลดการจราจรติดขัดบนเส้นทางหลัก คะแนน Hospitality 88% สะท้อนเมืองที่รู้วิธีสร้างรายได้จากประสบการณ์ของนักท่องเที่ยว สิทธิประโยชน์เขต BOI ใช้ได้กับธุรกิจดิจิทัลและเทคโนโลยีท่องเที่ยว",
-      zh: "普吉旅游经济年收入超过4000亿泰铢。富士通AI交通管理系统已减少主要通道的拥堵。88%的款待评分反映了一座善于将游客体验变现的城市。BOI区域优惠适用于数字和旅游科技企业。",
-    },
-    stats: [
-      { label: { en: "Hospitality Score", th: "คะแนนอัธยาศัย", zh: "款待评分" }, value: "88%" },
-      { label: { en: "Tourism GDP", th: "GDP ท่องเที่ยว", zh: "旅游GDP" }, value: "400B+" },
-      { label: { en: "Data Maturity", th: "ความสมบูรณ์ข้อมูล", zh: "数据成熟度" }, value: "High" },
-    ],
-    opportunities: {
-      en: "PropTech / Tourism platforms / Smart mobility / Environmental monitoring",
-      th: "PropTech / แพลตฟอร์มท่องเที่ยว / การเดินทางอัจฉริยะ / การติดตามสิ่งแวดล้อม",
-      zh: "房产科技 / 旅游平台 / 智慧出行 / 环境监测",
-    },
-  },
-  {
-    id: "bangkok",
-    tag: "Alpha",
-    tagColor: "var(--teal)",
-    name: {
-      en: "Bangkok Innovation Belt",
-      th: "แถบนวัตกรรมกรุงเทพ",
-      zh: "曼谷创新带",
-    },
-    subtitle: {
-      en: "Samyan-Phra Ram 4 axis. Startup density, 5G testbed, university anchors.",
-      th: "แกนสามย่าน-พระราม 4 ความหนาแน่นของสตาร์ทอัพ 5G ทดสอบ มหาวิทยาลัยเป็นหลัก",
-      zh: "三养-拍喃四轴线。创业密度、5G试验区、大学锚点。",
-    },
-    body: {
-      en: "The Samyan-Phra Ram 4 corridor houses 200+ startups, True Digital Park, and the One Bangkok development. As Thailand's sole Alpha-tier metropolis, Bangkok is the only city where FinTech, HealthTech, and EdTech ecosystems are self-sustaining. 5G commercial testbeds are live. Chulalongkorn and Mahidol universities anchor the talent pipeline.",
-      th: "ระเบียง สามย่าน-พระราม 4 เป็นที่ตั้งของสตาร์ทอัพกว่า 200 แห่ง True Digital Park และโครงการ One Bangkok ในฐานะมหานครระดับ Alpha เพียงแห่งเดียวของไทย กรุงเทพฯ เป็นเมืองเดียวที่ระบบนิเวศ FinTech, HealthTech และ EdTech สามารถดำรงอยู่ได้ด้วยตัวเอง พื้นที่ทดสอบ 5G เชิงพาณิชย์เปิดใช้งานแล้ว จุฬาลงกรณ์มหาวิทยาลัยและมหิดลเป็นแหล่งบุคลากร",
-      zh: "三养-拍喃四走廊集聚了200多家初创企业、True Digital Park和One Bangkok项目。作为泰国唯一的Alpha级大都市，曼谷是唯一一个金融科技、健康科技和教育科技生态系统能够自我维持的城市。5G商用试验区已上线。朱拉隆功大学和玛希隆大学是人才管道的锚点。",
-    },
-    stats: [
-      { label: { en: "Startups", th: "สตาร์ทอัพ", zh: "初创企业" }, value: "200+" },
-      { label: { en: "5G Coverage", th: "ครอบคลุม 5G", zh: "5G覆盖" }, value: "Live" },
-      { label: { en: "Anchor", th: "จุดยึด", zh: "锚点" }, value: "TDP / CU" },
-    ],
-    opportunities: {
-      en: "FinTech / HealthTech / EdTech incubation / Deep tech R&D",
-      th: "FinTech / HealthTech / บ่มเพาะ EdTech / วิจัย Deep Tech",
-      zh: "金融科技 / 健康科技 / 教育科技孵化 / 深科技研发",
-    },
-  },
-  {
-    id: "khon-kaen",
-    tag: "Alpha/Beta",
-    tagColor: "var(--gold)",
-    name: {
-      en: "Khon Kaen — Isan Gateway",
-      th: "ขอนแก่น — ประตูอีสาน",
-      zh: "孔敬 — 伊森门户",
-    },
-    subtitle: {
-      en: "Private consortium model. Community-led LRT. 20M underserved market.",
-      th: "โมเดลกลุ่มเอกชน LRT ที่ชุมชนนำ ตลาด 20 ล้านคนที่ยังไม่ได้รับบริการ",
-      zh: "民间联盟模式。社区主导轻轨。2000万人的待开发市场。",
-    },
-    body: {
-      en: "Khon Kaen's KKTS (Khon Kaen Think Tank) is Thailand's most remarkable public-private consortium. They're building LRT without waiting for central government. The 6-hospital digital health network covers the Isan corridor. With 20M population in the Northeast, this is the largest underserved market in Thailand — and the consortium model is replicable.",
-      th: "KKTS (Khon Kaen Think Tank) ของขอนแก่นเป็นกลุ่มความร่วมมือรัฐ-เอกชนที่น่าทึ่งที่สุดในไทย พวกเขากำลังสร้าง LRT โดยไม่ต้องรอรัฐบาลกลาง เครือข่ายสุขภาพดิจิทัล 6 โรงพยาบาลครอบคลุมระเบียงอีสาน ด้วยประชากร 20 ล้านคนในภาคตะวันออกเฉียงเหนือ นี่คือตลาดที่ยังไม่ได้รับบริการที่ใหญ่ที่สุดในไทย และโมเดลกลุ่มเอกชนนี้สามารถจำลองได้",
-      zh: "孔敬的KKTS（孔敬智库）是泰国最杰出的公私合作联盟。他们不等中央政府，自主建设轻轨。6家医院的数字健康网络覆盖伊森走廊。东北地区拥有2000万人口，是泰国最大的待开发市场——而这一联盟模式可被复制。",
-    },
-    stats: [
-      { label: { en: "Consortium Model", th: "โมเดลกลุ่มเอกชน", zh: "联盟模式" }, value: "KKTS" },
-      { label: { en: "Hospital Network", th: "เครือข่ายโรงพยาบาล", zh: "医院网络" }, value: "6" },
-      { label: { en: "NE Population", th: "ประชากร อีสาน", zh: "东北人口" }, value: "20M" },
-    ],
-    opportunities: {
-      en: "Healthcare / Transit-oriented development / AgriTech / Rural FinTech",
-      th: "สุขภาพ / TOD / AgriTech / FinTech ชนบท",
-      zh: "医疗 / 公交导向开发 / 农业科技 / 农村金融科技",
-    },
-  },
-  {
-    id: "eec",
-    tag: "Beta",
-    tagColor: "var(--gold)",
-    name: {
-      en: "EEC Digital Corridor",
-      th: "ระเบียงดิจิทัล EEC",
-      zh: "EEC数字走廊",
-    },
-    subtitle: {
-      en: "Rayong, Chachoengsao, Chon Buri. $43B committed. Manufacturing 4.0 hub.",
-      th: "ระยอง ฉะเชิงเทรา ชลบุรี ลงทุน $43B อุตสาหกรรม 4.0",
-      zh: "罗勇、北柳、春武里。$43B承诺投资。制造业4.0枢纽。",
-    },
-    body: {
-      en: "The Eastern Economic Corridor is Thailand's largest industrial policy bet. $43B in committed investment spans automotive, electronics, port logistics, and a new high-speed rail link to Bangkok. BOI EEC super-incentives offer up to 15-year corporate income tax holidays. The gap: digital infrastructure lags physical. Industrial IoT and logistics tech are the bridge.",
-      th: "ระเบียงเศรษฐกิจพิเศษภาคตะวันออกคือนโยบายอุตสาหกรรมที่ใหญ่ที่สุดของไทย การลงทุนที่ผูกพัน $43B ครอบคลุมยานยนต์ อิเล็กทรอนิกส์ โลจิสติกส์ท่าเรือ และรถไฟความเร็วสูงเชื่อมกรุงเทพฯ สิทธิประโยชน์พิเศษ BOI EEC ให้ยกเว้นภาษีเงินได้นิติบุคคลสูงสุด 15 ปี ช่องว่าง: โครงสร้างดิจิทัลตามหลังกายภาพ Industrial IoT และ logistics tech คือสะพานเชื่อม",
-      zh: "东部经济走廊是泰国最大的产业政策赌注。$43B承诺投资涵盖汽车、电子、港口物流以及连接曼谷的新高铁线路。BOI EEC超级优惠提供最长15年企业所得税免除。差距在于：数字基础设施落后于物理基础设施。工业物联网和物流科技是桥梁。",
-    },
-    stats: [
-      { label: { en: "Committed Investment", th: "การลงทุนที่ผูกพัน", zh: "承诺投资" }, value: "$43B" },
-      { label: { en: "Tax Holiday", th: "ยกเว้นภาษี", zh: "税收假期" }, value: "15yr" },
-      { label: { en: "Key Sectors", th: "ภาคหลัก", zh: "关键领域" }, value: "4.0" },
-    ],
-    opportunities: {
-      en: "Industrial IoT / Manufacturing 4.0 / Logistics tech / EV supply chain",
-      th: "Industrial IoT / การผลิต 4.0 / Logistics Tech / ห่วงโซ่อุปทาน EV",
-      zh: "工业物联网 / 制造业4.0 / 物流科技 / 电动车供应链",
-    },
-  },
-  {
-    id: "chiang-mai",
-    tag: "Alpha/Beta",
-    tagColor: "var(--gold)",
-    name: {
-      en: "Northern Creative Corridor",
-      th: "ระเบียงสร้างสรรค์ภาคเหนือ",
-      zh: "北部创意走廊",
-    },
-    subtitle: {
-      en: "Chiang Mai + CMU. Digital nomad capital. Air quality as investment thesis.",
-      th: "เชียงใหม่ + มช. เมืองหลวง Digital Nomad คุณภาพอากาศเป็นวิทยานิพนธ์การลงทุน",
-      zh: "清迈 + CMU。数字游牧之都。空气质量作为投资论点。",
-    },
-    body: {
-      en: "Chiang Mai is Southeast Asia's de facto digital nomad capital. Chiang Mai University (CMU) operates 300+ environmental sensors including temple-based air quality stations. The air pollution crisis (PM2.5 peaking at 200+ during burn season) is paradoxically an investment thesis: CleanTech, smart monitoring, and remote work infrastructure all have immediate demand. The city's creative economy and low cost base make it a natural incubator.",
-      th: "เชียงใหม่คือเมืองหลวง Digital Nomad ของเอเชียตะวันออกเฉียงใต้โดยพฤตินัย มหาวิทยาลัยเชียงใหม่ (มช.) มีเซ็นเซอร์สิ่งแวดล้อมกว่า 300 ตัว รวมถึงสถานีวัดคุณภาพอากาศในวัด วิกฤตมลพิษอากาศ (PM2.5 สูงถึง 200+ ในฤดูเผา) เป็นวิทยานิพนธ์การลงทุนอย่างย้อนแย้ง: CleanTech การติดตามอัจฉริยะ และโครงสร้างพื้นฐานการทำงานระยะไกลมีความต้องการทันที เศรษฐกิจสร้างสรรค์และต้นทุนต่ำของเมืองทำให้เป็นศูนย์บ่มเพาะตามธรรมชาติ",
-      zh: "清迈是东南亚事实上的数字游牧之都。清迈大学（CMU）运营着300多个环境传感器，包括寺庙空气质量站点。空气污染危机（烧季PM2.5峰值超过200）反而成为投资论点：清洁技术、智能监测和远程办公基础设施都有即时需求。城市的创意经济和低成本基础使其成为天然孵化器。",
-    },
-    stats: [
-      { label: { en: "Env. Sensors", th: "เซ็นเซอร์สิ่งแวดล้อม", zh: "环境传感器" }, value: "300+" },
-      { label: { en: "Nomad Rank", th: "อันดับ Nomad", zh: "游牧排名" }, value: "#1 SEA" },
-      { label: { en: "University", th: "มหาวิทยาลัย", zh: "大学" }, value: "CMU" },
-    ],
-    opportunities: {
-      en: "CleanTech / Smart tourism / Remote work infra / Creative tech",
-      th: "CleanTech / ท่องเที่ยวอัจฉริยะ / โครงสร้างพื้นฐานทำงานระยะไกล / Creative Tech",
-      zh: "清洁科技 / 智慧旅游 / 远程办公基础设施 / 创意科技",
     },
   },
 ];
@@ -571,7 +408,6 @@ const sources: Source[] = [
 export default function InvestPage({ locale, onNavigate }: Props) {
   const [macroRef, macroVisible] = useInView(0.1);
   const [insightRef, insightVisible] = useInView(0.1);
-  const [corridorRef, corridorVisible] = useInView(0.1);
   const [mechRef, mechVisible] = useInView(0.1);
   const [riskRef, riskVisible] = useInView(0.1);
   const [ddRef, ddVisible] = useInView(0.1);
@@ -758,93 +594,8 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      {/* ═══════════ 4. TOP INVESTMENT CORRIDORS ═══════════ */}
-      <section ref={corridorRef} className={`section reveal stagger-3 ${corridorVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Investment Corridors", th: "ระเบียงการลงทุน", zh: "投资走廊" })}</p>
-        <h2>{translate(locale, {
-          en: "Five Corridors, Five Theses",
-          th: "ห้าระเบียง ห้าวิทยานิพนธ์",
-          zh: "五条走廊，五个投资论点",
-        })}</h2>
-        <p className="section-intro">
-          {translate(locale, {
-            en: "Each corridor has a distinct investment profile. Matched to SCITI tier, sector opportunity, and BOI incentive structure.",
-            th: "แต่ละระเบียงมีโปรไฟล์การลงทุนที่แตกต่างกัน สอดคล้องกับระดับ SCITI โอกาสทางภาค และโครงสร้างสิทธิประโยชน์ BOI",
-            zh: "每条走廊都有独特的投资特征。与SCITI层级、行业机会和BOI优惠结构相匹配。",
-          })}
-        </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginTop: "1.5rem" }}>
-          {corridors.map(c => (
-            <div key={c.id} className="glass-card shadow-premium" style={{
-              padding: "1.5rem 1.25rem",
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: "1rem",
-            }}>
-              {/* Header */}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: ".6rem", marginBottom: ".5rem" }}>
-                  <span style={{
-                    font: "700 .55rem var(--mono)",
-                    color: c.tagColor,
-                    padding: ".15rem .4rem",
-                    background: c.tagColor === "var(--teal)" ? "var(--teal-glow)" : "rgba(217, 119, 6, .1)",
-                    letterSpacing: ".08em",
-                    textTransform: "uppercase",
-                  }}>
-                    {c.tag}
-                  </span>
-                  <span style={{ font: "500 .55rem var(--mono)", color: "var(--4)", textTransform: "uppercase", letterSpacing: ".06em" }}>
-                    #{c.id.toUpperCase()}
-                  </span>
-                </div>
-                <h3 style={{ font: "800 1.3rem var(--font-heading)", letterSpacing: "-.03em", lineHeight: "1.1", marginBottom: ".35rem" }}>
-                  {translate(locale, c.name)}
-                </h3>
-                <p style={{ font: "600 .8rem var(--font)", color: "var(--teal)" }}>
-                  {translate(locale, c.subtitle)}
-                </p>
-              </div>
-
-              {/* Body */}
-              <p style={{ font: "400 .82rem var(--font)", color: "var(--2)", lineHeight: "1.65" }}>
-                {translate(locale, c.body)}
-              </p>
-
-              {/* Stats row */}
-              <div style={{
-                display: "flex",
-                gap: 0,
-                borderTop: "1px solid var(--5)",
-                paddingTop: ".75rem",
-                flexWrap: "wrap",
-              }}>
-                {c.stats.map((st, j) => (
-                  <div key={j} style={{
-                    flex: "1 1 100px",
-                    borderRight: j < c.stats.length - 1 ? "1px solid var(--5)" : "none",
-                    paddingRight: j < c.stats.length - 1 ? "1rem" : 0,
-                    paddingLeft: j > 0 ? "1rem" : 0,
-                  }}>
-                    <div style={{ font: "800 1.1rem var(--font-heading)", letterSpacing: "-.03em", color: "var(--ink)" }}>{st.value}</div>
-                    <div style={{ font: "500 .55rem var(--mono)", color: "var(--3)", textTransform: "uppercase", letterSpacing: ".08em" }}>{translate(locale, st.label)}</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Opportunities */}
-              <div style={{ borderTop: "1px solid var(--5)", paddingTop: ".65rem" }}>
-                <span style={{ font: "700 .55rem var(--mono)", color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: ".1em" }}>
-                  {translate(locale, { en: "Opportunities", th: "โอกาส", zh: "机遇" })}
-                </span>
-                <p style={{ font: "500 .75rem var(--font)", color: "var(--2)", marginTop: ".25rem" }}>
-                  {translate(locale, c.opportunities)}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* ═══════════ 4. CITY INVESTMENT DIRECTORY ═══════════ */}
+      <InvestCityDirectory locale={locale} onNavigate={onNavigate} />
 
       {/* ═══════════ 5. FINANCIAL MECHANISMS ═══════════ */}
       <section ref={mechRef} className={`section reveal stagger-4 ${mechVisible ? "visible" : ""}`}>
