@@ -83,7 +83,7 @@ const output = {
   cities,
 };
 
-// Write to dist/data/cities.json
+// Write to dist/data/cities.json (postbuild runs after vite build, so dist/ exists)
 const outDir = join(root, "dist", "data");
 mkdirSync(outDir, { recursive: true });
 const outFile = join(outDir, "cities.json");

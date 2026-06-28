@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>CEA 2026 — 03 วัตถุประสงค์และแนวคิด</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font: "IBM Plex Sans Thai", "Sukhumvit Set", sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+      --ink: #0f0f0f;
+      --paper: #fff;
+      --surface: #f6f6f6;
+      --teal: #2BA89C;
+      --saffron: #E8913A;
+      --rule: #d0d0d0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    @page { size: A4 portrait; margin: 0; }
+    body {
+      font-family: var(--font);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--paper);
+      width: 210mm;
+      min-height: 297mm;
+      padding: 16mm 18mm;
+    }
+    .doc-label {
+      font: 600 10px/1 var(--mono);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin-bottom: 4px;
+    }
+    .sub { font-size: 13px; color: #555; margin-bottom: 24px; }
+    .rule { height: 2px; background: var(--ink); margin-bottom: 24px; }
+    .section { margin-bottom: 26px; }
+    .section-title {
+      font: 700 10px/1 var(--mono);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--saffron);
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .problem-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    .prob {
+      background: #fff8f4;
+      border: 1px solid #f0c9a0;
+      padding: 12px 14px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .prob strong { display: block; color: var(--saffron); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 5px; font-family: var(--mono); }
+    .design-concept {
+      background: var(--surface);
+      border-left: 3px solid var(--teal);
+      padding: 14px 18px;
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+    .design-concept strong { color: var(--teal); }
+    ol { padding-left: 0; list-style: none; counter-reset: obj; }
+    li {
+      counter-increment: obj;
+      padding: 8px 0 8px 32px;
+      border-bottom: 1px solid var(--rule);
+      font-size: 13px;
+      position: relative;
+    }
+    li::before {
+      content: counter(obj, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      font: 600 11px/1 var(--mono);
+      color: var(--teal);
+      top: 10px;
+    }
+    li strong { font-weight: 600; }
+    li span { color: #666; font-size: 12px; display: block; margin-top: 2px; }
+    .ref-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .ref-tag {
+      font: 500 11px/1 var(--mono);
+      padding: 4px 10px;
+      border: 1px solid var(--rule);
+      color: #555;
+    }
+    .footer {
+      margin-top: 32px;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      font: 400 10px/1.4 var(--mono);
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="doc-label">CEA Creative Excellence Awards 2026 · หมวดที่ 1 · เอกสาร 03/05</div>
+  <h1>วัตถุประสงค์<br>และแนวคิดในการออกแบบ</h1>
+  <p class="sub">Objectives &amp; Design Concept</p>
+  <div class="rule"></div>
+
+  <div class="section">
+    <div class="section-title">ปัญหา — Problem Statement</div>
+    <div class="problem-row">
+      <div class="prob">
+        <strong>ช่องว่างข้อมูล</strong>
+        เศรษฐกิจสร้างสรรค์ไทยมีมูลค่า 1.44 ล้านล้านบาท (8% ของ GDP) แต่ขาดโครงสร้างพื้นฐานข้อมูลระบบสำหรับกำหนดนโยบาย
+      </div>
+      <div class="prob">
+        <strong>Bangkok-Centric Bias</strong>
+        กรุงเทพฯ ดูดซับ GDP สร้างสรรค์เกือบ 48% ทำให้ 76 จังหวัดไม่ปรากฏในสายตาผู้กำหนดนโยบายระดับชาติ
+      </div>
+      <div class="prob">
+        <strong>ข้อมูลกระจัดกระจาย</strong>
+        UNESCO ระบุว่า "การกระจัดกระจายของข้อมูล" คืออุปสรรคหลักในการบูรณาการวัฒนธรรมเข้ากับการพัฒนายั่งยืน
+      </div>
+      <div class="prob">
+        <strong>ไม่มีแพลตฟอร์มรวม</strong>
+        ไม่มีระบบเดียวที่จับคู่ วัดผล และติดตามทรัพย์สินเศรษฐกิจสร้างสรรค์ในระดับเมือง/จังหวัด
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">แนวคิดในการออกแบบ — Design Concept</div>
+    <div class="design-concept">
+      SCITI เป็น <strong>"Creative City Policy Platform"</strong> — ระบบแรกของไทยและเอเชียตะวันออกเฉียงใต้ที่รวมวิทยาศาสตร์ข้อมูลเข้ากับการทำแผนที่ทรัพย์สินทางวัฒนธรรม ผสานเป้าหมายนโยบายรัฐกับการใช้งานของภาคเอกชน และเชื่อมอัตลักษณ์ท้องถิ่นกับการวัดผลกระทบทางเศรษฐกิจ<br><br>
+      SCITI ดำเนินการตาม <strong>UNESCO Culture|2030 Indicators</strong> ในระดับจังหวัด — ครั้งแรกในเอเชียตะวันออกเฉียงใต้ ออกแบบตามแนวทางระดับสากล: Amsterdam Cultural Infrastructure Mapping, Barcelona CityOS, Buenos Aires Data Cultura, Seoul Open Data Plaza, Singapore Cultural Statistics
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">วัตถุประสงค์เฉพาะ — Specific Objectives</div>
+    <ol>
+      <li>
+        <strong>ทำให้ทรัพย์สินสร้างสรรค์จังหวัดมองเห็นได้</strong>
+        <span>วัดผลและเปรียบเทียบได้ครบ 77 จังหวัด — Make provincial creative assets visible, measurable, and comparable</span>
+      </li>
+      <li>
+        <strong>สนับสนุน CEA ด้วยฐานข้อมูลระดับจังหวัด</strong>
+        <span>สำหรับการติดตั้ง Thailand Creative District Network (TCDN) ให้บรรลุเป้าหมาย 60 จังหวัด</span>
+      </li>
+      <li>
+        <strong>เปิดใช้งานการตัดสินใจเชิงหลักฐาน</strong>
+        <span>จัดสรรสิทธิประโยชน์ BOI และการลงทุนอุตสาหกรรมสร้างสรรค์อย่างเป็นระบบ</span>
+      </li>
+      <li>
+        <strong>สนับสนุน 9 UNESCO Creative Cities</strong>
+        <span>ด้วยข้อมูลติดตามผลสำหรับรายงานสี่ปีของแต่ละเมือง</span>
+      </li>
+      <li>
+        <strong>สร้างต้นแบบที่ทำซ้ำได้</strong>
+        <span>สำหรับประเทศอื่นในเอเชียตะวันออกเฉียงใต้ — Create a replicable model for ASEAN</span>
+      </li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <div class="section-title">แนวปฏิบัติสากลอ้างอิง — International Best Practice References</div>
+    <div class="ref-row">
+      <span class="ref-tag">Amsterdam Cultural Infrastructure Mapping</span>
+      <span class="ref-tag">Barcelona CityOS</span>
+      <span class="ref-tag">Buenos Aires Data Cultura</span>
+      <span class="ref-tag">Seoul Open Data Plaza</span>
+      <span class="ref-tag">Singapore Cultural Statistics</span>
+      <span class="ref-tag">UNESCO Culture|2030 Indicators</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>SCITI 2026 · CEA Creative Excellence Awards · หมวดที่ 1 Creative City Awards</span>
+    <span>เอกสาร 03/05 · 28 มิถุนายน 2569</span>
+  </div>
+
+</body>
+</html>
