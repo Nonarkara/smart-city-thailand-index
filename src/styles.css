@@ -125,7 +125,7 @@ html { color-scheme: light; scroll-behavior: smooth; -webkit-text-size-adjust: 1
 body {
   font: 400 14px/1.6 var(--font);
   color: var(--ink);
-  background: var(--bg);
+  background: var(--depa-blue, #0C2F53); /* Gutter: dark depa-blue stage on viewports wider than the 1440px design canvas */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv11", "ss01";
@@ -140,7 +140,13 @@ ul, ol { list-style: none; }
 
 /* Layout */
 .section, .S { width: min(var(--w), calc(100% - 2.5rem)); margin-inline: auto; }
-.page-shell { min-height: 100vh; background: var(--bg); }
+/* Phase 21 — Fixed design canvas. The page-shell caps the design at 1440px so
+ * Red Dot readers always see the same composition regardless of monitor size.
+ * On viewports ≥ 1440px, the depa-blue body bg shows as a quiet gutter on
+ * each side; on smaller viewports the canvas is full-width and the gutter
+ * never appears. This is the editorial "design stage" pattern — Apple, NYT,
+ * Bloomberg all use it. */
+.page-shell { min-height: 100vh; background: var(--bg); max-width: 1440px; margin-inline: auto; position: relative; }
 .page-frame { opacity: 1; }
 .loading {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -1053,15 +1059,15 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 
 /* ─── WIDE SCREEN ADJUSTMENTS ─── */
 /* Phase 14 — scaling ladder. Base rules are phone-first. These lift the
- * typographic scale on 13–15" laptops (most common viewing device) and
- * again on 24–27" desktops. Mobile base stays untouched. */
+ * typographic scale on 13–15" laptops (most common viewing device).
+ * Mobile base stays untouched. Above 1440px, the design canvas is fixed
+ * (see .page-shell max-width) and the content column stops scaling —
+ * 1200px is the optimal editorial reading width per typographic standards. */
 @media (min-width: 1280px) {
   :root { --w: 1200px; }
   /* Typography no longer scales by viewport — the 3-size hierarchy
    * (display / body / micro) holds across all devices per §11.7. */
 }
-@media (min-width: 1600px) { :root { --w: 1360px; } }
-@media (min-width: 2000px) { :root { --w: 1600px; } }
 
 /* ─── SPIDER ─── */
 .spider-section { margin-bottom: 1.25rem; }
@@ -1229,9 +1235,12 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .globe-legend-count { margin-left: auto; font: 600 .48rem var(--mono); color: var(--teal); }
 
 /* ─── CHAT ─── */
-.chat-fab { position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 150; width: 44px; height: 44px; display: grid; place-items: center; background: var(--teal); color: #fff; }
+/* Phase 21 — FAB pinned to the canvas right edge. On viewports wider than
+ * the 1440px design canvas, the right offset grows to keep the FAB inside
+ * the white page-shell instead of floating in the depa-blue gutter. */
+.chat-fab { position: fixed; bottom: 1.25rem; right: max(1.25rem, calc(50vw - 720px + 1.25rem)); z-index: 150; width: 44px; height: 44px; display: grid; place-items: center; background: var(--teal); color: #fff; }
 .chat-fab:hover { opacity: .85; }
-.chat-panel { position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 150; width: 340px; max-height: 480px; display: flex; flex-direction: column; border: 1px solid var(--5); background: var(--bg); box-shadow: none; }
+.chat-panel { position: fixed; bottom: 1.25rem; right: max(1.25rem, calc(50vw - 720px + 1.25rem)); z-index: 150; width: 340px; max-height: 480px; display: flex; flex-direction: column; border: 1px solid var(--5); background: var(--bg); box-shadow: none; }
 .chat-header { display: flex; align-items: center; gap: .3rem; padding: .4rem .6rem; border-bottom: 1px solid var(--5); }
 .chat-title { font-weight: 700; font-size: .68rem; }
 .chat-powered { font: 500 .45rem var(--mono); color: var(--3); margin-left: auto; }
@@ -2267,9 +2276,14 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .record-value { font: 600 var(--text-micro) var(--mono); color: var(--ink); }
 
 /* ─── CINEMATIC PHOTO HERO ─── */
+/* Phase 21 — Locked to the canonical 3-size hierarchy (display 48.8px /
+ * body 16px / micro 11.5px). The hero is 56vh / 540px max so it never
+ * dominates the page; the title caps at 3rem (matches --text-display);
+ * the stats cap at 1.85rem (between --text-lg and --text-xl). This
+ * holds on every device from 13" laptop to 27" desktop. */
 .cinematic-hero {
   position: relative; width: 100%;
-  height: 80vh; min-height: 440px; max-height: 680px;
+  height: clamp(420px, 56vh, 540px);
   overflow: hidden;
   background: var(--depa-blue, #0C2F53); /* fallback while photos load */
 }
@@ -2291,8 +2305,8 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   position: absolute; inset: 0;
   z-index: 10; /* always above the rotating slides */
   display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 3.5rem min(calc((100% - var(--w, 1200px)) / 2), 2rem);
-  background: linear-gradient(transparent 0%, transparent 45%, rgba(0,0,0,.4) 70%, rgba(0,0,0,.82) 100%);
+  padding: 2.25rem min(calc((100% - var(--w, 1200px)) / 2), 1.5rem);
+  background: linear-gradient(transparent 0%, transparent 50%, rgba(0,0,0,.45) 75%, rgba(0,0,0,.78) 100%);
 }
 /* Slide credit label — bottom-right micro label showing which city */
 .hero-slide-label {
@@ -2307,32 +2321,32 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 }
 .cinematic-hero-eyebrow {
   font: 600 var(--text-sm) var(--mono); letter-spacing: .18em;
-  color: var(--depa-yellow, #FFF200); margin-bottom: .75rem;
+  color: var(--depa-yellow, #FFF200); margin-bottom: .5rem;
 }
 .cinematic-hero-title {
-  font-size: clamp(2.5rem, 6vw, 4.2rem); font-weight: 700;
-  color: #fff; letter-spacing: -.04em; line-height: .92;
-  margin-bottom: 1rem;
+  font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 700;
+  color: #fff; letter-spacing: -.04em; line-height: .95;
+  margin-bottom: .65rem;
 }
 .cinematic-hero-stats {
-  display: flex; gap: 0; margin-bottom: 1.5rem; align-items: flex-end;
+  display: flex; gap: 0; margin-bottom: 1.1rem; align-items: flex-end;
 }
 .hero-stat-cell {
   display: flex; flex-direction: column; gap: 0.15rem;
-  padding: 0 1.75rem 0 0;
+  padding: 0 1.5rem 0 0;
 }
 .hero-stat-cell + .hero-stat-cell {
-  padding-left: 1.75rem;
+  padding-left: 1.5rem;
   border-left: 1px solid rgba(255,255,255,.18);
 }
 .hero-stat-num {
-  font: 700 2.4rem/1 var(--mono);
+  font: 700 1.85rem/1 var(--mono);
   color: #fff;
   letter-spacing: -0.05em;
 }
 .hero-stat-label {
-  font: 600 0.52rem var(--mono);
-  color: rgba(255,255,255,.5);
+  font: 600 var(--text-micro) var(--mono);
+  color: rgba(255,255,255,.55);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -3977,48 +3991,48 @@ h2, h3 { font-family: var(--font); }
   letter-spacing: -.005em;
 }
 
-/* ─── 13" laptop frame (1280px baseline) ─────────────────────────────────
+/* ─── 13" laptop frame (1024px baseline) ─────────────────────────────────
    A 13" MacBook viewport is ~1280×800. Mobile-first base handles ≤480px.
-   This block lifts the hero feel specifically for the 1280 reading context:
-   wider max-width cap, editorial text sizing, overlay bottom margin. */
+   This block keeps the hero compact on the laptop / desktop reading
+   context — the base rules already cap the title at 3rem, but we add
+   a touch more padding and bump the gradient up so the title stays
+   legible on lighter hero photos. */
 @media (min-width: 1024px) {
   .cinematic-hero {
-    height: 82vh;
-    min-height: 500px;
-    max-height: 780px;
+    height: clamp(440px, 58vh, 560px);
   }
   .cinematic-hero-overlay {
-    padding: 4rem min(calc((100% - var(--w, 1200px)) / 2 + 1rem), 3rem);
-    padding-bottom: 4.5rem;
+    padding: 2.75rem min(calc((100% - var(--w, 1200px)) / 2 + 1rem), 2.25rem);
+    padding-bottom: 3rem;
     background: linear-gradient(
       transparent 0%,
-      transparent 38%,
-      rgba(0,0,0,.20) 60%,
+      transparent 45%,
+      rgba(0,0,0,.25) 65%,
       rgba(0,0,0,.72) 100%
     );
   }
   .cinematic-hero-title {
-    font-size: clamp(2.8rem, 5.5vw, 5rem);
-    letter-spacing: -.05em;
-    line-height: .88;
-    margin-bottom: 1.25rem;
+    font-size: clamp(2.25rem, 4vw, 3rem);
+    letter-spacing: -.04em;
+    line-height: .95;
+    margin-bottom: .85rem;
     text-shadow: 0 2px 12px rgba(0,0,0,.35);
   }
   .cinematic-hero-why {
     font-size: var(--text-body);
-    max-width: 600px;
-    margin-bottom: 1.5rem;
+    max-width: 560px;
+    margin-bottom: 1.1rem;
     text-shadow: 0 1px 6px rgba(0,0,0,.4);
   }
   .cinematic-hero-stats {
     gap: 0;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.25rem;
   }
-  .hero-stat-cell { padding: 0 2.25rem 0 0; }
-  .hero-stat-cell + .hero-stat-cell { padding-left: 2.25rem; }
-  .hero-stat-num { font-size: 3rem; }
+  .hero-stat-cell { padding: 0 1.85rem 0 0; }
+  .hero-stat-cell + .hero-stat-cell { padding-left: 1.85rem; }
+  .hero-stat-num { font-size: 1.95rem; }
   .cinematic-hero-actions {
-    gap: 1rem;
+    gap: .85rem;
   }
 }
 
