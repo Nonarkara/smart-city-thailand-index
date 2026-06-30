@@ -772,6 +772,9 @@ export default function MethodologyPage({ locale }: Props) {
           <a href={assetUrl("/downloads/SCITI-2026-Methodology.html")} download className="export-doc-link">
             {t("Methodology Source (HTML)", "Methodology Source (HTML)", "方法源文件（HTML）")}
           </a>
+          <a href={assetUrl("/downloads/SCITI-2026-cities-dataset.csv")} download className="export-doc-link">
+            {t("City Dataset (CSV, 118 cities)", "ชุดข้อมูลเมือง (CSV, 118 เมือง)", "城市数据集（CSV，118城市）")}
+          </a>
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="export-doc-link">
             {t("Source code (GitHub)", "Source code (GitHub)", "源代码（GitHub）")}
           </a>
