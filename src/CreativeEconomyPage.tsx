@@ -80,9 +80,9 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
           </p>
           <p style={{ marginBottom: "1.5rem" }}>
             {translate(locale, {
-              en: "Thailand is home to 9 UNESCO Creative Cities -- the most in Southeast Asia -- including Chiang Mai (Crafts & Folk Art), Phuket (Gastronomy), Phetchaburi (Music), Chiang Rai (Design), and Songkhla (Gastronomy). SCITI provides these cities with monitoring data for their quadrennial UNESCO reports while helping aspiring cities build the evidence case for their own applications.",
-              th: "ประเทศไทยเป็นบ้านของเครือข่ายเมืองสร้างสรรค์ของยูเนสโกถึง 9 เมือง ซึ่งมากที่สุดในเอเชียตะวันออกเฉียงใต้ ได้แก่ เชียงใหม่ ภูเก็ต เพชรบุรี เชียงราย และสงขลา SCITI นำเสนอข้อมูลติดตามผลสำหรับรายงานยูเนสโกทุก 4 ปีของเมืองเหล่านี้ ในขณะเดียวกันก็ช่วยเมืองที่มุ่งหวังจะเข้าร่วมในการสร้างฐานข้อมูลหลักฐานสำหรับการสมัครของตนเอง",
-              zh: "泰国拥有9个联合国教科文组织创意城市——东南亚最多——包括清迈、普吉岛、佛丕、清莱和宋卡。SCITI为这些城市提供每四年一次的教科文组织报告所需的监测数据，同时帮助有抱负的城市为自己的申请建立证据案例。"
+              en: "Thailand is home to 9 UNESCO Creative Cities -- among the most in Southeast Asia -- including Chiang Mai (Crafts & Folk Art), Phuket (Gastronomy), Suphan Buri (Music), Chiang Rai (Design), and Songkhla (Gastronomy). SCITI provides these cities with monitoring data for their quadrennial UNESCO reports while helping aspiring cities build the evidence case for their own applications.",
+              th: "ประเทศไทยเป็นบ้านของเครือข่ายเมืองสร้างสรรค์ของยูเนสโกถึง 9 เมือง ซึ่งเป็นหนึ่งในกลุ่มที่มากที่สุดในเอเชียตะวันออกเฉียงใต้ ได้แก่ เชียงใหม่ ภูเก็ต สุพรรณบุรี เชียงราย และสงขลา SCITI นำเสนอข้อมูลติดตามผลสำหรับรายงานยูเนสโกทุก 4 ปีของเมืองเหล่านี้ ในขณะเดียวกันก็ช่วยเมืองที่มุ่งหวังจะเข้าร่วมในการสร้างฐานข้อมูลหลักฐานสำหรับการสมัครของตนเอง",
+              zh: "泰国拥有9个联合国教科文组织创意城市——位居东南亚前列——包括清迈、普吉、素攀武里、清莱和宋卡。SCITI为这些城市提供每四年一次的教科文组织报告所需的监测数据，同时帮助有抱负的城市为自己的申请建立证据案例。"
             })}
           </p>
         </div>
@@ -92,9 +92,9 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
         <div className="callout-card glass-card shadow-premium" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center", padding: "3rem 2rem" }}>
           <p style={{ fontSize: "var(--text-lg)", marginBottom: "1rem" }}>
             {translate(locale, {
-              en: "In a country where cultural heritage data has been \"limited and dispersed across various institutes and agencies, stored in formats that pose challenges to public access,\" SCITI is the connective tissue. We operationalize UNESCO's Culture|2030 Indicators at provincial scale -- the first platform of its kind in Southeast Asia.",
-              th: "ในประเทศที่ข้อมูลมรดกทางวัฒนธรรมมีจำกัดและกระจัดกระจายตามสถาบันต่างๆ SCITI คือเนื้อเยื่อเกี่ยวพันที่เชื่อมโยงสิ่งเหล่านี้เข้าด้วยกัน เรานำตัวชี้วัด Culture|2030 ของยูเนสโกมาปฏิบัติจริงในระดับจังหวัด ซึ่งถือเป็นแพลตฟอร์มแรกในประเภทนี้ของเอเชียตะวันออกเฉียงใต้",
-              zh: "在一个文化遗产数据“有限并分散在各个机构”的国家，SCITI是连接的组织。我们在省级层面实操联合国教科文组织的“文化|2030”指标——这是东南亚同类平台的首创。"
+              en: "In a country where cultural heritage data has been \"limited and dispersed across various institutes and agencies, stored in formats that pose challenges to public access,\" SCITI is the connective tissue. We operationalize UNESCO's Culture|2030 Indicators at provincial scale.",
+              th: "ในประเทศที่ข้อมูลมรดกทางวัฒนธรรมมีจำกัดและกระจัดกระจายตามสถาบันต่างๆ SCITI คือเนื้อเยื่อเกี่ยวพันที่เชื่อมโยงสิ่งเหล่านี้เข้าด้วยกัน เรานำตัวชี้วัด Culture|2030 ของยูเนสโกมาปฏิบัติจริงในระดับจังหวัด",
+              zh: "在一个文化遗产数据“有限并分散在各个机构”的国家，SCITI是连接的组织。我们在省级层面实操联合国教科文组织的“文化|2030”指标。"
             })}
           </p>
           <button className="cta-button" onClick={() => onNavigate("/methodology")} style={{ marginTop: "1.5rem" }}>

@@ -64,7 +64,7 @@ export default function ShowcaseLocatorMap({ locale }: { locale: Locale }) {
     })
       .addTo(map)
       .bindTooltip(
-        translate(locale, { en: "Nakhon Si Thammarat", th: "นครศรีธรรมราช", zh: "那空是贪玛叻" }),
+        translate(locale, { en: "Nakhon Si Thammarat", th: "นครศรีธรรมราช", zh: "洛坤" }),
         { permanent: true, direction: "right", offset: [8, 0], className: "showcase-locator-tip" },
       );
 
@@ -79,7 +79,7 @@ export default function ShowcaseLocatorMap({ locale }: { locale: Locale }) {
 
   return (
     <div className="showcase-locator">
-      <div ref={elRef} className="showcase-locator-canvas" aria-label={translate(locale, { en: "Map locating Nakhon Si Thammarat on Thailand's southern Gulf coast", th: "แผนที่ตำแหน่งนครศรีธรรมราชบนชายฝั่งอ่าวไทยภาคใต้", zh: "标示那空是贪玛叻位于泰国南部湾岸的地图" })} />
+      <div ref={elRef} className="showcase-locator-canvas" aria-label={translate(locale, { en: "Map locating Nakhon Si Thammarat on Thailand's southern Gulf coast", th: "แผนที่ตำแหน่งนครศรีธรรมราชบนชายฝั่งอ่าวไทยภาคใต้", zh: "标示洛坤位于泰国南部湾岸的地图" })} />
       {!ready && (
         <div className="showcase-locator-loading">
           {translate(locale, { en: "Loading map…", th: "กำลังโหลดแผนที่…", zh: "正在加载地图…" })}

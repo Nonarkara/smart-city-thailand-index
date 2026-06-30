@@ -383,7 +383,7 @@ export const CITY_FACTS: Record<string, CityFacts> = {
     creativeEconomyEdge: {
       en: "UNESCO City of Design; Mae Fah Luang University art and design programs; Doi Tung creative development model; traditional Tai Lue weaving, hill tribe crafts, tea culture; Chiang Rai Design Week emerging; CEA Creative Lanna corridor member.",
       th: "เมืองสร้างสรรค์ยูเนสโกด้านการออกแบบ; หลักสูตรศิลปะและการออกแบบ มหาวิทยาลัยแม่ฟ้าหลวง; โมเดลการพัฒนาสร้างสรรค์ดอยตุง; การทอผ้าไทลื้อดั้งเดิม งานฝีมือชาวเขา วัฒนธรรมชา; งานเชียงรายดีไซน์วีคที่กำลังเติบโต; สมาชิกกลุ่มระเบียงเศรษฐกิจสร้างสรรค์ล้านนา CEA",
-      zh: "联合国教科文组织设计之都；皇太后大学艺术与设计项目；董山创意发展模式；传统傣仂编织、高山族手工艺、茶文化；清迈设计周正在兴起；CEA创意兰纳走廊成员。"
+      zh: "联合国教科文组织设计之都；皇太后大学艺术与设计项目；董山创意发展模式；传统傣仂编织、高山族手工艺、茶文化；清莱设计周正在兴起；CEA创意兰纳走廊成员。"
     },
     investmentAngle: {
       en: "Cross-border creative trade, design and branding services, artisan craft export, tea and specialty food creative branding, border tourism. Dual SEZ+NEC status provides exceptional BOI incentive stacking.",

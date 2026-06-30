@@ -1250,7 +1250,7 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
     dailyLife: {
       en: "An 18K-person sub-district in Nakhon Si Thammarat where rice paddies and fruit orchards stretch to the hills. The tambon office is the center of gravity, and the smart city program is essentially a digital layer on top of village governance.",
       th: "ตำบล 18K คนในนครศรีธรรมราชที่นาข้าวและสวนผลไม้ทอดยาวถึงเนินเขา สำนักงานตำบลคือศูนย์กลาง และโปรแกรมเมืองอัจฉริยะเป็นชั้นดิจิทัลบนปกครองหมู่บ้าน",
-      zh: "一个位于那空是贪玛叻的1.8万人乡镇，稻田和果园延伸到山丘。乡办公室是重心，智慧城市计划本质上是在村庄治理上加了一层数字层。",
+      zh: "一个位于洛坤的1.8万人乡镇，稻田和果园延伸到山丘。乡办公室是重心，智慧城市计划本质上是在村庄治理上加了一层数字层。",
     },
     signatureStory: {
       en: "Tai Yong is a proof point for tambon-scale digital governance — community-level apps for complaints, land use, and agricultural support. If this works, it could scale to thousands of Thai sub-districts.",
@@ -1260,7 +1260,7 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
     funFact: {
       en: "Nakhon Si Thammarat's shadow puppets (nang talung) are UNESCO-recognized intangible heritage — making this province one of the few places where smart governance coexists with thousand-year-old leather art.",
       th: "หนังตะลุงของนครศรีธรรมราชเป็นมรดกทางวัฒนธรรมที่จับต้องไม่ได้ของ UNESCO — ทำให้จังหวัดนี้เป็นหนึ่งในไม่กี่ที่ที่ปกครองอัจฉริยะอยู่ร่วมกับศิลปะหนังพันปี",
-      zh: "那空是贪玛叻的皮影戏(nang talung)是联合国教科文组织认可的非物质遗产——使这个省成为少数智慧治理与千年皮革艺术共存的地方之一。",
+      zh: "洛坤的皮影戏(nang talung)是联合国教科文组织认可的非物质遗产——使这个省成为少数智慧治理与千年皮革艺术共存的地方之一。",
     },
     compareNote: {
       en: "18K people, 3 dimensions, digital 35. The smallest southern smart city — but the tambon governance model is replicable at scale if anyone pays attention.",

@@ -333,7 +333,7 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
         {/* Centre: map */}
         <div className="ranking-map-canvas">
           <div className="ranking-map-eyebrow">
-            {t({ en: "Thailand · 49 certified cities", th: "ประเทศไทย · 49 เมืองรับรอง", zh: "泰国 · 49 座认证城市" })}
+            {t({ en: "Thailand · 49 ranked cities", th: "ประเทศไทย · 49 เมืองที่จัดอันดับ", zh: "泰国 · 49 座城市" })}
           </div>
           <div ref={mapEl} className="ranking-map-leaflet" aria-label={t({ en: "Map of Thailand smart cities", th: "แผนที่เมืองอัจฉริยะของไทย", zh: "泰国智慧城市地图" })} />
           {!leafletReady && (

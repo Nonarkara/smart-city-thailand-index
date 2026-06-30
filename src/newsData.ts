@@ -62,7 +62,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     summary: {
       en: "Dr. Non Arkara presented to the International Smart City Network on citizen-centric urban innovation, using NST's crowdsourced flood-response system as the central case. Core argument: 'Smart cities are not only about technology and funding, but about citizen participation and data — and innovative solutions can be simple.'",
       th: "ดร.นนท์ อาคารา นำเสนอต่อเครือข่ายเมืองอัจฉริยะนานาชาติเรื่องนวัตกรรมเมืองที่เน้นประชาชน โดยใช้ระบบรับมือน้ำท่วมแบบ crowdsource ของนครศรีธรรมราชเป็นกรณีหลัก ประเด็นสำคัญ: 'สมาร์ทซิตี้ไม่ใช่แค่เรื่องเทคโนโลยีและเงิน แต่คือการมีส่วนร่วมของประชาชนและข้อมูล — และนวัตกรรมที่ดีอาจเรียบง่ายมาก'",
-      zh: "Non Arkara 博士在国际智慧城市网络上发表演讲，聚焦以市民为核心的城市创新，以那空是贪玛叻的众包洪水响应系统为核心案例。核心论点：'智慧城市不仅关乎技术和资金，更关乎公民参与和数据——而好的创新解决方案往往很简单。'",
+      zh: "Non Arkara 博士在国际智慧城市网络上发表演讲，聚焦以市民为核心的城市创新，以洛坤的众包洪水响应系统为核心案例。核心论点：'智慧城市不仅关乎技术和资金，更关乎公民参与和数据——而好的创新解决方案往往很简单。'",
     },
     source: "Smart City Dialog · ISCN",
     url: "https://www.smart-city-dialog.de/en/latest/events/iscn-global-mixer-rethinking-smart-insights-community-driven-innovation-thailand",

@@ -234,7 +234,7 @@ export default function GeminiChat({ locale }: Props) {
                 t("Which cities are Alpha tier?", "เมืองไหนเป็น Alpha?", "哪些城市是Alpha级？"),
                 t("Why is Wangchan Valley Gamma?", "ทำไมวังจันทร์วัลเลย์เป็น Gamma?", "为什么Wangchan Valley是Gamma级？"),
                 t("What financing fits Khon Kaen?", "กลไกการเงินอะไรเหมาะกับขอนแก่น?", "什么融资机制适合孔敬？"),
-                t("How does Nakhon Si Thammarat work?", "นครศรีธรรมราชทำอะไร?", "那空是贪玛叻如何运作？"),
+                t("How does Nakhon Si Thammarat work?", "นครศรีธรรมราชทำอะไร?", "洛坤如何运作？"),
               ].map((q, i) => (
                 <button key={i} className="chat-suggestion" onClick={() => { setInput(q); }}>
                   {q}

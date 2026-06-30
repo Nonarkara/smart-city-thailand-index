@@ -274,7 +274,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           {translate(locale, {
             en: "Nakhon Si Thammarat: the city that listened.",
             th: "นครศรีธรรมราช: เมืองที่ฟังประชาชน",
-            zh: "那空是贪玛叻：一座学会倾听的城市。",
+            zh: "洛坤：一座学会倾听的城市。",
           })}
         </h1>
         <p className="hero-strapline showcase-strapline">
@@ -324,7 +324,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage
               src="/Nakhon Si Thammarat/1763875528673.jpg"
-              alt={translate(locale, { en: "ASEAN CSCO workshop delegation in front of Nakhon Si Thammarat Municipality", th: "คณะผู้เข้าร่วมอบรม ASEAN CSCO หน้าเทศบาลนครนครศรีธรรมราช", zh: "ASEAN CSCO 研讨团在那空是贪玛叻市政大楼前合影" })}
+              alt={translate(locale, { en: "ASEAN CSCO workshop delegation in front of Nakhon Si Thammarat Municipality", th: "คณะผู้เข้าร่วมอบรม ASEAN CSCO หน้าเทศบาลนครนครศรีธรรมราช", zh: "ASEAN CSCO 研讨团在洛坤市政大楼前合影" })}
               sizes="240px"
             />
             <span className="photo-strip-label">{translate(locale, { en: "ASEAN CSCO workshop", th: "อบรม ASEAN CSCO", zh: "ASEAN CSCO 研讨" })}</span>
@@ -367,7 +367,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               <ResponsiveImage src="/Nakhon Si Thammarat/Nakhon-Si-Thammarat.jpg" alt={translate(locale, { en: "Wat Phra Mahathat Woramahawihan during Hae Pha Khuen That — pilgrims carry a sacred cloth to wrap the great chedi", th: "วัดพระมหาธาตุวรมหาวิหารในงานแห่ผ้าขึ้นธาตุ — ผู้ศรัทธาอัญเชิญผ้าพระบฏขึ้นห่มองค์พระบรมธาตุเจดีย์", zh: "帕玛哈塔寺的裹塔布朝圣仪式——信众抬着圣布缠绕大佛塔" })} sizes="100vw" />
               <div className="showcase-intro-hero-caption">{translate(locale, { en: "Wat Phra Mahathat Woramahawihan — the Hae Pha Khuen That pilgrimage", th: "วัดพระมหาธาตุวรมหาวิหาร — ประเพณีแห่ผ้าขึ้นธาตุ", zh: "帕玛哈塔寺 — 裹塔布朝圣节" })}</div>
             </div>
-            <p className="showcase-intro-lead">{translate(locale, { en: "Long before it ran a flood-sensor network or a citizen app, Nakhon Si Thammarat was a sacred capital on the Gulf — a city pilgrims walked toward, not past. To see why its smart-city turn matters, start with the place Thais already carry in their heads.", th: "ก่อนจะมีเครือข่ายเซ็นเซอร์น้ำท่วมหรือแอปสำหรับประชาชน นครศรีธรรมราชคือเมืองศักดิ์สิทธิ์ริมอ่าวไทย — เมืองที่ผู้คนเดินทางไปแสวงบุญ ไม่ใช่เมืองที่ผ่านเลย หากอยากเข้าใจว่าทำไมการก้าวสู่เมืองอัจฉริยะของที่นี่จึงสำคัญ ต้องเริ่มจากภาพเมืองที่คนไทยจดจำอยู่แล้ว", zh: "早在拥有洪水传感网络或市民应用之前，那空是贪玛叻就已是湾岸边的一座圣城——人们朝它跋涉而来，而非匆匆而过。要理解它迈向智慧城市为何重要，得先从泰国人心中早已熟知的这座城说起。" })}</p>
+            <p className="showcase-intro-lead">{translate(locale, { en: "Long before it ran a flood-sensor network or a citizen app, Nakhon Si Thammarat was a sacred capital on the Gulf — a city pilgrims walked toward, not past. To see why its smart-city turn matters, start with the place Thais already carry in their heads.", th: "ก่อนจะมีเครือข่ายเซ็นเซอร์น้ำท่วมหรือแอปสำหรับประชาชน นครศรีธรรมราชคือเมืองศักดิ์สิทธิ์ริมอ่าวไทย — เมืองที่ผู้คนเดินทางไปแสวงบุญ ไม่ใช่เมืองที่ผ่านเลย หากอยากเข้าใจว่าทำไมการก้าวสู่เมืองอัจฉริยะของที่นี่จึงสำคัญ ต้องเริ่มจากภาพเมืองที่คนไทยจดจำอยู่แล้ว", zh: "早在拥有洪水传感网络或市民应用之前，洛坤就已是湾岸边的一座圣城——人们朝它跋涉而来，而非匆匆而过。要理解它迈向智慧城市为何重要，得先从泰国人心中早已熟知的这座城说起。" })}</p>
           </section>
 
           {/* Place — locator map + basic facts */}
@@ -393,7 +393,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           {/* Identity — what comes to mind */}
           <section className="section showcase-identity">
             <p className="eyebrow">{translate(locale, { en: "What comes to mind", th: "ภาพที่คนนึกถึง", zh: "人们的印象" })}</p>
-            <p className="showcase-identity-text">{translate(locale, { en: "Ask anyone in Thailand about Nakhon Si Thammarat and the first answer is rarely technology. It is the great golden chedi of Wat Phra Mahathat, believed to enshrine a relic of the Buddha and among the most revered pilgrimage sites in the south. It is the hypnotic Nora dance and the lamplit screens of Nang Talung shadow play; nielloware silver and centuries of monastic scholarship — a city whose name itself means 'City of the Sacred Dharma King.'", th: "ถามคนไทยคนไหนถึงนครศรีธรรมราช คำตอบแรกมักไม่ใช่เรื่องเทคโนโลยี แต่คือองค์พระบรมธาตุเจดีย์สีทองของวัดพระมหาธาตุ ที่เชื่อกันว่าประดิษฐานพระบรมสารีริกธาตุ และเป็นหนึ่งในศาสนสถานที่ผู้คนเคารพศรัทธามากที่สุดของภาคใต้ คือท่วงท่าของโนราและจอหนังตะลุงยามค่ำ คือเครื่องถมเงินและภูมิปัญญาทางศาสนาที่สืบทอดมาหลายศตวรรษ — เมืองที่แม้แต่ชื่อก็แปลว่า 'เมืองแห่งพระราชาผู้ทรงธรรมอันศักดิ์สิทธิ์'", zh: "随便问一个泰国人对那空是贪玛叻的印象，第一反应很少是科技。是帕玛哈塔寺那座金顶大佛塔——相传供奉佛陀舍利，为南部最受尊崇的朝圣地之一；是令人入神的诺拉舞与夜色中皮影戏的灯影；是乌银工艺，以及绵延数百年的佛门学问——一座连名字都意为'神圣法王之城'的城市。" })}</p>
+            <p className="showcase-identity-text">{translate(locale, { en: "Ask anyone in Thailand about Nakhon Si Thammarat and the first answer is rarely technology. It is the great golden chedi of Wat Phra Mahathat, believed to enshrine a relic of the Buddha and among the most revered pilgrimage sites in the south. It is the hypnotic Nora dance and the lamplit screens of Nang Talung shadow play; nielloware silver and centuries of monastic scholarship — a city whose name itself means 'City of the Sacred Dharma King.'", th: "ถามคนไทยคนไหนถึงนครศรีธรรมราช คำตอบแรกมักไม่ใช่เรื่องเทคโนโลยี แต่คือองค์พระบรมธาตุเจดีย์สีทองของวัดพระมหาธาตุ ที่เชื่อกันว่าประดิษฐานพระบรมสารีริกธาตุ และเป็นหนึ่งในศาสนสถานที่ผู้คนเคารพศรัทธามากที่สุดของภาคใต้ คือท่วงท่าของโนราและจอหนังตะลุงยามค่ำ คือเครื่องถมเงินและภูมิปัญญาทางศาสนาที่สืบทอดมาหลายศตวรรษ — เมืองที่แม้แต่ชื่อก็แปลว่า 'เมืองแห่งพระราชาผู้ทรงธรรมอันศักดิ์สิทธิ์'", zh: "随便问一个泰国人对洛坤的印象，第一反应很少是科技。是帕玛哈塔寺那座金顶大佛塔——相传供奉佛陀舍利，为南部最受尊崇的朝圣地之一；是令人入神的诺拉舞与夜色中皮影戏的灯影；是乌银工艺，以及绵延数百年的佛门学问——一座连名字都意为'神圣法王之城'的城市。" })}</p>
             <ul className="showcase-identity-tags">
               {nstIdentity.map(tag => (<li key={tag.en} className="showcase-identity-tag">{translate(locale, tag)}</li>))}
             </ul>
@@ -441,7 +441,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               <div className="showcase-mayor-photo">
                 <ResponsiveImage
                   src="/Nakhon Si Thammarat/nst-town-hall-with-dr-non.jpg"
-                  alt={translate(locale, { en: "Dr. Kanop Ketchart at a Nakhon Si Thammarat community town hall — the participatory governance style that defines his tenure", th: "ดร.กณพ เกตุชาติ ในเวทีประชาคมนครศรีธรรมราช — รูปแบบการปกครองแบบมีส่วนร่วมที่เป็นเอกลักษณ์ของวาระนี้", zh: "Kanop Ketchart 博士在那空是贪玛叻社区市政厅——其任期内标志性的参与式治理风格" })}
+                  alt={translate(locale, { en: "Dr. Kanop Ketchart at a Nakhon Si Thammarat community town hall — the participatory governance style that defines his tenure", th: "ดร.กณพ เกตุชาติ ในเวทีประชาคมนครศรีธรรมราช — รูปแบบการปกครองแบบมีส่วนร่วมที่เป็นเอกลักษณ์ของวาระนี้", zh: "Kanop Ketchart 博士在洛坤社区市政厅——其任期内标志性的参与式治理风格" })}
                   sizes="100vw"
                   style={{ objectPosition: "center 40%" }}
                 />
@@ -455,7 +455,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   {translate(locale, {
                     en: "Mayor, Nakhon Si Thammarat Municipality · In office since 2020",
                     th: "นายกเทศมนตรีนครนครศรีธรรมราช · ดำรงตำแหน่งตั้งแต่ปี 2563",
-                    zh: "那空是贪玛叻市长 · 自 2020 年起任职",
+                    zh: "洛坤市长 · 自 2020 年起任职",
                   })}
                 </p>
                 <div className="showcase-pull-block">
@@ -505,7 +505,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               {translate(locale, {
                 en: "This number — verified June 2026 — has crossed a threshold no Thai city government has reached before. In most Thai cities, government digital platforms reach 20% of residents at best. Nakhon Si Thammarat's @Nakhoncity LINE account now has 131,908 friends: more than the city's own population of 110,000. The account has outgrown the city. People from across Nakhon Si Thammarat province follow it as the most reliable government communication channel in the region — for real-time flood warnings, queue bookings, road repair reports, and live CCTV access.",
                 th: "ตัวเลขนี้ — ยืนยัน ณ มิถุนายน 2569 — ได้ก้าวข้ามเส้นที่ไม่มีรัฐบาลเมืองไทยใดเคยทำได้มาก่อน ในเมืองส่วนใหญ่ของไทย แพลตฟอร์มดิจิทัลของรัฐเข้าถึงประชาชนได้ดีที่สุดเพียง 20% LINE OA @Nakhoncity ของนครศรีธรรมราชมีเพื่อนแล้ว 131,908 ราย — มากกว่าประชากรในเขตเทศบาลที่มีอยู่ 110,000 คน บัญชีนี้โตเกินเมืองไปแล้ว ประชาชนทั่วทั้งจังหวัดนครศรีธรรมราชต่างติดตามเพราะมันคือช่องทางสื่อสารของรัฐที่น่าเชื่อถือที่สุดในภูมิภาค — สำหรับแจ้งเตือนน้ำท่วมเรียลไทม์ จองคิว รายงานซ่อมถนน และดูกล้องวงจรปิดสด",
-                zh: "这个数字——于2026年6月确认——越过了泰国任何一座城市政府从未到达的门槛。泰国多数城市的政府数字平台顶多覆盖20%的居民。那空是贪玛叻的@Nakhoncity LINE账户目前拥有131,908位好友：超过了这座城市自身11万人口的总量。账户的覆盖已经超出城市本身。来自那空是贪玛叻全省的民众将其视为整个地区最可靠的政府沟通渠道——用于实时洪水预警、事务预约、道路修缮报告和实时监控画面。",
+                zh: "这个数字——于2026年6月确认——越过了泰国任何一座城市政府从未到达的门槛。泰国多数城市的政府数字平台顶多覆盖20%的居民。洛坤的@Nakhoncity LINE账户目前拥有131,908位好友：超过了这座城市自身11万人口的总量。账户的覆盖已经超出城市本身。来自洛坤全省的民众将其视为整个地区最可靠的政府沟通渠道——用于实时洪水预警、事务预约、道路修缮报告和实时监控画面。",
               })}
             </p>
             <p>
@@ -587,7 +587,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               {translate(locale, {
                 en: "Other provinces had built custom apps for citizen reporting. Most of those apps sat unused. They required downloads, logins, and learning a new interface — friction that government enthusiasm generated but resident attention would not pay. Nakhon Si Thammarat chose the platform with 70 million Thai users already on it.",
                 th: "จังหวัดอื่นๆ ได้สร้างแอปเฉพาะสำหรับรายงานของประชาชน แอปส่วนใหญ่ไม่ถูกใช้งาน ต้องการการดาวน์โหลด การล็อกอิน และการเรียนรู้อินเทอร์เฟซใหม่ — ความยุ่งยากที่ความกระตือรือร้นของรัฐสร้างขึ้น แต่ความสนใจของประชาชนไม่ยอมจ่าย นครศรีธรรมราชเลือกแพลตฟอร์มที่คนไทยกว่า 70 ล้านคนอยู่บนนั้นแล้ว",
-                zh: "其他省份建了专属市民报告应用，大多数无人问津。它们需要下载、注册、学习新界面——政府的热情制造了摩擦，居民的注意力不会为此买单。那空是贪玛叻选择了一个已有7000万泰国用户的平台。",
+                zh: "其他省份建了专属市民报告应用，大多数无人问津。它们需要下载、注册、学习新界面——政府的热情制造了摩擦，居民的注意力不会为此买单。洛坤选择了一个已有7000万泰国用户的平台。",
               })}
             </p>
             <p>
@@ -607,7 +607,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               {translate(locale, {
                 en: "Before 2021, a flood event in Nakhon Si Thammarat meant four days of water. The city responded after the fact — assessing damage, deploying teams, waiting for levels to drop. The data that changed this was already there. Traffic CCTV cameras were redirected to monitor canals, flood-prone intersections, and upstream water gates. Upstream sensors provided the trigger points. The LINE OA channel already reached virtually every resident.",
                 th: "ก่อนปี 2564 เหตุการณ์น้ำท่วมในนครศรีธรรมราชหมายถึงสี่วันของการแช่น้ำ เมืองตอบสนองหลังเหตุการณ์เกิดขึ้น — ประเมินความเสียหาย ส่งทีมลงพื้นที่ รอให้ระดับน้ำลง ข้อมูลที่เปลี่ยนทุกอย่างนั้นมีอยู่แล้ว กล้องวงจรปิดถูกหันไปส่องคลอง จุดน้ำท่วมซ้ำซาก และประตูน้ำต้นน้ำ เซ็นเซอร์ต้นน้ำให้จุดกระตุ้น และช่อง LINE OA เข้าถึงประชาชนเกือบทุกคนอยู่แล้ว",
-                zh: "2021年之前，那空是贪玛叻的洪水事件意味着泡在水里整整四天。城市被动应对——评估损失、派遣队伍、等待水位下降。改变这一切的数据早已存在。交通摄像头被重新定向，用于监控河渠、易涝路口和上游水闸；上游传感器提供触发节点；LINE OA频道已经覆盖了几乎所有居民。",
+                zh: "2021年之前，洛坤的洪水事件意味着泡在水里整整四天。城市被动应对——评估损失、派遣队伍、等待水位下降。改变这一切的数据早已存在。交通摄像头被重新定向，用于监控河渠、易涝路口和上游水闸；上游传感器提供触发节点；LINE OA频道已经覆盖了几乎所有居民。",
               })}
             </p>
             <p>
@@ -633,7 +633,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="showcase-mayor-photo" style={{ height: "360px", marginTop: "1rem" }}>
               <ResponsiveImage
                 src="/Nakhon Si Thammarat/mayor-kanop-flood-zone.jpg"
-                alt={translate(locale, { en: "Dr. Kanop Ketchart wading through floodwater in Nakhon Si Thammarat — hard hat, SLIC jacket, on the street with residents", th: "ดร.กณพ เกตุชาติ ลุยน้ำท่วมในนครศรีธรรมราช — หมวกนิรภัย เสื้อ SLIC อยู่บนถนนกับประชาชน", zh: "Kanop Ketchart 博士趟过那空是贪玛叻的洪水——戴安全帽、穿SLIC夹克，与居民同在街头" })}
+                alt={translate(locale, { en: "Dr. Kanop Ketchart wading through floodwater in Nakhon Si Thammarat — hard hat, SLIC jacket, on the street with residents", th: "ดร.กณพ เกตุชาติ ลุยน้ำท่วมในนครศรีธรรมราช — หมวกนิรภัย เสื้อ SLIC อยู่บนถนนกับประชาชน", zh: "Kanop Ketchart 博士趟过洛坤的洪水——戴安全帽、穿SLIC夹克，与居民同在街头" })}
                 sizes="100vw"
               />
             </div>
@@ -647,7 +647,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               {translate(locale, {
                 en: "In 2023, Nakhon Si Thammarat won the Best Partnership Award at the World Smart City Expo in Goyang, South Korea — in partnership with depa. The award recognised the city's approach to citizen-led digital adoption, not just the technology deployed. In 2025, the city returned to Goyang to represent Thailand's smart city programme at the ASEAN level, then carried the story further — to Tomorrow.City Shanghai, where it was presented as Thailand's featured smart city to an audience of urban investors and policymakers from across East Asia.",
                 th: "ในปี 2566 นครศรีธรรมราชได้รับรางวัล Best Partnership Award ในงาน World Smart City Expo ที่โกยัง ร่วมกับ depa รางวัลนี้ยกย่องแนวทางการนำดิจิทัลโดยประชาชน ไม่ใช่แค่เทคโนโลยี ปี 2568 เมืองกลับโกยังเพื่อเป็นตัวแทนไทยในระดับ ASEAN แล้วนำเรื่องราวไปต่อที่ Tomorrow.City Shanghai ซึ่งถูกนำเสนอในฐานะเมืองอัจฉริยะตัวแทนไทยต่อนักลงทุนและผู้กำหนดนโยบายทั่วเอเชียตะวันออก",
-                zh: "2023年，那空是贪玛叻与depa合作，在韩国高阳世界智慧城市博览会荣获最佳合作奖。2025年，城市再度赴高阳代表泰国出席ASEAN级别的活动，随后将这个故事带到了更远的地方——Tomorrow.City上海，作为泰国代表智慧城市向东亚各地的城市投资者和政策制定者展示。",
+                zh: "2023年，洛坤与depa合作，在韩国高阳世界智慧城市博览会荣获最佳合作奖。2025年，城市再度赴高阳代表泰国出席ASEAN级别的活动，随后将这个故事带到了更远的地方——Tomorrow.City上海，作为泰国代表智慧城市向东亚各地的城市投资者和政策制定者展示。",
               })}
             </p>
             <div className="showcase-award-photo-grid showcase-award-photo-grid--3">
@@ -814,7 +814,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <div className="timeline-arc-content">
                   <div className="timeline-arc-text">
                     <h3 className="timeline-arc-title">{translate(locale, { en: "International Leadership", th: "ความเป็นผู้นำระดับนานาชาติ", zh: "国际领导力" })}</h3>
-                    <p className="timeline-arc-desc">{translate(locale, { en: "Nakhon Si Thammarat was selected as the model-city case study for the ASEAN CSCO Handbook. Dr. Kanop represented Thailand at multiple global summits, including the Busan Metaverse Expo and returning to Goyang, sharing the playbook of how a mid-sized city outperformed metropolitan giants.", th: "นครศรีธรรมราชได้รับเลือกเป็นเมืองต้นแบบใน ASEAN CSCO Handbook ดร.กณพ เป็นตัวแทนไทยในเวทีโลกหลายแห่ง รวมถึง Busan Metaverse Expo และ Goyang เพื่อแชร์ว่าเมืองขนาดกลางเอาชนะเมืองหลวงได้อย่างไร", zh: "那空是贪玛叻被选为ASEAN CSCO手册的示范城市案例。Kanop博士代表泰国出席了多个全球峰会，分享了一座中等规模城市如何超越大都市巨头的经验。" })}</p>
+                    <p className="timeline-arc-desc">{translate(locale, { en: "Nakhon Si Thammarat was selected as the model-city case study for the ASEAN CSCO Handbook. Dr. Kanop represented Thailand at multiple global summits, including the Busan Metaverse Expo and returning to Goyang, sharing the playbook of how a mid-sized city outperformed metropolitan giants.", th: "นครศรีธรรมราชได้รับเลือกเป็นเมืองต้นแบบใน ASEAN CSCO Handbook ดร.กณพ เป็นตัวแทนไทยในเวทีโลกหลายแห่ง รวมถึง Busan Metaverse Expo และ Goyang เพื่อแชร์ว่าเมืองขนาดกลางเอาชนะเมืองหลวงได้อย่างไร", zh: "洛坤被选为ASEAN CSCO手册的示范城市案例。Kanop博士代表泰国出席了多个全球峰会，分享了一座中等规模城市如何超越大都市巨头的经验。" })}</p>
                   </div>
                   <div className="timeline-arc-gallery">
                     <div className="timeline-arc-photo">
@@ -858,9 +858,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="showcase-mayor-photo" style={{ marginBottom: "2rem" }}>
               <picture style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
                 <source srcSet="/Nakhon Si Thammarat/asean-csco-city-map-demo.webp" type="image/webp" />
-                <img src="/Nakhon Si Thammarat/asean-csco-city-map-demo.jpg" alt={translate(locale, { en: "ASEAN CSCO city map demonstration at the Nakhon Si Thammarat IOC — the geospatial layer that connects flood sensors, CCTV, and service routing", th: "การสาธิตแผนที่เมือง ASEAN CSCO ที่ศูนย์ IOC นครศรีธรรมราช — ชั้นข้อมูลภูมิสารสนเทศที่เชื่อมเซ็นเซอร์น้ำท่วม กล้อง CCTV และการจัดเส้นทางบริการ", zh: "ASEAN CSCO 城市地图在那空是贪玛叻 IOC 的演示——连接洪水传感器、CCTV 与服务路由的地理空间层" })} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
+                <img src="/Nakhon Si Thammarat/asean-csco-city-map-demo.jpg" alt={translate(locale, { en: "ASEAN CSCO city map demonstration at the Nakhon Si Thammarat IOC — the geospatial layer that connects flood sensors, CCTV, and service routing", th: "การสาธิตแผนที่เมือง ASEAN CSCO ที่ศูนย์ IOC นครศรีธรรมราช — ชั้นข้อมูลภูมิสารสนเทศที่เชื่อมเซ็นเซอร์น้ำท่วม กล้อง CCTV และการจัดเส้นทางบริการ", zh: "ASEAN CSCO 城市地图在洛坤 IOC 的演示——连接洪水传感器、CCTV 与服务路由的地理空间层" })} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
               </picture>
-              <div className="showcase-cinematic-caption">{translate(locale, { en: "ASEAN CSCO city map demo — NST IOC", th: "การสาธิตแผนที่เมือง ASEAN CSCO — ศูนย์ IOC นครศรี", zh: "ASEAN CSCO 城市地图演示 — 那空是贪玛叻 IOC" })}</div>
+              <div className="showcase-cinematic-caption">{translate(locale, { en: "ASEAN CSCO city map demo — NST IOC", th: "การสาธิตแผนที่เมือง ASEAN CSCO — ศูนย์ IOC นครศรี", zh: "ASEAN CSCO 城市地图演示 — 洛坤 IOC" })}</div>
             </div>
 
             <div className="showcase-idea-grid">
@@ -984,7 +984,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   {translate(locale, {
                     en: "A pothole in NST no longer disappears into a phone queue. It gets photographed, geotagged, timestamped, and routed to the right maintenance crew via LINE — the messaging app 85% of Thais already use. The city rebuilt @NakhonCity twice in three years based on live usage data. Recurring complaint clusters became infrastructure budget signals: when the same street floods repeatedly in reports, it moves to the front of the pipe-replacement queue. Governance shifted from reactive to predictive.",
                     th: "หลุมบ่อในนครศรีธรรมราชไม่ได้หายไปในคิวโทรศัพท์อีกต่อไป แต่ถูกถ่ายภาพ ระบุพิกัด ประทับเวลา และส่งถึงทีมช่างที่รับผิดชอบทาง LINE ซึ่งเป็นแอปที่คนไทย 85% ใช้อยู่แล้ว เทศบาลปรับปรุง @NakhonCity ถึงสองครั้งในสามปีจากข้อมูลการใช้งานจริง กลุ่มร้องเรียนซ้ำๆ กลายเป็นสัญญาณงบประมาณโครงสร้างพื้นฐาน: เมื่อถนนสายเดิมถูกรายงานน้ำท่วมซ้ำในรายงาน ก็จะถูกเลื่อนขึ้นมาอยู่ต้นแถวของโครงการเปลี่ยนท่อ การบริหารเมืองเปลี่ยนจากตั้งรับเป็นเชิงรุก",
-                    zh: "那空是贪玛叻的一个路面坑洼，不会再消失于电话排队等待中。它会被拍照、标记地理位置和时间戳，然后通过 LINE——泰国 85% 人口已在使用的即时通讯软件——分配给对应的维修团队。市政府在三年内根据实时使用数据两次重建 @NakhonCity。反复出现的投诉热点成为基础设施预算的信号：当同一条街道在报告中反复出现积水，它便被提前列入换管计划。城市治理从被动应对转向主动预测。",
+                    zh: "洛坤的一个路面坑洼，不会再消失于电话排队等待中。它会被拍照、标记地理位置和时间戳，然后通过 LINE——泰国 85% 人口已在使用的即时通讯软件——分配给对应的维修团队。市政府在三年内根据实时使用数据两次重建 @NakhonCity。反复出现的投诉热点成为基础设施预算的信号：当同一条街道在报告中反复出现积水，它便被提前列入换管计划。城市治理从被动应对转向主动预测。",
                   })}
                 </p>
                 <div className="showcase-pull-block">
@@ -995,7 +995,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                       zh: "「我想从来没有人问过我们需要什么。」",
                     })}
                   </p>
-                  <p className="showcase-pull-source">{translate(locale, { en: "— Secondary school teacher, NST stakeholder dialogue 2023", th: "— ครูมัธยม, เวทีผู้มีส่วนได้ส่วนเสีย นครฯ ปี 2566", zh: "— 中学教师，那空是贪玛叻利益相关方对话 2023" })}</p>
+                  <p className="showcase-pull-source">{translate(locale, { en: "— Secondary school teacher, NST stakeholder dialogue 2023", th: "— ครูมัธยม, เวทีผู้มีส่วนได้ส่วนเสีย นครฯ ปี 2566", zh: "— 中学教师，洛坤利益相关方对话 2023" })}</p>
                 </div>
                 <div className="showcase-data-callout" style={{ margin: 0 }}>
                   <div className="showcase-data-callout-cell">
@@ -1037,7 +1037,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   {translate(locale, {
                     en: "For elderly and bed-ridden villagers, a hospital used to mean a half-day journey. NST co-designed a mobile diagnostics van — with the local hospital — that brings AI-assisted chest X-ray screening directly into remote communities. Images are processed instantly by an AI trained on thousands of cases. A doctor reviews, but the AI is usually faster. The program was inspired by a study trip to South Korea and re-engineered for NST's specific geography and budget using a Build-Own-Operate (BOO) private-financing model, so the city pays monthly, not upfront.",
                     th: "สำหรับผู้สูงอายุและผู้ป่วยติดเตียงในชนบท การไปโรงพยาบาลหมายถึงการเดินทางครึ่งวัน เทศบาลนครฯ ร่วมออกแบบรถวินิจฉัยโรคเคลื่อนที่กับโรงพยาบาลในพื้นที่ เพื่อนำการตรวจ X-ray ทรวงอกด้วย AI ไปถึงชุมชนห่างไกลโดยตรง ภาพถ่ายจะถูกประมวลผลทันทีด้วย AI ที่เทรนมาจากเคสนับพัน แพทย์จะตรวจสอบซ้ำ แต่ AI มักจะเร็วกว่า โครงการนี้ได้แรงบันดาลใจจากการศึกษาดูงานที่เกาหลีใต้ และปรับให้เหมาะกับภูมิศาสตร์และงบประมาณของนครฯ ผ่านรูปแบบการเงิน BOO (Build-Own-Operate) ซึ่งทำให้เทศบาลจ่ายรายเดือนแทนการจ่ายก้อนล่วงหน้า",
-                    zh: "对农村地区的老人和卧床患者而言，去医院意味着半天的路程。那空是贪玛叻与当地医院共同设计了一辆移动诊疗车，将 AI 辅助胸部 X 光筛查直接带入偏远社区。图像由经过数千个病例训练的 AI 即时处理。医生负责复核，但 AI 通常更快。该项目受韩国考察之旅启发，根据那空是贪玛叻的地理条件和预算重新设计，采用建设-拥有-经营 (BOO) 私人融资模式，使市政府按月付款而非前期一次性投入。",
+                    zh: "对农村地区的老人和卧床患者而言，去医院意味着半天的路程。洛坤与当地医院共同设计了一辆移动诊疗车，将 AI 辅助胸部 X 光筛查直接带入偏远社区。图像由经过数千个病例训练的 AI 即时处理。医生负责复核，但 AI 通常更快。该项目受韩国考察之旅启发，根据洛坤的地理条件和预算重新设计，采用建设-拥有-经营 (BOO) 私人融资模式，使市政府按月付款而非前期一次性投入。",
                   })}
                 </p>
                 <div className="showcase-pull-block">
@@ -1090,7 +1090,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   {translate(locale, {
                     en: "NST's AI School was not imported. It was reverse-engineered from a South Korean model, then rebuilt for Thai public school classrooms where class sizes are large and exams are the only feedback loop. The platform detects hesitation patterns and topic fatigue in real time — teachers see which students are memorizing versus actually understanding, before any test. When the first school got internet as part of the pilot, the first thing students asked was: \"Can we learn how to make games?\" The platform procured at per-student OPEX rates, which means no upfront hardware debt and no stranded assets if the software improves.",
                     th: "โรงเรียน AI ของนครฯ ไม่ได้นำเข้ามาตรงๆ แต่ถอดแบบจากโมเดลเกาหลีใต้ แล้วสร้างใหม่ให้เหมาะกับห้องเรียนโรงเรียนของรัฐไทยที่มีนักเรียนจำนวนมากและใช้การสอบเป็นวงจรสะท้อนข้อมูลหลักเพียงอย่างเดียว แพลตฟอร์มตรวจจับรูปแบบความลังเลและความล้าในหัวข้อแบบเรียลไทม์ ครูเห็นว่านักเรียนคนไหนท่องจำแบบผิวเผินและคนไหนเข้าใจจริงๆ ก่อนสอบ เมื่อโรงเรียนแรกได้รับอินเทอร์เน็ตในโครงการนำร่อง สิ่งแรกที่นักเรียนถามคือ: \"เราเรียนทำเกมได้ไหม?\" ระบบจัดซื้อในราคา OPEX ต่อนักเรียน หมายความว่าไม่มีหนี้ฮาร์ดแวร์ล่วงหน้าและไม่มีสินทรัพย์ค้างอยู่หากซอฟต์แวร์พัฒนาขึ้น",
-                    zh: "那空是贪玛叻的 AI 学校并非照搬引进，而是以韩国模式为蓝本，重新为泰国公立学校的课堂量身定制——这里班级规模庞大，考试是唯一的反馈回路。平台能实时检测犹豫模式和知识疲劳点——教师在任何考试前便能看到哪些学生只是在死记硬背、哪些学生真正理解了。当第一所学校通过试点项目接入互联网时，学生们第一个问题是：「我们能学做游戏吗？」该平台按每生 OPEX 费率采购，意味着没有前期硬件债务，若软件迭代升级也不会产生搁置资产。",
+                    zh: "洛坤的 AI 学校并非照搬引进，而是以韩国模式为蓝本，重新为泰国公立学校的课堂量身定制——这里班级规模庞大，考试是唯一的反馈回路。平台能实时检测犹豫模式和知识疲劳点——教师在任何考试前便能看到哪些学生只是在死记硬背、哪些学生真正理解了。当第一所学校通过试点项目接入互联网时，学生们第一个问题是：「我们能学做游戏吗？」该平台按每生 OPEX 费率采购，意味着没有前期硬件债务，若软件迭代升级也不会产生搁置资产。",
                   })}
                 </p>
                 <div className="showcase-data-callout" style={{ margin: 0 }}>
@@ -1158,7 +1158,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               {translate(locale, {
                 en: "Nakhon Si Thammarat operates under a mid-tier municipal budget constraint of ฿500–700 million annually. Scaling smart services required moving away from high-debt upfront assets to agile, outcome-linked investments.",
                 th: "เทศบาลนครนครศรีธรรมราชดำเนินการภายใต้ข้อจำกัดงบประมาณระดับกลางที่ 500–700 ล้านบาทต่อปี การขยายบริการอัจฉริยะจึงจำเป็นต้องเปลี่ยนจากการซื้อสินทรัพย์ราคาแพงล่วงหน้า ไปสู่การลงทุนที่ยืดหยุ่นและผูกพันกับผลสัมฤทธิ์",
-                zh: "那空是贪玛叻每年在 5.00-7.00 亿泰铢的中等市政预算限制下运行。扩展智能服务需要从前期的高债务资产购建转向灵活的、与成果挂钩的投资。",
+                zh: "洛坤每年在 5.00-7.00 亿泰铢的中等市政预算限制下运行。扩展智能服务需要从前期的高债务资产购建转向灵活的、与成果挂钩的投资。",
               })}
             </p>
 
@@ -1172,7 +1172,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   {translate(locale, {
                     en: "Instead of borrowing heavy capital for short-lived software, NST procures services as operational expenditure. Payments run on monthly per-student licenses or outcome-based triggers, keeping the budget elastic without accumulating stranded hardware debt.",
                     th: "แทนที่จะก่อหนี้กู้ยืมงบลงทุนไปกับซอฟต์แวร์ที่มีอายุการใช้งานสั้น นครฯ เลือกจัดซื้อในลักษณะค่าใช้จ่ายดำเนินงาน การจ่ายเงินรายเดือนตามจำนวนสิทธิ์ใช้งานต่อนักเรียนหรือตามผลสัมฤทธิ์ ทำให้งบประมาณยืดหยุ่นโดยไม่สะสมหนี้ฮาร์ดแวร์ค้างอยู่",
-                    zh: "那空是贪玛叻不再为寿命较短的软件申请大额建设性贷款，而是将采购结构调整为运营性支出。付款按月度每生许可证或基于成果的触发机制进行，保持预算弹性，避免积累搁置硬件债务。",
+                    zh: "洛坤不再为寿命较短的软件申请大额建设性贷款，而是将采购结构调整为运营性支出。付款按月度每生许可证或基于成果的触发机制进行，保持预算弹性，避免积累搁置硬件债务。",
                   })}
                 </p>
               </article>
@@ -1186,7 +1186,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   {translate(locale, {
                     en: "NST procures via depa's Digital Catalog — a pre-vetted national registry of Thai tech vendors, service providers, and digital solutions. Combined with streamlined TOR templates, it cut procurement lead time from an average of 14 months in 2019 to 6.5 months in 2024, while removing compliance risk at the city level.",
                     th: "เทศบาลจัดซื้อผ่านแคตตาล็อกดิจิทัลของ depa ซึ่งเป็นทะเบียนแห่งชาติของผู้ให้บริการเทคโนโลยีไทย ผู้ให้บริการ และโซลูชันดิจิทัลที่ผ่านการคัดกรองล่วงหน้า เมื่อรวมกับการปรับแบบ TOR ให้กระชับ ช่วยลดระยะเวลาจัดซื้อจากเฉลี่ย 14 เดือนในปี 2562 เหลือ 6.5 เดือนในปี 2567 พร้อมลดความเสี่ยงด้านกฎระเบียบในระดับเมือง",
-                    zh: "那空是贪玛叻通过 depa 数字名录进行采购——这是一份预先审核的泰国科技供应商、服务商及数字解决方案国家名录。配合精简的 TOR 模板，采购周期从 2019 年平均 14 个月缩短至 2024 年的 6.5 个月，同时消除了城市层面的合规风险。",
+                    zh: "洛坤通过 depa 数字名录进行采购——这是一份预先审核的泰国科技供应商、服务商及数字解决方案国家名录。配合精简的 TOR 模板，采购周期从 2019 年平均 14 个月缩短至 2024 年的 6.5 个月，同时消除了城市层面的合规风险。",
                   })}
                 </p>
               </article>
@@ -1200,7 +1200,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                   {translate(locale, {
                     en: "NST maps each project onto the ASEAN Smart Cities Network toolkit's funding structures: grants for civic tech with no revenue, BOO for infrastructure with a private operator, and PPP for shared-cost services. Across the region, 75% of smart city projects are now in some stage of implementation — the toolkit keeps cities from over-relying on the wrong instrument.",
                     th: "นครฯ จับคู่แต่ละโครงการกับโครงสร้างการเงินในเครื่องมือของเครือข่ายเมืองอัจฉริยะอาเซียน: เงินอุดหนุนสำหรับเทคโนโลยีพลเมืองที่ไม่มีรายได้ BOO สำหรับโครงสร้างพื้นฐานที่มีผู้ดำเนินงานเอกชน และ PPP สำหรับบริการร่วมทุน ทั่วทั้งภูมิภาค 75% ของโครงการสมาร์ทซิตี้อยู่ระหว่างการดำเนินงานในขั้นใดขั้นหนึ่งแล้ว เครื่องมือนี้ช่วยไม่ให้เมืองพึ่งพาเครื่องมือที่ไม่ถูกต้อง",
-                    zh: "那空是贪玛叻将每个项目对应到东盟智慧城市网络工具包的资金结构上：无收入的市民科技项目使用赠款，有私营运营商的基础设施使用 BOO，成本共担服务使用 PPP。放眼整个区域，75% 的智慧城市项目目前正处于某一实施阶段——该工具包帮助城市避免过度依赖错误的融资工具。",
+                    zh: "洛坤将每个项目对应到东盟智慧城市网络工具包的资金结构上：无收入的市民科技项目使用赠款，有私营运营商的基础设施使用 BOO，成本共担服务使用 PPP。放眼整个区域，75% 的智慧城市项目目前正处于某一实施阶段——该工具包帮助城市避免过度依赖错误的融资工具。",
                   })}
                 </p>
               </article>

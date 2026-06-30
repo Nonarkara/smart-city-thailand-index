@@ -41,7 +41,7 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
   showcase: {
     en: `${SITE_NAME} | Showcase — Nakhon Si Thammarat`,
     th: `${SITE_NAME} | ต้นแบบ — นครศรีธรรมราช`,
-    zh: `${SITE_NAME} | 样板 — 那空是贪玛叻`,
+    zh: `${SITE_NAME} | 样板 — 洛坤`,
   },
   map: {
     en: `${SITE_NAME} | City Map Dashboard`,

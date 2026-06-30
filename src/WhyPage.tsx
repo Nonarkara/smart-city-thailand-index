@@ -32,7 +32,7 @@ const benefits: BenefitBlock[] = [
     body: {
       en: "This is not about embarrassing cities. It's about giving every municipality a clear diagnostic — like a doctor's checkup, not a beauty contest. The IMD Smart City Index demonstrates that benchmarking enables cities to identify specific strengths and weaknesses, then design targeted strategies. When Nakhon Si Thammarat sees that Khon Kaen scores higher on digital governance, it can study exactly what Khon Kaen did and adapt it. When Hat Yai sees Yala's environmental excellence, it learns that even cities in challenging security situations can achieve green city outcomes.",
       th: "นี่ไม่ใช่การทำให้เมืองอาย แต่เป็นการให้เทศบาลทุกแห่งได้รับการวินิจฉัยที่ชัดเจน — เหมือนการตรวจสุขภาพ ไม่ใช่การประกวดความงาม IMD Smart City Index แสดงว่าการเปรียบเทียบช่วยให้เมืองระบุจุดแข็งและจุดอ่อนเฉพาะ แล้วออกแบบกลยุทธ์ที่ตรงเป้า เมื่อนครศรีธรรมราชเห็นว่าขอนแก่นได้คะแนนสูงกว่าด้าน digital governance ก็สามารถศึกษาว่าขอนแก่นทำอะไรแล้วนำมาปรับใช้",
-      zh: "这不是为了让城市难堪，而是给每个市政当局一个清晰的诊断——像医生体检，而不是选美比赛。IMD智慧城市指数表明，基准评估使城市能够识别具体的优势和劣势，然后设计有针对性的策略。当那空是贪玛叻看到孔敬在数字治理方面得分更高时，它可以研究孔敬究竟做了什么并加以调整。当合艾看到也拉的环境卓越表现时，它了解到即使在安全形势严峻的城市也能取得绿色城市成果。",
+      zh: "这不是为了让城市难堪，而是给每个市政当局一个清晰的诊断——像医生体检，而不是选美比赛。IMD智慧城市指数表明，基准评估使城市能够识别具体的优势和劣势，然后设计有针对性的策略。当洛坤看到孔敬在数字治理方面得分更高时，它可以研究孔敬究竟做了什么并加以调整。当合艾看到也拉的环境卓越表现时，它了解到即使在安全形势严峻的城市也能取得绿色城市成果。",
     },
   },
   {
@@ -50,9 +50,9 @@ const benefits: BenefitBlock[] = [
     lens: { en: "Regional model", th: "โมเดลระดับภูมิภาค", zh: "区域模型" },
     title: { en: "For ASEAN: a model for regional benchmarking", th: "สำหรับอาเซียน: แบบจำลองสำหรับการเปรียบเทียบระดับภูมิภาค", zh: "东盟：区域基准评估的典范" },
     body: {
-      en: "The ASEAN Smart Cities Network has 38 pilot cities across 10 countries, but no standardized way to compare them. This index, built on SLIC methodology, can be adapted for any ASEAN city. Thailand is the first country to create a transparent, citizen-centric smart city index for its own cities. The methodology is open — any country can adopt it. The Frontiers in Sustainable Cities journal documented how Thailand's data-driven approach contributes to smart city innovation across the region.",
-      th: "ASEAN Smart Cities Network มี 38 เมืองนำร่องใน 10 ประเทศ แต่ไม่มีวิธีมาตรฐานในการเปรียบเทียบ ดัชนีนี้สร้างจากวิธีการ SLIC สามารถปรับใช้กับเมืองอาเซียนใดก็ได้ ไทยเป็นประเทศแรกที่สร้างดัชนีเมืองอัจฉริยะแบบโปร่งใสเน้นประชาชนสำหรับเมืองของตัวเอง วิธีการเปิดเผย — ประเทศใดก็นำไปใช้ได้",
-      zh: "东盟智慧城市网络在10个国家拥有38个试点城市，但没有标准化的比较方式。本指数基于SLIC方法论，可适用于任何东盟城市。泰国是第一个为本国城市创建透明、以市民为中心的智慧城市指数的国家。方法论是开放的——任何国家都可以采用。《可持续城市前沿》期刊记录了泰国的数据驱动方法如何促进该地区的智慧城市创新。",
+      en: "The ASEAN Smart Cities Network has 38 pilot cities across 10 countries, but no standardized way to compare them. This index, built on SLIC methodology, can be adapted for any ASEAN city. Thailand has built a transparent, citizen-centric smart city index for its own cities, openly licensed so any country can adopt it. The Frontiers in Sustainable Cities journal documented how Thailand's data-driven approach contributes to smart city innovation across the region.",
+      th: "ASEAN Smart Cities Network มี 38 เมืองนำร่องใน 10 ประเทศ แต่ไม่มีวิธีมาตรฐานในการเปรียบเทียบ ดัชนีนี้สร้างจากวิธีการ SLIC สามารถปรับใช้กับเมืองอาเซียนใดก็ได้ ไทยได้สร้างดัชนีเมืองอัจฉริยะแบบโปร่งใสที่เน้นประชาชนสำหรับเมืองของตัวเอง และเปิดเผยวิธีการให้ประเทศใดก็นำไปปรับใช้ได้",
+      zh: "东盟智慧城市网络在10个国家拥有38个试点城市，但没有标准化的比较方式。本指数基于SLIC方法论，可适用于任何东盟城市。泰国为本国城市建立了透明、以市民为中心的智慧城市指数，并开放方法论供任何国家采用。《可持续城市前沿》期刊记录了泰国的数据驱动方法如何促进该地区的智慧城市创新。",
     },
   },
   {

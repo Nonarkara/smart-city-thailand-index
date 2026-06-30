@@ -664,10 +664,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
               </span>
             </button>
             <div className="export-docs">
-              <a href={assetUrl("/downloads/SCITI-2026-Executive-Summary.pdf")} download className="export-doc-link">{t({ en: "Executive Summary (PDF)", th: "บทสรุปผู้บริหาร (PDF)", zh: "执行摘要 (PDF)" })}</a>
               <a href={assetUrl("/downloads/SCITI-2026-Methodology.pdf")} download className="export-doc-link">{t({ en: "Methodology Paper (PDF)", th: "เอกสารระเบียบวิธี (PDF)", zh: "方法论文 (PDF)" })}</a>
-              <a href={assetUrl("/downloads/SCITI-2026-Report.pdf")} download className="export-doc-link">{t({ en: "Full Report (PDF)", th: "รายงานฉบับเต็ม (PDF)", zh: "完整报告 (PDF)" })}</a>
-              <a href={assetUrl("/downloads/SCITI-2026-Audit.pdf")} download className="export-doc-link">{t({ en: "Performance Audit (PDF)", th: "การตรวจสอบผลการดำเนินงาน (PDF)", zh: "绩效审计 (PDF)" })}</a>
+              <a href={assetUrl("/downloads/SCITI-2026-cities-dataset.csv")} download className="export-doc-link">{t({ en: "City Dataset (CSV, 118 cities)", th: "ชุดข้อมูลเมือง (CSV, 118 เมือง)", zh: "城市数据集 (CSV, 118城市)" })}</a>
             </div>
           </div>
         </div>

@@ -86,7 +86,7 @@ export default function AsusPage({ locale, onNavigate }: Props) {
           {t(locale,
             "The ASUS Project Phase II partners UN-Habitat with 15 ASEAN cities across 7 countries. Thailand contributes Nakhon Si Thammarat (Solid Waste) and Chiang Mai (Safety & Security) — two cities already in our Smart City Index.",
             "โครงการ ASUS Phase II ร่วมมือ UN-Habitat กับ 15 เมืองอาเซียนใน 7 ประเทศ ไทยเข้าร่วมด้วยนครศรีธรรมราช (ขยะ) และเชียงใหม่ (ความปลอดภัย) — สองเมืองที่อยู่ในดัชนีของเราแล้ว",
-            "ASUS 二期项目由联合国人居署与 7 个国家的 15 座东盟城市合作。泰国贡献了那空是贪玛叻（固体废物）和清迈（安全保障）——两座已在我们指数中的城市。"
+            "ASUS 二期项目由联合国人居署与 7 个国家的 15 座东盟城市合作。泰国贡献了洛坤（固体废物）和清迈（安全保障）——两座已在我们指数中的城市。"
           )}
         </p>
       </section>
@@ -138,7 +138,7 @@ export default function AsusPage({ locale, onNavigate }: Props) {
           <p>{t(locale,
             "Nakhon Si Thammarat tackles solid waste management — the same city where the My City app cut response times from 67 hours to 2. Chiang Mai addresses safety and security in the context of its burning season air quality crisis and growing digital nomad economy.",
             "นครศรีธรรมราชรับมือการจัดการขยะ — เมืองเดียวกันที่แอพ My City ลดเวลาตอบสนองจาก 67 ชั่วโมงเหลือ 2 เชียงใหม่รับมือความปลอดภัยท่ามกลางวิกฤตคุณภาพอากาศฤดูเผาและเศรษฐกิจ digital nomad ที่เติบโต",
-            "那空是贪玛叻处理固体废物管理——正是My City应用把响应时间从67小时降到2小时的那座城市。清迈在烧荒季空气质量危机和数字游民经济增长的背景下解决安全问题。"
+            "洛坤处理固体废物管理——正是My City应用把响应时间从67小时降到2小时的那座城市。清迈在烧荒季空气质量危机和数字游民经济增长的背景下解决安全问题。"
           )}</p>
           <div style={{ display: "flex", gap: ".4rem", marginTop: ".5rem" }}>
             <button className="cta-button" onClick={() => onNavigate("/city/nakhon-si-thammarat")}>
