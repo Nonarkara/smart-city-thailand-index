@@ -355,9 +355,9 @@ export default function MethodologyPage({ locale }: Props) {
               ver: "2026.04", date: "2026-04",
               label: { en: "This version — SCITI 2026", th: "เวอร์ชันนี้ — SCITI 2026", zh: "当前版本——SCITI 2026" },
               desc: {
-                en: `118+ certified and promotion-zone cities. 7 pillars. A confidence model. Official depa certification data integrated from source PDFs. A live React app, not a slide. Submitted for the CEA Creative Excellence Awards 2026.`,
-                th: `118+ เมืองรับรองและเขตส่งเสริม 7 เสาหลัก โมเดลความเชื่อมั่น รวมข้อมูลรับรองอย่างเป็นทางการจาก depa ผ่าน PDF ต้นฉบับ เป็น React app แบบสด ไม่ใช่สไลด์ ส่งเข้าประกวด CEA Creative Excellence Awards 2026`,
-                zh: `118+ 座认证及推广城市，7 个支柱，置信模型，从官方 PDF 集成 depa 认证数据，是实时 React 应用而非幻灯片。已提交 2026 年 CEA 创意卓越奖。`,
+                en: `118 certified, promotion-zone, and registered cities. 7 pillars. A confidence model. Official depa certification data integrated from source PDFs. A live React app, not a slide. Submitted for the CEA Creative Excellence Awards 2026.`,
+                th: `118 เมืองรับรอง เขตส่งเสริม และเมืองจดทะเบียน 7 เสาหลัก โมเดลความเชื่อมั่น รวมข้อมูลรับรองอย่างเป็นทางการจาก depa ผ่าน PDF ต้นฉบับ เป็น React app แบบสด ไม่ใช่สไลด์ ส่งเข้าประกวด CEA Creative Excellence Awards 2026`,
+                zh: `118 座认证、推广和注册城市，7 个支柱，置信模型，从官方 PDF 集成 depa 认证数据，是实时 React 应用而非幻灯片。已提交 2026 年 CEA 创意卓越奖。`,
               },
               current: true,
             },

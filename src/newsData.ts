@@ -106,7 +106,7 @@ export const NEWS_ITEMS: NewsItem[] = [
 
   // ── Thailand smart city news ─────────────────────────────────────────────
   {
-    id: "sciti-red-dot-2026",
+    id: "sciti-cea-2026",
     title: {
       en: "SCITI 2026 submitted to CEA Creative Excellence Awards — data transparency scorecard for 118 Thai cities",
       th: "SCITI 2026 ส่งเข้าประกวด CEA Creative Excellence Awards — ระบบให้คะแนนความโปร่งใสข้อมูล 118 เมืองไทย",

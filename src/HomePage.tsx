@@ -1,5 +1,4 @@
 import { useMemo, useState, useEffect } from "react";
-// ActionAtlas removed — map was ugly, data speaks for itself
 import { useInView } from "./useInView";
 import AnimatedScore from "./AnimatedScore";
 import NewsStrip from "./NewsStrip";

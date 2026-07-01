@@ -151,7 +151,7 @@ ul, ol { list-style: none; }
 /* Layout */
 .section, .S { width: min(var(--w), calc(100% - 2.5rem)); margin-inline: auto; }
 /* Phase 21 — Fixed design canvas. The page-shell caps the design at 1440px so
- * Red Dot readers always see the same composition regardless of monitor size.
+ * CEA judges always see the same composition regardless of monitor size.
  * On viewports ≥ 1440px, the depa-blue body bg shows as a quiet gutter on
  * each side; on smaller viewports the canvas is full-width and the gutter
  * never appears. This is the editorial "design stage" pattern — Apple, NYT,
@@ -3918,7 +3918,8 @@ h2, h3 { font-family: var(--font); }
 .globe-lg-dot { width: 5px; height: 5px; flex-shrink: 0; }
 .globe-lg-stat { margin-left: auto; color: var(--gold); font-weight: 600; }
 
-/* Keep old class for backward compat */
+/* Orphaned globe-tooltip variants — no component references these; the live
+   tooltip uses .globe-html-tooltip / .globe-tt-* below. */
 .globe-tooltip-country { font: 500 .55rem var(--mono); color: #A8A49C; }
 .globe-tooltip-type { font: 600 .48rem var(--mono); text-transform: uppercase; letter-spacing: .06em; }
 .globe-tooltip-focus { font-size: .6rem; color: #A8A49C; line-height: 1.45; margin-bottom: .2rem; }
@@ -4631,7 +4632,7 @@ details[open] .kb-question::before { content: "−"; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   RED DOT POLISH — 8 items for design award submission
+   CEA POLISH — 8 items for design award submission
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* 1. Ken Burns hero animation */
@@ -5498,7 +5499,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   RED DOT CRITICAL + POLISH — Final submission pass
+   CEA CRITICAL + POLISH — Final submission pass
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* C1: Nav overflow — raise breakpoint to 1100px */
@@ -6050,7 +6051,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   CITY DOSSIER COMPOSITION PASS — RED DOT CANDIDATE
+   CITY DOSSIER COMPOSITION PASS — CEA CANDIDATE
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @media screen {
@@ -6602,7 +6603,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   }
 }
 
-/* ---------- Red Dot Phase 9: Finance readiness banner ---------- */
+/* ---------- CEA Phase 9: Finance readiness banner ---------- */
 .finance-readiness-banner {
   border: 1px solid var(--5);
   border-radius: 0;
@@ -6701,7 +6702,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .finance-readiness-score { font-size: 2.5rem; }
 }
 
-/* ---------- Red Dot Phase 9: Dimensions chips (monochrome) ---------- */
+/* ---------- CEA Phase 9: Dimensions chips (monochrome) ---------- */
 .dimension-chip-row {
   display: flex;
   flex-wrap: wrap;
@@ -6732,7 +6733,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .city-scope-meta { opacity: .88; }
 .city-scope-meta h2 { font-size: var(--text-lg); color: var(--2); }
 
-/* ---------- Red Dot Phase 9: Rank + delta + freshness chips ---------- */
+/* ---------- CEA Phase 9: Rank + delta + freshness chips ---------- */
 .composite-rank-chip {
   display: inline-block;
   margin-top: .35rem;
@@ -6771,7 +6772,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .freshness-chip-stale   { color: #B0413E; border-color: #B0413E; }
 .freshness-chip-unknown { color: var(--3); }
 
-/* ---------- Red Dot Phase 9: Performance triptych ---------- */
+/* ---------- CEA Phase 9: Performance triptych ---------- */
 .triptych-subsection {
   margin-top: 2rem;
   padding-top: 1.5rem;

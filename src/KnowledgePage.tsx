@@ -117,9 +117,9 @@ const FAQS: FAQ[] = [
       zh: "泰国有多少智慧城市？",
     },
     a: {
-      en: "As of 2025, there are 37 certified smart cities across 4 batches, plus dozens more in 'promotion' status. The national target is 100 smart cities by the end of the 20-year National Strategy (2036), with 3 cities to be internationally accredited. SCITI tracks 118 cities total — all certified, promotion-phase, and registered candidates — because plans that never launch also deserve measurement.",
-      th: "ณ ปี 2025 มีเมืองอัจฉริยะรับรองแล้ว 37 เมืองใน 4 รุ่น พร้อมอีกหลายสิบเมืองในสถานะ 'ส่งเสริม' เป้าหมายคือ 100 เมืองภายในปี 2036 SCITI ติดตาม 118 เมืองทั้งหมด เพราะแม้แต่แผนที่ไม่เคยเริ่มก็สมควรถูกวัด",
-      zh: "截至2025年，共有37个经过4批认证的智慧城市，还有数十个处于”推广”阶段。国家目标是到2036年建成100座智慧城市。SCITI追踪118个城市——包括已认证、推广阶段和注册候选城市——因为从未启动的计划也值得被衡量。",
+      en: "As of 2025, there are 37 certified smart cities across 4 batches, plus dozens more in 'promotion' status. The national target is 105 smart cities by 2027, under depa's Smart City Master Plan 1 (2024-2027). SCITI tracks 118 cities total — all certified, promotion-phase, and registered candidates — because plans that never launch also deserve measurement.",
+      th: "ณ ปี 2025 มีเมืองอัจฉริยะรับรองแล้ว 37 เมืองใน 4 รุ่น พร้อมอีกหลายสิบเมืองในสถานะ 'ส่งเสริม' เป้าหมายของประเทศคือ 105 เมืองภายในปี 2570 ตามแผนแม่บทเมืองอัจฉริยะฉบับที่ 1 (2567-2570) ของ depa SCITI ติดตาม 118 เมืองทั้งหมด เพราะแม้แต่แผนที่ไม่เคยเริ่มก็สมควรถูกวัด",
+      zh: "截至2025年，共有37个经过4批认证的智慧城市，还有数十个处于\"推广\"阶段。根据depa智慧城市总体规划第1期（2024-2027），国家目标是到2027年建成105座智慧城市。SCITI追踪118个城市——包括已认证、推广阶段和注册候选城市——因为从未启动的计划也值得被衡量。",
     },
   },
   // ─── The 7 Smarts ───
@@ -185,9 +185,9 @@ const FAQS: FAQ[] = [
       zh: "东盟智慧城市网络(ASCN)是什么？",
     },
     a: {
-      en: "ASCN was established in 2018 as a regional platform for ASEAN Member States to share smart city best practices. Its primary goal is improving quality of life through technology for sustainable urban development. Thai cities like Bangkok, Chonburi, and Chiang Mai are active members. The network connects with partners including Japan (ASEAN-Japan Smart Cities Network), Australia (ASUS project via UN-Habitat), the UK (Global Future Cities Programme), and Mastercard (City Possible initiative).",
-      th: "ASCN ก่อตั้งปี 2018 เป็นแพลตฟอร์มระดับภูมิภาคให้ชาติอาเซียนแลกเปลี่ยนแนวปฏิบัติเมืองอัจฉริยะ เมืองไทยที่ร่วมได้แก่ กรุงเทพฯ ชลบุรี เชียงใหม่ เครือข่ายเชื่อมกับญี่ปุ่น ออสเตรเลีย (โครงการ ASUS ผ่าน UN-Habitat) สหราชอาณาจักร (GFCP) และ Mastercard",
-      zh: "ASCN成立于2018年，是东盟成员国共享智慧城市最佳实践的区域平台。曼谷、春武里和清迈等泰国城市是活跃成员。该网络与日本（东盟-日本智慧城市网络）、澳大利亚（通过联合国人居署的ASUS项目）、英国（全球未来城市计划）和万事达卡等合作伙伴相连。",
+      en: "ASCN was established in 2018 as a regional platform for ASEAN Member States to share smart city best practices. Its primary goal is improving quality of life through technology for sustainable urban development. Thai cities like Bangkok, Phuket, Chonburi, and Chiang Mai are active members. The network connects with partners including Japan (ASEAN-Japan Smart Cities Network), Australia (ASUS project via UN-Habitat), the UK (Global Future Cities Programme), and Mastercard (City Possible initiative).",
+      th: "ASCN ก่อตั้งปี 2018 เป็นแพลตฟอร์มระดับภูมิภาคให้ชาติอาเซียนแลกเปลี่ยนแนวปฏิบัติเมืองอัจฉริยะ เมืองไทยที่ร่วมได้แก่ กรุงเทพฯ ภูเก็ต ชลบุรี เชียงใหม่ เครือข่ายเชื่อมกับญี่ปุ่น ออสเตรเลีย (โครงการ ASUS ผ่าน UN-Habitat) สหราชอาณาจักร (GFCP) และ Mastercard",
+      zh: "ASCN成立于2018年，是东盟成员国共享智慧城市最佳实践的区域平台。曼谷、普吉、春武里和清迈等泰国城市是活跃成员。该网络与日本（东盟-日本智慧城市网络）、澳大利亚（通过联合国人居署的ASUS项目）、英国（全球未来城市计划）和万事达卡等合作伙伴相连。",
     },
   },
   {
@@ -559,9 +559,9 @@ const FAQS: FAQ[] = [
       zh: "东盟智慧城市网络是什么，它如何运作？",
     },
     a: {
-      en: "The ASEAN Smart Cities Network (ASCN) was established in 2018 as a collaborative platform for all ten ASEAN member states to share smart city best practices, pilot projects, and private sector partnerships. Each ASEAN country nominates up to three cities, and the network meets regularly at the ASEAN Smart Cities Summit. Cambodia chaired the network in 2022. Thailand's nominees have included Bangkok, Chiang Mai, and Chonburi. The ASCN connects cities not only to each other but to a wide range of international partners: Japan provides funding and technical assistance through the ASEAN-Japan Smart Cities Network; Australia implements the ASUS project via UN-Habitat; the UK runs the Global Future Cities Programme; and Mastercard contributes through the City Possible initiative. The network is deliberately practical — it prioritises pilot projects and knowledge exchange over declarations, because the gap between smart city policy and smart city reality is where the real work happens.",
-      th: "ASEAN Smart Cities Network (ASCN) ก่อตั้งในปี 2018 เป็นแพลตฟอร์มความร่วมมือสำหรับประเทศสมาชิกอาเซียนทั้ง 10 ประเทศเพื่อแลกเปลี่ยนแนวปฏิบัติที่ดี โครงการนำร่อง และหุ้นส่วนภาคเอกชนด้านเมืองอัจฉริยะ แต่ละประเทศอาเซียนสามารถเสนอชื่อเมืองได้สูงสุด 3 เมือง กัมพูชาเป็นประธานเครือข่ายในปี 2022 เมืองที่ไทยเสนอชื่อ ได้แก่ กรุงเทพฯ เชียงใหม่ และชลบุรี ASCN เชื่อมต่อเมืองไม่เพียงแต่กันเองแต่ยังกับพันธมิตรระหว่างประเทศที่หลากหลาย เครือข่ายนี้ให้ความสำคัญกับโครงการนำร่องและการแลกเปลี่ยนความรู้มากกว่าการออกปฏิญญา เพราะช่องว่างระหว่างนโยบายเมืองอัจฉริยะและความเป็นจริงคือที่ที่งานจริงเกิดขึ้น",
-      zh: "东盟智慧城市网络(ASCN)于2018年建立，作为所有十个东盟成员国分享智慧城市最佳实践、试点项目和私营部门伙伴关系的协作平台。每个东盟国家最多提名三个城市。柬埔寨于2022年担任网络主席。泰国的提名城市包括曼谷、清迈和春武里。ASCN不仅将城市彼此连接，还与各类国际合作伙伴相连：日本通过东盟-日本智慧城市网络提供资金和技术援助；澳大利亚通过联合国人居署实施ASUS项目；英国运营全球未来城市计划；万事达卡通过City Possible倡议贡献力量。",
+      en: "The ASEAN Smart Cities Network (ASCN) was established in 2018 as a collaborative platform for all ten ASEAN member states to share smart city best practices, pilot projects, and private sector partnerships. Each ASEAN country nominates up to three cities, and the network meets regularly at the ASEAN Smart Cities Summit. Cambodia chaired the network in 2022. Thailand's original 2018 nominees were Bangkok, Phuket, and Chonburi; Chiang Mai, Khon Kaen, and Rayong joined later, bringing the network to 38 member cities by 2026. The ASCN connects cities not only to each other but to a wide range of international partners: Japan provides funding and technical assistance through the ASEAN-Japan Smart Cities Network; Australia implements the ASUS project via UN-Habitat; the UK runs the Global Future Cities Programme; and Mastercard contributes through the City Possible initiative. The network is deliberately practical — it prioritises pilot projects and knowledge exchange over declarations, because the gap between smart city policy and smart city reality is where the real work happens.",
+      th: "ASEAN Smart Cities Network (ASCN) ก่อตั้งในปี 2018 เป็นแพลตฟอร์มความร่วมมือสำหรับประเทศสมาชิกอาเซียนทั้ง 10 ประเทศเพื่อแลกเปลี่ยนแนวปฏิบัติที่ดี โครงการนำร่อง และหุ้นส่วนภาคเอกชนด้านเมืองอัจฉริยะ แต่ละประเทศอาเซียนสามารถเสนอชื่อเมืองได้สูงสุด 3 เมือง กัมพูชาเป็นประธานเครือข่ายในปี 2022 เมืองที่ไทยเสนอชื่อในปี 2018 ได้แก่ กรุงเทพฯ ภูเก็ต และชลบุรี ต่อมาเชียงใหม่ ขอนแก่น และระยองเข้าร่วมภายหลัง ทำให้เครือข่ายมีสมาชิก 38 เมืองภายในปี 2026 ASCN เชื่อมต่อเมืองไม่เพียงแต่กันเองแต่ยังกับพันธมิตรระหว่างประเทศที่หลากหลาย เครือข่ายนี้ให้ความสำคัญกับโครงการนำร่องและการแลกเปลี่ยนความรู้มากกว่าการออกปฏิญญา เพราะช่องว่างระหว่างนโยบายเมืองอัจฉริยะและความเป็นจริงคือที่ที่งานจริงเกิดขึ้น",
+      zh: "东盟智慧城市网络(ASCN)于2018年建立，作为所有十个东盟成员国分享智慧城市最佳实践、试点项目和私营部门伙伴关系的协作平台。每个东盟国家最多提名三个城市。柬埔寨于2022年担任网络主席。泰国2018年最初提名的城市是曼谷、普吉和春武里；清迈、孔敬和罗勇随后加入，使该网络到2026年拥有38个成员城市。ASCN不仅将城市彼此连接，还与各类国际合作伙伴相连：日本通过东盟-日本智慧城市网络提供资金和技术援助；澳大利亚通过联合国人居署实施ASUS项目；英国运营全球未来城市计划；万事达卡通过City Possible倡议贡献力量。",
     },
   },
   {

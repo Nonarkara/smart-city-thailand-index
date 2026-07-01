@@ -2,43 +2,33 @@
 
 Category **1.3 Creative City Policy Award**
 Applicant: **depa Smart City Promotion Department, Ministry of Digital Economy and Society (MDES)**
-Submission deadline: **30 June 2026**
 
 ---
 
-## Canonical deliverables
+## What's actually in this folder
 
-The submission set lives in **`gdrive-pack/`** (upload-ready) and is built from
-**`form-pack/`**. These three PDFs are the only documents to submit:
-
-| File | Purpose | Form field |
-|---|---|---|
-| `SCITI-2026-CEA-Form-Answers.pdf` | Trilingual answers to form questions (Q1–Q3, Q13–Q16) | Q17/Q18 upload |
-| `SCITI-2026-CEA-Proposal.pdf` | Proposal against all five official requirements | Q4 attachment |
-| `SCITI-2026-CEA-Portfolio.pdf` | Design notes + live-site plates | Q5 attachment |
-
-Plus the open dataset for the judges:
-
-| File | Purpose |
+| Item | What it is |
 |---|---|
-| `SCITI-2026-cities-dataset.csv` | Full 118-city × 22-column dataset (UTF-8, opens in Excel) |
+| `sciti-cea-2026-submission.zip` | Packaged executive-summary / fact-sheet / evidence-appendix PDFs + screenshots. **Dated 28 June — predates later content fixes** (see note below). Verify contents before submitting. |
+| `screenshots/` | 5 full-page site captures (home, invest, rankings, methodology, mobile home) — the source images inside the zip. |
+| `key-source-code/` | 8 real source files (scoring engine, routing, trilingual helper, data pipeline) with a bilingual README, for judges who want to verify the technical substance behind the claims. |
+| `capture-screenshots.mjs` | Regenerates `screenshots/` via Playwright. |
+| `generate-pdfs.mjs` | Regenerates the three PDFs from `executive-summary.html` / `fact-sheet.html` / `evidence-appendix.html` — **those `.html` sources are not currently in this folder**; recreate or restore them before running this script. |
 
-All three PDFs are under the form's 10 MB limit, and the same dataset CSV is
-published live at `https://sciti.nonarkara.org/downloads/SCITI-2026-cities-dataset.csv`.
-
-> Superseded internal drafts (executive-summary, fact-sheet, evidence-appendix,
-> the old `form-docs/`) are in `_ARCHIVE-DO-NOT-SEND/` — **do not submit them.**
-
-## Page snapshots
-
-`gdrive-pack/` also carries PNG snapshots of every page (150 DPI) for quick
-browsing without opening the PDFs, plus `README.txt` (bilingual index).
+> **Known gap:** an earlier pass produced a corrected PDF pack (`form-pack/` /
+> `gdrive-pack/`, built via `build-form-pack.mjs` from a `content.json` with
+> verified figures) that removed a stale self-review score and fixed a factual
+> error. Those files and that script are no longer on disk. If the zip above
+> is what actually gets submitted, diff its contents against the live site
+> and `src/claimRegistry.ts` before sending — don't assume it reflects the
+> latest fixes.
 
 ## Live properties
 
 - **Website:** https://sciti.nonarkara.org
 - **Source code:** https://github.com/Nonarkara/smart-city-thailand-index
 - **License:** CC BY 4.0
+- **Open dataset:** https://sciti.nonarkara.org/downloads/SCITI-2026-cities-dataset.csv (118 cities × 22 columns)
 
 ## Key message
 
@@ -52,14 +42,12 @@ Smart City Thailand programme. It is designed as a **government policy/measure**
 ## How to regenerate
 
 ```bash
-# Form-pack PDFs (answers / proposal / portfolio) — reads content.json
-node cea-submission/build-form-pack.mjs
-
-# Dataset CSV — reads dist/data/cities.json (run a build first)
-node cea-submission/generate-data-csv.mjs
-
 # Site screenshots
-node cea-submission/capture-site-screens.mjs
+node cea-submission/capture-screenshots.mjs
+
+# PDFs — requires executive-summary.html / fact-sheet.html / evidence-appendix.html
+# to exist in this folder first (not currently present — see "Known gap" above)
+node cea-submission/generate-pdfs.mjs
 ```
 
 Requires Playwright + Chromium (already installed in this project).

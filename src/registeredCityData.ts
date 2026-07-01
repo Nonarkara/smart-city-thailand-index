@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Registered Smart City Promotion Zones — 160+ cities
+// Registered Smart City Promotion Zones — 69 encoded entries (from depa's ~173-zone promotion pool)
 // ---------------------------------------------------------------------------
 // These cities have submitted smart city proposals to depa but have
 // insufficient data for full scoring. They receive default baseline

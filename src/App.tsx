@@ -42,8 +42,7 @@ function getInitialTheme(): Theme {
   return "light";
 }
 
-// Phase 2.4 — NAV_ITEMS replaced by NAV_GROUPS in src/TopbarNav.tsx,
-// which consolidates 13 flat nav items into 5 grouped dropdowns
+// Top nav lives in src/TopbarNav.tsx — 5 grouped dropdowns
 // (Home · Rankings · Method · Stories · Network).
 
 const MDES_LOGO = {

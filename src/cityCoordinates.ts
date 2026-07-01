@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // City Coordinates — for the Rankings map view (GISTDA layer overlay)
 // ---------------------------------------------------------------------------
-// All 49 certified cities + registered cities pull from their inline lat/lng.
+// All 49 certified + promotion-zone cities, plus registered cities, pull from their inline lat/lng.
 // Coordinates are the recognizable city centre (municipality hall or
 // university campus where applicable), not provincial capital fallbacks.
 // ---------------------------------------------------------------------------

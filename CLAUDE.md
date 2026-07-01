@@ -11,9 +11,11 @@ tsc -b              # Type-check (NOT tsc --noEmit — must match CI)
 npx vite build      # Always verify both before pushing
 ```
 
-- GitHub Pages via GitHub Actions — push to `main` triggers auto-deploy
-- Base path: `VITE_BASE_PATH=/smart-city-thailand-index/`
-- Verify deploy: `gh run list --limit 1`
+- Base path is `/` (VITE_BASE_PATH is unset anywhere; `vite.config.ts` falls back to `"/"`)
+- **Production (sciti.nonarkara.org) is Cloudflare Pages — deploy is MANUAL:**
+  `VITE_BASE_PATH=/ npm run build && wrangler pages deploy dist --project-name=smart-city-thailand-index --branch=main --commit-dirty=true`
+  Pushing to `main` alone does **not** update the live site.
+- GitHub Actions also auto-deploys to GitHub Pages on push to `main` (`gh run list --limit 1` to verify), but DNS for `sciti.nonarkara.org` resolves to Cloudflare — the GitHub Pages copy is a live mirror, not what judges/users see.
 
 ## Design Philosophy
 
@@ -36,8 +38,10 @@ npx vite build      # Always verify both before pushing
   segments at fixed pixel widths, not `width: %` of a flexing
   parent. The Phase 11 `.pillar-strip` (220 px fixed, 7 segments) is
   the pattern.
-- **Typography**: Major Third scale (1.25), tokens `--text-xs`
-  through `--text-3xl`. All numerics in `var(--mono)`.
+- **Typography**: three sizes only — `--text-display` (32px), `--text-body`
+  (14px), `--text-micro` (11px). All numerics in `var(--mono)`. Legacy
+  Major-Third `--text-xs`..`--text-3xl` aliases are frozen for back-compat —
+  reach for the canonical three in new code (see Anti-Regression below).
 - **Thai typography — non-looped only.** Native Thai readers clock a
   non-Thai establishment in one glance by its looped หัว (head-loops).
   When a Thai person handwrites, the loop shrinks until it's vestigial
@@ -48,7 +52,8 @@ npx vite build      # Always verify both before pushing
   NEVER `IBM Plex Sans Thai Looped`, `Sarabun`, `TH Sarabun New`, or
   any other looped Thai face. This rule applies to every Thai-facing
   surface in this workspace — dashboards, decks, PDFs, signage.
-- **Cards**: glass-morphism, premium shadows.
+- **Cards**: flat, hairline-bordered (1px). No border-radius, no gradient,
+  no drop shadow — see Anti-Regression / Phase 17 zero tokens below.
 - **Scroll animations**: `.reveal` class + IntersectionObserver.
 
 ## Trilingual Content (EN / TH / CN)
