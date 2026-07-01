@@ -108,14 +108,14 @@ export const NEWS_ITEMS: NewsItem[] = [
   {
     id: "sciti-red-dot-2026",
     title: {
-      en: "SCITI 2026 submitted to Red Dot Design Award — data transparency scorecard for 118 Thai cities",
-      th: "SCITI 2026 ส่งเข้าประกวด Red Dot Design Award — ระบบให้คะแนนความโปร่งใสข้อมูล 118 เมืองไทย",
-      zh: "SCITI 2026提交红点设计奖——118座泰国城市的数据透明度评分卡",
+      en: "SCITI 2026 submitted to CEA Creative Excellence Awards — data transparency scorecard for 118 Thai cities",
+      th: "SCITI 2026 ส่งเข้าประกวด CEA Creative Excellence Awards — ระบบให้คะแนนความโปร่งใสข้อมูล 118 เมืองไทย",
+      zh: "SCITI 2026提交 CEA 创意卓越奖——118座泰国城市的数据透明度评分卡",
     },
     summary: {
-      en: "depa's Smart City Promotion Department submits SCITI 2026 — a 7-pillar scorecard ranking 118 Thai cities — to the Red Dot Communication Design Award. The index is open-access, PDPA-compliant, and built for investment-grade city comparison.",
-      th: "ฝ่ายส่งเสริมสมาร์ทซิตี้ของ depa ส่ง SCITI 2026 — ระบบให้คะแนน 7 เสาหลักสำหรับ 118 เมืองไทย — เข้าประกวด Red Dot Communication Design Award ดัชนีนี้เปิดให้เข้าถึงได้อย่างเสรี สอดคล้อง PDPA และออกแบบมาสำหรับการเปรียบเทียบเมืองระดับลงทุน",
-      zh: "depa智慧城市推广部门将SCITI 2026——对118座泰国城市进行7大支柱评分的体系——提交至红点传播设计奖。该指数开放获取、符合PDPA，专为投资级城市比较而设计。",
+      en: "depa's Smart City Promotion Department submits SCITI 2026 — a 7-pillar scorecard ranking 118 Thai cities — to the CEA Creative Excellence Awards 2026 (Category 1.3). The index is open-access, PDPA-compliant, and built for investment-grade city comparison.",
+      th: "ฝ่ายส่งเสริมสมาร์ทซิตี้ของ depa ส่ง SCITI 2026 — ระบบให้คะแนน 7 เสาหลักสำหรับ 118 เมืองไทย — เข้าประกวด CEA Creative Excellence Awards 2026 (ประเภท 1.3) ดัชนีนี้เปิดให้เข้าถึงได้อย่างเสรี สอดคล้อง PDPA และออกแบบมาสำหรับการเปรียบเทียบเมืองระดับลงทุน",
+      zh: "depa智慧城市推广部门将SCITI 2026——对118座泰国城市进行7大支柱评分的体系——提交至 CEA 创意卓越奖 2026（1.3 类）。该指数开放获取、符合PDPA，专为投资级城市比较而设计。",
     },
     source: "depa Smart City Promotion Department",
     url: "https://www.depa.or.th/en/smartcity",

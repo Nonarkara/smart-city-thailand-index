@@ -5657,9 +5657,11 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .transparency-inner h2 { font-size: var(--text-2xl); font-weight: 700; letter-spacing: -.02em; margin-bottom: 1.25rem; }
 .transparency-formula {
-  padding: .6rem .8rem; background: var(--depa-blue, #0C2F53); color: var(--depa-yellow, #FFF200);
-  font: 500 .6rem var(--mono); overflow-x: auto; margin-bottom: 1rem;
+  padding: 1.2rem 1.5rem; background: var(--depa-blue, #0C2F53); color: #fff;
+  font: 700 clamp(.75rem, 1.6vw, .9rem)/1.7 var(--mono); overflow-x: auto; margin-bottom: 1.5rem;
   white-space: nowrap;
+  border-left: 3px solid var(--depa-amber, #FFC600);
+  letter-spacing: .01em;
 }
 .transparency-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
 .transparency-step {
@@ -9427,6 +9429,11 @@ body:has(.bingo-page) { overflow: hidden; }
 }
 
 @media (max-width: 900px) {
+  body:has(.nav-links-open) .chat-fab,
+  body:has(.nav-links-open) .chat-panel {
+    visibility: hidden;
+    pointer-events: none;
+  }
   .nav-links.nav-links-open {
     display: flex !important;
     flex-direction: column;

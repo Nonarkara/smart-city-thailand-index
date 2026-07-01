@@ -6,3 +6,10 @@ dist
 .env.*
 .vercel
 dist_cf
+
+# Generated CEA submission exports; canonical source/zip remain tracked.
+cea-submission/Contents/
+cea-submission/_ARCHIVE-DO-NOT-SEND/
+cea-submission/form-pack/
+cea-submission/gallery/
+cea-submission/gdrive-pack/

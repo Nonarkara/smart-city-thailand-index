@@ -1,6 +1,6 @@
 # SCITI 2026 — Smart City Thailand Index
 
-Red Dot Design Award submission. Built by depa Smart City Promotion Department.
+CEA Creative Excellence Awards 2026 submission (Category 1.3 — Creative City Policy Award). Built by depa Smart City Promotion Department.
 
 React 19 + Vite 6 + TypeScript 5.8 SPA. No React Router — custom routing in `src/routing.ts`.
 
@@ -108,7 +108,7 @@ npx vite build      # Always verify both before pushing
 
 See `/Users/nonarkara/Projects/CLAUDE.md` §11 (The Codex Incident — Anti-Regression Laws) for the full rules. These items are the personality of SCITI 2026. Do not remove, replace, or "simplify" any of them without Dr Non's explicit in-chat approval:
 
-- **SCITI mobile-first layout** — designed for Red Dot submission. Do not retro-fit as desktop-first.
+- **SCITI mobile-first layout** — designed for award submission (CEA 2026). Do not retro-fit as desktop-first.
 - **No React Router — single-page architecture.** Do not add routing, do not split pages.
 - **Jony Ive × Dieter Rams typography** — editorial type scale, hairline rules, mono numerics. ZERO border-radius, ZERO gradients, ZERO drop shadows.
 - **Design tokens are deliberately zero (Phase 17).** `--radius`, `--radius-sm`, `--radius-xs`, `--shadow-premium`, `--shadow-heavy`, `--card-shadow`, `--card-shadow-hover` are all `0` / `none` in `src/styles.css`. This is the Codex Incident law enforced at the token layer — any future "restore" of non-zero values is a regression, not a fix. Only gradients permitted in the stylesheet are dark-over-photo legibility overlays (see `.cinematic-hero-overlay` etc.). Only shadows permitted are `inset` border-substitutes and `:focus-visible` accessibility rings.

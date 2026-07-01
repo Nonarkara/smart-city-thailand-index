@@ -1,6 +1,6 @@
 # SCITI 2026 — Smart City Thailand Index
 
-Red Dot Design Award submission. Built by depa Smart City Promotion Department.
+CEA Creative Excellence Awards 2026 submission (Category 1.3 — Creative City Policy Award). Built by depa Smart City Promotion Department.
 
 React 19 + Vite 6 + TypeScript 5.8 SPA. No React Router — custom routing in `src/routing.ts`.
 

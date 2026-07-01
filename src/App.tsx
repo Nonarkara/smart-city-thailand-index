@@ -193,9 +193,9 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
 const newsItems = [
   {
     date: "2026-05-20",
-    titleEn: "SCITI 2026 submitted to Red Dot Design Award — open-data scorecard for 118 Thai cities",
-    titleTh: "SCITI 2026 ส่งเข้าประกวด Red Dot Design Award — ตารางคะแนนข้อมูลเปิดสำหรับ 118 เมือง",
-    titleZh: "SCITI 2026 提交红点设计奖——覆盖 118 座泰国城市的开放数据评分卡",
+    titleEn: "SCITI 2026 submitted to CEA Creative Excellence Awards — open-data scorecard for 118 Thai cities",
+    titleTh: "SCITI 2026 ส่งเข้าประกวด CEA Creative Excellence Awards — ตารางคะแนนข้อมูลเปิดสำหรับ 118 เมือง",
+    titleZh: "SCITI 2026 提交 CEA 创意卓越奖——覆盖 118 座泰国城市的开放数据评分卡",
     url: "https://www.depa.or.th/en/smartcity",
     source: "depa / SCITI",
   },

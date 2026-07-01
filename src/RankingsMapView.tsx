@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // RankingsMapView — Thailand map with city markers + GISTDA layer toggles
 // ---------------------------------------------------------------------------
-// Renders the 49 certified cities as ranked markers on a Leaflet map of
+// Renders the 49 ranked cities as ranked markers on a Leaflet map of
 // Thailand. Toggleable GISTDA overlays show flood-prone areas, fire hotspots,
 // air pollution, and forest coverage.
 //

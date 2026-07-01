@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 // ActionAtlas removed — map was ugly, data speaks for itself
 import { useInView } from "./useInView";
+import AnimatedScore from "./AnimatedScore";
 import NewsStrip from "./NewsStrip";
 import { useCitySummaries } from "./cityApi";
 import { summarizeCities } from "./cityCollections";
@@ -198,15 +199,15 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </p>
           <div className="cinematic-hero-stats">
             <div className="hero-stat-cell">
-              <span className="hero-stat-num">{stats.total}</span>
+              <AnimatedScore target={stats.total} from={0} decimals={0} duration={1600} className="hero-stat-num" />
               <span className="hero-stat-label">{t({ en: "cities", th: "เมือง", zh: "城市" })}</span>
             </div>
             <div className="hero-stat-cell">
-              <span className="hero-stat-num">{stats.operational}</span>
+              <AnimatedScore target={stats.operational} from={0} decimals={0} duration={1600} className="hero-stat-num" />
               <span className="hero-stat-label">{t({ en: "operational", th: "เดินระบบแล้ว", zh: "运营中" })}</span>
             </div>
             <div className="hero-stat-cell">
-              <span className="hero-stat-num">{stats.certified}</span>
+              <AnimatedScore target={stats.certified} from={0} decimals={0} duration={1600} className="hero-stat-num" />
               <span className="hero-stat-label">{t({ en: "depa-certified", th: "รับรองโดย depa", zh: "depa 认证" })}</span>
             </div>
           </div>

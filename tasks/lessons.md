@@ -13,6 +13,25 @@ Per §13: the same mistake never happens twice.
 
 ---
 
+## 2026-06-30 · Cloudflare deploy to wrong dir shipped an incomplete build
+
+- **What went wrong:** Deployed Cloudflare Pages from `dist_cf/` after
+  `VITE_BASE_PATH=/ npm run build -- --outDir dist_cf`. The `postbuild` scripts
+  (`generate-city-og-pages.mjs`, `generate-cities-json.mjs`) **hardcode `dist/`**,
+  so `dist_cf` shipped with NO city OG pages, NO `sitemap.xml`, and a stale
+  `data/cities.json` (copied from a stray `public/data/`). Social-share cards and
+  the sitemap were dead on the live site, masked because the SPA itself still ran.
+- **Correct behaviour:** For the CF manual deploy, build to the **default `dist/`**
+  with `VITE_BASE_PATH=/ npm run build` (postbuild writes OG pages/sitemap/cities.json
+  into that same `dist/`), then `wrangler pages deploy dist`. Never deploy a dir the
+  postbuild generators didn't write into. GitHub Pages rebuilds itself with its own
+  base path via Actions, so the local base=/ `dist` is correct for CF only.
+- **How to recognise:** After `wrangler pages deploy`, if the upload count is small
+  (~20 files) the OG pages/sitemap are missing — a full deploy is ~140 files. Verify
+  `ls dist/city | wc -l` (=118) and `dist/sitemap.xml` exist *before* deploying.
+
+---
+
 ## 2026-05-26 · GitHub Actions token expired — always deploy manually
 
 - **What went wrong:** CI fails with code 9109 (invalid CLOUDFLARE_API_TOKEN in GH secrets).
