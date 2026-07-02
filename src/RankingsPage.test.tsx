@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import RankingsPage from "./RankingsPage";
 
@@ -44,7 +44,8 @@ describe("RankingsPage", () => {
     await user.click(container.querySelector(".compare-launch-bar .btn-primary") as HTMLButtonElement);
 
     expect(screen.getByRole("button", { name: /back to directory/i })).toBeInTheDocument();
-    expect(container.querySelectorAll(".compare-city-card")).toHaveLength(2);
+    // ComparisonGrid is lazy-loaded — wait for the chunk to resolve through Suspense
+    await waitFor(() => expect(container.querySelectorAll(".compare-city-card")).toHaveLength(2));
     expect(screen.getAllByText(/phuket smart city/i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/samyan smart city/i)[0]).toBeInTheDocument();
   });

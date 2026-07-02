@@ -48,3 +48,10 @@
 - [ ] preview @390px: labels readable, no layout break
 - [ ] commit + push (GH Pages) + wrangler deploy dist (proper)
 - [ ] live: 99,918 absent, 131,908 present, CSV 200, no "Phetchaburi (Music)", no "15 Alpha"
+
+# Bundle split for award submission (2026-07-02, Fable 5)
+- [ ] vite.config.ts: manualChunks function form — all node_modules → vendor (react-dom currently leaks into index)
+- [ ] App.tsx: CityDetailPage → lazy + warm-up (immediate on direct /city/ links, idle otherwise)
+- [ ] RankingsPage.tsx: ComparisonGrid → lazy + Suspense (renders only in compare mode)
+- [ ] CLAUDE.md: update page-loading pattern note
+- [ ] Verify: build sizes before/after, tsc, tests, lint, preview smoke (/, /rankings compare, direct /city/phuket, mobile), deploy, live check

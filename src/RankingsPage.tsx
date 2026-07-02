@@ -1,5 +1,9 @@
-import { useMemo, useState } from "react";
-import ComparisonGrid from "./ComparisonGrid";
+import { lazy, Suspense, useMemo, useState } from "react";
+
+// ComparisonGrid renders only after the user enters compare mode, and it
+// drags the full cityResearch corpus (~100 kB) with it — lazy keeps that
+// out of the rankings page's initial load.
+const ComparisonGrid = lazy(() => import("./ComparisonGrid"));
 import CityFingerprint from "./CityFingerprint";
 import RankingsMapView from "./RankingsMapView";
 import { getCityPhotoAsset } from "./cityMedia";
@@ -683,7 +687,9 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               <button type="button" className="btn-tab" onClick={() => setViewMode("directory")}>
                 {t({ en: "← Back to directory", th: "← กลับสู่สารบบ", zh: "← 返回名录" })}
               </button>
-              <ComparisonGrid locale={locale} onNavigate={onNavigate} preselectedIds={selectedIds} />
+              <Suspense fallback={<div className="loading" role="status" aria-live="polite" aria-label="Loading comparison" />}>
+                <ComparisonGrid locale={locale} onNavigate={onNavigate} preselectedIds={selectedIds} />
+              </Suspense>
             </div>
           )}
           </>)}

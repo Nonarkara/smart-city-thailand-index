@@ -9,7 +9,22 @@ import { ErrorBoundary } from "./ErrorBoundary";
 
 import HomePage from "./HomePage";
 import RankingsPage from "./RankingsPage";
-import CityDetailPage from "./CityDetailPage";
+
+// CityDetailPage carries the full 118-city dossier machinery (~250 kB of
+// research, facts, and analysis text), so it loads as its own chunk. The
+// warm-up below keeps both entry paths fast: direct /city/ links (the
+// primary shared surface, §11.8) start fetching immediately — in parallel
+// with the app booting — and everyone else prefetches on first idle, so
+// click-throughs from Home/Rankings hit a warm cache.
+const cityDetailImport = () => import("./CityDetailPage");
+const CityDetailPage = lazy(cityDetailImport);
+if (window.location.pathname.startsWith("/city/")) {
+  cityDetailImport();
+} else if (typeof window.requestIdleCallback === "function") {
+  window.requestIdleCallback(() => cityDetailImport(), { timeout: 4000 });
+} else {
+  window.setTimeout(cityDetailImport, 2500);
+}
 
 const MethodologyPage = lazy(() => import("./MethodologyPage"));
 const StoryPage = lazy(() => import("./StoryPage"));
@@ -566,7 +581,7 @@ export default function App() {
           {/* ─── NEWSLETTER SIGNUP ─── */}
           <section className="newsletter-section" style={{ background: "var(--2)", padding: "3rem 1rem", textAlign: "center" }}>
             <div className="section" style={{ maxWidth: "600px", margin: "0 auto" }}>
-              <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "0.5rem" }}>
+              <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "0.5rem", color: "var(--bg)" }}>
                 {locale === "th" ? "สมัครรับข้อมูลข่าวสาร" : locale === "zh" ? "订阅简报" : "Subscribe to SCITI Data Insights"}
               </h3>
               <p style={{ marginBottom: "1.5rem", color: "var(--4)" }}>
@@ -580,7 +595,7 @@ export default function App() {
                 <input 
                   type="email" 
                   placeholder={locale === "th" ? "อีเมลของคุณ" : locale === "zh" ? "您的电子邮件" : "Your email address"} 
-                  style={{ padding: "0.75rem 1rem", borderRadius: "4px", border: "1px solid var(--border)", flex: "1", maxWidth: "300px", background: "var(--1)", color: "var(--text)" }}
+                  style={{ padding: "0.75rem 1rem", borderRadius: 0, border: "1px solid var(--border)", flex: "1", maxWidth: "300px", background: "var(--bg)", color: "var(--ink)" }}
                   required
                 />
                 <button type="submit" className="cta-button" style={{ padding: "0.75rem 1.5rem", border: "none" }}>

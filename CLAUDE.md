@@ -80,7 +80,7 @@ npx vite build      # Always verify both before pushing
   1. `src/routing.ts` — add type + parser case
   2. `src/App.tsx` — lazy import + nav item + render case
   3. `src/siteMeta.ts` — add route title in all 3 locales
-- **Page loading**: lazy-loaded via `React.lazy()`, except `HomePage`, `RankingsPage`, `CityDetailPage`
+- **Page loading**: lazy-loaded via `React.lazy()`, except `HomePage` and `RankingsPage`. `CityDetailPage` is lazy **with a warm-up** in `App.tsx` — the import fires immediately on direct `/city/` links and on idle otherwise, so shared city links (the primary surface, §11.8) never wait on a serial chunk fetch. `ComparisonGrid` is lazy inside `RankingsPage` (compare mode only). All `node_modules` go to a `vendor` chunk (function-form `manualChunks` in `vite.config.ts`) so content deploys don't re-download React.
 
 ## Roadmap notes
 

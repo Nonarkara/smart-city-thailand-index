@@ -15,8 +15,12 @@ export default defineConfig(({ mode }) => {
       assetsDir: "static",
       rollupOptions: {
         output: {
-          manualChunks: {
-            vendor: ["react", "react-dom"],
+          // Function form so react-dom's deep production module lands in
+          // vendor too — the array form only caught the package entry files,
+          // leaving ~500 kB of react-dom inside the content-hashed index
+          // chunk, so every content deploy re-downloaded React itself.
+          manualChunks(id) {
+            if (id.includes("node_modules")) return "vendor";
           },
         },
       },
