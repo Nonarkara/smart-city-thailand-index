@@ -1,39 +1,39 @@
 import type { WeeklyDigest } from "./weeklyDigest";
 
 export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
-  weekOf: "2026-06-09",
+  weekOf: "2026-06-29",
   trendingCity: {
-    cityId: "khon-kaen",
+    cityId: "phuket",
     note: {
-      en: "Khon Kaen LRT reached 65% structural completion this week — the viaduct section through the Mittraphap corridor is now continuous.",
-      th: "รถไฟฟ้ารางเบาขอนแก่นคืบหน้าโครงสร้างถึง 65% สัปดาห์นี้ — ส่วนทางยกระดับตลอดแนวถนนมิตรภาพเชื่อมต่อกันสมบูรณ์แล้ว",
-      zh: "本周孔敬轻轨结构完成度达 65%——友谊路沿线高架段已全线贯通。",
+      en: "Phuket's transport stack is drawing foreign partners — depa signed a smart-mobility MoU with a Polish technology firm on the island on 16 June, focused on transport and logistics.",
+      th: "ระบบขนส่งภูเก็ตกำลังดึงดูดพันธมิตรต่างชาติ — depa ลงนาม MoU ด้านสมาร์ทโมบิลิตี้กับบริษัทเทคโนโลยีโปแลนด์ที่ภูเก็ตเมื่อ 16 มิ.ย. เน้นการขนส่งและโลจิสติกส์",
+      zh: "普吉的交通体系正吸引外国合作伙伴——depa 于 6 月 16 日在岛上与一家波兰科技公司签署智慧出行合作备忘录，聚焦交通与物流。",
     },
   },
   trendingSearch: {
     phrase: {
-      en: '"smart city thailand investment 2026"',
-      th: '"ลงทุนเมืองอัจฉริยะไทย 2569"',
-      zh: '"泰国智慧城市投资 2026"',
+      en: '"phuket smart city"',
+      th: '"ภูเก็ต สมาร์ทซิตี้"',
+      zh: '"普吉智慧城市"',
     },
     deltaLabel: {
-      en: "↑ 44% vs last week",
-      th: "↑ 44% เทียบสัปดาห์ก่อน",
-      zh: "较上周 ↑ 44%",
+      en: "Rising with the June MoU news",
+      th: "กำลังมาแรงจากข่าว MoU เดือนมิถุนายน",
+      zh: "随六月合作备忘录新闻升温",
     },
-    lensId: "investment",
+    lensId: "growth",
   },
   headline: {
     title: {
-      en: "SCITI 2026 selected for Thailand Creative Economy Agency showcase",
-      th: "SCITI 2026 ได้รับเลือกเข้าร่วมโชว์เคสของ สำนักงานส่งเสริมเศรษฐกิจสร้างสรรค์ (CEA)",
-      zh: "SCITI 2026 入选泰国创意经济局展示项目",
+      en: "depa, Polish firm ink Phuket Smart City transport MoU",
+      th: "depa ลงนาม MoU กับบริษัทโปแลนด์ พัฒนาขนส่งภูเก็ตสมาร์ทซิตี้",
+      zh: "depa 与波兰企业签署普吉智慧城市交通合作备忘录",
     },
     gloss: {
-      en: "The index was nominated as a case study in data-driven civic design — where independent analysis meets public-interest design.",
-      th: "ดัชนีนี้ได้รับการเสนอชื่อเป็นกรณีศึกษาด้านการออกแบบเมืองเชิงข้อมูล ณ จุดตัดระหว่างการวิเคราะห์อิสระและการออกแบบเพื่อสาธารณะ",
-      zh: "该指数被提名为数据驱动公共设计案例——独立分析与公益设计的交汇点。",
+      en: "Signed 16 June with the Polish Investment and Trade Agency's support — an early test of whether Phuket's smart-mobility plan can convert foreign interest into working systems.",
+      th: "ลงนามเมื่อ 16 มิ.ย. โดยการสนับสนุนของหน่วยงานส่งเสริมการลงทุนและการค้าโปแลนด์ — บททดสอบแรกว่าแผนสมาร์ทโมบิลิตี้ภูเก็ตจะเปลี่ยนความสนใจจากต่างชาติเป็นระบบที่ใช้งานจริงได้หรือไม่",
+      zh: "6 月 16 日在波兰投资贸易局支持下签署——这是对普吉智慧出行计划能否把外国兴趣转化为实际运行系统的一次早期检验。",
     },
-    url: "https://www.cea.or.th",
+    url: "https://www.thephuketnews.com/depa-polish-firm-ink-phuket-smart-city-transport-mou-100664.php",
   },
 };

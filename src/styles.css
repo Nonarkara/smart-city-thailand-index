@@ -25,6 +25,7 @@
   --depa-blue: #0C2F53;
   --depa-yellow: #FFF200;
   --depa-amber: #FFC600;
+  --amber: #f59e0b;        /* single amber accent (§14 rule 1) — borders/fills; use --gold-text for text on white */
 
   /* Reality Tiers — Semantic + Brand-Aligned */
   --teal: #1A6FB5;         /* Operational — depa blue family */
@@ -438,7 +439,7 @@ ul, ol { list-style: none; }
 }
 .theme-toggle:hover { color: var(--ink); background: rgba(0,0,0,.04); }
 .locale-toggle {
-  margin-left: .1rem; padding: .2rem .5rem; font: 600 .5rem var(--mono);
+  margin-left: .1rem; padding: .2rem .5rem; font: 600 var(--text-micro) var(--mono);
   min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
   color: var(--3); background: var(--surface); border-radius: 0;
   transition: all .2s var(--ease);
@@ -460,7 +461,7 @@ ul, ol { list-style: none; }
   overflow: hidden;
 }
 .locale-segmented-btn {
-  font: 600 .5rem var(--mono);
+  font: 600 var(--text-micro) var(--mono);
   padding: .2rem .5rem;
   min-height: 44px;
   min-width: 44px;
@@ -485,7 +486,7 @@ ul, ol { list-style: none; }
   background: rgba(255, 255, 255, 0.92);
 }
 @media (max-width: 768px) {
-  .locale-segmented-btn { padding: .18rem .4rem; font-size: .48rem; }
+  .locale-segmented-btn { padding: .18rem .4rem; font-size: var(--text-micro); }
   .nav-links.nav-links-open .locale-segmented {
     width: 100%;
     margin: 0;
@@ -6007,7 +6008,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   }
   .nav-links::-webkit-scrollbar { display: none; }
   .nav-link { padding: .3rem .4rem; font-size: .65rem; }
-  .locale-toggle { padding: .18rem .4rem; font-size: .48rem; }
+  .locale-toggle { padding: .18rem .4rem; font-size: var(--text-micro); }
   .brand-name { display: none; }
 }
 
@@ -10469,16 +10470,16 @@ body.canvas-print-mode {
   left: 3.5rem;
   width: 2px;
   height: 100%;
-  background: linear-gradient(to bottom, var(--amber) 0%, transparent 100%);
+  background: var(--amber);
   z-index: 1;
   opacity: 0.6;
   animation: flowPulse 3s infinite;
 }
 
 @keyframes flowPulse {
-  0% { opacity: 0.2; box-shadow: 0 0 0 transparent; }
-  50% { opacity: 1; box-shadow: 0 0 10px var(--amber); }
-  100% { opacity: 0.2; box-shadow: 0 0 0 transparent; }
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
 }
 
 .showcase-timeline-arc {
