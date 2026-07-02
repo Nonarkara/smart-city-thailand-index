@@ -296,9 +296,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <span className="opening-argument-num">{stats.certified}</span>
               <p className="opening-argument-copy">
                 {t({
-                  en: "cities hold depa certification. Fewer than half have operational systems as of 2026. The certification measures intent. This index measures outcomes.",
-                  th: "เมืองถือครองการรับรอง depa น้อยกว่าครึ่งหนึ่งมีระบบปฏิบัติการจริงในปี 2569 การรับรองวัดเจตนา ดัชนีนี้วัดผลลัพธ์",
-                  zh: "座城市持有 depa 认证。截至 2026 年，有实际运营系统的不到一半。认证衡量意图，本指数衡量结果。",
+                  en: "cities hold depa certification. Seven of them still run partial or merely planned systems as of 2026. The certification measures intent. This index measures outcomes.",
+                  th: "เมืองถือครองการรับรอง depa เจ็ดเมืองในจำนวนนี้ยังมีระบบเพียงบางส่วนหรืออยู่ในขั้นวางแผนในปี 2569 การรับรองวัดเจตนา ดัชนีนี้วัดผลลัพธ์",
+                  zh: "座城市持有 depa 认证。截至 2026 年，其中仍有七座的系统只是部分运行或停留在规划阶段。认证衡量意图，本指数衡量结果。",
                 })}
               </p>
             </div>
