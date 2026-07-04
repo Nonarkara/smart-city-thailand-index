@@ -193,3 +193,6 @@ cd /Users/nonarkara/Projects/thailand-smart-city/index
 npx vite build
 npx wrangler pages deploy dist --project-name=smart-city-thailand-index --branch=main --commit-dirty=true
 ```
+
+## Known exposures (resolved)
+- 2026-07-04: A Gemini API key was committed to this public repo's history (commits `c84a517`..`105159f`). Confirmed dead on testing (backing GCP project was deleted). Chat widget now uses BYO-key model (localStorage), no bundled key needed. `.webui_secret_key` (unused, unrelated tool artifact) also removed from tracking.
