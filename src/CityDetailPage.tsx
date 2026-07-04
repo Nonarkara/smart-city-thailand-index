@@ -1388,23 +1388,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             <strong className="city-decision-value">{leadInstrumentName}</strong>
             <span className="city-decision-note">{dossier?.leadStepLabel ?? leadAction}</span>
           </div>
-
-        <div className="city-share-bar" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '1rem', padding: '.75rem 0', borderTop: '1px solid var(--4)', borderBottom: '1px solid var(--4)' }}>
-          <span style={{ font: `600 var(--text-micro) var(--font)`, color: 'var(--ink)', marginRight: '4px' }}>{translate(locale, { en: "Share:", th: "แชร์:", zh: "分享:" })}</span>
-          <button onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')} aria-label="Share on Facebook" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--3)', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.77,7.46H14.5v-1.9c0-0.9,0.6-1.1,1-1.1h3V0.5h-4.33C10.24,0.5,9.5,3.44,9.5,5.32v2.15h-3v4h3v12h5v-12h3.85l0.42-4Z" /></svg>
-          </button>
-          <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Check out ${getCityName(city, locale)} on Smart City Thailand Index`)}`, '_blank')} aria-label="Share on X" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--3)', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </button>
-          <button onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')} aria-label="Share on LinkedIn" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--3)', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </button>
-          <button onClick={() => navigator.clipboard.writeText(window.location.href)} aria-label="Copy link" title={translate(locale, { en: "Copy link", th: "คัดลอกลิงก์", zh: "复制链接" })} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--3)', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 5 6 5.9 6 7v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-          </button>
-        </div>
-
           <div className="city-decision-item">
             <span className="city-decision-label">{translate(locale, { en: "Readiness", th: "ความพร้อม", zh: "准备度" })}</span>
             <strong className="city-decision-value">{city.financeProfile.readinessScore}/100</strong>
@@ -1425,6 +1408,22 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             <strong className="city-decision-value">{dataCoverageValue}</strong>
             <span className="city-decision-note">{missingBasicSummary}</span>
           </div>
+        </div>
+
+        <div className="city-share-bar" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '1rem', padding: '.75rem 0', borderTop: '1px solid var(--4)', borderBottom: '1px solid var(--4)' }}>
+          <span style={{ font: `600 var(--text-micro) var(--font)`, color: 'var(--ink)', marginRight: '4px' }}>{translate(locale, { en: "Share:", th: "แชร์:", zh: "分享:" })}</span>
+          <button onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')} aria-label="Share on Facebook" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--3)', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.77,7.46H14.5v-1.9c0-0.9,0.6-1.1,1-1.1h3V0.5h-4.33C10.24,0.5,9.5,3.44,9.5,5.32v2.15h-3v4h3v12h5v-12h3.85l0.42-4Z" /></svg>
+          </button>
+          <button onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Check out ${getCityName(city, locale)} on Smart City Thailand Index`)}`, '_blank')} aria-label="Share on X" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--3)', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </button>
+          <button onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')} aria-label="Share on LinkedIn" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--3)', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </button>
+          <button onClick={() => navigator.clipboard.writeText(window.location.href)} aria-label="Copy link" title={translate(locale, { en: "Copy link", th: "คัดลอกลิงก์", zh: "复制链接" })} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--3)', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 5 6 5.9 6 7v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          </button>
         </div>
 
         {isRegisteredProfile && (

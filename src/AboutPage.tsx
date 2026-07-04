@@ -26,9 +26,9 @@ export default function AboutPage({ locale, onNavigate }: Props) {
         </h1>
         <p className="hero-strapline">
           {translate(locale, {
-            en: "Thailand's creative economy is a THB 1.44 trillion juggernaut -- 8% of national GDP. But here is the problem: nearly half of it happens in one city.",
-            th: "เศรษฐกิจสร้างสรรค์ของไทยเป็นขุมพลังขนาด 1.44 ล้านล้านบาท หรือคิดเป็น 8% ของ GDP ประเทศ แต่ปัญหาคือ เกือบครึ่งหนึ่งกระจุกตัวอยู่แค่เมืองเดียว",
-            zh: "泰国的创意经济是一个价值1.44万亿泰铢的庞然大物——占国家GDP的8%。但问题在于：几乎一半都集中在一个城市。",
+            en: "Thailand's creative economy is a THB 1.44 trillion juggernaut -- 8.01% of national GDP (CEA, Creative Economy Strategic Direction 2026). But here is the problem: a disproportionate share of it happens in one city.",
+            th: "เศรษฐกิจสร้างสรรค์ของไทยเป็นขุมพลังขนาด 1.44 ล้านล้านบาท หรือคิดเป็น 8.01% ของ GDP ประเทศ (CEA, ทิศทางยุทธศาสตร์เศรษฐกิจสร้างสรรค์ 2026) แต่ปัญหาคือ สัดส่วนที่มากเกินควรกระจุกตัวอยู่แค่เมืองเดียว",
+            zh: "泰国的创意经济是一个价值1.44万亿泰铢的庞然大物——占国家GDP的8.01%（CEA《2026创意经济战略方向》）。但问题在于：其中相当大的一部分集中在同一座城市。",
           })}
         </p>
       </section>

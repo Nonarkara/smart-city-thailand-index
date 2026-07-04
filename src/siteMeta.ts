@@ -1,5 +1,6 @@
 import { getCitySummaryById } from "./cityCdp";
 import { getCityPhotoAsset } from "./cityMedia";
+import { CITY_NAME_ZH } from "./cityNamesZh";
 import { parseRoute, type Route } from "./routing";
 import type { Locale } from "./types";
 
@@ -183,12 +184,13 @@ function buildMeta(route: Route, locale: Locale) {
     return { title, description, canonicalUrl, imageUrl };
   }
 
-  const cityName = locale === "th" ? city.nameTh : city.nameEn;
+  const cityNameZh = CITY_NAME_ZH[route.cityId] ?? city.nameEn;
+  const cityName = locale === "th" ? city.nameTh : locale === "zh" ? cityNameZh : city.nameEn;
   const cityDescription =
     locale === "th"
       ? `โปรไฟล์ ${city.nameTh} พร้อมคะแนน เสาหลัก ข้อมูลตั้งต้น และหลักฐานที่ตรวจสอบย้อนกลับได้`
       : locale === "zh"
-        ? `${city.nameEn} 城市档案，含评分、维度、原始数据与可追溯证据。`
+        ? `${cityNameZh}城市档案，含评分、维度、原始数据与可追溯证据。`
         : `${city.nameEn} city profile with scores, pillar breakdown, raw metrics, and traceable evidence.`;
 
   // Use the city's primary photo for social sharing — much richer than the logo

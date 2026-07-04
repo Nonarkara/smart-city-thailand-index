@@ -46,7 +46,11 @@ async function fetchJson<T>(url: string, retries = 2, backoff = 300): Promise<T>
       throw new Error(`Request failed: ${response.status}`);
     }
 
-    const envelope = await response.json() as { success: boolean; data: T; error?: string };
+    const rawEnvelope = await response.json();
+    if (typeof rawEnvelope !== "object" || rawEnvelope === null || !("success" in rawEnvelope)) {
+      throw new Error("API returned malformed payload");
+    }
+    const envelope = rawEnvelope as { success: boolean; data: T; error?: string };
     if (envelope.success === false) {
       throw new Error(envelope.error || "API returned failure state");
     }

@@ -427,13 +427,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
                     className="regional-champion-btn"
                     onClick={() => onNavigate(`/city/${city.id}`)}
                   >
-                    <span className="regional-champion-region" style={{ color: "var(--amber)" }}>
+                    <span className="regional-champion-region" style={{ color: "var(--gold-text, #946B0C)" }}>
                       {city.metrics.roadFatalityRate}/100K
                     </span>
                     <span className="regional-champion-city">{getCityName(city, locale)}</span>
                     <span className="regional-champion-meta">
                       <span>{getProvinceName(city, locale)}</span>
-                      <span className="regional-champion-score" style={{ color: "var(--amber)" }}>
+                      <span className="regional-champion-score" style={{ color: "var(--gold-text, #946B0C)" }}>
                         {t({ en: "deaths/yr", th: "เสียชีวิต/ปี", zh: "死亡/年" })}
                       </span>
                     </span>

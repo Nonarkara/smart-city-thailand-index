@@ -34,6 +34,6 @@ export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
       th: "ลงนามเมื่อ 16 มิ.ย. โดยการสนับสนุนของหน่วยงานส่งเสริมการลงทุนและการค้าโปแลนด์ — บททดสอบแรกว่าแผนสมาร์ทโมบิลิตี้ภูเก็ตจะเปลี่ยนความสนใจจากต่างชาติเป็นระบบที่ใช้งานจริงได้หรือไม่",
       zh: "6 月 16 日在波兰投资贸易局支持下签署——这是对普吉智慧出行计划能否把外国兴趣转化为实际运行系统的一次早期检验。",
     },
-    url: "https://www.thephuketnews.com/depa-polish-firm-ink-phuket-smart-city-transport-mou-100664.php",
+    url: "https://www.rawai.com/depa-and-polish-firm-seedia-sign-phuket-smart-transport-mou/",
   },
 };

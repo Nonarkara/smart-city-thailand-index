@@ -117,9 +117,9 @@ const FAQS: FAQ[] = [
       zh: "泰国有多少智慧城市？",
     },
     a: {
-      en: "As of 2025, there are 37 certified smart cities across 4 batches, plus dozens more in 'promotion' status. The national target is 105 smart cities by 2027, under depa's Smart City Master Plan 1 (2024-2027). SCITI tracks 118 cities total — all certified, promotion-phase, and registered candidates — because plans that never launch also deserve measurement.",
-      th: "ณ ปี 2025 มีเมืองอัจฉริยะรับรองแล้ว 37 เมืองใน 4 รุ่น พร้อมอีกหลายสิบเมืองในสถานะ 'ส่งเสริม' เป้าหมายของประเทศคือ 105 เมืองภายในปี 2570 ตามแผนแม่บทเมืองอัจฉริยะฉบับที่ 1 (2567-2570) ของ depa SCITI ติดตาม 118 เมืองทั้งหมด เพราะแม้แต่แผนที่ไม่เคยเริ่มก็สมควรถูกวัด",
-      zh: "截至2025年，共有37个经过4批认证的智慧城市，还有数十个处于\"推广\"阶段。根据depa智慧城市总体规划第1期（2024-2027），国家目标是到2027年建成105座智慧城市。SCITI追踪118个城市——包括已认证、推广阶段和注册候选城市——因为从未启动的计划也值得被衡量。",
+      en: "As of January 2026, there are 37 certified smart cities across 4 batches, plus dozens more in 'promotion' status. The national target is 105 smart cities by 2027, under depa's Smart City Master Plan 1 (2024-2027). SCITI tracks 118 cities total — all certified, promotion-phase, and registered candidates — because plans that never launch also deserve measurement.",
+      th: "ณ เดือนมกราคม 2569 มีเมืองอัจฉริยะรับรองแล้ว 37 เมืองใน 4 รุ่น พร้อมอีกหลายสิบเมืองในสถานะ 'ส่งเสริม' เป้าหมายของประเทศคือ 105 เมืองภายในปี 2570 ตามแผนแม่บทเมืองอัจฉริยะฉบับที่ 1 (2567-2570) ของ depa SCITI ติดตาม 118 เมืองทั้งหมด เพราะแม้แต่แผนที่ไม่เคยเริ่มก็สมควรถูกวัด",
+      zh: "截至2026年1月，共有37个经过4批认证的智慧城市，还有数十个处于\"推广\"阶段。根据depa智慧城市总体规划第1期（2024-2027），国家目标是到2027年建成105座智慧城市。SCITI追踪118个城市——包括已认证、推广阶段和注册候选城市——因为从未启动的计划也值得被衡量。",
     },
   },
   // ─── The 7 Smarts ───

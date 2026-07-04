@@ -430,10 +430,11 @@ export function getLandPrice(province: string): number | null {
 }
 
 /**
- * Returns the land appraisal data source.
+ * Returns the land appraisal data source, or null when the province has no
+ * official record — never imply a source for data that does not exist.
  */
-export function getLandPriceSource(province: string): string {
-  return PROVINCIAL_LAND_PRICE_SCORE[province]?.source.en ?? "Treasury Department";
+export function getLandPriceSource(province: string): string | null {
+  return PROVINCIAL_LAND_PRICE_SCORE[province]?.source.en ?? null;
 }
 
 /**

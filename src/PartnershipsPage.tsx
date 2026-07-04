@@ -406,7 +406,7 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
       {/* ─── BUILT BY THIS TEAM ─── */}
       <section className="section partnerships-section-gap">
         <p className="eyebrow">{t(locale, { en: "Built by this team", th: "ทีมนี้สร้าง", zh: "本团队构建" })}</p>
-        <h2>{t(locale, { en: "Open tools we shipped for the network", th: "เครืื่องมือเปิดที่เราส่งมอบให้เครือข่าย", zh: "我们为网络交付的开放工具" })}</h2>
+        <h2>{t(locale, { en: "Open tools we shipped for the network", th: "เครื่องมือเปิดที่เราส่งมอบให้เครือข่าย", zh: "我们为网络交付的开放工具" })}</h2>
         <div className="partnerships-showcase-grid">
           <a href="https://nonarkara.github.io/ascn-smart-cities-network/" target="_blank" rel="noopener noreferrer" className="partnerships-showcase-card">
             <span className="partnerships-showcase-badge">ASCN</span>

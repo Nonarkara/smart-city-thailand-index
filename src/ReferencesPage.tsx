@@ -20,7 +20,7 @@ function t(locale: Locale, copy: LocalizedItem): string {
 
 // ─── DOMAIN CATEGORIES ───
 const DOMAINS = {
-  economic: { en: "Economic & Productivity", th: "เศรษฐกิจและผลิตภาพ", zh: "经济与生产力", color: "var(--amber)" },
+  economic: { en: "Economic & Productivity", th: "เศรษฐกิจและผลิตภาพ", zh: "经济与生产力", color: "var(--gold-text, #946B0C)" },
   environmental: { en: "Environmental & Climate", th: "สิ่งแวดล้อมและสภาพภูมิอากาศ", zh: "环境与气候", color: "var(--emerald)" },
   social: { en: "Social & Wellbeing", th: "สังคมและความเป็นอยู่", zh: "社会与福祉", color: "var(--indigo)" },
   digital: { en: "Digital & Infrastructure", th: "ดิจิทัลและโครงสร้างพื้นฐาน", zh: "数字与基础设施", color: "var(--sky)" },

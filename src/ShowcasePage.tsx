@@ -299,24 +299,24 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
         <div className="photo-strip" style={{ marginTop: "1.25rem" }}>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage
-              src="/Nakhon Si Thammarat/FB_IMG_1763702950339.jpg"
-              alt={translate(locale, { en: "ASEAN CSCO team at NST's ICT & CCTV Command Center during the 2025 workshop", th: "ทีม ASEAN CSCO ที่ศูนย์บัญชาการ ICT และ CCTV ของนครศรีธรรมราช ในงาน workshop ปี 2025", zh: "ASEAN CSCO 团队在 NST 的 ICT 与 CCTV 指挥中心参观（2025 年研讨会）" })}
+              src="/Nakhon Si Thammarat/1763875142225.jpg"
+              alt={translate(locale, { en: "Municipal officer briefing ASEAN CSCO delegates on the live city map at NST's command centre", th: "เจ้าหน้าที่เทศบาลบรรยายแผนที่เมืองแบบสดให้คณะ ASEAN CSCO ที่ศูนย์บัญชาการนครศรีธรรมราช", zh: "市政官员在 NST 指挥中心向 ASEAN CSCO 代表团讲解实时城市地图" })}
               sizes="240px"
             />
             <span className="photo-strip-label">{translate(locale, { en: "Command centre", th: "ศูนย์บัญชาการ", zh: "指挥中心" })}</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage
-              src="/Nakhon Si Thammarat/1763875143668.jpg"
-              alt={translate(locale, { en: "NST officials monitoring live flood CCTV feeds at the city command centre", th: "เจ้าหน้าที่นครฯ เฝ้าระวัง CCTV น้ำท่วมแบบเรียลไทม์ที่ศูนย์บัญชาการเมือง", zh: "NST 官员在城市指挥中心实时监控洪涝 CCTV 画面" })}
+              src="/photos/nst-flood-fieldwork.jpg"
+              alt={translate(locale, { en: "Field inspection in a flooded NST neighbourhood — ground-truthing the sensor network during a flood event", th: "ลงพื้นที่ตรวจน้ำท่วมในชุมชนนครฯ — ตรวจสอบข้อมูลจริงของเครือข่ายเซนเซอร์ระหว่างเหตุการณ์น้ำท่วม", zh: "在 NST 被淹街区进行实地巡查——洪水期间对传感网络做实地核验" })}
               sizes="240px"
             />
-            <span className="photo-strip-label">{translate(locale, { en: "Flood monitoring", th: "เฝ้าระวังน้ำท่วม", zh: "洪涝监控" })}</span>
+            <span className="photo-strip-label">{translate(locale, { en: "Flood fieldwork", th: "ลงพื้นที่น้ำท่วม", zh: "洪涝实地巡查" })}</span>
           </div>
           <div className="photo-strip-item" style={{ width: "240px", height: "150px" }}>
             <ResponsiveImage
-              src="/Nakhon Si Thammarat/1763875144974.jpg"
-              alt={translate(locale, { en: "Real-time hydrological data dashboard at the NST smart city operations centre", th: "แดชบอร์ดข้อมูลอุทกวิทยาแบบเรียลไทม์ที่ศูนย์ปฏิบัติการเมืองอัจฉริยะนครศรีธรรมราช", zh: "NST 智慧城市运营中心的实时水文数据仪表板" })}
+              src="/Nakhon Si Thammarat/1763875144710.jpg"
+              alt={translate(locale, { en: "Delegates reading the live hydrological data table on the NST CCTV command wall", th: "คณะผู้เยี่ยมชมอ่านตารางข้อมูลอุทกวิทยาแบบสดบนจอศูนย์ CCTV นครศรีธรรมราช", zh: "代表团在 NST CCTV 指挥墙上查看实时水文数据表" })}
               sizes="240px"
             />
             <span className="photo-strip-label">{translate(locale, { en: "Hydro dashboard", th: "แดชบอร์ดน้ำ", zh: "水文仪表板" })}</span>
@@ -916,9 +916,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               </div>
 
               <div className="flow-node" style={{ borderColor: 'var(--amber)' }}>
-                <div className="flow-node-icon" style={{ color: "var(--amber)" }}>4</div>
+                <div className="flow-node-icon" style={{ color: "var(--gold-text, #946B0C)" }}>4</div>
                 <div className="flow-node-content">
-                  <div className="flow-node-title" style={{ color: 'var(--amber)' }}>{translate(locale, { en: "4. Zero Fatalities (Outcome)", th: "4. ไม่มีผู้เสียชีวิต (ผลลัพธ์)", zh: "4. 零伤亡（结果）" })}</div>
+                  <div className="flow-node-title" style={{ color: 'var(--gold-text, #946B0C)' }}>{translate(locale, { en: "4. Zero Fatalities (Outcome)", th: "4. ไม่มีผู้เสียชีวิต (ผลลัพธ์)", zh: "4. 零伤亡（结果）" })}</div>
                   <div className="flow-node-desc">{translate(locale, { en: "The physical flood still happens, but the human disaster is averted. Technology bought the city time.", th: "น้ำท่วมทางกายภาพยังคงเกิดขึ้น แต่หายนะต่อชีวิตถูกป้องกันไว้ เทคโนโลยีช่วยซื้อเวลาให้เมือง", zh: "物理上的洪水依然发生，但人类的灾难被避免了。技术为城市赢得了时间。" })}</div>
                 </div>
               </div>

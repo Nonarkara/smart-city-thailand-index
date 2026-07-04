@@ -92,11 +92,13 @@ export const HOME_HERO_ASSETS: HeroAsset[] = [
     objectPosition: "center 50%",
     label: "Khon Kaen",
   },
-  // NST temple compound at dusk — enc() only; assetUrl applied by ResponsiveImage.
+  // Wat Phra That Doi Suthep — golden chedi above Chiang Mai, authored photo.
+  // (Replaced Z03A4010-3946608958.jpg, which is actually a Shanghai event
+  // photo and was mislabeled as an NST temple — 2026-07-02 content audit.)
   {
-    src: enc("/Nakhon Si Thammarat/Z03A4010-3946608958.jpg"),
-    objectPosition: "center 50%",
-    label: "Nakhon Si Thammarat",
+    src: enc("/CMU Smart City/P1210289.JPG"),
+    objectPosition: "center 55%",
+    label: "Chiang Mai · Wat Phra That Doi Suthep",
   },
   // Chiang Rai cityscape — Wikimedia CC BY-SA. Represents northern Thailand.
   {

@@ -45,7 +45,7 @@ function city(
     ...metrics,
     floodFrequencyScore: floodScore,
     landPriceBaht: landPrice,
-    landPriceSource: landPriceSrc,
+    landPriceSource: landPriceSrc ?? undefined,
   };
 
   const finalScores = RANKING_OVERRIDES[id] ? { ...adjustedScores, ...RANKING_OVERRIDES[id] } : adjustedScores;

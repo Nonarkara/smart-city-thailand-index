@@ -1,4 +1,5 @@
 import { getCityContext } from "./cityContext.ts";
+import { CITY_TAGLINE_ZH } from "./cityNamesZh.ts";
 import { getAirQualityUrl, getBOIInvestmentUrl, getCityDataUrl, getOpenDataSearchUrl } from "./cdpData.ts";
 import { polishThaiList, polishThaiText } from "./thaiText.ts";
 import type { Locale, SmartCity } from "./types.ts";
@@ -1341,12 +1342,21 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
   },
 };
 
-function fallbackText(copy: { en: string; th: string }, zh?: string): TrilingualText {
+function fallbackText(copy: { en: string; th: string; zh: string }): TrilingualText {
   return {
     en: copy.en,
     th: copy.th,
-    zh: zh ?? copy.en,
+    zh: copy.zh,
   };
+}
+
+const REGISTERED_TAGLINE_EN = "Promotion zone — awaiting sufficient data for full assessment.";
+const REGISTERED_TAGLINE_ZH = "推广区域——等待充足数据进行全面评估。";
+
+function zhTagline(city: SmartCity): string {
+  if (CITY_TAGLINE_ZH[city.id]) return CITY_TAGLINE_ZH[city.id];
+  if (city.tagline === REGISTERED_TAGLINE_EN) return REGISTERED_TAGLINE_ZH;
+  return city.tagline;
 }
 
 function defaultIndustries(city: SmartCity): TrilingualList {
@@ -1406,12 +1416,12 @@ export function resolveCityResearch(city: SmartCity): CityResearchProfile {
       dailyLife: {
         en: city.tagline,
         th: city.taglineTh,
-        zh: city.tagline,
+        zh: zhTagline(city),
       },
       signatureStory: {
         en: city.highlights[0] ?? city.tagline,
         th: city.highlights[0] ?? city.taglineTh,
-        zh: city.highlights[0] ?? city.tagline,
+        zh: city.highlights[0] ?? zhTagline(city),
       },
       funFact: {
         en: city.highlights[1] ?? city.nameEn,
@@ -1421,7 +1431,7 @@ export function resolveCityResearch(city: SmartCity): CityResearchProfile {
       compareNote: {
         en: city.tagline,
         th: city.taglineTh,
-        zh: city.tagline,
+        zh: zhTagline(city),
       },
       sources,
     });

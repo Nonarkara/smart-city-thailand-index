@@ -202,7 +202,7 @@ function DataFlowDiagram({ locale }: { locale: Locale }) {
   const boxes = [
     { id: "sources", label: t("18+ Sources", "18+ แหล่งข้อมูล", "18+ 数据源"), sub: t("NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…"), x: 20, color: "#0D9488" },
     { id: "research", label: t("Research Layer", "ชั้นวิจัย", "研究层"), sub: t("7 pillars · field verification", "7 เสาหลัก · ยืนยันภาคสนาม", "7 支柱 · 实地核验"), x: 200, color: "#D97706" },
-    { id: "math", label: t("Math Layer", "ชั้นคณิตศาสตร์", "数学层"), sub: t("Weighted sum · deterministic", "ผลรวมถ่วงน้ำหนัก · กำหนดแน่นอน", "加权求和 · 确定性"), x: 380, color: "#3B82F6" },
+    { id: "math", label: t("Math Layer", "ชั้นคณิตศาสตร์", "数学层"), sub: t("Weighted sum · deterministic", "ผลรวมถ่วงน้ำหนัก · กำหนดแน่นอน", "加权求和 · 确定性"), x: 380, color: "#1A6FB5" },
     { id: "output", label: t("Score + Tier", "คะแนน + ระดับ", "得分 + 层级"), sub: t("0–100 · α β γ", "0–100 · α β γ", "0–100 · α β γ"), x: 560, color: "#6366F1" },
   ];
 

@@ -1,10 +1,12 @@
 import { cdpSources, getAirQualityUrl, getBOIInvestmentUrl, getCityDataUrl, getOpenDataSearchUrl } from "./cdpData.ts";
 import { cityContexts, type CityContext } from "./cityContext.ts";
 import { allCities } from "./cityData.ts";
+import { CITY_NAME_ZH } from "./cityNamesZh.ts";
 import { dataSources, getEvidenceForCity, type DataSource, type EvidenceItem } from "./evidenceData.ts";
 import { SCITI_DATA_CUTOFF_ISO, classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import { SCORING_PILLARS } from "./scoring.ts";
 import { polishThaiText } from "./thaiText.ts";
+import { DIMENSION_LABELS, PILLAR_LABELS } from "./types.ts";
 import type {
   CityReality,
   CityStatus,
@@ -449,8 +451,13 @@ type CityDetailBuild = {
   exportRows: CityResearchExportRow[];
 };
 
-function localized(en: string, th: string, zh = en): LocalizedText {
-  return { en, th: polishThaiText(th), zh };
+function localized(en: string, th: string, zh?: string): LocalizedText {
+  return { en, th: polishThaiText(th), zh: zh ?? en };
+}
+
+/** Chinese display name for interpolation into zh copy. */
+function zhCityName(city: SmartCity): string {
+  return CITY_NAME_ZH[city.id] ?? city.nameEn;
 }
 
 function clamp(value: number, min: number, max: number): number {
@@ -553,7 +560,7 @@ function citySpecificOpportunity(city: SmartCity, context?: CityContext): Locali
     return localized(
       context.opportunity.en,
       context.opportunity.th,
-      context.opportunity.en,
+      context.opportunity.zh,
     );
   }
 
@@ -562,7 +569,7 @@ function citySpecificOpportunity(city: SmartCity, context?: CityContext): Locali
   return localized(
     `${city.nameEn} has room to turn its ${pillarLabel(strongest)} advantage into a city product instead of another presentation. The clearest wedge is ${dimension} delivery backed by hard metrics.`,
     `${city.nameTh} มีโอกาสเปลี่ยนจุดแข็งด้าน${pillarLabel(strongest)} ให้กลายเป็นผลิตภัณฑ์ของเมืองจริง ไม่ใช่แค่สไลด์ โดยเริ่มจากการส่งมอบด้าน${dimension} ที่ผูกกับตัวชี้วัดจริง`,
-    `${city.nameEn} can turn its ${pillarLabel(strongest)} edge into a real city product. The clearest wedge is ${dimension} delivery tied to hard metrics.`,
+    `${zhCityName(city)}有条件把${PILLAR_LABELS.zh[strongest]}优势转化为真正的城市产品，而不是又一份汇报材料。最清晰的切入点，是以硬指标为支撑的${DIMENSION_LABELS.zh[dimension]}交付。`,
   );
 }
 
@@ -577,14 +584,14 @@ function citySpecificConstraint(city: SmartCity, context?: CityContext): Localiz
     return localized(
       `Air quality is not a side note here. PM2.5 at ${pm} means the city cannot claim livability leadership without a serious environmental pipeline.`,
       `คุณภาพอากาศไม่ใช่เรื่องข้างเคียงของเมืองนี้ PM2.5 ที่ ${pm} แปลว่าเมืองจะอ้างความน่าอยู่ไม่ได้ ถ้าไม่มี pipeline ด้านสิ่งแวดล้อมที่จริงจัง`,
-      `Air quality is not a side note. PM2.5 at ${pm} means the city cannot claim livability leadership without a serious environmental pipeline.`,
+      `空气质量在这里绝非小事。PM2.5 高达 ${pm}，意味着如果没有一条真正的环境治理管线，这座城市无法自称宜居标杆。`,
     );
   }
 
   return localized(
     `The weakest drag is ${pillarLabel(weakest)}. If that stays soft, the city will keep getting capped no matter how polished the narrative sounds.`,
     `ตัวฉุดหลักคือด้าน${pillarLabel(weakest)} ถ้าจุดนี้ยังอ่อน เมืองจะถูกกดเพดานต่อให้เล่าเรื่องเก่งแค่ไหนก็ตาม`,
-    `The weakest drag is ${pillarLabel(weakest)}. If it stays soft, the city will keep getting capped no matter how polished the narrative becomes.`,
+    `最大的拖累是${PILLAR_LABELS.zh[weakest]}。这一项若持续疲软，无论叙事多么漂亮，城市的上限都会被压住。`,
   );
 }
 
@@ -593,7 +600,7 @@ function citySpecificWarning(city: SmartCity): LocalizedText {
     return localized(
       "Do not finance dashboard theatre before the physical city exists. Pipe, wire, rights-of-way, and service operators come first.",
       "อย่าไปลงเงินกับ dashboard theatre ก่อนที่เมืองทางกายภาพจะมีจริง ท่อ สาย สิทธิทาง และผู้เดินระบบ ต้องมาก่อน",
-      "Do not fund dashboard theatre before the physical city exists. Pipes, wires, rights-of-way, and operators come first.",
+      "在实体城市成形之前，不要为“仪表盘表演”买单。管网、线路、路权和运营方必须先行。",
     );
   }
 
@@ -601,14 +608,14 @@ function citySpecificWarning(city: SmartCity): LocalizedText {
     return localized(
       "This city is small enough to prototype fast. That also means bad procurement choices get very visible, very quickly.",
       "เมืองนี้เล็กพอที่จะทดลองได้เร็ว แปลว่าถ้าจัดซื้อพลาด ความพลาดจะมองเห็นชัดและเร็วเหมือนกัน",
-      "This city is small enough to prototype fast. That also means bad procurement becomes visible very quickly.",
+      "这座城市小到可以快速试验。但这也意味着糟糕的采购决策会非常快、非常显眼地暴露出来。",
     );
   }
 
   return localized(
     "The failure mode is generic copy-paste. The city needs a delivery stack tied to its own metrics, not borrowed swagger from a different urban economy.",
     "โหมดล้มเหลวของเมืองนี้คือการ copy-paste แบบเหมารวม เมืองต้องมี delivery stack ที่ผูกกับตัวเลขของตัวเอง ไม่ใช่ยืม swagger จากเศรษฐกิจเมืองอื่น",
-    "The failure mode here is generic copy-paste. The delivery stack must tie back to local metrics, not borrowed swagger from another city.",
+    "这里的失败模式是照搬照抄。城市需要一套绑定自身指标的交付体系，而不是从另一种城市经济借来的派头。",
   );
 }
 
@@ -617,7 +624,7 @@ function citySpecificLesson(city: SmartCity, context?: CityContext): LocalizedTe
     return localized(
       context.opportunity.en,
       context.opportunity.th,
-      context.opportunity.en,
+      context.opportunity.zh,
     );
   }
 
@@ -625,7 +632,7 @@ function citySpecificLesson(city: SmartCity, context?: CityContext): LocalizedTe
   return localized(
     `${city.nameEn} is most exportable when it acts like itself. The reusable lesson is how it turns ${pillarLabel(strongest)} into something operational.`,
     `${city.nameTh} ส่งออกบทเรียนได้ดีที่สุดเมื่อมันเป็นตัวเองจริงๆ บทเรียนที่ถอดซ้ำได้คือการเปลี่ยน${pillarLabel(strongest)} ให้เป็นระบบปฏิบัติการ`,
-    `${city.nameEn} becomes exportable when it acts like itself. The reusable lesson is how it turns ${pillarLabel(strongest)} into operations.`,
+    `${zhCityName(city)}最可输出的时刻，是它做回自己的时候。可复用的经验，在于它如何把${PILLAR_LABELS.zh[strongest]}变成实际运营。`,
   );
 }
 
@@ -1021,7 +1028,7 @@ function buildDataRails(city: SmartCity): CityDataRail[] {
       description: localized(
         `${city.nameEn} needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them.`,
         `${city.nameTh} ต้องมีข้อมูลบริการสดจากงานเทศบาล สาธารณูปโภค และการรับเหตุหน้างาน ถ้าเมืองมองไม่เห็นการปฏิบัติการ เมืองก็เดินระบบไม่ได้`,
-        `${city.nameEn} needs live service data from municipal ops, utilities, and frontline incident handling. If the city cannot see operations, it cannot run them.`,
+        `${zhCityName(city)}需要来自市政运营、公用事业和一线事件处理的实时服务数据。城市若看不见运营，就无法运营。`,
       ),
       sourceUrl: getCityDataUrl(city.nameEn),
     },
@@ -1031,7 +1038,7 @@ function buildDataRails(city: SmartCity): CityDataRail[] {
       description: localized(
         "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines.",
         "NSO, NESDC, PCD, BOI และรางข้อมูลระดับชาติอื่นต้องไหลเข้าโปรไฟล์เมือง เพื่อให้คำอ้างอิงท้องถิ่นตั้งอยู่บนฐานที่ตรวจสอบได้",
-        "NSO, NESDC, PCD, BOI, and other national rails should feed the city profile so local claims sit on verifiable baselines.",
+        "NSO、NESDC、PCD、BOI 等国家级数据轨应汇入城市档案，让本地论断建立在可核验的基线之上。",
       ),
       sourceUrl: getOpenDataSearchUrl(city.province),
     },
@@ -1041,7 +1048,7 @@ function buildDataRails(city: SmartCity): CityDataRail[] {
       description: localized(
         "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access.",
         "การ export ต้อง flatten dossier ของเมืองออกเป็นแถวข้อมูลที่นักวิจัยดาวน์โหลด ตรวจ และโต้แย้งได้ โดยไม่ต้องขอสิทธิพิเศษ",
-        "Exports should flatten the city dossier into rows researchers can audit, download, and challenge without asking for special access.",
+        "导出功能应把城市档案摊平成研究者无需申请特殊权限即可审计、下载和质疑的数据行。",
       ),
       sourceUrl: `/api/cities/${city.id}/export.csv`,
     },
@@ -1322,7 +1329,7 @@ function recommendationCopy(
     whyNow: localized(
       `${whyNow.en} Readiness score: ${finance.readinessScore}/100.`,
       `${whyNow.th} คะแนนความพร้อม: ${finance.readinessScore}/100`,
-      `${whyNow.zh} Readiness score: ${finance.readinessScore}/100.`,
+      `${whyNow.zh} 就绪度评分：${finance.readinessScore}/100。`,
     ),
     nextStep: localized(
       nextStep.en,
@@ -1341,10 +1348,10 @@ function recommendationCopy(
           ? "ภาครัฐควรรับความเสี่ยงชั้นแรกและประกาศตัวชี้วัดการส่งมอบให้ชัด"
           : "ภาครัฐควรจ่ายความพร้อมตั้งต้นและระบบคุ้มครองสาธารณะ",
       city.tier === "alpha"
-        ? "Government should hold land, standards, permits, and the policy floor."
+        ? "政府应掌握土地、标准、许可和政策底线。"
         : city.tier === "beta"
-          ? "Government should anchor the first-loss piece and publish the delivery KPIs."
-          : "Government should pay for baseline readiness and civic safeguards.",
+          ? "政府应承担第一损失层，并公开交付KPI。"
+          : "政府应为基础就绪度和公共保障买单。",
     ),
     privateCapitalRole: localized(
       instrument.category === "grant"
@@ -1354,8 +1361,8 @@ function recommendationCopy(
         ? "เอกชนควรลงความสามารถ วินัยการส่งมอบ และการร่วมพัฒนาในจุดที่เมืองพิสูจน์การใช้งานจริงได้"
         : "ทุนเอกชนควรรับส่วนเชิงพาณิชย์ก็ต่อเมื่อเมืองพิสูจน์ตรรกะความต้องการของพื้นที่ได้แล้ว",
       instrument.category === "grant"
-        ? "Private actors should supply capability, delivery discipline, and co-development where the city proves uptake."
-        : "Private capital should take the commercial slice only after the city proves the local demand logic.",
+        ? "私营方应在城市证明实际采用度的环节，投入能力、交付纪律和联合开发。"
+        : "私人资本应在城市证明本地需求逻辑之后，再承接商业部分。",
     ),
   };
 }
@@ -1401,7 +1408,7 @@ function buildShortTailoredNote(city: SmartCity, context?: CityContext): Localiz
     return localized(
       `${context.opportunity.en} Watch the constraint: ${context.theCatch.en}`,
       `${context.opportunity.th} แต่ต้องระวัง: ${context.theCatch.th}`,
-      `${context.opportunity.en} Watch the constraint: ${context.theCatch.en}`,
+      `${context.opportunity.zh} 但要盯住约束：${context.theCatch.zh}`,
     );
   }
 
@@ -1410,7 +1417,7 @@ function buildShortTailoredNote(city: SmartCity, context?: CityContext): Localiz
   return localized(
     `${city.nameEn} leans on ${pillarLabel(strongest)} but still gets capped by ${pillarLabel(weakest)}. That's where the backend should keep drilling.`,
     `${city.nameTh} มีแรงหลักอยู่ที่${pillarLabel(strongest)} แต่ยังถูกกดเพดานโดย${pillarLabel(weakest)} ตรงนี้แหละที่ backend ต้องขุดต่อ`,
-    `${city.nameEn} leans on ${pillarLabel(strongest)} but is still capped by ${pillarLabel(weakest)}. That's where the backend should keep drilling.`,
+    `${zhCityName(city)}的支撑点在${PILLAR_LABELS.zh[strongest]}，但仍被${PILLAR_LABELS.zh[weakest]}压住上限。后端应继续在这里深挖。`,
   );
 }
 
@@ -1440,15 +1447,15 @@ function buildFinanceSignal(city: SmartCity, finance: CityFinanceProfile, recomm
     zh: lead?.instrumentName ?? "Government Budget / Grant",
   };
   const readinessLabel: Record<CityFinanceProfile["deliveryReadiness"], LocalizedText> = {
-    advanced: localized("advanced", "ขั้นสูง", "advanced"),
-    building: localized("building", "กำลังสร้าง", "building"),
-    foundational: localized("foundational", "ระดับรากฐาน", "foundational"),
+    advanced: localized("advanced", "ขั้นสูง", "成熟"),
+    building: localized("building", "กำลังสร้าง", "建设中"),
+    foundational: localized("foundational", "ระดับรากฐาน", "打基础"),
   };
   const riskLabel: Record<CityFinanceProfile["riskProfile"], LocalizedText> = {
-    low: localized("low", "ต่ำ", "low"),
-    medium: localized("medium", "ปานกลาง", "medium"),
-    high: localized("high", "สูง", "high"),
-    acute: localized("acute", "วิกฤต", "acute"),
+    low: localized("low", "ต่ำ", "低"),
+    medium: localized("medium", "ปานกลาง", "中等"),
+    high: localized("high", "สูง", "高"),
+    acute: localized("acute", "วิกฤต", "严峻"),
   };
 
   return {
@@ -1462,8 +1469,8 @@ function buildFinanceSignal(city: SmartCity, finance: CityFinanceProfile, recomm
         ? `${leadName.th} เป็นเครื่องมือนำ เพราะ ${city.nameTh} อยู่ใน${readinessLabel[finance.deliveryReadiness].th} และมีความเสี่ยง${riskLabel[finance.riskProfile].th}`
         : `${city.nameTh} ยังบางเกินไปสำหรับการเงินเฉพาะทาง ควรใช้เงินภาครัฐพื้นฐานก่อน`,
       lead
-        ? `${leadName.zh} leads because ${city.nameEn} is ${readinessLabel[finance.deliveryReadiness].zh} with a ${riskLabel[finance.riskProfile].zh} risk profile.`
-        : `${city.nameEn} is still too thin for bespoke finance; stay with public baseline funding.`,
+        ? `首选工具为 ${leadName.zh}，因为${zhCityName(city)}处于“${readinessLabel[finance.deliveryReadiness].zh}”阶段，风险等级为${riskLabel[finance.riskProfile].zh}。`
+        : `${zhCityName(city)}的数据基础仍然太薄，暂不适合定制化融资；应继续依靠公共基础资金。`,
     ),
     readinessScore: finance.readinessScore,
   };

@@ -128,7 +128,7 @@ export default function AuditPage({ locale, onNavigate }: Props) {
 
         {/* MISSION LOG / TRACE LOG */}
         <div className="audit-trace-log shadow-heavy">
-          <div className="audit-trace-header">[MISSION LOG — SCITI SYSTEM AUDIT — v2.0]</div>
+          <div className="audit-trace-header">[MISSION LOG — SCITI SYSTEM AUDIT — v2.0 — APRIL 2026 SNAPSHOT]</div>
           <div className="audit-trace-row">
             <span className="audit-trace-ts">2026-04-05 08:31:02</span>
             <span className="audit-trace-msg">Pinging Open Data API endpoints for 37 certified cities...</span>

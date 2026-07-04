@@ -93,114 +93,117 @@ type PageHeroAsset = {
   place: string;
 };
 
+// 2026-07-02 photo de-dup audit: every scenic cityscape in /photos is already
+// claimed by a city identity in cityMedia.ts, so page heroes draw exclusively
+// from the authored depa / event archive — each file used exactly once site-wide.
 const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
   rankings: {
-    src: "/photos/khonkaen-aerial.jpg",
-    objectPosition: "center 48%",
+    src: "/photos/nst-world-smart-city-expo.jpg",
+    objectPosition: "center 40%",
     title: { en: "Rankings", th: "อันดับเมือง", zh: "城市排名" },
-    place: "Khon Kaen",
+    place: "World Smart City Expo",
   },
   discover: {
-    src: "/photos/wp-songkhla.jpg",
-    objectPosition: "center 52%",
+    src: "/photos/IMG_0324.JPG",
+    objectPosition: "center 45%",
     title: { en: "Find Your City", th: "ค้นหาเมืองของคุณ", zh: "寻找你的城市" },
-    place: "Songkhla",
+    place: "Bangkok Pavilion",
   },
   program: {
-    src: "/photos/wp-samut-prakan.jpg",
-    objectPosition: "center 50%",
+    src: "/photos/P6204927.JPG",
+    objectPosition: "center 45%",
     title: { en: "Smart City Program", th: "โครงการเมืองอัจฉริยะ", zh: "智慧城市计划" },
-    place: "Samut Prakan",
+    place: "Smart City Thailand Roadshow",
   },
   methodology: {
-    src: "/photos/wiki-bangkok-bts.jpg",
-    objectPosition: "center 52%",
+    src: "/photos/P6205097.JPG",
+    objectPosition: "center 40%",
     title: { en: "Methodology", th: "วิธีการประเมิน", zh: "评估方法" },
-    place: "Bangkok",
+    place: "depa criteria workshop",
   },
   story: {
-    src: "/photos/chiangmai-night.jpg",
-    objectPosition: "center 44%",
+    src: "/photos/IMG_7607.JPG",
+    objectPosition: "center 40%",
     title: { en: "Story", th: "เรื่องราว", zh: "故事" },
-    place: "Chiang Mai",
+    place: "Digital Thailand Big Bang",
   },
   why: {
-    src: "/photos/report-city-night.jpg",
-    objectPosition: "center 55%",
+    src: "/photos/IMG_6691.JPG",
+    objectPosition: "center 45%",
     title: { en: "Why SCITI", th: "ทำไมต้อง SCITI", zh: "为什么是 SCITI" },
-    place: "Bangkok",
+    place: "depa",
   },
   showcase: {
-    src: "/Nakhon%20Si%20Thammarat/Z03A4010-3946608958.jpg",
-    objectPosition: "center 10%",
+    src: "/photos/nst-municipal-briefing.jpg",
+    objectPosition: "center 30%",
     title: { en: "Nakhon Si Thammarat", th: "นครศรีธรรมราช", zh: "洛坤府" },
     place: "Nakhon Si Thammarat",
   },
   partners: {
-    src: "/photos/wp-rattanakosin.jpg",
-    objectPosition: "center 54%",
+    src: "/photos/318402.jpg",
+    objectPosition: "center 45%",
     title: { en: "Partners", th: "พันธมิตร", zh: "伙伴" },
-    place: "Rattanakosin",
+    place: "Smart City Innovation Park",
   },
   map: {
-    src: "/photos/wp-makkasan.jpg",
-    objectPosition: "center 50%",
+    src: "/photos/49880176.c69e12bcd4cc4e80925f28838ebcb215.19091017.jpg",
+    objectPosition: "center 45%",
     title: { en: "National Map", th: "แผนที่ประเทศ", zh: "全国地图" },
-    place: "Makkasan",
+    place: "Bangkok Urban Presence exhibition",
   },
   asus: {
-    src: "/photos/phuket-smart-city.jpg",
-    objectPosition: "center 48%",
+    src: "/photos/IMG_7613.JPG",
+    objectPosition: "center 40%",
     title: { en: "ASUS Collaboration", th: "ความร่วมมือ ASUS", zh: "ASUS 合作" },
-    place: "Phuket",
+    place: "Thailand Smart City Week",
   },
   audit: {
-    src: "/photos/wp-chanthaburi.jpg",
+    src: "/photos/1-57.jpg",
     objectPosition: "center 45%",
     title: { en: "Audit", th: "การตรวจสอบ", zh: "审计" },
-    place: "Chanthaburi",
+    place: "depa boardroom",
   },
   references: {
-    src: "/photos/samyan-smart-city.jpg",
+    src: "/photos/IMG_7331.JPG",
     objectPosition: "center 45%",
     title: { en: "References", th: "แหล่งอ้างอิง", zh: "参考资料" },
-    place: "Samyan",
+    place: "depa Smart City Thailand exhibit",
   },
   knowledge: {
-    src: "/photos/cmu-doiSuthep.jpg",
-    objectPosition: "center 45%",
+    src: "/photos/cmu-smart-city.jpg",
+    objectPosition: "center 55%",
     title: { en: "Knowledge Base", th: "คลังความรู้", zh: "知识库" },
-    place: "Chiang Mai",
+    place: "Chiang Mai University",
   },
   invest: {
-    src: "/photos/phuket-smart-city.jpg",
-    objectPosition: "center 50%",
+    src: "/photos/73513755_10157605754953794_5475140449704345600_n.jpg",
+    objectPosition: "center 35%",
     title: { en: "Invest", th: "ลงทุน", zh: "投资" },
-    place: "Phuket",
+    place: "depa startup ecosystem",
   },
   compare: {
-    src: "/photos/wiki-wat-arun.jpg",
-    objectPosition: "center 58%",
+    src: "/photos/IMG_0396.JPG",
+    objectPosition: "center 30%",
     title: { en: "Compare Cities", th: "เปรียบเทียบเมือง", zh: "城市对比" },
-    place: "Bangkok",
+    place: "Korea Smart Cities Pavilion",
   },
   bingo: {
-    src: "/photos/khonkaen-smart-city.jpg",
-    objectPosition: "center 50%",
+    src: "/photos/72639510_2459479007664540_4785365931712839680_o.jpg",
+    objectPosition: "center 45%",
     title: { en: "SCITI Bingo", th: "SCITI บิงโก", zh: "SCITI 宾果" },
-    place: "Khon Kaen",
+    place: "depa Ladprao",
   },
   about: {
-    src: "/photos/chiangmai-night.jpg",
-    objectPosition: "center 50%",
+    src: "/photos/IMG_5849.JPG",
+    objectPosition: "center 40%",
     title: { en: "Mission", th: "พันธกิจ", zh: "使命" },
-    place: "Chiang Mai",
+    place: "depa",
   },
   "creative-economy": {
-    src: "/photos/wp-songkhla.jpg",
-    objectPosition: "center 50%",
+    src: "/photos/_K635402.jpg",
+    objectPosition: "center 45%",
     title: { en: "Creative Economy", th: "เศรษฐกิจสร้างสรรค์", zh: "创意经济" },
-    place: "Songkhla",
+    place: "NEXT Creator Shop",
   },
 };
 
@@ -210,7 +213,7 @@ const newsItems = [
     titleEn: "SCITI 2026 submitted to CEA Creative Excellence Awards — open-data scorecard for 118 Thai cities",
     titleTh: "SCITI 2026 ส่งเข้าประกวด CEA Creative Excellence Awards — ตารางคะแนนข้อมูลเปิดสำหรับ 118 เมือง",
     titleZh: "SCITI 2026 提交 CEA 创意卓越奖——覆盖 118 座泰国城市的开放数据评分卡",
-    url: "https://www.depa.or.th/en/smartcity",
+    url: "https://sciti.nonarkara.org/",
     source: "depa / SCITI",
   },
   {
@@ -218,7 +221,7 @@ const newsItems = [
     titleEn: "SLIC Index V2 launched at Smart City Summit & Expo 2026 in Taipei",
     titleTh: "SLIC Index V2 เปิดตัวบนเวที SCSE 2026 ไทเป",
     titleZh: "SLIC Index V2 在 2026 台北智慧城市展发布",
-    url: "https://slic-index.onrender.com/history",
+    url: "https://slic.nonarkara.org/",
     source: "SLIC Index",
   },
   {
@@ -238,12 +241,12 @@ const newsItems = [
     source: "NextTopBrand",
   },
   {
-    date: "2026-02",
-    titleEn: "depa and DLA co-design new mechanism to drive Smart City for local governments",
-    titleTh: "depa ร่วม สถ. ออกแบบกลไกใหม่ขับเคลื่อน Smart City มุ่งยกระดับท้องถิ่น",
-    titleZh: "depa 与地方行政厅共同设计地方智慧城市新机制",
-    url: "https://smartcitythailand.com/depa-smart-city/",
-    source: "Smart City Thailand",
+    date: "2025-11-05",
+    titleEn: "Minister of Digital Economy: smart cities are a key solution to improving people's lives",
+    titleTh: "รัฐมนตรีดิจิทัลชี้สมาร์ทซิตี้เป็นโซลูชันหลักยกระดับคุณภาพชีวิต",
+    titleZh: "数字经济部长：智慧城市是改善民生的关键方案",
+    url: "https://en.moneyandbanking.co.th/2025/206803/",
+    source: "Money & Banking",
   },
   {
     date: "2025-11",
@@ -579,12 +582,12 @@ export default function App() {
           </section>
 
           {/* ─── NEWSLETTER SIGNUP ─── */}
-          <section className="newsletter-section" style={{ background: "var(--2)", padding: "3rem 1rem", textAlign: "center" }}>
+          <section className="newsletter-section" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "3rem 1rem", textAlign: "center" }}>
             <div className="section" style={{ maxWidth: "600px", margin: "0 auto" }}>
-              <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "0.5rem", color: "var(--bg)" }}>
+              <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "0.5rem", color: "var(--ink)" }}>
                 {locale === "th" ? "สมัครรับข้อมูลข่าวสาร" : locale === "zh" ? "订阅简报" : "Subscribe to SCITI Data Insights"}
               </h3>
-              <p style={{ marginBottom: "1.5rem", color: "var(--4)" }}>
+              <p style={{ marginBottom: "1.5rem", color: "var(--2)" }}>
                 {locale === "th" 
                   ? "รับข้อมูลเชิงลึกเศรษฐกิจสร้างสรรค์ระดับจังหวัดรายเดือน ส่งตรงถึงอีเมลคุณ" 
                   : locale === "zh" 

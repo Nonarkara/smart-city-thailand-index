@@ -173,8 +173,8 @@ export default function StoryPage({ locale, onNavigate }: Props) {
             <p className="quote-text">
               {translate(locale, {
                 en: "In 2018, we thought if we could just measure the number of sensors, we could measure progress. We were wrong.",
-                th: "ในปี 2018 เราคิดว่าถ้าเราแค่วัดจำนวนเซ็นเซอร์ได้ เราก็วัดความก้าวหน้าได้ เราคิดผิด",
-                zh: "2018年，我们以为只要能测量传感器的数量，就能测量进步。我们错了。",
+                th: "ในปี 2018 ผมคิดว่าถ้าแค่วัดจำนวนเซ็นเซอร์ได้ ก็วัดความก้าวหน้าได้ ผมคิดผิด",
+                zh: "2018年，我以为只要能测量传感器的数量，就能测量进步。我错了。",
               })}
             </p>
             <p className="quote-author">Nonarkara, 2018 (The Engineer Mindset)</p>

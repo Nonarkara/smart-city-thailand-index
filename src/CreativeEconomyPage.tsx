@@ -58,10 +58,22 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
             })}
           </p>
           <ul style={{ paddingLeft: "1.5rem", marginBottom: "1.5rem" }}>
-            <li style={{ marginBottom: "0.5rem" }}><strong>Cultural Heritage:</strong> tangible and intangible assets, UNESCO designations, traditional crafts</li>
-            <li style={{ marginBottom: "0.5rem" }}><strong>Creative Infrastructure:</strong> venues, studios, co-working spaces, digital connectivity</li>
-            <li style={{ marginBottom: "0.5rem" }}><strong>Talent & Education:</strong> universities, vocational training, creative workforce size</li>
-            <li style={{ marginBottom: "0.5rem" }}><strong>Economic Output:</strong> GPP contributions, BOI-promoted creative projects, SME revenue growth</li>
+            <li style={{ marginBottom: "0.5rem" }}>
+              <strong>{translate(locale, { en: "Cultural Heritage:", th: "มรดกทางวัฒนธรรม:", zh: "文化遗产：" })}</strong>{" "}
+              {translate(locale, { en: "tangible and intangible assets, UNESCO designations, traditional crafts", th: "สินทรัพย์ที่จับต้องได้และจับต้องไม่ได้ การขึ้นทะเบียนยูเนสโก งานหัตถกรรมดั้งเดิม", zh: "有形与无形资产、教科文组织认定、传统手工艺" })}
+            </li>
+            <li style={{ marginBottom: "0.5rem" }}>
+              <strong>{translate(locale, { en: "Creative Infrastructure:", th: "โครงสร้างพื้นฐานเชิงสร้างสรรค์:", zh: "创意基础设施：" })}</strong>{" "}
+              {translate(locale, { en: "venues, studios, co-working spaces, digital connectivity", th: "พื้นที่จัดงาน สตูดิโอ พื้นที่ทำงานร่วม และการเชื่อมต่อดิจิทัล", zh: "场馆、工作室、共享办公空间与数字连接" })}
+            </li>
+            <li style={{ marginBottom: "0.5rem" }}>
+              <strong>{translate(locale, { en: "Talent & Education:", th: "บุคลากรและการศึกษา:", zh: "人才与教育：" })}</strong>{" "}
+              {translate(locale, { en: "universities, vocational training, creative workforce size", th: "มหาวิทยาลัย การฝึกอาชีพ และขนาดกำลังคนสายสร้างสรรค์", zh: "高校、职业培训与创意从业人口规模" })}
+            </li>
+            <li style={{ marginBottom: "0.5rem" }}>
+              <strong>{translate(locale, { en: "Economic Output:", th: "ผลผลิตทางเศรษฐกิจ:", zh: "经济产出：" })}</strong>{" "}
+              {translate(locale, { en: "GPP contributions, BOI-promoted creative projects, SME revenue growth", th: "สัดส่วนใน GPP โครงการสร้างสรรค์ที่ BOI ส่งเสริม และการเติบโตของรายได้ SME", zh: "对省内生产总值的贡献、BOI 扶持的创意项目、中小企业营收增长" })}
+            </li>
           </ul>
         </div>
       </section>
