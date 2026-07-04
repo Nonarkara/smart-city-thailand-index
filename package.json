@@ -15,6 +15,7 @@
     "assets:build-responsive": "node scripts/build-responsive-images.mjs",
     "perf:lighthouse": "lhci autorun --config=./lighthouserc.json",
     "check": "npm run lint && npm run test:run && npm run build",
+    "cdpt": "bash scripts/cdpt.sh",
     "postbuild": "node scripts/generate-city-og-pages.mjs && node scripts/generate-cities-json.mjs",
     "sync": "node scripts/sync-data.mjs"
   },

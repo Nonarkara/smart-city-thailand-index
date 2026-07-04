@@ -17,6 +17,24 @@ npx vite build      # Always verify both before pushing
   Pushing to `main` alone does **not** update the live site.
 - GitHub Actions also auto-deploys to GitHub Pages on push to `main` (`gh run list --limit 1` to verify), but DNS for `sciti.nonarkara.org` resolves to Cloudflare — the GitHub Pages copy is a live mirror, not what judges/users see.
 
+### CDPT — the one-command ship sequence
+
+**CDPT = Commit · Push · Deploy · Test-on-web.** The full sequence above is
+hardcoded into `scripts/cdpt.sh` — use it instead of running the steps by hand:
+
+```bash
+npm run cdpt -- "commit message"   # or:  bash scripts/cdpt.sh "commit message"
+```
+
+Or invoke the Claude Code slash command **`/cdpt commit message`** (defined in
+`.claude/commands/cdpt.md`). The script gates on `vitest` + `eslint` + a
+`base=/` build (aborts if red), commits **tracked** changes only (never
+auto-stages new/untracked files — stage those yourself so no stray secret
+lands in this public repo), pushes `origin main`, `wrangler pages deploy dist`
+to Cloudflare, then polls the live domain until it serves the freshly-built
+chunk hash and asserts HTTP 200 on the key routes. It is idempotent — running
+it with no changes just re-deploys and re-verifies.
+
 ## Design Philosophy
 
 "Jony Ive meets Dieter Rams" — clarity, simplicity, elegance.
