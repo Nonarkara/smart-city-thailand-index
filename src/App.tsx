@@ -111,7 +111,7 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
   },
   program: {
     src: "/Nakhon Si Thammarat/mayor-kanop-speaking-depa-session.jpg",
-    objectPosition: "center 40%",
+    objectPosition: "top center",
     title: { en: "Smart City Program", th: "โครงการเมืองอัจฉริยะ", zh: "智慧城市计划" },
     place: "Nakhon Si Thammarat",
   },
@@ -194,10 +194,10 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
     place: "World Smart City Expo 2025",
   },
   about: {
-    src: "/Nakhon Si Thammarat/mayor-kanop-town-hall-speaking.jpg",
-    objectPosition: "center 40%",
+    src: "/Nakhon Si Thammarat/mayor-kanop-wsce-stage.jpg",
+    objectPosition: "top center",
     title: { en: "Mission", th: "พันธกิจ", zh: "使命" },
-    place: "Nakhon Si Thammarat",
+    place: "World Smart City Expo",
   },
   "creative-economy": {
     src: "/photos/khonkaen-aerial.jpg",
