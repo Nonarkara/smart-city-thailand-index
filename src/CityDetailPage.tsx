@@ -432,8 +432,8 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
     return (
       <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--teal)', marginTop: '2rem' }}>
         <p className="eyebrow" style={{ color: 'var(--teal)' }}>{translate(locale, { en: "Institutional Spotlight", th: "จุดเด่นเชิงสถาบัน", zh: "机构亮点" })}</p>
-        <h3 style={{ fontSize: '1.2rem', marginBottom: '.5rem' }}>{translate(locale, { en: "Japan / Fujitsu Smart JAMP Case", th: "กรณีศึกษา Fujitsu Smart JAMP (ญี่ปุ่น)", zh: "日本 / 富士通 Smart JAMP 案例" })}</h3>
-        <p style={{ fontSize: '.75rem', lineHeight: 1.6, color: 'var(--2)' }}>
+        <h3 style={{ fontSize: 'var(--text-body)', marginBottom: '.5rem' }}>{translate(locale, { en: "Japan / Fujitsu Smart JAMP Case", th: "กรณีศึกษา Fujitsu Smart JAMP (ญี่ปุ่น)", zh: "日本 / 富士通 Smart JAMP 案例" })}</h3>
+        <p style={{ fontSize: 'var(--text-micro)', lineHeight: 1.6, color: 'var(--2)' }}>
           {translate(locale, {
             en: "Phuket isn't just installing cameras; it's proving the 'AI vs Asphalt' philosophy. By using Fujitsu's traffic AI, the city reduced congestion at major roundabouts by 15% without widening a single road. This is the definition of a high-maturity digital outcome.",
             th: "ภูเก็ตไม่ได้แค่ติดกล้อง แต่กำลังพิสูจน์ปรัชญา 'AI vs ยางมะตอย' ด้วยการใช้ AI จาก Fujitsu บริหารจราจร เมืองสามารถลดความหนาแน่นที่วงเวียนหลักได้ 15% โดยไม่ต้องขยายถนนแม้แต่นิ้วเดียว นี่คือคำนิยามของผลลัพธ์ดิจิทัลระดับสูง",
@@ -450,8 +450,8 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
     return (
       <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--alpha)', marginTop: '2rem' }}>
         <p className="eyebrow" style={{ color: 'var(--alpha)' }}>{translate(locale, { en: "Community Grit", th: "ใจสู้คนท้องถิ่น", zh: "社区韧性" })}</p>
-        <h3 style={{ fontSize: '1.2rem', marginBottom: '.5rem' }}>{translate(locale, { en: "KKTS: The Local Consortium", th: "KKTS: คอนซอร์เทียมท้องถิ่น", zh: "KKTS：地方财团" })}</h3>
-        <p style={{ fontSize: '.75rem', lineHeight: 1.6, color: 'var(--2)' }}>
+        <h3 style={{ fontSize: 'var(--text-body)', marginBottom: '.5rem' }}>{translate(locale, { en: "KKTS: The Local Consortium", th: "KKTS: คอนซอร์เทียมท้องถิ่น", zh: "KKTS：地方财团" })}</h3>
+        <p style={{ fontSize: 'var(--text-micro)', lineHeight: 1.6, color: 'var(--2)' }}>
           {translate(locale, {
             en: "Khon Kaen's success isn't about central budget—it's about local grit. Through KKTS (Khon Kaen Transit System), the city's private sectors and 5 municipalities funded their own Smart Bus and are pushing for LRT. This bottom-up ownership makes Khon Kaen the most resilient smart city in the index.",
             th: "ความสำเร็จของขอนแก่นไม่ใช่เรื่องงบส่วนกลาง แต่คือความใจสู้ของท้องถิ่น ผ่าน KKTS (บริษัท ขอนแก่น ทรานซิท ซิสเต็ม) ภาคเอกชนและ 5 เทศบาลร่วมกันลงขันสร้าง Smart Bus และผลักดัน LRT การเป็นเจ้าของจากฐานรากทำให้ขอนแก่นเป็นเมืองอัจฉริยะที่ยืดหยุ่นที่สุด",
@@ -468,8 +468,8 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
     return (
       <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--gamma)', marginTop: '2rem' }}>
         <p className="eyebrow" style={{ color: 'var(--gamma)' }}>{translate(locale, { en: "Reality Audit", th: "ตรวจสอบความจริง", zh: "现实审计" })}</p>
-        <h3 style={{ fontSize: '1.2rem', marginBottom: '.5rem' }}>{translate(locale, { en: "The Laboratory Gap", th: "ช่องว่างห้องทดลอง", zh: "实验室差距" })}</h3>
-        <p style={{ fontSize: '.75rem', lineHeight: 1.6, color: 'var(--2)' }}>
+        <h3 style={{ fontSize: 'var(--text-body)', marginBottom: '.5rem' }}>{translate(locale, { en: "The Laboratory Gap", th: "ช่องว่างห้องทดลอง", zh: "实验室差距" })}</h3>
+        <p style={{ fontSize: 'var(--text-micro)', lineHeight: 1.6, color: 'var(--2)' }}>
           {translate(locale, {
             en: "Wangchan Valley has the highest infrastructure score in the country. However, our index ranks it Gamma. Why? Because a smart city without residents is a lab, not a city. Until the 'Live' component matches the 'Digital' hardware, it remains a brilliant prototype.",
             th: "วังจันทร์วัลเลย์มีคะแนนโครงสร้างพื้นฐานสูงที่สุดในประเทศ แต่ดัชนีของเราจัดให้อยู่ Gamma ทำไม? เพราะเมืองอัจฉริยะที่ไม่มีคนอยู่คือห้องทดลอง ไม่ใช่เมือง จนกว่าส่วนประกอบ 'Live' จะโตทันฮาร์ดแวร์ 'Digital' ที่นี่ก็ยังเป็นเพียงต้นแบบที่ยอดเยี่ยม",
@@ -1279,7 +1279,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           <button
             className="btn btn-secondary"
             onClick={() => onNavigate(`/canvas/${cityId}`)}
-            style={{ fontSize: "0.85rem", padding: "0.4rem 0.8rem", borderRadius: "var(--radius-sm)", minHeight: "44px", display: "inline-flex", alignItems: "center" }}
+            style={{ fontSize: "var(--text-body)", padding: "0.4rem 0.8rem", borderRadius: "var(--radius-sm)", minHeight: "44px", display: "inline-flex", alignItems: "center" }}
           >
             {translate(locale, { en: "Print City Canvas", th: "พิมพ์แคนวาสเมือง", zh: "打印城市画布" })}
           </button>

@@ -61,7 +61,7 @@ const benefits: BenefitBlock[] = [
     title: { en: "For policymakers: evidence-based decisions", th: "สำหรับผู้กำหนดนโยบาย: ตัดสินใจบนหลักฐาน", zh: "政策制定者：基于证据的决策" },
     body: {
       en: "Thailand's target is 105 smart cities by 2027. But how do you allocate limited resources? This index shows which cities are closest to Alpha tier and would benefit most from targeted investment, which cities are stuck in Gamma and need fundamental infrastructure before smart technology, and which policies actually correlate with better outcomes. Academic research in Land Use Policy (2024) demonstrates that composite smart city indices enable more efficient resource allocation when they are transparent about their methodology.",
-      th: "ไทยตั้งเป้า 105 เมืองอัจฉริยะภายปี 2570 แต่จะจัดสรรทรัพยากรจำกัดอย่างไร? ดัชนีนี้แสดงว่าเมืองไหนใกล้ Alpha ที่สุดและจะได้ประโยชน์มากที่สุดจากการลงทุนตรงเป้า เมืองไหนติดอยู่ที่ Gamma และต้องการโครงสร้างพื้นฐานก่อนเทคโนโลยีอัจฉริยะ และนโยบายใดสัมพันธ์กับผลลัพธ์ที่ดีขึ้นจริง",
+      th: "ไทยตั้งเป้า 105 เมืองอัจฉริยะภายในปี 2570 แต่จะจัดสรรทรัพยากรจำกัดอย่างไร? ดัชนีนี้แสดงว่าเมืองไหนใกล้ Alpha ที่สุดและจะได้ประโยชน์มากที่สุดจากการลงทุนตรงเป้า เมืองไหนติดอยู่ที่ Gamma และต้องการโครงสร้างพื้นฐานก่อนเทคโนโลยีอัจฉริยะ และนโยบายใดสัมพันธ์กับผลลัพธ์ที่ดีขึ้นจริง",
       zh: "泰国的目标是到2027年拥有105个智慧城市。但如何分配有限的资源？本指数显示哪些城市最接近Alpha级别并能从定向投资中获益最大，哪些城市困在Gamma级别需要先完善基础设施再引入智能技术，以及哪些政策实际上与更好的成果相关。《土地利用政策》(2024)的学术研究表明，当复合智慧城市指数的方法论透明时，能实现更高效的资源分配。",
     },
   },

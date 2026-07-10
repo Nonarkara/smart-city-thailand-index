@@ -6,6 +6,12 @@
       "runtimeExecutable": "/opt/homebrew/bin/node",
       "runtimeArgs": ["node_modules/.bin/vite", "--port", "5188"],
       "port": 5188
+    },
+    {
+      "name": "prod-preview",
+      "runtimeExecutable": "/opt/homebrew/bin/node",
+      "runtimeArgs": ["node_modules/.bin/vite", "preview", "--port", "5190"],
+      "port": 5190
     }
   ]
 }

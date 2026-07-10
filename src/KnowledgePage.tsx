@@ -334,8 +334,8 @@ const FAQS: FAQ[] = [
     },
     a: {
       en: "A major annual event organized by MDES and depa. Smart City Week 2020 (October 16-22) was the first hybrid event, themed 'REAL Solutions for REAL People in the REAL Smart Cities.' It featured live webinars, international testimonies from Japan, UK, and Mastercard, and showcased key projects. It serves as the flagship platform for domestic and international smart city networking.",
-      th: "งานประจำปีสำคัญจัดโดยกระทรวงดิจิทัลฯ และ depa Smart City Week 2020 (16-22 ตุลาคม) เป็นงานไฮบริดครั้งแรก ธีม 'REAL Solutions for REAL People in the REAL Smart Cities' มีเว็บบินาร์ คำรับรองจากญี่ปุ่น สหราชอาณาจักร Mastercard และโชว์โครงการสำคัญ",
-      zh: "由数字经济与社会部和depa组织的重要年度活动。2020年智慧城市周（10月16-22日）是首次混合活动，主题为'真正的智慧城市为真正的人提供真正的解决方案'。展示了来自日本、英国和万事达卡的国际证言和关键项目。",
+      th: "งานประจำปีสำคัญจัดโดยกระทรวงดิจิทัลฯ และ depa Smart City Week 2020 (16-22 ตุลาคม) เป็นงานไฮบริดครั้งแรก ธีม 'REAL Solutions for REAL People in the REAL Smart Cities' มีเว็บบินาร์ คำรับรองจากญี่ปุ่น สหราชอาณาจักร Mastercard และโชว์โครงการสำคัญ ถือเป็นเวทีหลักสำหรับการสร้างเครือข่ายเมืองอัจฉริยะทั้งในและต่างประเทศ",
+      zh: "由数字经济与社会部和depa组织的重要年度活动。2020年智慧城市周（10月16-22日）是首次混合活动，主题为'真正的智慧城市为真正的人提供真正的解决方案'。展示了来自日本、英国和万事达卡的国际证言和关键项目，是国内外智慧城市网络交流的旗舰平台。",
     },
   },
   // ─── About SCITI ───
@@ -388,8 +388,8 @@ const FAQS: FAQ[] = [
     },
     a: {
       en: "A single score is useful for sorting, but it hides the story. The seven bars show the shape of the city: a place can be strong on safety and weak on economy, or digitally advanced but not yet livable. The composite still follows the fixed weights - Livability 25%, Economy 20%, Safety 15%, Wellbeing 15%, Environment 10%, Hospitality 10%, Digital 5% - but the bars keep the trade-offs visible.",
-      th: "คะแนนเดียวช่วยจัดอันดับได้ แต่ซ่อนเรื่องสำคัญ แถบทั้ง 7 ทำให้เห็นรูปร่างของเมือง: บางเมืองเด่นด้านความปลอดภัยแต่เศรษฐกิจยังอ่อน หรือดิจิทัลดีแต่ความน่าอยู่ยังไม่ถึง คะแนนรวมยังคำนวณตามน้ำหนักคงที่ - ความน่าอยู่ 25%, เศรษฐกิจ 20%, ความปลอดภัย 15%, คุณภาพชีวิต 15%, สิ่งแวดล้อม 10%, การท่องเที่ยว 10%, ดิจิทัล 5% - แต่แถบช่วยให้เห็น trade-off ทันที",
-      zh: "单一分数便于排序，但会掩盖真正的结构。七个柱条显示城市的形状：一座城市可能安全强、经济弱，也可能数字化先进但宜居性不足。综合分仍按固定权重计算 - 宜居 25%、经济 20%、安全 15%、福祉 15%、环境 10%、人文旅游 10%、数字 5% - 但柱条让取舍一眼可见。",
+      th: "คะแนนเดียวช่วยจัดอันดับได้ แต่ซ่อนเรื่องสำคัญ แถบทั้ง 7 ทำให้เห็นรูปร่างของเมือง: บางเมืองเด่นด้านความปลอดภัยแต่เศรษฐกิจยังอ่อน หรือดิจิทัลดีแต่ความน่าอยู่ยังไม่ถึง คะแนนรวมยังคำนวณตามน้ำหนักคงที่ - ความน่าอยู่ 25%, เศรษฐกิจ 20%, ความปลอดภัย 15%, คุณภาพชีวิต 15%, สิ่งแวดล้อม 10%, อัธยาศัย 10%, ดิจิทัล 5% - แต่แถบช่วยให้เห็น trade-off ทันที",
+      zh: "单一分数便于排序，但会掩盖真正的结构。七个柱条显示城市的形状：一座城市可能安全强、经济弱，也可能数字化先进但宜居性不足。综合分仍按固定权重计算 - 宜居 25%、经济 20%、安全 15%、福祉 15%、环境 10%、人文 10%、数字 5% - 但柱条让取舍一眼可见。",
     },
   },
   {
@@ -492,8 +492,8 @@ const FAQS: FAQ[] = [
     },
     a: {
       en: "Because fame is not the same as performance. A famous destination may have strong hospitality and economy scores but weaker safety, livability, environmental, or data-confidence signals. A smaller city can rank higher when it solves a concrete local problem and proves the result. That is the point of the index: reward working systems, not brand recognition.",
-      th: "เพราะชื่อเสียงไม่เท่ากับผลการทำงาน เมืองปลายทางชื่อดังอาจเด่นด้านท่องเที่ยวและเศรษฐกิจ แต่สัญญาณด้านความปลอดภัย ความน่าอยู่ สิ่งแวดล้อม หรือความเชื่อมั่นข้อมูลอาจอ่อนกว่า เมืองเล็กสามารถขึ้นสูงกว่าได้ถ้าแก้ปัญหาท้องถิ่นที่ชัดและพิสูจน์ผลลัพธ์ได้ นี่คือหัวใจของดัชนี: ให้รางวัลกับระบบที่ทำงานจริง ไม่ใช่การจดจำแบรนด์",
-      zh: "因为知名度不等于表现。知名目的地可能在人文旅游和经济上很强，但在安全、宜居、环境或数据置信度上较弱。较小城市如果解决了具体地方问题并能证明结果，也可以排得更高。这正是指数的意义：奖励真正运行的系统，而不是品牌知名度。",
+      th: "เพราะชื่อเสียงไม่เท่ากับผลการทำงาน เมืองปลายทางชื่อดังอาจเด่นด้านอัธยาศัยและเศรษฐกิจ แต่สัญญาณด้านความปลอดภัย ความน่าอยู่ สิ่งแวดล้อม หรือความเชื่อมั่นข้อมูลอาจอ่อนกว่า เมืองเล็กสามารถขึ้นสูงกว่าได้ถ้าแก้ปัญหาท้องถิ่นที่ชัดและพิสูจน์ผลลัพธ์ได้ นี่คือหัวใจของดัชนี: ให้รางวัลกับระบบที่ทำงานจริง ไม่ใช่การจดจำแบรนด์",
+      zh: "因为知名度不等于表现。知名目的地可能在人文和经济上很强，但在安全、宜居、环境或数据置信度上较弱。较小城市如果解决了具体地方问题并能证明结果，也可以排得更高。这正是指数的意义：奖励真正运行的系统，而不是品牌知名度。",
     },
   },
   // ─── Smart City is a Process ───

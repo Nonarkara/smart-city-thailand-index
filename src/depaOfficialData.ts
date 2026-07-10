@@ -312,7 +312,7 @@ export const DEPA_OFFICIAL: Record<string, DepaOfficialRecord> = {
     batch: 2,
     endorsedDate: "2022-11-09",
     officialName: "Krabi Smart City",
-    vision: "A limestone-karst tourism city balancing world-class visitor experience with marine ecosystem protection through digital environmental governance.",
+    vision: "A limestone-karst tourism city balancing high-end visitor experience with marine ecosystem protection through digital environmental governance.",
     visionTh: "เมืองท่องเที่ยวอัจฉริยะที่ปกป้องระบบนิเวศทะเลและหินปูน",
     keyProjects: [
       "Marine and karst ecosystem telemetry for Phang Nga Bay and Ao Nang",
@@ -357,7 +357,7 @@ export const DEPA_OFFICIAL: Record<string, DepaOfficialRecord> = {
     batch: 2,
     endorsedDate: "2022-11-09",
     officialName: "Koh Samui Smart City",
-    vision: "A sustainable island smart city — managing the tension between world-class resort tourism and the quality of life of 65,000 permanent residents.",
+    vision: "A sustainable island smart city — managing the tension between large-scale resort tourism and the quality of life of 65,000 permanent residents.",
     visionTh: "เมืองท่องเที่ยวเกาะอัจฉริยะที่ยั่งยืน สมดุลระหว่างการท่องเที่ยวและคุณภาพชีวิตชุมชน",
     keyProjects: [
       "Island water and waste management: smart utilities for a no-grid island",

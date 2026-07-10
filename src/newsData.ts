@@ -74,7 +74,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     title: {
       en: "\"A smart city cannot exist without its citizens\" — Dr. Non on trust, tech, and civic participation",
       th: "\"เมืองอัจฉริยะจะมีอยู่ไม่ได้หากปราศจากประชาชน\" — ดร.นนท์ว่าด้วยความไว้วางใจ เทคโนโลยี และการมีส่วนร่วมของพลเมือง",
-      zh: "\"没有市民，智慧城市就无法存在\" — ดร.นนท์谈信任、技术与公民参与",
+      zh: "\"没有市民，智慧城市就无法存在\" — Non Arkara 博士谈信任、技术与公民参与",
     },
     summary: {
       en: "TechNode Global interview with Dr. Non Arkaraprasertkul on Thailand's dual strategy: upgrading existing cities alongside building new high-tech urban centres to attract global investment. He argues technological advances foster stronger trust between citizens and institutions — but only when built around local community needs.",

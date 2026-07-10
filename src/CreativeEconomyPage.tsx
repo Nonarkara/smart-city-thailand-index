@@ -105,8 +105,8 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
           <p style={{ fontSize: "var(--text-lg)", marginBottom: "1rem" }}>
             {translate(locale, {
               en: "In a country where cultural heritage data has been \"limited and dispersed across various institutes and agencies, stored in formats that pose challenges to public access,\" SCITI is the connective tissue. We operationalize UNESCO's Culture|2030 Indicators at provincial scale.",
-              th: "ในประเทศที่ข้อมูลมรดกทางวัฒนธรรมมีจำกัดและกระจัดกระจายตามสถาบันต่างๆ SCITI คือเนื้อเยื่อเกี่ยวพันที่เชื่อมโยงสิ่งเหล่านี้เข้าด้วยกัน เรานำตัวชี้วัด Culture|2030 ของยูเนสโกมาปฏิบัติจริงในระดับจังหวัด",
-              zh: "在一个文化遗产数据“有限并分散在各个机构”的国家，SCITI是连接的组织。我们在省级层面实操联合国教科文组织的“文化|2030”指标。"
+              th: "ในประเทศที่ข้อมูลมรดกทางวัฒนธรรมมีจำกัดและกระจัดกระจายตามสถาบันต่างๆ จัดเก็บในรูปแบบที่ยากต่อการเข้าถึงของสาธารณะ SCITI คือเนื้อเยื่อเกี่ยวพันที่เชื่อมโยงสิ่งเหล่านี้เข้าด้วยกัน เรานำตัวชี้วัด Culture|2030 ของยูเนสโกมาปฏิบัติจริงในระดับจังหวัด",
+              zh: "在一个文化遗产数据“有限并分散在各个机构，且储存格式难以供公众取用”的国家，SCITI正是串联这一切的纽带。我们在省级层面实操联合国教科文组织的“文化|2030”指标。"
             })}
           </p>
           <button className="cta-button" onClick={() => onNavigate("/methodology")} style={{ marginTop: "1.5rem" }}>

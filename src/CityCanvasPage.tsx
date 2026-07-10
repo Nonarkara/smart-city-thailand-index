@@ -75,18 +75,20 @@ function CityCanvasSheet({ city }: { city: SmartCity }) {
           </div>
         </div>
 
-        {/* Box 3: Pain Points */}
+        {/* Box 3: Pain Points — deliberately blank; filled by hand during a workshop/site visit */}
         <div className="canvas-box canvas-box-empty">
           <h2 className="canvas-box-title">
             Pain Points & Opportunities <span style={{ opacity: 0.5, fontSize: "0.8em" }}>| จุดที่ต้องแก้และโอกาส</span>
           </h2>
+          <p className="canvas-box-hint">To be completed on site — this sheet is a workshop template, not a data field. | เว้นว่างเพื่อกรอกในพื้นที่จริง</p>
         </div>
 
-        {/* Box 4: Business Model */}
+        {/* Box 4: Business Model — deliberately blank; filled by hand during a workshop/site visit */}
         <div className="canvas-box canvas-box-empty">
           <h2 className="canvas-box-title">
             Business Model & Funding <span style={{ opacity: 0.5, fontSize: "0.8em" }}>| โมเดลธุรกิจและแหล่งทุน</span>
           </h2>
+          <p className="canvas-box-hint">To be completed on site — this sheet is a workshop template, not a data field. | เว้นว่างเพื่อกรอกในพื้นที่จริง</p>
         </div>
       </div>
 

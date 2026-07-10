@@ -150,7 +150,7 @@ const COUNTRIES: CountryVibe[] = [
       { label: { en: "Status", th: "สถานะ", zh: "状态" }, value: "Stalled" },
     ],
     community: {
-      en: "KDI + KOTRA + Yonsei + SCA Korea — a planning culture producing world-class blueprints. What Thailand learns: good design without local ownership is just expensive paper.",
+      en: "KDI + KOTRA + Yonsei + SCA Korea — a planning culture producing internationally cited blueprints. What Thailand learns: good design without local ownership is just expensive paper.",
       th: "KDI + KOTRA + Yonsei + SCA Korea — วัฒนธรรมวางแผนที่สร้าง blueprint ระดับโลก สิ่งที่ไทยได้เรียนรู้: ออกแบบดีโดยไม่มีเจ้าของท้องถิ่น ก็แค่กระดาษแพง",
       zh: "KDI + KOTRA + 延世 + 韩国智慧城市协会——产出世界级蓝图的规划文化。泰国学到的：没有本地所有权的好设计只是昂贵的纸张。",
     },

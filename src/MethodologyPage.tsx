@@ -714,14 +714,14 @@ export default function MethodologyPage({ locale }: Props) {
             zh: "SCITI Moneyball评分是一个加权综合指数，计算如下：",
           })}
         </p>
-        <ul style={{ listStyle: "decimal", paddingLeft: "2rem", marginBottom: "2rem", color: "var(--2)", fontSize: "0.95rem" }}>
+        <ul style={{ listStyle: "decimal", paddingLeft: "2rem", marginBottom: "2rem", color: "var(--2)", fontSize: "var(--text-body)" }}>
           <li style={{ marginBottom: "0.5rem" }}><strong>{t("GPP Growth Potential (30%)", "ศักยภาพการเติบโต GPP (30%)", "GPP增长潜力 (30%)")}</strong> — {t("GPP/capita relative to regional average", "GPP ต่อหัวเทียบกับค่าเฉลี่ยภูมิภาค", "相对于区域平均水平的人均GPP")}</li>
           <li style={{ marginBottom: "0.5rem" }}><strong>{t("Cost Advantage (25%)", "ข้อได้เปรียบด้านต้นทุน (25%)", "成本优势 (25%)")}</strong> — {t("Inverse ranking of minimum wage tier", "อันดับผกผันของอัตราค่าจ้างขั้นต่ำ", "最低工资等级的反向排名")}</li>
           <li style={{ marginBottom: "0.5rem" }}><strong>{t("Infrastructure Readiness (20%)", "ความพร้อมของโครงสร้างพื้นฐาน (20%)", "基础设施就绪度 (20%)")}</strong> — {t("Binary scoring across 6 dimensions (airport, rail, port, highway, 5G, university)", "การให้คะแนนแบบทวิวิภาคใน 6 มิติ (สนามบิน รถไฟ ท่าเรือ ทางหลวง 5G มหาวิทยาลัย)", "跨6个维度的二元评分 (机场、铁路、港口、高速公路、5G、大学)")}</li>
           <li style={{ marginBottom: "0.5rem" }}><strong>{t("Creative/Talent Index (15%)", "ดัชนีสร้างสรรค์และบุคลากร (15%)", "创意/人才指数 (15%)")}</strong> — {t("University students, UNESCO City status, CEA district, festival economy", "นักศึกษามหาวิทยาลัย สถานะเมืองยูเนสโก เขต CEA เศรษฐกิจเทศกาล", "大学生人数、联合国教科文组织城市地位、CEA街区、节日经济")}</li>
           <li style={{ marginBottom: "0.5rem" }}><strong>{t("Policy Support (10%)", "การสนับสนุนทางนโยบาย (10%)", "政策支持 (10%)")}</strong> — {t("BOI zone classification (EEC, SEZ, Corridors)", "การจัดกลุ่มเขต BOI (EEC, SEZ, ระเบียงเศรษฐกิจ)", "BOI区域分类 (EEC, SEZ, 经济走廊)")}</li>
         </ul>
-        <p style={{ fontSize: "0.95rem", color: "var(--3)", marginBottom: "2rem" }}>
+        <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "2rem" }}>
           {translate(locale, {
             en: "Scores are normalized to a 0-10 scale. >7.5 is \"Strong Buy\" (Tier 1), 6.5-7.5 is \"Buy\" (Tier 2), and <6.5 is \"Emerging\" (Tier 3).",
             th: "คะแนนถูกปรับให้เป็นสเกล 0-10 >7.5 คือ \"ซื้อแข็งแกร่ง\" (กลุ่ม 1), 6.5-7.5 คือ \"ซื้อ\" (กลุ่ม 2) และ <6.5 คือ \"ตลาดเกิดใหม่\" (กลุ่ม 3)",
@@ -730,7 +730,7 @@ export default function MethodologyPage({ locale }: Props) {
         </p>
 
         <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>{t("Limitations & Transparency", "ข้อจำกัดและความโปร่งใส", "局限性与透明度")}</h3>
-        <ul style={{ paddingLeft: "1.5rem", marginBottom: "2rem", color: "var(--3)", fontSize: "0.9rem" }}>
+        <ul style={{ paddingLeft: "1.5rem", marginBottom: "2rem", color: "var(--3)", fontSize: "var(--text-body)" }}>
           <li style={{ marginBottom: "0.5rem", listStyleType: "square" }}>{translate(locale, {
             en: "GPP data reflects 2019 chain-volume measures and may not capture post-pandemic recovery dynamics in real time.",
             th: "ข้อมูล GPP สะท้อนมูลค่า ณ ราคาปี 62 และอาจไม่สามารถจับทิศทางการฟื้นตัวหลังโรคระบาดแบบเรียลไทม์ได้",

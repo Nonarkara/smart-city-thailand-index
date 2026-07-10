@@ -5687,7 +5687,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .investor-card:hover { transform: none; background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.3); }
 .investor-card-name { font-size: var(--text-base); font-weight: 700; color: #fff; }
-.investor-card-score { font: 700 1rem var(--mono); color: var(--depa-yellow, #FFF200); }
+.investor-card-score { font: 700 1rem var(--mono); color: var(--depa-amber, #FFC600); }
 .investor-card-province { font-size: var(--text-xs); color: rgba(255,255,255,.6); }
 .investor-card-vibe { font: 500 var(--text-xs) var(--mono); color: var(--depa-amber, #FFC600); }
 .investor-cta-text { font-size: var(--text-base); color: rgba(255,255,255,.6); line-height: 1.55; max-width: 560px; }
@@ -10260,6 +10260,12 @@ body.canvas-print-mode {
 
 .canvas-box-empty {
   min-height: 80mm;
+}
+
+.canvas-box-hint {
+  font: 400 italic .7rem var(--font);
+  color: #888;
+  margin: 0;
 }
 
 .canvas-box-title {

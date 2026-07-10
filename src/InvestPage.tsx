@@ -134,7 +134,7 @@ const insightCards: InsightCard[] = [
     },
     body: {
       en: "Only 5% weight, but diagnostic. Cities that score high on Digital today are building the infrastructure for tomorrow's services. Low digital + high livability = a city coasting on legacy. High digital + low livability = investment thesis in motion.",
-      th: "มีน้ำหนักเพียง 5% แต่เป็นตัวชี้วัดสำคัญ เมืองที่ได้คะแนน Digital สูงวันนี้กำลังสร้างโครงสร้างพื้นฐานเพื่อบริการในอนาคต Digital ต่ำ + ความน่าอยู่สูง = เมืองที่พึ่งพามรดกเดิม Digital สูง + ความน่าอยู่ต่ำ = วิทยานิพนธ์การลงทุนที่กำลังเคลื่อนไหว",
+      th: "มีน้ำหนักเพียง 5% แต่เป็นตัวชี้วัดสำคัญ เมืองที่ได้คะแนน Digital สูงวันนี้กำลังสร้างโครงสร้างพื้นฐานเพื่อบริการในอนาคต Digital ต่ำ + ความน่าอยู่สูง = เมืองที่พึ่งพามรดกเดิม Digital สูง + ความน่าอยู่ต่ำ = สมมติฐานการลงทุนที่กำลังก่อตัว",
       zh: "仅占5%权重，但具诊断性。今天数字评分高的城市正在为明天的服务构建基础设施。低数字+高宜居=依赖存量的城市。高数字+低宜居=正在验证中的投资论点。",
     },
   },

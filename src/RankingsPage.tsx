@@ -349,7 +349,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               className="btn"
               onClick={() => onNavigate(`/canvas/top10`)}
               style={{
-                fontSize: "0.85rem",
+                fontSize: "var(--text-body)",
                 padding: "0.4rem 0.8rem",
                 borderRadius: "var(--radius-sm)",
                 display: "flex",

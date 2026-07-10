@@ -103,6 +103,13 @@ export default function AuditPage({ locale, onNavigate }: Props) {
             zh: "我们将自行报告的“公关”得分（灰色）与我们的独立“运维”评估（彩色条）进行对比。",
           })}
         </p>
+        <p className="section-intro" style={{ color: "var(--3)" }}>
+          {translate(locale, {
+            en: "These per-domain gaps are an illustrative model built from public messaging patterns, not a per-city crawl — treat them as directional, not a sourced claim like the numbers below.",
+            th: "ช่องว่างรายด้านนี้เป็นแบบจำลองประกอบภาพจากรูปแบบการสื่อสารสาธารณะ ไม่ใช่การเก็บข้อมูลรายเมือง — โปรดถือเป็นทิศทางคร่าวๆ ไม่ใช่ข้อมูลอ้างอิงแบบตัวเลขด้านล่าง",
+            zh: "各领域的差距为基于公开信息传播模式构建的示意模型，并非逐城市抓取的数据——请视为方向性参考，而非下方带来源的数据。",
+          })}
+        </p>
         <div className="audit-domain-grid">
           {domains.map((d, i) => (
             <div key={i} className="audit-domain-card shadow-premium">
