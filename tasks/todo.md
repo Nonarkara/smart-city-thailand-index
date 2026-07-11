@@ -33,4 +33,13 @@ re-confirmed against the actual source/live site before acting.
 ## Verify & ship
 - [x] tsc -b, vitest run, eslint, build clean
 - [x] visual re-check: homepage + investor section + city detail + methodology + rankings at 375px and desktop
+- [x] CDPT ship — commit 9912bb3, live and verified on sciti.nonarkara.org
+
+# Deep pre-submission review (2026-07-12, Fable 5)
+- [x] All 133 sitemap URLs live-checked — city URLs 308-redirected; sitemap/canonical/og:url now emit the direct-200 trailing-slash form (generator + siteMeta aligned; SPA router already normalized slashes by design)
+- [x] All 98 bundle-referenced images HEAD-checked live — zero 404s
+- [x] All 44 unique city OG share images HEAD-checked live — zero 404s
+- [x] TH + CN rendered views verified in browser (titles, nav, hero, digest — native quality)
+- [x] Dark mode verified — hero legibility overlay working as designed, contrast clean
+- [x] AnimatedScore: settle timer added — hero stats can no longer stick at 0/partial in rAF-throttled contexts (hidden tabs, crawlers, prerenderers); verified 118/39/37 settles even in a throttled pane
 - [ ] CDPT ship

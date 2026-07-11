@@ -170,7 +170,10 @@ function buildMeta(route: Route, locale: Locale) {
   const title = routeTitles[route.kind][locale];
   const description = defaultDescriptions[locale];
   const siteUrl = getSiteUrl();
-  const path = route.path === "/" ? "" : route.path;
+  // City pages canonicalize to the trailing-slash form — the URL Cloudflare
+  // Pages serves directly (200) for the static OG dirs; the slashless form
+  // 308-redirects. Must match generate-city-og-pages.mjs and sitemap.xml.
+  const path = route.path === "/" ? "" : route.kind === "city" ? `${route.path}/` : route.path;
   const canonicalUrl = `${siteUrl}${path}`;
   // Default share image — square logo
   let imageUrl = `${siteUrl}${SHARE_IMAGE_PATH}`;

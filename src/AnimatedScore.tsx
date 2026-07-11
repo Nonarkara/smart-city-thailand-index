@@ -72,8 +72,16 @@ export default function AnimatedScore({
     };
 
     rafRef.current = requestAnimationFrame(tick);
+
+    // rAF never fires in hidden/zero-size documents (background tabs,
+    // crawlers, prerenderers) — without this, the number would sit at its
+    // start value forever there. Snap to the target once the duration has
+    // passed; harmless no-op when the animation already finished.
+    const settle = window.setTimeout(() => setDisplayed(target), duration + 100);
+
     return () => {
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      window.clearTimeout(settle);
     };
   }, [target, computedStart, duration, decimals, reduced]);
 

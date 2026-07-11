@@ -82,7 +82,11 @@ for (const city of allCities) {
   const ogDesc =
     `${city.nameEn} smart city profile — composite score ${score}/100. ` +
     `${rankStr}Explore pillar scores, city highlights, and investment signals.`;
-  const cityUrl = `${BASE_URL}/city/${city.id}`;
+  // Trailing slash: Cloudflare Pages serves the static dir at /city/<id>/
+  // directly (200) and 308-redirects the slashless form. Canonical, og:url,
+  // and the sitemap all use the direct-200 form so crawlers never follow a
+  // redirect from our own metadata. The SPA router strips the slash on parse.
+  const cityUrl = `${BASE_URL}/city/${city.id}/`;
 
   // Replace existing meta content (template has these tags verbatim).
   let html = template
@@ -144,7 +148,7 @@ const STATIC_ROUTES = [
 const lastmod = new Date().toISOString().slice(0, 10);
 const urls = [
   ...STATIC_ROUTES.map((p) => ({ loc: p === "/" ? `${BASE_URL}/` : `${BASE_URL}${p}`, priority: p === "/" ? "1.0" : "0.8" })),
-  ...allCities.map((c) => ({ loc: `${BASE_URL}/city/${c.id}`, priority: "0.6" })),
+  ...allCities.map((c) => ({ loc: `${BASE_URL}/city/${c.id}/`, priority: "0.6" })),
 ];
 const sitemap =
   `<?xml version="1.0" encoding="UTF-8"?>\n` +
