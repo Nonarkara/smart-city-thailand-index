@@ -42,4 +42,4 @@ re-confirmed against the actual source/live site before acting.
 - [x] TH + CN rendered views verified in browser (titles, nav, hero, digest — native quality)
 - [x] Dark mode verified — hero legibility overlay working as designed, contrast clean
 - [x] AnimatedScore: settle timer added — hero stats can no longer stick at 0/partial in rAF-throttled contexts (hidden tabs, crawlers, prerenderers); verified 118/39/37 settles even in a throttled pane
-- [ ] CDPT ship
+- [x] CDPT ship — commit 6c4b06c, live and verified
