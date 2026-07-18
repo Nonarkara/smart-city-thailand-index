@@ -55,9 +55,9 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     zh: `${SITE_NAME} | 联合国人居署ASUS项目`,
   },
   audit: {
-    en: `${SITE_NAME} | depa Performance Audit`,
-    th: `${SITE_NAME} | ตรวจสอบผลการดำเนินงาน depa`,
-    zh: `${SITE_NAME} | depa绩效审计`,
+    en: `${SITE_NAME} | Jury Evidence Walk-through`,
+    th: `${SITE_NAME} | เส้นทางหลักฐานสำหรับคณะกรรมการ`,
+    zh: `${SITE_NAME} | 评审证据导览`,
   },
   partners: {
     en: `${SITE_NAME} | International Partnerships`,

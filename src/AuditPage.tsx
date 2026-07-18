@@ -1,5 +1,16 @@
+import { useMemo } from "react";
+import { assetUrl } from "./assetUtils";
+import { buildAuditReleaseSummary } from "./auditData";
+import { getCityFactsCsv } from "./cityCdp";
 import { translate } from "./cityPresentation";
+import { dataSources } from "./evidenceData";
+import {
+  SCITI_DATA_CUTOFF_ISO,
+  SCITI_METHOD_CODE,
+  SCITI_METHOD_VERSION,
+} from "./methodologySpec";
 import type { Locale } from "./types";
+import { PILLAR_LABELS } from "./types";
 import { useInView } from "./useInView";
 
 interface Props {
@@ -7,203 +18,231 @@ interface Props {
   onNavigate: (path: string) => void;
 }
 
-const timelineEvents = [
-  { year: "2018", type: "pos", text: { en: "National Smart City Committee formed. Vision of 100+ cities.", th: "จัดตั้งคณะกรรมการเมืองอัจฉริยะแห่งชาติ วางวิสัยทัศน์ 100+ เมือง", zh: "国家智慧城市委员会成立。愿景 100+ 城市。" } },
-  { year: "2019", type: "pos", text: { en: "Smart City Thailand Office (depa) formally opens.", th: "เปิดสำนักงานเมืองอัจฉริยะประเทศไทย (depa) อย่างเป็นทางการ", zh: "泰国智慧城市办公室 (depa) 正式启用。" } },
-  { year: "2020", type: "neu", text: { en: "Pandemic shifts focus to health-tech and contact tracing.", th: "โรคระบาดเปลี่ยนโฟกัสไปที่ health-tech และการติดตามผู้สัมผัส", zh: "疫情使重点转向健康科技和接触者追踪。" } },
-  { year: "2021", type: "neg", text: { en: "First wave of certification. Criticism over 'marketing-first' approach.", th: "การรับรองระลอกแรก เริ่มมีข้อวิจารณ์เรื่อง 'การตลาดนำ'", zh: "第一波认证。对“营销优先”模式的批评。" } },
-  { year: "2023", type: "neu", text: { en: "Integration with ASEAN Smart Cities Network. Standards tightening.", th: "บูรณาการกับ ASEAN Smart Cities Network เริ่มคุมมาตรฐานเข้มขึ้น", zh: "融入东盟智慧城市网络。标准收紧。" } },
-  { year: "2025", type: "neg", text: { en: "Audit phase begins. High delta found between plans and reality.", th: "เริ่มเฟสการตรวจสอบ พบช่องว่างขนาดใหญ่ระหว่างแผนกับความจริง", zh: "审计阶段开始。发现规划与现实之间存在巨大差距。" } },
-];
+const GITHUB_URL = "https://github.com/Nonarkara/smart-city-thailand-index";
+const LINKED_DATA_SOURCES = dataSources.filter(source => source.url.trim() !== "");
 
-const kpis = [
-  { value: "37", label: { en: "Certified Cities", th: "เมืองที่ได้รับการรับรอง", zh: "认证城市" }, sub: { en: "Official count", th: "จำนวนทางการ", zh: "官方统计" } },
-  { value: "4", label: { en: "Alpha Tier", th: "ระดับ Alpha", zh: "Alpha 层级" }, sub: { en: "Operational reality", th: "ความจริงเชิงปฏิบัติการ", zh: "运维现实" } },
-  { value: "21", label: { en: "Dead Links", th: "ลิงก์เสีย", zh: "失效链接" }, sub: { en: "Open Data targets", th: "เป้าหมาย Open Data", zh: "开放数据目标" } },
-  { value: "12%", label: { en: "Citizen Usage", th: "การใช้งานจริงโดยคน", zh: "市民使用率" }, sub: { en: "Average adoption", th: "ค่าเฉลี่ยการใช้งาน", zh: "平均采用率" } },
-];
-
-const domains = [
-  { name: { en: "Smart Environment", th: "สิ่งแวดล้อมอัจฉริยะ", zh: "智慧环境" }, pr: 95, real: 42 },
-  { name: { en: "Smart Economy", th: "เศรษฐกิจอัจฉริยะ", zh: "智慧经济" }, real: 38, pr: 88 },
-  { name: { en: "Smart Governance", th: "การปกครองอัจฉริยะ", zh: "智慧治理" }, real: 55, pr: 92 },
-  { name: { en: "Smart Living", th: "การใช้ชีวิตอัจฉริยะ", zh: "智慧生活" }, real: 61, pr: 85 },
-  { name: { en: "Smart Mobility", th: "การขนส่งอัจฉริยะ", zh: "智慧出行" }, real: 49, pr: 90 },
-  { name: { en: "Smart People", th: "พลเมืองอัจฉริยะ", zh: "智慧人文" }, real: 28, pr: 82 },
-  { name: { en: "Smart Energy", th: "พลังงานอัจฉริยะ", zh: "智慧能源" }, real: 44, pr: 87 },
-];
+function downloadFactsCsv() {
+  const blob = new Blob([getCityFactsCsv()], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "sciti-2026-source-linked-facts.csv";
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
 
 export default function AuditPage({ locale, onNavigate }: Props) {
-  const [timelineRef, timelineVisible] = useInView(0.1);
-  const [kpiRef, kpiVisible] = useInView(0.1);
-  const [domainRef, domainVisible] = useInView(0.1);
-  const [socialRef, socialVisible] = useInView(0.1);
-  const [recRef, recVisible] = useInView(0.1);
+  const [scopeRef, scopeVisible] = useInView(0.1);
+  const [proofRef, proofVisible] = useInView(0.1);
+  const [sourceRef, sourceVisible] = useInView(0.1);
+  const [limitsRef, limitsVisible] = useInView(0.1);
+  const [routeRef, routeVisible] = useInView(0.1);
+
+  const audit = useMemo(() => buildAuditReleaseSummary(), []);
+
+  const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
+  const releaseDate = SCITI_DATA_CUTOFF_ISO.slice(0, 10);
+
+  const scopeKpis = [
+    {
+      value: audit.cities.length,
+      label: { en: "City records", th: "ระเบียนเมือง", zh: "城市记录" },
+      sub: { en: "Release dataset", th: "ชุดข้อมูลฉบับเผยแพร่", zh: "发布数据集" },
+    },
+    {
+      value: audit.fullDossiers,
+      label: { en: "Research dossiers", th: "แฟ้มวิจัย", zh: "研究档案" },
+      sub: { en: "Certified + promotion", th: "รับรอง + เขตส่งเสริม", zh: "认证 + 推广" },
+    },
+    {
+      value: audit.metricRows,
+      label: { en: "Baseline rows", th: "แถวข้อมูลฐาน", zh: "基线数据行" },
+      sub: { en: "In provenance export", th: "ในไฟล์ส่งออกแหล่งที่มา", zh: "溯源导出" },
+    },
+    {
+      value: LINKED_DATA_SOURCES.length,
+      label: { en: "Source families", th: "ตระกูลแหล่งข้อมูล", zh: "来源族群" },
+      sub: { en: "Public registry", th: "ทะเบียนสาธารณะ", zh: "公开名录" },
+    },
+  ];
+
+  const confidenceRows = [
+    {
+      key: "high",
+      value: audit.confidence.high,
+      label: { en: "High confidence", th: "ความเชื่อมั่นสูง", zh: "高置信" },
+      desc: { en: "Full research dossiers with baseline coverage and provenance support.", th: "แฟ้มวิจัยเต็มรูปแบบ มีข้อมูลฐานและแหล่งที่มารองรับ", zh: "具备基线覆盖与溯源支持的完整研究档案。" },
+    },
+    {
+      key: "medium",
+      value: audit.confidence.medium,
+      label: { en: "Medium confidence", th: "ความเชื่อมั่นปานกลาง", zh: "中置信" },
+      desc: { en: "The formula allows this band; this release currently contains none.", th: "สูตรรองรับระดับนี้ แต่ฉบับปัจจุบันยังไม่มีเมืองในกลุ่มนี้", zh: "模型保留此等级；当前版本暂无记录。" },
+    },
+    {
+      key: "low",
+      value: audit.confidence.low,
+      label: { en: "Registry only", th: "ข้อมูลระดับทะเบียน", zh: "仅名录信息" },
+      desc: { en: "Kept visible as gaps, not padded with invented municipal metrics.", th: "คงไว้ให้เห็นช่องว่าง โดยไม่เติมตัวชี้วัดระดับเมืองขึ้นมาเอง", zh: "保留缺口，不以虚构的市级指标填充。" },
+    },
+  ];
 
   return (
     <div className="audit-page">
       <section className="section audit-hero reveal visible">
-        <p className="eyebrow">{translate(locale, { en: "Technical Audit", th: "การตรวจสอบทางเทคนิค", zh: "技术审计" })}</p>
-        <h1 className="hero-title">{translate(locale, { en: "Institutional Honesty.", th: "ความซื่อสัตย์ของสถาบัน", zh: "体制诚信。" })}</h1>
+        <p className="eyebrow">{t({ en: "Jury walk-through", th: "เส้นทางสำหรับคณะกรรมการ", zh: "评审导览" })}</p>
+        <h1 className="hero-title">{t({ en: "Follow the evidence, not the pitch.", th: "ตามหลักฐาน ไม่ใช่คำโฆษณา", zh: "看证据，不听推销。" })}</h1>
         <p className="hero-strapline">
-          {translate(locale, {
-            en: "This is the evidence layer. We map public announcements to technical infrastructure logs and report gaps plainly when systems are offline.",
-            th: "นี่คือชั้นหลักฐาน เราจับคู่คำแถลงสาธารณะกับบันทึกโครงสร้างพื้นฐานทางเทคนิค และรายงานช่องว่างอย่างตรงไปตรงมาเมื่อระบบไม่พร้อมใช้งาน",
-            zh: "这是证据层。我们将公开公告与技术基础设施日志对应，并在系统离线时清楚说明差距。",
+          {t({
+            en: "This is the shortest route through SCITI: release scope, one reproducible score, source institutions, exports, and the limits we will not hide.",
+            th: "นี่คือเส้นทางสั้นที่สุดในการตรวจ SCITI: ขอบเขตฉบับเผยแพร่ ตัวอย่างคะแนนที่คำนวณซ้ำได้ สถาบันต้นทาง ไฟล์ส่งออก และข้อจำกัดที่เราไม่ปกปิด",
+            zh: "这是审阅 SCITI 的最短路径：发布范围、一项可复算评分、来源机构、导出文件，以及我们不会隐藏的局限。",
           })}
         </p>
-      </section>
-
-      {/* ─── HISTORY TIMELINE ─── */}
-      <section ref={timelineRef} className={`section audit-section reveal stagger-1 ${timelineVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Timeline of Reality", th: "ไทม์ไลน์ความจริง", zh: "现实时间线" })}</p>
-        <h2>{translate(locale, { en: "How we got here", th: "เรามาถึงจุดนี้ได้อย่างไร", zh: "我们是如何走到这一步的" })}</h2>
-        <div className="audit-timeline">
-          {timelineEvents.map((ev, i) => (
-            <div key={i} className="audit-timeline-row">
-              <span className={`audit-timeline-year ${ev.type}`}>{ev.year}</span>
-              <p className="audit-timeline-event">{translate(locale, ev.text)}</p>
-            </div>
-          ))}
-        </div>
-        <div className="audit-verdict">
-          <p className="audit-verdict-label">{translate(locale, { en: "Audit Verdict", th: "คำวินิจฉัยตรวจสอบ", zh: "审计结论" })}</p>
-          <p className="audit-verdict-text">
-            {translate(locale, {
-              en: "The current trajectory shows a significant 'Identity Crisis'. Cities are buying equipment faster than they are training staff or engaging citizens. The risk of stranded assets is high.",
-              th: "ทิศทางปัจจุบันแสดงถึง 'วิกฤตอัตลักษณ์' ที่ชัดเจน เมืองต่างๆ ซื้ออุปกรณ์เร็วกว่าการฝึกอบรมเจ้าหน้าที่หรือการดึงประชาชนมามีส่วนร่วม ความเสี่ยงเรื่องทรัพย์สินที่ใช้งานไม่ได้นั้นสูงมาก",
-              zh: "目前的轨迹显示出明显的“身份危机”。城市购买设备的速度超过了培训员工或吸引公民参与的速度。资产搁淺风险很高。",
-            })}
-          </p>
+        <div className="audit-release-stamp">
+          <span>{SCITI_METHOD_CODE}</span>
+          <span>{t({ en: "Version", th: "เวอร์ชัน", zh: "版本" })} {SCITI_METHOD_VERSION}</span>
+          <span>{t({ en: "Release cut-off", th: "วันตัดข้อมูล", zh: "发布截点" })} {releaseDate}</span>
         </div>
       </section>
 
-      {/* ─── MACRO KPIs ─── */}
-      <section ref={kpiRef} className={`section audit-section reveal stagger-2 ${kpiVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Macro KPI", th: "ตัวชี้วัดมหาภาค", zh: "宏观 KPI" })}</p>
+      <section ref={scopeRef} className={`section audit-section reveal stagger-1 ${scopeVisible ? "visible" : ""}`}>
+        <p className="eyebrow">{t({ en: "01 / Scope", th: "01 / ขอบเขต", zh: "01 / 范围" })}</p>
+        <h2>{t({ en: "What is actually in this release", th: "สิ่งที่อยู่ในฉบับนี้จริง", zh: "本次发布实际包含什么" })}</h2>
         <div className="audit-kpi-grid">
-          {kpis.map((k, i) => (
-            <div key={i} className="audit-kpi shadow-premium">
-              <div className="audit-kpi-value">{k.value}</div>
-              <div className="audit-kpi-label">{translate(locale, k.label)}</div>
-              <div className="audit-kpi-sub">{translate(locale, k.sub)}</div>
+          {scopeKpis.map(item => (
+            <div key={item.label.en} className="audit-kpi">
+              <div className="audit-kpi-value">{item.value}</div>
+              <div className="audit-kpi-label">{t(item.label)}</div>
+              <div className="audit-kpi-sub">{t(item.sub)}</div>
             </div>
           ))}
         </div>
+        <div className="audit-scope-ledger" aria-label={t({ en: "Release composition", th: "องค์ประกอบฉบับเผยแพร่", zh: "发布构成" })}>
+          <span>{t({ en: "Certified", th: "รับรองแล้ว", zh: "已认证" })} <strong>{audit.status.certified}</strong></span>
+          <span>{t({ en: "Promotion", th: "เขตส่งเสริม", zh: "推广" })} <strong>{audit.status.promotion}</strong></span>
+          <span>{t({ en: "Registered", th: "ขึ้นทะเบียน", zh: "已登记" })} <strong>{audit.status.registered}</strong></span>
+        </div>
+        <p className="audit-disclosure">
+          {t({
+            en: `SCITI does not claim that all ${audit.cities.length} records have equal evidence. ${audit.registeredOnly} registry-only entries remain deliberately low-confidence until city-level evidence is available. This release is an index dataset, not the complete national proposal registry.`,
+            th: `SCITI ไม่อ้างว่าระเบียนทั้ง ${audit.cities.length} แห่งมีหลักฐานเท่ากัน รายการระดับทะเบียน ${audit.registeredOnly} แห่งถูกคงไว้ที่ความเชื่อมั่นต่ำโดยตั้งใจ จนกว่าจะมีหลักฐานระดับเมือง ฉบับนี้คือชุดข้อมูลดัชนี ไม่ใช่ทะเบียนข้อเสนอระดับชาติทั้งหมด`,
+            zh: `SCITI 不声称 ${audit.cities.length} 条记录拥有同等证据。${audit.registeredOnly} 条仅名录记录在取得市级证据前会保持低置信。本版本是指数数据集，并非全国全部提案名录。`,
+          })}
+        </p>
       </section>
 
-      {/* ─── DOMAIN PERFORMANCE GAP ─── */}
-      <section ref={domainRef} className={`section audit-section reveal stagger-3 ${domainVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Domain Audit", th: "ตรวจสอบรายแอป", zh: "领域审计" })}</p>
-        <h2>{translate(locale, { en: "The Performance Gap", th: "ช่องว่างของสมรรถนะ", zh: "性能差距" })}</h2>
+      <section ref={proofRef} className={`section audit-section reveal stagger-2 ${proofVisible ? "visible" : ""}`}>
+        <p className="eyebrow">{t({ en: "02 / Reproduce", th: "02 / คำนวณซ้ำ", zh: "02 / 复算" })}</p>
+        <h2>{t({ en: `Rebuild ${audit.example.nameEn}'s score`, th: `คำนวณคะแนน ${audit.example.nameTh} ใหม่`, zh: `复算 ${audit.example.nameEn} 的分数` })}</h2>
         <p className="section-intro">
-          {translate(locale, {
-            en: "We compare self-reported 'PR' scores (grey) against our independent 'Operational' assessment (colored bars).",
-            th: "เราเปรียบเทียบคะแนน 'PR' ที่รายงานตัวเอง (สีเทา) กับการประเมิน 'เชิงปฏิบัติการ' ที่เป็นอิสระของเรา (แถบสี)",
-            zh: "我们将自行报告的“公关”得分（灰色）与我们的独立“运维”评估（彩色条）进行对比。",
+          {t({
+            en: "The composite is arithmetic, not editorial judgement. Multiply each published pillar score by its fixed weight, sum the contributions, and round to one decimal place.",
+            th: "คะแนนรวมเป็นเลขคณิต ไม่ใช่ดุลยพินิจของบรรณาธิการ นำคะแนนแต่ละเสาหลักคูณน้ำหนักคงที่ รวมผลลัพธ์ แล้วปัดเป็นทศนิยมหนึ่งตำแหน่ง",
+            zh: "综合分是算术结果，不是编辑判断。将每项公开支柱分乘以固定权重，合计贡献值，再保留一位小数。",
           })}
         </p>
-        <p className="section-intro" style={{ color: "var(--3)" }}>
-          {translate(locale, {
-            en: "These per-domain gaps are an illustrative model built from public messaging patterns, not a per-city crawl — treat them as directional, not a sourced claim like the numbers below.",
-            th: "ช่องว่างรายด้านนี้เป็นแบบจำลองประกอบภาพจากรูปแบบการสื่อสารสาธารณะ ไม่ใช่การเก็บข้อมูลรายเมือง — โปรดถือเป็นทิศทางคร่าวๆ ไม่ใช่ข้อมูลอ้างอิงแบบตัวเลขด้านล่าง",
-            zh: "各领域的差距为基于公开信息传播模式构建的示意模型，并非逐城市抓取的数据——请视为方向性参考，而非下方带来源的数据。",
-          })}
-        </p>
+        <div className="audit-proof">
+          <div className="audit-proof-terms">
+            {audit.breakdown.terms.map(term => (
+              <div key={term.pillar} className="audit-proof-row">
+                <span>{PILLAR_LABELS[locale][term.pillar]}</span>
+                <code>{term.score} × {term.weight}%</code>
+                <strong>{term.contribution.toFixed(2)}</strong>
+              </div>
+            ))}
+          </div>
+          <div className="audit-proof-result">
+            <span>{t({ en: "Published composite", th: "คะแนนรวมที่เผยแพร่", zh: "公开综合分" })}</span>
+            <strong>{audit.breakdown.composite.toFixed(1)}</strong>
+            <code>{audit.breakdown.terms.map(term => term.contribution.toFixed(2)).join(" + ")} = {audit.breakdown.composite.toFixed(1)}</code>
+          </div>
+        </div>
         <div className="audit-domain-grid">
-          {domains.map((d, i) => (
-            <div key={i} className="audit-domain-card shadow-premium">
-              <h3 className="audit-domain-name">{translate(locale, d.name)}</h3>
-              <div className="audit-domain-scores">
-                <div className="audit-domain-score-box">
-                  <span className="audit-domain-score-label">Real</span>
-                  <span className="audit-domain-score-val" style={{ color: d.real > 50 ? 'var(--alpha)' : 'var(--gamma)' }}>{d.real}</span>
-                </div>
-                <div className="audit-domain-divider">/</div>
-                <div className="audit-domain-score-box">
-                  <span className="audit-domain-score-label">PR</span>
-                  <span className="audit-domain-score-val" style={{ color: 'var(--4)' }}>{d.pr}</span>
-                </div>
-              </div>
-              <div className="audit-gap-meter">
-                <div className="audit-gap-fill-pr" style={{ width: `${d.pr}%` }}></div>
-                <div className="audit-gap-fill-result" style={{ width: `${d.real}%`, background: d.real > 50 ? 'var(--alpha)' : 'var(--gamma)' }}></div>
-              </div>
+          {confidenceRows.map(row => (
+            <div key={row.key} className="audit-domain-card">
+              <h3 className="audit-domain-name">{t(row.label)}</h3>
+              <div className="audit-domain-score-val">{row.value}</div>
+              <p className="audit-domain-description">{t(row.desc)}</p>
             </div>
           ))}
         </div>
+      </section>
 
-        {/* MISSION LOG / TRACE LOG */}
-        <div className="audit-trace-log shadow-heavy">
-          <div className="audit-trace-header">[MISSION LOG — SCITI SYSTEM AUDIT — v2.0 — APRIL 2026 SNAPSHOT]</div>
-          <div className="audit-trace-row">
-            <span className="audit-trace-ts">2026-04-05 08:31:02</span>
-            <span className="audit-trace-msg">Pinging Open Data API endpoints for 37 certified cities...</span>
-            <span className="audit-trace-status status-pass">PASS</span>
-          </div>
-          <div className="audit-trace-row">
-            <span className="audit-trace-ts">2026-04-05 08:31:05</span>
-            <span className="audit-trace-msg">Analyzing certificate vs. sensor metadata delta...</span>
-            <span className="audit-trace-status status-warn">WARN</span>
-          </div>
-          <div className="audit-trace-row">
-            <span className="audit-trace-ts">2026-04-05 08:31:12</span>
-            <span className="audit-trace-msg">Verifying citizen feedback integration (LINE/Traffy)...</span>
-            <span className="audit-trace-status status-fail">FAIL</span>
-          </div>
-          <div className="audit-trace-row">
-            <span className="audit-trace-ts">2026-04-05 08:31:15</span>
-            <span className="audit-trace-msg">Compiling Reality Tiers based on operational uptime...</span>
-            <span className="audit-trace-status status-pass">PASS</span>
-          </div>
-          <div style={{ color: '#555', marginTop: '0.4rem' }}>&gt; Audit complete. Delta 44.2% identified. System integrity compromised.</div>
+      <section ref={sourceRef} className={`section audit-section reveal stagger-3 ${sourceVisible ? "visible" : ""}`}>
+        <p className="eyebrow">{t({ en: "03 / Sources", th: "03 / แหล่งข้อมูล", zh: "03 / 来源" })}</p>
+        <h2>{t({ en: "Open the institutions behind the rows", th: "เปิดดูสถาบันต้นทางของแต่ละแถว", zh: "打开每行数据背后的机构" })}</h2>
+        <p className="section-intro">
+          {t({
+            en: `${audit.sourceLinkedMetricRows} of ${audit.metricRows} exported baseline rows carry a source-institution URL. A link identifies the responsible publisher; it is not presented as proof that every value is municipal rather than provincial.`,
+            th: `แถวข้อมูลฐานที่ส่งออก ${audit.sourceLinkedMetricRows} จาก ${audit.metricRows} แถว มี URL ของสถาบันต้นทาง ลิงก์นี้ระบุผู้เผยแพร่ที่รับผิดชอบ ไม่ได้ใช้แสร้งว่าทุกค่าเป็นข้อมูลระดับเทศบาลแทนข้อมูลระดับจังหวัด`,
+            zh: `${audit.metricRows} 条导出基线中有 ${audit.sourceLinkedMetricRows} 条带来源机构链接。链接用于标明责任发布方，并不把省级值冒充为市级值。`,
+          })}
+        </p>
+        <div className="audit-source-grid">
+          {LINKED_DATA_SOURCES.map(source => (
+            <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer" className="audit-source-card">
+              <span className="audit-source-type">{source.type}</span>
+              <strong>{source.name}</strong>
+              <span>{source.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
+              <span className="audit-source-frequency">{source.metrics.join(" · ")} ↗</span>
+            </a>
+          ))}
+        </div>
+        <div className="audit-verified-claims">
+          {audit.verifiedClaims.map(claim => (
+            <div key={claim.id} className="audit-verified-claim">
+              <span>{claim.value}</span>
+              <strong>{translate(locale, claim.label)}</strong>
+              {claim.sourceUrl ? <a href={claim.sourceUrl} target="_blank" rel="noopener noreferrer">{t({ en: "Official source ↗", th: "แหล่งทางการ ↗", zh: "官方来源 ↗" })}</a> : null}
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ─── SENTIMENT ANALYSIS ─── */}
-      <section ref={socialRef} className={`section audit-section reveal stagger-4 ${socialVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Social Audit", th: "ตรวจสอบสังคม", zh: "社会审计" })}</p>
-        <h2>{translate(locale, { en: "Citizen Sentiment", th: "ความรู้สึกพลเมือง", zh: "市民情绪" })}</h2>
+      <section ref={limitsRef} className={`section audit-section reveal stagger-4 ${limitsVisible ? "visible" : ""}`}>
+        <p className="eyebrow">{t({ en: "04 / Limits", th: "04 / ข้อจำกัด", zh: "04 / 局限" })}</p>
+        <h2>{t({ en: "What the index does not know", th: "สิ่งที่ดัชนียังไม่รู้", zh: "指数不知道什么" })}</h2>
         <div className="audit-sentiment-grid">
           <div className="audit-sentiment-card">
-            <p className="audit-sentiment-label" style={{ color: 'var(--gamma)' }}>{translate(locale, { en: "Frustration", th: "ความหงุดหงิด", zh: "沮丧" })}</p>
-            <div className="audit-sentiment-pct">68%</div>
-            <p className="audit-sentiment-desc">{translate(locale, { en: "Mentions of 'apps that don't work' or 'broken links' in social scraping.", th: "การพูดถึง 'แอปที่ใช้งานไม่ได้' หรือ 'ลิงก์เสีย' ในการขุดข้อมูลโซเชียล", zh: "社交媒体抓取中提到的“运行不灵的应用”或“死链”。" })}</p>
+            <p className="audit-sentiment-label">{t({ en: "Geographic level", th: "ระดับพื้นที่", zh: "地理层级" })}</p>
+            <div className="audit-sentiment-pct">PROXY</div>
+            <p className="audit-sentiment-desc">{t({ en: "Several economic, health, safety, and environmental baselines are provincial proxies for smaller city units. Each dossier labels that method role.", th: "ข้อมูลฐานด้านเศรษฐกิจ สุขภาพ ความปลอดภัย และสิ่งแวดล้อมหลายรายการเป็นตัวแทนระดับจังหวัดสำหรับหน่วยเมืองที่เล็กกว่า โดยแฟ้มเมืองระบุบทบาทนี้ไว้", zh: "部分经济、健康、安全与环境基线以省级数据代理较小城市单元；每份档案均标明该方法角色。" })}</p>
           </div>
           <div className="audit-sentiment-card">
-            <p className="audit-sentiment-label" style={{ color: 'var(--alpha)' }}>{translate(locale, { en: "Hope", th: "ความหวัง", zh: "希望" })}</p>
-            <div className="audit-sentiment-pct">22%</div>
-            <p className="audit-sentiment-desc">{translate(locale, { en: "Positive mentions of specific local services (Traffy Fondue, Smart Bus).", th: "การพูดถึงเชิงบวกต่อบริการท้องถิ่นเฉพาะทาง (Traffy Fondue, Smart Bus)", zh: "对特定地方服务（Traffy Fondue, Smart Bus）的正向提及。" })}</p>
+            <p className="audit-sentiment-label">{t({ en: "Pillar scores", th: "คะแนนเสาหลัก", zh: "支柱评分" })}</p>
+            <div className="audit-sentiment-pct">JUDGEMENT</div>
+            <p className="audit-sentiment-desc">{t({ en: "Pillar scores are structured research assessments anchored in indicators and evidence. They are not raw API outputs. The composite alone is deterministic.", th: "คะแนนเสาหลักเป็นการประเมินงานวิจัยอย่างมีโครงสร้าง ยึดกับตัวชี้วัดและหลักฐาน ไม่ใช่ผลลัพธ์ดิบจาก API มีเพียงคะแนนรวมที่คำนวณแบบตายตัว", zh: "支柱分是以指标与证据为锚的结构化研究判断，并非 API 原始输出；只有综合分是确定性计算。" })}</p>
           </div>
           <div className="audit-sentiment-card">
-            <p className="audit-sentiment-label" style={{ color: 'var(--3)' }}>{translate(locale, { en: "Indifference", th: "ความเฉยเมย", zh: "漠不关心" })}</p>
-            <div className="audit-sentiment-pct">10%</div>
-            <p className="audit-sentiment-desc">{translate(locale, { en: "Citizens unaware their city is officially 'smart'.", th: "พลเมืองไม่รู้ว่าเมืองของเขานั้นเป็น 'เมืองอัจฉริยะ' อย่างเป็นทางการ", zh: "市民甚至不知道他们的城市已被正式认证为“智慧”城市。" })}</p>
+            <p className="audit-sentiment-label">{t({ en: "Missing evidence", th: "หลักฐานที่ขาด", zh: "证据缺口" })}</p>
+            <div className="audit-sentiment-pct">VISIBLE</div>
+            <p className="audit-sentiment-desc">{t({ en: "Registry-only cities stay low-confidence. Unknown municipal values are not silently converted to zero, and confidence never changes the published composite.", th: "เมืองที่มีเพียงข้อมูลทะเบียนจะอยู่ในระดับความเชื่อมั่นต่ำ ค่าระดับเทศบาลที่ไม่ทราบจะไม่ถูกเปลี่ยนเป็นศูนย์ และค่าความเชื่อมั่นไม่เปลี่ยนคะแนนรวม", zh: "仅名录城市保持低置信；未知市级值不会被悄然改成零，置信度也不会改写综合分。" })}</p>
           </div>
         </div>
       </section>
 
-      {/* ─── RECOMMENDATIONS ─── */}
-      <section ref={recRef} className={`section audit-section reveal stagger-5 ${recVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Strategic Directives", th: "คำสั่งยุทธศาสตร์", zh: "战略指令" })}</p>
-        <h2>{translate(locale, { en: "Recommendations", th: "ข้อเสนอแนะ", zh: "建议" })}</h2>
-        <div className="audit-rec-grid">
-          <div className="audit-rec-card shadow-premium">
-            <div className="audit-rec-type audit-rec-more">DO MORE</div>
-            <button type="button" className="audit-rec-action" onClick={() => onNavigate("/why")}>
-              <h3 className="audit-rec-title">{translate(locale, { en: "Human Infrastructure", th: "โครงสร้างพื้นฐานมนุษย์", zh: "人文基础设施" })}</h3>
-              <p className="audit-rec-body">{translate(locale, { en: "Invest in training municipal staff before buying dashboards. A smart city is an operational skill, not a software license.", th: "ลงทุนในการฝึกอบรมเจ้าหน้าที่เทศบาลก่อนซื้อแดชบอร์ด เมืองอัจฉริยะคือทักษะการปฏิบัติงาน ไม่ใช่แค่ใบอนุญาตซอฟต์แวร์", zh: "在购买仪表板之前，先投资于市政职员培训。智慧城市是一项运维技能，而非软件许可证。" })}</p>
-              <div className="audit-rec-evidence">{translate(locale, { en: "Based on success in Khon Kaen local consortium models.", th: "อ้างอิงจากความสำเร็จในโมเดล KKTS ที่ขอนแก่น", zh: "基于孔敬地方联盟模式的成功经验。" })}</div>
-            </button>
-          </div>
-          <div className="audit-rec-card shadow-premium">
-            <div className="audit-rec-type audit-rec-less">DO LESS</div>
-            <div>
-              <h3 className="audit-rec-title">{translate(locale, { en: "Ribbon Cutting", th: "พิธีตัดริบบิ้น", zh: "剪彩仪式" })}</h3>
-              <p className="audit-rec-body">{translate(locale, { en: "Stop the ceremonial cycle. Move toward permanent, funded maintenance budgets for digital assets.", th: "หยุดวงจรพิธีกรรม เปลี่ยนไปสู่การตั้งงบประมาณบำรุงรักษาถาวรสำหรับสินทรัพย์ดิจิทัล", zh: "停止仪式化循环。向为数字资产建立永久性、有资金支持的运维预算方向转变。" })}</p>
-              <div className="audit-rec-evidence">{translate(locale, { en: "21% dead link rate identified in active certification projects.", th: "พบอัตราลิงก์เสีย 21% ในโครงการที่ได้รับการรับรอง", zh: "在活跃认证项目中发现 21% 的死链率。" })}</div>
-            </div>
-          </div>
+      <section ref={routeRef} className={`section audit-section reveal stagger-5 ${routeVisible ? "visible" : ""}`}>
+        <p className="eyebrow">{t({ en: "Jury route", th: "เส้นทางคณะกรรมการ", zh: "评审路线" })}</p>
+        <h2>{t({ en: "Four checks. About four minutes.", th: "สี่จุดตรวจ ใช้เวลาประมาณสี่นาที", zh: "四项核验，约四分钟。" })}</h2>
+        <div className="audit-route-grid">
+          <button type="button" onClick={() => onNavigate("/rankings")}>
+            <span>01</span><strong>{t({ en: "Test the ranking", th: "ทดสอบอันดับ", zh: "检验排名" })}</strong><small>{t({ en: "Change pillar and filters", th: "เปลี่ยนเสาหลักและตัวกรอง", zh: "切换支柱与筛选" })}</small>
+          </button>
+          <button type="button" onClick={() => onNavigate(`/city/${audit.example.id}`)}>
+            <span>02</span><strong>{t({ en: "Open one dossier", th: "เปิดแฟ้มเมืองหนึ่งแห่ง", zh: "打开一份城市档案" })}</strong><small>{audit.example.nameEn}</small>
+          </button>
+          <button type="button" onClick={() => onNavigate("/methodology")}>
+            <span>03</span><strong>{t({ en: "Challenge the method", th: "ตรวจทานระเบียบวิธี", zh: "质疑方法" })}</strong><small>{SCITI_METHOD_CODE}</small>
+          </button>
+          <button type="button" onClick={downloadFactsCsv}>
+            <span>04</span><strong>{t({ en: "Take the evidence", th: "ดาวน์โหลดหลักฐาน", zh: "下载证据" })}</strong><small>CSV · {audit.metricRows} {t({ en: "baseline rows", th: "แถวข้อมูลฐาน", zh: "条基线" })}</small>
+          </button>
+        </div>
+        <div className="audit-open-links">
+          <a href={assetUrl("/downloads/SCITI-2026-cities-dataset.csv")} download>{t({ en: "118-city dataset (CSV)", th: "ชุดข้อมูล 118 เมือง (CSV)", zh: "118 城市数据集 (CSV)" })}</a>
+          <a href={assetUrl("/downloads/SCITI-2026-Methodology.pdf")} download>{t({ en: "Methodology paper (PDF)", th: "เอกสารระเบียบวิธี (PDF)", zh: "方法论文 (PDF)" })}</a>
+          <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">{t({ en: "Public source code ↗", th: "ซอร์สโค้ดสาธารณะ ↗", zh: "公开源代码 ↗" })}</a>
         </div>
       </section>
     </div>

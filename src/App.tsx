@@ -160,7 +160,7 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
   audit: {
     src: "/photos/wp-chachoengsao.jpg",
     objectPosition: "center 40%",
-    title: { en: "Audit", th: "การตรวจสอบ", zh: "审计" },
+    title: { en: "Jury walk-through", th: "เส้นทางสำหรับคณะกรรมการ", zh: "评审导览" },
     place: "Chachoengsao",
   },
   references: {
@@ -627,18 +627,18 @@ export default function App() {
                 </p>
                 <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
                   {locale === "th"
-                    ? "SCITI เป็นเครื่องมือนโยบายสาธารณะดิจิทัลที่นำตัวชี้วัด Culture|2030 ของยูเนสโกมาปฏิบัติจริงในระดับจังหวัด สนับสนุนเครือข่ายย่านเศรษฐกิจสร้างสรรค์ประเทศไทย (TCDN) ของ CEA, โมเดลเศรษฐกิจ BCG ของไทย, และยุทธศาสตร์ชาติ 1 ครอบครัว 1 ซอฟต์พาวเวอร์ (OFOS) SCITI สอดคล้องกับเป้าหมายของแผนพัฒนาเศรษฐกิจและสังคมแห่งชาติ ฉบับที่ 13 สำหรับย่านสร้างสรรค์ เมืองอัจฉริยะ และการกระจายโอกาสทางเศรษฐกิจ"
+                    ? "SCITI เป็นต้นแบบเครื่องมือนโยบายสาธารณะดิจิทัลสำหรับเปรียบเทียบเมืองไทยด้วยข้อมูลฐานสาธารณะ งานวิจัยที่มีแหล่งอ้างอิง และวิธีรวมคะแนนแบบเปิดเผย โดยวางงานไว้ในบริบทของเครือข่ายย่านสร้างสรรค์ เมืองอัจฉริยะ และการกระจายโอกาสทางเศรษฐกิจของไทย"
                     : locale === "zh"
-                      ? "SCITI 是一个数字公共政策工具，在省级层面实操联合国教科文组织“文化|2030”指标。它支持 CEA 的泰国创意街区网络 (TCDN)、泰国的 BCG 经济模型，以及“一个家庭一个软实力 (OFOS)”国家战略。SCITI 与第十三个国家经济和社会发展计划关于创意街区、智慧城市和权力下放经济机会的目标相一致。"
-                      : "SCITI is a digital public policy instrument that operationalizes UNESCO Culture|2030 Indicators at provincial scale. It supports the Creative Economy Agency's Thailand Creative District Network (TCDN), Thailand's Bio-Circular-Green (BCG) Economic Model, and the One Family One Soft Power (OFOS) national strategy. SCITI aligns with the 13th National Economic and Social Development Plan's targets for creative districts, smart cities, and decentralized economic opportunity."}
+                      ? "SCITI 是一项数字公共政策工具原型，以公开基线、有来源的研究和透明的汇总方法比较泰国城市，并将成果置于泰国创意街区、智慧城市和经济机会下沉的政策语境中。"
+                      : "SCITI is a digital public-policy prototype for comparing Thai cities through public baselines, source-linked research, and a transparent aggregation method. It places that work in the context of Thailand's creative districts, smart-city programme, and decentralized economic opportunity."}
                 </p>
                 <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
                   <strong style={{ color: "var(--3)" }}>{locale === "th" ? "การอ้างอิงข้อมูล: " : locale === "zh" ? "数据归属： " : "Data Attribution: "}</strong>
                   {locale === "th"
-                    ? "ข้อมูลเศรษฐกิจระดับจังหวัดจากสภาพัฒน์ (NESDC) ข้อมูลส่งเสริมการลงทุนจาก BOI ข้อมูลค่าจ้างจากกระทรวงแรงงาน ข้อมูลโครงสร้างพื้นฐานดิจิทัลจาก กสทช. ตัวชี้วัดเศรษฐกิจสร้างสรรค์จาก CEA สถานะเครือข่ายเมืองสร้างสรรค์ของยูเนสโกจากการประกาศอย่างเป็นทางการ ข้อมูลทั้งหมดเป็นข้อมูลเปิดภาครัฐ"
+                    ? "ฉบับเผยแพร่นี้ผสานข้อมูลฐานสาธารณะระดับจังหวัด ทะเบียนและแพลตฟอร์มสาธารณะ รวมถึงดุลยพินิจทางวิจัยที่ระบุไว้อย่างชัดเจน แฟ้มเมืองและไฟล์ส่งออกแสดงสถาบันต้นทาง ระดับพื้นที่ ค่าความเชื่อมั่น และข้อจำกัด ไม่อ้างว่าทุกค่าเป็นข้อมูลเทศบาลหรือข้อมูลสด"
                     : locale === "zh"
-                      ? "省级经济数据来自 NESDC。投资激励数据来自 BOI。工资数据来自劳工部。数字基础设施数据来自 NBTC。创意经济指标来自 CEA。联合国教科文组织创意城市网络地位来自官方指定。所有数据均为根据《泰国官方信息法》发布的开放政府数据。"
-                      : "Provincial economic data sourced from NESDC Gross Regional and Provincial Product (chain volume measures, 2019 base). Investment incentive data from Board of Investment. Wage data from Ministry of Labour. Digital infrastructure data from NBTC. Creative economy indicators from CEA. UNESCO Creative Cities Network status from UNESCO official designations. All data is open government data published under Thai Official Information Act."}
+                      ? "本版本结合省级公开基线、公开名录与平台记录，以及明确标注的研究判断。城市档案与导出文件说明来源机构、地理层级、置信度和局限；我们不声称每个值都是市级或实时数据。"
+                      : "This release combines provincial public baselines, public registries and platform records, and explicitly labelled research judgement. City dossiers and exports disclose source institutions, geographic level, confidence, and limitations; not every value is claimed to be municipal or live."}
                 </p>
                 <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
                   <strong style={{ color: "var(--3)" }}>{locale === "th" ? "กิตติกรรมประกาศ: " : locale === "zh" ? "致谢： " : "Acknowledgments: "}</strong>

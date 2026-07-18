@@ -220,14 +220,14 @@ const FAQS: FAQ[] = [
   {
     category: "Methodology",
     q: {
-      en: "What is the 'Data Confidence' multiplier?",
-      th: "'Data Confidence' multiplier คืออะไร?",
-      zh: "什么是”数据置信度”乘数？",
+      en: "What is the Data Confidence score?",
+      th: "คะแนนความเชื่อมั่นของข้อมูลคืออะไร?",
+      zh: "什么是数据置信得分？",
     },
     a: {
-      en: "It's a penalty for opacity. If a city stops reporting open data to data.go.th, if their City Data Platform goes offline, or if they haven't updated their datasets in over a year, the Data Confidence multiplier automatically lowers their composite score. This prevents cities from coasting on a one-time good score. Transparency is a continuous obligation, not a launch-day achievement.",
-      th: "เป็นค่าปรับสำหรับความไม่โปร่งใส หากเมืองหยุดรายงานข้อมูลเปิดไปที่ data.go.th หรือ CDP ล่ม หรือไม่อัปเดตข้อมูลเกิน 1 ปี ตัวคูณนี้จะลดคะแนนรวมอัตโนมัติ ป้องกันไม่ให้เมืองอยู่ได้ด้วยคะแนนเก่า ความโปร่งใสเป็นภาระต่อเนื่อง ไม่ใช่ผลงานวันเปิดตัว",
-      zh: "这是对不透明度的惩罚。如果城市停止向data.go.th报告开放数据、CDP下线、或超过一年未更新数据集，数据置信度乘数会自动降低综合得分。这防止城市靠一次性的好成绩坐享其成。透明度是持续义务，不是启动日成就。",
+      en: "It is a separate disclosure score built from core metric coverage (65%), extended coverage (15%), provenance density (10%), and freshness (10%). It never multiplies or changes the composite. Its job is to tell readers how much trust to place in the published assessment.",
+      th: "เป็นคะแนนเปิดเผยข้อมูลที่คำนวณแยกต่างหาก จากความครบถ้วนของตัวชี้วัดหลัก 65% ตัวชี้วัดเสริม 15% ความหนาแน่นของแหล่งที่มา 10% และความสดใหม่ 10% คะแนนนี้ไม่คูณหรือเปลี่ยนคะแนนรวม หน้าที่คือบอกผู้อ่านว่าควรให้น้ำหนักความเชื่อถือต่อการประเมินที่เผยแพร่มากเพียงใด",
+      zh: "这是单独披露的得分，由核心指标覆盖度（65%）、扩展覆盖度（15%）、溯源密度（10%）和时效性（10%）构成。它不会乘算或改变综合分，只用于告诉读者应当多大程度信任已发布评估。",
     },
   },
   {
@@ -279,9 +279,9 @@ const FAQS: FAQ[] = [
       zh: "如果城市的数据过时了会怎样？",
     },
     a: {
-      en: "The score drops automatically. SCITI applies a Data Confidence multiplier: if a city stops reporting to data.go.th, if their CDP goes offline, or if datasets are stale, the penalty kicks in. We don't grandfather old scores. Transparency is a running obligation. This is why some formerly well-ranked cities have slipped — they stopped feeding their own platform.",
-      th: "คะแนนจะลดอัตโนมัติ SCITI ใช้ตัวคูณ Data Confidence: หากเมืองหยุดรายงานข้อมูล หรือ CDP ล่ม หรือข้อมูลค้าง คะแนนจะถูกหักทันที เราไม่ให้สิทธิ์คะแนนเก่า ความโปร่งใสเป็นภาระต่อเนื่อง นี่คือเหตุที่บางเมืองที่เคยอันดับดีตกลงมา — พวกเขาหยุดป้อนข้อมูลให้แพลตฟอร์มตัวเอง",
-      zh: "得分会自动下降。SCITI应用数据置信度乘数：如果城市停止报告、CDP下线或数据过期，惩罚就会生效。我们不保留旧分数。透明度是持续义务。这就是为什么一些曾经排名靠前的城市下滑了——他们停止为自己的平台提供数据。",
+      en: "Its confidence label drops; the composite does not. SCITI reports freshness, coverage, and provenance separately so stale evidence remains visible instead of secretly changing the ranking. A pillar score changes only when the research assessment is updated with new evidence.",
+      th: "ค่าความเชื่อมั่นจะลดลง แต่คะแนนรวมไม่เปลี่ยน SCITI รายงานความสดใหม่ ความครบถ้วน และแหล่งที่มาแยกต่างหาก เพื่อให้ข้อมูลล้าสมัยยังมองเห็นได้ โดยไม่แอบเปลี่ยนอันดับ คะแนนเสาหลักจะเปลี่ยนก็ต่อเมื่อปรับการประเมินวิจัยด้วยหลักฐานใหม่",
+      zh: "置信标签会下降，但综合分不会。SCITI 将时效性、覆盖度和溯源信息分开报告，让陈旧证据保持可见，而不是暗中改写排名。只有研究评估依据新证据更新时，支柱分才会改变。",
     },
   },
   // ─── Politics ───
@@ -293,9 +293,9 @@ const FAQS: FAQ[] = [
       zh: "这个指数是在批评政府吗？",
     },
     a: {
-      en: "This index is honest, not hostile. depa created the framework and momentum; we provide the mirror. The SCITI methodology is peer-reviewed (SCSE Taipei 2026) and uses public data sources. To improve, Thai cities need accurate reflection, not just applause. Feedback is the highest form of support.",
-      th: "ดัชนีนี้จริงใจ ไม่ได้เป็นศัตรู depa เป็นผู้สร้างกรอบและแรงขับเคลื่อน เราเป็นกระจก วิธีการของ SCITI ผ่านการตรวจสอบโดยผู้ทรงคุณวุฒิ (SCSE ไทเป 2026) และใช้ข้อมูลเปิดเท่านั้น เมืองไทยต้องการการสะท้อนจริง ไม่ใช่แค่เสียงปรบมือ",
-      zh: "这个指数是诚实的，而非敌对的。depa建立了框架并推动了进展；我们提供镜子。SCITI方法论经过同行评审（2026台北SCSE），仅使用公开数据来源。为了进步，泰国城市需要准确的反思，而不仅仅是掌声。",
+      en: "This index is honest, not hostile. depa created the framework and momentum; SCITI provides a transparent comparison layer. The method, source registry, confidence model, and exports are public so cities can challenge errors with better evidence. Accurate reflection is more useful than applause.",
+      th: "ดัชนีนี้จริงใจ ไม่ได้เป็นศัตรู depa เป็นผู้สร้างกรอบและแรงขับเคลื่อน ส่วน SCITI เพิ่มชั้นการเปรียบเทียบที่โปร่งใส ระเบียบวิธี ทะเบียนแหล่งข้อมูล โมเดลความเชื่อมั่น และไฟล์ส่งออกเปิดเผยต่อสาธารณะ เพื่อให้เมืองโต้แย้งข้อผิดพลาดด้วยหลักฐานที่ดีกว่าได้ การสะท้อนที่แม่นยำมีประโยชน์กว่าเสียงปรบมือ",
+      zh: "这个指数追求诚实，而非敌对。depa 建立框架并推动进展，SCITI 则提供透明的比较层。方法、来源名录、置信模型和导出文件均公开，城市可以用更好的证据纠正错误。准确的映照比掌声更有用。",
     },
   },
   // ─── Success Stories ───
@@ -360,9 +360,9 @@ const FAQS: FAQ[] = [
       zh: "谁创建了SCITI指数？",
     },
     a: {
-      en: "SCITI was developed by Dr. Non A., Senior Expert at depa's Smart City Promotion Department, using the SLIC (Smart Liveable Cities Index) methodology. The methodology was peer-reviewed at SCSE Taipei 2026. It draws on Dr. Non's academic work published in Hitachi Review (2021) and practical experience deploying smart city frameworks across 40+ Thai cities since 2019.",
-      th: "SCITI พัฒนาโดย ดร.ณณ ผู้เชี่ยวชาญอาวุโส ฝ่ายส่งเสริมเมืองอัจฉริยะ depa ใช้วิธีการ SLIC (Smart Liveable Cities Index) ผ่านการตรวจสอบที่ SCSE ไทเป 2026 อ้างอิงจากงานวิชาการใน Hitachi Review (2021) และประสบการณ์ภาคสนามกับ 40+ เมืองตั้งแต่ 2019",
-      zh: "SCITI由depa智慧城市推广部门高级专家Non A.博士开发，使用SLIC（智慧宜居城市指数）方法论。该方法论在2026年台北SCSE会议上经过同行评审。它基于Non博士在日立评论（2021年）发表的学术成果和自2019年以来在40多个泰国城市部署智慧城市框架的实践经验。",
+      en: "SCITI was developed by Dr. Non A., Senior Expert at depa's Smart City Promotion Department, using the SLIC (Smart Liveable Cities Index) methodology. This release draws on the team's published smart-city work, public source institutions, and documented field research. The current method code is SCITI-2026-METH, version 2026.04.",
+      th: "SCITI พัฒนาโดย ดร.ณณ ผู้เชี่ยวชาญอาวุโส ฝ่ายส่งเสริมเมืองอัจฉริยะ depa โดยใช้ระเบียบวิธี SLIC (Smart Liveable Cities Index) ฉบับนี้อ้างอิงงานด้านเมืองอัจฉริยะที่ทีมเผยแพร่ สถาบันข้อมูลสาธารณะ และงานวิจัยภาคสนามที่มีการบันทึกไว้ รหัสวิธีปัจจุบันคือ SCITI-2026-METH เวอร์ชัน 2026.04",
+      zh: "SCITI 由 depa 智慧城市推广部门高级专家 Non A. 博士开发，采用 SLIC（智慧宜居城市指数）方法。本版本基于团队已发表的智慧城市工作、公共来源机构和有记录的实地研究。当前方法代码为 SCITI-2026-METH，版本 2026.04。",
     },
   },
   // ─── Using SCITI ───

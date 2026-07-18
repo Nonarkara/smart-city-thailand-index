@@ -18,7 +18,7 @@ import { ResponsiveImage } from "./mediaAssets";
 import { assetUrl } from "./assetUtils";
 import { PILLAR_WEIGHTS } from "./types";
 import { HOME_COLLECTIONS } from "./homeCollections";
-import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_METHOD_CODE } from "./methodologySpec";
+import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_DATA_CUTOFF_ISO, SCITI_METHOD_CODE } from "./methodologySpec";
 import { WEEKLY_DIGEST, formatWeeklyStamp } from "./weeklyDigest";
 import { REGIONS_ORDERED, REGION_LABELS, type Region } from "./regions";
 
@@ -214,8 +214,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <button className="cta-button" onClick={() => onNavigate("/rankings")}>
               {t({ en: "Get Rankings", th: "ดูอันดับ", zh: "查看排名" })}
             </button>
-            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/methodology")}>
-              {t({ en: "Methodology", th: "ระเบียบวิธี", zh: "方法论" })}
+            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/audit")}>
+              {t({ en: "Jury: start here", th: "กรรมการ: เริ่มที่นี่", zh: "评审：从这里开始" })}
             </button>
           </div>
         </div>
@@ -259,7 +259,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
         <span>
           {`SCITI 2026 Edition · ${stats.total} ${t({ en: "cities", th: "เมือง", zh: "城市" })} · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源族群" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}
         </span>
-        <span>{t({ en: "Research by Dr. Non A · depa · SLIC Methodology · Peer-reviewed at SCSE Taipei 2026", th: "งานวิจัยโดย ดร.ณณ · depa · ระเบียบวิธี SLIC · ผ่านการพิจารณาของผู้ทรงคุณวุฒิที่ SCSE ไทเป 2026", zh: "研究：Non A博士 · depa · SLIC方法论 · 2026台北SCSE同行评审" })}</span>
+        <span>{t({ en: `Research by Dr. Non A · depa · ${SCITI_METHOD_CODE} · release cut-off ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, th: `งานวิจัยโดย ดร.ณณ · depa · ${SCITI_METHOD_CODE} · วันตัดข้อมูล ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, zh: `研究：Non A 博士 · depa · ${SCITI_METHOD_CODE} · 数据截点 ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}` })}</span>
       </div>
 
       {/* ─── OPENING ARGUMENT ─── */}
@@ -285,9 +285,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <span className="opening-argument-num">{stats.total}</span>
               <p className="opening-argument-copy">
                 {t({
-                  en: "cities measured across every depa smart city zone and registered promotion area. The index begins with the complete picture — no cherry-picking.",
-                  th: "เมืองที่วัดในทุกเขตเมืองอัจฉริยะ depa และพื้นที่ส่งเสริมที่จดทะเบียน ดัชนีเริ่มต้นจากภาพรวมที่สมบูรณ์ ไม่คัดเลือกเฉพาะ",
-                  zh: "座城市——覆盖 depa 每一个智慧城市区域和已登记促进区。指数从完整图景出发，无一遗漏。",
+                  en: "city records in this release, spanning certified cities, modeled promotion zones, and registry-only entries. Scope is explicit; evidence depth is not presented as equal.",
+                  th: "ระเบียนเมืองในฉบับนี้ ครอบคลุมเมืองรับรอง เขตส่งเสริมที่นำมาสร้างแบบจำลอง และรายการระดับทะเบียน โดยระบุขอบเขตชัดเจน และไม่อ้างว่าความลึกของหลักฐานเท่ากัน",
+                  zh: "条城市记录，涵盖认证城市、已建模推广区与仅名录条目。范围明确，也不声称证据深度相同。",
                 })}
               </p>
             </div>
@@ -307,9 +307,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <span className="opening-argument-num">{SCORING_PILLARS.length}</span>
               <p className="opening-argument-copy">
                 {t({
-                  en: "pillars scored from real provincial data. Road fatalities from thairsc.com. Flood frequency from GISTDA 2005–2016. PM2.5 from live stations. No proxies. No interpolation. No null treated as zero.",
-                  th: "เสาหลักที่ประเมินจากข้อมูลจังหวัดจริง อัตราเสียชีวิตบนถนนจาก thairsc.com ความถี่น้ำท่วมจาก GISTDA ปี 2548–2559 PM2.5 จากสถานีสด ไม่มีตัวแทน ไม่มีการประมาณ ไม่มีค่า null ที่ถือเป็นศูนย์",
-                  zh: "个支柱，基于真实省级数据评分。道路死亡率来自 thairsc.com，洪水频率来自 GISTDA 2005–2016，PM2.5 来自实时站点。无代理数据，无插值，不以零代替空值。",
+                  en: "pillars assessed against public baselines and research evidence. Provincial proxies are disclosed when municipal values are unavailable. Missing evidence lowers confidence; it is not silently converted to zero.",
+                  th: "เสาหลักที่ประเมินเทียบกับข้อมูลฐานสาธารณะและหลักฐานวิจัย เมื่อไม่มีค่าระดับเทศบาล จะระบุชัดว่าใช้ตัวแทนระดับจังหวัด หลักฐานที่ขาดจะลดค่าความเชื่อมั่น ไม่ถูกเปลี่ยนเป็นศูนย์อย่างเงียบๆ",
+                  zh: "个支柱，以公开基线与研究证据评估。缺少市级值时会明确标注省级代理；证据缺失会降低置信度，不会被悄然改成零。",
                 })}
               </p>
             </div>
@@ -326,9 +326,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
           <button
             type="button"
             className="opening-argument-cta"
-            onClick={() => onNavigate("/methodology")}
+            onClick={() => onNavigate("/audit")}
           >
-            {t({ en: "Read the full methodology →", th: "อ่านระเบียบวิธีทั้งหมด →", zh: "阅读完整方法论 →" })}
+            {t({ en: "Start the jury walk-through →", th: "เริ่มเส้นทางสำหรับคณะกรรมการ →", zh: "开始评审导览 →" })}
           </button>
         </div>
       </section>
