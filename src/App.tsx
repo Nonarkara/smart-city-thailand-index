@@ -170,9 +170,9 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
     title: { en: "Nakhon Si Thammarat", th: "นครศรีธรรมราช", zh: "洛坤府" },
     place: "Tak",
     description: {
-      en: "Tak — A historic western gateway to Myanmar, home to the legendary Death Railway, the bustling Mae Sot border trade zone, and the serene Ping River.",
-      th: "ตาก — ประตูสู่พม่าทางตะวันตกที่มีประวัติศาสตร์ยาวนาน ที่ตั้งของทางรถไฟสายมรณะในตำนาน เขตการค้าชายแดนแม่สอดที่คึกคัก และแม่น้ำปิงอันเงียบสงบ",
-      zh: "达府 — 通往缅甸的历史性西部门户，拥有传奇的死亡铁路、繁忙的美索边境贸易区和宁静的宾河。",
+      en: "Tak — A historic western gateway to Myanmar tied to King Taksin the Great, home to the bustling Mae Sot border trade zone and the serene Ping River.",
+      th: "ตาก — ประตูสู่พม่าทางตะวันตกที่มีประวัติศาสตร์ยาวนาน ผูกพันกับสมเด็จพระเจ้าตากสินมหาราช เขตการค้าชายแดนแม่สอดที่คึกคัก และแม่น้ำปิงอันเงียบสงบ",
+      zh: "达府 — 通往缅甸的历史性西部门户，与达信大帝渊源深厚，拥有繁忙的美索边境贸易区和宁静的宾河。",
     },
   },
   partners: {
@@ -181,9 +181,9 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
     title: { en: "Partners", th: "พันธมิตร", zh: "伙伴" },
     place: "Thailand",
     description: {
-      en: "Thailand at night — A nation of 70 million people serving as Southeast Asia's bridge, where world-class infrastructure meets millennia of heritage and digital transformation.",
-      th: "ประเทศไทยยามค่ำคืน — ประเทศที่มีประชากร 70 ล้านคนเป็นสะพานเชื่อมเอเชียตะวันออกเฉียงใต้ ที่ซึ่งโครงสร้างพื้นฐานระดับโลกผสานกับมรดกหลายพันปีและการเปลี่ยนผ่านสู่ดิจิทัล",
-      zh: "泰国夜景 — 一个7000万人口的国度，作为东南亚的桥梁，世界级基础设施与千年遗产及数字化转型在此交融。",
+      en: "Thailand at night — A nation of 70 million people serving as Southeast Asia's bridge, where fast-modernizing infrastructure meets millennia of heritage and digital transformation.",
+      th: "ประเทศไทยยามค่ำคืน — ประเทศที่มีประชากร 70 ล้านคนเป็นสะพานเชื่อมเอเชียตะวันออกเฉียงใต้ ที่ซึ่งโครงสร้างพื้นฐานที่ทันสมัยอย่างรวดเร็วผสานกับมรดกหลายพันปีและการเปลี่ยนผ่านสู่ดิจิทัล",
+      zh: "泰国夜景 — 一个7000万人口的国度，作为东南亚的桥梁，快速现代化的基础设施与千年遗产及数字化转型在此交融。",
     },
   },
   map: {
@@ -258,9 +258,9 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
     title: { en: "Compare Cities", th: "เปรียบเทียบเมือง", zh: "城市对比" },
     place: "Phichit",
     description: {
-      en: "Phichit — Along the Nan River, birthplace of the legendary Muay Thai fighter Nai Khanom Tom, where ancient folklore and timeless traditions endure.",
-      th: "พิจิตร — ริมแม่น้ำน่าน บ้านเกิดของนายขนมต้มนักมวยไทยในตำนาน ที่ซึ่งตำนานโบราณและประเพณีอันเป็นเอกลักษณ์ยังคงดำรงอยู่",
-      zh: "披集 — 位于难河畔，传奇泰拳手乃克农·托姆的出生地，古老的民间传说和永恒的传统在此延续。",
+      en: "Phichit — Along the Nan River, known as Chalawan City for the legendary crocodile epic Krai Thong, where ancient folklore and timeless traditions endure.",
+      th: "พิจิตร — ริมแม่น้ำน่าน ได้ฉายาเมืองชาละวันจากวรรณคดีไกรทองในตำนาน ที่ซึ่งตำนานโบราณและประเพณีอันเป็นเอกลักษณ์ยังคงดำรงอยู่",
+      zh: "披集 — 位于难河畔，因传奇鳄鱼史诗《盖通》而被称为「差拉万之城」，古老的民间传说和永恒的传统在此延续。",
     },
   },
   bingo: {

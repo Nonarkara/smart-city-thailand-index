@@ -225,7 +225,7 @@ ul, ol { list-style: none; }
   margin-top: .25rem;
 }
 .route-photo-hero-desc {
-  font: 400 var(--text-xs)/1.5 var(--font);
+  font: 400 var(--text-micro)/1.5 var(--font);
   color: rgba(255,255,255,.72);
   max-width: 520px;
   margin-top: .35rem;
