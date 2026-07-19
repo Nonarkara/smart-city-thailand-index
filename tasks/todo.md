@@ -1,45 +1,42 @@
-# Jury-impression audit (2026-07-10, Opus) — 4-lens pass: language / design / narrative / delight
+# Needs Ladder — 8-rung hierarchy per user brief (2026-07-20, Fable 5)
 
-4 parallel agents + my own live-browser verification. All findings below independently
-re-confirmed against the actual source/live site before acting.
+User's priority ladder (apex→base): hygiene(air/water) → safety/healthcare/nature →
+community/hospitality → jobs/land/BOI → distance-to-hubs → quality-of-life/convenience →
+cost-of-living/schooling → mental-health/traffic.
 
-## EXECUTE NOW — real bugs & rule violations, low risk, high judge-visibility
-- [x] newsData.ts:77 — Thai text leaked inside a Chinese string ("ดร.นนท์" → "Non Arkara 博士")
-- [x] WhyPage.tsx:64 — Thai typo "ภายปี" → "ภายในปี" (not a word)
-- [x] InvestPage.tsx:137 — "วิทยานิพนธ์" (academic dissertation) is a false-friend mistranslation of "investment thesis"
-- [x] KnowledgePage.tsx:391-392,496 — Hospitality pillar rendered as "การท่องเที่ยว"/"人文旅游" (tourism) instead of canonical "อัธยาศัย"/"人文" used everywhere else — a judge cross-referencing FAQ vs rankings sees two different names for the same 10% weight
-- [x] KnowledgePage.tsx:336-338 — EN has a closing sentence TH/ZH both drop
-- [x] CreativeEconomyPage.tsx:107-109 — EN quote clause dropped from TH/ZH (a sourced claim, both languages silently truncate it)
-- [x] CreativeEconomyPage.tsx:109 — "连接的组织" (ambiguous/awkward) → "纽带" (natural Chinese metaphor for "connective tissue")
-- [x] "world-class" (explicitly banned AI-tell cliché) — 6 hits: PartnerVibeMap.tsx, cityContext.ts(×2), cityResearch.ts, depaOfficialData.ts(×2), cityAnalytics.ts — replace with the concrete claim already in the same sentence
-- [x] styles.css:5690/5692 — .investor-card-score (#FFF200) and .investor-card-vibe (#FFC600) are two different yellows competing on the SAME card — consolidate to one
-- [x] Inline font-size literals bypassing the 3-token law in JSX (CSS-only audit missed these): CityDetailPage.tsx:435,436,453,454,471,472,1282; MethodologyPage.tsx:717,724,733; RankingsPage.tsx:352
-- [x] AuditPage.tsx domains[] array (pr/real gap %) — no claimRegistry backing on the one page whose thesis is "we source everything" — add an "illustrative model" caption (cheap, honest, matches the page's existing honesty pattern)
-- [x] CityCanvasPage — genuinely empty "Pain Points"/"Business Model" boxes read as broken on a public route (confirmed via screenshot) — caption as "workshop template, fill in during a site visit" (NOT linked from nav/sitemap, so low-traffic, but cheap fix)
-- [x] Weekly digest stale — weekOf 2026-06-29, today is 2026-07-10 (11 days) — research + refresh with a verified real story, matching the established Monday-ritual pattern
+## Framework — DONE, shipped
+- [x] `src/regionalDistance.ts` — haversine distance to Bangkok/Chiang Mai/Phuket from
+      real coordinates (all 118 cities already have coords). Pure geometry, zero research risk.
+- [x] `src/needsLadderEngine.ts` — computes all 8 rungs from EXISTING real CityMetrics
+      fields (pm25, water quality, crime, hospital beds, flood safety, green coverage, GPP,
+      GPP growth, FDI, land price, income, hospitality/wellbeing/digital pillars, smart
+      dimensions) + hub distance. Fully trilingual signal labels (LocalizedText).
+      Verified sane on 5 real cities — Chiang Mai's real PM2.5 burn-season problem and
+      Bangkok's real high cost-of-living both surface correctly; missing data renders "—"
+      not a guess.
+- [x] `src/NeedsLadder.tsx` + CSS — literal ladder visual (ordered, not radar — radar
+      implies peer dimensions, this hierarchy is ordered by priority so position does the
+      work). Mono/hairline house style; single amber accent reserved for the one honest
+      "weakest rung" callout. Complements (does not replace) CityFingerprint's 7-pillar radar.
+- [x] Wired into CityDetailPage Overview tab, right after the tagline.
+- [x] tsc/vitest(77)/eslint all clean. Verified live in EN/TH/CN via accessibility tree
+      (screenshot tool had transient compositing glitches this session — confirmed via
+      DOM/AOM inspection instead, which is authoritative).
 
-## ASK Dr Non — genuine judgment calls, not mine to decide unilaterally (STILL OPEN)
-- [ ] Hero headline: "Moneyball for Thailand's Creative Economy" doesn't match the certification-vs-outcome thesis that's the actual "aha" (nor About's investment framing, nor Why's benchmarking framing) — 3 pages, 3 different pitches. Rewriting the site's single most important sentence is an aesthetic/messaging call.
-- [ ] Institutional "เรา" (~24 instances, SCITI's own voice: "we rank," "our platform") — house rule says ผม-only but was written for personal voice; unclear if it's meant to extend to institutional/product copy.
-- [ ] NST 131,908-friends proof point is buried 3 clicks deep behind a weaker stat (112,000 app users) on its own showcase page — recommend a homepage teaser card, but this touches the flagship page's composition.
+## Data — 4 provincial stub files, honest-empty until research lands
+- [x] `src/provincialBoiZones.ts` — BOI Zone 1/2/3 + EEC/SEZ-border, per province
+- [x] `src/provincialLaborEconomics.ts` — minimum wage + cost-of-living index, per province
+- [x] `src/provincialTrafficIndex.ts` — congestion index or vehicle-density proxy, per province
+- [x] `src/provincialAccessData.ts` — hospital count + university/int'l-school count, per province
+- [ ] **AWAITING**: workflow wf_f1fe66e9-bbf (research + adversarial verify, 6 parallel
+      researchers across BOI/wage/CPI/traffic/healthcare/education, all 77 provinces).
+      When it returns: populate the 4 files above with ONLY verified entries (each carrying
+      real source/sourceUrl/asOf). Provinces with no real source stay absent — never fill a gap.
 
-## SKIP / DEFER (real but lower leverage vs risk, or already adequately handled)
-- Bar-fill animations use `width` not `transform:scaleX` (GPU rule) — real, but moderate blast radius across many components for a mostly-invisible-to-judges perf nuance
-- Letter-spacing tighter than -0.04em floor — mostly on large display numerals where tight tracking is typographically defensible per the auditing agent's own read
-- Showcase Playbook Extensions using undocumented --radius-md/lg / --shadow-sm/md tokens — currently zeroed/harmless, just add a doc note so a future session doesn't "fix" them into visible radius/shadow
-- AuditPage MISSION LOG — already honestly labeled "APRIL 2026 SNAPSHOT" in its own header, not deceptive
-- /cities.json vs /data/cities.json redirect risk (agent worry) — VERIFIED both serve real JSON with 200, no actual risk
-
-## Verify & ship
-- [x] tsc -b, vitest run, eslint, build clean
-- [x] visual re-check: homepage + investor section + city detail + methodology + rankings at 375px and desktop
-- [x] CDPT ship — commit 9912bb3, live and verified on sciti.nonarkara.org
-
-# Deep pre-submission review (2026-07-12, Fable 5)
-- [x] All 133 sitemap URLs live-checked — city URLs 308-redirected; sitemap/canonical/og:url now emit the direct-200 trailing-slash form (generator + siteMeta aligned; SPA router already normalized slashes by design)
-- [x] All 98 bundle-referenced images HEAD-checked live — zero 404s
-- [x] All 44 unique city OG share images HEAD-checked live — zero 404s
-- [x] TH + CN rendered views verified in browser (titles, nav, hero, digest — native quality)
-- [x] Dark mode verified — hero legibility overlay working as designed, contrast clean
-- [x] AnimatedScore: settle timer added — hero stats can no longer stick at 0/partial in rAF-throttled contexts (hidden tabs, crawlers, prerenderers); verified 118/39/37 settles even in a throttled pane
-- [x] CDPT ship — commit 6c4b06c, live and verified
+## Next after data lands
+- [ ] Re-run the 5-city sanity check + full test suite after populating provincial data
+- [ ] Spot-check 8-10 cities across tiers (not just Alpha) for score sanity
+- [ ] Consider surfacing "strongest/weakest rung" as a one-line callout elsewhere (rankings
+      card? homepage spotlight?) — flagged, not yet decided, would need Dr Non's steer
+      since it touches page composition again
+- [ ] CDPT ship after data integration

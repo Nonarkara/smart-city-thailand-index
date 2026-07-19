@@ -1,5 +1,8 @@
 import { useMemo } from "react";
 import CityFingerprint from "./CityFingerprint";
+import NeedsLadder from "./NeedsLadder";
+import { computeNeedsLadder } from "./needsLadderEngine";
+import { getCityById } from "./cityData";
 import { getDepaOfficial } from "./depaOfficialData";
 import { getPopulationDensityPerKm2, getResolvedLandAreaKm2, getResolvedPopulationThousand } from "./adminBaselines";
 import { getCityContext } from "./cityContext";
@@ -1322,6 +1325,11 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
 
         <p className="city-detail-tagline">{cityTagline}</p>
         <p className="section-intro">{cityOrientation}</p>
+
+        {(() => {
+          const rawCity = getCityById(cityId);
+          return rawCity ? <NeedsLadder profile={computeNeedsLadder(rawCity)} locale={locale} /> : null;
+        })()}
 
         {/* ─── depa Official Recognition ─── */}
         {(() => {
