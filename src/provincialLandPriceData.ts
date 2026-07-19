@@ -390,7 +390,7 @@ export const PROVINCIAL_LAND_PRICE_SCORE: Record<string, ProvincialLandPriceEntr
     note: {
       en: "Treasury Department Pipit road peak appraisal (฿30,000/sq.wah)",
       th: "ราคาประเมินสูงสุดบนถนนพิพิธของกรมธนารักษ์ (30,000 บาท/ตารางวา)",
-      zh: "财政厅皮皮路最高评估价（30,000 泰铢/平方哇）",
+      zh: "财政厅披披路最高评估价（30,000 泰铢/平方哇）",
     },
   },
   "Yala": {
@@ -403,7 +403,7 @@ export const PROVINCIAL_LAND_PRICE_SCORE: Record<string, ProvincialLandPriceEntr
     note: {
       en: "Treasury Department Pipitpakdee road peak appraisal (฿35,000/sq.wah)",
       th: "ราคาประเมินสูงสุดบนถนนพิพิธภักดีของกรมธนารักษ์ (35,000 บาท/ตารางวา)",
-      zh: "财政厅皮皮管迪路最高评估价（35,000 泰铢/平方哇）",
+      zh: "财政厅披披帕迪路最高评估价（35,000 泰铢/平方哇）",
     },
   },
   "Narathiwat": {

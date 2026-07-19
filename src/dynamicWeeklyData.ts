@@ -1,7 +1,7 @@
 import type { WeeklyDigest } from "./weeklyDigest";
 
 export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
-  weekOf: "2026-07-06",
+  weekOf: "2026-07-20",
   trendingCity: {
     cityId: "phuket",
     note: {
