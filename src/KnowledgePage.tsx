@@ -64,9 +64,9 @@ const FAQS: FAQ[] = [
       zh: "泰国存在数字鸿沟问题吗？",
     },
     a: {
-      en: "Yes. Thailand has 92 million mobile subscribers (133% penetration) and 55 million active mobile internet users — impressive on paper. But only 21% of Thai households own a computer, far below the global average of 49%. This means 'smart city' services that require desktop or broadband access exclude most residents outside Bangkok and the EEC. The SCITI index reflects this by weighting Livability higher than Digital.",
-      th: "ใช่ ไทยมี 92 ล้านเลขหมายมือถือ (อัตราการเข้าถึง 133%) และผู้ใช้เน็ตมือถือ 55 ล้านคน แต่มีเพียง 21% ของครัวเรือนไทยที่มีคอมพิวเตอร์ ต่ำกว่าค่าเฉลี่ยโลก 49% มาก บริการ smart city ที่ต้องใช้บรอดแบนด์จึงเข้าไม่ถึงคนส่วนใหญ่นอกกรุงเทพฯ และ EEC",
-      zh: "是的。泰国拥有9200万手机用户（渗透率133%）和5500万活跃移动互联网用户——但只有21%的家庭拥有电脑，远低于全球49%的平均水平。这意味着需要桌面或宽带访问的”智慧城市”服务将大部分曼谷以外的居民排除在外。",
+      en: "Yes. Thailand has 92 million mobile subscribers (133% penetration) and 55 million active mobile internet users — impressive on paper. But household computer ownership outside Bangkok is only 21% (NSO 2023), far below the global average of 49%. This means 'smart city' services that require desktop or broadband access exclude most residents outside Bangkok and the EEC. The SCITI index reflects this by weighting Livability higher than Digital.",
+      th: "ใช่ ไทยมี 92 ล้านเลขหมายมือถือ (อัตราการเข้าถึง 133%) และผู้ใช้เน็ตมือถือ 55 ล้านคน แต่ครัวเรือนนอกกรุงเทพฯ มีคอมพิวเตอร์เพียง 21% (สสช. 2566) ต่ำกว่าค่าเฉลี่ยโลก 49% มาก บริการ smart city ที่ต้องใช้บรอดแบนด์จึงเข้าไม่ถึงคนส่วนใหญ่นอกกรุงเทพฯ และ EEC",
+      zh: "是的。泰国拥有9200万手机用户（渗透率133%）和5500万活跃移动互联网用户——但曼谷以外家庭电脑拥有率仅21%（NSO 2023），远低于全球49%的平均水平。这意味着需要桌面或宽带访问的“智慧城市”服务将大部分曼谷以外的居民排除在外。",
     },
   },
   {
@@ -133,7 +133,7 @@ const FAQS: FAQ[] = [
     a: {
       en: "Thailand uses the 'Two-Five-Seven' system: (1) Smart Environment (mandatory for all, led by Ministry of Natural Resources); (2) Smart Economy (Ministry of Finance); (3) Smart Mobility (Ministry of Transport); (4) Smart Energy (Ministry of Energy); (5) Smart People (MDES); (6) Smart Living — covering health, safety, and built environment (Ministry of Interior); (7) Smart Governance (Office of Prime Minister). Each city chooses domains based on local needs but must include Environment.",
       th: "ไทยใช้ระบบ 'สอง-ห้า-เจ็ด': (1) Smart Environment (บังคับทุกเมือง, กระทรวงทรัพยากรฯ) (2) Smart Economy (กระทรวงการคลัง) (3) Smart Mobility (กระทรวงคมนาคม) (4) Smart Energy (กระทรวงพลังงาน) (5) Smart People (กระทรวงดิจิทัลฯ) (6) Smart Living — สุขภาพ ความปลอดภัย อาคาร (กระทรวงมหาดไทย) (7) Smart Governance (สำนักนายกฯ) แต่ละเมืองเลือกตามความต้องการ แต่ต้องมี Environment",
-      zh: "泰国使用”二五七”体系：(1) 智慧环境（所有城市必选）(2) 智慧经济 (3) 智慧交通 (4) 智慧能源 (5) 智慧市民 (6) 智慧生活——涵盖健康、安全和建筑环境 (7) 智慧治理。每个城市根据需求选择领域，但必须包含环境。",
+      zh: "泰国使用“二五七”体系：(1) 智慧环境（所有城市必选）(2) 智慧经济 (3) 智慧交通 (4) 智慧能源 (5) 智慧市民 (6) 智慧生活——涵盖健康、安全和建筑环境 (7) 智慧治理。每个城市根据需求选择领域，但必须包含环境。",
     },
   },
   {
@@ -145,8 +145,8 @@ const FAQS: FAQ[] = [
     },
     a: {
       en: "depa's 7 domains (Environment, Economy, Mobility, Energy, People, Living, Governance) are a planning framework — they help cities organize proposals. SCITI's 7 pillars (Livability, Economy, Safety, Wellbeing, Environment, Hospitality, Digital) are measurement pillars weighted by citizen impact. Livability (25%) and Economy (20%) carry the most weight because they reflect lived experience. Digital (5%) weighs least because connectivity without quality of life is just infrastructure theater.",
-      th: "7 Smart ของ depa เป็นกรอบวางแผน ช่วยจัดทำข้อเสนอ ส่วน 7 เสาหลักของ SCITI (ความน่าอยู่ เศรษฐกิจ ความปลอดภัย คุณภาพชีวิต สิ่งแวดล้อม การท่องเที่ยว ดิจิทัล) เป็นเสาวัดผล ถ่วงน้ำหนักตามผลกระทบต่อประชาชน ความน่าอยู่ (25%) และเศรษฐกิจ (20%) หนักสุดเพราะสะท้อนชีวิตจริง ดิจิทัล (5%) น้อยสุดเพราะเน็ตเร็วที่ไม่มีคุณภาพชีวิตเป็นแค่โชว์โครงสร้างพื้นฐาน",
-      zh: "depa的7个领域是规划框架——帮助城市组织提案。SCITI的7个支柱（宜居性、经济、安全、福祉、环境、旅游、数字）是按市民影响加权的测量支柱。宜居性(25%)和经济(20%)权重最高因为反映了真实生活体验。数字(5%)权重最低因为没有生活质量的连接只是基础设施表演。",
+      th: "7 Smart ของ depa เป็นกรอบวางแผน ช่วยจัดทำข้อเสนอ ส่วน 7 เสาหลักของ SCITI (ความน่าอยู่ เศรษฐกิจ ความปลอดภัย คุณภาพชีวิต สิ่งแวดล้อม อัธยาศัย ดิจิทัล) เป็นเสาวัดผล ถ่วงน้ำหนักตามผลกระทบต่อประชาชน ความน่าอยู่ (25%) และเศรษฐกิจ (20%) หนักสุดเพราะสะท้อนชีวิตจริง ดิจิทัล (5%) น้อยสุดเพราะเน็ตเร็วที่ไม่มีคุณภาพชีวิตเป็นแค่โชว์โครงสร้างพื้นฐาน",
+      zh: "depa的7个领域是规划框架——帮助城市组织提案。SCITI的7个支柱（宜居、经济、安全、福祉、环境、人文、数字）是按市民影响加权的测量支柱。宜居(25%)和经济(20%)权重最高因为反映了真实生活体验。数字(5%)权重最低因为没有生活质量的连接只是基础设施表演。",
     },
   },
   // ─── Certification & Process ───
@@ -209,12 +209,12 @@ const FAQS: FAQ[] = [
     q: {
       en: "Why is 'Livability' weighted higher than 'Digital'?",
       th: "ทำไม 'ความน่าอยู่' ถึงน้ำหนักเยอะกว่า 'ดิจิทัล'?",
-      zh: "为什么”宜居性”的权重高于”数字”？",
+      zh: "为什么“宜居”的权重高于“数字”？",
     },
     a: {
       en: "Technology is a tool, not the objective. depa's own definition says a smart city should 'achieve citizen's quality of life and happiness as well as sustainability.' A smart city with 5G but broken sidewalks is a failure. We weight Livability at 25% because a city must function for its citizens before it can be 'Smart'. Digital at 5% reflects this: connectivity without quality of life is infrastructure theater.",
       th: "เทคโนโลยีคือเครื่องมือ ไม่ใช่เป้าหมาย depa เองนิยามเมืองอัจฉริยะว่าต้อง 'บรรลุคุณภาพชีวิตและความสุขของพลเมือง' เมืองที่มี 5G แต่ทางเท้าพังคือความล้มเหลว ความน่าอยู่ 25% เพราะเมืองต้องทำงานได้จริงเพื่อประชาชนก่อน ดิจิทัล 5% สะท้อนว่าเน็ตเร็วที่ไม่มีคุณภาพชีวิตเป็นแค่โชว์",
-      zh: "技术是工具，不是目标。depa自己的定义说智慧城市应该'实现市民的生活质量、幸福和可持续性'。拥有5G但人行道破损的城市是失败的。宜居性25%因为城市必须先为市民服务才能称'智慧'。数字5%反映了这一点：没有生活质量的连接只是基础设施表演。",
+      zh: "技术是工具，不是目标。depa自己的定义说智慧城市应该'实现市民的生活质量、幸福和可持续性'。拥有5G但人行道破损的城市是失败的。宜居25%因为城市必须先为市民服务才能称'智慧'。数字5%反映了这一点：没有生活质量的连接只是基础设施表演。",
     },
   },
   {
@@ -322,7 +322,7 @@ const FAQS: FAQ[] = [
     a: {
       en: "Phuket — first official pilot, tourism revitalization via the 'Phuket Sandbox' with 5G integration. Chiang Mai — early pilot focused on safety and digital tools. Khon Kaen — 'Living Lab' for health tech modernization, private-sector-led LRT via the KKTS consortium. Mae Moh (Lampang) — clean energy hub by EGAT. Wang Chan Valley (Rayong) — EEC technology hub. Samyan (Bangkok) — innovation-focused urban district. Each demonstrates a different model: tourism, health, energy, industry, or innovation.",
       th: "ภูเก็ต — นำร่องแรก ฟื้นฟูท่องเที่ยวผ่าน 'Phuket Sandbox' + 5G เชียงใหม่ — นำร่องด้านความปลอดภัย + ดิจิทัล ขอนแก่น — Living Lab สุขภาพ + LRT โดยเอกชนผ่าน KKTS แม่เมาะ (ลำปาง) — ศูนย์พลังงานสะอาดโดย กฟผ. วังจันทร์ (ระยอง) — เทคโนโลยี EEC สามย่าน (กรุงเทพฯ) — นวัตกรรมเมือง",
-      zh: "普吉——第一个官方试点，通过'普吉沙盒'和5G整合振兴旅游业。清迈——早期试点专注安全和数字工具。孔敬——健康技术现代化'实验室'，私营主导的轻轨。湄莫（南邦）——泰国电力局清洁能源中心。旺占（罗勇）——EEC技术中心。三养（曼谷）——创新城市区。每个展示不同模式。",
+      zh: "普吉——第一个官方试点，通过'普吉沙盒'和5G整合振兴旅游业。清迈——早期试点专注安全和数字工具。孔敬——健康技术现代化'实验室'，私营主导的轻轨。湄末（南邦）——泰国电力局清洁能源中心。旺湛谷（罗勇）——EEC技术中心。三眼井（曼谷）——创新城市区。每个展示不同模式。",
     },
   },
   {

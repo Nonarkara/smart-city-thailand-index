@@ -26,7 +26,7 @@ describe("methodology spec helpers", () => {
 
   it("saturates provenance support instead of growing without bound", () => {
     expect(computeProvenanceWeight(0)).toBe(0);
-    expect(computeProvenanceWeight(9)).toBe(0.5);
+    expect(computeProvenanceWeight(9)).toBe(0.6);
     expect(computeProvenanceWeight(36)).toBe(1);
   });
 

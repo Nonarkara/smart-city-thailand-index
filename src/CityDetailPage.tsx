@@ -96,7 +96,7 @@ const DATA_CONFIDENCE_LABELS = {
 } as const;
 
 const FINANCE_STRENGTH_LABELS: Record<"strong" | "moderate" | "thin", Record<Locale, string>> = {
-  strong: { en: "Strong", th: "แข็งแกร่ง", zh: "强" },
+  strong: { en: "Strong", th: "ชัดเจน", zh: "强" },
   moderate: { en: "Moderate", th: "ปานกลาง", zh: "中等" },
   thin: { en: "Thin", th: "บาง", zh: "弱" },
 };
@@ -441,7 +441,7 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
           })}
         </p>
         <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--teal)' }}>
-          RESULT: -15% CONGESTION | 0km NEW ASPHALT
+          PER FUJITSU PROJECT REPORT: -15% CONGESTION | 0km NEW ASPHALT
         </div>
       </div>
     );
@@ -453,9 +453,9 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
         <h3 style={{ fontSize: 'var(--text-body)', marginBottom: '.5rem' }}>{translate(locale, { en: "KKTS: The Local Consortium", th: "KKTS: คอนซอร์เทียมท้องถิ่น", zh: "KKTS：地方财团" })}</h3>
         <p style={{ fontSize: 'var(--text-micro)', lineHeight: 1.6, color: 'var(--2)' }}>
           {translate(locale, {
-            en: "Khon Kaen's success isn't about central budget—it's about local grit. Through KKTS (Khon Kaen Transit System), the city's private sectors and 5 municipalities funded their own Smart Bus and are pushing for LRT. This bottom-up ownership makes Khon Kaen the most resilient smart city in the index.",
-            th: "ความสำเร็จของขอนแก่นไม่ใช่เรื่องงบส่วนกลาง แต่คือความใจสู้ของท้องถิ่น ผ่าน KKTS (บริษัท ขอนแก่น ทรานซิท ซิสเต็ม) ภาคเอกชนและ 5 เทศบาลร่วมกันลงขันสร้าง Smart Bus และผลักดัน LRT การเป็นเจ้าของจากฐานรากทำให้ขอนแก่นเป็นเมืองอัจฉริยะที่ยืดหยุ่นที่สุด",
-            zh: "孔敬的成功不在于中央预算，而在于地方韧性。通过 KKTS，该市的私营部门和 5 个市政当局资助了自己的智慧巴士，并正在推动轻轨建设。这种自下而上的所有权使孔敬成为指数中最具韧性的智慧城市。"
+            en: "Khon Kaen's success isn't about central budget—it's about local grit. Through KKTS (Khon Kaen Transit System), the city's private sectors and 5 municipalities funded their own Smart Bus and are pushing for LRT. This bottom-up ownership makes Khon Kaen one of the most community-resilient cities in the index — an Alpha-tier city built largely without central funding.",
+            th: "ความสำเร็จของขอนแก่นไม่ใช่เรื่องงบส่วนกลาง แต่คือความใจสู้ของท้องถิ่น ผ่าน KKTS (บริษัท ขอนแก่น ทรานซิท ซิสเต็ม) ภาคเอกชนและ 5 เทศบาลร่วมกันลงขันสร้าง Smart Bus และผลักดัน LRT การเป็นเจ้าของจากฐานรากทำให้ขอนแก่นเป็นหนึ่งในเมืองที่ยืดหยุ่นที่สุดในดัชนี — เมืองระดับ Alpha ที่สร้างโดยแทบไม่พึ่งงบส่วนกลาง",
+            zh: "孔敬的成功不在于中央预算，而在于地方韧性。通过 KKTS，该市的私营部门和 5 个市政当局资助了自己的智慧巴士，并正在推动轻轨建设。这种自下而上的所有权使孔敬成为指数中最具社区韧性的城市之一——一座几乎不依赖中央资金的 Alpha 级城市。"
           })}
         </p>
         <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--alpha)' }}>
@@ -471,9 +471,9 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
         <h3 style={{ fontSize: 'var(--text-body)', marginBottom: '.5rem' }}>{translate(locale, { en: "The Laboratory Gap", th: "ช่องว่างห้องทดลอง", zh: "实验室差距" })}</h3>
         <p style={{ fontSize: 'var(--text-micro)', lineHeight: 1.6, color: 'var(--2)' }}>
           {translate(locale, {
-            en: "Wangchan Valley has the highest infrastructure score in the country. However, our index ranks it Gamma. Why? Because a smart city without residents is a lab, not a city. Until the 'Live' component matches the 'Digital' hardware, it remains a brilliant prototype.",
-            th: "วังจันทร์วัลเลย์มีคะแนนโครงสร้างพื้นฐานสูงที่สุดในประเทศ แต่ดัชนีของเราจัดให้อยู่ Gamma ทำไม? เพราะเมืองอัจฉริยะที่ไม่มีคนอยู่คือห้องทดลอง ไม่ใช่เมือง จนกว่าส่วนประกอบ 'Live' จะโตทันฮาร์ดแวร์ 'Digital' ที่นี่ก็ยังเป็นเพียงต้นแบบที่ยอดเยี่ยม",
-            zh: "旺参谷拥有全国最高的基础设施得分。然而，我们的指数将其评为 Gamma。为什么？因为没有居民的智慧城市只是实验室，而不是城市。在“生活”维度赶上“数字”硬件之前，它仍然只是一个出色的原型。"
+            en: "Wangchan Valley's masterplan promises advanced digital infrastructure — its Digital pillar scores 55 despite the city still being pre-operational. However, our index ranks it Gamma. Why? Because a smart city without residents is a lab, not a city. Until the 'Live' component matches the 'Digital' hardware, it remains a brilliant prototype.",
+            th: "แผนแม่บทของวังจันทร์วัลเลย์สัญญาโครงสร้างพื้นฐานดิจิทัลขั้นสูง — เสาดิจิทัลได้คะแนน 55 ทั้งที่เมืองยังอยู่ในช่วงก่อนเริ่มปฏิบัติการ แต่ดัชนีของเราจัดให้อยู่ Gamma ทำไม? เพราะเมืองอัจฉริยะที่ไม่มีคนอยู่คือห้องทดลอง ไม่ใช่เมือง จนกว่าส่วนประกอบ 'Live' จะโตทันฮาร์ดแวร์ 'Digital' ที่นี่ก็ยังเป็นเพียงต้นแบบที่ยอดเยี่ยม",
+            zh: "旺湛谷的总体规划承诺了先进的数字基础设施——尽管城市尚未投入运营，其数字支柱仍获得55分。然而，我们的指数将其评为 Gamma。为什么？因为没有居民的智慧城市只是实验室，而不是城市。在“生活”维度赶上“数字”硬件之前，它仍然只是一个出色的原型。"
           })}
         </p>
         <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--gamma)' }}>

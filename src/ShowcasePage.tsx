@@ -30,11 +30,11 @@ interface ShowcaseSource {
 }
 
 const metrics: ShowcaseMetric[] = [
-  { value: "112,000+", label: { en: "Active app users", th: "ผู้ใช้แอปที่ใช้งานจริง", zh: "活跃应用用户" } },
+  { value: "131,908", label: { en: "LINE OA friends (province-wide)", th: "เพื่อน LINE OA (ทั่วจังหวัด)", zh: "LINE OA 好友（全省范围）" } },
   { value: "< 48h", label: { en: "Issue resolution target", th: "เป้าเวลาแก้ปัญหา", zh: "问题处理目标" } },
   { value: "38,000", label: { en: "Complaints resolved in 3 years", th: "เรื่องร้องเรียนที่แก้ใน 3 ปี", zh: "3 年内已处理投诉" } },
   { value: "37%", label: { en: "Call-center workload cut", th: "ปริมาณงานคอลเซ็นเตอร์ที่ลดลง", zh: "呼叫中心工作量下降" } },
-  { value: "70%", label: { en: "Population adoption", th: "สัดส่วนประชากรที่ใช้งาน", zh: "人口采用率" } },
+  { value: "70%", label: { en: "Resident adoption in municipality", th: "สัดส่วนประชากรในเขตเทศบาลที่ใช้งาน", zh: "市区居民采用率" } },
   { value: "฿2.3M", label: { en: "Reported annual savings", th: "มูลค่าประหยัดต่อปีที่รายงาน", zh: "报告中的年度节省" } },
   { value: "2.7d", label: { en: "Avg resolution, from 6.2 days", th: "เวลาแก้ปัญหาเฉลี่ย จาก 6.2 วัน", zh: "平均处理时间（原 6.2 天）" } },
   { value: "92%", label: { en: "Citizen satisfaction", th: "ความพึงพอใจประชาชน", zh: "市民满意度" } },
@@ -503,9 +503,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </div>
             <p>
               {translate(locale, {
-                en: "This number — verified June 2026 — has crossed a threshold no Thai city government has reached before. In most Thai cities, government digital platforms reach 20% of residents at best. Nakhon Si Thammarat's @Nakhoncity LINE account now has 131,908 friends: more than the city's own population of 110,000. The account has outgrown the city. People from across Nakhon Si Thammarat province follow it as the most reliable government communication channel in the region — for real-time flood warnings, queue bookings, road repair reports, and live CCTV access.",
-                th: "ตัวเลขนี้ — ยืนยัน ณ มิถุนายน 2569 — ได้ก้าวข้ามเส้นที่ไม่มีรัฐบาลเมืองไทยใดเคยทำได้มาก่อน ในเมืองส่วนใหญ่ของไทย แพลตฟอร์มดิจิทัลของรัฐเข้าถึงประชาชนได้ดีที่สุดเพียง 20% LINE OA @Nakhoncity ของนครศรีธรรมราชมีเพื่อนแล้ว 131,908 ราย — มากกว่าประชากรในเขตเทศบาลที่มีอยู่ 110,000 คน บัญชีนี้โตเกินเมืองไปแล้ว ประชาชนทั่วทั้งจังหวัดนครศรีธรรมราชต่างติดตามเพราะมันคือช่องทางสื่อสารของรัฐที่น่าเชื่อถือที่สุดในภูมิภาค — สำหรับแจ้งเตือนน้ำท่วมเรียลไทม์ จองคิว รายงานซ่อมถนน และดูกล้องวงจรปิดสด",
-                zh: "这个数字——于2026年6月确认——越过了泰国任何一座城市政府从未到达的门槛。泰国多数城市的政府数字平台顶多覆盖20%的居民。洛坤的@Nakhoncity LINE账户目前拥有131,908位好友：超过了这座城市自身11万人口的总量。账户的覆盖已经超出城市本身。来自洛坤全省的民众将其视为整个地区最可靠的政府沟通渠道——用于实时洪水预警、事务预约、道路修缮报告和实时监控画面。",
+                en: "This number — verified June 2026 — is a scale few Thai municipalities have reached. In most Thai cities, government digital platforms reach 20% of residents at best. Nakhon Si Thammarat's @Nakhoncity LINE account now has 131,908 friends: more than the city's own population of 110,000. The account has outgrown the city. People from across Nakhon Si Thammarat province follow it as the most reliable government communication channel in the region — for real-time flood warnings, queue bookings, road repair reports, and live CCTV access.",
+                th: "ตัวเลขนี้ — ยืนยัน ณ มิถุนายน 2569 — เป็นระดับที่เทศบาลไทยมีเพียงไม่กี่แห่งที่ทำได้ ในเมืองส่วนใหญ่ของไทย แพลตฟอร์มดิจิทัลของรัฐเข้าถึงประชาชนได้ดีที่สุดเพียง 20% LINE OA @Nakhoncity ของนครศรีธรรมราชมีเพื่อนแล้ว 131,908 ราย — มากกว่าประชากรในเขตเทศบาลที่มีอยู่ 110,000 คน บัญชีนี้โตเกินเมืองไปแล้ว ประชาชนทั่วทั้งจังหวัดนครศรีธรรมราชต่างติดตามเพราะมันคือช่องทางสื่อสารของรัฐที่น่าเชื่อถือที่สุดในภูมิภาค — สำหรับแจ้งเตือนน้ำท่วมเรียลไทม์ จองคิว รายงานซ่อมถนน และดูกล้องวงจรปิดสด",
+                zh: "这个数字——于2026年6月确认——达到了泰国少有城市政府曾及的规模。泰国多数城市的政府数字平台顶多覆盖20%的居民。洛坤的@Nakhoncity LINE账户目前拥有131,908位好友：超过了这座城市自身11万人口的总量。账户的覆盖已经超出城市本身。来自洛坤全省的民众将其视为整个地区最可靠的政府沟通渠道——用于实时洪水预警、事务预约、道路修缮报告和实时监控画面。",
               })}
             </p>
             <p>
@@ -793,7 +793,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <div className="timeline-arc-content">
                   <div className="timeline-arc-text">
                     <h3 className="timeline-arc-title">{translate(locale, { en: "Operational Command", th: "ศูนย์บัญชาการปฏิบัติการ", zh: "运营指挥" })}</h3>
-                    <p className="timeline-arc-desc">{translate(locale, { en: "With over 112,000 citizens connected to the LINE OA, the IOC (Intelligent Operation Center) became the true brain of the city. Resolving over 38,000 complaints directly, the CCTV wall driven by live sensor data reduced resolution time by 56%.", th: "ด้วยประชาชนกว่า 112,000 คนบน LINE OA ศูนย์ IOC กลายเป็นสมองของเมืองอย่างแท้จริง การแก้ปัญหาไปแล้วกว่า 38,000 เรื่อง กำแพง CCTV ที่ขับเคลื่อนด้วยข้อมูลสดลดเวลาแก้ปัญหาลง 56%", zh: "随着超过112,000名市民连接到LINE OA，IOC（智能运营中心）成为了城市真正的大脑。通过实时传感器数据驱动的CCTV监控墙，直接解决了38,000多起投诉，将解决时间缩短了56%。" })}</p>
+                    <p className="timeline-arc-desc">{translate(locale, { en: "With over 131,000 LINE OA friends — more than the municipal population — the IOC (Intelligent Operation Center) became the true brain of the city. Resolving over 38,000 complaints directly, the CCTV wall driven by live sensor data reduced resolution time by 56%.", th: "ด้วยเพื่อน LINE OA กว่า 131,000 ราย — มากกว่าประชากรในเขตเทศบาล — ศูนย์ IOC กลายเป็นสมองของเมืองอย่างแท้จริง การแก้ปัญหาไปแล้วกว่า 38,000 เรื่อง กำแพง CCTV ที่ขับเคลื่อนด้วยข้อมูลสดลดเวลาแก้ปัญหาลง 56%", zh: "随着LINE OA好友超过131,000人——超过市区人口——IOC（智能运营中心）成为了城市真正的大脑。通过实时传感器数据驱动的CCTV监控墙，直接解决了38,000多起投诉，将解决时间缩短了56%。" })}</p>
                   </div>
                   <div className="timeline-arc-gallery">
                     <div className="timeline-arc-photo">
@@ -911,7 +911,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <div className="flow-node-icon">3</div>
                 <div className="flow-node-content">
                   <div className="flow-node-title">{translate(locale, { en: "3. LINE OA Broadcast (Output)", th: "3. แจ้งเตือนผ่าน LINE OA (ส่งออก)", zh: "3. LINE OA广播（输出）" })}</div>
-                  <div className="flow-node-desc">{translate(locale, { en: "A push notification hits the phones of 112,000 residents in targeted zones. Citizens move vehicles and elderly relatives to high ground.", th: "ข้อความแจ้งเตือนถูกส่งเข้ามือถือประชาชน 112,000 คนในพื้นที่เป้าหมาย ประชาชนย้ายรถและผู้สูงอายุขึ้นที่สูง", zh: "推送通知直接发送到目标区域112,000名居民的手机上。市民将车辆和老人转移到高处。" })}</div>
+                  <div className="flow-node-desc">{translate(locale, { en: "A push notification hits the phones of over 131,000 LINE OA friends in targeted zones. Citizens move vehicles and elderly relatives to high ground.", th: "ข้อความแจ้งเตือนถูกส่งเข้ามือถือเพื่อน LINE OA กว่า 131,000 รายในพื้นที่เป้าหมาย ประชาชนย้ายรถและผู้สูงอายุขึ้นที่สูง", zh: "推送通知直接发送到目标区域超过131,000名LINE OA好友的手机上。市民将车辆和老人转移到高处。" })}</div>
                 </div>
               </div>
 
@@ -1064,7 +1064,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                     </span>
                   </div>
                   <div className="showcase-data-callout-cell">
-                    <span className="showcase-data-callout-num">Same visit</span>
+                    <span className="showcase-data-callout-num">{translate(locale, { en: "Same visit", th: "รู้ผลในครั้งเดียว", zh: "当日完成" })}</span>
                     <span className="showcase-data-callout-label">
                       {translate(locale, { en: "Preliminary result — no more waiting days for a radiologist", th: "รู้ผลเบื้องต้นในวันเดียวกัน ไม่ต้องรอรังสีแพทย์หลายวัน", zh: "初步结果即时出具——无需等待放射科医生数天" })}
                     </span>

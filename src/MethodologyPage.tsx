@@ -52,8 +52,8 @@ const pillarDescriptions: Record<ScoringPillar, TriLingual & { signals: TriLingu
   },
   safety: {
     en: "Three-component doctrine: road fatality rate (30%), crime exposure (40%), and disaster resilience (30%). Road safety is sourced from thairsc.com provincial data — annual deaths per 100,000 population — because a city cannot be called safe while its roads are lethal. Crime and resilience components remain qualitatively assessed against available provincial data.",
-    th: "หลักคำสอนสามองค์ประกอบ: อัตราการเสียชีวิตบนท้องถนน (30%) ความเสี่ยงอาชญากรรม (40%) และความยืดหยุ่นต่อภัยพิบัติ (30%) ความปลอดภัยทางถนนมาจากข้อมูลรายจังหวัดของ thairsc.com — จำนวนผู้เสียชีวิตต่อแสนคนต่อปี — เพราะเมืองไม่อาจอ้างว่าปลอดภัยหากถนนยังคร่าชีวิตผู้คน",
-    zh: "三组分安全主义：道路死亡率（30%）、犯罪暴露（40%）与灾害韧性（30%）。道路安全数据来自 thairsc.com 的省级年度死亡率（每十万人）——因为一座城市若道路夺命，便无权自称安全。犯罪与韧性部分继续以定性方式对照省级数据评估。",
+    th: "หลักคำสอนสามองค์ประกอบ: อัตราการเสียชีวิตบนท้องถนน (30%) ความเสี่ยงอาชญากรรม (40%) และความยืดหยุ่นต่อภัยพิบัติ (30%) ความปลอดภัยทางถนนมาจากข้อมูลรายจังหวัดของ thairsc.com — จำนวนผู้เสียชีวิตต่อแสนคนต่อปี — เพราะเมืองไม่อาจอ้างว่าปลอดภัยหากถนนยังคร่าชีวิตผู้คน ส่วนองค์ประกอบด้านอาชญากรรมและความยืดหยุ่นยังคงประเมินเชิงคุณภาพเทียบกับข้อมูลระดับจังหวัดที่มีอยู่",
+    zh: "三要素原则：道路死亡率（30%）、犯罪暴露（40%）与灾害韧性（30%）。道路安全数据来自 thairsc.com 的省级年度死亡率（每十万人）——因为一座城市若道路夺命，便无权自称安全。犯罪与韧性部分继续以定性方式对照省级数据评估。",
     signals: [
       { en: "Road deaths per 100K — thairsc.com (30%)", th: "ผู้เสียชีวิตทางถนนต่อแสนคน — thairsc.com (30%)", zh: "每十万人道路死亡 — thairsc.com（30%）" },
       { en: "Crime per 100K (40%)", th: "อาชญากรรมต่อแสนคน (40%)", zh: "每十万人犯罪率（40%）" },
@@ -74,7 +74,7 @@ const pillarDescriptions: Record<ScoringPillar, TriLingual & { signals: TriLingu
   },
   environment: {
     en: "Environmental stress and resilience: air, water, green coverage, and whether the ecological baseline supports healthy urban life. World Bank CCDR 2025 quantifies the cost of inaction at 7–14% of GDP by 2050 under business-as-usual — making the environment pillar an investment signal, not just a sustainability score. Cities with stronger environmental baselines face lower climate adaptation costs and smaller economic drag from flood damage, heat stress, and water scarcity.",
-    th: "ความกดดันและความยืดหยุ่นด้านสิ่งแวดล้อม: อากาศ น้ำ พื้นที่สีเขียว และฐานนิเวศรองรับชีวิตเมืองที่ดีหรือไม่ ธนาคารโลก CCDR 2025 วัดค่าต้นทุนของการไม่ดำเนินการที่ 7-14% ของ GDP ภายในปี 2593 ภายใต้สถานการณ์ปกติ ทำให้เสาหลักสิ่งแวดล้อมเป็นสัญญาณการลงทุน ไม่ใช่แค่คะแนนความยั่งยืน",
+    th: "ความกดดันและความยืดหยุ่นด้านสิ่งแวดล้อม: อากาศ น้ำ พื้นที่สีเขียว และฐานนิเวศรองรับชีวิตเมืองที่ดีหรือไม่ ธนาคารโลก CCDR 2025 วัดค่าต้นทุนของการไม่ดำเนินการที่ 7-14% ของ GDP ภายในปี 2593 ภายใต้สถานการณ์ปกติ ทำให้เสาหลักสิ่งแวดล้อมเป็นสัญญาณการลงทุน ไม่ใช่แค่คะแนนความยั่งยืน เมืองที่มีฐานสิ่งแวดล้อมแข็งแกร่งกว่าจะเผชิญต้นทุนการปรับตัวด้านภูมิอากาศที่ต่ำกว่า และแรงฉุดทางเศรษฐกิจจากความเสียหายน้ำท่วม ความเครียดจากความร้อน และภาวะขาดแคลนน้ำก็น้อยกว่า",
     zh: "环境压力与韧性：空气、水、绿地，以及生态底盘是否支撑健康的城市生活。世界银行CCDR 2025将不作为的代价量化为2050年前占GDP7-14%——使环境支柱成为投资信号，而非仅仅是可持续发展评分。环境基线更强的城市面临更低的气候适应成本和更小的洪水、热应力和水资源短缺造成的经济拖累。",
     signals: [
       { en: "Annual PM2.5 (GISTDA live stations)", th: "PM2.5 รายปี (สถานีสด GISTDA)", zh: "年均 PM2.5（GISTDA实时站）" },
@@ -200,7 +200,7 @@ function DataFlowDiagram({ locale }: { locale: Locale }) {
     locale === "th" ? th : locale === "zh" ? zh : en;
 
   const boxes = [
-    { id: "sources", label: t("18+ Sources", "18+ แหล่งข้อมูล", "18+ 数据源"), sub: t("NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…"), x: 20, color: "#0D9488" },
+    { id: "sources", label: t(`${EVIDENCE_SOURCE_FAMILY_COUNT} Sources`, `${EVIDENCE_SOURCE_FAMILY_COUNT} แหล่งข้อมูล`, `${EVIDENCE_SOURCE_FAMILY_COUNT} 个数据源`), sub: t("NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…"), x: 20, color: "#0D9488" },
     { id: "research", label: t("Research Layer", "ชั้นวิจัย", "研究层"), sub: t("7 pillars · field verification", "7 เสาหลัก · ยืนยันภาคสนาม", "7 支柱 · 实地核验"), x: 200, color: "#D97706" },
     { id: "math", label: t("Math Layer", "ชั้นคณิตศาสตร์", "数学层"), sub: t("Weighted sum · deterministic", "ผลรวมถ่วงน้ำหนัก · กำหนดแน่นอน", "加权求和 · 确定性"), x: 380, color: "#1A6FB5" },
     { id: "output", label: t("Score + Tier", "คะแนน + ระดับ", "得分 + 层级"), sub: t("0–100 · α β γ", "0–100 · α β γ", "0–100 · α β γ"), x: 560, color: "#6366F1" },
@@ -707,6 +707,13 @@ export default function MethodologyPage({ locale }: Props) {
         </p>
 
         <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>{t("The Moneyball Score: Composite", "คะแนน Moneyball: การคำนวณรวม", "Moneyball评分：综合计算")}</h3>
+        <p style={{ fontSize: "var(--text-micro)", color: "var(--3)", lineHeight: 1.6, marginBottom: "1rem", borderLeft: "2px solid var(--5, #E5E5E5)", paddingLeft: "0.75rem" }}>
+          {translate(locale, {
+            en: "Note: the SCITI index score is the 7-pillar composite described above. The Moneyball Score below is a separate, downloadable investment analysis built on top of the index — it is not the index score itself.",
+            th: "หมายเหตุ: คะแนนดัชนี SCITI คือคะแนนรวม 7 เสาหลักที่อธิบายไว้ด้านบน คะแนน Moneyball ด้านล่างเป็นการวิเคราะห์เพื่อการลงทุนแบบดาวน์โหลดแยกต่างหากที่สร้างต่อยอดจากดัชนี ไม่ใช่คะแนนดัชนี",
+            zh: "注：SCITI 指数得分是上文所述的七支柱综合分。下方的 Moneyball 评分是基于该指数构建的独立可下载投资分析，并非指数得分本身。",
+          })}
+        </p>
         <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginBottom: "1rem" }}>
           {translate(locale, {
             en: "The SCITI Moneyball Score is a weighted composite index calculated as follows:",
@@ -767,7 +774,7 @@ export default function MethodologyPage({ locale }: Props) {
         </p>
         <div className="export-docs" style={{ marginTop: "1rem" }}>
           <a href={assetUrl("/downloads/SCITI-2026-Methodology.pdf")} download className="export-doc-link">
-            {t("Methodology Paper (PDF)", "Methodology Paper (PDF)", "方法论文（PDF）")}
+            {t("Methodology Paper (PDF)", "เอกสารระเบียบวิธี (PDF)", "方法论文（PDF）")}
           </a>
           <a href={assetUrl("/downloads/SCITI-2026-Methodology.html")} download className="export-doc-link">
             {t("Methodology Source (HTML)", "Methodology Source (HTML)", "方法源文件（HTML）")}

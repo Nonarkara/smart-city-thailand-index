@@ -84,29 +84,29 @@ export default function AsusPage({ locale, onNavigate }: Props) {
         </h1>
         <p style={{ fontSize: ".85rem", color: "var(--2, #444)", lineHeight: 1.7, maxWidth: "520px" }}>
           {t(locale,
-            "The ASUS Project Phase II partners UN-Habitat with 15 ASEAN cities across 7 countries. Thailand contributes Nakhon Si Thammarat (Solid Waste) and Chiang Mai (Safety & Security) — two cities already in our Smart City Index.",
-            "โครงการ ASUS Phase II ร่วมมือ UN-Habitat กับ 15 เมืองอาเซียนใน 7 ประเทศ ไทยเข้าร่วมด้วยนครศรีธรรมราช (ขยะ) และเชียงใหม่ (ความปลอดภัย) — สองเมืองที่อยู่ในดัชนีของเราแล้ว",
-            "ASUS 二期项目由联合国人居署与 7 个国家的 15 座东盟城市合作。泰国贡献了洛坤（固体废物）和清迈（安全保障）——两座已在我们指数中的城市。"
+            "The ASUS Project Phase II partners UN-Habitat with 15 ASEAN cities across 8 countries. Thailand contributes Nakhon Si Thammarat (Solid Waste) and Chiang Mai (Safety & Security) — two cities already in our Smart City Index.",
+            "โครงการ ASUS Phase II ร่วมมือ UN-Habitat กับ 15 เมืองอาเซียนใน 8 ประเทศ ไทยเข้าร่วมด้วยนครศรีธรรมราช (ขยะ) และเชียงใหม่ (ความปลอดภัย) — สองเมืองที่อยู่ในดัชนีของเราแล้ว",
+            "ASUS 二期项目由联合国人居署与 8 个国家的 15 座东盟城市合作。泰国贡献了洛坤（固体废物）和清迈（安全保障）——两座已在我们指数中的城市。"
           )}
         </p>
       </section>
 
       <section className="section" style={{ marginBottom: "2rem" }}>
         <p className="eyebrow">{t(locale, "Phase II Cities", "เมือง Phase II", "二期城市")}</p>
-        <h2>{t(locale, "15 cities, 7 countries, 6 focus areas", "15 เมือง 7 ประเทศ 6 ด้าน", "15座城市，7个国家，6个重点领域")}</h2>
+        <h2>{t(locale, "15 cities, 8 countries, 8 focus areas", "15 เมือง 8 ประเทศ 8 ด้าน", "15座城市，8个国家，8个重点领域")}</h2>
         <div style={{ borderTop: "2px solid var(--ink, #111)" }}>
           {phase2Cities.map((c, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "2rem 1fr 10rem auto", gap: ".4rem", padding: ".4rem 0", borderBottom: "1px solid var(--5, #E5E5E5)", alignItems: "center", fontSize: ".72rem" }}>
+            <div key={i} style={{ display: "grid", gridTemplateColumns: "2rem 1fr 10rem auto", gap: ".4rem", padding: ".4rem 0", borderBottom: "1px solid var(--5, #E5E5E5)", alignItems: "center", fontSize: "var(--text-micro)" }}>
               <span>{c.flag}</span>
               <span style={{ fontWeight: 700 }}>{tri(locale, c.city, CITY_LABELS)}</span>
-              <span style={{ font: "500 .55rem var(--mono, monospace)", color: "var(--teal, #2BBAA0)" }}>{tri(locale, c.focus, FOCUS_LABELS)}</span>
+              <span style={{ font: "500 var(--text-micro) var(--mono, monospace)", color: "var(--teal, #2BBAA0)" }}>{tri(locale, c.focus, FOCUS_LABELS)}</span>
               {"linked" in c && c.linked ? (
-                <button style={{ font: "600 .55rem var(--mono, monospace)", color: "var(--teal, #2BBAA0)", background: "none", border: 0, cursor: "pointer" }}
+                <button style={{ font: "600 var(--text-micro) var(--mono, monospace)", color: "var(--teal, #2BBAA0)", background: "none", border: 0, cursor: "pointer" }}
                   onClick={() => onNavigate(`/city/${c.linked}`)}>
                   {t(locale, "View profile", "ดูโปรไฟล์", "查看档案")} →
                 </button>
               ) : (
-                <span style={{ font: "500 .5rem var(--mono, monospace)", color: "var(--4, #BBB)" }}>{tri(locale, c.country, COUNTRY_LABELS)}</span>
+                <span style={{ font: "500 var(--text-micro) var(--mono, monospace)", color: "var(--4, #BBB)" }}>{tri(locale, c.country, COUNTRY_LABELS)}</span>
               )}
             </div>
           ))}
@@ -125,8 +125,8 @@ export default function AsusPage({ locale, onNavigate }: Props) {
           ].map(s => (
             <div key={s.step} style={{ padding: ".7rem .6rem", borderRight: "1px solid var(--5, #E5E5E5)" }}>
               <div style={{ font: "700 .85rem var(--mono, monospace)", color: "var(--teal, #2BBAA0)", marginBottom: ".15rem" }}>{s.step}</div>
-              <div style={{ fontWeight: 700, fontSize: ".72rem", marginBottom: ".15rem" }}>{t(locale, s.title.en, s.title.th, s.title.zh)}</div>
-              <div style={{ fontSize: ".55rem", color: "var(--2, #444)", lineHeight: 1.4 }}>{t(locale, s.desc.en, s.desc.th, s.desc.zh)}</div>
+              <div style={{ fontWeight: 700, fontSize: "var(--text-micro)", marginBottom: ".15rem" }}>{t(locale, s.title.en, s.title.th, s.title.zh)}</div>
+              <div style={{ fontSize: "var(--text-micro)", color: "var(--2, #444)", lineHeight: 1.4 }}>{t(locale, s.desc.en, s.desc.th, s.desc.zh)}</div>
             </div>
           ))}
         </div>

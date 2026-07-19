@@ -419,15 +419,3 @@ export function getDepaOfficial(cityId: string): DepaOfficialRecord | undefined 
   return DEPA_OFFICIAL[cityId];
 }
 
-/** National programme statistics from official depa sources (2025). */
-export const DEPA_PROGRAMME_STATS = {
-  certifiedCities: 37,
-  promotionZones: 173,
-  provinces: 25,
-  citizensCoveredMillions: 9,
-  totalInvestmentBaht: 11_900_000_000,
-  target2027Cities: 105,
-  smartDimensions: 7,
-  certificationCriteria: 5,
-  sourceYear: 2025,
-};

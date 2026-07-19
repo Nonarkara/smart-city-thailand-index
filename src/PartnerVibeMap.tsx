@@ -163,6 +163,14 @@ const COUNTRIES: CountryVibe[] = [
 
 const THAILAND = { x: 500, y: 295, flag: "🇹🇭", name: { en: "Thailand", th: "ไทย", zh: "泰国" } };
 
+// Status stat values mirror the statusLabels map in PartnershipsPage.
+const STATUS_VALUES: Record<string, { en: string; th: string; zh: string }> = {
+  Active: { en: "Active", th: "ยังเดินอยู่", zh: "仍在推进" },
+  Done: { en: "Done", th: "ส่งมอบแล้ว", zh: "已交付" },
+  Early: { en: "Early", th: "ยังต้นน้ำ", zh: "仍在早期" },
+  Stalled: { en: "Stalled", th: "ติดคอขวด", zh: "推进受阻" },
+};
+
 function t(locale: Locale, dict: { en: string; th: string; zh: string }): string {
   return locale === "th" ? dict.th : locale === "zh" ? dict.zh : dict.en;
 }
@@ -365,7 +373,7 @@ export default function PartnerVibeMap({ locale }: Props) {
             <div className="vibe-card-stats">
               {hovered.stats.map((s, i) => (
                 <div key={i} className="vibe-card-stat">
-                  <span className="vibe-card-stat-value">{s.value}</span>
+                  <span className="vibe-card-stat-value">{STATUS_VALUES[s.value] ? t(locale, STATUS_VALUES[s.value]) : s.value}</span>
                   <span className="vibe-card-stat-label">{t(locale, s.label)}</span>
                 </div>
               ))}

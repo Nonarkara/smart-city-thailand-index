@@ -236,7 +236,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="home-stat-value">{stats.certified}</span>
           </div>
           <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Provinces covered", th: "จังหวัดครอบคลุม", zh: "覆盖府县" })}</span>
+            <span className="home-stat-label">{t({ en: "Provinces covered", th: "จังหวัดครอบคลุม", zh: "覆盖省份" })}</span>
             <span className="home-stat-value">{provinceCount}</span>
           </div>
           <div className="home-stat-cell">
@@ -248,7 +248,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="home-stat-value">SCITI 2026</span>
           </div>
           <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Refreshed", th: "อัปเดต", zh: "刷新" })}</span>
+            <span className="home-stat-label">{t({ en: "Refreshed", th: "อัปเดต", zh: "最近更新" })}</span>
             <span className="home-stat-value">{formatWeeklyStamp(WEEKLY_DIGEST.weekOf, locale)}</span>
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ─── EDITION STAMP ─── */}
       <div className="edition-stamp">
         <span>
-          {`SCITI 2026 Edition · ${stats.total} ${t({ en: "cities", th: "เมือง", zh: "城市" })} · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源族群" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}
+          {`SCITI 2026 Edition · ${stats.total} ${t({ en: "cities", th: "เมือง", zh: "城市" })} · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源类别" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}
         </span>
         <span>{t({ en: `Research by Dr. Non A · depa · ${SCITI_METHOD_CODE} · release cut-off ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, th: `งานวิจัยโดย ดร.ณณ · depa · ${SCITI_METHOD_CODE} · วันตัดข้อมูล ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, zh: `研究：Non A 博士 · depa · ${SCITI_METHOD_CODE} · 数据截点 ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}` })}</span>
       </div>
@@ -266,17 +266,17 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* The editorial heart of SCITI: why it exists, what makes it honest,
           what the user is about to see. Dark panel, ink-on-white reversed,
           large monospaced numbers anchoring three hard claims. */}
-      <section className="opening-argument" aria-label={t({ en: "Opening argument", th: "ข้อโต้แย้งเปิด", zh: "开篇论点" })}>
+      <section className="opening-argument" aria-label={t({ en: "Opening argument", th: "ประเด็นตั้งต้น", zh: "开篇论点" })}>
         <div className="opening-argument-inner">
           <p className="opening-argument-eyebrow">
-            {t({ en: "Opening argument", th: "ข้อโต้แย้งเปิด", zh: "开篇论点" })}
+            {t({ en: "Opening argument", th: "ประเด็นตั้งต้น", zh: "开篇论点" })}
           </p>
           <h2 className="opening-argument-headline">
             {locale === "th"
-              ? <>118 เมือง. 37 รับรองแล้ว.<br />นี่คือสิ่งที่แยกพวกเขาออกจากกัน</>
+              ? <>{stats.total} เมือง. {stats.certified} รับรองแล้ว.<br />นี่คือสิ่งที่แยกพวกเขาออกจากกัน</>
               : locale === "zh"
-                ? <>118 座城市。37 座已认证。<br />这就是区别它们的东西。</>
-                : <>118 cities, 37 certified.<br />Here is what separates them.</>
+                ? <>{stats.total} 座城市。{stats.certified} 座已认证。<br />这就是区别它们的东西。</>
+                : <>{stats.total} cities, {stats.certified} certified.<br />Here is what separates them.</>
             }
           </h2>
 

@@ -181,7 +181,7 @@ export const PLANNING_STEPS: PlanningStepDefinition[] = [
     id: "dataPlatform",
     label: {
       en: "3. City data platform",
-      th: "3. City Data Platform",
+      th: "3. แพลตฟอร์มข้อมูลเมือง",
       zh: "3. 城市数据平台",
     },
     description: {

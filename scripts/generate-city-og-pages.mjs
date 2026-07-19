@@ -141,8 +141,8 @@ console.log(`✓ Generated ${count} city OG pages in dist/city/`);
 //    excluded — they are not public content surfaces.
 // ---------------------------------------------------------------------------
 const STATIC_ROUTES = [
-  "/", "/rankings", "/methodology", "/story", "/why", "/showcase",
-  "/partners", "/map", "/program", "/knowledge", "/discover", "/invest",
+  "/", "/about", "/rankings", "/methodology", "/story", "/why", "/showcase",
+  "/creative-economy", "/partners", "/map", "/program", "/knowledge", "/discover", "/invest",
   "/compare", "/references", "/audit",
 ];
 const lastmod = new Date().toISOString().slice(0, 10);

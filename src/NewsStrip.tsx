@@ -146,7 +146,7 @@ export default function NewsStrip({ locale }: Props) {
               </p>
             </div>
             <div className="legal-block">
-              <span className="legal-badge legal-badge-disclaimer">Disclaimer</span>
+              <span className="legal-badge legal-badge-disclaimer">{translate(locale, { en: "Disclaimer", th: "ข้อจำกัดความรับผิดชอบ", zh: "免责声明" })}</span>
               <p className="legal-text">
                 {translate(locale, {
                   en: "Scores are research estimates based on public data — not official government assessments. No city paid for its ranking. No investor paid for placement.",

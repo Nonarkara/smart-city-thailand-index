@@ -49,7 +49,7 @@ export const HOME_COLLECTIONS: HomeCollection[] = [
       th: "คนไทยส่วนใหญ่หายใจ PM₂.₅ เกินเกณฑ์ชั่วคราวขององค์การอนามัยโลก ส่วนเมืองกลุ่มนี้อยู่ในเกณฑ์",
       zh: "泰国多数地区的 PM₂.₅ 高于 WHO 暂定目标。这些城市不是。",
     },
-    cityIds: ["yala", "nakhon-si-thammarat", "chiang-rai", "ubon", "nan"],
+    cityIds: ["yala", "nakhon-si-thammarat", "satun", "ubon", "narathiwat"],
   },
   {
     id: "money-moving",
@@ -64,6 +64,6 @@ export const HOME_COLLECTIONS: HomeCollection[] = [
       th: "GPP โต การลงทุนต่างประเทศเพิ่ม นิคมอุตสาหกรรมใหม่เปิด — เมืองที่ทำได้ดีกว่าค่าเฉลี่ยประเทศในแกนเศรษฐกิจ",
       zh: "GPP 增长、外资流入、新工业园——在资金维度上跑赢全国平均的城市。",
     },
-    cityIds: ["rayong", "samyan", "wangchan-valley", "chachoengsao"],
+    cityIds: ["rayong", "samyan", "saensuk", "chachoengsao"],
   },
 ];

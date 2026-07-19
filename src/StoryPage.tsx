@@ -56,6 +56,14 @@ const INDICATOR_CARDS: IndicatorCard[] = [
       zh: "孵化中心 + 无现金社会 + 业务连续性大数据基础设施",
     },
   },
+  {
+    dim: { en: "Smart People", th: "คนอัจฉริยะ", zh: "智慧人才" },
+    threshold: {
+      en: "Digital literacy & ICT skills programs · lifelong learning centers · equal access to education technology",
+      th: "โครงการพัฒนาทักษะดิจิทัลและ ICT · ศูนย์การเรียนรู้ตลอดชีวิต · การเข้าถึงเทคโนโลยีการศึกษาอย่างเท่าเทียม",
+      zh: "数字素养与ICT技能项目 · 终身学习中心 · 平等获取教育技术",
+    },
+  },
 ];
 
 interface Props {
@@ -81,11 +89,11 @@ const spotlights: Spotlight[] = [
     vibe: { en: "High output, high data maturity. Real sensors, real impact.", th: "ผลลัพธ์สูง ข้อมูลพร้อม เซ็นเซอร์จริง ผลกระทบจริง", zh: "高产出，高数据成熟度。真实传感器，真实影响。" },
     body: {
       en: "Phuket isn't just a beach. It's Thailand's most mature data ecosystem, scoring high in Hospitality and Digital. From high-resolution CCTV to environmental sensors, it's the closest we have to a 'Running' smart city.",
-      th: "ภูเก็ตไม่ใช่แค่หาดทราย แต่เป็นระบบนิเวศข้อมูลที่สมบูรณ์ที่สุดของไทย คะแนนสูงในด้าน Hospitality และ Digital ตั้งแต่ CCTV ความละเอียดสูงไปจนถึงเซ็นเซอร์สิ่งแวดล้อม นี่คือใกล้เคียงที่สุดกับคำว่าเมืองอัจฉริยะที่ 'ทำงานจริง'",
-      zh: "普吉不仅有海滩。它是泰国最成熟的数据生态系统，在款待与数字维度得分很高。从高清监控到环境传感器，它是我们最接近“运行中”的智慧城市。",
+      th: "ภูเก็ตไม่ใช่แค่หาดทราย แต่เป็นระบบนิเวศข้อมูลที่สมบูรณ์ที่สุดของไทย คะแนนสูงในด้านอัธยาศัยและดิจิทัล ตั้งแต่ CCTV ความละเอียดสูงไปจนถึงเซ็นเซอร์สิ่งแวดล้อม นี่คือใกล้เคียงที่สุดกับคำว่าเมืองอัจฉริยะที่ 'ทำงานจริง'",
+      zh: "普吉不仅有海滩。它是泰国最成熟的数据生态系统，在人文与数字支柱得分很高。从高清监控到环境传感器，它是我们最接近“运行中”的智慧城市。",
     },
-    metric: "88%",
-    metricLabel: { en: "Efficiency Level", th: "ระดับประสิทธิภาพ", zh: "效率级别" },
+    metric: "88",
+    metricLabel: { en: "Hospitality Score", th: "คะแนนอัธยาศัย", zh: "人文得分" },
   },
   {
     id: "khon-kaen",
@@ -94,21 +102,21 @@ const spotlights: Spotlight[] = [
     vibe: { en: "Bottom-up innovation. Less flash, more infrastructure.", th: "นวัตกรรมจากล่างขึ้นบน แฟลชน้อยกว่า แต่โครงสร้างแน่นกว่า", zh: "自下而上的创新。少点噱头，多点基础设施。" },
     body: {
       en: "Khon Kaen is the 'people's city'. While others wait for central budgets, Khon Kaen builds its own Smart Bus and pushes for LRT via community-led investment. It scores high in Wellbeing and Economy through sheer local grit.",
-      th: "ขอนแก่นคือ 'เมืองของประชาชน' ในขณะที่เมืองอื่นรอสมาธิจากส่วนกลาง ขอนแก่นสร้าง Smart Bus ของตัวเองและผลักดัน LRT ผ่านการลงทุนที่นำโดยชุมชน คะแนนสูงในด้าน Wellbeing และ Economy ด้วยความใจสู้ของคนในพื้นที่",
+      th: "ขอนแก่นคือ 'เมืองของประชาชน' ในขณะที่เมืองอื่นรอสมาธิจากส่วนกลาง ขอนแก่นสร้าง Smart Bus ของตัวเองและผลักดัน LRT ผ่านการลงทุนที่นำโดยชุมชน คะแนนสูงในด้านคุณภาพชีวิตและเศรษฐกิจ ด้วยความใจสู้ของคนในพื้นที่",
       zh: "孔敬是“人民的城市”。当其他城市在等待中央预算时，孔敬建立了自己的智慧巴士，并通过社区主导的投资推动轻轨建设。凭借地方韧性，它在福祉与经济方面得分很高。",
     },
-    metric: "72.4",
-    metricLabel: { en: "Grit Score", th: "คะแนนความใจสู้", zh: "韧性评分" },
+    metric: "66.6",
+    metricLabel: { en: "Composite Score", th: "คะแนนรวม", zh: "综合评分" },
   },
   {
     id: "wangchan-valley",
     type: { en: "The Reality Check", th: "ภาพสะท้อนความจริง", zh: "现实检查" },
-    title: { en: "Wangchan Valley: The Lab Gap", th: "วังจันทร์วัลเลย์: ช่องว่างห้องทดลอง", zh: "旺参谷：实验室差距" },
+    title: { en: "Wangchan Valley: The Lab Gap", th: "วังจันทร์วัลเลย์: ช่องว่างห้องทดลอง", zh: "旺湛谷：实验室差距" },
     vibe: { en: "Masterplan vs. Operations. High potential, pre-population.", th: "แผนแม่บท vs. การปฏิบัติงาน ศักยภาพสูง อยู่ในระยะก่อนการอยู่อาศัย", zh: "总体规划 vs. 实际运营。潜力巨大，处于人口准备前期。" },
     body: {
       en: "Wangchan Valley represents an ambitious 'Silicon Valley' masterplan. The proposed infrastructure is highly advanced, but our index categorizes it as Gamma because it is currently pre-operational without an established resident population. It serves as the ultimate study in 'Planned' vs. 'Operational'.",
       th: "วังจันทร์วัลเลย์นำเสนอแผนแม่บท 'ซิลิคอนวัลเลย์' ที่ทะเยอทะยาน โครงสร้างพื้นฐานที่นำเสนอมีความก้าวหน้าสูง แต่ดัชนีของเราจัดให้อยู่ในกลุ่ม Gamma เนื่องจากปัจจุบันยังอยู่ในช่วงก่อนเริ่มปฏิบัติการและยังไม่มีกลุ่มประชากรอยู่อาศัยที่ชัดเจน จึงเป็นกรณีศึกษาสำคัญในการเปรียบเทียบระหว่าง 'แผนงาน' กับ 'การใช้งานจริง'",
-      zh: "旺掺谷代表了一个雄心勃勃的“硅谷”总体规划。尽管拟建的基础设施高度先进，但我们的指数将其归类为 Gamma，因为它目前处于投入运营前的阶段，尚无常住人口。这是研究“规划中”与“实施中”差异的最佳案例。",
+      zh: "旺湛谷代表了一个雄心勃勃的“硅谷”总体规划。尽管拟建的基础设施高度先进，但我们的指数将其归类为 Gamma，因为它目前处于投入运营前的阶段，尚无常住人口。这是研究“规划中”与“实施中”差异的最佳案例。",
     },
     metric: "Gamma",
     metricLabel: { en: "Reality Tier", th: "ระดับความจริง", zh: "现实层级" },
@@ -259,7 +267,7 @@ export default function StoryPage({ locale, onNavigate }: Props) {
         <div className="story-shift-grid" style={{ borderTop: '2px solid var(--ink)', padding: '1rem 0' }}>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: '0', borderRadius: '0', borderRight: '1px solid var(--5)' }}>
             <h3 style={{ fontSize: '.85rem' }}>{translate(locale, { en: "Logo Distribution → Evidence Mapping", th: "การแจกโลโก้ → การวางแผนหลักฐาน", zh: "Logo分发 → 证据映射" })}</h3>
-            <p style={{ fontSize: '.65rem' }}>{translate(locale, { en: "Certification used to be the end goal. Now, it's just the starting line for auditable outcomes.", th: "การรับรอบที่เคยเป็นความจบสิ้นแล้ว แต่ตอนนี้เป็นเป้าหมายที่มีการตรวจสอบได้", zh: "认证曾是终极目标。现在，它只是可审计结果的起点。" })}</p>
+            <p style={{ fontSize: '.65rem' }}>{translate(locale, { en: "Certification used to be the end goal. Now, it's just the starting line for auditable outcomes.", th: "การรับรองเคยเป็นเป้าหมายสูงสุด แต่ตอนนี้มันคือเพียงเส้นเริ่มต้นของผลลัพธ์ที่ตรวจสอบได้", zh: "认证曾是终极目标。现在，它只是可审计结果的起点。" })}</p>
           </div>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: '0', borderRadius: '0', borderRight: '1px solid var(--5)' }}>
             <h3 style={{ fontSize: '.85rem' }}>{translate(locale, { en: "Technology Theater → Citizen Pain Points", th: "ละครเทคโนโลยี → จุดที่ประชาชนเดือนร้อน", zh: "技术表演 → 公民痛点" })}</h3>

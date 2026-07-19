@@ -73,10 +73,10 @@ const PILLAR_SHORT_LABELS: Record<Locale, Record<ScoringPillar, string>> = {
   },
   th: {
     livability: "อยู่",
-    economy: "ศก.",
+    economy: "ศก",
     safety: "ปลอด",
-    wellbeing: "สุข",
-    environment: "สิ่ง",
+    wellbeing: "ชีวิต",
+    environment: "สิ่งแวด",
     hospitality: "ไมตรี",
     digital: "ดิจิ",
   },

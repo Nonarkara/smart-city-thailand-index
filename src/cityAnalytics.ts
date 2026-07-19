@@ -8,6 +8,7 @@
 import type { SmartCity, ScoringPillar } from "./types";
 import { SCORING_PILLARS } from "./scoring";
 import { PROVINCIAL_LAND_PRICE_SCORE } from "./provincialLandPriceData.ts";
+import { getCityById } from "./cityData.ts";
 
 // ─── DEVELOPABILITY SCORE ───
 // Measures: growth capacity (30%), infrastructure readiness (40%), livability (30%)
@@ -439,8 +440,26 @@ export interface MoneyballProfile {
   headlineZh: string;
 }
 
-// Big 3 benchmarks (Bangkok/Phuket/Chiang Mai averages)
-const BIG3_AVG = { gpp: 429000, pm25: 32.2, crime: 208, beds: 33, green: 41 };
+// Big 3 benchmarks (Bangkok/Phuket/Chiang Mai averages) — computed from
+// cityData at module load so the anchors can never drift from the dataset.
+// Bangkok anchor is "samyan" (carries Bangkok-province metrics); Chiang Mai
+// anchor is "chiang-mai-old-town".
+const BIG3_IDS = ["samyan", "phuket", "chiang-mai-old-town"] as const;
+const BIG3_CITIES = BIG3_IDS.map(id => getCityById(id)).filter(
+  (c): c is SmartCity => c !== undefined,
+);
+function big3Mean(pick: (c: SmartCity) => number | undefined, fallback: number): number {
+  const vals = BIG3_CITIES.map(pick).filter((v): v is number => v !== undefined);
+  if (vals.length === 0) return fallback;
+  return vals.reduce((s, v) => s + v, 0) / vals.length;
+}
+const BIG3_AVG = {
+  gpp: Math.round(big3Mean(c => c.metrics.gppPerCapita, 429000) / 1000) * 1000,
+  pm25: Math.round(big3Mean(c => c.metrics.pm25Annual, 32.2) * 10) / 10,
+  crime: Math.round(big3Mean(c => c.metrics.crimeRatePer100k, 208)),
+  beds: Math.round(big3Mean(c => c.metrics.hospitalBedsPer10k, 33)),
+  green: Math.round(big3Mean(c => c.metrics.greenCoverage, 42)),
+};
 
 export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
   const gpp = city.metrics.gppPerCapita ?? 0;

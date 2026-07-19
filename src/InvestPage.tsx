@@ -35,8 +35,8 @@ const macroStats: MacroStat[] = [
   },
   {
     label: { en: "Smart City National Target", th: "เป้าหมายเมืองอัจฉริยะ", zh: "智慧城市国家目标" },
-    value: "100",
-    sub: { en: "cities by 2036 (depa)", th: "เมือง ภายใน 2579 (depa)", zh: "座城市，2036年目标 (depa)" },
+    value: "105",
+    sub: { en: "cities by 2027 (depa)", th: "เมือง ภายใน 2570 (depa)", zh: "座城市，2027年目标 (depa)" },
   },
   {
     label: { en: "BOI Tax Holiday", th: "สิทธิประโยชน์ BOI", zh: "BOI税收优惠" },
@@ -77,9 +77,9 @@ const insightCards: InsightCard[] = [
       zh: "综合评分65+ = 当下可投资",
     },
     body: {
-      en: "Alpha cities have operational infrastructure, live data pipelines, and measurable citizen outcomes. Currently only 3-5 cities qualify. These are not promises — they are running systems.",
-      th: "เมือง Alpha มีโครงสร้างพื้นฐานที่ใช้งานจริง มี data pipeline ที่ทำงานอยู่ และมีผลลัพธ์สำหรับพลเมืองที่วัดได้ ปัจจุบันมีเพียง 3-5 เมืองที่ผ่านเกณฑ์ สิ่งเหล่านี้ไม่ใช่คำสัญญา แต่คือระบบที่ทำงานจริง",
-      zh: "Alpha城市拥有运营中的基础设施、实时数据管道和可衡量的市民成效。目前仅3-5座城市达标。这些不是承诺，而是运行中的系统。",
+      en: "Alpha cities have operational infrastructure, live data pipelines, and measurable citizen outcomes. Currently 9 cities qualify. These are not promises — they are running systems.",
+      th: "เมือง Alpha มีโครงสร้างพื้นฐานที่ใช้งานจริง มี data pipeline ที่ทำงานอยู่ และมีผลลัพธ์สำหรับพลเมืองที่วัดได้ ปัจจุบันมี 9 เมืองที่ผ่านเกณฑ์ สิ่งเหล่านี้ไม่ใช่คำสัญญา แต่คือระบบที่ทำงานจริง",
+      zh: "Alpha城市拥有运营中的基础设施、实时数据管道和可衡量的市民成效。目前有9座城市达标。这些不是承诺，而是运行中的系统。",
     },
   },
   {
@@ -394,7 +394,7 @@ const sources: Source[] = [
   { name: "BOI Annual Report 2024", desc: { en: "FDI inflows, investment incentive structures, EEC commitments", th: "FDI ไหลเข้า, โครงสร้างสิทธิประโยชน์การลงทุน, พันธสัญญา EEC", zh: "FDI流入、投资优惠结构、EEC承诺" } },
   { name: "NESDC (National Economic and Social Development Council)", desc: { en: "GDP growth forecasts, digital economy targets, national strategy", th: "คาดการณ์การเติบโต GDP, เป้าหมายเศรษฐกิจดิจิทัล, ยุทธศาสตร์ชาติ", zh: "GDP增长预测、数字经济目标、国家战略" } },
   { name: "NSO Thailand (National Statistical Office)", desc: { en: "Household computer ownership, labor force statistics, demographic data", th: "การถือครองคอมพิวเตอร์ครัวเรือน, สถิติแรงงาน, ข้อมูลประชากร", zh: "家庭电脑拥有率、劳动力统计、人口数据" } },
-  { name: "depa Smart City Thailand Office", desc: { en: "Smart city designations, CDP status, 100-city roadmap", th: "การกำหนดเมืองอัจฉริยะ, สถานะ CDP, แผน 100 เมือง", zh: "智慧城市认定、CDP状态、100城路线图" } },
+  { name: "depa Smart City Thailand Office", desc: { en: "Smart city designations, CDP status, 105-city roadmap", th: "การกำหนดเมืองอัจฉริยะ, สถานะ CDP, แผน 105 เมือง", zh: "智慧城市认定、CDP状态、105城路线图" } },
   { name: "SCITI 2026 Index", desc: { en: "Composite scores, pillar breakdowns, tier classifications, data confidence ratings", th: "คะแนนรวม, การแยกตามเสาหลัก, การจัดระดับ, ระดับความเชื่อมั่นข้อมูล", zh: "综合评分、支柱分解、层级分类、数据置信度评级" } },
   { name: "ASEAN Smart City Financing Toolkit", desc: { en: "Blended finance frameworks, regional investment facilitation", th: "กรอบการเงินผสม, การอำนวยความสะดวกการลงทุนระดับภูมิภาค", zh: "混合融资框架、区域投资便利化" } },
   { name: "ADB ACGF Reports", desc: { en: "Green finance mechanisms, catalytic co-lending structures", th: "กลไกการเงินสีเขียว, โครงสร้างร่วมให้กู้เชิงเร่งปฏิกิริยา", zh: "绿色金融机制、催化联合贷款结构" } },
@@ -472,49 +472,49 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             
             <div className="invest-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>GPP & GPP/Capita</h4>
-                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Provincial productivity and economic scale (NESDC).", th: "ผลิตภาพและขนาดเศรษฐกิจระดับจังหวัด (สภาพัฒน์)", zh: "省级生产力和经济规模 (NESDC)。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "GPP & GPP/Capita", th: "GPP และ GPP ต่อหัว", zh: "GPP与人均GPP" })}</h4>
+                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Provincial productivity and economic scale (NESDC).", th: "ผลิตภาพและขนาดเศรษฐกิจระดับจังหวัด (สภาพัฒน์)", zh: "省级生产力和经济规模 (NESDC)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>BOI Incentive Zones</h4>
-                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Tax holidays and special privileges (BOI).", th: "การยกเว้นภาษีและสิทธิพิเศษ (BOI)", zh: "免税期和特殊待遇 (BOI)。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "BOI Incentive Zones", th: "เขตส่งเสริมการลงทุน BOI", zh: "BOI投资优惠区" })}</h4>
+                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Tax holidays and special privileges (BOI).", th: "การยกเว้นภาษีและสิทธิพิเศษ (BOI)", zh: "免税期和特殊待遇 (BOI)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>Minimum Wage Tiers</h4>
-                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Labor cost benchmarking (Min. of Labour).", th: "การเปรียบเทียบต้นทุนแรงงาน (กระทรวงแรงงาน)", zh: "劳动力成本基准 (劳工部)。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Minimum Wage Tiers", th: "ระดับค่าแรงขั้นต่ำ", zh: "最低工资层级" })}</h4>
+                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Labor cost benchmarking (Min. of Labour).", th: "การเปรียบเทียบต้นทุนแรงงาน (กระทรวงแรงงาน)", zh: "劳动力成本基准 (劳工部)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>Infrastructure Scorecard</h4>
-                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Airport, rail, port, 5G, and broadband.", th: "สนามบิน รถไฟ ท่าเรือ 5G และบรอดแบนด์", zh: "机场、铁路、港口、5G和宽带。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Infrastructure Scorecard", th: "ตารางคะแนนโครงสร้างพื้นฐาน", zh: "基础设施记分卡" })}</h4>
+                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Airport, rail, port, 5G, and broadband.", th: "สนามบิน รถไฟ ท่าเรือ 5G และบรอดแบนด์", zh: "机场、铁路、港口、5G和宽带。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>Creative Economy Heatmap</h4>
-                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "15 creative industries by province.", th: "15 อุตสาหกรรมสร้างสรรค์แยกตามจังหวัด", zh: "按省份划分的15个创意产业。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Creative Economy Heatmap", th: "แผนที่ความเข้มเศรษฐกิจสร้างสรรค์", zh: "创意经济热力图" })}</h4>
+                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "15 creative industries by province.", th: "15 อุตสาหกรรมสร้างสรรค์แยกตามจังหวัด", zh: "按省份划分的15个创意产业。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>Moneyball Score</h4>
-                <p style={{ fontSize: "0.9rem", color: "var(--3)" }}>{translate(locale, { en: "Composite: growth + cost + infra + creative.", th: "คะแนนรวม: การเติบโต + ต้นทุน + โครงสร้างพื้นฐาน + สร้างสรรค์", zh: "综合：增长 + 成本 + 基础设施 + 创意。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Moneyball Score", th: "คะแนน Moneyball", zh: "Moneyball评分" })}</h4>
+                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Composite: growth + cost + infra + creative.", th: "คะแนนรวม: การเติบโต + ต้นทุน + โครงสร้างพื้นฐาน + สร้างสรรค์", zh: "综合：增长 + 成本 + 基础设施 + 创意。" })}</p>
               </div>
             </div>
 
             <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>
               {translate(locale, { en: "How to Read the Data", th: "วิธีอ่านข้อมูล", zh: "如何解读数据" })}
             </h3>
-            <p style={{ fontSize: "1rem", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.6 }}>
               {translate(locale, {
                 en: "A high GPP/Capita relative to minimum wage means strong productivity at low cost — the classic \"value play.\" A province with a domestic airport, 5G coverage above 85%, and a university population over 20,000 has the infrastructure to support creative and knowledge industries today, not someday. A UNESCO Creative City designation or CEA-backed creative district signals policy tailwinds and potential access to grants, training, and international networks.",
                 th: "GPP ต่อหัวที่สูงเมื่อเทียบกับค่าแรงขั้นต่ำหมายถึงผลิตภาพที่แข็งแกร่งในต้นทุนที่ต่ำ — นี่คือ \"value play\" แบบคลาสสิก จังหวัดที่มีสนามบินภายในประเทศ ความครอบคลุม 5G เกิน 85% และประชากรมหาวิทยาลัยกว่า 20,000 คน มีโครงสร้างพื้นฐานรองรับอุตสาหกรรมสร้างสรรค์และความรู้ได้ตั้งแต่วันนี้ ไม่ใช่วันหน้า การได้รับการรับรองจากยูเนสโกหรือเขตสร้างสรรค์ที่สนับสนุนโดย CEA เป็นสัญญาณบ่งบอกถึงนโยบายที่เอื้ออำนวยและโอกาสในการเข้าถึงเงินทุนสนับสนุน",
                 zh: "高人均GPP相对于最低工资意味着低成本下的高生产力——经典的“价值投资”。拥有国内机场、5G覆盖率超过85%、大学人口超过2万人的省份，今天（而不是未来某天）就具备支持创意和知识产业的基础设施。联合国教科文组织创意城市称号或CEA支持的创意街区标志着政策顺风，以及获得资助、培训和国际网络的潜力。",
               })}
             </p>
-            <p style={{ fontSize: "1rem", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.6 }}>
               {translate(locale, {
-                en: "The provinces ranked highest on our Moneyball composite — Lamphun, Khon Kaen, Chanthaburi, Nakhon Ratchasima, Chiang Rai — share a pattern: strong fundamentals, low entry cost, and creative assets that the market has not yet fully priced in.",
-                th: "จังหวัดที่ได้คะแนนสูงสุดในคะแนน Moneyball รวมของเรา — ลำพูน, ขอนแก่น, จันทบุรี, นครราชสีมา, เชียงราย — มีรูปแบบที่เหมือนกัน: พื้นฐานแข็งแกร่ง ต้นทุนเข้าถึงต่ำ และสินทรัพย์สร้างสรรค์ที่ตลาดยังประเมินมูลค่าไม่เต็มที่",
-                zh: "在我们的Moneyball综合指数上排名最高的省份——南奔、孔敬、尖竹汶、呵叻、清莱——都有一个共同点：基本面强劲、进入成本低，以及市场尚未完全定价的创意资产。",
+                en: "The provinces ranked highest on our Moneyball composite — a separate downloadable analysis (see the factsheets below), not a live SCITI metric — Lamphun, Khon Kaen, Chanthaburi, Nakhon Ratchasima, Chiang Rai — share a pattern: strong fundamentals, low entry cost, and creative assets that the market has not yet fully priced in.",
+                th: "จังหวัดที่ได้คะแนนสูงสุดในคะแนน Moneyball รวมของเรา — การวิเคราะห์แยกต่างหากที่ดาวน์โหลดได้ (ดู factsheet ด้านล่าง) ไม่ใช่ตัวชี้วัดสดของ SCITI — ลำพูน, ขอนแก่น, จันทบุรี, นครราชสีมา, เชียงราย — มีรูปแบบที่เหมือนกัน: พื้นฐานแข็งแกร่ง ต้นทุนเข้าถึงต่ำ และสินทรัพย์สร้างสรรค์ที่ตลาดยังประเมินมูลค่าไม่เต็มที่",
+                zh: "在我们的Moneyball综合指数（一项可下载的独立分析，见下方资料，并非SCITI实时指标）上排名最高的省份——南奔、孔敬、尖竹汶、呵叻、清莱——都有一个共同点：基本面强劲、进入成本低，以及市场尚未完全定价的创意资产。",
               })}
             </p>
-            <p style={{ fontSize: "1rem", color: "var(--text)", fontWeight: 600, marginTop: "2rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem" }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--text)", fontWeight: 600, marginTop: "2rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem" }}>
               {translate(locale, {
                 en: "SCITI does not give investment advice. It gives you the data to make your own call — with the same rigor you would apply to any other asset class.",
                 th: "SCITI ไม่ได้ให้คำแนะนำการลงทุน แต่ให้ข้อมูลเพื่อให้คุณตัดสินใจด้วยตัวเอง — ด้วยความรัดกุมเช่นเดียวกับที่คุณใช้กับสินทรัพย์ประเภทอื่น",
@@ -559,9 +559,9 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               <span className="invest-ccdr-num">$219B</span>
               <p className="invest-ccdr-copy">
                 {translate(locale, {
-                  en: "climate investment needed over 25 years — $105B adaptation, $96B emissions reduction, $19B climate-smart agriculture. Cost of inaction is multiples larger.",
-                  th: "การลงทุนด้านภูมิอากาศที่ต้องการใน 25 ปี — 105 พันล้าน USD การปรับตัว, 96 พันล้าน USD ลดการปล่อยก๊าซ, 19 พันล้าน USD เกษตรอัจฉริยะ ต้นทุนของการไม่ดำเนินการมากกว่าหลายเท่า",
-                  zh: "25年内所需气候投资——1050亿美元适应，960亿美元减排，190亿美元气候智慧农业。不作为的代价是其数倍。",
+                  en: "climate investment needed over 25 years — $104B adaptation, $96B emissions reduction, $19B climate-smart agriculture. Cost of inaction is multiples larger.",
+                  th: "การลงทุนด้านภูมิอากาศที่ต้องการใน 25 ปี — 104 พันล้าน USD การปรับตัว, 96 พันล้าน USD ลดการปล่อยก๊าซ, 19 พันล้าน USD เกษตรอัจฉริยะ ต้นทุนของการไม่ดำเนินการมากกว่าหลายเท่า",
+                  zh: "25年内所需气候投资——1040亿美元适应，960亿美元减排，190亿美元气候智慧农业。不作为的代价是其数倍。",
                 })}
               </p>
             </div>
@@ -597,7 +597,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         <p className="section-intro">
           {translate(locale, {
             en: "Real numbers from real institutions. No forecasts, no fluff — the baseline for any investment thesis in Thai smart cities.",
-            th: "ตัวเลขจริงจากสถาบันจริง ไม่มีการคาดการณ์ ไม่มีสิ่งฟุ่มเฟือย พื้นฐานสำหรับวิทยานิพนธ์การลงทุนในเมืองอัจฉริยะไทย",
+            th: "ตัวเลขจริงจากสถาบันจริง ไม่มีการคาดการณ์ ไม่มีสิ่งฟุ่มเฟือย พื้นฐานสำหรับทฤษฎีการลงทุนในเมืองอัจฉริยะไทย",
             zh: "来自真实机构的真实数据。没有预测，没有虚言——泰国智慧城市投资论点的基准线。",
           })}
         </p>

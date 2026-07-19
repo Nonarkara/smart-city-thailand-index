@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Registered Smart City Promotion Zones — 69 encoded entries (from depa's ~173-zone promotion pool)
+// Registered Smart City Promotion Zones — 69 encoded entries (from depa's ~190-zone promotion pool, January 2026 registry)
 // ---------------------------------------------------------------------------
 // These cities have submitted smart city proposals to depa but have
 // insufficient data for full scoring. They receive default baseline
@@ -50,7 +50,7 @@ function reg(c: RegCity): SmartCity {
   };
 }
 
-// Provinces that have submitted smart city plans (from depa 173 promotion zones)
+// Provinces that have submitted smart city plans (from depa 190 promotion zones)
 const registeredEntries: RegCity[] = [
   // ─── NORTH ───
   { id: "reg-chiang-mai-pao", nameEn: "Chiang Mai PAO", nameTh: "อบจ.เชียงใหม่", province: "Chiang Mai", provinceTh: "เชียงใหม่", region: "north", lat: 18.78, lng: 98.99 },

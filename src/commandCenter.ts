@@ -24,6 +24,7 @@ export interface CaseStudy {
   outcome: { en: string; th: string; zh: string };
   lesson: { en: string; th: string; zh: string };
   financialModel: string;
+  source?: string;  // citation for the outcome stats, where a credible one exists
   applicableTiers: ("alpha" | "beta" | "gamma")[];
   similarContext: string[];  // tags for matching to Thai cities
 }
@@ -44,9 +45,9 @@ export const CASE_STUDIES: CaseStudy[] = [
       zh: "在仁川机场附近1500英亩填海造地上从零建造。韩国押注绿地智慧城市：无处不在的连接、气动垃圾收集与集中城市管理。",
     },
     outcome: {
-      en: "70% occupancy after 20 years. Infrastructure works but city lacks organic urban life. Lesson: technology doesn't create community — people do.",
-      th: "อัตราเข้าใช้ 70% หลังผ่านไป 20 ปี โครงสร้างพื้นฐานเวิร์กแต่เมืองขาดชีวิตเมืองแบบเกิดขึ้นเอง บทเรียน: เทคโนโลยีไม่ได้สร้างชุมชน — คนต่างหากที่สร้าง",
-      zh: "20年后入住率70%。基础设施有效但城市缺乏有机城市生活。教训：技术不能创造社区——人才能。",
+      en: "Two decades in, occupancy and street life still trail the master plan. Infrastructure works but the city lacks organic urban life. Lesson: technology doesn't create community — people do.",
+      th: "ผ่านไปสองทศวรรษ อัตราการเข้าอยู่และชีวิตชีวาบนท้องถนนยังตามไม่ทันแผนแม่บท โครงสร้างพื้นฐานเวิร์กแต่เมืองขาดชีวิตเมืองแบบเกิดขึ้นเอง บทเรียน: เทคโนโลยีไม่ได้สร้างชุมชน — คนต่างหากที่สร้าง",
+      zh: "二十年过去，入住率与街头活力仍落后于总体规划。基础设施有效但城市缺乏有机城市生活。教训：技术不能创造社区——人才能。",
     },
     lesson: {
       en: "Greenfield cities need demand anchors (universities, corporate HQs, transit hubs) not just tech. Apply to EEC zone cities planning new districts.",
@@ -72,9 +73,9 @@ export const CASE_STUDIES: CaseStudy[] = [
       zh: "用缆车将暴力猖獗的非正式山坡社区连接到市中心。每个站点结合公共图书馆、公园与经济开发区。",
     },
     outcome: {
-      en: "Homicide rate dropped 80%. Property values near stations rose 120%. Won the Lee Kuan Yew World City Prize 2016. Model for how transport transforms marginalized areas.",
-      th: "อัตราฆาตกรรมลด 80% มูลค่าที่ดินใกล้สถานีเพิ่ม 120% ได้รับรางวัล Lee Kuan Yew World City Prize 2016 ต้นแบบว่าขนส่งเปลี่ยนพื้นที่ชายขอบได้อย่างไร",
-      zh: "凶杀率下降80%。站点附近房产价值上升120%。获2016年李光耀世界城市奖。交通如何改造边缘地区的典范。",
+      en: "Homicide rate dropped 80% from its 1991 peak. Property values near stations climbed sharply. Won the Lee Kuan Yew World City Prize 2016. Model for how transport transforms marginalized areas.",
+      th: "อัตราฆาตกรรมลด 80% จากจุดพีคปี 1991 มูลค่าที่ดินใกล้สถานีพุ่งขึ้นอย่างมีนัยสำคัญ ได้รับรางวัล Lee Kuan Yew World City Prize 2016 ต้นแบบว่าขนส่งเปลี่ยนพื้นที่ชายขอบได้อย่างไร",
+      zh: "凶杀率较1991年峰值下降80%。站点附近房产价值大幅上涨。获2016年李光耀世界城市奖。交通如何改造边缘地区的典范。",
     },
     lesson: {
       en: "Transit works when co-designed with social infrastructure. Land value capture around stations can fund operations. Direct model for Khon Kaen LRT and hillside cities in Northern Thailand.",
@@ -82,6 +83,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       zh: "交通与社会基础设施共同设计时才有效。站点周边土地价值回收可支持运营。直接适用于孔敬LRT和泰国北部山地城市。",
     },
     financialModel: "Municipal bonds + land value capture + national grants",
+    source: "Lee Kuan Yew World City Prize 2016; Americas Quarterly (homicide vs 1991 peak)",
     applicableTiers: ["alpha", "beta"],
     similarContext: ["transit", "inequality", "tourism", "cultural-city"],
   },
@@ -110,6 +112,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       zh: "从一个试点超级街区开始，测量结果，然后扩展。数据平台是运营主干，不是公关看板。直接适用于清迈和洛坤等可步行的泰国古城。",
     },
     financialModel: "Municipal budget + EU structural funds + performance contracts with tech vendors",
+    source: "Barcelona City Council superblock monitoring, Sant Antoni (via EEA Climate-ADAPT)",
     applicableTiers: ["alpha", "beta"],
     similarContext: ["heritage", "tourism", "walkable", "old-town", "air-quality"],
   },
@@ -156,9 +159,9 @@ export const CASE_STUDIES: CaseStudy[] = [
       zh: "欧洲智慧城市创新的活体实验室。200+项目覆盖能源、出行、循环经济与市民数据。AMS研究院将大学研究直接导入城市运营。",
     },
     outcome: {
-      en: "25% carbon reduction since 2009. 10,000+ EV charging points. Smart grid pilots cut peak demand 10%. Living lab approach validated: fail fast, scale what works.",
-      th: "ลดคาร์บอน 25% ตั้งแต่ 2009 จุดชาร์จ EV 10,000+ Smart grid นำร่องลดดีมานด์พีค 10% แนวทาง Living lab พิสูจน์แล้ว: ล้มเร็ว ขยายสิ่งที่เวิร์ก",
-      zh: "自2009年减碳25%。10000+EV充电桩。智能电网试点削减峰值需求10%。活体实验室方法验证：快速失败，扩展有效方案。",
+      en: "The city targets a 55% CO₂ cut by 2030 versus 1990 under its Climate Neutral 2050 roadmap. 10,000+ EV charging points. Smart grid pilots cut peak demand 10%. Living lab approach validated: fail fast, scale what works.",
+      th: "เมืองตั้งเป้าลด CO₂ 55% ภายในปี 2030 เทียบปี 1990 ภายใต้แผน Climate Neutral 2050 จุดชาร์จ EV 10,000+ Smart grid นำร่องลดดีมานด์พีค 10% แนวทาง Living lab พิสูจน์แล้ว: ล้มเร็ว ขยายสิ่งที่เวิร์ก",
+      zh: "该市根据其《2050气候中和路线图》，目标是到2030年较1990年减排55%二氧化碳。10000+EV充电桩。智能电网试点削减峰值需求10%。活体实验室方法验证：快速失败，扩展有效方案。",
     },
     lesson: {
       en: "University-city partnerships create sustainable innovation pipelines. CMU Smart City and university-anchored Thai cities can replicate this model. Start with energy and environment — they have the clearest ROI.",
@@ -166,6 +169,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       zh: "大学-城市合作创造可持续创新管线。CMU智慧城市和以大学为锚的泰国城市可复制此模式。从能源和环境开始——ROI最清晰。",
     },
     financialModel: "EU Horizon grants + city budget + corporate R&D partnerships + green bonds",
+    source: "Roadmap Amsterdam Climate Neutral 2050 (City of Amsterdam)",
     applicableTiers: ["alpha", "beta"],
     similarContext: ["university", "energy", "circular", "living-lab", "environment"],
   },
@@ -184,9 +188,9 @@ export const CASE_STUDIES: CaseStudy[] = [
       zh: "130万人小国建立了世界最先进的数字政府。X-Road骨干连接所有公共和许多私有数据库。99%政府服务在线。每个公民数字ID。电子居住权吸引全球企业家。",
     },
     outcome: {
-      en: "Saves 844 years of working time annually through digital services. GDP per capita doubled in 15 years. Corruption perception improved dramatically. Blueprint for Thailand's digital government ambitions.",
-      th: "ประหยัดเวลาทำงาน 844 ปี/ปีผ่านบริการดิจิทัล GDP ต่อหัวเพิ่มเป็นเท่าตัวใน 15 ปี ภาพลักษณ์คอร์รัปชันดีขึ้นมาก ต้นแบบสำหรับความทะเยอทะยานด้านรัฐบาลดิจิทัลของไทย",
-      zh: "每年通过数字服务节省844年工作时间。15年内人均GDP翻倍。腐败感知大幅改善。泰国数字政府雄心的蓝图。",
+      en: "Saves 800+ years of working time annually through digital services. GDP per capita doubled in 15 years. Corruption perception improved dramatically. Blueprint for Thailand's digital government ambitions.",
+      th: "ประหยัดเวลาทำงานกว่า 800 ปี/ปีผ่านบริการดิจิทัล GDP ต่อหัวเพิ่มเป็นเท่าตัวใน 15 ปี ภาพลักษณ์คอร์รัปชันดีขึ้นมาก ต้นแบบสำหรับความทะเยอทะยานด้านรัฐบาลดิจิทัลของไทย",
+      zh: "每年通过数字服务节省800多年工作时间。15年内人均GDP翻倍。腐败感知大幅改善。泰国数字政府雄心的蓝图。",
     },
     lesson: {
       en: "Start with identity and interoperability, not flashy apps. Thailand's Smart City program needs a shared data backbone (like X-Road) to avoid 105 cities each building their own silos.",
@@ -194,6 +198,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       zh: "从身份和互操作性开始，而非炫酷应用。泰国智慧城市计划需要共享数据骨干（如X-Road），避免105个城市各建各的数据孤岛。",
     },
     financialModel: "National budget + EU structural funds + private sector co-investment",
+    source: "PwC — Estonia: the Digital Republic Secured by Blockchain; e-Estonia",
     applicableTiers: ["alpha", "beta", "gamma"],
     similarContext: ["digital-government", "governance", "national-program", "interoperability"],
   },

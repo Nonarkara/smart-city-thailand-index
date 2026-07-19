@@ -6,6 +6,7 @@ import type { Locale, SmartDimension } from "./types";
 import { DIMENSION_LABELS } from "./types";
 import { useInView } from "./useInView";
 import { assetUrl } from "./assetUtils";
+import { getClaimValue } from "./claimRegistry";
 
 interface Props {
   locale: Locale;
@@ -277,6 +278,9 @@ const PHOTOS_INTL = [
 export default function ProgramPage({ locale, onNavigate }: Props) {
   const { data: cities } = useCitySummaries();
   const stats = useMemo(() => summarizeCities(cities), [cities]);
+  // Promotion-zone count comes from the claim registry (depa registry, Jan 2026)
+  // so this page can never drift from the sourced figure again.
+  const promotionZones = Number(getClaimValue("promotion-zones") ?? 190);
   const dimensions: SmartDimension[] = ["environment", "economy", "mobility", "energy", "people", "living", "governance"];
 
   const [dnaRef, dnaVisible] = useInView(0.1);
@@ -630,7 +634,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
             <span className="program-stat-label">{translate(locale, { en: "Certified", th: "รับรอง", zh: "认证" })}</span>
           </div>
           <div className="program-stat">
-            <span className="program-stat-value">173+</span>
+            <span className="program-stat-value">{promotionZones}+</span>
             <span className="program-stat-label">{translate(locale, { en: "Promotion zones", th: "เขตส่งเสริม", zh: "推广区" })}</span>
           </div>
           <div className="program-stat">

@@ -3,10 +3,13 @@
 // ---------------------------------------------------------------------------
 // Hand-selected. The Michelin-guide layer over the directory.
 // Each pick frames one city against the Big Three (Bangkok / Phuket / Chiang Mai)
-// with two concrete, comparable chips. Benchmarks anchor every claim:
-//   Bangkok: GPP/cap ฿429k, PM2.5 32.2 µg/m³, crime 208/100k, beds 33/10k
-//   Phuket:  composite 74, hospitality 88
-//   Chiang Mai: PM2.5 historically 40+ during burn season
+// with two concrete, comparable chips. Benchmarks anchor every claim (verified
+// against src/cityData.ts, July 2026 — the Bangkok anchor is "samyan", which
+// carries Bangkok-province metrics):
+//   Bangkok (samyan): GPP/cap ฿628k, PM2.5 32.4 µg/m³, crime 285/100k, beds 42/10k
+//   Phuket:  composite 72.6, hospitality 88
+//   Chiang Mai (old town): composite 67.0, PM2.5 46.1 annual (burn season)
+//   Big-3 averages: GPP/cap ฿429k, PM2.5 32.2, crime 208/100k, beds 33/10k
 // ---------------------------------------------------------------------------
 
 import type { LocalizedText } from "./cityCdp";
@@ -75,18 +78,18 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
         label: { en: "PM₂.₅", th: "PM₂.₅", zh: "PM₂.₅" },
         value: "14.2 µg/m³",
         anchor: {
-          en: "lowest among 49 cities",
-          th: "ต่ำสุดใน 49 เมือง",
-          zh: "49 城中最低",
+          en: "among the five cleanest in the index",
+          th: "หนึ่งในห้าเมืองอากาศสะอาดสุดของดัชนี",
+          zh: "位列本指数空气最洁净前五",
         },
       },
       {
         label: { en: "Green cover", th: "พื้นที่สีเขียว", zh: "绿地覆盖" },
         value: "58%",
         anchor: {
-          en: "vs national median ~42%",
-          th: "เทียบค่ากลาง 42%",
-          zh: "对比全国中位数约 42%",
+          en: "vs index median 45%",
+          th: "เทียบมัธยฐานดัชนี 45%",
+          zh: "对比指数中位数 45%",
         },
       },
     ],
@@ -108,18 +111,18 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
         label: { en: "GPP growth", th: "GPP เติบโต", zh: "GPP 增速" },
         value: "+3.5% YoY",
         anchor: {
-          en: "double Bangkok's pace",
-          th: "เร็วกว่ากรุงเทพสองเท่า",
-          zh: "曼谷增速的两倍",
+          en: "~70% faster than Bangkok",
+          th: "เร็วกว่ากรุงเทพราว 70%",
+          zh: "比曼谷快约 70%",
         },
       },
       {
         label: { en: "FDI inflow", th: "FDI เข้า", zh: "外资流入" },
         value: "฿2.8B",
         anchor: {
-          en: "largest outside EEC",
-          th: "สูงสุดนอก EEC",
-          zh: "EEC 以外最高",
+          en: "tied-4th outside Bangkok & EEC",
+          th: "ร่วมอันดับ 4 นอกกรุงเทพและ EEC",
+          zh: "曼谷与 EEC 以外并列第四",
         },
       },
     ],
@@ -127,23 +130,23 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
   {
     cityId: "nan",
     kicker: {
-      en: "Undervalued gamma",
-      th: "แกมมาที่ถูกประเมินต่ำ",
-      zh: "被低估的 γ 城",
+      en: "Undervalued beta",
+      th: "เบต้าที่ถูกประเมินต่ำ",
+      zh: "被低估的 β 城",
     },
     why: {
-      en: "A quiet northern town where safety, forest cover, and community warmth all read in the top decile — the composite score hides what the metrics actually say.",
-      th: "เมืองเหนือเงียบๆ ที่ความปลอดภัย พื้นที่ป่า และความอบอุ่นของชุมชนอยู่ใน 10% แรกทั้งหมด คะแนนรวมบังสิ่งที่ตัวเลขบอกเอาไว้",
-      zh: "静谧的北部小城，安全、森林覆盖与社区温情三项皆入前一成——综合分掩盖了指标真正的声音。",
+      en: "A quiet northern town holding the index's highest forest cover and a hospitality score in the top five — the composite score hides what the metrics actually say.",
+      th: "เมืองเหนือเงียบๆ ที่มีพื้นที่ป่าสูงสุดในดัชนีและคะแนนอัธยาศัยติดห้าอันดับแรก คะแนนรวมบังสิ่งที่ตัวเลขบอกเอาไว้",
+      zh: "静谧的北部小城，森林覆盖率居本指数之首，人文得分位列前五——综合分掩盖了指标真正的声音。",
     },
     chips: [
       {
-        label: { en: "Safety", th: "ความปลอดภัย", zh: "安全" },
-        value: "78",
+        label: { en: "Hospitality", th: "อัธยาศัย", zh: "人文" },
+        value: "82",
         anchor: {
-          en: "vs Bangkok ~62",
-          th: "เทียบกรุงเทพ ~62",
-          zh: "对比曼谷约 62",
+          en: "top-five in the index",
+          th: "ติดห้าอันดับแรกของดัชนี",
+          zh: "位列指数前五",
         },
       },
       {
@@ -165,27 +168,27 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
       zh: "人均财富",
     },
     why: {
-      en: "EEC anchor city where GPP per capita runs more than double Bangkok's. Not a lifestyle pick — an investor's pick. Environmental monitoring is genuine, not ornamental.",
-      th: "เมืองหลักใน EEC ที่ GPP ต่อหัวมากกว่ากรุงเทพสองเท่า ไม่ใช่เดิมพันไลฟ์สไตล์ แต่เป็นเดิมพันนักลงทุน การเฝ้าระวังสิ่งแวดล้อมเป็นจริง ไม่ประดับ",
-      zh: "EEC 锚点城市，人均 GPP 超过曼谷两倍。非生活方式之选，是投资人之选。环境监测真实运作，绝非装饰。",
+      en: "EEC anchor city where GPP per capita runs ~60% above Bangkok's. Not a lifestyle pick — an investor's pick. Environmental monitoring is genuine, not ornamental.",
+      th: "เมืองหลักใน EEC ที่ GPP ต่อหัวสูงกว่ากรุงเทพราว 60% ไม่ใช่เดิมพันไลฟ์สไตล์ แต่เป็นเดิมพันนักลงทุน การเฝ้าระวังสิ่งแวดล้อมเป็นจริง ไม่ประดับ",
+      zh: "EEC 锚点城市，人均 GPP 比曼谷高约 60%。非生活方式之选，是投资人之选。环境监测真实运作，绝非装饰。",
     },
     chips: [
       {
         label: { en: "GPP / capita", th: "GPP ต่อหัว", zh: "人均 GPP" },
         value: "฿1.02M",
         anchor: {
-          en: "2.4× Bangkok",
-          th: "2.4 เท่าของกรุงเทพ",
-          zh: "曼谷的 2.4 倍",
+          en: "1.6× Bangkok",
+          th: "1.6 เท่าของกรุงเทพ",
+          zh: "曼谷的 1.6 倍",
         },
       },
       {
         label: { en: "FDI inflow", th: "FDI เข้า", zh: "外资流入" },
         value: "฿5.8B",
         anchor: {
-          en: "#1 among certified cities",
-          th: "อันดับ 1 ในเมืองรับรอง",
-          zh: "认证城市第一",
+          en: "top-10 FDI inflow in the index",
+          th: "FDI ติดสิบอันดับแรกของดัชนี",
+          zh: "外资流入位列指数前十",
         },
       },
     ],
@@ -240,9 +243,9 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
         label: { en: "PM₂.₅ trend", th: "แนวโน้ม PM₂.₅", zh: "PM₂.₅ 趋势" },
         value: "improving",
         anchor: {
-          en: "while Chiang Mai worsens",
-          th: "ขณะที่เชียงใหม่แย่ลง",
-          zh: "而清迈在恶化",
+          en: "while Chiang Rai worsens",
+          th: "ขณะที่เชียงรายแย่ลง",
+          zh: "而清莱在恶化",
         },
       },
       {

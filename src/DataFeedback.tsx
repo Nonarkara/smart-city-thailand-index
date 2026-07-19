@@ -42,7 +42,7 @@ export default function DataFeedback({ locale }: Props) {
     },
     zh: {
       ask: "我们漏掉了什么吗？",
-      cta: "向我发送数据",
+      cta: "提交数据",
       placeholder: "告诉我们关于城市或指标的遗漏...",
       success: "谢谢。您的见解已发送至编辑团队。"
     }

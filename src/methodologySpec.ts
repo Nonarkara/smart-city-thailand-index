@@ -116,7 +116,7 @@ export function computeFreshnessWeight(latestObservedAt?: string): number {
 
 export function computeProvenanceWeight(provenanceCount?: number): number {
   if (!provenanceCount || provenanceCount <= 0) return 0;
-  return Math.min(1, provenanceCount / 18);
+  return Math.min(1, provenanceCount / EVIDENCE_SOURCE_FAMILY_COUNT);
 }
 
 interface DataConfidenceInputs {

@@ -41,8 +41,8 @@ const partnerships: Partnership[] = [
     vibe: { en: "The System Builder — cameras before asphalt", th: "ผู้สร้างระบบ — กล้องก่อนยางมะตอย", zh: "系统建设者——摄像头优于沥青" },
     body: {
       en: "Japan is the biggest external system-builder. The 250B yen fund is regional, but Thailand repeatedly shows up in delivery: Bangsue mapping, city data platforms, and JASCA coordination.",
-      th: "ญี่ปุ่นคือผู้เล่นต่างประเทศที่ลงมือสร้างระบบมากที่สุด กองทุน 2.5 แสนล้านเยนเป็นระดับภูมิภาค แต่ไทยโผล่ในชั้นการส่งมอบซ้ำๆ",
-      zh: "日本是这份名单里最像系统建设者的外部伙伴。资金规模是区域级的，但泰国持续出现在交付层。",
+      th: "ญี่ปุ่นคือผู้เล่นต่างประเทศที่ลงมือสร้างระบบมากที่สุด กองทุน 2.5 แสนล้านเยนเป็นระดับภูมิภาค แต่ไทยโผล่ในชั้นการส่งมอบซ้ำๆ: แผนที่บางซื่อ แพลตฟอร์มข้อมูลเมือง และการประสานงานผ่าน JASCA",
+      zh: "日本是这份名单里最像系统建设者的外部伙伴。2500亿日元基金是区域级的，但泰国持续出现在交付层：挽赐测绘、城市数据平台，以及 JASCA 协调。",
     },
     lesson: {
       en: "Cameras vs Asphalt: The Fujitsu/Smart JAMP project in Phuket proves AI traffic management is 1/10th the cost of road expansion with better long-term outcomes.",
@@ -67,8 +67,8 @@ const partnerships: Partnership[] = [
     vibe: { en: "The Precision Partner — technically specific, politically narrow", th: "พันธมิตรเฉพาะทาง — เทคนิคละเอียด การเมืองแคบ", zh: "精准合作伙伴——技术专精，政治范围窄" },
     body: {
       en: "The U.S. line is narrower but technically specific. Bangkok and Phuket are linked to concrete expertise: renewable-grid planning, water exchanges, and technical assistance for Phuket's operations centre.",
-      th: "เส้นของสหรัฐแคบกว่าแต่เฉพาะทางเชิงเทคนิคกว่า กรุงเทพฯ และภูเก็ตเชื่อมกับความเชี่ยวชาญที่จับต้องได้",
-      zh: "美国这条线规模更窄，但技术指向更明确。曼谷与普吉对应的是具体专长，而不是抽象品牌。",
+      th: "เส้นของสหรัฐแคบกว่าแต่เฉพาะทางเชิงเทคนิคกว่า กรุงเทพฯ และภูเก็ตเชื่อมกับความเชี่ยวชาญที่จับต้องได้: การวางแผนกริดพลังงานหมุนเวียน การแลกเปลี่ยนด้านน้ำ และความช่วยเหลือทางเทคนิคสำหรับศูนย์ปฏิบัติการของภูเก็ต",
+      zh: "美国这条线规模更窄，但技术指向更明确。曼谷与普吉对应的是具体专长：可再生能源电网规划、水务交流，以及对普吉运营中心的技术援助。",
     },
     lesson: {
       en: "Blueprints Require Ownership: Technical assistance only sticks when local municipal capacity matches project complexity.",
