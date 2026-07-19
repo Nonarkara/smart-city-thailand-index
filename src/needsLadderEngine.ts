@@ -53,7 +53,7 @@ export interface LadderRung {
 
 export interface LadderSignal {
   label: LocalizedText;
-  value: string;
+  value: string | LocalizedText;
   source: "metrics" | "provincial" | "geometry" | "pillar";
 }
 
@@ -173,8 +173,8 @@ function protectionRung(city: SmartCity): LadderRung {
   }
 
   const access = getAccessSignal(city.province);
-  if (access?.hospitalsPerProvince !== undefined) {
-    signals.push({ label: L.hospitalsProvince, value: `${access.hospitalsPerProvince}`, source: "provincial" });
+  if (access?.publicHospitals) {
+    signals.push({ label: L.hospitalsProvince, value: `${access.publicHospitals.total}`, source: "provincial" });
   }
 
   return { id: "protection", score: parts.length ? clampScore(average(parts)!) : undefined, signals };
@@ -212,7 +212,7 @@ function livelihoodRung(city: SmartCity): LadderRung {
   const boi = getBoiZone(city.province);
   if (boi) {
     parts.push(boi.score);
-    signals.push({ label: L.boiZone, value: boi.label, source: "provincial" });
+    signals.push({ label: L.boiZone, value: boi.label, source: "provincial" }); // boi.label is LocalizedText
   }
   const labor = getLaborEconomics(city.province);
   if (labor?.minWageBaht !== undefined) {
@@ -247,11 +247,8 @@ function convenienceRung(city: SmartCity): LadderRung {
   const parts = [city.scores.digital, scoreHigherIsBetter(city.smartDimensions.length, 0, 7)];
 
   const access = getAccessSignal(city.province);
-  if (access?.universities !== undefined || access?.internationalSchools !== undefined) {
-    const bits: string[] = [];
-    if (access.universities !== undefined) bits.push(`${access.universities} univ.`);
-    if (access.internationalSchools !== undefined) bits.push(`${access.internationalSchools} int'l schools`);
-    signals.push({ label: L.educationAccess, value: bits.join(", "), source: "provincial" });
+  if (access?.higherEdInstitutions !== undefined) {
+    signals.push({ label: L.educationAccess, value: `${access.higherEdInstitutions}`, source: "provincial" });
   }
 
   return { id: "convenience", score: clampScore(average(parts)!), signals };
@@ -275,9 +272,12 @@ function affordabilityRung(city: SmartCity): LadderRung {
   }
 
   const labor = getLaborEconomics(city.province);
-  if (labor?.costOfLivingIndex !== undefined) {
-    parts.push(labor.costOfLivingIndex);
-    signals.push({ label: L.costOfLiving, value: `${labor.costOfLivingIndex}/100`, source: "provincial" });
+  if (labor?.costOfLivingIndexRaw !== undefined) {
+    // Numbeo Cost of Living Index, NYC=100. Thai provinces with a verified
+    // entry span roughly 25 (cheap) to 60 (expensive urban) — lower raw value
+    // means more affordable, so it inverts into the score.
+    parts.push(scoreLowerIsBetter(labor.costOfLivingIndexRaw, 25, 60));
+    signals.push({ label: L.costOfLiving, value: `${labor.costOfLivingIndexRaw}`, source: "provincial" });
   }
 
   return { id: "affordability", score: parts.length ? clampScore(average(parts)!) : undefined, signals };

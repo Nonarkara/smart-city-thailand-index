@@ -72,7 +72,9 @@ export default function NeedsLadder({ profile, locale, className }: Props) {
                   {rung.signals.map((s, si) => (
                     <li key={si}>
                       <span className="needs-ladder-signal-label">{s.label[locale]}</span>
-                      <span className="needs-ladder-signal-value">{s.value}</span>
+                      <span className="needs-ladder-signal-value">
+                        {typeof s.value === "string" ? s.value : s.value[locale]}
+                      </span>
                     </li>
                   ))}
                 </ul>
