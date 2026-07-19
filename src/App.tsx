@@ -137,8 +137,8 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
     title: { en: "Methodology", th: "วิธีการประเมิน", zh: "评估方法" },
     place: "Chanthaburi",
     description: {
-      en: "Chanthaburi — The \"City of the Moon,\" world capital of gems and jewellery, famed for durian orchards and a unique French-colonial heritage.",
-      th: "จันทบุรี — \"เมืองจันทร์\" เมืองหลวงอัญมณีและเครื่องประดับของโลก ขึ้นชื่อเรื่องสวนทุเรียนและมรดกเชิงอาณานิคมฝรั่งเศสที่เป็นเอกลักษณ์",
+      en: "Chanthaburi — The 「City of the Moon,」 world capital of gems and jewellery, famed for durian orchards and a unique French-colonial heritage.",
+      th: "จันทบุรี — 「เมืองจันทร์」 เมืองหลวงอัญมณีและเครื่องประดับของโลก ขึ้นชื่อเรื่องสวนทุเรียนและมรดกเชิงอาณานิคมฝรั่งเศสที่เป็นเอกลักษณ์",
       zh: "尖竹汶 — 「月亮之城」，世界珠宝之都，以榴莲果园和独特的法国殖民遗产闻名。",
     },
   },
