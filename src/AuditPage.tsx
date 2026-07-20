@@ -94,9 +94,9 @@ export default function AuditPage({ locale, onNavigate }: Props) {
         <h1 className="hero-title">{t({ en: "Follow the evidence, not the pitch.", th: "ตามหลักฐาน ไม่ใช่คำโฆษณา", zh: "看证据，不听推销。" })}</h1>
         <p className="hero-strapline">
           {t({
-            en: "This is the shortest route through SCITI: release scope, one reproducible score, source institutions, exports, and the limits we will not hide.",
-            th: "นี่คือเส้นทางสั้นที่สุดในการตรวจ SCITI: ขอบเขตฉบับเผยแพร่ ตัวอย่างคะแนนที่คำนวณซ้ำได้ สถาบันต้นทาง ไฟล์ส่งออก และข้อจำกัดที่เราไม่ปกปิด",
-            zh: "这是审阅 SCITI 的最短路径：发布范围、一项可复算评分、来源机构、导出文件，以及我们不会隐藏的局限。",
+            en: "This is the shortest route through SCITI: release scope, one reproducible score, source institutions, exports, the Needs Ladder overlay, and the limits we will not hide.",
+            th: "นี่คือเส้นทางสั้นที่สุดในการตรวจ SCITI: ขอบเขตฉบับเผยแพร่ ตัวอย่างคะแนนที่คำนวณซ้ำได้ สถาบันต้นทาง ไฟล์ส่งออก บันไดความสำคัญ และข้อจำกัดที่เราไม่ปกปิด",
+            zh: "这是审阅 SCITI 的最短路径：发布范围、一项可复算评分、来源机构、导出文件、需求阶梯叠加层，以及我们不会隐藏的局限。",
           })}
         </p>
         <div className="audit-release-stamp">
@@ -218,6 +218,17 @@ export default function AuditPage({ locale, onNavigate }: Props) {
             <p className="audit-sentiment-label">{t({ en: "Missing evidence", th: "หลักฐานที่ขาด", zh: "证据缺口" })}</p>
             <div className="audit-sentiment-pct">VISIBLE</div>
             <p className="audit-sentiment-desc">{t({ en: "Registry-only cities stay low-confidence. Unknown municipal values are not silently converted to zero, and confidence never changes the published composite.", th: "เมืองที่มีเพียงข้อมูลทะเบียนจะอยู่ในระดับความเชื่อมั่นต่ำ ค่าระดับเทศบาลที่ไม่ทราบจะไม่ถูกเปลี่ยนเป็นศูนย์ และค่าความเชื่อมั่นไม่เปลี่ยนคะแนนรวม", zh: "仅名录城市保持低置信；未知市级值不会被悄然改成零，置信度也不会改写综合分。" })}</p>
+          </div>
+          <div className="audit-sentiment-card">
+            <p className="audit-sentiment-label">{t({ en: "Needs Ladder", th: "บันไดความสำคัญ", zh: "需求阶梯" })}</p>
+            <div className="audit-sentiment-pct">OVERLAY</div>
+            <p className="audit-sentiment-desc">
+              {t({
+                en: `Eight ordered human-need rungs on every dossier city — mean coverage ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs}. TomTom traffic backs the calm rung for ${audit.needsLadder.calmTrafficBacked} cities only; the rest stay blank. Ladder scores never alter the published composite.`,
+                th: `แปดขั้นความต้องการมนุษย์เรียงตามลำดับความสำคัญบนทุกเมืองที่มีแฟ้ม — ครอบคลุมเฉลี่ย ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs} ขั้น ข้อมูลจราจร TomTom รองรับขั้นความสงบเพียง ${audit.needsLadder.calmTrafficBacked} เมือง ที่เหลือเว้นว่าง คะแนนบันไดไม่เปลี่ยนคะแนนรวมที่เผยแพร่`,
+                zh: `每份研究档案上有八层按优先排序的人类需求阶梯——平均覆盖 ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs} 层。TomTom 交通数据仅支撑 ${audit.needsLadder.calmTrafficBacked} 座城市的“宁静”层，其余留空。阶梯分数永不改写公开综合分。`,
+              })}
+            </p>
           </div>
         </div>
       </section>

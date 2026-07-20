@@ -43,6 +43,17 @@ describe("jury evidence walk-through", () => {
     });
   });
 
+  it("reports Needs Ladder coverage as an overlay that never pads missing traffic", () => {
+    const audit = buildAuditReleaseSummary();
+
+    expect(audit.needsLadder.rungs).toBe(8);
+    expect(audit.needsLadder.dossierCities).toBe(audit.fullDossiers);
+    expect(audit.needsLadder.meanCoverage).toBeGreaterThan(0);
+    expect(audit.needsLadder.meanCoverage).toBeLessThanOrEqual(8);
+    expect(audit.needsLadder.calmTrafficBacked).toBeGreaterThan(0);
+    expect(audit.needsLadder.calmTrafficBacked).toBeLessThan(audit.needsLadder.dossierCities);
+  });
+
   it("renders the jury route without the former simulated audit verdicts", async () => {
     const onNavigate = vi.fn();
     const user = userEvent.setup();
@@ -51,6 +62,8 @@ describe("jury evidence walk-through", () => {
     expect(screen.getByRole("heading", { name: "Follow the evidence, not the pitch." })).toBeInTheDocument();
     expect(screen.queryByText("System integrity compromised.")).not.toBeInTheDocument();
     expect(screen.queryByText("68%")).not.toBeInTheDocument();
+    expect(screen.getByText("Needs Ladder")).toBeInTheDocument();
+    expect(screen.getByText("OVERLAY")).toBeInTheDocument();
 
     const rankingButton = screen.getByRole("button", { name: /Test the ranking/ });
     await user.click(rankingButton);

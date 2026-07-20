@@ -5736,7 +5736,14 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .audit-proof { grid-template-columns: 1fr; }
   .audit-proof-result { border-top: 1px solid var(--5); border-left: 0; }
   .audit-route-grid button { min-height: 112px; }
+  .audit-page .audit-kpi-grid { grid-template-columns: 1fr 1fr; }
+  .audit-page .audit-sentiment-grid { grid-template-columns: 1fr; }
+  .audit-page .audit-domain-grid { grid-template-columns: 1fr; }
+  .audit-page .audit-source-grid { grid-template-columns: 1fr; }
 }
+
+.audit-route-grid button:hover > small { color: inherit; opacity: .72; }
+.audit-route-grid button:hover > span { color: var(--amber); }
 
 @media (prefers-reduced-motion: reduce) {
   .audit-source-card,

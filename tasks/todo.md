@@ -72,4 +72,9 @@ cost-of-living/schooling → mental-health/traffic.
 - [ ] Consider surfacing "strongest/weakest rung" as a one-line callout elsewhere (rankings
       card? homepage spotlight?) — flagged, not yet decided, would need Dr Non's steer
       since it touches page composition again
-- [ ] CDPT ship after data integration
+
+## 2026-07-20 · System audit + natural upgrade (Grok 4.5)
+- [x] Wire Needs Ladder coverage into `/audit` jury Limits (OVERLAY card + live stats)
+- [x] `needsLadderIntegrity.test.ts` + audit integrity coverage assertions
+- [x] Phone collapse for audit KPI / sentiment / source grids; route-button hover contrast
+- [ ] CDPT ship
