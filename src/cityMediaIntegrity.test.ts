@@ -101,4 +101,41 @@ describe("city media integrity", () => {
       }
     });
   });
+
+  it("gives every chapter break a trilingual caption free of smart quotes", () => {
+    // Same drift class as the page-hero guard (src/heroPhotoIntegrity.test.ts):
+    // a caption that drops a locale, uses a Unicode curly quote as a
+    // delimiter, or contradicts its city can land silently. We can't
+    // unit-test factual accuracy (judges do that), but we can fail the
+    // build on structural drift. City-name agreement is intentionally
+    // not checked here — some breaks describe a context (the hydrological
+    // dashboard, the BRT corridor) without naming the city, and that's
+    // a deliberate editorial choice, not a bug.
+    const citiesWithBreaks = allCities
+      .map(city => ({ city, breaks: getCityPhotoSet(city).breaks ?? [] }))
+      .filter(({ breaks }) => breaks.length > 0);
+
+    // Sanity: at least one city must be using chapter breaks today, or the
+    // guard is guarding nothing.
+    expect(
+      citiesWithBreaks.length,
+      "no cities have chapter breaks — guard is inactive, re-check the data layer",
+    ).toBeGreaterThan(0);
+
+    citiesWithBreaks.forEach(({ city, breaks }) => {
+      breaks.forEach((brk, index) => {
+        for (const suffix of ["En", "Th", "Zh"] as const) {
+          const caption = brk[`caption${suffix}`];
+          expect(
+            typeof caption === "string" && caption.trim().length > 0,
+            `${city.id} break #${index + 1} (after ${brk.after}) caption${suffix} is empty or missing`,
+          ).toBe(true);
+          expect(
+            !caption.includes("\u201C") && !caption.includes("\u201D"),
+            `${city.id} break #${index + 1} (after ${brk.after}) caption${suffix} contains a smart double-quote`,
+          ).toBe(true);
+        }
+      });
+    });
+  });
 });
