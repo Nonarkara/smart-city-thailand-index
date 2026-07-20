@@ -77,4 +77,4 @@ cost-of-living/schooling → mental-health/traffic.
 - [x] Wire Needs Ladder coverage into `/audit` jury Limits (OVERLAY card + live stats)
 - [x] `needsLadderIntegrity.test.ts` + audit integrity coverage assertions
 - [x] Phone collapse for audit KPI / sentiment / source grids; route-button hover contrast
-- [ ] CDPT ship
+- [x] CDPT ship — 8b61ae5 live on sciti.nonarkara.org (`/static/index-BkkKN_oS.js`)

@@ -84,9 +84,9 @@ const SLIC_LOGO = {
   height: 200,
 };
 
-type PageHeroCopy = { en: string; th: string; zh: string };
-type StaticHeroKind = Exclude<Route["kind"], "home" | "city" | "canvas">;
-type PageHeroAsset = {
+export type PageHeroCopy = { en: string; th: string; zh: string };
+export type StaticHeroKind = Exclude<Route["kind"], "home" | "city" | "canvas">;
+export type PageHeroAsset = {
   src: string;
   objectPosition?: string;
   title: PageHeroCopy;
@@ -97,7 +97,9 @@ type PageHeroAsset = {
 // 2026-07-02 photo de-dup audit: every scenic cityscape in /photos is already
 // claimed by a city identity in cityMedia.ts, so page heroes draw exclusively
 // from the authored depa / event archive — each file used exactly once site-wide.
-const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
+// Exported for the hero integrity test (src/heroPhotoIntegrity.test.ts) —
+// guards against Codex-style title/place/description drift.
+export const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
   rankings: {
     src: "/photos/wp-makkasan.jpg",
     objectPosition: "center 40%",
@@ -167,7 +169,7 @@ const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
   showcase: {
     src: "/photos/wp-tak.jpg",
     objectPosition: "center 40%",
-    title: { en: "Nakhon Si Thammarat", th: "นครศรีธรรมราช", zh: "洛坤府" },
+    title: { en: "Tak", th: "ตาก", zh: "达府" },
     place: "Tak",
     description: {
       en: "Tak — A historic western gateway to Myanmar tied to King Taksin the Great, home to the bustling Mae Sot border trade zone and the serene Ping River.",
