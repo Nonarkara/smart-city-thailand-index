@@ -30,6 +30,37 @@ interface Props {
   className?: string;
 }
 
+type Signal = NeedsLadderProfile["rungs"][number]["signals"][number];
+
+function sourceFallback(signal: Signal, locale: Locale) {
+  if (signal.source === "metrics") {
+    return {
+      label: locale === "th" ? "ข้อมูลฐานพร้อมแหล่งอ้างอิง" : locale === "zh" ? "有来源的基线数据" : "Source-linked baseline",
+      href: "/audit",
+      geography: locale === "th" ? "ข้อมูลตัวแทนระดับจังหวัด" : locale === "zh" ? "府级代理数据" : "provincial proxy",
+    };
+  }
+  if (signal.source === "pillar") {
+    return {
+      label: locale === "th" ? "การประเมิน SCITI" : locale === "zh" ? "SCITI 评估" : "SCITI assessment",
+      href: "/methodology",
+      geography: locale === "th" ? "การประเมินระดับเมือง" : locale === "zh" ? "城市评估" : "city assessment",
+    };
+  }
+  if (signal.source === "geometry") {
+    return {
+      label: locale === "th" ? "พิกัดเมือง · คำนวณ Haversine" : locale === "zh" ? "城市坐标 · Haversine 推导" : "City coordinates · Haversine-derived",
+      href: "/methodology",
+      geography: locale === "th" ? "ค่าที่คำนวณ" : locale === "zh" ? "推导值" : "derived value",
+    };
+  }
+  return {
+    label: locale === "th" ? "ข้อมูลภายนอกที่ตรวจสอบแล้ว" : locale === "zh" ? "经核验的外部数据" : "Verified external data",
+    href: undefined,
+    geography: locale === "th" ? "ข้อมูลตัวแทนระดับจังหวัด" : locale === "zh" ? "府级代理数据" : "provincial proxy",
+  };
+}
+
 export default function NeedsLadder({ profile, locale, className }: Props) {
   const weak = weakestRung(profile);
 
@@ -41,12 +72,19 @@ export default function NeedsLadder({ profile, locale, className }: Props) {
         </span>
         <span className="needs-ladder-coverage">
           {locale === "th"
-            ? `มีข้อมูลจริง ${profile.coverage}/8 ขั้น`
+            ? `ให้คะแนน ${profile.coverage}/8 · มีข้อมูลสังเกต ${profile.observedCoverage}/8`
             : locale === "zh"
-              ? `${profile.coverage}/8 层有真实数据`
-              : `${profile.coverage}/8 rungs backed by real data`}
+              ? `${profile.coverage}/8 层已评分 · ${profile.observedCoverage}/8 层有观测数据`
+              : `${profile.coverage}/8 scored · ${profile.observedCoverage}/8 observed`}
         </span>
       </div>
+      <p className="needs-ladder-method">
+        {locale === "th"
+          ? "ชั้นข้อมูลประกอบ 0–100 ของ SCITI ไม่ใช่คะแนนทางการ แยกข้อมูลสังเกต การประเมิน และค่าคำนวณ พร้อมระบุขอบเขตพื้นที่และปีข้อมูลด้านล่าง"
+          : locale === "zh"
+            ? "这是 SCITI 的 0–100 归一化辅助层，并非官方评分。下方明确区分观测数据、评估和推导值，并标注地理范围与年份。"
+            : "A normalized 0–100 SCITI overlay, not an official score. Observations, assessments, and derived values are separated below with geography and vintage."}
+      </p>
 
       <ol className="needs-ladder-rungs">
         {profile.rungs.map((rung, i) => {
@@ -71,10 +109,34 @@ export default function NeedsLadder({ profile, locale, className }: Props) {
                 <ul className="needs-ladder-rung-signals">
                   {rung.signals.map((s, si) => (
                     <li key={si}>
-                      <span className="needs-ladder-signal-label">{s.label[locale]}</span>
-                      <span className="needs-ladder-signal-value">
-                        {typeof s.value === "string" ? s.value : s.value[locale]}
+                      <span className="needs-ladder-signal-main">
+                        <span className="needs-ladder-signal-label">{s.label[locale]}</span>
+                        <span className="needs-ladder-signal-value">
+                          {typeof s.value === "string" ? s.value : s.value[locale]}
+                        </span>
                       </span>
+                      {(() => {
+                        const fallback = sourceFallback(s, locale);
+                        const href = s.sourceUrl ?? fallback.href;
+                        const sourceLabel = s.sourceLabel ?? fallback.label;
+                        const geography = s.geography?.[locale] ?? fallback.geography;
+                        return (
+                          <span className="needs-ladder-signal-provenance">
+                            <span className={`needs-ladder-signal-role needs-ladder-signal-role-${s.role ?? "input"}`}>
+                              {s.role === "context"
+                                ? locale === "th" ? "บริบท" : locale === "zh" ? "背景" : "context"
+                                : locale === "th" ? "ใช้คำนวณ" : locale === "zh" ? "计入评分" : "scored input"}
+                            </span>
+                            {href ? (
+                              <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                                {sourceLabel} ↗
+                              </a>
+                            ) : <span>{sourceLabel}</span>}
+                            {s.asOf ? <span>{s.asOf}</span> : null}
+                            <span>{geography}</span>
+                          </span>
+                        );
+                      })()}
                     </li>
                   ))}
                 </ul>

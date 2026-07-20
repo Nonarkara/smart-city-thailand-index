@@ -63,6 +63,10 @@ export interface TrafficSignal {
   value: string;
   /** 0-100, higher = calmer (less congested). */
   score: number;
+  source: string;
+  sourceUrl?: string;
+  asOf: string;
+  geography: string;
 }
 
 const CONGESTION_LABEL: LocalizedText = {
@@ -71,13 +75,41 @@ const CONGESTION_LABEL: LocalizedText = {
   zh: "交通拥堵指数（TomTom）",
 };
 
-export function getTrafficSignal(province: string): TrafficSignal | undefined {
-  const e = PROVINCIAL_TRAFFIC[province];
+// TomTom publishes city/metro observations, not province-wide values. Map only
+// index units that sit inside the named coverage area; notably Songkhla City
+// must not inherit Hat Yai's observation.
+const TRAFFIC_AREA_BY_CITY_ID: Record<string, keyof typeof PROVINCIAL_TRAFFIC> = {
+  "samyan": "Bangkok",
+  "phra-ram-4": "Bangkok",
+  "klong-phadung": "Bangkok",
+  "makkasan": "Bangkok",
+  "rattanakosin": "Bangkok",
+  "reg-bangkok-noi": "Bangkok",
+  "reg-bang-rak": "Bangkok",
+  "reg-din-daeng": "Bangkok",
+  "reg-chatuchak": "Bangkok",
+  "reg-bang-sue": "Bangkok",
+  "chiang-mai-old-town": "Chiang Mai",
+  "cmu-smart-city": "Chiang Mai",
+  "reg-chiang-mai-pao": "Chiang Mai",
+  "khon-kaen": "Khon Kaen",
+  "korat": "Nakhon Ratchasima",
+  "hat-yai": "Songkhla",
+};
+
+export function getTrafficSignal(cityId: string): TrafficSignal | undefined {
+  const area = TRAFFIC_AREA_BY_CITY_ID[cityId];
+  if (!area) return undefined;
+  const e = PROVINCIAL_TRAFFIC[area];
   if (!e) return undefined;
   const score = Math.max(0, 100 - e.congestionLevelPct);
   return {
     label: CONGESTION_LABEL,
     value: `${e.congestionLevelPct}% congestion, ${e.hoursLostPerYear} hrs/yr lost`,
     score,
+    source: e.source,
+    sourceUrl: e.sourceUrl,
+    asOf: e.asOf,
+    geography: area === "Songkhla" ? "Hat Yai city" : `${area} metro`,
   };
 }

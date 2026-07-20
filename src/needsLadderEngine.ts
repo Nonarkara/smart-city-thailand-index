@@ -14,7 +14,8 @@
 //   7. Affordability— rent, cost of living, schooling
 //   8. Calm         — mental health: traffic, commute stress
 //
-// Every rung is computed ONLY from fields that already carry a real source
+// Every rung is computed only from fields that carry a source or from an
+// explicitly labelled SCITI assessment/derivation
 // (CityMetrics, already-cited in the codebase) or from newly-verified
 // provincial data (see provincialBoiZones.ts, provincialLaborEconomics.ts,
 // provincialTrafficIndex.ts, provincialAccessData.ts — each entry there
@@ -45,9 +46,9 @@ export type LadderRungId =
 
 export interface LadderRung {
   id: LadderRungId;
-  /** 0-100, undefined when there is not enough real data to score this rung at all. */
+  /** 0-100, undefined when no defensible input is available for this rung. */
   score: number | undefined;
-  /** Real, cited data points that fed the score — always at least 1 if score is defined. */
+  /** Inputs and clearly marked contextual signals; always at least 1 if scored. */
   signals: LadderSignal[];
 }
 
@@ -55,13 +56,21 @@ export interface LadderSignal {
   label: LocalizedText;
   value: string | LocalizedText;
   source: "metrics" | "provincial" | "geometry" | "pillar";
+  /** Context is visible evidence but is not included in the rung arithmetic. */
+  role?: "input" | "context";
+  sourceLabel?: string;
+  sourceUrl?: string;
+  asOf?: string;
+  geography?: LocalizedText;
 }
 
 export interface NeedsLadderProfile {
   cityId: string;
   rungs: LadderRung[];
-  /** How many of the 8 rungs have a real score (vs. no-data). */
+  /** How many of the 8 rungs can be scored (vs. no-data). */
   coverage: number;
+  /** Scored rungs containing at least one observed baseline, not only an assessment/derivation. */
+  observedCoverage: number;
 }
 
 const RUNGS: LadderRungId[] = [
@@ -101,8 +110,23 @@ const L = {
   avgIncome: { en: "Avg. monthly income", th: "รายได้เฉลี่ยต่อเดือน", zh: "月均收入" },
   landPrice: { en: "Land price", th: "ราคาที่ดิน", zh: "地价" },
   costOfLiving: { en: "Cost-of-living index", th: "ดัชนีค่าครองชีพ", zh: "生活成本指数" },
-  urbanProximity: { en: "Urban-core proximity", th: "ความใกล้ศูนย์กลางเมือง", zh: "邻近城市核心区" },
 } as const satisfies Record<string, LocalizedText>;
+
+function provincialGeography(city: SmartCity): LocalizedText {
+  return {
+    en: `${city.province} province proxy`,
+    th: `ข้อมูลตัวแทนระดับจังหวัด ${city.provinceTh}`,
+    zh: `${city.province} 府级代理数据`,
+  };
+}
+
+function cityAreaGeography(en: string): LocalizedText {
+  return {
+    en,
+    th: `พื้นที่เมือง: ${en}`,
+    zh: `城市范围：${en}`,
+  };
+}
 
 /** Clamp + round to a clean integer 0-100 score. */
 function clampScore(v: number): number {
@@ -174,7 +198,16 @@ function protectionRung(city: SmartCity): LadderRung {
 
   const access = getAccessSignal(city.province);
   if (access?.publicHospitals) {
-    signals.push({ label: L.hospitalsProvince, value: `${access.publicHospitals.total}`, source: "provincial" });
+    signals.push({
+      label: L.hospitalsProvince,
+      value: `${access.publicHospitals.total}`,
+      source: "provincial",
+      role: "context",
+      sourceLabel: access.healthSource,
+      sourceUrl: access.healthSourceUrl,
+      asOf: access.healthAsOf,
+      geography: provincialGeography(city),
+    });
   }
 
   return { id: "protection", score: parts.length ? clampScore(average(parts)!) : undefined, signals };
@@ -212,11 +245,28 @@ function livelihoodRung(city: SmartCity): LadderRung {
   const boi = getBoiZone(city.province);
   if (boi) {
     parts.push(boi.score);
-    signals.push({ label: L.boiZone, value: boi.label, source: "provincial" }); // boi.label is LocalizedText
+    signals.push({
+      label: L.boiZone,
+      value: boi.label,
+      source: "provincial",
+      sourceLabel: boi.source,
+      sourceUrl: boi.sourceUrl,
+      asOf: boi.asOf,
+      geography: provincialGeography(city),
+    });
   }
   const labor = getLaborEconomics(city.province);
   if (labor?.minWageBaht !== undefined) {
-    signals.push({ label: L.minWage, value: `฿${labor.minWageBaht}/day`, source: "provincial" });
+    signals.push({
+      label: L.minWage,
+      value: `฿${labor.minWageBaht}/day`,
+      source: "provincial",
+      role: "context",
+      sourceLabel: labor.minWageSource,
+      sourceUrl: labor.minWageSourceUrl,
+      asOf: labor.minWageAsOf,
+      geography: provincialGeography(city),
+    });
   }
 
   return { id: "livelihood", score: parts.length ? clampScore(average(parts)!) : undefined, signals };
@@ -248,7 +298,16 @@ function convenienceRung(city: SmartCity): LadderRung {
 
   const access = getAccessSignal(city.province);
   if (access?.higherEdInstitutions !== undefined) {
-    signals.push({ label: L.educationAccess, value: `${access.higherEdInstitutions}`, source: "provincial" });
+    signals.push({
+      label: L.educationAccess,
+      value: `${access.higherEdInstitutions}`,
+      source: "provincial",
+      role: "context",
+      sourceLabel: access.educationSource,
+      sourceUrl: access.educationSourceUrl,
+      asOf: access.educationAsOf,
+      geography: provincialGeography(city),
+    });
   }
 
   return { id: "convenience", score: clampScore(average(parts)!), signals };
@@ -272,12 +331,20 @@ function affordabilityRung(city: SmartCity): LadderRung {
   }
 
   const labor = getLaborEconomics(city.province);
-  if (labor?.costOfLivingIndexRaw !== undefined) {
-    // Numbeo Cost of Living Index, NYC=100. Thai provinces with a verified
-    // entry span roughly 25 (cheap) to 60 (expensive urban) — lower raw value
-    // means more affordable, so it inverts into the score.
+  const costOfLivingApplies = city.province === "Bangkok" || city.id === "reg-pattaya";
+  if (costOfLivingApplies && labor?.costOfLivingIndexRaw !== undefined) {
+    // Numbeo Cost of Living Index, NYC=100. The 25-60 bounds are the published
+    // overlay normalization range; lower raw values invert to higher scores.
     parts.push(scoreLowerIsBetter(labor.costOfLivingIndexRaw, 25, 60));
-    signals.push({ label: L.costOfLiving, value: `${labor.costOfLivingIndexRaw}`, source: "provincial" });
+    signals.push({
+      label: L.costOfLiving,
+      value: `${labor.costOfLivingIndexRaw}`,
+      source: "provincial",
+      sourceLabel: labor.costOfLivingSource,
+      sourceUrl: labor.costOfLivingSourceUrl,
+      asOf: labor.costOfLivingAsOf,
+      geography: cityAreaGeography(city.id === "reg-pattaya" ? "Pattaya" : "Bangkok"),
+    });
   }
 
   return { id: "affordability", score: parts.length ? clampScore(average(parts)!) : undefined, signals };
@@ -288,19 +355,18 @@ function calmRung(city: SmartCity): LadderRung {
   const signals: LadderSignal[] = [];
   const parts: number[] = [];
 
-  const traffic = getTrafficSignal(city.province);
+  const traffic = getTrafficSignal(city.id);
   if (traffic) {
     parts.push(traffic.score);
-    signals.push({ label: traffic.label, value: traffic.value, source: "provincial" });
-  }
-
-  // Distance-to-hub is a genuine, real proxy for commute pressure even where
-  // no direct congestion index exists: cities far from any hub don't have
-  // hub-style gridlock, cities embedded in one usually do.
-  const hub = getHubDistances(city.id);
-  if (hub && hub.nearestHubKm < 30) {
-    parts.push(scoreLowerIsBetter(hub.nearestHubKm, 0, 30));
-    signals.push({ label: L.urbanProximity, value: `${hub.nearestHubKm} km`, source: "geometry" });
+    signals.push({
+      label: traffic.label,
+      value: traffic.value,
+      source: "provincial",
+      sourceLabel: traffic.source,
+      sourceUrl: traffic.sourceUrl,
+      asOf: traffic.asOf,
+      geography: cityAreaGeography(traffic.geography),
+    });
   }
 
   return { id: "calm", score: parts.length ? clampScore(average(parts)!) : undefined, signals };
@@ -320,17 +386,22 @@ const RUNG_BUILDERS: Record<LadderRungId, (city: SmartCity) => LadderRung> = {
 export function computeNeedsLadder(city: SmartCity): NeedsLadderProfile {
   const rungs = RUNGS.map(id => RUNG_BUILDERS[id](city));
   const coverage = rungs.filter(r => r.score !== undefined).length;
-  return { cityId: city.id, rungs, coverage };
+  const observedCoverage = rungs.filter(rung =>
+    rung.score !== undefined
+      && rung.signals.some(signal => signal.role !== "context"
+        && (signal.source === "metrics" || signal.source === "provincial")),
+  ).length;
+  return { cityId: city.id, rungs, coverage, observedCoverage };
 }
 
-/** Highest-scoring rung with real data — "this city's strongest need it meets". */
+/** Highest-scoring available rung — "this city's strongest need it meets". */
 export function strongestRung(profile: NeedsLadderProfile): LadderRung | undefined {
   return profile.rungs
     .filter(r => r.score !== undefined)
     .sort((a, b) => (b.score! - a.score!))[0];
 }
 
-/** Lowest-scoring rung with real data — the honest gap, not hidden. */
+/** Lowest-scoring available rung — the honest gap, not hidden. */
 export function weakestRung(profile: NeedsLadderProfile): LadderRung | undefined {
   return profile.rungs
     .filter(r => r.score !== undefined)

@@ -50,6 +50,9 @@ describe("jury evidence walk-through", () => {
     expect(audit.needsLadder.dossierCities).toBe(audit.fullDossiers);
     expect(audit.needsLadder.meanCoverage).toBeGreaterThan(0);
     expect(audit.needsLadder.meanCoverage).toBeLessThanOrEqual(8);
+    expect(audit.needsLadder.meanObservedCoverage).toBeGreaterThan(0);
+    expect(audit.needsLadder.meanObservedCoverage).toBeLessThanOrEqual(audit.needsLadder.meanCoverage);
+    expect(audit.needsLadder.sourceEndpoints).toBeGreaterThan(0);
     expect(audit.needsLadder.calmTrafficBacked).toBeGreaterThan(0);
     expect(audit.needsLadder.calmTrafficBacked).toBeLessThan(audit.needsLadder.dossierCities);
   });

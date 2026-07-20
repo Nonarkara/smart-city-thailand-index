@@ -224,9 +224,9 @@ export default function AuditPage({ locale, onNavigate }: Props) {
             <div className="audit-sentiment-pct">OVERLAY</div>
             <p className="audit-sentiment-desc">
               {t({
-                en: `Eight ordered human-need rungs on every dossier city — mean coverage ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs}. TomTom traffic backs the calm rung for ${audit.needsLadder.calmTrafficBacked} cities only; the rest stay blank. Ladder scores never alter the published composite.`,
-                th: `แปดขั้นความต้องการมนุษย์เรียงตามลำดับความสำคัญบนทุกเมืองที่มีแฟ้ม — ครอบคลุมเฉลี่ย ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs} ขั้น ข้อมูลจราจร TomTom รองรับขั้นความสงบเพียง ${audit.needsLadder.calmTrafficBacked} เมือง ที่เหลือเว้นว่าง คะแนนบันไดไม่เปลี่ยนคะแนนรวมที่เผยแพร่`,
-                zh: `每份研究档案上有八层按优先排序的人类需求阶梯——平均覆盖 ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs} 层。TomTom 交通数据仅支撑 ${audit.needsLadder.calmTrafficBacked} 座城市的“宁静”层，其余留空。阶梯分数永不改写公开综合分。`,
+                en: `Eight ordered human-need rungs on every dossier city — ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs} scored on average, ${audit.needsLadder.meanObservedCoverage}/${audit.needsLadder.rungs} with an observed input, and ${audit.needsLadder.sourceEndpoints} exact overlay source endpoints exposed in dossiers. TomTom city/metro traffic backs calm for ${audit.needsLadder.calmTrafficBacked} index units only; the rest stay blank. The overlay never alters the published composite.`,
+                th: `แปดขั้นความต้องการมนุษย์เรียงตามลำดับความสำคัญบนทุกเมืองที่มีแฟ้ม — ให้คะแนนเฉลี่ย ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs} ขั้น ${audit.needsLadder.meanObservedCoverage}/${audit.needsLadder.rungs} ขั้นมีข้อมูลสังเกตเป็นตัวคำนวณ และแสดงปลายทางแหล่งข้อมูลของชั้นประกอบโดยตรง ${audit.needsLadder.sourceEndpoints} แห่งในแฟ้มเมือง ข้อมูลจราจรระดับเมือง/มหานครของ TomTom รองรับขั้นความสงบเพียง ${audit.needsLadder.calmTrafficBacked} หน่วยดัชนี ที่เหลือเว้นว่าง ชั้นข้อมูลนี้ไม่เปลี่ยนคะแนนรวมที่เผยแพร่`,
+                zh: `每份研究档案上有八层按优先排序的人类需求阶梯——平均 ${audit.needsLadder.meanCoverage}/${audit.needsLadder.rungs} 层已评分，其中 ${audit.needsLadder.meanObservedCoverage}/${audit.needsLadder.rungs} 层含观测输入，并在档案中直接公开 ${audit.needsLadder.sourceEndpoints} 个辅助层来源端点。TomTom 城市/都会区交通数据仅支撑 ${audit.needsLadder.calmTrafficBacked} 个指数单元的“宁静”层，其余留空；该辅助层永不改写公开综合分。`,
               })}
             </p>
           </div>

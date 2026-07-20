@@ -14,6 +14,13 @@ export function buildAuditReleaseSummary() {
   const dossierCities = allCities.filter(city => city.status !== "registered");
   const ladderProfiles = dossierCities.map(city => computeNeedsLadder(city));
   const coverageTotal = ladderProfiles.reduce((sum, profile) => sum + profile.coverage, 0);
+  const observedCoverageTotal = ladderProfiles.reduce((sum, profile) => sum + profile.observedCoverage, 0);
+  const ladderSourceUrls = new Set(
+    ladderProfiles.flatMap(profile => profile.rungs)
+      .flatMap(rung => rung.signals)
+      .map(signal => signal.sourceUrl)
+      .filter((url): url is string => Boolean(url)),
+  );
   const calmTrafficBacked = ladderProfiles.filter(profile =>
     profile.rungs.some(rung => rung.id === "calm" && rung.score !== undefined
       && rung.signals.some(signal => signal.source === "provincial")),
@@ -43,8 +50,12 @@ export function buildAuditReleaseSummary() {
       meanCoverage: dossierCities.length === 0
         ? 0
         : Math.round((coverageTotal / dossierCities.length) * 10) / 10,
+      meanObservedCoverage: dossierCities.length === 0
+        ? 0
+        : Math.round((observedCoverageTotal / dossierCities.length) * 10) / 10,
       fullCoverage: ladderProfiles.filter(profile => profile.coverage === 8).length,
       calmTrafficBacked,
+      sourceEndpoints: ladderSourceUrls.size,
       rungs: 8,
     },
   };

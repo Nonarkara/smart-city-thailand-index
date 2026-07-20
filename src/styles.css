@@ -10861,6 +10861,13 @@ body.canvas-print-mode {
   font: 500 var(--text-micro) var(--mono);
   color: var(--3);
 }
+.needs-ladder-method {
+  max-width: 78ch;
+  margin: -.35rem 0 1.1rem;
+  color: var(--2);
+  font-size: var(--text-micro);
+  line-height: 1.55;
+}
 .needs-ladder-rungs {
   list-style: none;
   margin: 0;
@@ -10925,9 +10932,15 @@ body.canvas-print-mode {
 }
 .needs-ladder-rung-signals li {
   display: flex;
-  gap: .3rem;
+  flex: 1 1 17rem;
+  flex-direction: column;
+  gap: .18rem;
   font-size: var(--text-micro);
   color: var(--3);
+}
+.needs-ladder-signal-main {
+  display: flex;
+  gap: .3rem;
 }
 .needs-ladder-signal-label::after {
   content: ":";
@@ -10935,6 +10948,31 @@ body.canvas-print-mode {
 .needs-ladder-signal-value {
   color: var(--2);
   font-family: var(--mono);
+}
+.needs-ladder-signal-provenance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .2rem .45rem;
+  color: var(--3);
+  font-family: var(--mono);
+  line-height: 1.45;
+}
+.needs-ladder-signal-provenance a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.needs-ladder-signal-role {
+  border: 1px solid var(--5);
+  padding: .05rem .25rem;
+  color: var(--2);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.needs-ladder-signal-role-context {
+  color: var(--3);
 }
 
 @media (max-width: 480px) {

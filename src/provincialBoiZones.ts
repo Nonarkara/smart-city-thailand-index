@@ -463,16 +463,42 @@ export interface BoiZoneSignal {
   label: LocalizedText;
   /** 0-100 — deeper/broader BOI incentive overlays score higher. */
   score: number;
+  source: string;
+  sourceUrl?: string;
+  asOf: string;
+  scope: string;
 }
+
+const PROVINCE_WIDE_TAGS = new Set<BoiTag>([
+  "EEC",
+  "southern-border-zone",
+  "decentralization-20-lowest-income",
+  "economic-corridor-NEC",
+  "economic-corridor-NeEC",
+  "economic-corridor-CWEC",
+  "economic-corridor-SEC",
+]);
 
 export function getBoiZone(province: string): BoiZoneSignal | undefined {
   const entry = PROVINCIAL_BOI_ZONES[province];
-  if (!entry || entry.tags.length === 0) return undefined;
-  const best = entry.tags.reduce((max, t) => Math.max(max, TAG_WEIGHT[t]), 0);
+  // A province lookup is only safe for overlays that genuinely cover the
+  // whole province. District/sub-district incentives must not leak onto a
+  // different city merely because it shares the province name.
+  if (!entry || entry.tags.length === 0 || !entry.scope.toLowerCase().includes("full-province")) return undefined;
+  const applicableTags = entry.tags.filter(tag => PROVINCE_WIDE_TAGS.has(tag));
+  if (applicableTags.length === 0) return undefined;
+  const best = applicableTags.reduce((max, t) => Math.max(max, TAG_WEIGHT[t]), 0);
   const label: LocalizedText = {
-    en: entry.tags.map(t => TAG_LABEL[t].en).join(" + "),
-    th: entry.tags.map(t => TAG_LABEL[t].th).join(" + "),
-    zh: entry.tags.map(t => TAG_LABEL[t].zh).join(" + "),
+    en: applicableTags.map(t => TAG_LABEL[t].en).join(" + "),
+    th: applicableTags.map(t => TAG_LABEL[t].th).join(" + "),
+    zh: applicableTags.map(t => TAG_LABEL[t].zh).join(" + "),
   };
-  return { label, score: Math.min(100, best) };
+  return {
+    label,
+    score: Math.min(100, best),
+    source: entry.source,
+    sourceUrl: entry.sourceUrl,
+    asOf: entry.asOf,
+    scope: "full-province",
+  };
 }
