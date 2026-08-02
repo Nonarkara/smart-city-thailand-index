@@ -447,6 +447,42 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         </p>
       </section>
 
+      {/* ═══════════ SECTION 2: WHAT IS MONEYBALL ═══════════ */}
+      <section className="section reveal visible" style={{ paddingTop: 0 }}>
+        <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
+          <div className="invest-ccdr-inner">
+            <h2 style={{ fontSize: "var(--text-3xl)", marginBottom: "1rem" }}>
+              {translate(locale, {
+                en: "What Is Moneyball?",
+                th: "Moneyball คืออะไร",
+                zh: "什么是 Moneyball？",
+              })}
+            </h2>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+              {translate(locale, {
+                en: "In 2002 the Oakland Athletics spent 41 million dollars on players. The New York Yankees spent 126 million. Both teams won 103 games. Oakland matched a payroll three times its size by buying the one statistic that actually wins games — on-base percentage — while everyone else paid for how a player looked. That discipline now has a name: Moneyball. Buy what the data says matters. Ignore what the postcard says.",
+                th: "ปี 2002 ทีมเบสบอล Oakland Athletics ใช้งบค่าตัวนักกีฬา 41 ล้านดอลลาร์ ส่วน New York Yankees ใช้ 126 ล้าน ทั้งสองทีมชนะ 103 นัดเท่ากัน Oakland สู้กับงบที่ใหญ่กว่าสามเท่าได้ด้วยการซื้อสถิติเดียวที่ชนะเกมได้จริง — on-base percentage (อัตราการขึ้นถึงเบส) — ขณะที่ทีมอื่นจ่ายเงินให้ 「หน้าตา」 ของนักกีฬา วินัยแบบนี้มีชื่อเรียกในเวลาต่อมาว่า Moneyball: ซื้อสิ่งที่ข้อมูลบอกว่าสำคัญ ไม่ใช่สิ่งที่โปสการ์ดบอก",
+                zh: "2002年，奥克兰运动家队在球员身上花了4100万美元，纽约洋基队花了1.26亿。两队同样赢下103场比赛。奥克兰对抗三倍于己的薪资总额，靠的是买下真正能赢球的那项数据——上垒率——而其他球队付钱买的是球员的「长相」。这种纪律后来有了名字：Moneyball。买数据证明重要的东西，而非明信片上的东西。",
+              })}
+            </p>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+              {translate(locale, {
+                en: "Thailand has been scouted by looks for forty years. In 1987, Carabao opened the song 「Welcome to Thailand」 with a tourist's question — 「Tom, Tom, where you go last night?」 — and the confession that follows: 「I love Muang Thai, I like Patpong」. The satire was aimed at visitors who fly ten thousand kilometers and see one street. Capital behaves the same way: it prices Bangkok, Phuket, and the EEC, then calls that Thailand.",
+                th: "ประเทศไทยถูก 「ดูจากหน้าตา」 มาสี่สิบปี ปี 2530 คาราบาวเปิดเพลง 「เวลคัมทูไทยแลนด์」 ด้วยคำถามของนักท่องเที่ยว — 「ทอม ทอม แวร์ยูโกลาสไนท์」 — ตามด้วยคำสารภาพ 「ไอเลิฟเมืองไทย ไอไลค์พัฒน์พงศ์」 เพลงนี้เสียดสีผู้มาเยือนที่บินหมื่นกิโลเมตรเพื่อมาเห็นถนนเส้นเดียว เงินทุนก็ทำแบบเดียวกัน: ให้ราคากรุงเทพฯ ภูเก็ต และ EEC แล้วเรียกสิ่งนั้นว่าประเทศไทย",
+                zh: "泰国被「以貌取人」了四十年。1987年，卡拉宝乐队（Carabao）的歌曲《欢迎来到泰国》以一句游客的问话开场——「Tom, Tom, where you go last night?」——接着是那句自白：「I love Muang Thai, I like Patpong」。这首歌讽刺的是飞了一万公里却只看一条街的游客。资本的行为如出一辙：它给曼谷、普吉和EEC定价，然后把这叫作泰国。",
+              })}
+            </p>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+              {translate(locale, {
+                en: "What the postcard leaves out is measurable, and this index measures it. A day of labor costs 337–400 baht depending on province (Ministry of Labour, 2025). Appraised urban land runs from under 9,000 baht per square meter in provincial cities to 250,000 in central Bangkok (Treasury Department). Bangkok's cost of living indexes at 43.7 against New York's 100 (Numbeo). Kindness is scored here: hospitality is one of the seven pillars, weighted at 10% — alongside safety, wellbeing, and environment, built from crime rates, road fatalities, hospital beds, and PM2.5, cited per city. Every city page carries a Needs Ladder: eight rungs of what a place must actually get right, from clean air to commute stress, scored only where real data exists. The gap between what Thailand is and what Thailand is priced at — that is the trade.",
+                th: "สิ่งที่โปสการ์ดไม่ได้บอกนั้นวัดได้ และดัชนีนี้วัดมันอยู่: ค่าแรงหนึ่งวันอยู่ที่ 337–400 บาทแล้วแต่จังหวัด (กระทรวงแรงงาน 2568) ราคาประเมินที่ดินในเมืองเริ่มจากไม่ถึง 9,000 บาท/ตร.ม. ในเมืองภูมิภาค จนถึง 250,000 บาทใจกลางกรุงเทพฯ (กรมธนารักษ์) ค่าครองชีพกรุงเทพฯ อยู่ที่ 43.7 เทียบนิวยอร์ก 100 (Numbeo) ความมีน้ำใจถูกให้คะแนนที่นี่: อัธยาศัยคือหนึ่งในเจ็ดเสาหลัก น้ำหนัก 10% — เคียงข้างความปลอดภัย คุณภาพชีวิต และสิ่งแวดล้อม ซึ่งสร้างจากอัตราอาชญากรรม ผู้เสียชีวิตบนถนน เตียงโรงพยาบาล และ PM2.5 อ้างอิงแหล่งที่มารายเมือง ทุกหน้าเมืองมี 「บันไดความสำคัญ」 แปดขั้นของสิ่งที่เมืองต้องทำให้ได้จริง ตั้งแต่อากาศสะอาดจนถึงความเครียดจากการเดินทาง ให้คะแนนเฉพาะจุดที่มีข้อมูลจริงเท่านั้น ช่องว่างระหว่างสิ่งที่ประเทศไทยเป็น กับราคาที่ประเทศไทยถูกตั้งไว้ — นั่นคือโอกาสของนักลงทุน",
+                zh: "明信片没有印出的东西是可以测量的，本指数正在测量它：一天的劳动力成本因府而异，为337–400泰铢（劳工部，2025）；城市评估地价从府级城市的每平方米不到9,000泰铢，到曼谷市中心的250,000泰铢（财政部国库厅）；曼谷生活成本指数为43.7，纽约为100（Numbeo）。善意在这里被打分：待客之道是七大支柱之一，权重10%——与安全、福祉、环境并列，由犯罪率、道路死亡、医院床位和PM2.5构成，每座城市均注明来源。每个城市页面都有一座「需求阶梯」：一个地方必须真正做对的八层要素，从清洁空气到通勤压力，只在有真实数据处评分。泰国的实际面貌与泰国的市场定价之间的差距——就是这笔交易。",
+              })}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════ SECTION 3: LOOK BEYOND BANGKOK ═══════════ */}
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
