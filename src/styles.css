@@ -44,7 +44,14 @@
   --radius: 0;
   --radius-sm: 0;
   --radius-xs: 0;
-  --w: 1200px;
+  /* THE content column (§14.11 — one shared grid, declared once). Border-box,
+   * so the gutter below is inside it: 1120 - 2×32 = 1056px of text at the
+   * 1440 design canvas. Every content surface derives from these two tokens —
+   * .section, .home-column, .rankings-column, the hero overlay, the stat
+   * ribbon, the opening-argument band, the invest panels. Nothing hard-codes
+   * a width. Change these and the whole site re-grids together. */
+  --w: 1120px;
+  --gutter: clamp(1.25rem, 4vw, 2rem);
   --ease: cubic-bezier(0.23, 1, 0.32, 1);
 
   /* Glassmorphism */
@@ -150,7 +157,11 @@ img { display: block; max-width: 100%; }
 ul, ol { list-style: none; }
 
 /* Layout */
-.section, .S { width: min(var(--w), calc(100% - 2.5rem)); margin-inline: auto; }
+/* The gutter lives INSIDE the column (padding, not a narrowed width) so a bare
+ * .section and a .home-column / .rankings-column wrapper resolve to the exact
+ * same text line. The old calc(100% - 2.5rem) form put the gutter outside,
+ * which is why column pages and long-form pages sat on different lines. */
+.section, .S { width: min(var(--w), 100%); margin-inline: auto; padding-inline: var(--gutter); }
 /* Phase 21 — Fixed design canvas. The page-shell caps the design at 1440px so
  * CEA judges always see the same composition regardless of monitor size.
  * On viewports ≥ 1440px, the depa-blue body bg shows as a quiet gutter on
@@ -843,8 +854,11 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .city-detail-tagline { font-size: var(--text-body); line-height: 1.7; color: var(--2); margin-top: .75rem; max-width: 520px; }
 
 /* ─── DOSSIER TABS ─── */
-.dossier-tabs { width: min(var(--w), calc(100% - 1.5rem)); margin: 0 auto; }
-.dossier-tab-list { display: flex; gap: .25rem; border-bottom: 1px solid var(--5); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+/* Full column width — the gutter is carried by the .section blocks inside each
+ * tab panel, so the old calc(100% - 1.5rem) outside-gutter put the whole city
+ * dossier 12px off the line every other page sits on. */
+.dossier-tabs { width: min(var(--w), 100%); margin: 0 auto; }
+.dossier-tab-list { display: flex; gap: .25rem; border-bottom: 1px solid var(--5); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-inline: var(--gutter); }
 .dossier-tab-list::-webkit-scrollbar { display: none; }
 .dossier-tab { flex: 0 0 auto; min-height: 44px; display: inline-flex; align-items: center; padding: .55rem .9rem; font: 600 var(--text-micro) var(--font); color: var(--3); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; }
 .dossier-tab:hover { color: var(--teal); }
@@ -1090,10 +1104,10 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 /* Phase 14 — scaling ladder. Base rules are phone-first. These lift the
  * typographic scale on 13–15" laptops (most common viewing device).
  * Mobile base stays untouched. Above 1440px, the design canvas is fixed
- * (see .page-shell max-width) and the content column stops scaling —
- * 1200px is the optimal editorial reading width per typographic standards. */
+ * (see .page-shell max-width) and the content column stops scaling — --w is
+ * declared once in :root and is not re-stated per breakpoint, so there is a
+ * single content measure at every viewport. */
 @media (min-width: 1280px) {
-  :root { --w: 1200px; }
   /* Typography no longer scales by viewport — the 3-size hierarchy
    * (display / body / micro) holds across all devices per §11.7. */
 }
@@ -1232,7 +1246,10 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .source-list strong { color: var(--ink); }
 
 /* ─── NEWS ─── */
-.news-section { margin-top: 2rem; padding: 1.5rem 0; border-top: 2px solid var(--ink); }
+/* padding-block, not the `padding: 1.5rem 0` shorthand — the shorthand would
+ * zero the inline gutter that .section now carries, dropping this block off
+ * the column line. */
+.news-section { margin-top: 2rem; padding-block: 1.5rem; border-top: 2px solid var(--ink); }
 .news-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--5); margin-top: .6rem; }
 .news-item { display: flex; flex-direction: column; gap: .1rem; padding: .45rem .6rem; border-right: 1px solid var(--5); border-bottom: 1px solid var(--5); transition: all .15s var(--ease); }
 .news-item:hover { background: var(--surface); transform: none; }
@@ -6307,7 +6324,10 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 /* Subtle improvement: tighter section padding on narrow phones */
 @media (max-width: 360px) {
-  .section, .S { width: calc(100% - 1.5rem); }
+  /* Tighten the gutter on the smallest phones by moving the ONE token, not by
+   * narrowing .section — narrowing it here would re-introduce the outside-gutter
+   * form and knock every block off the line the hero and ribbon sit on. */
+  :root { --gutter: .75rem; }
 }
 
 /* City grid cards — lift on hover with color accent */
@@ -6444,7 +6464,10 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     position: relative;
     z-index: 3;
     margin-top: -3.35rem;
-    padding: clamp(1.05rem, 2vw, 1.45rem);
+    /* Vertical stays compact (this card overlaps the hero photo); horizontal
+     * takes the column gutter so the city name lands on the same line as the
+     * dossier content below it instead of 8px outboard of it. */
+    padding: clamp(1.05rem, 2vw, 1.45rem) calc(var(--gutter) - 1px);
     border: 1px solid rgba(17, 24, 39, .08);
     border-radius: 0;
     background: var(--surface);
@@ -6773,7 +6796,13 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   }
 
   .city-detail-hero {
-    width: min(var(--w), calc(100% - 1.5rem));
+    /* This card deliberately floats inset over the hero photo. Declare that
+     * inset once and subtract it back out of the padding, so the inset is
+     * preserved AND the city name still lands on the column line. Change
+     * --card-inset and the text stays aligned. */
+    --card-inset: .75rem;
+    width: calc(100% - var(--card-inset) * 2);
+    padding-inline: calc(var(--gutter) - var(--card-inset) - 1px);
     margin-top: -1.75rem;
     border-radius: 0;
   }
@@ -6819,7 +6848,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .dossier-tab { padding: .45rem .65rem; font-size: var(--text-micro); }
   .dossier-tab-panel { padding: .85rem 0; }
 
-  .city-detail-hero { padding: .95rem; }
+  /* padding-block only — the inline value is owned by the --card-inset maths
+   * in the ≤900px block above and must not be overwritten here. */
+  .city-detail-hero { padding-block: .95rem; }
   .city-detail-tagline { font-size: var(--text-body); }
   .city-detail-hero .section-intro { font-size: var(--text-micro); }
 
@@ -7759,13 +7790,16 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 /* One centered column threading every block on the Rankings page. */
 .rankings-column {
-  max-width: 1120px;
+  max-width: var(--w);
   margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 2rem);
+  padding-inline: var(--gutter);
 }
 .rankings-column > .section {
+  /* The column already supplies the gutter — reset width too, or the base
+   * .section rule pads a second time and shifts every block inboard. */
   padding-inline: 0;
   max-width: none;
+  width: 100%;
 }
 
 /* --- Lens chip row --- */
@@ -8070,12 +8104,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
    ========================================================================= */
 
 .home-column {
-  max-width: 1120px;
+  max-width: var(--w);
   margin-inline: auto;
-  /* 1.25rem floor (not 1rem) so the phone gutter matches the hero overlay, the
-   * stat ribbon, and the base .section rule's calc(100% - 2.5rem). A 1rem floor
-   * left body copy 4px outboard of the hero below ~500px. */
-  padding-inline: clamp(1.25rem, 4vw, 2rem);
+  padding-inline: var(--gutter);
 }
 /* Planar Alignment (§14.11): .home-column already supplies the page gutter via
  * its own padding-inline, but .section still carries width:min(--w,100% - 2.5rem)
@@ -8110,22 +8141,22 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   border-bottom: 3px solid var(--amber, #f59e0b);
 }
 /* Planar Alignment (§14.11). This panel is used two ways — as a full-bleed dark
- * band, and as a bordered card inside a .section — and the old flat 1120px cap
+ * band, and as a bordered card inside a .section — and an old hard-coded cap
  * made the two land on different vertical lines (200 vs 201 at the 1440 canvas),
  * neither of which met the page's own .section line at 120. Derive from --w
  * instead so the band's content sits on the primary grid line, and give the card
  * variant one shared interior inset. Two lines, both meaningful; no orphans. */
 .invest-ccdr-inner {
-  width: min(var(--w), calc(100% - 2.5rem));
+  width: min(var(--w), 100%);
   max-width: none;
   margin-inline: auto;
-  padding: clamp(2rem, 5vw, 4rem) 0;
+  padding: clamp(2rem, 5vw, 4rem) var(--gutter);
 }
 .section > .invest-ccdr-panel > .invest-ccdr-inner {
-  /* The .section parent has already placed the card edge on the grid; the inner
-   * only needs breathing room off the 1px rule. */
+  /* Inside a .section the column gutter is already spent, so this padding is
+   * purely the card's interior breathing room off its 1px rule. */
   width: 100%;
-  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  padding-inline: var(--gutter);
 }
 .invest-ccdr-source {
   font: 600 var(--text-micro) var(--mono);
@@ -8458,7 +8489,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 /* Three moves, in order:                                                    */
 /*   1. Darken the gradient past the CLAUDE.md ≥78% floor and add a          */
 /*      text-shadow so white copy stays legible across any photograph.       */
-/*   2. Inset the overlay *content* to 1120px so title/why/stats/CTAs align  */
+/*   2. Inset the overlay *content* to var(--w) so title/why/stats/CTAs align */
 /*      with the .home-column sections below — photograph stays full-bleed,  */
 /*      text stops feeling "crammed in the middle".                          */
 /*   3. Introduce a full-bleed stat ribbon directly under the hero to bridge */
@@ -8488,18 +8519,18 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
 }
 
-/* 2. Column-inset pattern — photograph full-bleed, text at 1120px */
+/* 2. Column-inset pattern — photograph full-bleed, text on the --w column */
 .cinematic-hero-overlay {
   padding: 0;
   align-items: stretch;
 }
 .cinematic-hero-overlay > * {
-  max-width: 1120px;
+  max-width: var(--w);
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(1.25rem, 4vw, 2rem);
-  padding-right: clamp(1.25rem, 4vw, 2rem);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
 }
 .cinematic-hero-overlay > *:first-child {
   padding-top: 3.5rem;
@@ -8527,9 +8558,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   border-bottom: 1px solid rgba(255,255,255,0.12);
 }
 .opening-argument-inner {
-  max-width: 1120px;
+  max-width: var(--w);
   margin: 0 auto;
-  padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2.5rem);
+  padding: clamp(2.5rem, 6vw, 5rem) var(--gutter);
 }
 .opening-argument-eyebrow {
   font: 600 var(--text-micro) var(--mono);
@@ -8630,9 +8661,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   background: #071428;
 }
 .home-stat-ribbon-inner {
-  max-width: 1120px;
+  max-width: var(--w);
   margin: 0 auto;
-  padding: 1.25rem clamp(1.25rem, 4vw, 2rem);
+  padding: 1.25rem var(--gutter);
   display: flex;
   gap: clamp(1.5rem, 4vw, 3rem);
   overflow-x: auto;
@@ -8663,11 +8694,17 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   white-space: nowrap;
 }
 @media (min-width: 900px) {
+  .home-stat-value { font-size: var(--text-display); }
+}
+/* The six ribbon cells need ~1145px of intrinsic width. Spreading them (and
+ * dropping the scroller) at 900px let them spill past the viewport and drag the
+ * whole PAGE into horizontal scroll between 900–1200px — a §11.8 violation.
+ * Only stop scrolling once they genuinely fit. */
+@media (min-width: 1200px) {
   .home-stat-ribbon-inner {
     justify-content: space-between;
     overflow-x: visible;
   }
-  .home-stat-value { font-size: var(--text-display); }
 }
 
 /* ─── PHASE 14 — TYPOGRAPHY, LEGENDS, REGIONAL CHAMPIONS, LEAGUE ─────── */

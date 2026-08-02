@@ -462,7 +462,10 @@ export default function App() {
           </section>
 
           {/* ─── NEWSLETTER SIGNUP ─── */}
-          <section className="newsletter-section" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "3rem 1rem", textAlign: "center" }}>
+          {/* No horizontal padding here — the .section inside carries the column
+              gutter, and a wrapper gutter on top of it pushed this block 16px
+              inboard of every other block on the page. */}
+          <section className="newsletter-section" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "3rem 0", textAlign: "center" }}>
             <div className="section" style={{ maxWidth: "600px", margin: "0 auto" }}>
               <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "0.5rem", color: "var(--ink)" }}>
                 {locale === "th" ? "สมัครรับข้อมูลข่าวสาร" : locale === "zh" ? "订阅简报" : "Subscribe to SCITI Data Insights"}
