@@ -196,6 +196,15 @@ export default function HomePage({ locale, onNavigate }: Props) {
               zh: "泰国各府的 Moneyball 方法——在市场发现之前找到被低估的创意资产。",
             })}
           </p>
+          {/* On-ramp: the headline asserts a baseball metaphor, so give the reader
+              who does not know it a one-click route to the explanation. */}
+          <button type="button" className="cinematic-hero-explainer" onClick={() => onNavigate("/invest")}>
+            {t({
+              en: "What is Moneyball?",
+              th: "Moneyball คืออะไร?",
+              zh: "什么是 Moneyball？",
+            })}
+          </button>
           <div className="cinematic-hero-stats">
             <div className="hero-stat-cell">
               <AnimatedScore target={stats.total} from={0} decimals={0} duration={1600} className="hero-stat-num" />

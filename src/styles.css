@@ -4012,6 +4012,25 @@ h2, h3 { font-family: var(--font); }
   letter-spacing: -.005em;
 }
 
+/* Hero on-ramp to the Moneyball explainer. Text link, not a third button — the
+ * two CTAs below stay the primary targets. 44px min-height per §11.8; sits on
+ * the same left grid line as the copy above it, so it adds no new edge. */
+.cinematic-hero-explainer {
+  display: inline-flex; align-items: center; min-height: 44px;
+  margin: -.6rem 0 .5rem; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  font: 400 var(--text-body) var(--font);
+  color: rgba(255,255,255,.8);
+  letter-spacing: -.005em;
+  text-decoration: underline; text-underline-offset: .28em;
+  text-decoration-color: rgba(255,255,255,.45);
+  text-shadow: 0 2px 16px rgba(0,0,0,.45);
+  transition: color .18s var(--ease), text-decoration-color .18s var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .cinematic-hero-explainer:hover { color: #fff; text-decoration-color: #fff; }
+}
+
 /* ─── 13" laptop frame (1024px baseline) ─────────────────────────────────
    A 13" MacBook viewport is ~1280×800. Mobile-first base handles ≤480px.
    This block keeps the hero compact on the laptop / desktop reading
@@ -8053,11 +8072,21 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .home-column {
   max-width: 1120px;
   margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 2rem);
+  /* 1.25rem floor (not 1rem) so the phone gutter matches the hero overlay, the
+   * stat ribbon, and the base .section rule's calc(100% - 2.5rem). A 1rem floor
+   * left body copy 4px outboard of the hero below ~500px. */
+  padding-inline: clamp(1.25rem, 4vw, 2rem);
 }
+/* Planar Alignment (§14.11): .home-column already supplies the page gutter via
+ * its own padding-inline, but .section still carries width:min(--w,100% - 2.5rem)
+ * from the base rule — which subtracts a second 40px gutter and then re-centres,
+ * pushing every body section 20px inboard of the hero and stat ribbon. Reset the
+ * width so the column is the single declared gutter and hero / ribbon / sections
+ * all resolve to one vertical line. */
 .home-column > .section {
   padding-inline: 0;
   max-width: none;
+  width: 100%;
 }
 .home-section-title {
   margin: 0.25rem 0 0.9rem;
@@ -8080,10 +8109,23 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   border-top: 1px solid rgba(255,255,255,0.1);
   border-bottom: 3px solid var(--amber, #f59e0b);
 }
+/* Planar Alignment (§14.11). This panel is used two ways — as a full-bleed dark
+ * band, and as a bordered card inside a .section — and the old flat 1120px cap
+ * made the two land on different vertical lines (200 vs 201 at the 1440 canvas),
+ * neither of which met the page's own .section line at 120. Derive from --w
+ * instead so the band's content sits on the primary grid line, and give the card
+ * variant one shared interior inset. Two lines, both meaningful; no orphans. */
 .invest-ccdr-inner {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2.5rem);
+  width: min(var(--w), calc(100% - 2.5rem));
+  max-width: none;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 4rem) 0;
+}
+.section > .invest-ccdr-panel > .invest-ccdr-inner {
+  /* The .section parent has already placed the card edge on the grid; the inner
+   * only needs breathing room off the 1px rule. */
+  width: 100%;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
 }
 .invest-ccdr-source {
   font: 600 var(--text-micro) var(--mono);
