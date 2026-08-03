@@ -458,21 +458,21 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                 zh: "什么是 Moneyball？",
               })}
             </h2>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
                 en: "In 2002 the Oakland Athletics spent 41 million dollars on players. The New York Yankees spent 126 million. Both teams won 103 games. Oakland matched a payroll three times its size by buying the one statistic that actually wins games — on-base percentage — while everyone else paid for how a player looked. That discipline now has a name: Moneyball. Buy what the data says matters. Ignore what the postcard says.",
                 th: "ปี 2002 ทีมเบสบอล Oakland Athletics ใช้งบค่าตัวนักกีฬา 41 ล้านดอลลาร์ ส่วน New York Yankees ใช้ 126 ล้าน ทั้งสองทีมชนะ 103 นัดเท่ากัน Oakland สู้กับงบที่ใหญ่กว่าสามเท่าได้ด้วยการซื้อสถิติเดียวที่ชนะเกมได้จริง — on-base percentage (อัตราการขึ้นถึงเบส) — ขณะที่ทีมอื่นจ่ายเงินให้ 「หน้าตา」 ของนักกีฬา วินัยแบบนี้มีชื่อเรียกในเวลาต่อมาว่า Moneyball: ซื้อสิ่งที่ข้อมูลบอกว่าสำคัญ ไม่ใช่สิ่งที่โปสการ์ดบอก",
                 zh: "2002年，奥克兰运动家队在球员身上花了4100万美元，纽约洋基队花了1.26亿。两队同样赢下103场比赛。奥克兰对抗三倍于己的薪资总额，靠的是买下真正能赢球的那项数据——上垒率——而其他球队付钱买的是球员的「长相」。这种纪律后来有了名字：Moneyball。买数据证明重要的东西，而非明信片上的东西。",
               })}
             </p>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
                 en: "Thailand has been scouted by looks for forty years. In 1987, Carabao opened the song 「Welcome to Thailand」 with a tourist's question — 「Tom, Tom, where you go last night?」 — and the confession that follows: 「I love Muang Thai, I like Patpong」. The satire was aimed at visitors who fly ten thousand kilometers and see one street. Capital behaves the same way: it prices Bangkok, Phuket, and the EEC, then calls that Thailand.",
                 th: "ประเทศไทยถูก 「ดูจากหน้าตา」 มาสี่สิบปี ปี 2530 คาราบาวเปิดเพลง 「เวลคัมทูไทยแลนด์」 ด้วยคำถามของนักท่องเที่ยว — 「ทอม ทอม แวร์ยูโกลาสไนท์」 — ตามด้วยคำสารภาพ 「ไอเลิฟเมืองไทย ไอไลค์พัฒน์พงศ์」 เพลงนี้เสียดสีผู้มาเยือนที่บินหมื่นกิโลเมตรเพื่อมาเห็นถนนเส้นเดียว เงินทุนก็ทำแบบเดียวกัน: ให้ราคากรุงเทพฯ ภูเก็ต และ EEC แล้วเรียกสิ่งนั้นว่าประเทศไทย",
                 zh: "泰国被「以貌取人」了四十年。1987年，卡拉宝乐队（Carabao）的歌曲《欢迎来到泰国》以一句游客的问话开场——「Tom, Tom, where you go last night?」——接着是那句自白：「I love Muang Thai, I like Patpong」。这首歌讽刺的是飞了一万公里却只看一条街的游客。资本的行为如出一辙：它给曼谷、普吉和EEC定价，然后把这叫作泰国。",
               })}
             </p>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
                 en: "What the postcard leaves out is measurable, and this index measures it. A day of labor costs 337–400 baht depending on province (Ministry of Labour, 2025). Appraised urban land runs from under 9,000 baht per square meter in provincial cities to 250,000 in central Bangkok (Treasury Department). Bangkok's cost of living indexes at 43.7 against New York's 100 (Numbeo). Kindness is scored here: hospitality is one of the seven pillars, weighted at 10% — alongside safety, wellbeing, and environment, built from crime rates, road fatalities, hospital beds, and PM2.5, cited per city. Every city page carries a Needs Ladder: eight rungs of what a place must actually get right, from clean air to commute stress, scored only where real data exists. The gap between what Thailand is and what Thailand is priced at — that is the trade.",
                 th: "สิ่งที่โปสการ์ดไม่ได้บอกนั้นวัดได้ และดัชนีนี้วัดมันอยู่: ค่าแรงหนึ่งวันอยู่ที่ 337–400 บาทแล้วแต่จังหวัด (กระทรวงแรงงาน 2568) ราคาประเมินที่ดินในเมืองเริ่มจากไม่ถึง 9,000 บาท/ตร.ม. ในเมืองภูมิภาค จนถึง 250,000 บาทใจกลางกรุงเทพฯ (กรมธนารักษ์) ค่าครองชีพกรุงเทพฯ อยู่ที่ 43.7 เทียบนิวยอร์ก 100 (Numbeo) ความมีน้ำใจถูกให้คะแนนที่นี่: อัธยาศัยคือหนึ่งในเจ็ดเสาหลัก น้ำหนัก 10% — เคียงข้างความปลอดภัย คุณภาพชีวิต และสิ่งแวดล้อม ซึ่งสร้างจากอัตราอาชญากรรม ผู้เสียชีวิตบนถนน เตียงโรงพยาบาล และ PM2.5 อ้างอิงแหล่งที่มารายเมือง ทุกหน้าเมืองมี 「บันไดความสำคัญ」 แปดขั้นของสิ่งที่เมืองต้องทำให้ได้จริง ตั้งแต่อากาศสะอาดจนถึงความเครียดจากการเดินทาง ให้คะแนนเฉพาะจุดที่มีข้อมูลจริงเท่านั้น ช่องว่างระหว่างสิ่งที่ประเทศไทยเป็น กับราคาที่ประเทศไทยถูกตั้งไว้ — นั่นคือโอกาสของนักลงทุน",
@@ -494,7 +494,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                 zh: "致投资者：把目光投向曼谷之外",
               })}
             </h2>
-            <p style={{ fontSize: "var(--text-lg)", color: "var(--4)", marginBottom: "2rem", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "var(--text-lg)", color: "var(--3)", marginBottom: "2rem", lineHeight: 1.6 }}>
               {translate(locale, {
                 en: "If you are making location decisions in Thailand, you face an information asymmetry. Everyone knows Bangkok. Everyone knows the Eastern Economic Corridor. But what about the provinces where your capital goes 3x further and the talent competition is half as fierce?",
                 th: "หากคุณกำลังตัดสินใจเลือกสถานที่ลงทุนในไทย คุณจะพบกับความไม่สมมาตรของข้อมูล ทุกคนรู้จักกรุงเทพฯ ทุกคนรู้จักเขตพัฒนาพิเศษภาคตะวันออก (EEC) แต่จังหวัดที่เงินทุนของคุณมีค่ามากกว่า 3 เท่าและการแข่งขันแย่งบุคลากรน้อยกว่าครึ่งหนึ่งล่ะ?",
@@ -536,14 +536,14 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>
               {translate(locale, { en: "How to Read the Data", th: "วิธีอ่านข้อมูล", zh: "如何解读数据" })}
             </h3>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.6 }}>
               {translate(locale, {
                 en: "A high GPP/Capita relative to minimum wage means strong productivity at low cost — the classic \"value play.\" A province with a domestic airport, 5G coverage above 85%, and a university population over 20,000 has the infrastructure to support creative and knowledge industries today, not someday. A UNESCO Creative City designation or CEA-backed creative district signals policy tailwinds and potential access to grants, training, and international networks.",
                 th: "GPP ต่อหัวที่สูงเมื่อเทียบกับค่าแรงขั้นต่ำหมายถึงผลิตภาพที่แข็งแกร่งในต้นทุนที่ต่ำ — นี่คือ \"value play\" แบบคลาสสิก จังหวัดที่มีสนามบินภายในประเทศ ความครอบคลุม 5G เกิน 85% และประชากรมหาวิทยาลัยกว่า 20,000 คน มีโครงสร้างพื้นฐานรองรับอุตสาหกรรมสร้างสรรค์และความรู้ได้ตั้งแต่วันนี้ ไม่ใช่วันหน้า การได้รับการรับรองจากยูเนสโกหรือเขตสร้างสรรค์ที่สนับสนุนโดย CEA เป็นสัญญาณบ่งบอกถึงนโยบายที่เอื้ออำนวยและโอกาสในการเข้าถึงเงินทุนสนับสนุน",
                 zh: "高人均GPP相对于最低工资意味着低成本下的高生产力——经典的“价值投资”。拥有国内机场、5G覆盖率超过85%、大学人口超过2万人的省份，今天（而不是未来某天）就具备支持创意和知识产业的基础设施。联合国教科文组织创意城市称号或CEA支持的创意街区标志着政策顺风，以及获得资助、培训和国际网络的潜力。",
               })}
             </p>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.6 }}>
               {translate(locale, {
                 en: "The provinces ranked highest on our Moneyball composite — a separate downloadable analysis (see the factsheets below), not a live SCITI metric — Lamphun, Khon Kaen, Chanthaburi, Nakhon Ratchasima, Chiang Rai — share a pattern: strong fundamentals, low entry cost, and creative assets that the market has not yet fully priced in.",
                 th: "จังหวัดที่ได้คะแนนสูงสุดในคะแนน Moneyball รวมของเรา — การวิเคราะห์แยกต่างหากที่ดาวน์โหลดได้ (ดู factsheet ด้านล่าง) ไม่ใช่ตัวชี้วัดสดของ SCITI — ลำพูน, ขอนแก่น, จันทบุรี, นครราชสีมา, เชียงราย — มีรูปแบบที่เหมือนกัน: พื้นฐานแข็งแกร่ง ต้นทุนเข้าถึงต่ำ และสินทรัพย์สร้างสรรค์ที่ตลาดยังประเมินมูลค่าไม่เต็มที่",
@@ -864,7 +864,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             }}>
               <span style={{
                 font: "800 1.3rem var(--font-heading)",
-                color: "var(--4)",
+                color: "var(--3)",
                 lineHeight: 1,
               }}>
                 {item.num}
