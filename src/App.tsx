@@ -521,14 +521,14 @@ export default function App() {
                 <p style={{ fontWeight: 600, color: "var(--teal)", marginBottom: "1rem", fontSize: "0.85rem", letterSpacing: "0.05em", textTransform: "uppercase" as const }}>
                   {locale === "th" ? "การสมัคร CEA Creative Excellence Awards 2026 | รางวัลนโยบายเมืองสร้างสรรค์ (ประเภท 1.3)" : locale === "zh" ? "CEA 创意卓越奖 2026 申请 | 创意城市政策奖（1.3 类）" : "CEA Creative Excellence Awards 2026 Application | Creative City Policy Award (Category 1.3)"}
                 </p>
-                <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
+                <p style={{ marginBottom: "1rem", color: "var(--3)", lineHeight: "1.6" }}>
                   {locale === "th"
                     ? "SCITI เป็นต้นแบบเครื่องมือนโยบายสาธารณะดิจิทัลสำหรับเปรียบเทียบเมืองไทยด้วยข้อมูลฐานสาธารณะ งานวิจัยที่มีแหล่งอ้างอิง และวิธีรวมคะแนนแบบเปิดเผย โดยวางงานไว้ในบริบทของเครือข่ายย่านสร้างสรรค์ เมืองอัจฉริยะ และการกระจายโอกาสทางเศรษฐกิจของไทย"
                     : locale === "zh"
                       ? "SCITI 是一项数字公共政策工具原型，以公开基线、有来源的研究和透明的汇总方法比较泰国城市，并将成果置于泰国创意街区、智慧城市和经济机会下沉的政策语境中。"
                       : "SCITI is a digital public-policy prototype for comparing Thai cities through public baselines, source-linked research, and a transparent aggregation method. It places that work in the context of Thailand's creative districts, smart-city programme, and decentralized economic opportunity."}
                 </p>
-                <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
+                <p style={{ marginBottom: "1rem", color: "var(--3)", lineHeight: "1.6" }}>
                   <strong style={{ color: "var(--3)" }}>{locale === "th" ? "การอ้างอิงข้อมูล: " : locale === "zh" ? "数据归属： " : "Data Attribution: "}</strong>
                   {locale === "th"
                     ? "ฉบับเผยแพร่นี้ผสานข้อมูลฐานสาธารณะระดับจังหวัด ทะเบียนและแพลตฟอร์มสาธารณะ รวมถึงดุลยพินิจทางวิจัยที่ระบุไว้อย่างชัดเจน แฟ้มเมืองและไฟล์ส่งออกแสดงสถาบันต้นทาง ระดับพื้นที่ ค่าความเชื่อมั่น และข้อจำกัด ไม่อ้างว่าทุกค่าเป็นข้อมูลเทศบาลหรือข้อมูลสด"
@@ -536,7 +536,7 @@ export default function App() {
                       ? "本版本结合省级公开基线、公开名录与平台记录，以及明确标注的研究判断。城市档案与导出文件说明来源机构、地理层级、置信度和局限；我们不声称每个值都是市级或实时数据。"
                       : "This release combines provincial public baselines, public registries and platform records, and explicitly labelled research judgement. City dossiers and exports disclose source institutions, geographic level, confidence, and limitations; not every value is claimed to be municipal or live."}
                 </p>
-                <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
+                <p style={{ marginBottom: "1rem", color: "var(--3)", lineHeight: "1.6" }}>
                   <strong style={{ color: "var(--3)" }}>{locale === "th" ? "กิตติกรรมประกาศ: " : locale === "zh" ? "致谢： " : "Acknowledgments: "}</strong>
                   {locale === "th"
                     ? "SCITI พัฒนาขึ้นโดยสอดคล้องกับกรอบนโยบายเศรษฐกิจสร้างสรรค์แห่งชาติของไทย และแนวทางปฏิบัติที่ดีที่สุดระดับโลกในการกำกับดูแลข้อมูลวัฒนธรรม รวมถึง Amsterdam Cultural Infrastructure Mapping, Barcelona CityOS, Buenos Aires Data Cultura, Seoul Open Data Plaza และ Singapore Cultural Statistics"
@@ -544,7 +544,7 @@ export default function App() {
                       ? "SCITI 的开发符合泰国国家创意经济政策框架以及文化数据治理的全球最佳实践，包括阿姆斯特丹文化基础设施地图、巴塞罗那 CityOS、布宜诺斯艾利斯 Data Cultura、首尔开放数据广场和新加坡文化统计。"
                       : "SCITI is developed in alignment with Thailand's national creative economy policy framework and global best practices in cultural data governance, including Amsterdam Cultural Infrastructure Mapping, Barcelona CityOS, Buenos Aires Data Cultura, Seoul Open Data Plaza, and Singapore Cultural Statistics."}
                 </p>
-                <p style={{ marginBottom: "1rem", color: "var(--4)", lineHeight: "1.6" }}>
+                <p style={{ marginBottom: "1rem", color: "var(--3)", lineHeight: "1.6" }}>
                   <strong style={{ color: "var(--3)" }}>{locale === "th" ? "ติดต่อ: " : locale === "zh" ? "联系方式： " : "Contact: "}</strong>
                   {locale === "th"
                     ? "สอบถามข้อมูล เสนอความร่วมมือ หรือแจ้งแก้ไข ติดต่อทีม SCITI ได้ทาง sciti.nonarkara.org"
