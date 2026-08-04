@@ -218,30 +218,32 @@ export default function ScitiBingoPage({ locale }: Props) {
 
   const grid=(
     <div className={`bingo-grid bingo-grid-${gridSize}x${gridSize}`}>
-      {board.map(cell=>{
+      {board.map((cell, index)=>{
         const isFlipped=flippedIds.has(cell.id);
         const isAnim=animatingId===cell.id;
         const isFree=cell.id==="FREE";
         const color=DIM_COLORS[cell.dim];
         const showBack=!isFree&&(isFlipped||isAnim);
         const disabled=isFree||!targetDim||isFlipped||Boolean(animatingId)||won;
+        const cardNumber=String(index).padStart(2,"0");
         return(
           <button key={cell.id}
             className={`bingo-cell${showBack?" bingo-cell-marked":""}${isFree?" bingo-cell-free":""}${isAnim?" bingo-cell-wrong":""}${!targetDim&&!isFree?" bingo-cell-waiting":""}`}
-            style={{borderColor:showBack?color:`${color}55`}}
-            onClick={()=>handleClick(cell)} aria-pressed={showBack} disabled={disabled}>
+            style={{"--cell-color": color} as React.CSSProperties}
+            onClick={()=>handleClick(cell)} aria-pressed={showBack} aria-label={isFree ? t({en:"Free cell",th:"ช่องฟรี",zh:"免费格"}) : `${cardNumber} ${t(cell.label)}`} disabled={disabled}>
             <div className="bingo-card-front">
               {isFree?(
                 <div className="bingo-free-content">
+                  <span className="bingo-free-stamp">★</span>
+                  <span className="bingo-free-label">{t({en:"FREE",th:"ฟรี",zh:"FREE"})}</span>
                   <span className="bingo-click-count">{clickCount}</span>
-                  <span className="bingo-free-label">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
+                  <span className="bingo-free-sub">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
                 </div>
               ):(
                 <>
+                  <span className="bingo-cell-num">{cardNumber}</span>
                   <span className="bingo-cell-emoji">{cell.emoji}</span>
                   <span className="bingo-cell-text">{t(cell.label)}</span>
-                  <span className="bingo-cell-hint">{t(cell.hint)}</span>
-                  <span className="bingo-cell-dot" style={{background:color}}/>
                 </>
               )}
             </div>
