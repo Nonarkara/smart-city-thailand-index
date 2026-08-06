@@ -1,5 +1,6 @@
 import { translate } from "./cityPresentation";
 import InvestCityDirectory from "./InvestCityDirectory";
+import InvestCityLens from "./InvestCityLens";
 import type { Locale } from "./types";
 import { useInView } from "./useInView";
 import { assetUrl } from "./assetUtils";
@@ -749,6 +750,9 @@ export default function InvestPage({ locale, onNavigate }: Props) {
           ))}
         </div>
       </section>
+
+      {/* ═══════════ 3.5. CITY-BY-CITY INVESTMENT LENS — ASEAN toolkit cross-reference ═══════════ */}
+      <InvestCityLens locale={locale} onNavigate={onNavigate} />
 
       {/* ═══════════ 4. CITY INVESTMENT DIRECTORY ═══════════ */}
       <InvestCityDirectory locale={locale} onNavigate={onNavigate} />
