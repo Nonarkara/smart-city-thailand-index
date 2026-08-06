@@ -45,9 +45,9 @@ const partnerships: Partnership[] = [
       zh: "日本是这份名单里最像系统建设者的外部伙伴。2500亿日元基金是区域级的，但泰国持续出现在交付层：挽赐测绘、城市数据平台，以及 JASCA 协调。",
     },
     lesson: {
-      en: "Cameras vs Asphalt: The Fujitsu/Smart JAMP project in Phuket proves AI traffic management is 1/10th the cost of road expansion with better long-term outcomes.",
-      th: "กล้อง vs ยางมะตอย: โปรเจกต์ Fujitsu ในภูเก็ตพิสูจน์ว่า AI จัดการจราจรประหยัดกว่าสร้างถนน 10 เท่า",
-      zh: "摄像头 vs 沥青：普吉的富士通项目证明，AI交通管理成本仅为道路扩建的1/10。",
+      en: "Measure before you build. Fujitsu's computer-vision cameras ran day and night on the corridor to Phuket airport and found the congestion was caused by drivers changing lanes too abruptly, not by a shortage of road. Human observation had missed it, and the intuitive fix — widen the road — would not have touched the cause.",
+      th: "วัดก่อนสร้าง กล้องคอมพิวเตอร์วิชันของ Fujitsu ทำงานทั้งวันทั้งคืนบนเส้นทางสู่สนามบินภูเก็ต และพบว่าการจราจรติดขัดเกิดจากผู้ขับขี่เปลี่ยนเลนกะทันหันเกินไป ไม่ใช่เพราะถนนไม่พอ สายตามนุษย์มองไม่เห็น และวิธีแก้ตามสัญชาตญาณคือขยายถนน ซึ่งไม่ได้แตะที่ต้นเหตุเลย",
+      zh: "先测量，再建设。富士通的计算机视觉摄像头在通往普吉机场的路段上昼夜运行，发现拥堵源于驾驶者变道过于突然，而非道路不足。人眼观察未能察觉，而凭直觉的解法——拓宽道路——根本触及不到病因。",
     },
     sourceUrl: "https://www.jasca2021.jp/cooperative/country/thailand/",
     sourceLabel: "JASCA Thailand",
@@ -391,6 +391,54 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* ─── WORKING HERE — practical guidance for incoming partners ───
+           The country cards above record what each partnership produced. This
+           section is the operating advice that pattern implies, plus the three
+           legal facts that most often surprise an incoming team. */}
+      <section className="section partnerships-section-gap">
+        <p className="eyebrow">{t(locale, { en: "Working here", th: "การทำงานในไทย", zh: "在泰国开展工作" })}</p>
+        <h2>{t(locale, { en: "What actually produces a project, and what produces a photograph", th: "อะไรทำให้เกิดโครงการจริง และอะไรทำให้ได้แค่ภาพถ่าย", zh: "什么能催生项目，什么只能催生一张合影" })}</h2>
+        <p className="hero-strapline" style={{ maxWidth: "700px", marginBottom: "1.75rem" }}>
+          {t(locale, {
+            en: "Across every programme on this page, one split holds. Pilots run on Thai sites, with Thai stakeholders, against a live Thai problem tend to produce findings that outlast the funding. Study tours — flying Thai officials abroad to watch a foreign technology solve a foreign city's problem — build relationships reliably and built assets rarely, because the demonstration is calibrated to conditions the visitors do not go home to. Both have value. Only one of them leaves something running.",
+            th: "ตลอดทุกโครงการในหน้านี้ มีเส้นแบ่งหนึ่งที่จริงเสมอ โครงการนำร่องที่ทำในพื้นที่จริงของไทย กับผู้มีส่วนได้ส่วนเสียชาวไทย บนปัญหาไทยที่เกิดขึ้นจริง มักให้ข้อค้นพบที่อยู่ได้นานกว่างบประมาณ ส่วนการดูงาน คือพาเจ้าหน้าที่ไทยบินไปดูเทคโนโลยีต่างประเทศแก้ปัญหาของเมืองต่างประเทศ สร้างความสัมพันธ์ได้แน่นอน แต่สร้างของจริงได้ยาก เพราะการสาธิตถูกปรับให้เข้ากับเงื่อนไขที่ผู้มาดูงานไม่ได้กลับไปเจอ ทั้งสองแบบมีคุณค่า แต่มีเพียงแบบเดียวที่ทิ้งบางอย่างให้เดินต่อได้",
+            zh: "纵观本页的每一个项目，有一条分界线始终成立。在泰国的场地、与泰国利益相关方、针对当下的泰国问题开展的试点，往往能产出比资金存续更久的发现。而考察团——让泰国官员飞往国外，观看外国技术解决外国城市的问题——能可靠地建立关系，却极少建成资产，因为演示是按访客回国后并不面对的条件校准的。两者都有价值，但只有一种会留下仍在运转的东西。",
+          })}
+        </p>
+        <div className="story-shift-grid" style={{ borderTop: "2px solid var(--ink)", padding: "1rem 0" }}>
+          <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0", borderRight: "1px solid var(--5)" }}>
+            <h3 style={{ fontSize: ".85rem" }}>{t(locale, { en: "The integrator must be local", th: "ผู้รวมระบบต้องเป็นของไทย", zh: "系统集成商须为本地企业" })}</h3>
+            <p style={{ fontSize: ".65rem" }}>
+              {t(locale, {
+                en: "Foreign technology underneath is entirely normal; a foreign vendor contracting directly with a municipality and supporting it remotely is not. The requirement is single-point accountability — the city calls one party when anything breaks. The United States, Japan and Korea apply comparable expectations.",
+                th: "เทคโนโลยีต่างชาติที่อยู่ชั้นล่างเป็นเรื่องปกติ แต่ผู้ขายต่างชาติที่ทำสัญญาตรงกับเทศบาลแล้วซัพพอร์ตจากระยะไกลนั้นไม่ใช่ ข้อกำหนดนี้คือความรับผิดชอบจุดเดียว เมืองโทรหาคนคนเดียวเมื่อมีอะไรเสีย สหรัฐอเมริกา ญี่ปุ่น และเกาหลีก็มีข้อกำหนดลักษณะเดียวกัน",
+                zh: "位于底层的外国技术完全正常；但外国供应商直接与市镇签约并远程支持则不然。该要求的核心是单点问责——出问题时城市只找一方。美国、日本和韩国都有相当的要求。",
+              })}
+            </p>
+          </div>
+          <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0", borderRight: "1px solid var(--5)" }}>
+            <h3 style={{ fontSize: ".85rem" }}>{t(locale, { en: "The data stays in Thailand", th: "ข้อมูลต้องอยู่ในไทย", zh: "数据须留在泰国境内" })}</h3>
+            <p style={{ fontSize: ".65rem" }}>
+              {t(locale, {
+                en: "Data collected for a Thai government project is expected to reside on Thai soil — own facility or colocation, but inside the country. Plan the hosting decision at proposal stage; it is not a detail that can be settled after award.",
+                th: "ข้อมูลที่เก็บเพื่อโครงการภาครัฐไทยต้องอยู่บนแผ่นดินไทย จะเป็นศูนย์ข้อมูลของตนเองหรือโคโลเคชันก็ได้ แต่ต้องอยู่ในประเทศ ควรวางแผนเรื่องที่ตั้งของระบบตั้งแต่ขั้นยื่นข้อเสนอ ไม่ใช่รายละเอียดที่ค่อยตกลงหลังได้งาน",
+                zh: "为泰国政府项目采集的数据须存放于泰国境内——自建机房或托管皆可，但必须在国内。请在提案阶段就确定托管方案；这不是中标之后再谈的细节。",
+              })}
+            </p>
+          </div>
+          <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0" }}>
+            <h3 style={{ fontSize: ".85rem" }}>{t(locale, { en: "Drones need two registrations", th: "โดรนต้องขึ้นทะเบียนสองที่", zh: "无人机需两项登记" })}</h3>
+            <p style={{ fontSize: ".65rem" }}>
+              {t(locale, {
+                en: "A drone must be registered with the NBTC as radio equipment and, if it carries a camera, with CAAT as an aircraft — both, and on possession rather than on first flight. Government public-safety use has wider latitude. Budget the permission timeline into the project plan.",
+                th: "โดรนต้องขึ้นทะเบียนกับ กสทช. ในฐานะเครื่องวิทยุคมนาคม และหากมีกล้องต้องขึ้นทะเบียนกับ CAAT ในฐานะอากาศยานด้วย ต้องทั้งสองอย่าง และมีผลตั้งแต่การครอบครอง ไม่ใช่ตอนบินครั้งแรก การใช้งานเพื่อความปลอดภัยสาธารณะของภาครัฐมีความยืดหยุ่นกว่า ควรเผื่อเวลาขออนุญาตไว้ในแผนโครงการ",
+                zh: "无人机须向 NBTC 登记为无线电设备；若配备摄像头，还须向 CAAT 登记为航空器——两者都要，且适用于持有而非首次飞行。政府用于公共安全的用途空间更大。请把审批时间纳入项目计划。",
+              })}
+            </p>
+          </div>
         </div>
       </section>
 

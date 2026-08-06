@@ -211,9 +211,9 @@ export default function StoryPage({ locale, onNavigate }: Props) {
               <h3 className="story-tl-title">{translate(locale, { en: "The Engineer Era", th: "ยุควิศวกร", zh: "工程师时代" })}</h3>
               <p className="story-tl-body">
                 {translate(locale, {
-                  en: "Focus on hardware, dashboards, and command centers. Smart City was seen as a technology shopping list.",
-                  th: "โฟกัสที่ฮาร์ดแวร์ แดชบอร์ด และศูนย์บัญชาการ เมืองอัจฉริยะถูกมองเป็นเพียงรายการซื้อเทคโนโลยี",
-                  zh: "聚焦于硬件、仪表板和指挥中心。智慧城市被视为技术采购清单。",
+                  en: "Hardware, dashboards, command centres — smart city as a technology shopping list. The programme opened with a central master plan that cities were invited to join, and certification criteria drafted to a high engineering standard.",
+                  th: "ฮาร์ดแวร์ แดชบอร์ด ศูนย์บัญชาการ เมืองอัจฉริยะถูกมองเป็นรายการซื้อเทคโนโลยี โครงการเริ่มด้วยแผนแม่บทจากส่วนกลางแล้วเชิญเมืองเข้าร่วม พร้อมเกณฑ์การรับรองที่ร่างตามมาตรฐานวิศวกรรมระดับสูง",
+                  zh: "硬件、仪表板、指挥中心——智慧城市被视为技术采购清单。项目以中央总体规划开局，邀请城市加入，认证标准则按高工程标准起草。",
                 })}
               </p>
             </div>
@@ -224,9 +224,9 @@ export default function StoryPage({ locale, onNavigate }: Props) {
               <h3 className="story-tl-title">{translate(locale, { en: "The Infrastructure Reality", th: "ความจริงของโครงสร้างพื้นฐาน", zh: "基础设施现实" })}</h3>
               <p className="story-tl-body">
                 {translate(locale, {
-                  en: "Realization that pipes and wires aren't enough. Projects stalled due to a lack of community buy-in and operational maintenance.",
-                  th: "ตระหนักว่าท่อและสายไฟไม่เพียงพอ โครงการชะงักเพราะขาดการยอมรับจากชุมชนและการบำรุงรักษาในพื้นที่",
-                  zh: "意识到仅有管道和线路是不够的。由于缺乏社区支持和运维支持，项目一度停滞。",
+                  en: "Pipes and wires were not enough: projects stalled without community buy-in or a maintenance path. About two years in it was also clear the original criteria were not filtering for quality, they were filtering out participation — almost no municipality could meet them, so they were rewritten toward outcomes a city can observe directly.",
+                  th: "ท่อและสายไฟไม่เพียงพอ โครงการชะงักเพราะขาดการยอมรับจากชุมชนและเส้นทางการบำรุงรักษา ผ่านไปราวสองปีก็ชัดว่าเกณฑ์ชุดแรกไม่ได้คัดกรองคุณภาพ แต่คัดคนออกจากการเข้าร่วม เพราะแทบไม่มีเทศบาลใดผ่านได้ จึงเขียนใหม่ให้มุ่งผลลัพธ์ที่เมืองสังเกตได้เอง",
+                  zh: "管道和线路并不够：缺少社区认同与维护路径，项目随之停滞。约两年后也看清了，最初的标准筛的不是质量，而是把参与者筛掉了——几乎没有市镇能达标，于是被改写为城市可直接观察的结果。",
                 })}
               </p>
             </div>
@@ -237,9 +237,9 @@ export default function StoryPage({ locale, onNavigate }: Props) {
               <h3 className="story-tl-title">{translate(locale, { en: "The Anthropological Turn", th: "การหันเข้าสู่ด้านมานุษยวิทยา", zh: "人类学转向" })}</h3>
               <p className="story-tl-body">
                 {translate(locale, {
-                  en: "Shift to qualitative outcomes. Understanding urban psychology. Smart city as a tool for social equity and mental wellbeing.",
-                  th: "เปลี่ยนขั้วสู่ผลลัพธ์เชิงคุณภาพ เข้าใจจิตวิทยาเมือง เมืองอัจฉริยะคือเครื่องมือเพื่อความเท่าเทียมทางสังคมและสุขภาวะทางจิต",
-                  zh: "转向定性结果。理解城市心理学。智慧城市作为社会公平和心理健康的工具。",
+                  en: "Qualitative outcomes, urban psychology, equity and mental wellbeing — arrived at by fieldwork rather than by theory. Policy stopped being written first and started being written from what visiting the municipalities actually turned up.",
+                  th: "ผลลัพธ์เชิงคุณภาพ จิตวิทยาเมือง ความเท่าเทียมและสุขภาวะทางจิต ทั้งหมดมาจากการลงพื้นที่ ไม่ใช่จากทฤษฎี นโยบายเลิกถูกเขียนก่อน และเริ่มถูกเขียนจากสิ่งที่พบจริงเมื่อไปเยือนเทศบาล",
+                  zh: "定性结果、城市心理学、公平与心理健康——这些是通过实地工作得出的，而非源自理论。政策不再被预先写好，而是开始依据走访市镇后真正发现的东西来写。",
                 })}
               </p>
             </div>
@@ -256,6 +256,54 @@ export default function StoryPage({ locale, onNavigate }: Props) {
                 })}
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── THE METHOD — how the anthropological turn actually happened ───
+           The timeline above says policy shifted from central planning to
+           fieldwork. This section is the evidence for that claim: what was
+           tried first, why it failed, and the practice that replaced it. */}
+      <section className="section reveal visible">
+        <p className="eyebrow">{translate(locale, { en: "Method", th: "วิธีทำงาน", zh: "工作方法" })}</p>
+        <h2>{translate(locale, { en: "How the pain points were actually found", th: "ค้นหาปัญหาที่แท้จริงได้อย่างไร", zh: "真正的痛点是怎么找到的" })}</h2>
+        <p className="hero-strapline" style={{ maxWidth: "680px", marginBottom: "1.5rem" }}>
+          {translate(locale, {
+            en: "Top-down was tried first. It failed for a structural reason rather than a political one: a central agency cannot know what a specific municipality needs. The centre thinks in national policy — adopt 5G everywhere — while a small municipality may want wastewater treatment. Both are reasonable. They are not the same problem, and no master plan written in Bangkok can tell them apart.",
+            th: "แนวทางบนลงล่างถูกลองก่อน และล้มเหลวด้วยเหตุผลเชิงโครงสร้างมากกว่าเหตุผลทางการเมือง คือหน่วยงานส่วนกลางไม่มีทางรู้ว่าเทศบาลแห่งหนึ่งต้องการอะไร ส่วนกลางคิดเป็นนโยบายระดับชาติ เช่น ให้ใช้ 5G ทั่วประเทศ ขณะที่เทศบาลเล็ก ๆ อาจต้องการระบบบำบัดน้ำเสีย ทั้งสองอย่างสมเหตุสมผล แต่ไม่ใช่ปัญหาเดียวกัน และไม่มีแผนแม่บทที่เขียนในกรุงเทพฯ ฉบับใดแยกแยะสองสิ่งนี้ออกจากกันได้",
+            zh: "自上而下的做法先被尝试过。它的失败源于结构性原因而非政治原因：中央机构无法知道某个具体市镇需要什么。中央以国家政策思考——全国部署5G——而一个小市镇想要的可能是污水处理。两者都合理，但不是同一个问题，而任何在曼谷写就的总体规划都无法分辨二者。",
+          })}
+        </p>
+        <div className="story-shift-grid" style={{ borderTop: "2px solid var(--ink)", padding: "1rem 0" }}>
+          <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0", borderRight: "1px solid var(--5)" }}>
+            <h3 style={{ fontSize: ".85rem" }}>{translate(locale, { en: "1 · Go there", th: "1 · ไปให้ถึงพื้นที่", zh: "1 · 亲自到场" })}</h3>
+            <p style={{ fontSize: ".65rem" }}>
+              {translate(locale, {
+                en: "Thailand has roughly 7,000 local administrative organisations. Over eight years of the programme, about half have been visited in person — by train, by bus, staying a week, eating and living in the community. Pain points do not survive a questionnaire; they surface on the fourth day.",
+                th: "ไทยมีองค์กรปกครองส่วนท้องถิ่นราว 7,000 แห่ง ตลอดแปดปีของโครงการ ได้ลงพื้นที่จริงไปแล้วราวครึ่งหนึ่ง ทั้งโดยรถไฟ รถโดยสาร พักค้างเป็นสัปดาห์ กินและใช้ชีวิตอยู่กับชุมชน ปัญหาที่แท้จริงไม่ปรากฏในแบบสอบถาม แต่โผล่ขึ้นมาในวันที่สี่",
+                zh: "泰国约有7,000个地方行政组织。在项目的八年间，其中约一半已被实地走访——搭火车、坐巴士，一住就是一周，与社区同吃同住。真正的痛点在问卷里活不下来，它们出现在第四天。",
+              })}
+            </p>
+          </div>
+          <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0", borderRight: "1px solid var(--5)" }}>
+            <h3 style={{ fontSize: ".85rem" }}>{translate(locale, { en: "2 · Find the repeat", th: "2 · หาสิ่งที่ซ้ำ", zh: "2 · 找出重复项" })}</h3>
+            <p style={{ fontSize: ".65rem" }}>
+              {translate(locale, {
+                en: "One city's problem is a case. The same problem in forty cities is a policy. The work between the two is pattern-finding, and it is the step that a central master plan skips — which is why its solutions fit the plan rather than the place.",
+                th: "ปัญหาของเมืองเดียวคือกรณีศึกษา ปัญหาเดียวกันในสี่สิบเมืองคือนโยบาย งานที่อยู่ตรงกลางคือการหาแบบแผนร่วม และเป็นขั้นที่แผนแม่บทจากส่วนกลางข้ามไป จึงได้คำตอบที่เข้ากับแผน มากกว่าเข้ากับพื้นที่",
+                zh: "一座城市的问题是个案。四十座城市的同一个问题才是政策。两者之间的工作是找出共性，而这正是中央总体规划跳过的一步——所以它的方案贴合的是规划，而不是地方。",
+              })}
+            </p>
+          </div>
+          <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0" }}>
+            <h3 style={{ fontSize: ".85rem" }}>{translate(locale, { en: "3 · Then write the policy", th: "3 · แล้วจึงเขียนนโยบาย", zh: "3 · 然后才写政策" })}</h3>
+            <p style={{ fontSize: ".65rem" }}>
+              {translate(locale, {
+                en: "Policy is still written top-down — it has to be. The change is sequencing: it is written after the evidence rather than before it. That single reordering is what separates the current programme from the one that launched in 2018.",
+                th: "นโยบายยังเขียนจากบนลงล่างอยู่ และต้องเป็นเช่นนั้น สิ่งที่เปลี่ยนคือลำดับ คือเขียนหลังมีหลักฐาน ไม่ใช่ก่อน การสลับลำดับเพียงข้อเดียวนี้คือสิ่งที่แยกโครงการในปัจจุบันออกจากโครงการที่เริ่มต้นในปี 2561",
+                zh: "政策依然自上而下地制定——这是必然的。改变的是次序：它写在证据之后，而不是之前。仅仅这一处顺序的调换，就把今天的项目与2018年启动的那个区分开来。",
+              })}
+            </p>
           </div>
         </div>
       </section>
@@ -299,13 +347,32 @@ export default function StoryPage({ locale, onNavigate }: Props) {
             </div>
           ))}
         </div>
-        <p className="story-indicator-note">
-          {translate(locale, {
-            en: "Source: 7 Smart City Indicators, Smart City Thailand Office (depa)",
-            th: "ที่มา: 7 ตัวชี้วัดเมืองอัจฉริยะ, สำนักงานเมืองอัจฉริยะประเทศไทย (depa)",
-            zh: "来源：7项智慧城市指标，泰国智慧城市办公室（depa）",
-          })}
-        </p>
+        {/* Two registers exist and readers otherwise find them contradictory:
+            the formal certification indicators above are demanding, while the
+            working benchmarks below are deliberately plain. Both are real. */}
+        <div className="story-indicator-note" style={{ borderTop: "1px solid var(--5)", paddingTop: "1rem", marginTop: "1.25rem" }}>
+          <p style={{ font: "400 var(--text-body)/1.7 var(--font)", color: "var(--4)", maxWidth: "680px", marginBottom: ".75rem" }}>
+            {translate(locale, {
+              en: "Read alongside these a second, plainer set. The certification indicators above are the formal bar. In day-to-day assessment the programme also uses working benchmarks chosen so a mayor can verify them without hiring a consultant: average local income above roughly 20,000 baht a month, a measurable annual cut in emissions on the order of one percent within the designated area, residents getting home meaningfully faster — around an hour is the working figure — and fewer road accidents.",
+              th: "ควรอ่านคู่กับชุดที่สอง ที่เรียบง่ายกว่า ตัวชี้วัดการรับรองด้านบนคือเกณฑ์ทางการ แต่ในการประเมินประจำวัน โครงการยังใช้เกณฑ์ใช้งานจริงที่เลือกให้นายกเทศมนตรีตรวจสอบเองได้โดยไม่ต้องจ้างที่ปรึกษา ได้แก่ รายได้เฉลี่ยในพื้นที่สูงกว่าราว 20,000 บาทต่อเดือน การลดการปล่อยมลพิษที่วัดได้ราวร้อยละหนึ่งต่อปีในพื้นที่ที่กำหนด ประชาชนกลับถึงบ้านเร็วขึ้นอย่างมีนัยสำคัญ โดยราวหนึ่งชั่วโมงคือตัวเลขที่ใช้จริง และอุบัติเหตุบนถนนที่ลดลง",
+              zh: "请与第二套更朴素的标准并读。上方的认证指标是正式门槛。而在日常评估中，项目还使用一组便于操作的基准，其选取标准是让市长无需聘请顾问也能自行核验：本地平均收入高于约每月20,000泰铢；指定区域内每年可测量的减排约百分之一；居民回家时间显著缩短——约一小时是实际使用的数字；以及道路事故减少。",
+            })}
+          </p>
+          <p style={{ font: "400 var(--text-body)/1.7 var(--font)", color: "var(--4)", maxWidth: "680px", marginBottom: ".75rem" }}>
+            {translate(locale, {
+              en: "The gap between the two registers is deliberate, and it has a history. The first criteria were drafted to a high engineering standard and proved unreachable for the municipalities they were aimed at — about two years in, the bar was filtering out participation rather than filtering for quality. The plainer benchmarks were written to fix that. A target nobody can measure is not a target.",
+              th: "ช่องว่างระหว่างสองชุดนี้เป็นความตั้งใจ และมีที่มา เกณฑ์ชุดแรกถูกร่างตามมาตรฐานวิศวกรรมระดับสูง และพิสูจน์แล้วว่าเกินเอื้อมสำหรับเทศบาลที่เป็นกลุ่มเป้าหมาย ผ่านไปราวสองปีก็พบว่าเกณฑ์นั้นคัดคนออกจากการเข้าร่วม มากกว่าจะคัดกรองคุณภาพ เกณฑ์ที่เรียบง่ายกว่าจึงถูกเขียนขึ้นเพื่อแก้ปัญหานั้น เป้าหมายที่ไม่มีใครวัดได้ ไม่ถือเป็นเป้าหมาย",
+              zh: "两套标准之间的差距是有意为之，且事出有因。第一套标准按高工程标准起草，事实证明对其面向的市镇而言遥不可及——约两年后可以看到，这道门槛筛掉的是参与者，而不是在筛质量。更朴素的基准正是为解决这一点而写的。无人能测量的目标就不是目标。",
+            })}
+          </p>
+          <p>
+            {translate(locale, {
+              en: "Source: 7 Smart City Indicators, Smart City Thailand Office (depa)",
+              th: "ที่มา: 7 ตัวชี้วัดเมืองอัจฉริยะ, สำนักงานเมืองอัจฉริยะประเทศไทย (depa)",
+              zh: "来源：7项智慧城市指标，泰国智慧城市办公室（depa）",
+            })}
+          </p>
+        </div>
       </section>
 
       {/* ─── CTA ─── */}

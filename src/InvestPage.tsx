@@ -570,6 +570,38 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
+      {/* ═══════════ WHO SIGNS — the approval path most decks omit ═══════════ */}
+      <section className="section reveal visible" style={{ paddingTop: 0 }}>
+        <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
+          <div className="invest-ccdr-inner">
+            <h2 style={{ fontSize: "var(--text-3xl)", marginBottom: "1rem" }}>
+              {translate(locale, { en: "Who Signs", th: "ใครเป็นคนเซ็น", zh: "谁来签字" })}
+            </h2>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+              {translate(locale, {
+                en: "Every Thai province has two leaders, and confusing them is the most common and most expensive mistake a foreign investor makes here. The governor is a senior civil servant appointed by the Ministry of Interior. The Provincial Administrative Organisation (PAO) mayor is elected, and under decentralisation law the elected office is the one holding the budget. The governor holds the process instead: a project generally needs the governor's signature, and the governor can hold it, return it, or send it to a committee before it moves.",
+                th: "ทุกจังหวัดของไทยมีผู้นำสองคน และการสับสนระหว่างสองตำแหน่งนี้คือความผิดพลาดที่พบบ่อยและแพงที่สุดของนักลงทุนต่างชาติ ผู้ว่าราชการจังหวัดคือข้าราชการระดับสูงที่แต่งตั้งโดยกระทรวงมหาดไทย ส่วนนายกองค์การบริหารส่วนจังหวัด (อบจ.) มาจากการเลือกตั้ง และตามกฎหมายกระจายอำนาจ ตำแหน่งที่มาจากการเลือกตั้งคือผู้ถืองบประมาณ ขณะที่ผู้ว่าฯ ถือกระบวนการแทน โครงการโดยทั่วไปต้องผ่านลายเซ็นผู้ว่าฯ ซึ่งสามารถชะลอ ตีกลับ หรือส่งให้คณะกรรมการพิจารณาก่อนเดินหน้าต่อได้",
+                zh: "泰国每个府都有两位主官，混淆二者是外国投资者在此犯下的最常见、也最昂贵的错误。府尹是由内政部委任的高级公务员。府行政组织（PAO）主席则由选举产生，而依据权力下放法，民选职位才是掌握预算的一方。府尹掌握的是流程：项目通常需要府尹签字，府尹可以搁置、退回，或在放行前先交由委员会审议。",
+              })}
+            </p>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+              {translate(locale, {
+                en: "The practical consequence is simple. Win over the mayor and you have the money but not the permission. Win over the governor and you have the permission but not the money. Both conversations are required, and they are different conversations: the elected office answers to residents and responds to visible local benefit, while the appointed office answers to process and responds to a proposal that will survive scrutiny. Bangkok is the exception to all of it — it is not one of the 76 provinces and its governor is elected.",
+                th: "ผลในทางปฏิบัติเรียบง่าย ถ้าคุยกับนายก อบจ. สำเร็จ คุณได้เงินแต่ยังไม่ได้อนุญาต ถ้าคุยกับผู้ว่าฯ สำเร็จ คุณได้อนุญาตแต่ไม่มีเงิน ต้องคุยทั้งสองฝ่าย และเป็นการคุยคนละแบบ ตำแหน่งที่มาจากการเลือกตั้งตอบต่อประชาชนและตอบรับประโยชน์ที่เห็นได้ในพื้นที่ ส่วนตำแหน่งที่มาจากการแต่งตั้งตอบต่อกระบวนการ และตอบรับข้อเสนอที่ทนต่อการตรวจสอบได้ กรุงเทพมหานครเป็นข้อยกเว้นทั้งหมดนี้ เพราะไม่ได้เป็นหนึ่งใน 76 จังหวัด และผู้ว่าฯ กทม. มาจากการเลือกตั้ง",
+                zh: "实际后果很简单。说服了 PAO 主席，你拿到了钱却没有许可；说服了府尹，你拿到了许可却没有钱。两场对话都必须进行，而且是两种不同的对话：民选职位对居民负责，回应的是看得见的本地收益；委任职位对流程负责，回应的是经得起审查的提案。曼谷是这一切的例外——它不属于76个府，其府尹由选举产生。",
+              })}
+            </p>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--text)", fontWeight: 600, marginTop: "1.5rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem", lineHeight: 1.7 }}>
+              {translate(locale, {
+                en: "Then price the calendar. A request entering the central budget cycle is typically funded around two years later, and built in roughly two more. For a city that floods every year, that is four to five more flood seasons before the protection exists — and residents, manufacturers and investors all move during them. The unpriced line in every slow procurement is who left while it was pending.",
+                th: "จากนั้นให้ตีราคาปฏิทินด้วย คำของบที่เข้าสู่วงจรงบประมาณส่วนกลางมักได้รับจัดสรรราวสองปีให้หลัง และก่อสร้างอีกราวสองปี สำหรับเมืองที่น้ำท่วมทุกปี นั่นคือฤดูน้ำท่วมอีกสี่ถึงห้าครั้งก่อนที่การป้องกันจะมีอยู่จริง และในระหว่างนั้นทั้งประชาชน โรงงาน และนักลงทุนต่างย้ายออก ต้นทุนที่ไม่เคยถูกตีราคาในทุกการจัดซื้อที่ล่าช้า คือคนที่จากไปในระหว่างรอ",
+                zh: "然后，把日历也计入成本。进入中央预算周期的申请通常约两年后获批，再花约两年建成。对于年年被淹的城市，这意味着在防护到位之前还要再经历四到五个洪水季——而居民、制造商和投资者都会在这期间离开。每一次缓慢采购中未被计价的一项，是等待期间流失的人。",
+              })}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════ WORLD BANK CCDR 2025 URGENCY PANEL ═══════════ */}
       <div className="invest-ccdr-panel">
         <div className="invest-ccdr-inner">
