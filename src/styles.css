@@ -11103,3 +11103,243 @@ body.canvas-print-mode {
   .needs-ladder { padding: 1rem .9rem 1.25rem; }
   .needs-ladder-rung-signals { gap: .25rem .5rem; }
 }
+
+/* ═══ INVEST CITY LENS — 8 cities, ASEAN toolkit cross-reference ═══ */
+.invest-city-lens { margin-top: 2.5rem; }
+.invest-city-lens .section-intro { margin-bottom: 1.5rem; }
+
+/* ASEAN toolkit reference box — dark-on-light, hairline border, editorial */
+.asean-toolkit-box {
+  border: 1px solid var(--4);
+  border-left: 4px solid var(--teal);
+  background: var(--surface);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.asean-toolkit-box-bottom { margin-top: 2.5rem; }
+.asean-toolkit-eyebrow {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .14em;
+  color: var(--teal);
+  text-transform: uppercase;
+  margin: 0 0 .5rem;
+}
+.asean-toolkit-body {
+  font: 400 var(--text-body)/1.6 var(--font);
+  color: var(--3);
+  margin: 0 0 .75rem;
+}
+.asean-toolkit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1rem;
+  margin-top: .5rem;
+}
+.asean-toolkit-link {
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: .06em;
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-transform: uppercase;
+}
+
+/* Comparison table — hairline grid, mono caps headers, dark row hover */
+.city-lens-table-wrap { margin: 1.5rem 0 2.5rem; overflow-x: auto; }
+.city-lens-table-h {
+  font: 700 var(--text-body) var(--font-heading);
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin: 0 0 .75rem;
+}
+.city-lens-table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 400 var(--text-micro)/1.4 var(--font);
+  color: var(--ink);
+  border: 1px solid var(--4);
+  background: var(--bg);
+}
+.city-lens-table thead th {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: .55rem .6rem;
+  color: var(--3);
+  border-bottom: 2px solid var(--ink);
+  background: var(--surface);
+  white-space: nowrap;
+}
+.city-lens-table tbody tr {
+  border-bottom: 1px solid var(--5);
+  cursor: pointer;
+  transition: background .12s;
+}
+.city-lens-table tbody tr:hover { background: var(--surface); }
+.city-lens-table tbody tr:last-child { border-bottom: 1px solid var(--4); }
+.city-lens-table td {
+  padding: .6rem .6rem;
+  vertical-align: top;
+}
+.city-lens-table .cell-city {
+  font: 700 var(--text-micro) var(--font);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.city-lens-table .cell-ascn { text-align: center; font-family: var(--mono); }
+.city-lens-table .cell-tool { font: 600 var(--text-micro) var(--font); }
+.city-lens-table .cell-risk { color: var(--3); max-width: 28ch; }
+
+/* Tags */
+.tag-eec, .tag-noneec, .tag-ascn {
+  display: inline-block;
+  font: 700 .65rem var(--mono);
+  letter-spacing: .1em;
+  padding: .12rem .4rem;
+  text-transform: uppercase;
+}
+.tag-eec {
+  background: var(--ink);
+  color: var(--bg);
+}
+.tag-noneec {
+  background: transparent;
+  color: var(--3);
+  border: 1px solid var(--4);
+}
+.tag-ascn {
+  background: var(--teal-glow, rgba(20, 184, 166, .12));
+  color: var(--teal);
+  border: 1px solid var(--teal);
+}
+
+/* 8 city cards — 2-column grid on desktop, 1-column on mobile */
+.city-lens-cards-h {
+  font: 700 var(--text-body) var(--font-heading);
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin: 2rem 0 1rem;
+}
+.city-lens-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.city-lens-card {
+  border: 1px solid var(--4);
+  background: var(--bg);
+  padding: 1.25rem 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+.city-lens-card-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: .5rem;
+  border-bottom: 1px solid var(--5);
+  padding-bottom: .55rem;
+}
+.city-lens-card h4 {
+  font: 700 1.05rem var(--font-heading);
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin: 0;
+}
+.city-lens-card-tags { display: flex; gap: .3rem; flex-shrink: 0; }
+.city-lens-one-liner {
+  font: 400 var(--text-micro)/1.5 var(--font);
+  color: var(--3);
+  margin: 0;
+}
+.city-lens-tools { display: flex; gap: .5rem; flex-wrap: wrap; }
+.city-lens-tool {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1px solid var(--4);
+  padding: .35rem .45rem;
+}
+.city-lens-tool.primary { border-color: var(--ink); }
+.city-lens-tool-l {
+  font: 600 .6rem var(--mono);
+  letter-spacing: .14em;
+  color: var(--3);
+  text-transform: uppercase;
+}
+.city-lens-tool-v {
+  font: 600 .72rem var(--font);
+  color: var(--ink);
+  line-height: 1.25;
+}
+.city-lens-best, .city-lens-risk, .city-lens-climate, .city-lens-case {
+  border-top: 1px solid var(--5);
+  padding-top: .5rem;
+}
+.city-lens-kicker {
+  display: block;
+  font: 700 .62rem var(--mono);
+  letter-spacing: .12em;
+  color: var(--3);
+  text-transform: uppercase;
+  margin-bottom: .25rem;
+}
+.city-lens-best p, .city-lens-risk p, .city-lens-climate p, .city-lens-case p {
+  font: 400 var(--text-micro)/1.5 var(--font);
+  color: var(--ink);
+  margin: 0;
+}
+.city-lens-risk p { color: var(--3); }
+.city-lens-climate p {
+  color: var(--2);
+  border-left: 2px solid var(--teal);
+  padding-left: .5rem;
+}
+.city-lens-case p { color: var(--ink); }
+.city-lens-case-flag { font-family: var(--mono); margin-right: 2px; }
+.city-lens-case-meta {
+  margin-top: .2rem !important;
+  font: 600 .68rem var(--mono) !important;
+  letter-spacing: .04em;
+  color: var(--3) !important;
+}
+.city-lens-case-meta a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.city-lens-case-line {
+  color: var(--3) !important;
+  font-style: italic;
+  margin-top: .2rem !important;
+}
+.city-lens-deep {
+  align-self: flex-start;
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  margin-top: .25rem;
+}
+
+@media (max-width: 720px) {
+  .city-lens-grid { grid-template-columns: 1fr; }
+  .city-lens-table { font-size: .7rem; }
+  .city-lens-table thead th, .city-lens-table td { padding: .45rem .4rem; }
+  .city-lens-table .cell-risk { max-width: none; }
+}
+@media (max-width: 480px) {
+  .asean-toolkit-box { padding: 1rem .85rem; }
+  .asean-toolkit-actions { flex-direction: column; gap: .25rem; }
+  .city-lens-card { padding: 1rem .9rem .85rem; }
+  .city-lens-tools { flex-direction: column; }
+}
