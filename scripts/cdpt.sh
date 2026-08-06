@@ -82,4 +82,23 @@ for path in "/" "/rankings" "/methodology" "/city/phuket/" "/sitemap.xml" "/data
   ok "$path → 200"
 done
 
+# ── Every JS chunk must serve AS JAVASCRIPT ──────────────────────────────────
+# The 200-check above cannot catch a missing asset. _redirects rewrites ANY
+# unmatched path to /index.html with status 200, so a lazy chunk that failed to
+# propagate still answers 200 — while the browser refuses it for MIME mismatch,
+# the dynamic import throws, and React never mounts. That is a fully blank site
+# passing a green gate. It has happened. Assert the content-type instead.
+bold "Test — every JS chunk serves as JavaScript (not the SPA fallback)"
+chunk_fail=0
+for f in dist/static/*.js; do
+  name="$(basename "$f")"
+  ctype="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/static/$name")"
+  case "$ctype" in
+    *javascript*) ;;
+    *) printf "  \033[31m✗\033[0m %s → %s\n" "$name" "${ctype:-<none>}"; chunk_fail=$((chunk_fail+1)) ;;
+  esac
+done
+[[ "$chunk_fail" = 0 ]] || die "$chunk_fail chunk(s) are not being served as JavaScript — the site will render blank. Re-run the deploy, then re-check."
+ok "all $(ls dist/static/*.js | wc -l | tr -d ' ') JS chunks serve with a JavaScript content-type"
+
 printf "\n\033[1;32m✓ CDPT complete — %s is live and verified.\033[0m\n" "$DOMAIN"
