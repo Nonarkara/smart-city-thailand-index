@@ -34,6 +34,9 @@ const CATEGORY_LABELS: Record<string, { en: string; th: string; zh: string }> = 
   "Design Thinking": { en: "Design Thinking Approach", th: "แนวทาง Design Thinking", zh: "设计思维方法" },
   "Smart or Not Smart": { en: "Smart or Not Smart?", th: "อัจฉริยะหรือไม่อัจฉริยะ?", zh: "智慧还是不智慧？" },
   "Official Measurement Standards": { en: "Official Measurement Standards", th: "มาตรฐานการวัดผลทางการ", zh: "官方测量标准" },
+  "How Thailand Works": { en: "How Thailand Works", th: "กลไกรัฐไทยทำงานอย่างไร", zh: "泰国体制如何运作" },
+  "The A-B-C-D Barriers": { en: "The A-B-C-D Barriers", th: "อุปสรรค A-B-C-D", zh: "A-B-C-D 四大障碍" },
+  "For Foreign Partners": { en: "For Foreign Partners", th: "สำหรับพันธมิตรต่างประเทศ", zh: "致外国合作伙伴" },
 };
 
 function localiseCategory(category: string, locale: Locale): string {
@@ -119,7 +122,7 @@ const FAQS: FAQ[] = [
     a: {
       en: "As of January 2026, there are 37 certified smart cities across 4 batches, plus dozens more in 'promotion' status. The national target is 105 smart cities by 2027, under depa's Smart City Master Plan 1 (2024-2027). SCITI tracks 118 cities total — all certified, promotion-phase, and registered candidates — because plans that never launch also deserve measurement.",
       th: "ณ เดือนมกราคม 2569 มีเมืองอัจฉริยะรับรองแล้ว 37 เมืองใน 4 รุ่น พร้อมอีกหลายสิบเมืองในสถานะ 'ส่งเสริม' เป้าหมายของประเทศคือ 105 เมืองภายในปี 2570 ตามแผนแม่บทเมืองอัจฉริยะฉบับที่ 1 (2567-2570) ของ depa SCITI ติดตาม 118 เมืองทั้งหมด เพราะแม้แต่แผนที่ไม่เคยเริ่มก็สมควรถูกวัด",
-      zh: "截至2026年1月，共有37个经过4批认证的智慧城市，还有数十个处于\"推广\"阶段。根据depa智慧城市总体规划第1期（2024-2027），国家目标是到2027年建成105座智慧城市。SCITI追踪118个城市——包括已认证、推广阶段和注册候选城市——因为从未启动的计划也值得被衡量。",
+      zh: "截至2026年1月，共有37个经过4批认证的智慧城市，还有数十个处于「推广」阶段。根据depa智慧城市总体规划第1期（2024-2027），国家目标是到2027年建成105座智慧城市。SCITI追踪118个城市——包括已认证、推广阶段和注册候选城市——因为从未启动的计划也值得被衡量。",
     },
   },
   // ─── The 7 Smarts ───
@@ -708,6 +711,309 @@ const FAQS: FAQ[] = [
       en: "Smart People addresses human capital development across six areas. Digital literacy programs that reach all population segments, not just youth. Lifelong learning infrastructure that includes formal institutions, community learning centers, and online platforms. STEM labs in schools and community spaces to build applied science and technology skills. Creative hubs that bring together makers, designers, and entrepreneurs for cross-disciplinary work. Diversity and inclusion initiatives that ensure smart city benefits are accessible regardless of gender, income, age, or disability. SME upskilling programs that help small and medium enterprises adopt digital tools and operate in a cashless, data-driven economy. The ASEAN Smart City Primer also references YSEALI-type young leader programs as models for regional human capital development. Smart People is evaluated on reach and measurable improvement, not just programme existence.",
       th: "Smart People ครอบคลุมการพัฒนาทุนมนุษย์ใน 6 ด้าน โปรแกรมความรู้ดิจิทัลที่ครอบคลุมทุกกลุ่มประชากร โครงสร้างพื้นฐานการเรียนรู้ตลอดชีวิต ห้องปฏิบัติการ STEM ในโรงเรียนและชุมชน Creative Hub ที่รวบรวม makers นักออกแบบ และผู้ประกอบการ โครงการความหลากหลายและการรวมเข้า เพื่อให้ประโยชน์เมืองอัจฉริยะเข้าถึงได้โดยไม่คำนึงถึงเพศ รายได้ อายุ หรือความพิการ โปรแกรมพัฒนาทักษะ SME Smart City Primer ของอาเซียนยังอ้างถึงโปรแกรม YSEALI เป็นแบบอย่างการพัฒนาทุนมนุษย์ระดับภูมิภาค Smart People ประเมินจากการเข้าถึงและการปรับปรุงที่วัดได้ ไม่ใช่แค่การมีโปรแกรม",
       zh: "智慧人才涵盖六个领域的人力资本发展。覆盖所有人群（而非仅限青年）的数字素养项目。包含正规机构、社区学习中心和在线平台的终身学习基础设施。学校和社区空间的STEM实验室，以培养应用科学和技术技能。汇聚创客、设计师和企业家进行跨学科工作的创意中心。确保智慧城市福利无论性别、收入、年龄或残障均可获取的多元包容举措。帮助中小企业采用数字工具并在无现金、数据驱动经济中运营的技能提升计划。东盟智慧城市入门指南还将YSEALI类型的青年领袖项目作为区域人力资本发展的参考模式。智慧人才的评估基于覆盖范围和可量化的改善，而非仅项目的存在。",
+    },
+  },
+
+  // ─── How Thailand Works ───
+  // Institutional mechanics that are rarely written down in English. These are
+  // the questions foreign delegations, vendors and researchers ask first, and
+  // the answers that are hardest to find in any published document.
+  {
+    category: "How Thailand Works",
+    q: {
+      en: "Who actually runs a Thai province — the governor or the mayor?",
+      th: "ใครบริหารจังหวัดกันแน่ — ผู้ว่าราชการจังหวัด หรือ นายก อบจ.?",
+      zh: "泰国的府究竟由谁管理——府尹还是市长？",
+    },
+    a: {
+      en: "Both, and this is the single most misread feature of Thai local government. Every province has a governor appointed by the Ministry of Interior, and separately a Provincial Administrative Organisation (PAO) mayor elected by residents. The elected PAO mayor holds the budget — decentralisation law put the money with elected officials. The appointed governor holds the process: a project generally needs the governor's signature, and the governor can hold it, send it back, or route it to a committee first. So a foreign partner who has convinced the mayor has secured the funding but not yet the approval, and a partner who has convinced only the governor has approval but no money. Bangkok is the exception to all of this: it is not one of the 76 provinces and its governor is elected, not appointed.",
+      th: "ทั้งคู่ และนี่คือจุดที่คนเข้าใจผิดมากที่สุดเกี่ยวกับการปกครองท้องถิ่นไทย ทุกจังหวัดมีผู้ว่าราชการจังหวัดที่แต่งตั้งโดยกระทรวงมหาดไทย และมีนายกองค์การบริหารส่วนจังหวัด (อบจ.) ที่มาจากการเลือกตั้งแยกอีกตำแหน่ง นายก อบจ. ที่มาจากการเลือกตั้งคือผู้ถืองบประมาณ ตามเจตนารมณ์ของกฎหมายกระจายอำนาจที่ให้เงินอยู่ในมือผู้ที่ประชาชนเลือก ส่วนผู้ว่าฯ ถือกระบวนการ โครงการโดยทั่วไปต้องผ่านลายเซ็นผู้ว่าฯ ซึ่งสามารถชะลอ ตีกลับ หรือส่งให้คณะกรรมการพิจารณาก่อนได้ ดังนั้นพันธมิตรต่างชาติที่คุยกับนายกฯ สำเร็จ ถือว่าได้งบแต่ยังไม่ได้อนุมัติ ส่วนผู้ที่คุยกับผู้ว่าฯ อย่างเดียว ได้อนุมัติแต่ไม่มีงบ กรุงเทพมหานครเป็นข้อยกเว้น เพราะไม่ได้เป็นหนึ่งใน 76 จังหวัด และผู้ว่าฯ กทม. มาจากการเลือกตั้ง",
+      zh: "两者都管，而这正是泰国地方治理中最常被误读的一点。每个府都有一位由内政部委任的府尹，另有一位由居民选举产生的府行政组织（PAO）主席。民选的 PAO 主席掌握预算——权力下放法将资金交到民选官员手中。委任的府尹掌握流程：项目通常需要府尹签字，而府尹可以搁置、退回或先转交委员会审议。因此，说服了市长的外国伙伴拿到了资金却尚未拿到批准；只说服了府尹的伙伴拿到了批准却没有资金。曼谷是例外：它不属于76个府，其府尹由选举产生而非委任。",
+    },
+  },
+  {
+    category: "How Thailand Works",
+    q: {
+      en: "Do smart city projects start at the top or the bottom?",
+      th: "โครงการเมืองอัจฉริยะเริ่มจากบนลงล่าง หรือล่างขึ้นบน?",
+      zh: "智慧城市项目是自上而下还是自下而上启动的？",
+    },
+    a: {
+      en: "Bottom, now — because top-down was tried first and did not work. The original approach was a central master plan that cities were invited to join. It failed for a structural reason: Bangkok cannot know what a specific municipality needs. The centre tends to think in national policy (adopt 5G everywhere), while a small municipality may want wastewater treatment. Both are reasonable; they are not the same problem. The method that replaced it is to start in the city, collect the actual pain points, look for patterns across many cities, and only then write policy that matches what was found. Policy still gets written top-down — but after the evidence, not before it.",
+      th: "เริ่มจากล่างขึ้นบนในปัจจุบัน เพราะได้ทดลองแบบบนลงล่างมาก่อนแล้วไม่ได้ผล แนวทางเดิมคือแผนแม่บทจากส่วนกลางแล้วเชิญเมืองต่าง ๆ เข้าร่วม ซึ่งล้มเหลวด้วยเหตุผลเชิงโครงสร้าง คือส่วนกลางไม่มีทางรู้ว่าเทศบาลแต่ละแห่งต้องการอะไรจริง ๆ ส่วนกลางมักคิดเป็นนโยบายระดับชาติ เช่น ให้ใช้ 5G ทั่วประเทศ ขณะที่เทศบาลเล็ก ๆ อาจต้องการระบบบำบัดน้ำเสีย ทั้งสองอย่างสมเหตุสมผล แต่ไม่ใช่ปัญหาเดียวกัน วิธีที่มาแทนคือเริ่มที่เมือง เก็บปัญหาจริง หาแบบแผนร่วมจากหลายเมือง แล้วจึงเขียนนโยบายให้ตรงกับสิ่งที่พบ นโยบายยังเขียนจากบนลงล่างอยู่ แต่เขียนหลังมีหลักฐาน ไม่ใช่ก่อน",
+      zh: "现在是自下而上——因为自上而下已经试过且行不通。最初的做法是由中央制定总体规划，再邀请城市加入。它因结构性原因而失败：曼谷无法知道某个具体市镇需要什么。中央倾向于以国家政策思考（全国部署5G），而一个小市镇可能想要的是污水处理。两者都合理，但不是同一个问题。取而代之的方法是从城市入手，收集真实痛点，在众多城市中寻找共性，然后才据此制定政策。政策依然自上而下地制定——但在证据之后，而非之前。",
+    },
+  },
+  {
+    category: "How Thailand Works",
+    q: {
+      en: "Why does depa not have data on every project it supports?",
+      th: "ทำไม depa จึงไม่มีข้อมูลของทุกโครงการที่สนับสนุน?",
+      zh: "为什么 depa 没有其支持的每个项目的数据？",
+    },
+    a: {
+      en: "Arithmetic, and incentives. depa is an agency of roughly 200 people. Thailand has around 7,000 local administrative organisations and some 70,000 villages. No agency of that size can monitor that surface directly. The second reason is more useful to understand: cities self-report, and self-reporting is biased toward good news. Requests for the underlying data are often agreed to and then not fulfilled — not out of bad faith, but because a municipality's priority is delivering the service, not evidencing it to a national agency. This is precisely the gap SCITI exists to close: an index built from independently checkable sources does not depend on a city volunteering its own numbers.",
+      th: "เป็นเรื่องเลขคณิตและแรงจูงใจ depa มีบุคลากรราว 200 คน ขณะที่ไทยมีองค์กรปกครองส่วนท้องถิ่นราว 7,000 แห่ง และหมู่บ้านราว 70,000 แห่ง หน่วยงานขนาดนั้นไม่มีทางติดตามพื้นที่ขนาดนี้ได้โดยตรง เหตุผลที่สองสำคัญกว่า คือเมืองเป็นผู้รายงานตนเอง และการรายงานตนเองย่อมเอนไปทางข่าวดี เมื่อขอข้อมูลดิบมักได้รับคำตอบว่าจะส่งให้ แล้วไม่ได้รับ ไม่ใช่เพราะเจตนาไม่ดี แต่เพราะลำดับความสำคัญของเทศบาลคือการให้บริการ ไม่ใช่การพิสูจน์ผลต่อหน่วยงานระดับชาติ นี่คือช่องว่างที่ SCITI ตั้งขึ้นมาเพื่อปิด ดัชนีที่สร้างจากแหล่งข้อมูลที่ตรวจสอบได้อิสระ ไม่ต้องรอให้เมืองสมัครใจส่งตัวเลขของตนเอง",
+      zh: "算术问题，也是激励问题。depa 约有200名员工，而泰国有约7,000个地方行政组织和约70,000个村庄。这种规模的机构无法直接监测如此广阔的面。第二个原因更值得理解：城市自我报告，而自我报告天然偏向好消息。索取原始数据时往往得到应允，随后却不了了之——并非出于恶意，而是因为市镇的优先事项是提供服务，而非向国家机构举证。这正是 SCITI 要弥合的缺口：一个建立在可独立核查来源之上的指数，不依赖城市自愿提交自己的数字。",
+    },
+  },
+
+  // ─── The A-B-C-D Barriers ───
+  {
+    category: "The A-B-C-D Barriers",
+    q: {
+      en: "What actually stops a Thai smart city project from working?",
+      th: "อะไรคือสิ่งที่ทำให้โครงการเมืองอัจฉริยะไทยไปไม่ถึงฝั่ง?",
+      zh: "究竟是什么阻碍了泰国智慧城市项目的落地？",
+    },
+    a: {
+      en: "Four things, in a usable order: Affordability, Bureaucracy, Capacity, Design. Affordability is that new technology is expensive before economies of scale arrive. Bureaucracy is the approval chain that can consume most of the effort of the people trying to build something. Capacity is that technology without trained users is not neutral — it is actively destructive. Design is that governments tend to instruct citizens to use a system rather than give them a reason to want to. Money is the barrier everyone names first; in practice Capacity and Design kill more projects, because they fail after launch, when the budget has already been spent.",
+      th: "สี่อย่าง เรียงตามลำดับที่ใช้งานได้จริง คือ Affordability (ราคา) Bureaucracy (ระบบราชการ) Capacity (ขีดความสามารถ) และ Design (การออกแบบ) ราคา คือเทคโนโลยีใหม่ย่อมแพงก่อนที่การประหยัดต่อขนาดจะมาถึง ระบบราชการ คือสายอนุมัติที่กินเวลาส่วนใหญ่ของคนที่ตั้งใจจะสร้างของจริง ขีดความสามารถ คือเทคโนโลยีที่ไม่มีคนใช้เป็นนั้นไม่ได้เป็นกลาง แต่ทำลายเสียด้วยซ้ำ การออกแบบ คือรัฐมักสั่งให้ประชาชนใช้ระบบ แทนที่จะให้เหตุผลว่าทำไมเขาถึงอยากใช้ เงินคืออุปสรรคที่ทุกคนพูดถึงก่อน แต่ในทางปฏิบัติ ขีดความสามารถและการออกแบบทำให้โครงการตายมากกว่า เพราะมันพังหลังเปิดใช้ ตอนที่งบประมาณถูกใช้ไปหมดแล้ว",
+      zh: "四件事，按可操作的顺序排列：可负担性、官僚流程、能力、设计。可负担性指新技术在规模效应到来之前必然昂贵。官僚流程指审批链条会消耗掉真正想做事的人大部分精力。能力指没有受训使用者的技术并非中性——它是具破坏性的。设计指政府倾向于命令市民使用系统，而非给他们一个想用的理由。资金是所有人最先提到的障碍；但实践中，能力与设计扼杀的项目更多，因为它们在上线之后才失效——那时预算已经花完了。",
+    },
+  },
+  {
+    category: "The A-B-C-D Barriers",
+    q: {
+      en: "Affordability: why do cities buy the wrong size of system?",
+      th: "ราคา: ทำไมเมืองจึงซื้อระบบผิดขนาด?",
+      zh: "可负担性：为什么城市会买错规模的系统？",
+    },
+    a: {
+      en: "Because procurement happens before understanding does. A municipality that does not yet know its own operating capacity will specify against a vendor's catalogue rather than against its own need. Oversized CCTV procurements are the recurring example — systems specified several times larger than the city could staff or use, at several times the necessary cost. The failure is not the price of the technology. It is buying capability the organisation has no capacity to operate, which converts a budget line into a maintenance liability.",
+      th: "เพราะการจัดซื้อเกิดขึ้นก่อนความเข้าใจ เทศบาลที่ยังไม่รู้ขีดความสามารถในการปฏิบัติงานของตนเอง จะกำหนดสเปกตามแคตตาล็อกของผู้ขาย แทนที่จะกำหนดตามความต้องการจริง การจัดซื้อกล้องวงจรปิดเกินขนาดคือตัวอย่างที่พบซ้ำ ระบบถูกกำหนดใหญ่กว่าที่เมืองมีคนดูแลหรือใช้งานได้หลายเท่า ด้วยงบหลายเท่าเช่นกัน ความล้มเหลวไม่ได้อยู่ที่ราคาเทคโนโลยี แต่อยู่ที่การซื้อความสามารถที่องค์กรไม่มีกำลังใช้งาน ซึ่งเปลี่ยนรายการงบประมาณให้กลายเป็นภาระค่าบำรุงรักษา",
+      zh: "因为采购发生在理解之前。一个尚不了解自身运营能力的市镇，会照着供应商的产品目录写规格，而不是照着自己的需求写。超规格的闭路电视采购是反复出现的例子——系统规模比城市所能配置人力或使用的大出数倍，成本也高出数倍。失败之处不在技术的价格，而在于购买了组织没有能力运营的功能，从而把一笔预算变成了长期的维护负债。",
+    },
+  },
+  {
+    category: "The A-B-C-D Barriers",
+    q: {
+      en: "Bureaucracy: how much approval does one project need?",
+      th: "ระบบราชการ: หนึ่งโครงการต้องผ่านการอนุมัติกี่ชั้น?",
+      zh: "官僚流程：一个项目需要多少层审批？",
+    },
+    a: {
+      en: "Enough that the approval becomes the project. A single initiative can require sign-off along a chain running from an immediate supervisor up through senior management to ministerial level — in the order of a dozen or more signatures. The measurable cost is where effort goes: capable staff can spend the large majority of their time securing approvals and a small minority doing the work. The honest reading is two-sided. That chain does stop bad projects. It also stops good ones, and it disproportionately deters the people most willing to start something without being told to.",
+      th: "มากพอที่การอนุมัติจะกลายเป็นตัวโครงการเสียเอง โครงการเดียวอาจต้องผ่านลายเซ็นตั้งแต่ผู้บังคับบัญชาโดยตรง ขึ้นไปถึงผู้บริหารระดับสูง จนถึงระดับรัฐมนตรี รวมแล้วราวสิบกว่าลายเซ็นขึ้นไป ต้นทุนที่วัดได้คือแรงงานไปอยู่ที่ไหน บุคลากรที่มีความสามารถอาจใช้เวลาส่วนใหญ่ไปกับการไล่ขออนุมัติ และเหลือเวลาส่วนน้อยสำหรับทำงานจริง การอ่านอย่างซื่อตรงมีสองด้าน สายอนุมัตินั้นหยุดโครงการที่ไม่ดีได้จริง แต่ก็หยุดโครงการที่ดีด้วย และบั่นทอนคนที่พร้อมจะเริ่มทำอะไรเองโดยไม่ต้องรอคำสั่งมากที่สุด",
+      zh: "多到审批本身变成了项目。一个提案可能需要从直属主管、高层管理一路上报至部级的签字——大致十几个甚至更多。可衡量的代价在于精力的去向：有能力的员工可能把大部分时间用于争取批准，只剩一小部分用于实际工作。诚实的解读有两面。这条链条确实挡住了糟糕的项目，但它同样挡住了好项目，而且对那些最愿意主动发起事情的人打击最大。",
+    },
+  },
+  {
+    category: "The A-B-C-D Barriers",
+    q: {
+      en: "Capacity: what happens when technology arrives without training?",
+      th: "ขีดความสามารถ: จะเกิดอะไรขึ้นเมื่อเทคโนโลยีมาถึงโดยไม่มีการอบรม?",
+      zh: "能力：当技术到位却没有培训时会发生什么？",
+    },
+    a: {
+      en: "It gets switched off. GPS units were fitted to school buses and kept failing, until the cause turned out to be the drivers themselves disabling them. Nobody had explained what the devices were for, so drivers assumed the purpose was to catch them driving badly — a system that could only cost them, never help them. The devices could in fact have demonstrated the opposite: route quality, punctual pickups, a defensible record of good driving. The lesson generalises. Where the purpose of a system is not explained to the people it monitors, they will assume the worst plausible purpose, and they will be right often enough to keep assuming it.",
+      th: "มันจะถูกปิด มีการติดตั้งอุปกรณ์ GPS ในรถรับส่งนักเรียนแล้วเสียซ้ำ ๆ จนพบว่าสาเหตุคือคนขับปิดเอง ไม่มีใครอธิบายว่าอุปกรณ์นี้มีไว้ทำอะไร คนขับจึงสันนิษฐานว่ามีไว้จับผิดเวลาขับไม่ดี เป็นระบบที่มีแต่เสีย ไม่มีได้ ทั้งที่จริงอุปกรณ์เดียวกันสามารถแสดงสิ่งตรงกันข้ามได้ คือคุณภาพการเลือกเส้นทาง การรับส่งตรงเวลา และหลักฐานยืนยันว่าขับดี บทเรียนนี้ใช้ได้ทั่วไป เมื่อไม่อธิบายวัตถุประสงค์ของระบบให้ผู้ถูกติดตามทราบ เขาจะสันนิษฐานวัตถุประสงค์ที่แย่ที่สุดเท่าที่เป็นไปได้ และเขาจะเดาถูกบ่อยพอที่จะสันนิษฐานแบบนั้นต่อไป",
+      zh: "它会被关掉。校车装上了GPS却不断故障，最后查明原因是司机自己把它关了。没有人解释过这些设备的用途，司机便假定其目的是抓他们开车不当——一个只会让他们受损、绝不会帮到他们的系统。而事实上，同样的设备本可以证明相反的事：路线质量、准点接送、一份可信的良好驾驶记录。这个教训是通用的。当一个系统的用途没有向被监测者解释清楚时，他们会假定最坏的可能用途，而且他们猜对的次数足以让他们继续这样假定。",
+    },
+  },
+  {
+    category: "The A-B-C-D Barriers",
+    q: {
+      en: "Design: why do citizen-facing platforms get built and then not used?",
+      th: "การออกแบบ: ทำไมแพลตฟอร์มสำหรับประชาชนถึงสร้างเสร็จแล้วไม่มีคนใช้?",
+      zh: "设计：为什么面向市民的平台建成后无人使用？",
+    },
+    a: {
+      en: "Because they are designed to be complied with rather than chosen. The default government instinct is to build a system and then instruct residents to use it. Instruction produces the minimum: people do what they are told, once, and stop. The alternative is ordinary behavioural economics — give a reason to try, let the experience do the persuading, and let users bring in other users. This is the cheapest of the four barriers to fix and the most consistently skipped, because it is the one that looks like marketing rather than engineering. A platform with no adoption plan is an unfinished platform, not a finished platform with a marketing problem.",
+      th: "เพราะถูกออกแบบมาให้ปฏิบัติตาม ไม่ใช่ให้เลือกใช้ สัญชาตญาณตั้งต้นของภาครัฐคือสร้างระบบแล้วสั่งให้ประชาชนใช้ การสั่งได้ผลลัพธ์ขั้นต่ำ คนทำตามที่บอกครั้งเดียวแล้วเลิก ทางเลือกคือเศรษฐศาสตร์พฤติกรรมธรรมดา ให้เหตุผลที่จะลอง ปล่อยให้ประสบการณ์เป็นตัวโน้มน้าว และให้ผู้ใช้ชวนผู้ใช้ นี่คืออุปสรรคที่แก้ถูกที่สุดในสี่ข้อ และเป็นข้อที่ถูกข้ามบ่อยที่สุด เพราะมันดูเหมือนงานการตลาดมากกว่างานวิศวกรรม แพลตฟอร์มที่ไม่มีแผนสร้างการใช้งาน คือแพลตฟอร์มที่ยังสร้างไม่เสร็จ ไม่ใช่แพลตฟอร์มที่เสร็จแล้วแต่มีปัญหาการตลาด",
+      zh: "因为它们被设计成用来遵从的，而不是用来选择的。政府的默认本能是建好系统，然后要求居民使用。命令只能得到最低限度的结果：人们照做一次，然后停止。另一种做法是普通的行为经济学——给一个尝试的理由，让体验去说服，再让用户带来用户。这是四大障碍中修复成本最低、却最常被跳过的一个，因为它看起来像营销而不像工程。一个没有采用计划的平台是尚未完成的平台，而不是完成了却有营销问题的平台。",
+    },
+  },
+
+  // ─── Investment & Economics (institutional finance reality) ───
+  {
+    category: "Investment & Economics",
+    q: {
+      en: "Where does the money for a Thai smart city project actually come from?",
+      th: "งบประมาณของโครงการเมืองอัจฉริยะไทยมาจากไหนกันแน่?",
+      zh: "泰国智慧城市项目的资金究竟从哪里来？",
+    },
+    a: {
+      en: "Overwhelmingly from waiting for a central government allocation. Public-private partnership exists as a mechanism but is not yet the norm, and most municipalities and agencies default to the budget cycle because it is the familiar path. The consequence is timing: a request submitted now may be funded around two years later. For routine capital works that is tolerable. For anything responding to a live problem — flooding, air quality, an outbreak — the funding arrives after the window in which it would have mattered. Changing which mechanism cities reach for first is a larger unlock than increasing the amount of money in any one of them.",
+      th: "ส่วนใหญ่มาจากการรอจัดสรรงบจากส่วนกลาง การร่วมทุนรัฐ-เอกชน (PPP) มีอยู่ในฐานะกลไก แต่ยังไม่ใช่แนวปฏิบัติหลัก เทศบาลและหน่วยงานส่วนใหญ่จึงกลับไปใช้วงจรงบประมาณเพราะเป็นเส้นทางที่คุ้นเคย ผลที่ตามมาคือเรื่องจังหวะเวลา คำของบที่ยื่นวันนี้อาจได้รับจัดสรรราวสองปีให้หลัง สำหรับงานก่อสร้างตามปกติยังพอรับได้ แต่สำหรับสิ่งที่ตอบสนองปัญหาเฉพาะหน้า เช่น น้ำท่วม คุณภาพอากาศ หรือการระบาด งบจะมาถึงหลังพ้นช่วงเวลาที่มันจะมีความหมาย การเปลี่ยนว่าเมืองจะหยิบกลไกใดขึ้นมาใช้ก่อน จึงปลดล็อกได้มากกว่าการเพิ่มเงินในกลไกใดกลไกหนึ่ง",
+      zh: "绝大多数来自等待中央政府拨款。公私合作（PPP）作为一种机制是存在的，但尚未成为常态，多数市镇和机构仍默认走预算周期，因为那是熟悉的路径。后果体现在时间上：今天提交的申请可能约两年后才获得拨款。对于常规基建，这尚可接受。但对于任何回应现实问题的事项——洪水、空气质量、疫情——资金抵达时，那个本可发挥作用的窗口已经关闭。改变城市优先选用哪种机制，比增加任何单一机制中的资金量能释放更大的效益。",
+    },
+  },
+  {
+    category: "Investment & Economics",
+    q: {
+      en: "What does it actually cost a city to wait for a government budget?",
+      th: "การรอเงินงบประมาณมีต้นทุนต่อเมืองเท่าไรจริง ๆ?",
+      zh: "等待政府预算，城市实际付出的代价是什么？",
+    },
+    a: {
+      en: "The clearest way to see it is a city that floods every year. Funding for flood infrastructure arrives roughly two years after the request, and construction takes roughly two more — call it four to five years from decision to protection. On paper that is a normal delivery schedule. On the ground it is four to five more flood seasons. Residents move, manufacturers relocate, and prospective investors go elsewhere, all before the system is commissioned. By the time the project is finished it may be protecting a smaller city than the one that requested it. The unpriced item in every slow procurement is the population that left while it was pending, and people do not generally return to a place they have already left.",
+      th: "วิธีที่เห็นชัดที่สุดคือมองเมืองที่น้ำท่วมทุกปี งบสำหรับโครงสร้างพื้นฐานป้องกันน้ำท่วมมาถึงราวสองปีหลังยื่นคำขอ และก่อสร้างอีกราวสองปี รวมราวสี่ถึงห้าปีนับจากตัดสินใจจนได้รับการป้องกัน บนกระดาษนี่คือกำหนดส่งมอบปกติ แต่บนพื้นที่จริงคือฤดูน้ำท่วมอีกสี่ถึงห้าครั้ง ผู้คนย้ายออก โรงงานย้ายฐาน นักลงทุนที่กำลังพิจารณาเปลี่ยนไปที่อื่น ทั้งหมดเกิดขึ้นก่อนระบบจะเปิดใช้ เมื่อโครงการเสร็จ มันอาจกำลังปกป้องเมืองที่เล็กกว่าเมืองที่ยื่นขอไว้ ต้นทุนที่ไม่เคยถูกตีราคาในทุกการจัดซื้อที่ล่าช้า คือประชากรที่จากไปในระหว่างรอ และคนมักไม่กลับไปยังที่ที่เขาจากมาแล้ว",
+      zh: "最清楚的观察方式是看一座年年被淹的城市。防洪基建的资金约在申请两年后到位，施工再花约两年——从决策到获得保护约四到五年。在纸面上这是正常的交付周期。在现实中，这是又四到五个洪水季。居民迁走，制造商搬厂，潜在投资者转向别处，全都发生在系统启用之前。项目建成时，它保护的可能是一座比当初提出申请时更小的城市。每一次缓慢采购中未被计价的一项，是等待期间流失的人口——而人们通常不会回到自己已经离开的地方。",
+    },
+  },
+  {
+    category: "Investment & Economics",
+    q: {
+      en: "Could a Thai municipality raise its own money instead?",
+      th: "เทศบาลไทยระดมทุนเองได้ไหม?",
+      zh: "泰国市镇能否自行筹资？",
+    },
+    a: {
+      en: "In principle yes, through municipal bonds, and multilateral lenders including the World Bank and the Asian Development Bank have indicated willingness to support a first case. The mechanism is straightforward: a municipality issues a bond, residents and institutions buy it at a return above a bank deposit, and the proceeds fund infrastructure that raises the city's economic capacity enough to service the coupon. The obstacle is not the finance, it is the precedent. A Thai municipality acting as an issuing entity is unfamiliar enough that no one wants to be the first, and the pilot case has yet to be assembled. Until one exists, the idea remains structurally sound and practically untested.",
+      th: "โดยหลักการทำได้ ผ่านพันธบัตรท้องถิ่น และสถาบันการเงินระหว่างประเทศ รวมถึงธนาคารโลกและธนาคารพัฒนาเอเชีย ได้แสดงความพร้อมสนับสนุนกรณีแรก กลไกนั้นตรงไปตรงมา เทศบาลออกพันธบัตร ประชาชนและสถาบันซื้อโดยได้ผลตอบแทนสูงกว่าฝากธนาคาร และเงินที่ได้นำไปลงทุนโครงสร้างพื้นฐานที่ยกขีดความสามารถทางเศรษฐกิจของเมืองมากพอจะจ่ายดอกเบี้ยคืนได้ อุปสรรคไม่ใช่เรื่องการเงิน แต่เป็นเรื่องแบบอย่าง การที่เทศบาลไทยทำหน้าที่เป็นผู้ออกตราสารยังใหม่พอที่จะไม่มีใครอยากเป็นรายแรก และยังไม่มีกรณีนำร่องเกิดขึ้น ตราบใดที่ยังไม่มี แนวคิดนี้ก็ยังมั่นคงเชิงโครงสร้างแต่ไม่เคยถูกทดสอบจริง",
+      zh: "原则上可以，通过市政债券，且包括世界银行和亚洲开发银行在内的多边贷款机构已表示愿意支持首个案例。机制很直接：市镇发行债券，居民和机构以高于银行存款的回报购买，所得资金投入能提升城市经济能力、足以偿付票息的基础设施。障碍不在金融，而在先例。泰国市镇作为发行主体仍属陌生，没有人愿意当第一个，试点案例尚未成形。在它出现之前，这个想法在结构上是成立的，在实践上则未经检验。",
+    },
+  },
+
+  // ─── Official Measurement Standards (the real thresholds) ───
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "What numbers does depa use to call a project successful?",
+      th: "depa ใช้ตัวเลขอะไรตัดสินว่าโครงการสำเร็จ?",
+      zh: "depa 用哪些数字来判定项目成功？",
+    },
+    a: {
+      en: "Deliberately plain ones, chosen so a mayor can verify them without a consultant. Smart Economy: average local income above roughly 20,000 baht per month. Smart Environment: measurable reduction in carbon emissions, on the order of one percent per year within the designated area, alongside air, water and waste indicators. Smart Mobility: residents getting home meaningfully faster than before — around an hour is the working benchmark — and a fall in road accidents. The design principle is that a target nobody can measure is not a target. Each threshold is a floor for the domain, not a ceiling, and SCITI reports what is running rather than what was promised against these.",
+      th: "ตัวเลขที่เรียบง่ายโดยตั้งใจ เลือกให้นายกเทศมนตรีตรวจสอบเองได้โดยไม่ต้องจ้างที่ปรึกษา เศรษฐกิจอัจฉริยะ รายได้เฉลี่ยในพื้นที่สูงกว่าราว 20,000 บาทต่อเดือน สิ่งแวดล้อมอัจฉริยะ ลดการปล่อยคาร์บอนได้อย่างวัดผลได้ ราวร้อยละหนึ่งต่อปีในพื้นที่ที่กำหนด ควบคู่กับตัวชี้วัดอากาศ น้ำ และขยะ การเดินทางอัจฉริยะ ประชาชนกลับถึงบ้านเร็วขึ้นอย่างมีนัยสำคัญ โดยราวหนึ่งชั่วโมงคือเกณฑ์ที่ใช้กันจริง และอุบัติเหตุบนถนนลดลง หลักการออกแบบคือ เป้าหมายที่ไม่มีใครวัดได้ ไม่ถือเป็นเป้าหมาย แต่ละเกณฑ์เป็นพื้นขั้นต่ำของด้านนั้น ไม่ใช่เพดาน และ SCITI รายงานสิ่งที่เดินระบบจริง ไม่ใช่สิ่งที่สัญญาไว้",
+      zh: "刻意选用朴素的数字，让市长无需顾问也能自行核验。智慧经济：本地平均收入高于约每月20,000泰铢。智慧环境：可测量的碳排放下降，在指定区域内约为每年百分之一，并配合空气、水和废弃物指标。智慧交通：居民回家的时间显著缩短——约一小时是实际使用的基准——以及道路事故下降。设计原则是：无人能测量的目标就不是目标。每项阈值是该领域的下限而非上限，而 SCITI 报告的是实际运行的情况，而非对照这些指标所作出的承诺。",
+    },
+  },
+  {
+    category: "Official Measurement Standards",
+    q: {
+      en: "Why were the original certification metrics rewritten?",
+      th: "ทำไมต้องเขียนเกณฑ์การรับรองชุดแรกใหม่?",
+      zh: "为什么最初的认证指标被重写了？",
+    },
+    a: {
+      en: "Because almost no city could meet them. The first set, written around the programme's launch, was drafted to a high engineering standard — technically defensible, and in practice unreachable for the municipalities it was aimed at. After about two years it was clear the bar was not filtering for quality, it was filtering out participation. The metrics were rewritten toward outcomes a city can observe directly: is the commute shorter, are there fewer accidents, is income up, are emissions down. This is worth knowing before reading any Thai certification figure: the standard was made simpler on purpose, and comparisons across the two eras are not like-for-like.",
+      th: "เพราะแทบไม่มีเมืองไหนผ่านได้ ชุดแรกที่เขียนขึ้นตอนเริ่มโครงการถูกร่างตามมาตรฐานวิศวกรรมระดับสูง ซึ่งอธิบายได้ในทางเทคนิค แต่ในทางปฏิบัติเกินเอื้อมสำหรับเทศบาลที่เป็นกลุ่มเป้าหมาย ผ่านไปราวสองปีก็ชัดว่าเกณฑ์นั้นไม่ได้คัดกรองคุณภาพ แต่คัดคนออกจากการเข้าร่วม จึงเขียนเกณฑ์ใหม่ให้มุ่งที่ผลลัพธ์ที่เมืองสังเกตได้เอง คือการเดินทางสั้นลงไหม อุบัติเหตุน้อยลงไหม รายได้เพิ่มไหม การปล่อยมลพิษลดไหม เรื่องนี้ควรรู้ก่อนอ่านตัวเลขการรับรองใด ๆ ของไทย เพราะมาตรฐานถูกทำให้ง่ายลงโดยตั้งใจ และการเปรียบเทียบข้ามสองยุคไม่ใช่การเทียบบนฐานเดียวกัน",
+      zh: "因为几乎没有城市能达标。项目启动之初制定的第一套指标是按高工程标准起草的——技术上站得住脚，但对其面向的市镇而言实际上遥不可及。约两年后可以看清，这道门槛筛的不是质量，而是把参与者筛掉了。指标随后被改写为城市可直接观察的结果：通勤是否更短、事故是否更少、收入是否上升、排放是否下降。在解读任何泰国认证数字之前，这一点值得知晓：标准是有意被简化的，跨越这两个时期的比较并非同一基准。",
+    },
+  },
+
+  // ─── For Foreign Partners ───
+  {
+    category: "For Foreign Partners",
+    q: {
+      en: "What kind of foreign cooperation actually produces results in Thailand?",
+      th: "ความร่วมมือจากต่างประเทศแบบไหนที่ได้ผลจริงในไทย?",
+      zh: "哪一类国际合作在泰国真正产生成果？",
+    },
+    a: {
+      en: "Pilots run on Thai sites, with Thai stakeholders, on a Thai problem. The pattern that works is a partner bringing capability to a real location and testing it against a live local issue — the learning lands because the context is the participants' own. The pattern that produces less is the study tour: flying Thai mayors abroad to see how a foreign technology solved a foreign city's problem. It is pleasant, it builds relationships, and it rarely converts into anything built, because the demonstration is calibrated to conditions the visitors do not go home to. If a foreign partner wants a project rather than a memorandum, the site should be in Thailand.",
+      th: "โครงการนำร่องที่ทำในพื้นที่จริงของไทย กับผู้มีส่วนได้ส่วนเสียชาวไทย บนปัญหาของไทย รูปแบบที่ได้ผลคือพันธมิตรนำขีดความสามารถมาลงในพื้นที่จริงและทดสอบกับปัญหาที่เกิดขึ้นจริง การเรียนรู้ติดตัวเพราะบริบทเป็นของผู้เข้าร่วมเอง รูปแบบที่ได้ผลน้อยกว่าคือการดูงาน พาผู้บริหารเมืองไทยบินไปดูว่าเทคโนโลยีต่างประเทศแก้ปัญหาของเมืองต่างประเทศอย่างไร มันน่าประทับใจ สร้างความสัมพันธ์ได้ แต่ไม่ค่อยแปรเป็นสิ่งที่ถูกสร้างจริง เพราะการสาธิตถูกปรับให้เข้ากับเงื่อนไขที่ผู้มาดูงานไม่ได้กลับไปเจอ หากพันธมิตรต่างชาติต้องการโครงการ ไม่ใช่บันทึกความเข้าใจ พื้นที่ทดสอบควรอยู่ในประเทศไทย",
+      zh: "在泰国的场地上、与泰国利益相关方一起、针对泰国问题开展的试点。行之有效的模式是伙伴把能力带到真实地点，针对当下的本地问题进行验证——学习之所以留得下，是因为情境属于参与者自己。成效较弱的模式是考察团：让泰国市长飞往国外，看外国技术如何解决外国城市的问题。这令人愉快、能建立关系，却很少转化为真正建成的东西，因为演示是按照访客回国后并不面对的条件校准的。如果外国伙伴想要的是项目而非备忘录，场地应当在泰国。",
+    },
+  },
+  {
+    category: "For Foreign Partners",
+    q: {
+      en: "Which international smart city programmes has Thailand actually run?",
+      th: "ไทยเคยเข้าร่วมโครงการเมืองอัจฉริยะระหว่างประเทศใดบ้าง?",
+      zh: "泰国实际参与过哪些国际智慧城市项目？",
+    },
+    a: {
+      en: "Several, of two distinct kinds. Hands-on pilots include Smart JAMP with Japan's Ministry of Land, Infrastructure, Transport and Tourism, which put Japanese industry capability onto Thai sites, and Korea's K-City work alongside the Korea Development Institute. Capacity-building and networking programmes include the US-ASEAN Smart Cities Partnership, which paired ASEAN and American cities — Phuket with Las Vegas, Penang with Boston, Johor Bahru with Portland — and JICA's annual programme in Yokohama, and Seoul National University's ASEAN programme. Both kinds have value, but they buy different things: the pilots produced findings, the networks produced relationships across ASEAN ministries that did not previously know each other.",
+      th: "หลายโครงการ แบ่งได้สองประเภท ประเภทลงมือทำจริงได้แก่ Smart JAMP ร่วมกับกระทรวงที่ดิน โครงสร้างพื้นฐาน คมนาคมและการท่องเที่ยวของญี่ปุ่น ซึ่งนำขีดความสามารถของภาคอุตสาหกรรมญี่ปุ่นลงพื้นที่จริงในไทย และโครงการ K-City ของเกาหลีร่วมกับสถาบันพัฒนาเกาหลี (KDI) ประเภทเสริมศักยภาพและสร้างเครือข่ายได้แก่ US-ASEAN Smart Cities Partnership ที่จับคู่เมืองอาเซียนกับเมืองอเมริกัน เช่น ภูเก็ตกับลาสเวกัส ปีนังกับบอสตัน ยะโฮร์บาห์รูกับพอร์ตแลนด์ รวมถึงโครงการประจำปีของ JICA ที่โยโกฮามา และโครงการอาเซียนของมหาวิทยาลัยแห่งชาติโซล ทั้งสองประเภทมีคุณค่า แต่ซื้อคนละสิ่ง โครงการนำร่องให้ข้อค้นพบ ส่วนเครือข่ายให้ความสัมพันธ์ระหว่างกระทรวงในอาเซียนที่เดิมไม่เคยรู้จักกัน",
+      zh: "有若干项，分为两类。实操型试点包括与日本国土交通省合作的 Smart JAMP，它把日本产业能力投放到泰国现场；以及与韩国开发研究院（KDI）并行的韩国 K-City 项目。能力建设与网络型项目包括美国—东盟智慧城市伙伴关系，它将东盟城市与美国城市结对——普吉与拉斯维加斯、槟城与波士顿、新山与波特兰——以及 JICA 在横滨的年度项目和首尔大学的东盟项目。两类都有价值，但买到的东西不同：试点产出的是发现，网络产出的是此前彼此并不相识的东盟各部门之间的关系。",
+    },
+  },
+  {
+    category: "For Foreign Partners",
+    q: {
+      en: "What did the Phuket traffic pilot actually find?",
+      th: "โครงการนำร่องจราจรภูเก็ตค้นพบอะไร?",
+      zh: "普吉交通试点究竟发现了什么？",
+    },
+    a: {
+      en: "That the problem was driver behaviour, not road capacity. Computer-vision cameras running continuously on the corridor toward the airport showed congestion forming because vehicles were changing lanes too frequently and too abruptly, creating bottlenecks that propagated backwards. Human observation had not caught this, and the intuitive fix — build more road — would not have addressed it. This is the clearest available argument for instrumenting a problem before funding a solution to it: the pilot cost a fraction of a road widening and pointed at a different intervention entirely. It is also a caution about assumption-led infrastructure spending, which is the more expensive error.",
+      th: "พบว่าปัญหาคือพฤติกรรมผู้ขับขี่ ไม่ใช่ความจุของถนน กล้องคอมพิวเตอร์วิชันที่ทำงานต่อเนื่องบนเส้นทางมุ่งสู่สนามบินแสดงให้เห็นว่าการจราจรติดขัดเกิดจากรถเปลี่ยนเลนบ่อยและกะทันหันเกินไป ทำให้เกิดคอขวดที่ลามย้อนกลับไปด้านหลัง สายตามนุษย์จับสิ่งนี้ไม่ได้ และวิธีแก้ตามสัญชาตญาณคือสร้างถนนเพิ่ม ซึ่งไม่ได้แก้ที่เหตุ นี่คือข้อโต้แย้งที่ชัดที่สุดสำหรับการติดตั้งเครื่องมือวัดปัญหาก่อนจ่ายเงินแก้ปัญหา โครงการนำร่องใช้งบเพียงเศษเสี้ยวของการขยายถนน แต่ชี้ไปยังมาตรการที่ต่างออกไปโดยสิ้นเชิง และยังเป็นข้อเตือนใจเรื่องการลงทุนโครงสร้างพื้นฐานบนสมมติฐาน ซึ่งเป็นความผิดพลาดที่แพงกว่ามาก",
+      zh: "问题出在驾驶行为，而非道路容量。在通往机场的路段上持续运行的计算机视觉摄像头显示，拥堵的成因是车辆变道过于频繁和突然，形成向后传导的瓶颈。人眼观察未能捕捉到这一点，而凭直觉的解法——多修路——并不能解决它。这是「先为问题装上测量，再为解法出资」最有力的论据：试点的成本只是道路拓宽的零头，却指向了一种完全不同的干预措施。它同时也是对以假设为依据的基建支出的警示，那是代价更高的错误。",
+    },
+  },
+  {
+    category: "For Foreign Partners",
+    q: {
+      en: "Does a foreign supplier need a Thai partner, and where must the data live?",
+      th: "ผู้ขายต่างชาติต้องมีพันธมิตรไทยไหม และข้อมูลต้องเก็บที่ไหน?",
+      zh: "外国供应商需要泰国合作伙伴吗？数据必须存放在哪里？",
+    },
+    a: {
+      en: "Yes to a local system integrator, and data for government projects is expected to stay on Thai soil — own facility or colocation, but inside the country. The integrator requirement is not protectionism and is not unusual; the United States, Japan and Korea apply comparable expectations. The practical logic is single-point accountability: the integrator assembles components from several global vendors and is the party a city calls when anything breaks, rather than the city having to diagnose which upstream supplier is at fault. Foreign technology underneath that layer is entirely normal. What is not workable is a foreign vendor expecting to contract directly with a municipality and support it remotely.",
+      th: "ต้องมีผู้รวมระบบ (system integrator) ในประเทศ และข้อมูลของโครงการภาครัฐต้องอยู่บนแผ่นดินไทย จะเป็นศูนย์ข้อมูลของตนเองหรือโคโลเคชันก็ได้ แต่ต้องอยู่ในประเทศ ข้อกำหนดเรื่องผู้รวมระบบไม่ใช่การกีดกันทางการค้าและไม่ใช่เรื่องผิดปกติ สหรัฐอเมริกา ญี่ปุ่น และเกาหลีก็มีข้อกำหนดลักษณะเดียวกัน เหตุผลเชิงปฏิบัติคือความรับผิดชอบจุดเดียว ผู้รวมระบบเป็นผู้ประกอบชิ้นส่วนจากผู้ขายระดับโลกหลายราย และเป็นคนที่เมืองโทรหาเมื่อมีอะไรเสีย แทนที่เมืองจะต้องวินิจฉัยเองว่าผู้ขายรายใดต้นทางเป็นต้นเหตุ เทคโนโลยีต่างชาติที่อยู่ใต้ชั้นนั้นเป็นเรื่องปกติทั้งสิ้น สิ่งที่ทำไม่ได้คือผู้ขายต่างชาติที่หวังทำสัญญาตรงกับเทศบาลแล้วซัพพอร์ตจากระยะไกล",
+      zh: "需要本地系统集成商，且政府项目的数据须留在泰国境内——自建机房或托管皆可，但必须在国内。系统集成商的要求并非保护主义，也不罕见；美国、日本和韩国都有相当的要求。其实际逻辑是单点问责：集成商把来自多家全球供应商的组件组装起来，出问题时城市只需找他，而不必自行判断是哪一家上游供应商的责任。位于该层之下的外国技术完全正常。行不通的是外国供应商指望直接与市镇签约并远程支持。",
+    },
+  },
+  {
+    category: "For Foreign Partners",
+    q: {
+      en: "Can a project fly drones in Thailand?",
+      th: "โครงการสามารถใช้โดรนในไทยได้ไหม?",
+      zh: "项目可以在泰国使用无人机吗？",
+    },
+    a: {
+      en: "Only with registration, and the requirement catches people out because it applies on possession, not on flying. A drone must be registered with the NBTC as radio equipment and, for camera-equipped units, with CAAT as an aircraft — both, not either, and within a short window of purchase or import regardless of whether it is ever flown. Penalties are real rather than nominal. Public-safety use by government carries different latitude, and that is where the strongest cases sit: forest fire detection, disaster survey, entering conditions too dangerous for people. Agriculture is the other large legitimate use, alongside urban survey work. Budget the permission timeline into the project plan, not after it.",
+      th: "ได้ แต่ต้องขึ้นทะเบียน และข้อกำหนดนี้ทำให้หลายคนพลาด เพราะมีผลตั้งแต่การครอบครอง ไม่ใช่ตอนบิน โดรนต้องขึ้นทะเบียนกับ กสทช. ในฐานะเครื่องวิทยุคมนาคม และหากมีกล้องต้องขึ้นทะเบียนกับ CAAT ในฐานะอากาศยานด้วย ต้องทั้งสองอย่าง ไม่ใช่อย่างใดอย่างหนึ่ง และต้องทำภายในเวลาอันสั้นหลังซื้อหรือนำเข้า ไม่ว่าจะได้บินหรือไม่ก็ตาม บทลงโทษมีอยู่จริงไม่ใช่แค่ในนาม การใช้งานเพื่อความปลอดภัยสาธารณะโดยภาครัฐมีความยืดหยุ่นต่างออกไป และนั่นคือกรณีที่มีน้ำหนักที่สุด เช่น การตรวจจับไฟป่า การสำรวจภัยพิบัติ การเข้าไปในสภาพที่อันตรายเกินกว่าจะส่งคน เกษตรกรรมเป็นการใช้งานที่ชอบด้วยกฎหมายอีกกลุ่มใหญ่ ควบคู่กับงานสำรวจเมือง ควรวางกรอบเวลาขออนุญาตไว้ในแผนโครงการตั้งแต่ต้น ไม่ใช่ไว้ทีหลัง",
+      zh: "可以，但必须登记，而这项要求常让人措手不及，因为它适用于持有而非飞行。无人机须向 NBTC（国家广播电视和电信委员会）登记为无线电设备；若配备摄像头，还须向 CAAT（民航局）登记为航空器——两者都要，而非二选一，且须在购买或进口后的短时间内完成，无论是否实际飞行。处罚是实质性的，而非象征性的。政府用于公共安全的用途有不同的空间，而最有力的案例正在于此：林火探测、灾害勘查、进入对人类过于危险的环境。农业是另一大类合法用途，此外还有城市勘测工作。请把审批时间纳入项目计划之内，而不是事后再说。",
+    },
+  },
+
+  // ─── Success / cross-city learning ───
+  {
+    category: "Success",
+    q: {
+      en: "How does a good idea travel from one Thai city to another?",
+      th: "ไอเดียที่ดีเดินทางจากเมืองหนึ่งไปอีกเมืองอย่างไร?",
+      zh: "一个好点子如何从泰国的一座城市传到另一座？",
+    },
+    a: {
+      en: "Less reliably than it should, and the fix is a change of framing: steal and improve. The unhelpful assumption is that every city needs an original identity — that if Rayong leads on health data then health data is Rayong's, and another city should find its own theme. That is a waste of a working solution. If Rayong's approach functions, another city should copy it and adapt it. If Yala has held among the strongest environmental records for decades, take the method. The goal is not originality per city, it is the fastest possible spread of what already works. What is missing is the connective layer that makes good practice visible between cities — which is one of the reasons this index publishes city-by-city rather than only national totals.",
+      th: "เดินทางได้ไม่ดีเท่าที่ควร และทางแก้คือเปลี่ยนกรอบคิดเป็น ขโมยแล้วทำให้ดีขึ้น สมมติฐานที่ไม่ช่วยอะไรคือทุกเมืองต้องมีอัตลักษณ์เฉพาะของตน ว่าถ้าระยองนำเรื่องข้อมูลสุขภาพ เรื่องนั้นก็เป็นของระยอง เมืองอื่นต้องไปหาธีมของตัวเอง นั่นคือการปล่อยของที่ใช้ได้จริงให้เสียเปล่า ถ้าวิธีของระยองใช้ได้ เมืองอื่นควรลอกแล้วปรับ ถ้ายะลารักษาสถิติด้านสิ่งแวดล้อมได้ดีที่สุดกลุ่มหนึ่งมาหลายสิบปี ก็เอาวิธีนั้นมาใช้ เป้าหมายไม่ใช่ความเป็นต้นฉบับของแต่ละเมือง แต่คือการกระจายสิ่งที่ได้ผลอยู่แล้วให้เร็วที่สุด สิ่งที่ขาดคือชั้นเชื่อมต่อที่ทำให้แนวปฏิบัติที่ดีมองเห็นได้ระหว่างเมือง ซึ่งเป็นเหตุผลหนึ่งที่ดัชนีนี้เผยแพร่รายเมือง ไม่ใช่เพียงยอดรวมระดับประเทศ",
+      zh: "远不如应有的可靠，而解法是换一个思路：拿来，并改进。无益的假设是每座城市都需要独创的身份——若罗勇在健康数据上领先，那健康数据就是罗勇的，别的城市该另找主题。这是在浪费一个已经跑通的方案。如果罗勇的做法有效，别的城市就该照搬并调整。如果耶拉数十年来保持着最好的环境记录之一，就把方法拿过来。目标不是每座城市各自独创，而是让已经奏效的东西尽可能快地扩散。缺失的是让良好实践在城市之间可见的连接层——这也是本指数逐城发布、而不只发布全国汇总的原因之一。",
+    },
+  },
+  {
+    category: "Success",
+    q: {
+      en: "Why do university-born pilots often stall?",
+      th: "ทำไมโครงการนำร่องที่เกิดในมหาวิทยาลัยมักไปต่อไม่ได้?",
+      zh: "为什么源自大学的试点项目常常停滞？",
+    },
+    a: {
+      en: "Because a research project and a public service have different survival requirements. Thailand's best-known community air-quality sensing work began inside a university, which is a natural origin: academic teams need projects for publication and advancement, and government has funding channels ready to support them. What such a project usually lacks is a business model — a maintenance path, a cash flow, and a reason for the user base to keep growing after the paper is published. Without those, accuracy decays as sensors fail and participation thins, and a technically sound idea quietly stops being a service. This is the strongest argument for routing promising pilots into a partnership structure early, while the work is still good.",
+      th: "เพราะโครงการวิจัยกับบริการสาธารณะมีเงื่อนไขการอยู่รอดต่างกัน งานตรวจวัดคุณภาพอากาศระดับชุมชนที่รู้จักกันดีที่สุดของไทยเริ่มต้นในมหาวิทยาลัย ซึ่งเป็นจุดกำเนิดที่เป็นธรรมชาติ ทีมวิชาการต้องการโครงการเพื่อการตีพิมพ์และความก้าวหน้า และภาครัฐมีช่องทางทุนพร้อมสนับสนุน สิ่งที่โครงการแบบนี้มักขาดคือแบบจำลองธุรกิจ ได้แก่ เส้นทางการบำรุงรักษา กระแสเงินสด และเหตุผลที่ฐานผู้ใช้จะเติบโตต่อหลังบทความตีพิมพ์เสร็จ เมื่อไม่มีสิ่งเหล่านี้ ความแม่นยำจะถดถอยตามเซ็นเซอร์ที่ทยอยเสียและการมีส่วนร่วมที่เบาบางลง แล้วไอเดียที่ดีในทางเทคนิคก็เงียบหายจากการเป็นบริการ นี่คือเหตุผลที่หนักแน่นที่สุดในการผลักโครงการนำร่องที่มีแวว เข้าสู่โครงสร้างความร่วมมือตั้งแต่เนิ่น ๆ ขณะที่งานยังดีอยู่",
+      zh: "因为研究项目与公共服务的存活条件不同。泰国最知名的社区空气质量监测工作起源于大学，这是很自然的出身：学术团队需要项目用于发表和晋升，政府也有现成的资助渠道支持。这类项目通常缺少的是商业模式——维护路径、现金流，以及论文发表之后用户群继续增长的理由。缺了这些，传感器陆续失效、参与度稀薄，准确度随之衰减，一个技术上成立的想法便悄然不再是一项服务。这正是尽早把有潜力的试点导入合作结构、趁工作还处于良好状态时就动手的最有力理由。",
+    },
+  },
+
+  // ─── Reality Check (technology adoption) ───
+  {
+    category: "Reality Check",
+    q: {
+      en: "Is AI actually being used inside Thai local government?",
+      th: "ปัญญาประดิษฐ์ถูกใช้จริงในหน่วยงานท้องถิ่นไทยหรือยัง?",
+      zh: "人工智能在泰国地方政府中真的被使用了吗？",
+    },
+    a: {
+      en: "Barely, and the obstacle is reputation rather than capability. Adoption in Thailand is concentrated in general-purpose chat assistants used for light tasks; the applications that would matter to a municipality are largely untouched. The reason is a belief that AI is difficult and expensive, held most firmly by people who have not tried it. The genuine municipal use is unglamorous: removing repetitive, labour-intensive and dangerous work — transcribing meetings, monitoring water levels with inexpensive sensors, scheduling collection rounds, watching for forest fire. Meanwhile the economics underneath have shifted sharply. Capabilities that recently required a large foreign contract, including working city digital twins, can now be prototyped in-house with open tooling. Cities that learn to prototype will specify better contracts even when they still buy.",
+      th: "แทบยังไม่ถูกใช้ และอุปสรรคคือภาพจำ ไม่ใช่ขีดความสามารถ การใช้งานในไทยกระจุกอยู่ที่ผู้ช่วยสนทนาทั่วไปสำหรับงานเบา ๆ ส่วนการใช้งานที่จะมีความหมายต่อเทศบาลยังแทบไม่ถูกแตะ เหตุผลคือความเชื่อว่าปัญญาประดิษฐ์นั้นยากและแพง ซึ่งคนที่เชื่อแน่นที่สุดคือคนที่ยังไม่เคยลอง การใช้งานจริงในระดับเทศบาลนั้นไม่หวือหวา คือการตัดงานที่ซ้ำซาก ใช้แรงงานมาก และอันตรายออกไป เช่น ถอดเทปการประชุม เฝ้าระดับน้ำด้วยเซ็นเซอร์ราคาถูก จัดรอบเก็บขยะ และเฝ้าระวังไฟป่า ขณะเดียวกันเศรษฐศาสตร์เบื้องหลังก็เปลี่ยนไปมาก ความสามารถที่เมื่อไม่นานมานี้ต้องใช้สัญญากับต่างชาติมูลค่าสูง รวมถึงแฝดดิจิทัลของเมืองที่ใช้งานได้จริง ปัจจุบันสร้างต้นแบบเองได้ด้วยเครื่องมือเปิด เมืองที่หัดสร้างต้นแบบจะเขียนสัญญาได้ดีขึ้น แม้สุดท้ายยังเลือกซื้อก็ตาม",
+      zh: "几乎还没有，障碍在于名声而非能力。泰国的采用集中于用来处理轻量任务的通用聊天助手；真正对市镇有意义的应用基本无人触及。原因是一种「人工智能既难又贵」的认知，而抱持最坚定的，恰是尚未尝试过的人。真正的市政用途并不炫目：消除重复、劳动密集和危险的工作——会议转录、用廉价传感器监测水位、规划收运班次、监看林火。与此同时，底层的经济账已急剧改变。不久前还需要一份高额外国合同才能获得的能力，包括可用的城市数字孪生，如今已可用开放工具在内部做出原型。学会做原型的城市，即使最终仍选择采购，也能写出更好的合同。",
+    },
+  },
+  {
+    category: "Reality Check",
+    q: {
+      en: "Environment or economy — which does Thailand actually prioritise?",
+      th: "สิ่งแวดล้อมหรือเศรษฐกิจ — ไทยให้ความสำคัญกับอะไรกันแน่?",
+      zh: "环境还是经济——泰国究竟以何为先？",
+    },
+    a: {
+      en: "Government prioritises environment; residents prioritise income; and the distance between those two answers is the real governing problem. The state's position is defensible on its own terms — the highest GDP in the region is worth little if the air shortens life expectancy, and a city cannot draw clean water from its own canals the way a village can. But a household worried about tonight is not going to organise around a projection for 2035. Asking it to is not a communications failure, it is a sequencing failure. Long-term environmental programmes gain public support when short-term livelihood is already secure, which means the environmental agenda depends on the economic one being addressed first, not alongside.",
+      th: "ภาครัฐให้ความสำคัญกับสิ่งแวดล้อม ประชาชนให้ความสำคัญกับรายได้ และระยะห่างระหว่างสองคำตอบนี้คือโจทย์การบริหารที่แท้จริง จุดยืนของรัฐมีเหตุผลในตัวเอง เพราะต่อให้มี GDP สูงที่สุดในภูมิภาคก็มีความหมายน้อย หากอากาศทำให้อายุขัยสั้นลง และเมืองก็ตักน้ำสะอาดจากคลองของตัวเองแบบหมู่บ้านไม่ได้ แต่ครัวเรือนที่กังวลเรื่องมื้อค่ำคืนนี้ย่อมไม่รวมตัวกันเพื่อการคาดการณ์ปี 2578 การเรียกร้องเช่นนั้นไม่ใช่ความล้มเหลวด้านการสื่อสาร แต่เป็นความล้มเหลวด้านลำดับ โครงการสิ่งแวดล้อมระยะยาวจะได้รับแรงสนับสนุนเมื่อความเป็นอยู่ระยะสั้นมั่นคงแล้ว ซึ่งแปลว่าวาระสิ่งแวดล้อมขึ้นอยู่กับการแก้วาระเศรษฐกิจก่อน ไม่ใช่ไปพร้อมกัน",
+      zh: "政府以环境为先，居民以收入为先，而这两个答案之间的距离，才是真正的治理难题。国家的立场自有其道理——若空气会缩短寿命，区域内最高的GDP也价值有限；城市也无法像村庄那样从自家运河取用清洁水源。但一个为今晚发愁的家庭，不会围绕2035年的预测来组织行动。要求他们这样做，不是沟通的失败，而是次序的失败。长期环境议程要获得公众支持，前提是短期生计已经稳固——这意味着环境议程依赖于经济议程先被解决，而不是与之并行。",
     },
   },
 ];

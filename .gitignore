@@ -15,3 +15,7 @@ cea-submission/gallery/
 cea-submission/gdrive-pack/
 .webui_secret_key
 .firecrawl/
+
+# Local git worktrees for parallel agent branches — never committed,
+# never collected by vitest (see vitest.config.ts exclude).
+.worktrees/

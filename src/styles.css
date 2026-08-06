@@ -9785,7 +9785,9 @@ body:has(.bingo-page) { overflow: hidden; }
   gap: .35rem .45rem;
 }
 .knowledge-page .filter-btn {
-  min-height: 42px;
+  /* 44px, not 42 — this rule overrides the base .filter-btn and was landing
+   * every category chip 2px under the §11.8 tap-target floor. */
+  min-height: 44px;
   border: 1px solid transparent;
 }
 
