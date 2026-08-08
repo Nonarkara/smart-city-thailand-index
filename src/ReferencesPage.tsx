@@ -160,11 +160,11 @@ export default function ReferencesPage({ locale }: Props) {
         </p>
         <div className="photo-credits-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: ".5rem" }}>
           {WIKIMEDIA_PHOTO_CREDITS.map(credit => (
-            <div key={credit.cityId} className="photo-credit-card glass-card" style={{ padding: ".7rem", fontSize: ".65rem", lineHeight: 1.5 }}>
-              <div style={{ font: "700 .6rem var(--mono)", color: "var(--teal)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: ".2rem" }}>{credit.cityId}</div>
+            <div key={credit.cityId} className="photo-credit-card glass-card" style={{ padding: ".7rem", fontSize: "var(--text-micro)", lineHeight: 1.5 }}>
+              <div style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--teal)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: ".2rem" }}>{credit.cityId}</div>
               <div style={{ fontWeight: 600, marginBottom: ".15rem" }}>{credit.author}</div>
               <div style={{ color: "var(--3)", marginBottom: ".3rem" }}>{credit.license}</div>
-              <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: ".6rem", color: "var(--teal)" }}>
+              <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--text-micro)", color: "var(--teal)" }}>
                 {t(locale, { en: "Source on Wikimedia", th: "แหล่งที่มา Wikimedia", zh: "Wikimedia 原文件" })} →
               </a>
             </div>

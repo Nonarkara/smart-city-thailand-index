@@ -443,7 +443,7 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
             zh: "普吉不仅是在安装摄像头；它正在证明“AI 对抗沥青”的哲学。通过使用富士通的交通 AI，该市在没有拓宽任何道路的情况下，将主要环岛的拥堵减少了 15%。这就是高成熟度数字成果的定义。"
           })}
         </p>
-        <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--teal)' }}>
+        <div style={{ marginTop: '1rem', font: '700 var(--text-micro) var(--mono)', color: 'var(--teal)' }}>
           PER FUJITSU PROJECT REPORT: -15% CONGESTION | 0km NEW ASPHALT
         </div>
       </div>
@@ -461,7 +461,7 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
             zh: "孔敬的成功不在于中央预算，而在于地方韧性。通过 KKTS，该市的私营部门和 5 个市政当局资助了自己的智慧巴士，并正在推动轻轨建设。这种自下而上的所有权使孔敬成为指数中最具社区韧性的城市之一——一座几乎不依赖中央资金的 Alpha 级城市。"
           })}
         </p>
-        <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--alpha)' }}>
+        <div style={{ marginTop: '1rem', font: '700 var(--text-micro) var(--mono)', color: 'var(--alpha)' }}>
           MODEL: PPP 2.0 | OWNERSHIP: 100% LOCAL
         </div>
       </div>
@@ -479,7 +479,7 @@ function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
             zh: "旺湛谷的总体规划承诺了先进的数字基础设施——尽管城市尚未投入运营，其数字支柱仍获得55分。然而，我们的指数将其评为 Gamma。为什么？因为没有居民的智慧城市只是实验室，而不是城市。在“生活”维度赶上“数字”硬件之前，它仍然只是一个出色的原型。"
           })}
         </p>
-        <div style={{ marginTop: '1rem', font: '700 .6rem var(--mono)', color: 'var(--gamma)' }}>
+        <div style={{ marginTop: '1rem', font: '700 var(--text-micro) var(--mono)', color: 'var(--gamma)' }}>
           STATUS: PLANNED GAMMA | GAP: 0 RESIDENTS
         </div>
       </div>

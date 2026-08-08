@@ -518,7 +518,7 @@ export default function App() {
                 <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: "0.5rem", fontSize: "1rem" }}>
                   {locale === "th" ? "SCITI (sciti.nonarkara.org) -- แพลตฟอร์มข้อมูลเศรษฐกิจสร้างสรรค์ระดับจังหวัดของไทย" : locale === "zh" ? "SCITI (sciti.nonarkara.org) —— 泰国省级创意经济数据平台" : "SCITI (sciti.nonarkara.org) -- Thailand's Provincial Creative Economy Data Platform"}
                 </p>
-                <p style={{ fontWeight: 600, color: "var(--teal)", marginBottom: "1rem", fontSize: "0.85rem", letterSpacing: "0.05em", textTransform: "uppercase" as const }}>
+                <p style={{ fontWeight: 600, color: "var(--teal)", marginBottom: "1rem", fontSize: "var(--text-body)", letterSpacing: "0.05em", textTransform: "uppercase" as const }}>
                   {locale === "th" ? "การสมัคร CEA Creative Excellence Awards 2026 | รางวัลนโยบายเมืองสร้างสรรค์ (ประเภท 1.3)" : locale === "zh" ? "CEA 创意卓越奖 2026 申请 | 创意城市政策奖（1.3 类）" : "CEA Creative Excellence Awards 2026 Application | Creative City Policy Award (Category 1.3)"}
                 </p>
                 <p style={{ marginBottom: "1rem", color: "var(--3)", lineHeight: "1.6" }}>

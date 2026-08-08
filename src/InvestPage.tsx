@@ -686,13 +686,13 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               flexDirection: "column",
               gap: ".35rem",
             }}>
-              <span style={{ font: "700 .55rem var(--mono)", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--3)" }}>
+              <span style={{ font: "700 var(--text-micro) var(--mono)", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--3)" }}>
                 {translate(locale, s.label)}
               </span>
               <span style={{ font: "800 1.8rem var(--font-heading)", letterSpacing: "-.04em", color: "var(--ink)" }}>
                 {s.value}
               </span>
-              <span style={{ font: "500 .65rem var(--font)", color: "var(--2)" }}>
+              <span style={{ font: "500 var(--text-micro) var(--font)", color: "var(--2)" }}>
                 {translate(locale, s.sub)}
               </span>
             </div>
@@ -730,7 +730,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
                 <span style={{
-                  font: "700 .55rem var(--mono)",
+                  font: "700 var(--text-micro) var(--mono)",
                   color: c.tierColor,
                   padding: ".15rem .4rem",
                   background: c.tierColor === "var(--teal)" ? "var(--teal-glow)" : c.tierColor === "#9B5DE5" ? "rgba(155, 93, 229, .1)" : "rgba(217, 119, 6, .1)",
@@ -789,7 +789,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
                 <span style={{
-                  font: "700 .5rem var(--mono)",
+                  font: "700 var(--text-micro) var(--mono)",
                   color: "var(--teal)",
                   padding: ".12rem .35rem",
                   background: "var(--teal-glow)",
@@ -841,7 +841,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
                 <span style={{
-                  font: "700 .5rem var(--mono)",
+                  font: "700 var(--text-micro) var(--mono)",
                   color: severityColor(r.severity),
                   padding: ".12rem .35rem",
                   background: r.severity === "high" ? "rgba(229, 62, 62, .08)" : r.severity === "medium" ? "rgba(217, 119, 6, .08)" : "rgba(113, 113, 122, .08)",
@@ -851,7 +851,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                   {r.icon}
                 </span>
                 <span style={{
-                  font: "600 .5rem var(--mono)",
+                  font: "600 var(--text-micro) var(--mono)",
                   color: severityColor(r.severity),
                   letterSpacing: ".06em",
                   textTransform: "uppercase",
@@ -946,10 +946,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               borderBottom: i < sources.length - 1 ? "1px solid var(--5)" : "none",
               alignItems: "baseline",
             }}>
-              <span style={{ font: "600 .7rem var(--mono)", color: "var(--ink)", letterSpacing: "-.01em" }}>
+              <span style={{ font: "600 var(--text-micro) var(--mono)", color: "var(--ink)", letterSpacing: "-.01em" }}>
                 {s.name}
               </span>
-              <span style={{ font: "400 .7rem var(--font)", color: "var(--3)" }}>
+              <span style={{ font: "400 var(--text-micro) var(--font)", color: "var(--3)" }}>
                 {translate(locale, s.desc)}
               </span>
             </div>

@@ -82,7 +82,7 @@ export default function AsusPage({ locale, onNavigate }: Props) {
             "加速东盟可持续城市化"
           )}
         </h1>
-        <p style={{ fontSize: ".85rem", color: "var(--2, #444)", lineHeight: 1.7, maxWidth: "520px" }}>
+        <p style={{ fontSize: "var(--text-body)", color: "var(--2, #444)", lineHeight: 1.7, maxWidth: "520px" }}>
           {t(locale,
             "The ASUS Project Phase II partners UN-Habitat with 15 ASEAN cities across 8 countries. Thailand contributes Nakhon Si Thammarat (Solid Waste) and Chiang Mai (Safety & Security) — two cities already in our Smart City Index.",
             "โครงการ ASUS Phase II ร่วมมือ UN-Habitat กับ 15 เมืองอาเซียนใน 8 ประเทศ ไทยเข้าร่วมด้วยนครศรีธรรมราช (ขยะ) และเชียงใหม่ (ความปลอดภัย) — สองเมืองที่อยู่ในดัชนีของเราแล้ว",
