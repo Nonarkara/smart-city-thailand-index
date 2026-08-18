@@ -19,3 +19,5 @@ cea-submission/gdrive-pack/
 # Local git worktrees for parallel agent branches — never committed,
 # never collected by vitest (see vitest.config.ts exclude).
 .worktrees/
+.tmp/
+

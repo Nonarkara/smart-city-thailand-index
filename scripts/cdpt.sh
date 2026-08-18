@@ -27,21 +27,24 @@ bold(){ printf "\n\033[1m▸ %s\033[0m\n" "$*"; }
 ok(){   printf "  \033[32m✓\033[0m %s\n" "$*"; }
 die(){  printf "\n\033[31m✗ CDPT aborted: %s\033[0m\n" "$*" >&2; exit 1; }
 
+LOG_DIR="$ROOT/.tmp"
+mkdir -p "$LOG_DIR"
+
 # ── PREFLIGHT GATES — never ship red ─────────────────────────────────────────
 bold "Preflight — tests"
-npx vitest run >/tmp/cdpt-test.log 2>&1 || { tail -20 /tmp/cdpt-test.log; die "tests failed"; }
-ok "$(grep -oE 'Tests +[0-9]+ passed[^)]*\)' /tmp/cdpt-test.log | tail -1)"
+npx vitest run >"$LOG_DIR/cdpt-test.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-test.log"; die "tests failed"; }
+ok "$(grep -oE 'Tests +[0-9]+ passed[^)]*\)' "$LOG_DIR/cdpt-test.log" | tail -1)"
 
 bold "Preflight — lint"
-npm run lint >/tmp/cdpt-lint.log 2>&1 || { tail -20 /tmp/cdpt-lint.log; die "lint failed"; }
+npm run lint >"$LOG_DIR/cdpt-lint.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-lint.log"; die "lint failed"; }
 ok "eslint clean"
 
 bold "Preflight — build (base=/, the production artifact)"
-VITE_BASE_PATH=/ npm run build >/tmp/cdpt-build.log 2>&1 || { tail -30 /tmp/cdpt-build.log; die "build failed"; }
+VITE_BASE_PATH=/ npm run build >"$LOG_DIR/cdpt-build.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-build.log"; die "build failed"; }
 LOCAL_HASH="$(grep -oE '/static/index-[A-Za-z0-9_-]+\.js' dist/index.html | head -1)"
 [[ -n "$LOCAL_HASH" ]] || die "could not read built index chunk hash from dist/index.html"
 ok "built — main chunk $LOCAL_HASH"
-grep -q "Generated 118 city OG pages" /tmp/cdpt-build.log && ok "OG pages + sitemap + cities.json generated"
+grep -q "Generated 118 city OG pages" "$LOG_DIR/cdpt-build.log" && ok "OG pages + sitemap + cities.json generated"
 
 # ── C — commit ───────────────────────────────────────────────────────────────
 if [[ -n "$MSG" ]]; then
