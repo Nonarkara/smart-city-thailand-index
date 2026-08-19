@@ -32,12 +32,12 @@ export const REGION_LABELS: Record<Locale, Record<Region | "all", string>> = {
   },
   th: {
     all: "ทั้งหมด",
-    bangkok: "กรุงเทพ",
-    central: "กลาง",
-    north: "เหนือ",
+    bangkok: "กรุงเทพฯ",
+    central: "ภาคกลาง",
+    north: "ภาคเหนือ",
     northeast: "อีสาน",
-    east: "ตะวันออก",
-    south: "ใต้",
+    east: "ภาคตะวันออก",
+    south: "ภาคใต้",
   },
   zh: {
     all: "全部",

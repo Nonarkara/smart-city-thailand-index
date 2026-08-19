@@ -99,7 +99,7 @@ const DATA_CONFIDENCE_LABELS = {
 } as const;
 
 const FINANCE_STRENGTH_LABELS: Record<"strong" | "moderate" | "thin", Record<Locale, string>> = {
-  strong: { en: "Strong", th: "ชัดเจน", zh: "强" },
+  strong: { en: "Strong", th: "แข็งแกร่ง", zh: "强" },
   moderate: { en: "Moderate", th: "ปานกลาง", zh: "中等" },
   thin: { en: "Thin", th: "บาง", zh: "弱" },
 };
