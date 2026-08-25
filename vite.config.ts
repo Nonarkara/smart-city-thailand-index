@@ -20,7 +20,16 @@ export default defineConfig(({ mode }) => {
           // leaving ~500 kB of react-dom inside the content-hashed index
           // chunk, so every content deploy re-downloaded React itself.
           manualChunks(id) {
-            if (id.includes("node_modules")) return "vendor";
+            if (!id.includes("node_modules")) return;
+            // d3-geo / topojson-client / world-atlas are imported only by
+            // GlobeMap, which is lazy and only reachable from /partners.
+            // Left in `vendor` they taxed every first paint — including the
+            // phone opening a shared /city/ link — with ~90 kB of map data
+            // nobody on that page renders.
+            if (/node_modules\/(?:\.pnpm\/)?(?:@types\+)?(?:d3-geo|topojson-client|topojson-specification|world-atlas)/.test(id)) {
+              return "globe";
+            }
+            return "vendor";
           },
         },
       },

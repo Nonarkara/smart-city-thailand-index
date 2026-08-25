@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useCitySummaries } from "./cityApi";
 import { getCityName, translate } from "./cityPresentation";
 import { THAILAND_BOUNDS, CITY_COORDS as coords, projectTo, esriTileUrl, tierColor } from "./mapUtils";
+import { REGIONS_ORDERED, REGION_LABELS } from "./regions";
 import type { Locale, SmartCity } from "./types";
 import { TIER_LABELS } from "./types";
 
@@ -23,16 +24,6 @@ const layerUrls: Record<MapLayer, string> = {
   base: esriTileUrl(B, W, H, "light"),
   satellite: esriTileUrl(B, W, H, "satellite"),
   terrain: esriTileUrl(B, W, H, "topo"),
-};
-
-const REGIONS: SmartCity["region"][] = ["north", "central", "northeast", "east", "south", "bangkok"];
-const REGION_LABELS: Record<SmartCity["region"], { en: string; th: string; zh: string }> = {
-  north: { en: "North", th: "ภาคเหนือ", zh: "北部" },
-  central: { en: "Central", th: "ภาคกลาง", zh: "中部" },
-  northeast: { en: "Isan", th: "อีสาน", zh: "东北部" },
-  east: { en: "East", th: "ภาคตะวันออก", zh: "东部" },
-  south: { en: "South", th: "ภาคใต้", zh: "南部" },
-  bangkok: { en: "BKK", th: "กรุงเทพฯ", zh: "曼谷" },
 };
 
 const LAYER_LABELS: Record<MapLayer, { en: string; th: string; zh: string }> = {
@@ -61,9 +52,9 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
 
   // Regional stats
   const regionStats = useMemo(() => {
-    return REGIONS.map(r => ({
+    return REGIONS_ORDERED.map(r => ({
       region: r,
-      label: translate(locale, REGION_LABELS[r]),
+      label: REGION_LABELS[locale][r],
       total: filtered.filter(c => c.region === r).length,
       alpha: filtered.filter(c => c.region === r && c.tier === "alpha").length,
       beta: filtered.filter(c => c.region === r && c.tier === "beta").length,

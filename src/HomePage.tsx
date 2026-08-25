@@ -463,12 +463,32 @@ export default function HomePage({ locale, onNavigate }: Props) {
         {/* ─── TOP 5 PHOTO PODIUM ─── */}
         {top5.length >= 5 && (() => {
           const leader = top5[0];
-          const cityQuickStats: Record<string, string[]> = {
-            phuket: ["GPP ฿492K/capita", "PM2.5 18.2 μg/m³", "88% hospitality", "72% digital adoption"],
-            samyan: ["GPP ฿628K/capita", "200+ startups", "82% digital score", "5G testbed live"],
-            "chiang-mai-old-town": ["300+ temple sensors", "PM2.5 46.1 μg/m³", "92% hospitality", "50+ AQ stations"],
-            "khon-kaen": ["LRT under construction", "Smart bus running", "GPP ฿155K/capita", "6 hospital network"],
-            "cmu-smart-city": ["30% energy reduction", "12 AI intersections", "500+ open datasets", "80% digital"],
+          const cityQuickStats: Record<string, Record<Locale, string[]>> = {
+            phuket: {
+              en: ["GPP ฿492K/capita", "PM2.5 18.2 μg/m³", "88% hospitality", "72% digital adoption"],
+              th: ["GPP ฿492K/คน", "PM2.5 18.2 μg/m³", "อัธยาศัย 88%", "การยอมรับดิจิทัล 72%"],
+              zh: ["人均GPP ฿492K", "PM2.5 18.2 μg/m³", "接待 88%", "数字化采用率 72%"],
+            },
+            samyan: {
+              en: ["GPP ฿628K/capita", "200+ startups", "82% digital score", "5G testbed live"],
+              th: ["GPP ฿628K/คน", "สตาร์ทอัพ 200+ ราย", "คะแนนดิจิทัล 82%", "สนามทดสอบ 5G ใช้งานจริง"],
+              zh: ["人均GPP ฿628K", "初创企业 200+", "数字得分 82%", "5G 试验床已上线"],
+            },
+            "chiang-mai-old-town": {
+              en: ["300+ temple sensors", "PM2.5 46.1 μg/m³", "92% hospitality", "50+ AQ stations"],
+              th: ["เซนเซอร์วัด 300+ จุด", "PM2.5 46.1 μg/m³", "อัธยาศัย 92%", "สถานีวัดอากาศ 50+ แห่ง"],
+              zh: ["寺庙传感器 300+", "PM2.5 46.1 μg/m³", "接待 92%", "空气质量站 50+"],
+            },
+            "khon-kaen": {
+              en: ["LRT under construction", "Smart bus running", "GPP ฿155K/capita", "6 hospital network"],
+              th: ["LRT กำลังก่อสร้าง", "รถบัสอัจฉริยะวิ่งแล้ว", "GPP ฿155K/คน", "เครือข่ายโรงพยาบาล 6 แห่ง"],
+              zh: ["轻轨建设中", "智慧巴士已运行", "人均GPP ฿155K", "6 家医院网络"],
+            },
+            "cmu-smart-city": {
+              en: ["30% energy reduction", "12 AI intersections", "500+ open datasets", "80% digital"],
+              th: ["ลดพลังงาน 30%", "ทางแยก AI 12 แห่ง", "ชุดข้อมูลเปิด 500+", "ดิจิทัล 80%"],
+              zh: ["节能 30%", "AI 路口 12 处", "开放数据集 500+", "数字化 80%"],
+            },
           };
           const leaderPhoto = getCityPhotoAsset(leader);
           return (
@@ -496,7 +516,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                       </div>
                     </div>
                     <div className="podium-photo-stats">
-                      {(cityQuickStats[leader.id] ?? []).map((stat, i) => (
+                      {(cityQuickStats[leader.id]?.[locale] ?? []).map((stat, i) => (
                         <span key={i} className="podium-photo-stat">{stat}</span>
                       ))}
                     </div>
@@ -521,7 +541,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                           <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
                           <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
                           <div className="podium-photo-card-stats">
-                            {(cityQuickStats[city.id] ?? []).slice(0, 2).map((stat, j) => (
+                            {(cityQuickStats[city.id]?.[locale] ?? []).slice(0, 2).map((stat, j) => (
                               <span key={j} className="podium-photo-stat">{stat}</span>
                             ))}
                           </div>
