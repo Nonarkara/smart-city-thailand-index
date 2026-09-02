@@ -124,9 +124,9 @@ export default function AsusPage({ locale, onNavigate }: Props) {
             { step: "04", title: { en: "Proposal", th: "ข้อเสนอ", zh: "方案" }, desc: { en: "Theory of Change, MEL framework, financing plan", th: "ทฤษฎีการเปลี่ยนแปลง กรอบ MEL และแผนการเงิน", zh: "变革理论、MEL 框架与融资计划" } },
           ].map(s => (
             <div key={s.step} style={{ padding: ".7rem .6rem", borderRight: "1px solid var(--5, #E5E5E5)" }}>
-              <div style={{ font: "700 .85rem var(--mono, monospace)", color: "var(--teal, #2BBAA0)", marginBottom: ".15rem" }}>{s.step}</div>
-              <div style={{ fontWeight: 700, fontSize: "var(--text-micro)", marginBottom: ".15rem" }}>{t(locale, s.title.en, s.title.th, s.title.zh)}</div>
-              <div style={{ fontSize: "var(--text-micro)", color: "var(--2, #444)", lineHeight: 1.4 }}>{t(locale, s.desc.en, s.desc.th, s.desc.zh)}</div>
+              <div style={{ font: "700 var(--text-body) var(--mono, monospace)", color: "var(--teal, #2BBAA0)", marginBottom: ".15rem" }}>{s.step}</div>
+              <div style={{ fontWeight: 700, fontSize: "var(--text-body)", marginBottom: ".15rem" }}>{t(locale, s.title.en, s.title.th, s.title.zh)}</div>
+              <div style={{ fontSize: "var(--text-body)", color: "var(--2, #444)", lineHeight: 1.4 }}>{t(locale, s.desc.en, s.desc.th, s.desc.zh)}</div>
             </div>
           ))}
         </div>

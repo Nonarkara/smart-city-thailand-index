@@ -277,7 +277,7 @@ export default function StoryPage({ locale, onNavigate }: Props) {
         <div className="story-shift-grid" style={{ borderTop: "2px solid var(--ink)", padding: "1rem 0" }}>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0", borderRight: "1px solid var(--5)" }}>
             <h3 style={{ fontSize: "var(--text-body)" }}>{translate(locale, { en: "1 · Go there", th: "1 · ไปให้ถึงพื้นที่", zh: "1 · 亲自到场" })}</h3>
-            <p style={{ fontSize: "var(--text-micro)" }}>
+            <p style={{ fontSize: "var(--text-body)" }}>
               {translate(locale, {
                 en: "Thailand has roughly 7,000 local administrative organisations. Over eight years of the programme, about half have been visited in person — by train, by bus, staying a week, eating and living in the community. Pain points do not survive a questionnaire; they surface on the fourth day.",
                 th: "ไทยมีองค์กรปกครองส่วนท้องถิ่นราว 7,000 แห่ง ตลอดแปดปีของโครงการ ได้ลงพื้นที่จริงไปแล้วราวครึ่งหนึ่ง ทั้งโดยรถไฟ รถโดยสาร พักค้างเป็นสัปดาห์ กินและใช้ชีวิตอยู่กับชุมชน ปัญหาที่แท้จริงไม่ปรากฏในแบบสอบถาม แต่โผล่ขึ้นมาในวันที่สี่",
@@ -287,7 +287,7 @@ export default function StoryPage({ locale, onNavigate }: Props) {
           </div>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0", borderRight: "1px solid var(--5)" }}>
             <h3 style={{ fontSize: "var(--text-body)" }}>{translate(locale, { en: "2 · Find the repeat", th: "2 · หาสิ่งที่ซ้ำ", zh: "2 · 找出重复项" })}</h3>
-            <p style={{ fontSize: "var(--text-micro)" }}>
+            <p style={{ fontSize: "var(--text-body)" }}>
               {translate(locale, {
                 en: "One city's problem is a case. The same problem in forty cities is a policy. The work between the two is pattern-finding, and it is the step that a central master plan skips — which is why its solutions fit the plan rather than the place.",
                 th: "ปัญหาของเมืองเดียวคือกรณีศึกษา ปัญหาเดียวกันในสี่สิบเมืองคือนโยบาย งานที่อยู่ตรงกลางคือการหาแบบแผนร่วม และเป็นขั้นที่แผนแม่บทจากส่วนกลางข้ามไป จึงได้คำตอบที่เข้ากับแผน มากกว่าเข้ากับพื้นที่",
@@ -297,7 +297,7 @@ export default function StoryPage({ locale, onNavigate }: Props) {
           </div>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0" }}>
             <h3 style={{ fontSize: "var(--text-body)" }}>{translate(locale, { en: "3 · Then write the policy", th: "3 · แล้วจึงเขียนนโยบาย", zh: "3 · 然后才写政策" })}</h3>
-            <p style={{ fontSize: "var(--text-micro)" }}>
+            <p style={{ fontSize: "var(--text-body)" }}>
               {translate(locale, {
                 en: "Policy is still written top-down — it has to be. The change is sequencing: it is written after the evidence rather than before it. That single reordering is what separates the current programme from the one that launched in 2018.",
                 th: "นโยบายยังเขียนจากบนลงล่างอยู่ และต้องเป็นเช่นนั้น สิ่งที่เปลี่ยนคือลำดับ คือเขียนหลังมีหลักฐาน ไม่ใช่ก่อน การสลับลำดับเพียงข้อเดียวนี้คือสิ่งที่แยกโครงการในปัจจุบันออกจากโครงการที่เริ่มต้นในปี 2561",
@@ -315,15 +315,15 @@ export default function StoryPage({ locale, onNavigate }: Props) {
         <div className="story-shift-grid" style={{ borderTop: '2px solid var(--ink)', padding: '1rem 0' }}>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: '0', borderRadius: '0', borderRight: '1px solid var(--5)' }}>
             <h3 style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "Logo Distribution → Evidence Mapping", th: "การแจกโลโก้ → การวางแผนหลักฐาน", zh: "Logo分发 → 证据映射" })}</h3>
-            <p style={{ fontSize: 'var(--text-micro)' }}>{translate(locale, { en: "Certification used to be the end goal. Now, it's just the starting line for auditable outcomes.", th: "การรับรองเคยเป็นเป้าหมายสูงสุด แต่ตอนนี้มันคือเพียงเส้นเริ่มต้นของผลลัพธ์ที่ตรวจสอบได้", zh: "认证曾是终极目标。现在，它只是可审计结果的起点。" })}</p>
+            <p style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "Certification used to be the end goal. Now, it's just the starting line for auditable outcomes.", th: "การรับรองเคยเป็นเป้าหมายสูงสุด แต่ตอนนี้มันคือเพียงเส้นเริ่มต้นของผลลัพธ์ที่ตรวจสอบได้", zh: "认证曾是终极目标。现在，它只是可审计结果的起点。" })}</p>
           </div>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: '0', borderRadius: '0', borderRight: '1px solid var(--5)' }}>
             <h3 style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "Technology Theater → Citizen Pain Points", th: "ละครเทคโนโลยี → จุดที่ประชาชนเดือนร้อน", zh: "技术表演 → 公民痛点" })}</h3>
-            <p style={{ fontSize: 'var(--text-micro)' }}>{translate(locale, { en: "Moving away from 'buying gadgets' to 'removing pain'. Every sensor must justify its utility.", th: "ย้ายหน้าจากการซื้ออุปกรณ์เป็นการแก้ปัญหา ทุกเซ็นเซอร์ต้องมีความรับผิดชอบ", zh: "从'购买小工具'转向'消除痛苦'。每个传感器都必须证明其效用。" })}</p>
+            <p style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "Moving away from 'buying gadgets' to 'removing pain'. Every sensor must justify its utility.", th: "ย้ายหน้าจากการซื้ออุปกรณ์เป็นการแก้ปัญหา ทุกเซ็นเซอร์ต้องมีความรับผิดชอบ", zh: "从'购买小工具'转向'消除痛苦'。每个传感器都必须证明其效用。" })}</p>
           </div>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: '0', borderRadius: '0' }}>
             <h3 style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "Central Planning → Local Grit", th: "แผนจากส่วนกลาง → พลังท้องถิ่น", zh: "中央规划 → 地方韧性" })}</h3>
-            <p style={{ fontSize: 'var(--text-micro)' }}>{translate(locale, { en: "From waiting for Bangkok to empowerment of local consortiums like KKTS for resilience.", th: "ย้ายหน้าจากการรอฟังคำสั่งจากกรุงเทพเพื่อเสริมพลังท้องถิ่นในการพัฒนาความยืดหยุ่น", zh: "从等待曼谷指令转向赋权地方联盟（如KKTS）以增强韧性。" })}</p>
+            <p style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "From waiting for Bangkok to empowerment of local consortiums like KKTS for resilience.", th: "ย้ายหน้าจากการรอฟังคำสั่งจากกรุงเทพเพื่อเสริมพลังท้องถิ่นในการพัฒนาความยืดหยุ่น", zh: "从等待曼谷指令转向赋权地方联盟（如KKTS）以增强韧性。" })}</p>
           </div>
         </div>
       </section>

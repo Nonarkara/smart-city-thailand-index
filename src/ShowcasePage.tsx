@@ -1168,7 +1168,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <h3 style={{ fontWeight: 700, margin: "0 0 0.5rem" }}>
                   {translate(locale, { en: "CAPEX-to-OPEX Transition", th: "การเปลี่ยนจาก CAPEX เป็น OPEX", zh: "建设支出向运营支出转型" })}
                 </h3>
-                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-micro)" }}>
+                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-body)" }}>
                   {translate(locale, {
                     en: "Instead of borrowing heavy capital for short-lived software, NST procures services as operational expenditure. Payments run on monthly per-student licenses or outcome-based triggers, keeping the budget elastic without accumulating stranded hardware debt.",
                     th: "แทนที่จะก่อหนี้กู้ยืมงบลงทุนไปกับซอฟต์แวร์ที่มีอายุการใช้งานสั้น นครฯ เลือกจัดซื้อในลักษณะค่าใช้จ่ายดำเนินงาน การจ่ายเงินรายเดือนตามจำนวนสิทธิ์ใช้งานต่อนักเรียนหรือตามผลสัมฤทธิ์ ทำให้งบประมาณยืดหยุ่นโดยไม่สะสมหนี้ฮาร์ดแวร์ค้างอยู่",
@@ -1182,7 +1182,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <h3 style={{ fontWeight: 700, margin: "0 0 0.5rem" }}>
                   {translate(locale, { en: "depa Digital Catalog", th: "แคตตาล็อกดิจิทัลของ depa", zh: "depa 数字名录" })}
                 </h3>
-                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-micro)" }}>
+                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-body)" }}>
                   {translate(locale, {
                     en: "NST procures via depa's Digital Catalog — a pre-vetted national registry of Thai tech vendors, service providers, and digital solutions. Combined with streamlined TOR templates, it cut procurement lead time from an average of 14 months in 2019 to 6.5 months in 2024, while removing compliance risk at the city level.",
                     th: "เทศบาลจัดซื้อผ่านแคตตาล็อกดิจิทัลของ depa ซึ่งเป็นทะเบียนแห่งชาติของผู้ให้บริการเทคโนโลยีไทย ผู้ให้บริการ และโซลูชันดิจิทัลที่ผ่านการคัดกรองล่วงหน้า เมื่อรวมกับการปรับแบบ TOR ให้กระชับ ช่วยลดระยะเวลาจัดซื้อจากเฉลี่ย 14 เดือนในปี 2562 เหลือ 6.5 เดือนในปี 2567 พร้อมลดความเสี่ยงด้านกฎระเบียบในระดับเมือง",
@@ -1196,7 +1196,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <h3 style={{ fontWeight: 700, margin: "0 0 0.5rem" }}>
                   {translate(locale, { en: "ASCN Financing Toolkit", th: "เครื่องมือการเงินของ ASCN", zh: "ASCN 融资工具包" })}
                 </h3>
-                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-micro)" }}>
+                <p style={{ color: "var(--2)", lineHeight: 1.5, margin: 0, fontSize: "var(--text-body)" }}>
                   {translate(locale, {
                     en: "NST maps each project onto the ASEAN Smart Cities Network toolkit's funding structures: grants for civic tech with no revenue, BOO for infrastructure with a private operator, and PPP for shared-cost services. Across the region, 75% of smart city projects are now in some stage of implementation — the toolkit keeps cities from over-relying on the wrong instrument.",
                     th: "นครฯ จับคู่แต่ละโครงการกับโครงสร้างการเงินในเครื่องมือของเครือข่ายเมืองอัจฉริยะอาเซียน: เงินอุดหนุนสำหรับเทคโนโลยีพลเมืองที่ไม่มีรายได้ BOO สำหรับโครงสร้างพื้นฐานที่มีผู้ดำเนินงานเอกชน และ PPP สำหรับบริการร่วมทุน ทั่วทั้งภูมิภาค 75% ของโครงการสมาร์ทซิตี้อยู่ระหว่างการดำเนินงานในขั้นใดขั้นหนึ่งแล้ว เครื่องมือนี้ช่วยไม่ให้เมืองพึ่งพาเครื่องมือที่ไม่ถูกต้อง",

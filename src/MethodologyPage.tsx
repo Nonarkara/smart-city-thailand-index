@@ -207,6 +207,7 @@ function DataFlowDiagram({ locale }: { locale: Locale }) {
   ];
 
   return (
+    <div className="methodology-flow-scroll">
     <svg viewBox="0 0 760 100" className="methodology-flow-svg" aria-label={t("Data flow diagram", "แผนภาพการไหลของข้อมูล", "数据流向图")}>
       {boxes.map((box, i) => (
         <g key={box.id}>
@@ -221,10 +222,11 @@ function DataFlowDiagram({ locale }: { locale: Locale }) {
           )}
         </g>
       ))}
-      <text x={20} y={97} fontFamily="var(--mono)" fontSize="7" fill="var(--3)" letterSpacing="0.05em">
+      <text x={20} y={97} fontFamily="var(--mono)" fontSize="8" fill="var(--3)" letterSpacing="0.05em">
         {t("Research judgment is applied in the first step only. Everything after is deterministic mathematics.", "วิจารณญาณวิจัยใช้ในขั้นแรกเท่านั้น ที่เหลือเป็นคณิตศาสตร์กำหนดแน่นอน", "研究判断仅用于第一步，此后全为确定性数学。")}
       </text>
     </svg>
+    </div>
   );
 }
 
@@ -240,6 +242,7 @@ function CompositeDiagram({ locale }: { locale: Locale }) {
   }));
 
   return (
+    <div className="methodology-flow-scroll">
     <svg viewBox="0 0 760 80" className="methodology-flow-svg" aria-label={t("Composite formula diagram", "แผนภาพสูตรคะแนนรวม", "综合分公式图")}>
       <text x={10} y={18} fontFamily="var(--mono)" fontSize="8" fontWeight="700" fill="var(--3)" letterSpacing="0.1em">{t("COMPOSITE", "คะแนนรวม", "综合分")}</text>
       <text x={100} y={18} fontFamily="var(--mono)" fontSize="8" fill="var(--3)"> = (</text>
@@ -257,13 +260,14 @@ function CompositeDiagram({ locale }: { locale: Locale }) {
         );
       })}
       <text x={746} y={18} fontFamily="var(--mono)" fontSize="8" fill="var(--3)">)</text>
-      <text x={10} y={48} fontFamily="var(--mono)" fontSize="7.5" fill="var(--2)">
+      <text x={10} y={48} fontFamily="var(--mono)" fontSize="8" fill="var(--2)">
         {t("÷ 100 → round to 0.1 → assign tier (α≥65 / β≥45 / γ<45)", "÷ 100 → ปัดหนึ่งตำแหน่ง → จัดระดับ (α≥65 / β≥45 / γ<45)", "÷ 100 → 保留一位小数 → 分配层级 (α≥65 / β≥45 / γ<45)")}
       </text>
-      <text x={10} y={68} fontFamily="var(--font)" fontSize="7.5" fill="var(--3)">
+      <text x={10} y={68} fontFamily="var(--font)" fontSize="8" fill="var(--3)">
         {t("Weights are fixed and public. The research team cannot adjust them per city.", "น้ำหนักคงที่และเปิดเผย ทีมวิจัยปรับไม่ได้ตามเมือง", "权重固定且公开，研究团队不能按城市调整。")}
       </text>
     </svg>
+    </div>
   );
 }
 
@@ -638,10 +642,10 @@ export default function MethodologyPage({ locale }: Props) {
           {evidenceHighlights.map(source => (
             <div key={source.id} className="source-card glass-card">
               <div className="source-card-name" style={{ fontSize: "var(--text-body)", fontWeight: 800 }}>{source.name}</div>
-              <div className="source-card-desc" style={{ fontSize: "var(--text-micro)", marginBottom: ".5rem" }}>
+              <div className="source-card-desc" style={{ marginBottom: ".5rem" }}>
                 {translate(locale, { en: source.descEn, th: source.descTh, zh: source.descZh })}
               </div>
-              <div style={{ fontSize: "var(--text-micro)", color: "var(--2)" }}>
+              <div style={{ fontSize: "var(--text-body)", color: "var(--2)" }}>
                 {translate(locale, { en: `Frequency: ${source.updateFrequency}`, th: `ความถี่: ${source.updateFrequency}`, zh: `频率：${source.updateFrequency}` })}
               </div>
             </div>
@@ -649,10 +653,10 @@ export default function MethodologyPage({ locale }: Props) {
           {platformHighlights.map(source => (
             <div key={source.id} className="source-card glass-card">
               <div className="source-card-name" style={{ fontSize: "var(--text-body)", fontWeight: 800 }}>{locale === "th" ? source.nameTh : source.nameEn}</div>
-              <div className="source-card-desc" style={{ fontSize: "var(--text-micro)", marginBottom: ".5rem" }}>
+              <div className="source-card-desc" style={{ marginBottom: ".5rem" }}>
                 {translate(locale, { en: source.descEn, th: source.descTh, zh: platformHighlightZh[source.id] ?? source.descEn })}
               </div>
-              <div style={{ fontSize: "var(--text-micro)", color: "var(--2)" }}>
+              <div style={{ fontSize: "var(--text-body)", color: "var(--2)" }}>
                 {translate(locale, { en: `Mapped endpoint · ${source.frequency}`, th: `ปลายทางที่แม็ปไว้ · ${source.frequency}`, zh: `已映射端点 · ${source.frequency}` })}
               </div>
             </div>
@@ -707,7 +711,7 @@ export default function MethodologyPage({ locale }: Props) {
         </p>
 
         <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>{t("The Moneyball Score: Composite", "คะแนน Moneyball: การคำนวณรวม", "Moneyball评分：综合计算")}</h3>
-        <p style={{ fontSize: "var(--text-micro)", color: "var(--3)", lineHeight: 1.6, marginBottom: "1rem", borderLeft: "2px solid var(--5, #E5E5E5)", paddingLeft: "0.75rem" }}>
+        <p style={{ fontSize: "var(--text-body)", color: "var(--3)", lineHeight: 1.6, marginBottom: "1rem", borderLeft: "2px solid var(--5, #E5E5E5)", paddingLeft: "0.75rem" }}>
           {translate(locale, {
             en: "Note: the SCITI index score is the 7-pillar composite described above. The Moneyball Score below is a separate, downloadable investment analysis built on top of the index — it is not the index score itself.",
             th: "หมายเหตุ: คะแนนดัชนี SCITI คือคะแนนรวม 7 เสาหลักที่อธิบายไว้ด้านบน คะแนน Moneyball ด้านล่างเป็นการวิเคราะห์เพื่อการลงทุนแบบดาวน์โหลดแยกต่างหากที่สร้างต่อยอดจากดัชนี ไม่ใช่คะแนนดัชนี",

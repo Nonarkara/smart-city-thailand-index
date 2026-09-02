@@ -200,7 +200,7 @@ export default function GeminiChat({ locale }: Props) {
               "เพื่อความปลอดภัย ผู้ช่วยตัวเลือกนี้จะทำงานด้วย Gemini API key ของคุณเองที่เก็บไว้ในเบราว์เซอร์นี้เท่านั้น ไม่มี key ของโครงการถูกฝังมากับเว็บไซต์",
               "出于安全考虑，这个可选助手只会使用你自己的 Gemini API key，并仅保存在当前浏览器中。站点本身不再内置项目密钥。"
             )}</p>
-            <p style={{ marginBottom: "1rem", fontSize: "var(--text-micro)", lineHeight: "1.4", opacity: 0.8, background: "rgba(0,0,0,0.2)", padding: "0.5rem" }}>
+            <p style={{ marginBottom: "1rem", fontSize: "var(--text-body)", lineHeight: "1.4", opacity: 0.8, background: "rgba(0,0,0,0.2)", padding: "0.5rem" }}>
               {t(
                 "How to get a free key: 1. Visit aistudio.google.com 2. Sign in 3. Click 'Get API key' 4. Create key in new project 5. Copy and paste here.",
                 "วิธีรับ Key ฟรี: 1. ไปที่ aistudio.google.com 2. ลงชื่อเข้าใช้ 3. คลิก 'Get API key' 4. สร้าง Key ในโปรเจกต์ใหม่ 5. คัดลอกมาวางที่นี่",

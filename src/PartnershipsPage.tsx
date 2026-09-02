@@ -411,7 +411,7 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
         <div className="story-shift-grid" style={{ borderTop: "2px solid var(--ink)", padding: "1rem 0" }}>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0", borderRight: "1px solid var(--5)" }}>
             <h3 style={{ fontSize: "var(--text-body)" }}>{t(locale, { en: "The integrator must be local", th: "ผู้รวมระบบต้องเป็นของไทย", zh: "系统集成商须为本地企业" })}</h3>
-            <p style={{ fontSize: "var(--text-micro)" }}>
+            <p style={{ fontSize: "var(--text-body)" }}>
               {t(locale, {
                 en: "Foreign technology underneath is entirely normal; a foreign vendor contracting directly with a municipality and supporting it remotely is not. The requirement is single-point accountability — the city calls one party when anything breaks. The United States, Japan and Korea apply comparable expectations.",
                 th: "เทคโนโลยีต่างชาติที่อยู่ชั้นล่างเป็นเรื่องปกติ แต่ผู้ขายต่างชาติที่ทำสัญญาตรงกับเทศบาลแล้วซัพพอร์ตจากระยะไกลนั้นไม่ใช่ ข้อกำหนดนี้คือความรับผิดชอบจุดเดียว เมืองโทรหาคนคนเดียวเมื่อมีอะไรเสีย สหรัฐอเมริกา ญี่ปุ่น และเกาหลีก็มีข้อกำหนดลักษณะเดียวกัน",
@@ -421,7 +421,7 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
           </div>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0", borderRight: "1px solid var(--5)" }}>
             <h3 style={{ fontSize: "var(--text-body)" }}>{t(locale, { en: "The data stays in Thailand", th: "ข้อมูลต้องอยู่ในไทย", zh: "数据须留在泰国境内" })}</h3>
-            <p style={{ fontSize: "var(--text-micro)" }}>
+            <p style={{ fontSize: "var(--text-body)" }}>
               {t(locale, {
                 en: "Data collected for a Thai government project is expected to reside on Thai soil — own facility or colocation, but inside the country. Plan the hosting decision at proposal stage; it is not a detail that can be settled after award.",
                 th: "ข้อมูลที่เก็บเพื่อโครงการภาครัฐไทยต้องอยู่บนแผ่นดินไทย จะเป็นศูนย์ข้อมูลของตนเองหรือโคโลเคชันก็ได้ แต่ต้องอยู่ในประเทศ ควรวางแผนเรื่องที่ตั้งของระบบตั้งแต่ขั้นยื่นข้อเสนอ ไม่ใช่รายละเอียดที่ค่อยตกลงหลังได้งาน",
@@ -431,7 +431,7 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
           </div>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: "0", borderRadius: "0" }}>
             <h3 style={{ fontSize: "var(--text-body)" }}>{t(locale, { en: "Drones need two registrations", th: "โดรนต้องขึ้นทะเบียนสองที่", zh: "无人机需两项登记" })}</h3>
-            <p style={{ fontSize: "var(--text-micro)" }}>
+            <p style={{ fontSize: "var(--text-body)" }}>
               {t(locale, {
                 en: "A drone must be registered with the NBTC as radio equipment and, if it carries a camera, with CAAT as an aircraft — both, and on possession rather than on first flight. Government public-safety use has wider latitude. Budget the permission timeline into the project plan.",
                 th: "โดรนต้องขึ้นทะเบียนกับ กสทช. ในฐานะเครื่องวิทยุคมนาคม และหากมีกล้องต้องขึ้นทะเบียนกับ CAAT ในฐานะอากาศยานด้วย ต้องทั้งสองอย่าง และมีผลตั้งแต่การครอบครอง ไม่ใช่ตอนบินครั้งแรก การใช้งานเพื่อความปลอดภัยสาธารณะของภาครัฐมีความยืดหยุ่นกว่า ควรเผื่อเวลาขออนุญาตไว้ในแผนโครงการ",

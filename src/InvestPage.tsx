@@ -510,27 +510,27 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             <div className="invest-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
                 <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "GPP & GPP/Capita", th: "GPP และ GPP ต่อหัว", zh: "GPP与人均GPP" })}</h4>
-                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Provincial productivity and economic scale (NESDC).", th: "ผลิตภาพและขนาดเศรษฐกิจระดับจังหวัด (สภาพัฒน์)", zh: "省级生产力和经济规模 (NESDC)。" })}</p>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Provincial productivity and economic scale (NESDC).", th: "ผลิตภาพและขนาดเศรษฐกิจระดับจังหวัด (สภาพัฒน์)", zh: "省级生产力和经济规模 (NESDC)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
                 <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "BOI Incentive Zones", th: "เขตส่งเสริมการลงทุน BOI", zh: "BOI投资优惠区" })}</h4>
-                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Tax holidays and special privileges (BOI).", th: "การยกเว้นภาษีและสิทธิพิเศษ (BOI)", zh: "免税期和特殊待遇 (BOI)。" })}</p>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Tax holidays and special privileges (BOI).", th: "การยกเว้นภาษีและสิทธิพิเศษ (BOI)", zh: "免税期和特殊待遇 (BOI)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
                 <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Minimum Wage Tiers", th: "ระดับค่าแรงขั้นต่ำ", zh: "最低工资层级" })}</h4>
-                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Labor cost benchmarking (Min. of Labour).", th: "การเปรียบเทียบต้นทุนแรงงาน (กระทรวงแรงงาน)", zh: "劳动力成本基准 (劳工部)。" })}</p>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Labor cost benchmarking (Min. of Labour).", th: "การเปรียบเทียบต้นทุนแรงงาน (กระทรวงแรงงาน)", zh: "劳动力成本基准 (劳工部)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
                 <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Infrastructure Scorecard", th: "ตารางคะแนนโครงสร้างพื้นฐาน", zh: "基础设施记分卡" })}</h4>
-                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Airport, rail, port, 5G, and broadband.", th: "สนามบิน รถไฟ ท่าเรือ 5G และบรอดแบนด์", zh: "机场、铁路、港口、5G和宽带。" })}</p>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Airport, rail, port, 5G, and broadband.", th: "สนามบิน รถไฟ ท่าเรือ 5G และบรอดแบนด์", zh: "机场、铁路、港口、5G和宽带。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
                 <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Creative Economy Heatmap", th: "แผนที่ความเข้มเศรษฐกิจสร้างสรรค์", zh: "创意经济热力图" })}</h4>
-                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "15 creative industries by province.", th: "15 อุตสาหกรรมสร้างสรรค์แยกตามจังหวัด", zh: "按省份划分的15个创意产业。" })}</p>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "15 creative industries by province.", th: "15 อุตสาหกรรมสร้างสรรค์แยกตามจังหวัด", zh: "按省份划分的15个创意产业。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
                 <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Moneyball Score", th: "คะแนน Moneyball", zh: "Moneyball评分" })}</h4>
-                <p style={{ fontSize: "var(--text-micro)", color: "var(--3)" }}>{translate(locale, { en: "Composite: growth + cost + infra + creative.", th: "คะแนนรวม: การเติบโต + ต้นทุน + โครงสร้างพื้นฐาน + สร้างสรรค์", zh: "综合：增长 + 成本 + 基础设施 + 创意。" })}</p>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Composite: growth + cost + infra + creative.", th: "คะแนนรวม: การเติบโต + ต้นทุน + โครงสร้างพื้นฐาน + สร้างสรรค์", zh: "综合：增长 + 成本 + 基础设施 + 创意。" })}</p>
               </div>
             </div>
 
@@ -689,7 +689,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               <span style={{ font: "700 var(--text-micro) var(--mono)", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--3)" }}>
                 {translate(locale, s.label)}
               </span>
-              <span style={{ font: "800 1.8rem var(--font-heading)", letterSpacing: "-.04em", color: "var(--ink)" }}>
+              <span style={{ font: "800 var(--text-display) var(--font-heading)", letterSpacing: "-.04em", color: "var(--ink)" }}>
                 {s.value}
               </span>
               <span style={{ font: "500 var(--text-micro) var(--font)", color: "var(--2)" }}>
@@ -740,10 +740,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                   {c.tier}
                 </span>
               </div>
-              <h3 style={{ font: "700 .95rem var(--font-heading)", letterSpacing: "-.02em", color: "var(--ink)" }}>
+              <h3 style={{ font: "700 var(--text-body) var(--font-heading)", letterSpacing: "-.02em", color: "var(--ink)" }}>
                 {translate(locale, c.headline)}
               </h3>
-              <p style={{ font: "400 .78rem var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
+              <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
                 {translate(locale, c.body)}
               </p>
             </div>
@@ -798,11 +798,11 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                 }}>
                   {m.tag}
                 </span>
-                <span style={{ font: "700 .82rem var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em" }}>
+                <span style={{ font: "700 var(--text-body) var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em" }}>
                   {translate(locale, m.name)}
                 </span>
               </div>
-              <p style={{ font: "400 .75rem var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
+              <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
                 {translate(locale, m.desc)}
               </p>
             </div>
@@ -859,10 +859,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                   {severityLabel(r.severity)}
                 </span>
               </div>
-              <h3 style={{ font: "700 .9rem var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em" }}>
+              <h3 style={{ font: "700 var(--text-body) var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em" }}>
                 {translate(locale, r.title)}
               </h3>
-              <p style={{ font: "400 .75rem var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
+              <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
                 {translate(locale, r.body)}
               </p>
             </div>
@@ -899,17 +899,17 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               alignItems: "start",
             }}>
               <span style={{
-                font: "800 1.3rem var(--font-heading)",
+                font: "800 var(--text-display) var(--font-heading)",
                 color: "var(--3)",
                 lineHeight: 1,
               }}>
                 {item.num}
               </span>
               <div>
-                <h3 style={{ font: "700 .9rem var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em", marginBottom: ".3rem" }}>
+                <h3 style={{ font: "700 var(--text-body) var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em", marginBottom: ".3rem" }}>
                   {translate(locale, item.title)}
                 </h3>
-                <p style={{ font: "400 .78rem var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
+                <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
                   {translate(locale, item.desc)}
                 </p>
               </div>

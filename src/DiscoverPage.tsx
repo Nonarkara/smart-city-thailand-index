@@ -161,7 +161,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
 
       {/* ─── MISSING CITY CTA ─── */}
       <section className="section" style={{ marginBottom: "2rem", textAlign: "center" }}>
-        <p style={{ font: "500 .72rem var(--font)", color: "var(--2)", marginBottom: ".4rem" }}>
+        <p style={{ font: "500 var(--text-micro) var(--font)", color: "var(--2)", marginBottom: ".4rem" }}>
           {translate(locale, {
             en: "Is your city missing?",
             th: "เมืองของคุณไม่อยู่ในนี้?",
