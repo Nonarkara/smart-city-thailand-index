@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: 24
       - run: npm ci || npm install
+      # Same gates as scripts/cdpt.sh — the Pages mirror must never publish
+      # a build that CDPT would have refused.
+      - run: npm run lint
+      - run: npm run test:run
       - run: npm run build
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3

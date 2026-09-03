@@ -43,7 +43,12 @@ bold "Preflight — build (base=/, the production artifact)"
 VITE_BASE_PATH=/ npm run build >"$LOG_DIR/cdpt-build.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-build.log"; die "build failed"; }
 LOCAL_HASH="$(grep -oE '/static/index-[A-Za-z0-9_-]+\.js' dist/index.html | head -1)"
 [[ -n "$LOCAL_HASH" ]] || die "could not read built index chunk hash from dist/index.html"
-ok "built — main chunk $LOCAL_HASH"
+# The vendor chunk is modulepreloaded from index.html; a partial deploy that
+# serves a new index against a stale vendor would pass the main-hash check
+# while shipping two React versions. Assert both.
+LOCAL_VENDOR="$(grep -oE '/static/vendor-[A-Za-z0-9_-]+\.js' dist/index.html | head -1)"
+[[ -n "$LOCAL_VENDOR" ]] || die "could not read built vendor chunk hash from dist/index.html"
+ok "built — main chunk $LOCAL_HASH · vendor $LOCAL_VENDOR"
 grep -q "Generated 118 city OG pages" "$LOG_DIR/cdpt-build.log" && ok "OG pages + sitemap + cities.json generated"
 
 # ── C — commit ───────────────────────────────────────────────────────────────
@@ -69,14 +74,15 @@ bold "Deploy — wrangler pages deploy → $CF_PROJECT"
 npx wrangler pages deploy dist --project-name="$CF_PROJECT" --branch=main --commit-dirty=true 2>&1 | grep -E "Success|Deployment complete|peek" | sed 's/^/  /'
 
 # ── T — test on the web ──────────────────────────────────────────────────────
-bold "Test — waiting for $LOCAL_HASH to go live on $DOMAIN"
+bold "Test — waiting for $LOCAL_HASH + $LOCAL_VENDOR to go live on $DOMAIN"
 live=0
-for i in $(seq 1 20); do
-  if curl -fsS "$DOMAIN/" 2>/dev/null | grep -q "$LOCAL_HASH"; then live=1; break; fi
+for i in $(seq 1 40); do
+  html="$(curl -fsS "$DOMAIN/" 2>/dev/null || true)"
+  if grep -q "$LOCAL_HASH" <<<"$html" && grep -q "$LOCAL_VENDOR" <<<"$html"; then live=1; break; fi
   sleep 3
 done
-[[ "$live" = 1 ]] || die "live site did not serve the freshly-built chunk within ~60s"
-ok "production is serving the new build ($LOCAL_HASH)"
+[[ "$live" = 1 ]] || die "live site did not serve the freshly-built index + vendor chunks within ~120s"
+ok "production is serving the new build ($LOCAL_HASH · $LOCAL_VENDOR)"
 
 bold "Test — key routes"
 for path in "/" "/rankings" "/methodology" "/city/phuket/" "/sitemap.xml" "/data/cities.json" "/downloads/SCITI-2026-cities-dataset.csv"; do
