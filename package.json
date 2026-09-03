@@ -2,6 +2,7 @@
   "name": "smart-city-thailand-index",
   "private": true,
   "version": "1.0.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite --port 5188",
