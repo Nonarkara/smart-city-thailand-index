@@ -93,6 +93,8 @@ export default function GeminiChat({ locale }: Props) {
   const [apiKey, setApiKey] = useState<string>(getStoredGeminiKey);
   const [apiKeyDraft, setApiKeyDraft] = useState<string>(getStoredGeminiKey);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const keyInputRef = useRef<HTMLInputElement>(null);
   const { data: cities } = useCitySummaries();
   const systemPrompt = useRef("");
   const hasApiKey = apiKey.trim().length > 0;
@@ -113,6 +115,17 @@ export default function GeminiChat({ locale }: Props) {
   useEffect(() => {
     systemPrompt.current = buildContext(citySummaryPrompt, locale);
   }, [citySummaryPrompt, locale]);
+
+  // Dialog behaviour: focus the live input on open, close on Escape.
+  useEffect(() => {
+    if (!open) return;
+    (hasApiKey ? inputRef : keyInputRef).current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open, hasApiKey]);
 
   const persistApiKey = useCallback(() => {
     const nextKey = apiKeyDraft.trim();
@@ -176,7 +189,7 @@ export default function GeminiChat({ locale }: Props) {
 
   if (!open) {
     return (
-      <button className="chat-fab" onClick={() => setOpen(true)} title={t("Ask about Thai smart cities", "ถามเกี่ยวกับเมืองอัจฉริยะไทย", "询问泰国智慧城市")}>
+      <button className="chat-fab" onClick={() => setOpen(true)} aria-expanded={false} title={t("Ask about Thai smart cities", "ถามเกี่ยวกับเมืองอัจฉริยะไทย", "询问泰国智慧城市")}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>
@@ -185,11 +198,11 @@ export default function GeminiChat({ locale }: Props) {
   }
 
   return (
-    <div className="chat-panel">
+    <div className="chat-panel" role="dialog" aria-label={t("Smart City Assistant", "ผู้ช่วยเมืองอัจฉริยะ", "智慧城市助手")}>
       <div className="chat-header">
         <span className="chat-title">{t("Smart City Assistant", "ผู้ช่วยเมืองอัจฉริยะ", "智慧城市助手")}</span>
         <span className="chat-powered">{hasApiKey ? "Gemini" : "BYO key"}</span>
-        <button className="chat-close" onClick={() => setOpen(false)}>×</button>
+        <button className="chat-close" onClick={() => setOpen(false)} aria-label={t("Close", "ปิด", "关闭")}>×</button>
       </div>
 
       <div className="chat-messages" ref={scrollRef}>
@@ -208,6 +221,7 @@ export default function GeminiChat({ locale }: Props) {
               )}
             </p>
             <input
+              ref={keyInputRef}
               className="chat-input"
               type="password"
               value={apiKeyDraft}
@@ -257,6 +271,7 @@ export default function GeminiChat({ locale }: Props) {
 
       <div className="chat-input-row">
         <input
+          ref={inputRef}
           className="chat-input"
           value={input}
           onChange={e => setInput(e.target.value)}

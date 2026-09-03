@@ -662,7 +662,21 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                 })}
                 {sorted.length === 0 && (
                   <li className="rank-row-empty">
-                    {t({ en: "No cities match these filters.", th: "ไม่มีเมืองตรงกับตัวกรอง", zh: "无城市符合当前筛选。" })}
+                    <span style={{ display: "block", marginBottom: ".75rem" }}>
+                      {t({ en: "No cities match these filters.", th: "ไม่มีเมืองตรงกับตัวกรอง", zh: "无城市符合当前筛选。" })}
+                    </span>
+                    <button
+                      type="button"
+                      className="filter-chip"
+                      onClick={() => {
+                        setQuery("");
+                        setTierFilter("all");
+                        setStatusFilter("all");
+                        setRegionFilter("all");
+                      }}
+                    >
+                      {t({ en: "Clear filters", th: "ล้างตัวกรอง", zh: "清除筛选" })}
+                    </button>
                   </li>
                 )}
               </ol>

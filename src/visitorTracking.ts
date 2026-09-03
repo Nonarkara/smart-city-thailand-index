@@ -40,6 +40,9 @@ async function fetchGeo(): Promise<GeoData> {
 
 /** Track a page visit. Fires once per session. */
 export async function trackVisitor(page = "/") {
+  // Honour the browser's Do Not Track / Global Privacy Control opt-outs.
+  const nav = navigator as Navigator & { globalPrivacyControl?: boolean };
+  if (nav.doNotTrack === "1" || nav.globalPrivacyControl === true) return;
   if (!TRACKING_URL) return;
   if (sessionStorage.getItem("sciti_tracked")) return;
 

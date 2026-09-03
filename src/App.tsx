@@ -58,6 +58,28 @@ function getInitialTheme(): Theme {
   return "light";
 }
 
+// Route-chunk fallback: five hairline bars in the page column, so a lazy
+// page reads as arriving instead of popping in from blank. `.section` +
+// the inline gutter keep the bars on the same left edge as the content
+// that replaces them (`.loading-skeleton` alone pads to 0 on phones).
+function PageSkeleton({ locale }: { locale: Locale }) {
+  return (
+    <div
+      className="section loading-skeleton"
+      style={{ paddingInline: "var(--gutter)" }}
+      role="status"
+      aria-live="polite"
+      aria-label={locale === "th" ? "กำลังโหลดหน้า" : locale === "zh" ? "页面加载中" : "Loading page"}
+    >
+      <div className="skeleton-bar" />
+      <div className="skeleton-bar" />
+      <div className="skeleton-bar" />
+      <div className="skeleton-bar" />
+      <div className="skeleton-bar" />
+    </div>
+  );
+}
+
 // Top nav lives in src/TopbarNav.tsx — 5 grouped dropdowns
 // (Home · Rankings · Method · Stories · Network).
 
@@ -392,7 +414,7 @@ export default function App() {
       <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""} ${isCanvasRoute ? "page-frame-canvas" : ""}`} key={getRouteKey(route)}>
         {!isCanvasRoute && <PagePhotoHero route={route} locale={locale} />}
         <ErrorBoundary locale={locale}>
-          <Suspense fallback={<div className="loading" role="status" aria-live="polite" aria-label="Loading page" />}>
+          <Suspense fallback={<PageSkeleton locale={locale} />}>
             {route.kind === "rankings" ? (
               <RankingsPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "methodology" ? (
@@ -467,7 +489,7 @@ export default function App() {
               inboard of every other block on the page. */}
           <section className="newsletter-section" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "3rem 0", textAlign: "center" }}>
             <div className="section" style={{ maxWidth: "600px", margin: "0 auto" }}>
-              <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "0.5rem", color: "var(--ink)" }}>
+              <h3 style={{ fontSize: "var(--text-display)", marginBottom: "0.5rem", color: "var(--ink)" }}>
                 {locale === "th" ? "สมัครรับข้อมูลข่าวสาร" : locale === "zh" ? "订阅简报" : "Subscribe to SCITI Data Insights"}
               </h3>
               <p style={{ marginBottom: "1.5rem", color: "var(--2)" }}>

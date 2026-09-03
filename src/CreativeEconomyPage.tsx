@@ -34,8 +34,8 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
       </section>
 
       <section ref={section1Ref} className={`section reveal stagger-1 ${section1Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
-        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-lg)", lineHeight: "1.7" }}>
-          <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-xl)" }}>
+        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
+          <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-display)" }}>
             {translate(locale, {
               en: "SCITI goes deeper, mapping creative assets province by province so that Bangkok is no longer the default.",
               th: "SCITI เจาะลึกลงไปกว่านั้น โดยทำแผนที่สินทรัพย์เชิงสร้างสรรค์แบบรายจังหวัด เพื่อไม่ให้กรุงเทพฯ เป็นเพียงตัวเลือกเดียวอีกต่อไป",
@@ -46,8 +46,8 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
       </section>
 
       <section ref={section2Ref} className={`section reveal stagger-2 ${section2Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
-        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-lg)", lineHeight: "1.7" }}>
-          <h2 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>
+        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
+          <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
             {translate(locale, { en: "How SCITI Maps Creative Assets", th: "SCITI ทำแผนที่สินทรัพย์เชิงสร้างสรรค์อย่างไร", zh: "SCITI如何绘制创意资产地图" })}
           </h2>
           <p style={{ marginBottom: "1.5rem" }}>
@@ -79,8 +79,8 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
       </section>
 
       <section ref={section3Ref} className={`section reveal stagger-3 ${section3Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
-        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-lg)", lineHeight: "1.7" }}>
-          <h2 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>
+        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
+          <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
             {translate(locale, { en: "CEA & UNESCO Alignment", th: "ความสอดคล้องกับ CEA และ ยูเนสโก", zh: "与CEA和联合国教科文组织的协同" })}
           </h2>
           <p style={{ marginBottom: "1.5rem" }}>
@@ -102,7 +102,7 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
 
       <section ref={section4Ref} className={`section reveal stagger-4 ${section4Visible ? "visible" : ""}`} style={{ marginBottom: "5rem" }}>
         <div className="callout-card glass-card shadow-premium" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center", padding: "3rem 2rem" }}>
-          <p style={{ fontSize: "var(--text-lg)", marginBottom: "1rem" }}>
+          <p style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
             {translate(locale, {
               en: "In a country where cultural heritage data has been \"limited and dispersed across various institutes and agencies, stored in formats that pose challenges to public access,\" SCITI is the connective tissue. We operationalize UNESCO's Culture|2030 Indicators at provincial scale.",
               th: "ในประเทศที่ข้อมูลมรดกทางวัฒนธรรมมีจำกัดและกระจัดกระจายตามสถาบันต่างๆ จัดเก็บในรูปแบบที่ยากต่อการเข้าถึงของสาธารณะ SCITI คือเนื้อเยื่อเกี่ยวพันที่เชื่อมโยงสิ่งเหล่านี้เข้าด้วยกัน เรานำตัวชี้วัด Culture|2030 ของยูเนสโกมาปฏิบัติจริงในระดับจังหวัด",

@@ -552,7 +552,7 @@ ul, ol { list-style: none; }
 /* ─── HERO ─── */
 .hero { padding: 3.5rem 0 1.25rem; }
 .hero-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; align-items: start; }
-.hero-title { font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 800; line-height: .92; letter-spacing: -.045em; margin-bottom: .85rem; }
+.hero-title { font-size: clamp(var(--text-display), 5.5vw, 4rem); font-weight: 800; line-height: .92; letter-spacing: -.045em; margin-bottom: .85rem; }
 .hero-strapline { font-size: var(--text-body); line-height: 1.6; color: var(--2); max-width: 500px; letter-spacing: -.005em; }
 .hero-actions { display: flex; gap: .4rem; margin-top: 1.25rem; }
 .cta-button {
@@ -949,7 +949,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   font: 600 var(--text-micro) var(--mono);
 }
 .depa-official-partnerships {
-  font-size: var(--text-micro);
+  font-size: var(--text-body);
   color: var(--3);
   line-height: 1.55;
   margin-bottom: .55rem;
@@ -1245,7 +1245,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .threshold-gamma .threshold-symbol { color: var(--gamma); }
 .threshold-name { font-weight: 700; width: 3rem; font-size: var(--text-micro); }
 .threshold-range { font: 700 .75rem var(--mono); width: 3.5rem; }
-.threshold-desc { color: var(--2); font-size: var(--text-micro); }
+.threshold-desc { color: var(--2); font-size: var(--text-body); }
 .source-list { margin-bottom: 1.25rem; border-top: 2px solid var(--ink); }
 .source-list li { padding: .35rem 0; border-bottom: 1px solid var(--5); font-size: var(--text-micro); color: var(--2); }
 .source-list strong { color: var(--ink); }
@@ -1751,7 +1751,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .podium-leader-province { font-size: var(--text-micro); color: var(--3); }
 .podium-leader-scoreblock { text-align: right; }
 .podium-leader-score {
-  font: 700 2.5rem var(--mono); letter-spacing: -.04em; color: var(--gold); line-height: 1;
+  font: 700 var(--text-display) var(--mono); letter-spacing: -.04em; color: var(--gold); line-height: 1;
 }
 .podium-leader-bars .podium-bar-track { height: 28px; }
 .podium-runners {
@@ -2092,7 +2092,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .showcase-progress-svg { width: 100%; display: block; overflow: visible; }
 .showcase-progress-delta { font: 700 1rem var(--mono); color: var(--gold-text, #946B0C); margin-top: .5rem; }
 .showcase-zero-stat { display: flex; flex-direction: column; justify-content: center; padding-top: .25rem; }
-.showcase-zero-num { font: 700 2.8rem/1 var(--mono); color: var(--gold-text, #946B0C); }
+.showcase-zero-num { font: 700 var(--text-display)/1 var(--mono); color: var(--gold-text, #946B0C); }
 .showcase-zero-sub { font: 400 0.72rem/1.4 var(--font); color: var(--3); margin-top: .35rem; }
 
 /* Showcase milestones timeline */
@@ -3211,7 +3211,7 @@ h2, h3 { font-family: var(--font); }
   margin-bottom: .75rem;
 }
 .cc-bankability-number {
-  font: 700 2.5rem var(--mono); letter-spacing: -.04em; color: var(--gold);
+  font: 700 var(--text-display) var(--mono); letter-spacing: -.04em; color: var(--gold);
 }
 .cc-bankability-label {
   font: 500 .85rem var(--mono); color: var(--4);
@@ -3273,7 +3273,7 @@ h2, h3 { font-family: var(--font); }
   max-width: 760px;
   margin: .35rem 0 1rem;
   color: var(--2);
-  font-size: var(--text-micro);
+  font-size: var(--text-body);
   line-height: 1.65;
 }
 .program-logo-guideline {
@@ -3293,7 +3293,7 @@ h2, h3 { font-family: var(--font); }
 .program-logo-guideline-copy p {
   max-width: 520px;
   color: var(--2);
-  font-size: var(--text-micro);
+  font-size: var(--text-body);
   line-height: 1.65;
 }
 .program-guideline-actions {
@@ -3500,7 +3500,7 @@ h2, h3 { font-family: var(--font); }
   text-shadow: 0 1px 4px rgba(0,0,0,.5);
 }
 .podium-photo-score {
-  font: 700 2.8rem var(--mono); color: var(--gold);
+  font: 700 var(--text-display) var(--mono); color: var(--gold);
   letter-spacing: -.04em; line-height: 1;
   text-shadow: 0 1px 6px rgba(0,0,0,.4);
 }
@@ -3648,7 +3648,7 @@ h2, h3 { font-family: var(--font); }
   color: rgba(255,255,255,.72); margin-top: .2rem;
 }
 .action-atlas-stage-score { text-align: right; color: #fff; }
-.action-atlas-stage-score span { display: block; font: 700 2.2rem var(--mono); color: var(--gold); line-height: 1; }
+.action-atlas-stage-score span { display: block; font: 700 var(--text-display) var(--mono); color: var(--gold); line-height: 1; }
 .action-atlas-stage-score small {
   font: 700 var(--text-micro) var(--mono); letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.72);
 }
@@ -3762,7 +3762,7 @@ h2, h3 { font-family: var(--font); }
   display: flex; align-items: center; justify-content: flex-end;
   padding-right: .2rem; height: 100%;
   text-shadow: 0 1px 2px rgba(0,0,0,.3);
-  white-space: nowrap; overflow: hidden;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   min-width: 0;
 }
 /* Hide label if bar is too narrow (score < 30) */
@@ -5646,7 +5646,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 .audit-domain-description {
   margin-top: .65rem;
-  font: 400 var(--text-micro)/1.55 var(--font);
+  font: 400 var(--text-body)/1.55 var(--font);
   color: var(--2);
 }
 
@@ -5905,7 +5905,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   body { font-size: var(--text-body); }
   .bar-score-label { display: none; }
   .cinematic-hero-title { font-size: var(--text-display)!important; }
-  .cinematic-hero-why { font-size: var(--text-micro); max-width: 100%; }
+  .cinematic-hero-why { font-size: var(--text-body); max-width: 100%; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -5965,6 +5965,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   border-left: 3px solid var(--depa-amber, #FFC600);
   letter-spacing: .01em;
 }
+/* The formula is one long unbroken token — without this it ran to ~900px and
+   was sliced at the viewport edge on phones. */
+.transparency-formula code { white-space: pre-wrap; overflow-wrap: anywhere; display: block; }
 .transparency-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
 .transparency-step {
   display: flex; gap: .4rem; padding: .85rem;
@@ -6037,7 +6040,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 /* ─── City Analytics: Developability + Global Comparison + Steps + Financing ─── */
 .dev-score-grid { display: flex; gap: 1.5rem; align-items: center; margin-top: .6rem; margin-bottom: .75rem; }
 .dev-score-main { text-align: center; }
-.dev-score-pct { display: block; font: 700 2.5rem var(--mono); color: var(--teal); line-height: 1; }
+.dev-score-pct { display: block; font: 700 var(--text-display) var(--mono); color: var(--teal); line-height: 1; }
 .dev-score-label { font: 600 var(--text-micro) var(--mono); color: var(--3); text-transform: uppercase; letter-spacing: .06em; }
 .dev-score-breakdown { display: flex; gap: .5rem; }
 .dev-metric { display: flex; flex-direction: column; gap: .05rem; padding: .4rem .5rem; background: var(--surface); }
@@ -6070,8 +6073,11 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 /* Edition stamp */
 .edition-stamp {
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .3rem;
-  padding: .65rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
-  font: 500 var(--text-sm) var(--mono); color: rgba(255,255,255,.75); letter-spacing: .02em;
+  /* min(negative, 1.25rem) went negative below 1060px, invalidating the whole
+     padding declaration — the stamp sat flush at x=0 under a gutter-inset hero.
+     Inset to the content column at every width, never less than the gutter. */
+  padding: .65rem max(var(--gutter), calc((100% - var(--w, 1060px)) / 2 + var(--gutter)));
+  font: 500 var(--text-body) var(--mono); color: rgba(255,255,255,.75); letter-spacing: .02em;
   background: var(--depa-blue, #0C2F53);
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
@@ -6172,7 +6178,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   display: flex; align-items: flex-end; justify-content: space-between;
   margin-bottom: 1.25rem; gap: 1rem;
 }
-.news-section-title { font: 700 var(--text-2xl) var(--font-heading); letter-spacing: -.03em; line-height: 1; }
+.news-section-title { font: 700 clamp(1.4rem, 3vw, 2.4rem) var(--font-heading); letter-spacing: -.03em; line-height: 1; }
 .news-live-badge {
   display: flex; align-items: center; gap: .35rem;
   font: 600 var(--text-micro) var(--mono); text-transform: uppercase; letter-spacing: .1em;
@@ -6461,7 +6467,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .city-hero-photo-score-label { color: rgba(255, 255, 255, .62); }
   .city-hero-photo-score {
     margin: 0;
-    font: 800 clamp(2.1rem, 5vw, 3.8rem)/.9 var(--mono);
+    font: 800 clamp(var(--text-display), 5vw, 3.8rem)/.9 var(--mono);
     letter-spacing: -.08em;
     color: #f5c96b;
   }
@@ -6859,7 +6865,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
    * in the ≤900px block above and must not be overwritten here. */
   .city-detail-hero { padding-block: .95rem; }
   .city-detail-tagline { font-size: var(--text-body); }
-  .city-detail-hero .section-intro { font-size: var(--text-micro); }
+  .city-detail-hero .section-intro { font-size: var(--text-body); }
 
   .city-decision-strip {
     grid-template-columns: 1fr;
@@ -8670,15 +8676,40 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .home-stat-ribbon-inner {
   max-width: var(--w);
   margin: 0 auto;
-  padding: 1.25rem var(--gutter);
+  /* Gutter lives on the first/last cell, not the scrollport, so the sticky
+     arrow can sit on the true viewport edge and its solid backing covers the
+     sliced label completely (padding on the scrollport left a 20px leak). */
+  padding: 1.25rem 0;
   display: flex;
   gap: clamp(1.5rem, 4vw, 3rem);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  /* Mandatory snap aligns cells to the scrollport's padding edge, which
+     swallowed the gutter and left the first label flush at x=0 while the
+     hero above sits at the gutter. Snap to the content edge instead. */
+  scroll-padding-inline: var(--gutter);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 .home-stat-ribbon-inner::-webkit-scrollbar { display: none; }
+/* Sticky arrow on the strip's right edge: a signifier that it scrolls, so the
+   label sliced at the viewport edge reads as "more →" instead of a chopped
+   word. Solid ribbon-blue backing, no gradient. Hidden once the strip fits. */
+.home-stat-ribbon-inner::after {
+  content: "→";
+  flex: 0 0 auto;
+  position: sticky;
+  right: 0;
+  align-self: stretch;
+  display: flex; align-items: center;
+  margin-left: auto;
+  padding: 0 .5rem 0 .75rem;
+  font: 700 var(--text-body) var(--mono);
+  color: var(--depa-yellow, #FFF200);
+  background: var(--depa-blue, #0C2F53);
+}
+[data-theme="dark"] .home-stat-ribbon-inner::after { background: #071428; }
+@media (min-width: 1100px) { .home-stat-ribbon-inner::after { display: none; } }
 .home-stat-cell {
   flex: 0 0 auto;
   scroll-snap-align: start;
@@ -8687,6 +8718,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   gap: 0.2rem;
   min-width: 0;
 }
+.home-stat-cell:first-child { margin-left: var(--gutter); }
+.home-stat-cell:last-child  { margin-right: var(--gutter); }
 .home-stat-label {
   font: 600 var(--text-micro) var(--mono);
   letter-spacing: 0.14em;
@@ -9513,9 +9546,9 @@ body:has(.bingo-page) { overflow: hidden; }
 /* FREE cell — board-game centre stamp */
 .bingo-free-content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; gap: 2px; }
 .bingo-free-stamp   { font: 800 clamp(1rem, 5vw, 1.6rem) var(--mono); color: var(--cell-color, var(--3)); line-height: 1; letter-spacing: .04em; }
-.bingo-free-label   { font: 700 clamp(0.55rem, 2.2vw, 0.85rem) var(--mono); letter-spacing: .12em; color: var(--ink); text-transform: uppercase; margin-top: 2px; }
+.bingo-free-label   { font: 700 clamp(0.62rem, 2.2vw, 0.85rem) var(--mono); letter-spacing: .12em; color: var(--ink); text-transform: uppercase; margin-top: 2px; }
 .bingo-click-count  { font: 800 clamp(1.1rem, 6vw, 2rem) var(--mono); color: var(--teal); line-height: 1; letter-spacing: -.02em; }
-.bingo-free-sub     { font: 600 clamp(0.5rem, 1.6vw, 0.65rem) var(--mono); letter-spacing: .14em; color: var(--3); text-transform: uppercase; }
+.bingo-free-sub     { font: 600 clamp(0.6rem, 1.6vw, 0.72rem) var(--mono); letter-spacing: .14em; color: var(--3); text-transform: uppercase; }
 
 /* Cell front content — number stamp + emoji + label. Each scales with grid
    size below. Floors are set above the 11px project minimum so judges can
@@ -9534,8 +9567,11 @@ body:has(.bingo-page) { overflow: hidden; }
 .bingo-cell-text  {
   font: 600 clamp(0.6rem, 2.6vw, 0.8rem)/1.15 var(--font);
   text-align: center;
-  padding: 0 3px;
-  word-break: break-word;
+  padding: 0 2px;
+  /* break-word let the engine split anywhere ("Healthcar-e") before
+     hyphenation got a chance; overflow-wrap only breaks as a last resort,
+     after hyphens: auto has produced "Health-care". */
+  overflow-wrap: break-word;
   hyphens: auto;
   color: var(--ink);
   max-width: 100%;
@@ -9543,17 +9579,17 @@ body:has(.bingo-page) { overflow: hidden; }
 
 /* Cell back */
 .bingo-logo-img   { width: 60%; height: 60%; object-fit: contain; display: block; }
-.bingo-back-label { color: #fff; font: 800 clamp(.42rem, 1.8vw, .7rem)/1 var(--mono); letter-spacing: .06em; margin-top: .15rem; text-transform: uppercase; }
+.bingo-back-label { color: #fff; font: 800 clamp(.6rem, 1.8vw, .72rem)/1 var(--mono); letter-spacing: .06em; margin-top: .15rem; text-transform: uppercase; }
 
 /* Per-grid-size mobile overrides — denser grids get smaller text so all
    three layers (number, emoji, label) fit without overflow. */
 .bingo-grid-6x6 .bingo-cell-emoji { font-size: clamp(0.85rem, 4vw, 1.4rem); }
-.bingo-grid-6x6 .bingo-cell-text  { font-size: clamp(0.5rem, 2vw, 0.66rem); }
-.bingo-grid-6x6 .bingo-cell-num   { font-size: clamp(0.5rem, 2vw, 0.66rem); top: 5px; left: 5px; }
+.bingo-grid-6x6 .bingo-cell-text  { font-size: clamp(0.62rem, 2vw, 0.72rem); }
+.bingo-grid-6x6 .bingo-cell-num   { font-size: clamp(0.62rem, 2vw, 0.72rem); top: 5px; left: 5px; }
 
 .bingo-grid-7x7 .bingo-cell-emoji { font-size: clamp(0.7rem, 3.2vw, 1.05rem); }
-.bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(0.46rem, 1.6vw, 0.56rem); }
-.bingo-grid-7x7 .bingo-cell-num   { font-size: clamp(0.46rem, 1.6vw, 0.56rem); top: 4px; left: 4px; }
+.bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(0.6rem, 1.9vw, 0.72rem); }
+.bingo-grid-7x7 .bingo-cell-num   { font-size: clamp(0.6rem, 1.9vw, 0.72rem); top: 4px; left: 4px; }
 .bingo-grid-7x7 .bingo-card-front { gap: 2px; padding: 4px 2px 3px; }
 
 /* ── Mobile dim strip (row 4) ── */
@@ -9670,17 +9706,17 @@ body:has(.bingo-page) { overflow: hidden; }
   .bingo-cell-text  { font-size: clamp(0.62rem, 1.05vw, 0.85rem); }
   .bingo-card-front { gap: 6px; padding: 10px 6px 8px; }
   .bingo-logo-img   { width: 64%; height: 64%; }
-  .bingo-back-label { font-size: clamp(.55rem,1.1vw,.85rem); }
+  .bingo-back-label { font-size: clamp(.62rem,1.1vw,.85rem); }
   /* 6×6 desktop: still readable, slightly tighter */
   .bingo-grid-6x6 .bingo-card-front { overflow: hidden; gap: 4px; padding: 8px 4px 6px; }
   .bingo-grid-6x6 .bingo-cell-emoji { font-size: clamp(1.1rem, 1.9vw, 1.6rem); }
-  .bingo-grid-6x6 .bingo-cell-text  { font-size: clamp(0.52rem, 0.85vw, 0.7rem); }
+  .bingo-grid-6x6 .bingo-cell-text  { font-size: clamp(0.62rem, 0.85vw, 0.72rem); }
   .bingo-grid-6x6 .bingo-cell-num   { font-size: clamp(0.6rem, 0.95vw, 0.78rem); top: 5px; left: 6px; }
   /* 7×7 desktop: tightest density, still above 11px floor */
   .bingo-grid-7x7 .bingo-card-front { gap: 3px; overflow: hidden; padding: 6px 3px 5px; }
   .bingo-grid-7x7 .bingo-cell-emoji { font-size: clamp(0.9rem, 1.5vw, 1.25rem); }
-  .bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(0.48rem, 0.7vw, 0.58rem); }
-  .bingo-grid-7x7 .bingo-cell-num   { font-size: clamp(0.55rem, 0.78vw, 0.65rem); top: 4px; left: 4px; }
+  .bingo-grid-7x7 .bingo-cell-text  { font-size: clamp(0.6rem, 0.8vw, 0.72rem); }
+  .bingo-grid-7x7 .bingo-cell-num   { font-size: clamp(0.62rem, 0.78vw, 0.72rem); top: 4px; left: 4px; }
   .bingo-free-stamp  { font-size: clamp(1.4rem, 2.4vw, 2rem); }
   .bingo-free-label  { font-size: clamp(0.7rem, 1.1vw, 0.9rem); }
   .bingo-click-count { font-size: clamp(1.8rem, 3.2vw, 2.6rem); }
@@ -9928,7 +9964,8 @@ body:has(.bingo-page) { overflow: hidden; }
     padding-bottom: 2.6rem;
   }
   .city-hero-photo-title {
-    font-size: clamp(2.05rem, 11.8vw, 3.15rem);
+    /* 11.8vw put a 375px phone at 44px — cap at the display token (28px floor per §11.8) */
+    font-size: clamp(1.75rem, 8.5vw, var(--text-display));
     line-height: .98;
   }
   .city-detail-header h1 {
@@ -9940,7 +9977,7 @@ body:has(.bingo-page) { overflow: hidden; }
     align-items: center;
   }
   .city-detail-score-block .composite-large {
-    font-size: clamp(1.85rem, 9vw, 2.25rem);
+    font-size: clamp(1.75rem, 9vw, var(--text-display));
   }
 }
 
@@ -10312,7 +10349,7 @@ body:has(.bingo-page) { overflow: hidden; }
 
 .partner-visual-fact-value {
   display: block;
-  font: 700 var(--text-micro) var(--mono);
+  font: 700 var(--text-body) var(--mono);
   color: var(--ink);
 }
 

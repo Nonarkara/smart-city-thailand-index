@@ -710,7 +710,7 @@ export default function MethodologyPage({ locale }: Props) {
           })}
         </p>
 
-        <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>{t("The Moneyball Score: Composite", "คะแนน Moneyball: การคำนวณรวม", "Moneyball评分：综合计算")}</h3>
+        <h3 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>{t("The Moneyball Score: Composite", "คะแนน Moneyball: การคำนวณรวม", "Moneyball评分：综合计算")}</h3>
         <p style={{ fontSize: "var(--text-body)", color: "var(--3)", lineHeight: 1.6, marginBottom: "1rem", borderLeft: "2px solid var(--5, #E5E5E5)", paddingLeft: "0.75rem" }}>
           {translate(locale, {
             en: "Note: the SCITI index score is the 7-pillar composite described above. The Moneyball Score below is a separate, downloadable investment analysis built on top of the index — it is not the index score itself.",
@@ -740,7 +740,7 @@ export default function MethodologyPage({ locale }: Props) {
           })}
         </p>
 
-        <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>{t("Limitations & Transparency", "ข้อจำกัดและความโปร่งใส", "局限性与透明度")}</h3>
+        <h3 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>{t("Limitations & Transparency", "ข้อจำกัดและความโปร่งใส", "局限性与透明度")}</h3>
         <ul style={{ paddingLeft: "1.5rem", marginBottom: "2rem", color: "var(--3)", fontSize: "var(--text-body)" }}>
           <li style={{ marginBottom: "0.5rem", listStyleType: "square" }}>{translate(locale, {
             en: "GPP data reflects 2019 chain-volume measures and may not capture post-pandemic recovery dynamics in real time.",

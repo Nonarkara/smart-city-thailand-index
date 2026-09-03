@@ -652,9 +652,19 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
   if (!city && loading) {
     return (
-      <section className="section" style={{ paddingTop: "7rem" }}>
-        <h1>{translate(locale, { en: "Loading city dossier…", th: "กำลังโหลด dossier เมือง…", zh: "正在加载城市档案…" })}</h1>
-      </section>
+      <div
+        className="section loading-skeleton"
+        style={{ paddingInline: "var(--gutter)" }}
+        role="status"
+        aria-live="polite"
+        aria-label={translate(locale, { en: "Loading city dossier", th: "กำลังโหลด dossier เมือง", zh: "正在加载城市档案" })}
+      >
+        <div className="skeleton-bar" />
+        <div className="skeleton-bar" />
+        <div className="skeleton-bar" />
+        <div className="skeleton-bar" />
+        <div className="skeleton-bar" />
+      </div>
     );
   }
 

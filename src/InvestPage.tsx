@@ -452,7 +452,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-3xl)", marginBottom: "1rem" }}>
+            <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
               {translate(locale, {
                 en: "What Is Moneyball?",
                 th: "Moneyball คืออะไร",
@@ -488,14 +488,14 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-3xl)", marginBottom: "1rem" }}>
+            <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
               {translate(locale, {
                 en: "For Investors: Look Beyond Bangkok",
                 th: "สำหรับนักลงทุน: มองข้ามกรุงเทพฯ ไปอีกขั้น",
                 zh: "致投资者：把目光投向曼谷之外",
               })}
             </h2>
-            <p style={{ fontSize: "var(--text-lg)", color: "var(--3)", marginBottom: "2rem", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "2rem", lineHeight: 1.6 }}>
               {translate(locale, {
                 en: "If you are making location decisions in Thailand, you face an information asymmetry. Everyone knows Bangkok. Everyone knows the Eastern Economic Corridor. But what about the provinces where your capital goes 3x further and the talent competition is half as fierce?",
                 th: "หากคุณกำลังตัดสินใจเลือกสถานที่ลงทุนในไทย คุณจะพบกับความไม่สมมาตรของข้อมูล ทุกคนรู้จักกรุงเทพฯ ทุกคนรู้จักเขตพัฒนาพิเศษภาคตะวันออก (EEC) แต่จังหวัดที่เงินทุนของคุณมีค่ามากกว่า 3 เท่าและการแข่งขันแย่งบุคลากรน้อยกว่าครึ่งหนึ่งล่ะ?",
@@ -503,7 +503,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               })}
             </p>
 
-            <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>
+            <h3 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
               {translate(locale, { en: "What SCITI Gives You", th: "สิ่งที่ SCITI มอบให้คุณ", zh: "SCITI 能给您什么" })}
             </h3>
             
@@ -534,7 +534,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               </div>
             </div>
 
-            <h3 style={{ fontSize: "var(--text-xl)", marginBottom: "1rem" }}>
+            <h3 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
               {translate(locale, { en: "How to Read the Data", th: "วิธีอ่านข้อมูล", zh: "如何解读数据" })}
             </h3>
             <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.6 }}>
@@ -575,7 +575,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-3xl)", marginBottom: "1rem" }}>
+            <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
               {translate(locale, { en: "Who Signs", th: "ใครเป็นคนเซ็น", zh: "谁来签字" })}
             </h2>
             <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>

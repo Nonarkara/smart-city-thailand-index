@@ -316,13 +316,18 @@ export default function ComparePage({ locale, onNavigate }: Props) {
 
       {/* ─── Compare grid ─── */}
       {selectedCities.length === 0 ? (
-        <p className="compare-empty">
-          {translate(locale, {
-            en: "Add at least one city to begin comparing.",
-            th: "เพิ่มเมืองอย่างน้อยหนึ่งเมืองเพื่อเริ่มเปรียบเทียบ",
-            zh: "至少添加一座城市以开始对比。",
-          })}
-        </p>
+        <div className="compare-empty">
+          <span style={{ display: "block", marginBottom: ".75rem" }}>
+            {translate(locale, {
+              en: "Add at least one city to begin comparing.",
+              th: "เพิ่มเมืองอย่างน้อยหนึ่งเมืองเพื่อเริ่มเปรียบเทียบ",
+              zh: "至少添加一座城市以开始对比。",
+            })}
+          </span>
+          <button type="button" className="filter-chip" onClick={() => setSelectedIds(initialIds)}>
+            {translate(locale, { en: "Compare top 3", th: "เปรียบเทียบ 3 อันดับแรก", zh: "对比前三名" })}
+          </button>
+        </div>
       ) : (
         <div
           className="compare-grid"

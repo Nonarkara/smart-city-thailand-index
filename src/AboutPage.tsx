@@ -34,7 +34,7 @@ export default function AboutPage({ locale, onNavigate }: Props) {
       </section>
 
       <section ref={section1Ref} className={`section reveal stagger-1 ${section1Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
-        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-lg)", lineHeight: "1.7" }}>
+        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
           <p style={{ marginBottom: "1.5rem" }}>
             {translate(locale, {
               en: "Bangkok and its surrounding provinces soak up the investment, the talent, and the policy attention while 76 provinces watch from the sidelines. This is not just unfair. It is inefficient.",
@@ -42,7 +42,7 @@ export default function AboutPage({ locale, onNavigate }: Props) {
               zh: "曼谷及其周边省份吸收了投资、人才和政策关注，而其他76个省份只能在旁观望。这不仅不公平，而且效率低下。"
             })}
           </p>
-          <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-xl)" }}>
+          <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-display)" }}>
             {translate(locale, {
               en: "SCITI was built on a simple conviction: data can level the playing field.",
               th: "SCITI สร้างขึ้นจากความเชื่อมั่นง่ายๆ ว่า: ข้อมูลสามารถสร้างความเท่าเทียมได้",
@@ -53,7 +53,7 @@ export default function AboutPage({ locale, onNavigate }: Props) {
       </section>
 
       <section ref={section2Ref} className={`section reveal stagger-2 ${section2Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
-        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-lg)", lineHeight: "1.7" }}>
+        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
           <p style={{ marginBottom: "1.5rem" }}>
             {translate(locale, {
               en: "We call it the \"Moneyball\" approach. Just as the Oakland Athletics used data analytics to spot undervalued baseball players that traditional scouts missed, SCITI uses provincial data to uncover hidden investment opportunities across Thailand's 77 provinces.",
@@ -72,7 +72,7 @@ export default function AboutPage({ locale, onNavigate }: Props) {
       </section>
 
       <section ref={section3Ref} className={`section reveal stagger-3 ${section3Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
-        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-lg)", lineHeight: "1.7" }}>
+        <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
           <p style={{ marginBottom: "1.5rem" }}>
             {translate(locale, {
               en: "Our platform aggregates Gross Provincial Product, FDI flows, BOI incentive zones, infrastructure readiness, creative economy indicators, labor costs, and cultural asset data -- all in one place, all comparable, all actionable.",
@@ -92,7 +92,7 @@ export default function AboutPage({ locale, onNavigate }: Props) {
 
       <section ref={section4Ref} className={`section reveal stagger-4 ${section4Visible ? "visible" : ""}`} style={{ marginBottom: "5rem" }}>
         <div className="callout-card glass-card shadow-premium" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center", padding: "3rem 2rem" }}>
-          <h2 style={{ fontSize: "var(--text-2xl)", marginBottom: "1rem" }}>
+          <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
             {translate(locale, {
               en: "SCITI is not just a dashboard. It is a policy argument made visible.",
               th: "SCITI ไม่ใช่แค่แดชบอร์ด แต่มันคือข้อเสนอนโยบายที่มองเห็นได้",
