@@ -1334,9 +1334,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
         </div>
 
-        <p className="city-detail-tagline">{cityTagline}</p>
-        <p className="section-intro">{cityOrientation}</p>
-
         {(() => {
           const { strongest, weakest } = getStrongestWeakest(city.scores);
           return (
@@ -1362,6 +1359,9 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             </div>
           );
         })()}
+
+        <p className="city-detail-tagline">{cityTagline}</p>
+        <p className="section-intro">{cityOrientation}</p>
 
         {(() => {
           const rawCity = getCityById(cityId);

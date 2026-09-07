@@ -473,6 +473,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             ))}
           </div>
 
+          {!isBalanced && (
           <div className="lens-panel glass-card">
             <div className="lens-panel-copy">
               <p className="lens-panel-label">{translate(locale, lens.label)}</p>
@@ -508,6 +509,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               })}
             </div>
           </div>
+          )}
         </section>
 
         <section className="section reveal visible">

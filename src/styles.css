@@ -7916,7 +7916,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin: 0.5rem 0 1rem;
+  margin: 0.35rem 0 0.5rem;
   padding: 0.35rem;
   background: var(--surface);
   border: 1px solid var(--5);
