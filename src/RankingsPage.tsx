@@ -28,6 +28,7 @@ import type { CityTier, Locale, ScoringPillar, SmartCity } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LABELS, LEAGUE_LABELS } from "./types";
 import { REGION_LABELS } from "./regions";
 import { toAppPath } from "./routing";
+import { parseRankingsAxis, rankingsHref, type RankingsAxis } from "./rankingsQuery";
 
 interface Props {
   locale: Locale;
@@ -97,9 +98,11 @@ const PILLAR_SHORT_LABELS: Record<Locale, Record<ScoringPillar, string>> = {
 function CityPillarBars({
   city,
   locale,
+  highlightPillar,
 }: {
   city: SmartCity;
   locale: Locale;
+  highlightPillar?: ScoringPillar;
 }) {
   const ariaSummary = PILLAR_ORDER.map(pillar => {
     const label = PILLAR_LABELS[locale][pillar];
@@ -125,7 +128,7 @@ function CityPillarBars({
         return (
           <div
             key={pillar}
-            className="rank-pillar-bar"
+            className={`rank-pillar-bar${highlightPillar === pillar ? " is-focus" : highlightPillar ? " is-muted" : ""}`}
             title={`${PILLAR_LABELS[locale][pillar]}: ${value} / 100 (${PILLAR_WEIGHTS[pillar]}%)`}
           >
             <span className="rank-pillar-bar-head">
@@ -266,6 +269,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   const [query, setQuery] = useState("");
   const [compareMode, setCompareMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [pillarSort, setPillarSort] = useState<RankingsAxis>(() => parseRankingsAxis(window.location.search));
 
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
   const lens = getPresetById(lensId);
@@ -285,7 +289,10 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
     [cities, lens, isBalanced],
   );
 
-  const lensScoreValues = useMemo(() => enriched.map(e => e.lensScore), [enriched]);
+  const lensScoreValues = useMemo(
+    () => enriched.map(e => (pillarSort === "composite" ? e.lensScore : e.city.scores[pillarSort])),
+    [enriched, pillarSort],
+  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -304,8 +311,37 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   }, [enriched, tierFilter, statusFilter, regionFilter, query]);
 
   const sorted = useMemo(() => {
-    return [...filtered].sort((a, b) => b.lensScore - a.lensScore);
-  }, [filtered]);
+    return [...filtered].sort((a, b) => {
+      const left = pillarSort === "composite" ? a.lensScore : a.city.scores[pillarSort];
+      const right = pillarSort === "composite" ? b.lensScore : b.city.scores[pillarSort];
+      if (right !== left) return right - left;
+      return a.city.nameEn.localeCompare(b.city.nameEn);
+    });
+  }, [filtered, pillarSort]);
+
+  const syncRankingsUrl = (axis: RankingsAxis) => {
+    const href = rankingsHref(axis);
+    const base = import.meta.env.BASE_URL || "/";
+    const full = href.startsWith(base) ? href : `${base.replace(/\/$/, "")}${href}`;
+    const next = full.split("#")[0] ?? full;
+    if (`${window.location.pathname}${window.location.search}` !== next) {
+      window.history.replaceState({}, "", full);
+    }
+  };
+
+  const applyAxis = (axis: RankingsAxis) => {
+    setPillarSort(axis);
+    if (axis !== "composite") setLensId("balanced");
+    syncRankingsUrl(axis);
+  };
+
+  const applyLens = (nextLensId: string) => {
+    setLensId(nextLensId);
+    if (nextLensId !== "balanced" && pillarSort !== "composite") {
+      setPillarSort("composite");
+      syncRankingsUrl("composite");
+    }
+  };
 
   // Top-1 per tier under the active lens (full unfiltered set, so the panel
   // is stable regardless of filters)
@@ -371,21 +407,53 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
           </div>
           <p className="hero-strapline">
             {t({
-              en: "You already know Bangkok, Chiang Mai, and Phuket. Pick a lens and the directory re-ranks under that worldview — growth at all costs, retirement paradise, climate refuge. The spider shows the shape of each lens.",
-              th: "คุณรู้จักกรุงเทพ เชียงใหม่ และภูเก็ตอยู่แล้ว เลือกเลนส์ แล้วสารบบจะจัดอันดับใหม่ตามมุมมองนั้น — เติบโตล้วนๆ สวรรค์วัยเกษียณ ที่พักพิงภูมิอากาศ ใยแมงมุมแสดงรูปร่างของแต่ละเลนส์",
-              zh: "你已熟悉曼谷、清迈、普吉。选一副镜头，名录便按那套世界观重排——只看增长、退休天堂、气候避风港。蛛网呈现每副镜头的形状。",
+              en: "Pick a pillar to see who leads that axis. Lenses re-weight the composite when you want a worldview — growth, retirement, climate — rather than a single score.",
+              th: "เลือกเสาหลักเพื่อดูว่าใครนำบนแกนนั้น เลนส์จะถ่วงน้ำหนักคะแนนรวมใหม่เมื่อต้องการมุมมอง — เติบโต เกษียณ ภูมิอากาศ — ไม่ใช่คะแนนเดียว",
+              zh: "选一条支柱，看谁在那条轴上领先。镜头会在你要一种世界观——增长、退休、气候——而非单一分数时，重新加权综合分。",
             })}
           </p>
         </section>
 
         <section className="section reveal visible">
-          <div className="picks-section-header">
-            <p className="eyebrow">{t({ en: "Editor's picks", th: "คัดสรรโดยบรรณาธิการ", zh: "编辑精选" })}</p>
-            <h2 className="picks-section-title">
-              {t({ en: "Seven cities worth a second look", th: "เจ็ดเมืองที่ควรมองครั้งที่สอง", zh: "七座值得重新审视的城市" })}
-            </h2>
+          <p className="eyebrow">{t({ en: "Sort by", th: "เรียงตาม", zh: "排序" })}</p>
+          <div className="axis-chip-row" role="tablist" aria-label={t({ en: "Ranking axis", th: "แกนจัดอันดับ", zh: "排名主轴" })}>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={pillarSort === "composite"}
+              className={`axis-chip ${pillarSort === "composite" ? "active" : ""}`}
+              onClick={() => applyAxis("composite")}
+            >
+              {t({ en: "Composite", th: "คะแนนรวม", zh: "综合" })}
+            </button>
+            {PILLAR_ORDER.map(pillar => (
+              <button
+                key={pillar}
+                type="button"
+                role="tab"
+                aria-selected={pillarSort === pillar}
+                className={`axis-chip ${pillarSort === pillar ? "active" : ""}`}
+                onClick={() => applyAxis(pillar)}
+              >
+                <span className="axis-chip-dot" style={{ background: PILLAR_COLORS[pillar] }} aria-hidden="true" />
+                <span className="axis-chip-full">{PILLAR_LABELS[locale][pillar]}</span>
+                <span className="axis-chip-short">{PILLAR_SHORT_LABELS[locale][pillar]}</span>
+              </button>
+            ))}
           </div>
-          <MoneyballPicksStrip locale={locale} onNavigate={onNavigate} cities={cities} />
+          <p className="axis-chip-hint">
+            {pillarSort === "composite"
+              ? t({
+                  en: "Directory ranked by composite (or the active lens).",
+                  th: "สารบบเรียงตามคะแนนรวม (หรือเลนส์ที่เลือก)",
+                  zh: "名录按综合分（或当前镜头）排序。",
+                })
+              : t({
+                  en: `Directory ranked by ${PILLAR_LABELS.en[pillarSort]}. Other pillars stay visible for comparison.`,
+                  th: `สารบบเรียงตาม${PILLAR_LABELS.th[pillarSort]} เสาอื่นยังเห็นเพื่อเปรียบเทียบ`,
+                  zh: `名录按${PILLAR_LABELS.zh[pillarSort]}排序。其余支柱仍可见，便于比较。`,
+                })}
+          </p>
         </section>
 
         <section className="section reveal visible">
@@ -398,7 +466,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                 role="tab"
                 aria-selected={lensId === preset.id}
                 className={`lens-chip ${lensId === preset.id ? "active" : ""}`}
-                onClick={() => setLensId(preset.id)}
+                onClick={() => applyLens(preset.id)}
               >
                 {translate(locale, preset.label)}
               </button>
@@ -487,13 +555,14 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                 const provinceName = getProvinceName(city, locale);
                 const cityName = getCityName(city, locale);
                 const tierSym = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
+                const displayScore = pillarSort === "composite" ? lensScore : city.scores[pillarSort];
                 return (
                   <button
                     key={city.id}
                     type="button"
                     className="gallery-card"
                     onClick={() => onNavigate(`/city/${city.id}`)}
-                    aria-label={`${cityName} — ${provinceName} — ${lensScore.toFixed(1)}`}
+                    aria-label={`${cityName} — ${provinceName} — ${displayScore.toFixed(1)}`}
                   >
                     <div className="gallery-card-photo-wrap">
                       <ResponsiveImage
@@ -521,7 +590,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                     <div className="gallery-card-body">
                       <div className="gallery-card-head">
                         <span className="gallery-card-name">{cityName}</span>
-                        <span className="gallery-card-score">{lensScore.toFixed(1)}</span>
+                        <span className="gallery-card-score">{displayScore.toFixed(1)}</span>
                       </div>
                       <div className="gallery-card-meta">
                         <span className="gallery-card-province">{provinceName}</span>
@@ -533,7 +602,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               })}
             </div>
           ) : (<>
-          <div className="directory-toolbar">
+          <div className="directory-toolbar directory-toolbar-sticky">
             <input
               type="search"
               className="directory-search"
@@ -557,7 +626,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             </div>
 
             <div className="filter-chip-row" role="group" aria-label={t({ en: "Status filter", th: "ตัวกรองสถานะ", zh: "状态筛选" })}>
-              {(["all", "certified", "promotion"] as const).map(key => (
+              {(["all", "certified", "promotion", "registered"] as const).map(key => (
                 <button
                   key={key}
                   type="button"
@@ -596,12 +665,27 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                 : t({ en: "Compare mode", th: "โหมดเปรียบเทียบ", zh: "对比模式" })}
             </button>
           </div>
+          <p className="directory-count">
+            {t({
+              en: `${sorted.length} ${sorted.length === 1 ? "city" : "cities"}`,
+              th: `${sorted.length} เมือง`,
+              zh: `${sorted.length} 座城市`,
+            })}
+            {statusFilter === "all"
+              ? t({
+                  en: " · registry rows are labelled, not assessed",
+                  th: " · แถวทะเบียนระบุชัดว่ายังไม่ประเมิน",
+                  zh: " · 名录行已标注，并非评估结果",
+                })
+              : ""}
+          </p>
 
           {viewMode === "directory" ? (
             <div className="rank-list-wrap">
               <ol className="rank-list">
                 {sorted.map(({ city, edgeCount, lensScore }, idx) => {
-                  const pct = percentile(lensScore, lensScoreValues);
+                  const displayScore = pillarSort === "composite" ? lensScore : city.scores[pillarSort];
+                  const pct = percentile(displayScore, lensScoreValues);
                   const isSelected = selectedIds.includes(city.id);
                   const cityPath = `/city/${city.id}`;
                   const handleClick = (event: React.MouseEvent) => {
@@ -641,16 +725,25 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                           </div>
                           <div className="rank-row-caption">
                             {getProvinceName(city, locale)} · {getCityStatusLabel(city.status, locale)} · {getCityRealityLabel(city.reality, locale)}
+                            {city.status === "registered" ? (
+                              <>
+                                {" "}· <span className="rank-row-baseline">{t({ en: "registry baseline · not assessed", th: "เส้นฐานทะเบียน · ยังไม่ประเมิน", zh: "名录基线 · 未评估" })}</span>
+                              </>
+                            ) : null}
                             {city.league ? (
                               <>
                                 {" "}· <span className="league-badge">{LEAGUE_LABELS[locale][city.league]}</span>
                               </>
                             ) : null}
                           </div>
-                          <CityPillarBars city={city} locale={locale} />
+                          <CityPillarBars
+                            city={city}
+                            locale={locale}
+                            highlightPillar={pillarSort === "composite" ? undefined : pillarSort}
+                          />
                         </div>
                         <span className="rank-row-meta">
-                          <span className="rank-row-score">{lensScore.toFixed(1)}</span>
+                          <span className="rank-row-score">{displayScore.toFixed(1)}</span>
                           <span className="rank-row-pct">p{pct}</span>
                           <span className={`rank-row-edges ${edgeCount >= 3 ? "is-strong" : ""}`}>
                             {edgeCount} {t({ en: "edges", th: "จุดเด่น", zh: "优势" })}
@@ -707,6 +800,16 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             </div>
           )}
           </>)}
+        </section>
+
+        <section className="section reveal visible picks-section">
+          <div className="picks-section-header">
+            <p className="eyebrow">{t({ en: "Editor's picks", th: "คัดสรรโดยบรรณาธิการ", zh: "编辑精选" })}</p>
+            <h2 className="picks-section-title">
+              {t({ en: "Seven cities worth a second look", th: "เจ็ดเมืองที่ควรมองครั้งที่สอง", zh: "七座值得重新审视的城市" })}
+            </h2>
+          </div>
+          <MoneyballPicksStrip locale={locale} onNavigate={onNavigate} cities={cities} />
         </section>
       </div>
     </div>

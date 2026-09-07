@@ -3,7 +3,7 @@ import { cityContexts, type CityContext } from "./cityContext.ts";
 import { allCities } from "./cityData.ts";
 import { CITY_NAME_ZH } from "./cityNamesZh.ts";
 import { dataSources, getEvidenceForCity, type DataSource, type EvidenceItem } from "./evidenceData.ts";
-import { SCITI_DATA_CUTOFF_ISO, classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
+import { SCITI_DATA_CUTOFF_ISO, applyEvidenceConfidenceCap, classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import { SCORING_PILLARS } from "./scoring.ts";
 import { polishThaiText } from "./thaiText.ts";
 import { DIMENSION_LABELS, PILLAR_LABELS } from "./types.ts";
@@ -874,7 +874,7 @@ function privateInterestScore(city: SmartCity, context?: CityContext): number {
 }
 
 function riskProfile(city: SmartCity): "low" | "medium" | "high" | "acute" {
-  if (city.reality === "planned" && city.metrics.population === 0) return "acute";
+  if (city.reality === "planned" && (city.metrics.population == null || city.metrics.population === 0)) return "acute";
   if ((city.metrics.crimeRatePer100k ?? 0) >= 220 || (city.metrics.pm25Annual ?? 0) >= 45) return "high";
   if ((city.metrics.crimeRatePer100k ?? 0) >= 150 || (city.metrics.pm25Annual ?? 0) >= 30) return "medium";
   return "low";
@@ -1586,6 +1586,7 @@ function buildCitySummary(
   financeProfile: CityFinanceProfile,
   recommendations: CityFinanceRecommendation[],
   exportRows: CityResearchExportRow[],
+  evidenceCount: number,
   context?: CityContext,
 ): CitySummaryDTO {
   const latestObservedAt = latestDate([
@@ -1601,7 +1602,11 @@ function buildCitySummary(
 
   return {
     ...city,
-    dataConfidence: classifyDataConfidence(dataConfidenceScore),
+    dataConfidence: applyEvidenceConfidenceCap(
+      classifyDataConfidence(dataConfidenceScore),
+      evidenceCount,
+      city.status,
+    ),
     keyMetrics: buildKeyMetrics(city, observations),
     shortTailoredNote: buildShortTailoredNote(city, context),
     financeSignal: buildFinanceSignal(city, financeProfile, recommendations),
@@ -1629,6 +1634,7 @@ function buildCityDetail(city: SmartCity): CityDetailBuild {
     financeProfile,
     recommendations,
     exportRows,
+    evidence.length,
     context,
   );
 

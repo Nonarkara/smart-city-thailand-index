@@ -243,7 +243,8 @@ export default function App() {
   const navigate = (path: string) => {
     const base = import.meta.env.BASE_URL || "/";
     const fullPath = path.startsWith(base) ? path : base.replace(/\/$/, "") + path;
-    if (window.location.pathname !== fullPath) {
+    const pathAndQuery = fullPath.split("#")[0] ?? fullPath;
+    if (`${window.location.pathname}${window.location.search}` !== pathAndQuery) {
       window.history.pushState({}, "", fullPath);
     }
     window.scrollTo({ top: 0, behavior: "auto" });

@@ -1,4 +1,5 @@
 import {
+  applyEvidenceConfidenceCap,
   classifyDataConfidence,
   computeDataConfidenceScore,
   computeMetricCoverage,
@@ -68,5 +69,12 @@ describe("methodology spec helpers", () => {
 
     expect(score).toBeLessThan(40);
     expect(classifyDataConfidence(score)).toBe("low");
+  });
+
+  it("caps high confidence when a dossier has no city-level evidence", () => {
+    expect(applyEvidenceConfidenceCap("high", 0, "certified")).toBe("medium");
+    expect(applyEvidenceConfidenceCap("high", 3, "certified")).toBe("high");
+    expect(applyEvidenceConfidenceCap("high", 12, "registered")).toBe("low");
+    expect(applyEvidenceConfidenceCap("medium", 0, "promotion")).toBe("medium");
   });
 });

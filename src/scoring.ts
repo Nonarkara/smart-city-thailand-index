@@ -97,11 +97,24 @@ export function computeRoadSafetyScore(ratePerHundredK: number): number {
  * the data-driven road safety sub-score from thairsc (30 %).
  *
  * @param existingScore Current manually-assessed safety score (crime + resilience)
- * @param roadFatalityRate Annual road deaths per 100,000 population
+ * @param roadFatalityRate Annual road deaths per 100,000 population.
+ *                         If undefined, returns existingScore unchanged — no invented rate.
  * @returns Blended safety score 0–100
  */
-export function blendSafetyScore(existingScore: number, roadFatalityRate: number): number {
+export function blendSafetyScore(existingScore: number, roadFatalityRate: number | undefined): number {
+  if (roadFatalityRate == null) return existingScore;
   return Math.round(0.7 * existingScore + 0.3 * computeRoadSafetyScore(roadFatalityRate));
+}
+
+/** Strongest and weakest published pillars. Ties keep the earlier pillar in SCORING_PILLARS order. */
+export function getStrongestWeakest(scores: CityScores): { strongest: ScoringPillar; weakest: ScoringPillar } {
+  let strongest: ScoringPillar = SCORING_PILLARS[0];
+  let weakest: ScoringPillar = SCORING_PILLARS[0];
+  for (const pillar of SCORING_PILLARS) {
+    if (scores[pillar] > scores[strongest]) strongest = pillar;
+    if (scores[pillar] < scores[weakest]) weakest = pillar;
+  }
+  return { strongest, weakest };
 }
 
 /**

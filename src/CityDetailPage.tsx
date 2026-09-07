@@ -19,7 +19,8 @@ import {
   translate,
 } from "./cityPresentation";
 import { ResponsiveImage } from "./mediaAssets";
-import { getCompositeBreakdown, SCORING_PILLARS } from "./scoring";
+import { getCompositeBreakdown, getStrongestWeakest, SCORING_PILLARS } from "./scoring";
+import { rankingsHref } from "./rankingsQuery";
 import type { Locale, ScoringPillar, SmartCity } from "./types";
 import { DIMENSION_LABELS, PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS, TIER_LABELS, LEAGUE_LABELS } from "./types";
 import { computeDevelopability, getGlobalComparison, getMoneyballProfile, getTailoredSteps, getFinancingAdvice } from "./cityAnalytics";
@@ -1335,6 +1336,32 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
 
         <p className="city-detail-tagline">{cityTagline}</p>
         <p className="section-intro">{cityOrientation}</p>
+
+        {(() => {
+          const { strongest, weakest } = getStrongestWeakest(city.scores);
+          return (
+            <div className="city-axis-scan" aria-label={translate(locale, { en: "Pillar strengths", th: "จุดแข็งตามเสาหลัก", zh: "支柱强弱" })}>
+              <button
+                type="button"
+                className="city-axis-scan-btn"
+                onClick={() => onNavigate(rankingsHref(strongest))}
+              >
+                <span className="city-axis-scan-kicker">{translate(locale, { en: "Strongest", th: "แข็งที่สุด", zh: "最强" })}</span>
+                <span className="city-axis-scan-label">{PILLAR_LABELS[locale][strongest]}</span>
+                <span className="city-axis-scan-score">{city.scores[strongest]}</span>
+              </button>
+              <button
+                type="button"
+                className="city-axis-scan-btn"
+                onClick={() => onNavigate(rankingsHref(weakest))}
+              >
+                <span className="city-axis-scan-kicker">{translate(locale, { en: "Weakest", th: "อ่อนที่สุด", zh: "最弱" })}</span>
+                <span className="city-axis-scan-label">{PILLAR_LABELS[locale][weakest]}</span>
+                <span className="city-axis-scan-score">{city.scores[weakest]}</span>
+              </button>
+            </div>
+          );
+        })()}
 
         {(() => {
           const rawCity = getCityById(cityId);

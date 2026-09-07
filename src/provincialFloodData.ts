@@ -71,15 +71,16 @@ export const PROVINCIAL_FLOOD_SCORE: Record<string, ProvincialFloodEntry> = {
 
 /**
  * Returns the flood-frequency score (0-100) for a Thai province.
- * Falls back to 60 (Thailand average) for provinces without explicit data.
+ * Returns undefined when the province has no GISTDA/DDPM row — never invent an average.
  */
-export function getFloodScore(province: string): number {
-  return PROVINCIAL_FLOOD_SCORE[province]?.score ?? 60;
+export function getFloodScore(province: string): number | undefined {
+  return PROVINCIAL_FLOOD_SCORE[province]?.score;
 }
 
 /**
- * Returns the methodology note (one-line context) for a province.
+ * Returns the methodology note (one-line context) for a province, or undefined
+ * when there is no sourced flood row.
  */
-export function getFloodNote(province: string): string {
-  return PROVINCIAL_FLOOD_SCORE[province]?.note ?? "No explicit GISTDA flood record; Thailand average assumed";
+export function getFloodNote(province: string): string | undefined {
+  return PROVINCIAL_FLOOD_SCORE[province]?.note;
 }
