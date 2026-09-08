@@ -175,7 +175,19 @@ function getInitialLocale(): Locale {
 }
 
 function PagePhotoHero({ route, locale }: { route: Route; locale: Locale }) {
-  if (route.kind === "home" || route.kind === "city" || route.kind === "showcase" || route.kind === "canvas") return null;
+  // Tool pages need the first viewport for the directory / matcher / basket —
+  // a 150–300px scenic strip pushes ranked cities below the fold.
+  if (
+    route.kind === "home" ||
+    route.kind === "city" ||
+    route.kind === "showcase" ||
+    route.kind === "canvas" ||
+    route.kind === "rankings" ||
+    route.kind === "discover" ||
+    route.kind === "compare"
+  ) {
+    return null;
+  }
   const hero = PAGE_HERO_ASSETS[route.kind as StaticHeroKind];
   if (!hero) return null;
 

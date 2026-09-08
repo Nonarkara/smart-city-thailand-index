@@ -91,9 +91,9 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
   return (
     <div className="discover-page">
       {/* ─── HERO ─── */}
-      <section className="section rankings-hero reveal visible">
+      <section className="section rankings-hero discover-lead reveal visible">
         <p className="eyebrow">{translate(locale, { en: "City matcher", th: "จับคู่เมือง", zh: "城市匹配" })}</p>
-        <h1 className="hero-title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)" }}>
+        <h1 className="hero-title discover-title">
           {translate(locale, { en: "What is your city?", th: "เมืองของคุณคือเมืองไหน?", zh: "你的城市是哪座？" })}
         </h1>
         <p className="hero-strapline">

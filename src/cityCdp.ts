@@ -47,6 +47,8 @@ export interface CityKeyMetric {
   unit?: string;
   confidence: DataConfidence;
   sourceId: string;
+  /** Short geography badge when the figure is provincial or a proxy, not city-boundary. */
+  provenance?: LocalizedText;
 }
 
 export interface CityMetricObservation {
@@ -671,6 +673,21 @@ function metricLabel(metricKey: string): LocalizedText {
     default:
       return localized(metricKey, metricKey, metricKey);
   }
+}
+
+function metricProvenance(methodNote: string): LocalizedText | undefined {
+  const isProvincial = /\bprovincial\b/i.test(methodNote);
+  const isProxy = /\bproxy\b/i.test(methodNote);
+  if (isProvincial && isProxy) {
+    return localized("provincial proxy", "ข้อมูลตัวแทนระดับจังหวัด", "府级代理");
+  }
+  if (isProvincial) {
+    return localized("provincial", "ระดับจังหวัด", "府级");
+  }
+  if (isProxy) {
+    return localized("proxy", "ข้อมูลตัวแทน", "代理数据");
+  }
+  return undefined;
 }
 
 function metricMethod(metricKey: string): string {
@@ -1435,6 +1452,7 @@ function buildKeyMetrics(city: SmartCity, observations: CityMetricObservation[])
       unit: item.unit ?? undefined,
       confidence: item.confidence >= 0.85 ? "high" : item.confidence >= 0.7 ? "medium" : "low",
       sourceId: item.sourceId,
+      provenance: metricProvenance(item.methodNote),
     }));
 }
 

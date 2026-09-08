@@ -63,4 +63,15 @@ describe("RankingsPage", () => {
     expect(screen.getAllByText(/phuket smart city/i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/samyan smart city/i)[0]).toBeInTheDocument();
   });
+
+  it("places the ranked directory above the lens chips", () => {
+    const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
+    const firstCity = container.querySelector(".rank-row-name");
+    const lenses = container.querySelector(".lens-chip-row");
+    expect(firstCity).toBeTruthy();
+    expect(lenses).toBeTruthy();
+    expect(
+      firstCity!.compareDocumentPosition(lenses!) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
 });

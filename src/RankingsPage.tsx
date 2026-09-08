@@ -371,21 +371,23 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   return (
     <div className="rankings-page">
       <div className="rankings-column">
-        <section className="section reveal visible">
-          <p className="eyebrow">{t({ en: "Directory", th: "สารบบ", zh: "名录" })}</p>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "1rem", marginBottom: "1rem" }}>
-            <h1 className="hero-title" style={{ margin: 0 }}>
-              {t({
-                en: "The Moneyball of Thai city investment",
-                th: "มันนี่บอลของการลงทุนในเมืองไทย",
-                zh: "泰国城市投资的点球成金",
-              })}
-            </h1>
+        <section className="section rankings-lead reveal visible">
+          <div className="rankings-lead-head">
+            <div>
+              <p className="eyebrow">{t({ en: "Directory", th: "สารบบ", zh: "名录" })}</p>
+              <h1 className="hero-title rankings-title">
+                {t({
+                  en: "Who leads each axis",
+                  th: "ใครนำบนแต่ละแกน",
+                  zh: "谁在各轴领先",
+                })}
+              </h1>
+            </div>
             <button
-              className="btn"
+              className="btn rankings-canvas-btn"
               onClick={() => onNavigate(`/canvas/top10`)}
               style={{
-                fontSize: "var(--text-body)",
+                fontSize: "var(--text-micro)",
                 padding: "0.4rem 0.8rem",
                 borderRadius: "var(--radius-sm)",
                 display: "flex",
@@ -402,20 +404,9 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                 <polyline points="7 10 12 15 17 10"></polyline>
                 <line x1="12" y1="15" x2="12" y2="3"></line>
               </svg>
-              {t({ en: "Download Top 10 Canvas", th: "ดาวน์โหลดแคนวาส 10 อันดับ", zh: "下载前十名画布" })}
+              {t({ en: "Top 10 canvas", th: "แคนวาส 10 อันดับ", zh: "前十名画布" })}
             </button>
           </div>
-          <p className="hero-strapline">
-            {t({
-              en: "Pick a pillar to see who leads that axis. Lenses re-weight the composite when you want a worldview — growth, retirement, climate — rather than a single score.",
-              th: "เลือกเสาหลักเพื่อดูว่าใครนำบนแกนนั้น เลนส์จะถ่วงน้ำหนักคะแนนรวมใหม่เมื่อต้องการมุมมอง — เติบโต เกษียณ ภูมิอากาศ — ไม่ใช่คะแนนเดียว",
-              zh: "选一条支柱，看谁在那条轴上领先。镜头会在你要一种世界观——增长、退休、气候——而非单一分数时，重新加权综合分。",
-            })}
-          </p>
-        </section>
-
-        <section className="section reveal visible">
-          <p className="eyebrow">{t({ en: "Sort by", th: "เรียงตาม", zh: "排序" })}</p>
           <div className="axis-chip-row" role="tablist" aria-label={t({ en: "Ranking axis", th: "แกนจัดอันดับ", zh: "排名主轴" })}>
             <button
               type="button"
@@ -444,72 +435,16 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
           <p className="axis-chip-hint">
             {pillarSort === "composite"
               ? t({
-                  en: "Directory ranked by composite (or the active lens).",
-                  th: "สารบบเรียงตามคะแนนรวม (หรือเลนส์ที่เลือก)",
-                  zh: "名录按综合分（或当前镜头）排序。",
+                  en: "Ranked by composite (or the active lens).",
+                  th: "เรียงตามคะแนนรวม (หรือเลนส์ที่เลือก)",
+                  zh: "按综合分（或当前镜头）排序。",
                 })
               : t({
-                  en: `Directory ranked by ${PILLAR_LABELS.en[pillarSort]}. Other pillars stay visible for comparison.`,
-                  th: `สารบบเรียงตาม${PILLAR_LABELS.th[pillarSort]} เสาอื่นยังเห็นเพื่อเปรียบเทียบ`,
-                  zh: `名录按${PILLAR_LABELS.zh[pillarSort]}排序。其余支柱仍可见，便于比较。`,
+                  en: `Ranked by ${PILLAR_LABELS.en[pillarSort]}. Other pillars stay visible.`,
+                  th: `เรียงตาม${PILLAR_LABELS.th[pillarSort]} เสาอื่นยังเห็นเพื่อเปรียบเทียบ`,
+                  zh: `按${PILLAR_LABELS.zh[pillarSort]}排序。其余支柱仍可见。`,
                 })}
           </p>
-        </section>
-
-        <section className="section reveal visible">
-          <p className="eyebrow">{t({ en: "Lenses", th: "เลนส์", zh: "镜头" })}</p>
-          <div className="lens-chip-row" role="tablist" aria-label={t({ en: "Preset lenses", th: "เลนส์สำเร็จรูป", zh: "预设镜头" })}>
-            {PRESET_LENSES.map(preset => (
-              <button
-                key={preset.id}
-                type="button"
-                role="tab"
-                aria-selected={lensId === preset.id}
-                className={`lens-chip ${lensId === preset.id ? "active" : ""}`}
-                onClick={() => applyLens(preset.id)}
-              >
-                {translate(locale, preset.label)}
-              </button>
-            ))}
-          </div>
-
-          {!isBalanced && (
-          <div className="lens-panel glass-card">
-            <div className="lens-panel-copy">
-              <p className="lens-panel-label">{translate(locale, lens.label)}</p>
-              <p className="lens-panel-tagline">{translate(locale, lens.tagline)}</p>
-              <p className="lens-panel-flavour">{translate(locale, lens.flavour)}</p>
-            </div>
-            <div className="lens-panel-radar">
-              <LensRadar key={lens.id} lens={lens} locale={locale} />
-            </div>
-            <div className="lens-panel-top">
-              <p className="lens-panel-top-label">
-                {t({ en: "Top under this lens", th: "อันดับหนึ่งของเลนส์นี้", zh: "此镜头下的第一" })}
-              </p>
-              {(["alpha", "beta", "gamma"] as CityTier[]).map(tier => {
-                const entry = topByTier[tier];
-                if (!entry) return null;
-                const cityPath = `/city/${entry.city.id}`;
-                return (
-                  <a
-                    key={tier}
-                    href={toAppPath(cityPath)}
-                    className="lens-panel-top-row"
-                    onClick={event => {
-                      event.preventDefault();
-                      onNavigate(cityPath);
-                    }}
-                  >
-                    <span className="lens-panel-top-tier">{tierSymbol(tier)} {TIER_LABELS[locale][tier]}</span>
-                    <span className="lens-panel-top-name">{getCityName(entry.city, locale)}</span>
-                    <span className="lens-panel-top-score">{entry.lensScore.toFixed(1)}</span>
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-          )}
         </section>
 
         <section className="section reveal visible">
@@ -802,6 +737,62 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             </div>
           )}
           </>)}
+        </section>
+
+        <section className="section reveal visible rankings-lenses">
+          <p className="eyebrow">{t({ en: "Lenses", th: "เลนส์", zh: "镜头" })}</p>
+          <div className="lens-chip-row" role="tablist" aria-label={t({ en: "Preset lenses", th: "เลนส์สำเร็จรูป", zh: "预设镜头" })}>
+            {PRESET_LENSES.map(preset => (
+              <button
+                key={preset.id}
+                type="button"
+                role="tab"
+                aria-selected={lensId === preset.id}
+                className={`lens-chip ${lensId === preset.id ? "active" : ""}`}
+                onClick={() => applyLens(preset.id)}
+              >
+                {translate(locale, preset.label)}
+              </button>
+            ))}
+          </div>
+
+          {!isBalanced && (
+          <div className="lens-panel glass-card">
+            <div className="lens-panel-copy">
+              <p className="lens-panel-label">{translate(locale, lens.label)}</p>
+              <p className="lens-panel-tagline">{translate(locale, lens.tagline)}</p>
+              <p className="lens-panel-flavour">{translate(locale, lens.flavour)}</p>
+            </div>
+            <div className="lens-panel-radar">
+              <LensRadar key={lens.id} lens={lens} locale={locale} />
+            </div>
+            <div className="lens-panel-top">
+              <p className="lens-panel-top-label">
+                {t({ en: "Top under this lens", th: "อันดับหนึ่งของเลนส์นี้", zh: "此镜头下的第一" })}
+              </p>
+              {(["alpha", "beta", "gamma"] as CityTier[]).map(tier => {
+                const entry = topByTier[tier];
+                if (!entry) return null;
+                const cityPath = `/city/${entry.city.id}`;
+                return (
+                  <a
+                    key={tier}
+                    href={toAppPath(cityPath)}
+                    className="lens-panel-top-row"
+                    onClick={event => {
+                      event.preventDefault();
+                      onNavigate(cityPath);
+                    }}
+                  >
+                    <span className="lens-panel-top-tier">{tierSymbol(tier)} {TIER_LABELS[locale][tier]}</span>
+                    <span className="lens-panel-top-name">{getCityName(entry.city, locale)}</span>
+                    <span className="lens-panel-top-score">{entry.lensScore.toFixed(1)}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+          )}
         </section>
 
         <section className="section reveal visible picks-section">

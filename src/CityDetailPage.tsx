@@ -1493,6 +1493,9 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
               <div key={metric.key} className="city-qm">
                 <span className="city-qm-val">{metric.value}</span>
                 <span className="city-qm-lab">{metric.label[locale]}</span>
+                {metric.provenance ? (
+                  <span className="city-qm-src">{metric.provenance[locale]}</span>
+                ) : null}
               </div>
             ))}
             <div className="city-qm">
