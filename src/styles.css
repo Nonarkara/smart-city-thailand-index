@@ -841,6 +841,12 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 
 /* ─── CITY DETAIL ─── */
 .city-detail-hero { padding-top: 3.5rem; padding-bottom: .75rem; }
+.city-detail-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.65rem;
+}
 .back-link { font: 600 .72rem var(--font); color: var(--3); margin-bottom: .75rem; display: inline-block; text-transform: uppercase; letter-spacing: .08em; }
 .back-link:hover { color: var(--teal); }
 .city-detail-header { display: grid; grid-template-columns: 1fr auto; gap: 1.25rem; align-items: start; }
@@ -858,7 +864,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.4rem;
-  margin: 0.85rem 0 1rem;
+  margin: 0.35rem 0 0.85rem;
   max-width: 520px;
 }
 @media (min-width: 520px) {
@@ -6988,6 +6994,12 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .city-hero-fingerprint {
     display: none;
   }
+  .city-detail-score-block {
+    display: none;
+  }
+  .city-detail-nav {
+    margin-bottom: 0.35rem;
+  }
 }
 
 @media print {
@@ -7689,6 +7701,36 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     scrollbar-width: none;
   }
   .directory-toolbar .filter-chip-row::-webkit-scrollbar { display: none; }
+  .rankings-page .rankings-canvas-btn { display: none; }
+  .filter-more {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.4rem 0.7rem;
+    font: 700 var(--text-micro) var(--mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--2);
+    background: transparent;
+    border: 1px solid var(--5);
+    cursor: pointer;
+  }
+  .directory-filters-extra { display: none; width: 100%; }
+  .directory-filters-extra.is-open {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    width: 100%;
+  }
+  .rankings-page .ranking-view-tab {
+    padding-inline: 0.7rem;
+  }
+}
+@media (min-width: 721px) {
+  .filter-more { display: none; }
+  .directory-filters-extra {
+    display: contents;
+  }
 }
 .directory-count {
   margin: 0 0 0.75rem;
@@ -8064,6 +8106,13 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 @media (max-width: 720px) {
   .axis-chip-full { display: none; }
   .axis-chip-short { display: inline; }
+  .axis-chip-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .axis-chip-row::-webkit-scrollbar { display: none; }
 }
 
 /* --- Lens panel (three cells: copy · radar · top-per-tier) --- */

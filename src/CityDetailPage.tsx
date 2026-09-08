@@ -1274,7 +1274,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         <div className="dossier-tab-content">
 
       <section className="section city-detail-hero">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+        <div className="city-detail-nav">
           <button
             className="back-link"
             role="link"
@@ -1298,6 +1298,32 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             {translate(locale, { en: "Print City Canvas", th: "พิมพ์แคนวาสเมือง", zh: "打印城市画布" })}
           </button>
         </div>
+
+        {(() => {
+          const { strongest, weakest } = getStrongestWeakest(city.scores);
+          return (
+            <div className="city-axis-scan" aria-label={translate(locale, { en: "Pillar strengths", th: "จุดแข็งตามเสาหลัก", zh: "支柱强弱" })}>
+              <button
+                type="button"
+                className="city-axis-scan-btn"
+                onClick={() => onNavigate(rankingsHref(strongest))}
+              >
+                <span className="city-axis-scan-kicker">{translate(locale, { en: "Strongest", th: "แข็งที่สุด", zh: "最强" })}</span>
+                <span className="city-axis-scan-label">{PILLAR_LABELS[locale][strongest]}</span>
+                <span className="city-axis-scan-score">{city.scores[strongest]}</span>
+              </button>
+              <button
+                type="button"
+                className="city-axis-scan-btn"
+                onClick={() => onNavigate(rankingsHref(weakest))}
+              >
+                <span className="city-axis-scan-kicker">{translate(locale, { en: "Weakest", th: "อ่อนที่สุด", zh: "最弱" })}</span>
+                <span className="city-axis-scan-label">{PILLAR_LABELS[locale][weakest]}</span>
+                <span className="city-axis-scan-score">{city.scores[weakest]}</span>
+              </button>
+            </div>
+          );
+        })()}
 
         <div className="city-detail-header">
           <div>
@@ -1333,32 +1359,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             ) : null}
           </div>
         </div>
-
-        {(() => {
-          const { strongest, weakest } = getStrongestWeakest(city.scores);
-          return (
-            <div className="city-axis-scan" aria-label={translate(locale, { en: "Pillar strengths", th: "จุดแข็งตามเสาหลัก", zh: "支柱强弱" })}>
-              <button
-                type="button"
-                className="city-axis-scan-btn"
-                onClick={() => onNavigate(rankingsHref(strongest))}
-              >
-                <span className="city-axis-scan-kicker">{translate(locale, { en: "Strongest", th: "แข็งที่สุด", zh: "最强" })}</span>
-                <span className="city-axis-scan-label">{PILLAR_LABELS[locale][strongest]}</span>
-                <span className="city-axis-scan-score">{city.scores[strongest]}</span>
-              </button>
-              <button
-                type="button"
-                className="city-axis-scan-btn"
-                onClick={() => onNavigate(rankingsHref(weakest))}
-              >
-                <span className="city-axis-scan-kicker">{translate(locale, { en: "Weakest", th: "อ่อนที่สุด", zh: "最弱" })}</span>
-                <span className="city-axis-scan-label">{PILLAR_LABELS[locale][weakest]}</span>
-                <span className="city-axis-scan-score">{city.scores[weakest]}</span>
-              </button>
-            </div>
-          );
-        })()}
 
         <p className="city-detail-tagline">{cityTagline}</p>
         <p className="section-intro">{cityOrientation}</p>

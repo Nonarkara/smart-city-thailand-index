@@ -268,6 +268,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
   const [query, setQuery] = useState("");
   const [compareMode, setCompareMode] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [pillarSort, setPillarSort] = useState<RankingsAxis>(() => parseRankingsAxis(window.location.search));
 
@@ -562,6 +563,18 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               ))}
             </div>
 
+            <button
+              type="button"
+              className={`filter-more ${filtersOpen ? "is-open" : ""}`}
+              aria-expanded={filtersOpen}
+              onClick={() => setFiltersOpen(open => !open)}
+            >
+              {filtersOpen
+                ? t({ en: "Fewer filters", th: "ซ่อนตัวกรอง", zh: "收起筛选" })
+                : t({ en: "More filters", th: "ตัวกรองเพิ่ม", zh: "更多筛选" })}
+            </button>
+
+            <div className={`directory-filters-extra ${filtersOpen ? "is-open" : ""}`}>
             <div className="filter-chip-row" role="group" aria-label={t({ en: "Status filter", th: "ตัวกรองสถานะ", zh: "状态筛选" })}>
               {(["all", "certified", "promotion", "registered"] as const).map(key => (
                 <button
@@ -586,6 +599,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                   {REGION_LABELS[locale][key]}
                 </button>
               ))}
+            </div>
             </div>
 
             <button
