@@ -96,7 +96,7 @@ function makeBoard(seed: number, n: GridSize): BingoTerm[] {
   const hasFree = n % 2 === 1;
   if (hasFree) {
     const s = shuffled.slice(0, cellCount - 1);
-    const FREE: BingoTerm = { id:"FREE", dim:"governance", emoji:"🆓", label:{en:"FREE",th:"ฟรี",zh:"FREE"}, hint:{en:"no guessing needed!",th:"ช่องนี้ไม่ต้องเดา!",zh:"这格不用猜！"} };
+    const FREE: BingoTerm = { id:"FREE", dim:"governance", emoji:"🆓", label:{en:"FREE",th:"ฟรี",zh:"免费"}, hint:{en:"no guessing needed!",th:"ช่องนี้ไม่ต้องเดา!",zh:"这格不用猜！"} };
     const center = Math.floor(cellCount / 2);
     return [...s.slice(0,center), FREE, ...s.slice(center)];
   }
@@ -235,7 +235,7 @@ export default function ScitiBingoPage({ locale }: Props) {
               {isFree?(
                 <div className="bingo-free-content">
                   <span className="bingo-free-stamp">★</span>
-                  <span className="bingo-free-label">{t({en:"FREE",th:"ฟรี",zh:"FREE"})}</span>
+                  <span className="bingo-free-label">{t({en:"FREE",th:"ฟรี",zh:"免费"})}</span>
                   <span className="bingo-click-count">{clickCount}</span>
                   <span className="bingo-free-sub">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
                 </div>

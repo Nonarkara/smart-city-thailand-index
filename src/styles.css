@@ -1481,8 +1481,11 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 }
 .trend-refresh,
 .trend-submit {
-  border: 1px solid var(--ink, #111);
-  background: var(--ink, #111);
+  /* Always-dark control regardless of page theme — literal colors, not the
+     theme-flipping --ink token (which would invert this to pale-on-white
+     in dark mode). See .opening-argument for the same fix + rationale. */
+  border: 1px solid #111;
+  background: #111;
   color: #fff;
   font: 700 0.72rem var(--mono, monospace);
   letter-spacing: 0.08em;
@@ -5111,7 +5114,9 @@ details[open] .kb-question::before { content: "−"; }
   display: grid;
   grid-template-columns: 1.5fr 1fr 1.5fr 0.8fr;
   padding: 1rem 1.5rem;
-  background: var(--ink);
+  /* Literal navy, not var(--ink) — that token flips to pale in dark mode,
+     which would leave white text on a near-white header row. */
+  background: #0C2F53;
   color: #fff;
   font: 700 var(--text-micro) var(--mono);
   text-transform: uppercase;
@@ -8148,7 +8153,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
    ======================================================================== */
 .invest-ccdr-panel {
   width: 100%;
-  background: var(--ink, #0C2F53);
+  /* Literal navy — always dark by design, not theme-flipping var(--ink). */
+  background: #0C2F53;
   color: #fff;
   border-top: 1px solid rgba(255,255,255,0.1);
   border-bottom: 3px solid var(--amber, #f59e0b);
@@ -8565,7 +8571,11 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
    ======================================================================== */
 .opening-argument {
   width: 100%;
-  background: var(--ink, #0C2F53);
+  /* Literal navy, not var(--ink): --ink flips to a pale off-white in dark
+     mode (it is a text-ink token, not a fixed color), which left this
+     section rendering white text on a near-white background. Confirmed via
+     computed-style check: dark mode measured bg rgb(232,239,245) here. */
+  background: #0C2F53;
   color: #fff;
   border-top: 1px solid rgba(255,255,255,0.12);
   border-bottom: 1px solid rgba(255,255,255,0.12);
@@ -9546,7 +9556,7 @@ body:has(.bingo-page) { overflow: hidden; }
 /* FREE cell — board-game centre stamp */
 .bingo-free-content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; gap: 2px; }
 .bingo-free-stamp   { font: 800 clamp(1rem, 5vw, 1.6rem) var(--mono); color: var(--cell-color, var(--3)); line-height: 1; letter-spacing: .04em; }
-.bingo-free-label   { font: 700 clamp(0.62rem, 2.2vw, 0.85rem) var(--mono); letter-spacing: .12em; color: var(--ink); text-transform: uppercase; margin-top: 2px; }
+.bingo-free-label   { font: 700 clamp(0.7rem, 2.2vw, 0.85rem) var(--mono); letter-spacing: .12em; color: var(--ink); text-transform: uppercase; margin-top: 2px; }
 .bingo-click-count  { font: 800 clamp(1.1rem, 6vw, 2rem) var(--mono); color: var(--teal); line-height: 1; letter-spacing: -.02em; }
 .bingo-free-sub     { font: 600 clamp(0.6rem, 1.6vw, 0.72rem) var(--mono); letter-spacing: .14em; color: var(--3); text-transform: uppercase; }
 
@@ -9557,7 +9567,7 @@ body:has(.bingo-page) { overflow: hidden; }
   position: absolute;
   top: clamp(4px, 1.4vw, 8px);
   left: clamp(4px, 1.4vw, 6px);
-  font: 700 clamp(0.6rem, 2.4vw, 0.85rem) var(--mono);
+  font: 700 clamp(0.7rem, 2.4vw, 0.85rem) var(--mono);
   color: var(--cell-color, var(--3));
   letter-spacing: .06em;
   line-height: 1;
@@ -9565,7 +9575,7 @@ body:has(.bingo-page) { overflow: hidden; }
 }
 .bingo-cell-emoji { font-size: clamp(1.1rem, 5.5vw, 1.95rem); line-height: 1; flex-shrink: 0; }
 .bingo-cell-text  {
-  font: 600 clamp(0.6rem, 2.6vw, 0.8rem)/1.15 var(--font);
+  font: 600 clamp(0.7rem, 2.6vw, 0.8rem)/1.15 var(--font);
   text-align: center;
   padding: 0 2px;
   /* break-word let the engine split anywhere ("Healthcar-e") before
@@ -9579,7 +9589,7 @@ body:has(.bingo-page) { overflow: hidden; }
 
 /* Cell back */
 .bingo-logo-img   { width: 60%; height: 60%; object-fit: contain; display: block; }
-.bingo-back-label { color: #fff; font: 800 clamp(.6rem, 1.8vw, .72rem)/1 var(--mono); letter-spacing: .06em; margin-top: .15rem; text-transform: uppercase; }
+.bingo-back-label { color: #fff; font: 800 clamp(.7rem, 1.8vw, .72rem)/1 var(--mono); letter-spacing: .06em; margin-top: .15rem; text-transform: uppercase; }
 
 /* Per-grid-size mobile overrides — denser grids get smaller text so all
    three layers (number, emoji, label) fit without overflow. */
