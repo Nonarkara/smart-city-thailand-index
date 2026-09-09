@@ -86,3 +86,27 @@ Per §13: the same mistake never happens twice.
 - **What went wrong:** After calling `scrollIntoView()` in preview_eval, subsequent screenshot showed blank white. Root cause: `window.innerWidth` / `window.innerHeight` reported 0x0 even though the screenshot tool renders at full size. `window.scrollTo(0, n)` silently does nothing in this state.
 - **Correct behaviour:** Use `document.documentElement.scrollTo({ top: n, behavior: 'instant' })` to scroll (not `window.scrollTo`). Use `preview_resize` to reset the viewport if `window.innerWidth` reports 0. The actual screenshot tool renders at full desktop size regardless of `window.innerWidth`.
 - **How to recognise:** `window.innerWidth + 'x' + window.innerHeight` returns "0x0" → call `preview_resize` with a preset before proceeding. If `document.documentElement.scrollTop` won't change, the page may use `html { overflow: visible }` — use `document.documentElement.scrollTo()` with `behavior: 'instant'` instead.
+
+## 2026-09-03 · Type audit: grep the cascade in the browser, not the stylesheet
+- **What went wrong:** the stylesheet declared `.source-card-desc { font-size: var(--text-body) }`, yet it rendered at 11.5px. Two hidden overrides defeated the token system: inline `style={{ fontSize: "var(--text-micro)" }}` in JSX, and duplicate later CSS rules (`.callout-card p` declared body at L839 and micro at L3088 — last wins). A stylesheet grep had already been done once ("micro-token floor" pass) and missed both.
+- **Correct behaviour:** audit *computed* styles in the running page — census `getComputedStyle().fontSize` across routes at 375px, classify prose (≥60 chars) vs labels, then ask the browser which rule wins for a sample element. Only then edit.
+- **How to recognise:** a rule says X but the element renders Y; `font:` shorthand and single-quoted inline styles slip past `font-size:`/double-quote greps.
+
+## 2026-09-03 · `min(calc((100% − W)/2), X)` goes negative below W and drops the whole declaration
+- **What went wrong:** `.edition-stamp { padding: .65rem min(calc((100% - 1060px)/2), 1.25rem) }` — below 1060px the calc is negative, `min()` returns it, negative padding is invalid, the entire `padding` is discarded → element flush at x=0 under a gutter-inset hero.
+- **Correct behaviour:** `padding: max(var(--gutter), calc((100% - var(--w))/2 + var(--gutter)))` — never below the gutter, aligns to the column above W.
+- **How to recognise:** a container aligned on desktop but flush-left on phones; computed `paddingLeft: 0px` while the rule clearly sets one.
+
+## 2026-09-03 · SVG `<text fontSize="8">` in a 760-unit viewBox renders at 2.8px on a phone
+- **What went wrong:** `width:100%` scaled the methodology diagrams to 0.396× at 375px; computed style still reports 8px, so a font-size census misses it. The scoring formula was invisible on the primary surface.
+- **Correct behaviour:** measure `rect.width / viewBox.width × authoredSize`; hold a `min-width` inside an `overflow-x:auto; max-width:100%` wrapper so the SVG scales *up* to ≥11px effective and scrolls, instead of shrinking past legibility.
+- **How to recognise:** any `<svg viewBox>` with authored text ≤10 and `width:100%`.
+
+## 2026-09-03 · `scroll-snap-type: x mandatory` snaps to the padding edge and swallows the gutter
+- **What went wrong:** the stat ribbon's first cell rested at x=0 despite `padding-inline: var(--gutter)` — mandatory snap aligns `snap-align:start` cells to the scrollport (padding) edge.
+- **Correct behaviour:** add `scroll-padding-inline: var(--gutter)`; if a sticky edge affordance must reach the true viewport edge, put the gutter on `:first-child`/`:last-child` margins instead of scrollport padding.
+- **How to recognise:** a snap strip whose first item ignores container padding at rest.
+
+## 2026-09-03 · Minified CSS serialises `::after` as `:after` — don't grep live CSS for the double colon
+- **What went wrong:** the post-deploy check grepped production CSS for `home-stat-ribbon-inner::after` and aborted a green deploy.
+- **Correct behaviour:** assert on the single-colon form or a regex `:+after`, or on a property inside the rule.
