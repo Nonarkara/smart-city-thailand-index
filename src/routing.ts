@@ -24,9 +24,13 @@ export type Route =
   | { kind: "canvas"; path: `/canvas/${string}`; cityId: string };
 
 export function parseRoute(rawPathname: string): Route {
+  // Query strings (e.g. /rankings?pillar=safety) and hashes are not part of the
+  // route kind. Pages read search params themselves.
+  const withoutHash = rawPathname.split("#")[0] ?? rawPathname;
+  const pathOnly = withoutHash.split("?")[0] ?? withoutHash;
   // Strip Vite BASE_URL prefix (e.g., /smart-city-thailand-index/) for GitHub Pages
   const base = import.meta.env.BASE_URL || "/";
-  const afterBase = rawPathname.startsWith(base) ? rawPathname.slice(base.length - 1) || "/" : rawPathname;
+  const afterBase = pathOnly.startsWith(base) ? pathOnly.slice(base.length - 1) || "/" : pathOnly;
   // Strip trailing slash(es) so directory-style URLs resolve. Cloudflare Pages
   // 308-redirects /city/<id> -> /city/<id>/ (the OG static dir), and a shared
   // /rankings/ link arrives with a slash too; without this, cityId parses as

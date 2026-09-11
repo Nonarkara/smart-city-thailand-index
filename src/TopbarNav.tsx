@@ -52,7 +52,7 @@ const NAV_GROUPS: NavGroup[] = [
     label: { en: "Rankings", th: "อันดับ", zh: "排名" },
     items: [
       { kind: "rankings", path: "/rankings", label: { en: "Rankings", th: "อันดับเมือง", zh: "城市排名" } },
-      { kind: "discover", path: "/discover", label: { en: "Your City", th: "เมืองคุณ", zh: "你的城市" } },
+      { kind: "discover", path: "/discover", label: { en: "Match cities", th: "จับคู่เมือง", zh: "匹配城市" } },
       { kind: "compare", path: "/compare", label: { en: "Compare", th: "เทียบเมือง", zh: "对比城市" } },
     ],
   },

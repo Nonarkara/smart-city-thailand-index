@@ -55,4 +55,12 @@ describe("cityCdp derivation", () => {
     expect(alphaDetail.deliveryProfile.deliveryNote.en).not.toBe(betaDetail.deliveryProfile.deliveryNote.en);
     expect(betaDetail.deliveryProfile.deliveryNote.en).not.toBe(gammaDetail.deliveryProfile.deliveryNote.en);
   });
+
+  it("labels provincial and proxy key metrics instead of presenting them as city-boundary facts", () => {
+    const samyan = getCityDetail("samyan");
+    expect(samyan).toBeDefined();
+    const gpp = samyan!.keyMetrics.find(metric => metric.key === "gppPerCapita");
+    expect(gpp?.provenance?.en.toLowerCase()).toContain("provincial");
+    expect(samyan!.keyMetrics.some(metric => metric.provenance)).toBe(true);
+  });
 });

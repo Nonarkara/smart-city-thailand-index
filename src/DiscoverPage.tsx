@@ -34,6 +34,17 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
     return init as Record<ScoringPillar, Grade>;
   });
 
+  const applyPreset = (focus: ScoringPillar | "balanced") => {
+    setPrefs(() => {
+      const next: Partial<Record<ScoringPillar, Grade>> = {};
+      SCORING_PILLARS.forEach(p => {
+        if (focus === "balanced") next[p] = "B";
+        else next[p] = p === focus ? "A" : "C";
+      });
+      return next as Record<ScoringPillar, Grade>;
+    });
+  };
+
   const toggleGrade = (pillar: ScoringPillar) => {
     setPrefs(prev => {
       const current = prev[pillar];
@@ -80,9 +91,9 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
   return (
     <div className="discover-page">
       {/* ─── HERO ─── */}
-      <section className="section rankings-hero reveal visible">
+      <section className="section rankings-hero discover-lead reveal visible">
         <p className="eyebrow">{translate(locale, { en: "City matcher", th: "จับคู่เมือง", zh: "城市匹配" })}</p>
-        <h1 className="hero-title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)" }}>
+        <h1 className="hero-title discover-title">
           {translate(locale, { en: "What is your city?", th: "เมืองของคุณคือเมืองไหน?", zh: "你的城市是哪座？" })}
         </h1>
         <p className="hero-strapline">
@@ -92,6 +103,20 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
             zh: "在7个支柱上设定你的优先级。我们将找出哪些泰国智慧城市最匹配你的关注点。点击支柱循环：A(强) → B(中等) → C(任意)。",
           })}
         </p>
+        <div className="discover-presets" role="group" aria-label={translate(locale, { en: "Quick priorities", th: "ลำดับความสำคัญด่วน", zh: "快捷优先级" })}>
+          <button type="button" className="filter-chip" onClick={() => applyPreset("balanced")}>
+            {translate(locale, { en: "Balanced", th: "สมดุล", zh: "均衡" })}
+          </button>
+          <button type="button" className="filter-chip" onClick={() => applyPreset("safety")}>
+            {translate(locale, { en: "Safety first", th: "ความปลอดภัยก่อน", zh: "安全优先" })}
+          </button>
+          <button type="button" className="filter-chip" onClick={() => applyPreset("economy")}>
+            {translate(locale, { en: "Jobs first", th: "งานก่อน", zh: "就业优先" })}
+          </button>
+          <button type="button" className="filter-chip" onClick={() => applyPreset("environment")}>
+            {translate(locale, { en: "Clean air first", th: "อากาศสะอาดก่อน", zh: "空气优先" })}
+          </button>
+        </div>
       </section>
 
       {/* ─── PILLAR MIXER ─── */}

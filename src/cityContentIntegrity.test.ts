@@ -31,6 +31,7 @@ describe("city dossier content integrity", () => {
 
       const resolvedPopulation = getResolvedPopulationThousand(city);
       expect(resolvedPopulation.value, `${city.id} should have a resolved population baseline or an explicit pending state`).not.toBe(0);
+      expect(city.metrics.population, `${city.id} must not encode unknown population as 0`).not.toBe(0);
     });
   });
 

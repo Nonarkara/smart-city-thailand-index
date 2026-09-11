@@ -7,11 +7,12 @@
 // ---------------------------------------------------------------------------
 
 import { assignTier, blendLivabilityScore, blendSafetyScore, computeComposite } from "./scoring.ts";
-import { classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
+import { classifyDataConfidence, computeDataConfidenceScore, applyEvidenceConfidenceCap } from "./methodologySpec.ts";
 import type { SmartCity, CityScores } from "./types.ts";
 import { RANKING_OVERRIDES } from "./dynamicCityData.ts";
 import { getFloodScore } from "./provincialFloodData.ts";
 import { getLandPrice, getLandPriceSource } from "./provincialLandPriceData.ts";
+import { getEvidenceForCity } from "./evidenceData.ts";
 
 export { assignTier, computeComposite } from "./scoring.ts";
 
@@ -39,7 +40,7 @@ function city(
   const landPrice = getLandPrice(province);
   const landPriceSrc = getLandPriceSource(province);
   const blendedLivability = blendLivabilityScore(scores.livability, floodScore);
-  const blendedSafety = blendSafetyScore(scores.safety, metrics.roadFatalityRate ?? 25);
+  const blendedSafety = blendSafetyScore(scores.safety, metrics.roadFatalityRate);
   const adjustedScores: CityScores = { ...scores, livability: blendedLivability, safety: blendedSafety };
   const enrichedMetrics = {
     ...metrics,
@@ -50,8 +51,12 @@ function city(
 
   const finalScores = RANKING_OVERRIDES[id] ? { ...adjustedScores, ...RANKING_OVERRIDES[id] } : adjustedScores;
   const compositeScore = computeComposite(finalScores);
-  const dataConfidence = classifyDataConfidence(
-    computeDataConfidenceScore({ metrics: enrichedMetrics }),
+  const dataConfidence = applyEvidenceConfidenceCap(
+    classifyDataConfidence(
+      computeDataConfidenceScore({ metrics: enrichedMetrics }),
+    ),
+    getEvidenceForCity(id).length,
+    status,
   );
 
   return {
@@ -179,7 +184,7 @@ export const certifiedCities: SmartCity[] = [
     "Bangkok", "กรุงเทพฯ", "bangkok", "certified", "planned", 1,
     ["economy", "energy", "living", "mobility"],
     { livability: 30, economy: 35, safety: 61, wellbeing: 30, environment: 35, hospitality: 25, digital: 40 },
-    { population: 0, gppPerCapita: 628000, avgMonthlyIncome: 40200, pm25Annual: 32.4, hospitalBedsPer10k: 42, crimeRatePer100k: 285, greenCoverage: 15, gppGrowthRate: 2.1, pm25Trend: "stable", waterQuality: 55, forestCoverage: 11, fdiInflow: 12500, industryComposition: "services 72%, manufacturing 18%, agriculture 1%, other 9%", laborForce: 4200, roadFatalityRate: 14 },
+    { gppPerCapita: 628000, avgMonthlyIncome: 40200, pm25Annual: 32.4, hospitalBedsPer10k: 42, crimeRatePer100k: 285, greenCoverage: 15, gppGrowthRate: 2.1, pm25Trend: "stable", waterQuality: 55, forestCoverage: 11, fdiInflow: 12500, industryComposition: "services 72%, manufacturing 18%, agriculture 1%, other 9%", laborForce: 4200, roadFatalityRate: 14 },
     "Massive transit hub plan on paper. Almost nothing built. The land exists but the smart city doesn't — yet another plan waiting to become reality.",
     "แผนศูนย์กลางขนส่งขนาดใหญ่บนกระดาษ แทบไม่มีอะไรสร้าง ที่ดินมีอยู่แต่เมืองอัจฉริยะไม่มี — อีกแผนหนึ่งที่รอเป็นจริง",
     ["Master plan completed but construction not started", "Environmental impact assessment done", "Transit integration design with Airport Rail Link"],
@@ -212,7 +217,7 @@ export const certifiedCities: SmartCity[] = [
     "Rayong", "ระยอง", "east", "certified", "planned", 1,
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 18, economy: 22, safety: 46, wellbeing: 15, environment: 50, hospitality: 10, digital: 55 },
-    { population: 0, gppPerCapita: 1020000, avgMonthlyIncome: 32400, pm25Annual: 26.5, hospitalBedsPer10k: 18, crimeRatePer100k: 155, greenCoverage: 38, gppGrowthRate: 2.5, pm25Trend: "stable", waterQuality: 55, forestCoverage: 25, fdiInflow: 5800, industryComposition: "petrochemical/manufacturing 55%, services 30%, agriculture 15%", laborForce: 420, roadFatalityRate: 55 },
+    { gppPerCapita: 1020000, avgMonthlyIncome: 32400, pm25Annual: 26.5, hospitalBedsPer10k: 18, crimeRatePer100k: 155, greenCoverage: 38, gppGrowthRate: 2.5, pm25Trend: "stable", waterQuality: 55, forestCoverage: 25, fdiInflow: 5800, industryComposition: "petrochemical/manufacturing 55%, services 30%, agriculture 15%", laborForce: 420, roadFatalityRate: 55 },
     "Thailand's #1-ranked smart city on paper — PTT's 3,454-rai EEC campus with VISTEC and KVIS operational, but the biorefinery is two years delayed and zero residential occupancy has been published. The structural question underlying everything: World Bank CCDR 2025 documents the EEC facing a 40% water supply shortfall by 2037 under average hydrology — 72% in dry years — even after 32 planned infrastructure investments. Wangchan Valley's development thesis depends on EEC water security that does not yet exist.",
     "เมืองอัจฉริยะอันดับ 1 บนกระดาษ — วิทยาเขต PTT 3,454 ไร่ใน EEC มี VISTEC และ KVIS เปิดดำเนินการแล้ว แต่โรงกลั่นชีวภาพล่าช้าสองปีและไม่มีข้อมูลการอยู่อาศัยจริง ธนาคารโลก CCDR 2025: EEC เผชิญกับการขาดแคลนน้ำ 40% ภายในปี 2580 ภายใต้อุทกวิทยาเฉลี่ย — 72% ในปีที่แห้งแล้ง วิสัยทัศน์การพัฒนาวังจันทร์วัลเลย์ขึ้นอยู่กับความมั่นคงทางน้ำ EEC ที่ยังไม่มีอยู่จริง",
     ["VISTEC research university + KVIS science high school operational", "Biorefinery ~50% complete as of 2024 (promised 2022)", "PTT invested ฿4.5B Phase 1 — oil price crash 2020 slowed momentum", "World Bank CCDR 2025: EEC water shortfall 40% by 2037 (average), 72% in dry years — the constraint Wangchan Valley does not talk about"],
@@ -493,7 +498,7 @@ export const certifiedCities: SmartCity[] = [
     "Phuket", "ภูเก็ต", "south", "certified", "planned", 4,
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 25, economy: 30, safety: 61, wellbeing: 20, environment: 55, hospitality: 20, digital: 45 },
-    { population: 0, gppPerCapita: 492000, avgMonthlyIncome: 34600, pm25Annual: 18.2, hospitalBedsPer10k: 25, crimeRatePer100k: 198, greenCoverage: 44, gppGrowthRate: 5.2, pm25Trend: "improving", waterQuality: 72, forestCoverage: 42, fdiInflow: 3200, industryComposition: "tourism/services 75%, construction 12%, agriculture 8%, other 5%", laborForce: 280, roadFatalityRate: 22 },
+    { gppPerCapita: 492000, avgMonthlyIncome: 34600, pm25Annual: 18.2, hospitalBedsPer10k: 25, crimeRatePer100k: 198, greenCoverage: 44, gppGrowthRate: 5.2, pm25Trend: "improving", waterQuality: 72, forestCoverage: 42, fdiInflow: 3200, industryComposition: "tourism/services 75%, construction 12%, agriculture 8%, other 5%", laborForce: 280, roadFatalityRate: 22 },
     "Newest certified city — but it's a development plan, not a functioning city. The logo was awarded to a concept.",
     "เมืองที่ได้รับการรับรองล่าสุด — แต่เป็นแผนพัฒนา ไม่ใช่เมืองที่ทำงานได้ ตราสัญลักษณ์มอบให้กับแนวคิด",
     ["Master plan approved with all 7 dimensions", "Innovation park concept", "Not yet under construction"],

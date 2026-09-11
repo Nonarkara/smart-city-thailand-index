@@ -18,6 +18,7 @@ import { ResponsiveImage } from "./mediaAssets";
 import { assetUrl } from "./assetUtils";
 import { PILLAR_WEIGHTS } from "./types";
 import { HOME_COLLECTIONS } from "./homeCollections";
+import { rankingsHref } from "./rankingsQuery";
 import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_DATA_CUTOFF_ISO, SCITI_METHOD_CODE } from "./methodologySpec";
 import { WEEKLY_DIGEST, formatWeeklyStamp } from "./weeklyDigest";
 import { REGIONS_ORDERED, REGION_LABELS, type Region } from "./regions";
@@ -271,6 +272,52 @@ export default function HomePage({ locale, onNavigate }: Props) {
         <span>{t({ en: `Research by Dr. Non A · depa · ${SCITI_METHOD_CODE} · release cut-off ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, th: `งานวิจัยโดย ดร.ณณ · depa · ${SCITI_METHOD_CODE} · วันตัดข้อมูล ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, zh: `研究：Non A 博士 · depa · ${SCITI_METHOD_CODE} · 数据截点 ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}` })}</span>
       </div>
 
+      <div className="home-column">
+        {/* ─── PILLAR CHAMPIONS ─── */}
+        <section
+          ref={championsRef}
+          className={`section reveal stagger-1 ${championsVisible ? "visible" : ""}`}
+          aria-label={t({ en: "Pillar champions", th: "เมืองผู้นำรายเสาหลัก", zh: "各支柱冠军" })}
+        >
+          <p className="eyebrow">{t({ en: "The seven pillars, by champion", th: "เจ็ดเสาหลัก ดูผ่านเมืองผู้นำ", zh: "七支柱，冠军演绎" })}</p>
+          <h2 className="home-section-title">
+            {t({
+              en: "One city that wins each axis",
+              th: "หนึ่งเมืองผู้นำ ต่อหนึ่งแกน",
+              zh: "每条主轴的头名城市",
+            })}
+          </h2>
+          <ul className="pillar-champions">
+            {pillarChampions.map(({ pillar, city }) => (
+              <li key={pillar} className="pillar-champion-cell">
+                <button
+                  type="button"
+                  className="pillar-champion-btn"
+                  onClick={() => onNavigate(rankingsHref(pillar))}
+                >
+                  <span
+                    className="pillar-champion-dot"
+                    style={{ background: PILLAR_COLORS[pillar] }}
+                    aria-hidden="true"
+                  />
+                  <span className="pillar-champion-label">{PILLAR_LABELS[locale][pillar]}</span>
+                  <span className="pillar-champion-city">{getCityName(city, locale)}</span>
+                  <span className="pillar-champion-score">{city.scores[pillar]}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="pillar-champion-actions">
+            <button type="button" className="ghost-button" onClick={() => onNavigate("/rankings")}>
+              {t({ en: "Full directory →", th: "สารบบทั้งหมด →", zh: "完整名录 →" })}
+            </button>
+            <button type="button" className="ghost-button" onClick={() => onNavigate("/discover")}>
+              {t({ en: "Match your priorities →", th: "จับคู่ลำดับความสำคัญ →", zh: "匹配你的优先级 →" })}
+            </button>
+          </div>
+        </section>
+      </div>
+
       {/* ─── OPENING ARGUMENT ─── */}
       {/* The editorial heart of SCITI: why it exists, what makes it honest,
           what the user is about to see. Dark panel, ink-on-white reversed,
@@ -343,42 +390,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
       </section>
 
       <div className="home-column">
-        {/* ─── PILLAR CHAMPIONS ─── */}
-        <section
-          ref={championsRef}
-          className={`section reveal stagger-1 ${championsVisible ? "visible" : ""}`}
-          aria-label={t({ en: "Pillar champions", th: "เมืองผู้นำรายเสาหลัก", zh: "各支柱冠军" })}
-        >
-          <p className="eyebrow">{t({ en: "The seven pillars, by champion", th: "เจ็ดเสาหลัก ดูผ่านเมืองผู้นำ", zh: "七支柱，冠军演绎" })}</p>
-          <h2 className="home-section-title">
-            {t({
-              en: "One city that wins each axis",
-              th: "หนึ่งเมืองผู้นำ ต่อหนึ่งแกน",
-              zh: "每条主轴的头名城市",
-            })}
-          </h2>
-          <ul className="pillar-champions">
-            {pillarChampions.map(({ pillar, city }) => (
-              <li key={pillar} className="pillar-champion-cell">
-                <button
-                  type="button"
-                  className="pillar-champion-btn"
-                  onClick={() => onNavigate(`/city/${city.id}`)}
-                >
-                  <span
-                    className="pillar-champion-dot"
-                    style={{ background: PILLAR_COLORS[pillar] }}
-                    aria-hidden="true"
-                  />
-                  <span className="pillar-champion-label">{PILLAR_LABELS[locale][pillar]}</span>
-                  <span className="pillar-champion-city">{getCityName(city, locale)}</span>
-                  <span className="pillar-champion-score">{city.scores[pillar]}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-
         {/* ─── REGIONAL CHAMPIONS (Phase 14) ─── */}
         {regionalChampions.length > 0 && (
           <section
