@@ -20,28 +20,16 @@ const promotionCityCount = Number(getClaimValue("promotion-zones") ?? 190);
 const proposalCount = Number(getClaimValue("proposals") ?? 227);
 const smartCityTarget = Number(getClaimValue("target-smart-cities-2024-2027") ?? 105);
 
-function getStoredGeminiKey(): string {
+function removeLegacyGeminiKey() {
   try {
-    return window.localStorage.getItem(GEMINI_KEY_STORAGE_KEY)?.trim() ?? "";
-  } catch {
-    return "";
-  }
-}
-
-function saveStoredGeminiKey(apiKey: string) {
-  try {
-    if (apiKey.trim()) {
-      window.localStorage.setItem(GEMINI_KEY_STORAGE_KEY, apiKey.trim());
-      return;
-    }
     window.localStorage.removeItem(GEMINI_KEY_STORAGE_KEY);
   } catch {
     // Best-effort browser storage only.
   }
 }
 
-function buildGeminiUrl(apiKey: string): string {
-  return `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+function buildGeminiUrl(): string {
+  return "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 }
 
 /** Build the RAG context from our data */
@@ -90,8 +78,13 @@ export default function GeminiChat({ locale }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [apiKey, setApiKey] = useState<string>(getStoredGeminiKey);
-  const [apiKeyDraft, setApiKeyDraft] = useState<string>(getStoredGeminiKey);
+  const [apiKey, setApiKey] = useState("");
+  const [apiKeyDraft, setApiKeyDraft] = useState("");
+  const requestRef = useRef<AbortController | null>(null);
+  useEffect(() => {
+    removeLegacyGeminiKey();
+    return () => requestRef.current?.abort();
+  }, []);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const keyInputRef = useRef<HTMLInputElement>(null);
@@ -129,12 +122,13 @@ export default function GeminiChat({ locale }: Props) {
 
   const persistApiKey = useCallback(() => {
     const nextKey = apiKeyDraft.trim();
-    saveStoredGeminiKey(nextKey);
     setApiKey(nextKey);
+    setApiKeyDraft("");
   }, [apiKeyDraft]);
 
   const clearApiKey = useCallback(() => {
-    saveStoredGeminiKey("");
+    requestRef.current?.abort();
+    removeLegacyGeminiKey();
     setApiKey("");
     setApiKeyDraft("");
     setMessages([]);
@@ -147,6 +141,9 @@ export default function GeminiChat({ locale }: Props) {
     setInput("");
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
     setLoading(true);
+    const controller = new AbortController();
+    requestRef.current = controller;
+    const timeout = setTimeout(() => controller.abort(), 30000);
 
     try {
       const history = messages.slice(-6).map(m => ({
@@ -154,9 +151,10 @@ export default function GeminiChat({ locale }: Props) {
         parts: [{ text: m.content }],
       }));
 
-      const res = await fetch(buildGeminiUrl(apiKey), {
+      const res = await fetch(buildGeminiUrl(), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
         body: JSON.stringify({
           system_instruction: { parts: [{ text: systemPrompt.current }] },
           contents: [
@@ -172,14 +170,14 @@ export default function GeminiChat({ locale }: Props) {
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data?.error?.message ?? "Gemini request failed.");
+        throw new Error(`HTTP ${res.status}`);
       }
       const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "Sorry, I couldn't generate a response.";
-      setMessages(prev => [...prev, { role: "assistant", content: reply }]);
-    } catch (error) {
-      const detail = error instanceof Error ? error.message : "Connection error.";
-      setMessages(prev => [...prev, { role: "assistant", content: `Gemini request failed. ${detail}` }]);
+      if (!controller.signal.aborted) setMessages(prev => [...prev, { role: "assistant", content: reply }]);
+    } catch {
+      if (!controller.signal.aborted) setMessages(prev => [...prev, { role: "assistant", content: "Gemini request failed. Check your key and connection." }]);
     } finally {
+      clearTimeout(timeout);
       setLoading(false);
       setTimeout(() => scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" }), 50);
     }
@@ -209,9 +207,9 @@ export default function GeminiChat({ locale }: Props) {
         {!hasApiKey && (
           <div className="chat-welcome">
             <p>{t(
-              "For security, this optional assistant only runs with your own Gemini API key stored in this browser. No project key is bundled into the site.",
-              "เพื่อความปลอดภัย ผู้ช่วยตัวเลือกนี้จะทำงานด้วย Gemini API key ของคุณเองที่เก็บไว้ในเบราว์เซอร์นี้เท่านั้น ไม่มี key ของโครงการถูกฝังมากับเว็บไซต์",
-              "出于安全考虑，这个可选助手只会使用你自己的 Gemini API key，并仅保存在当前浏览器中。站点本身不再内置项目密钥。"
+              "This optional assistant sends your questions and city context to Google. Your own Gemini API key stays in memory until you reload or remove it; it is not saved in browser storage. No project key is bundled.",
+              "ผู้ช่วยนี้ส่งคำถามและข้อมูลบริบทเมืองไปยัง Google โดยเก็บ Gemini API key ของคุณในหน่วยความจำจนกว่าจะโหลดหน้าใหม่หรือลบออก ไม่บันทึกในที่เก็บข้อมูลเบราว์เซอร์ และไม่มี key ของโครงการฝังในเว็บไซต์",
+              "此助手会将你的问题和城市上下文发送给 Google。你的 Gemini API key 仅保存在内存中，刷新或移除后即清除，不写入浏览器存储。网站不内置项目密钥。"
             )}</p>
             <p style={{ marginBottom: "1rem", fontSize: "var(--text-body)", lineHeight: "1.4", opacity: 0.8, background: "rgba(0,0,0,0.2)", padding: "0.5rem" }}>
               {t(
@@ -224,6 +222,8 @@ export default function GeminiChat({ locale }: Props) {
               ref={keyInputRef}
               className="chat-input"
               type="password"
+              autoComplete="off"
+              aria-label={t("Gemini API key", "Gemini API key", "Gemini API 密钥")}
               value={apiKeyDraft}
               onChange={e => setApiKeyDraft(e.target.value)}
               placeholder={t("Paste Gemini API key", "วาง Gemini API key", "粘贴 Gemini API key")}
@@ -231,7 +231,7 @@ export default function GeminiChat({ locale }: Props) {
             />
             <div className="chat-suggestions">
               <button className="chat-suggestion" onClick={persistApiKey} disabled={!apiKeyDraft.trim()}>
-                {t("Save key", "บันทึก key", "保存 key")}
+                {t("Use key for this session", "ใช้ key สำหรับครั้งนี้", "仅本次使用 key")}
               </button>
             </div>
           </div>
@@ -290,7 +290,7 @@ export default function GeminiChat({ locale }: Props) {
             onClick={clearApiKey}
             style={{ border: 0, background: "transparent", color: "var(--teal)", padding: 0, cursor: "pointer" }}
           >
-            {t("Remove stored key", "ลบ key ที่บันทึกไว้", "移除已保存 key")}
+            {t("Remove key", "ลบ key", "移除 key")}
           </button>
         </div>
       )}

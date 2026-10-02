@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import {
   buildStableSignalId,
   coerceSentimentScore,
@@ -17,6 +18,7 @@ type ApiRequest = {
   method?: string;
   query?: Record<string, string | string[] | undefined>;
   body?: unknown;
+  headers?: Record<string, string | string[] | undefined>;
 };
 
 type ApiResponse = {
@@ -109,18 +111,24 @@ function createRequestId(): string {
 
 function parseJsonBody(body: unknown): Record<string, unknown> {
   if (typeof body === "string") {
+    if (Buffer.byteLength(body, "utf8") > 16384) {
+      throw new SignalValidationError("body", "Request body exceeds 16 KiB.");
+    }
     try {
-      return JSON.parse(body) as Record<string, unknown>;
+      body = JSON.parse(body);
     } catch {
       throw new SignalValidationError("body", "Request body must be valid JSON.");
     }
   }
 
-  if (typeof body === "object" && body !== null) {
+  if (typeof body === "object" && body !== null && !Array.isArray(body)) {
+    if (Buffer.byteLength(JSON.stringify(body), "utf8") > 16384) {
+      throw new SignalValidationError("body", "Request body exceeds 16 KiB.");
+    }
     return body as Record<string, unknown>;
   }
 
-  return {};
+  throw new SignalValidationError("body", "Request body must be a JSON object.");
 }
 
 function getSupabaseConfig() {
@@ -505,6 +513,19 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     }
 
     if (req.method === "POST") {
+      // Never expose service-role writes through an anonymous public endpoint.
+      const token = process.env.SIGNAL_INGEST_TOKEN;
+      if (!token) {
+        res.status(503).json({ success: false, error: "Signal ingestion is disabled.", requestId });
+        return;
+      }
+      const authorization = req.headers?.authorization;
+      const expected = Buffer.from(`Bearer ${token}`);
+      const supplied = Buffer.from(typeof authorization === "string" ? authorization : "");
+      if (supplied.length !== expected.length || !timingSafeEqual(supplied, expected)) {
+        res.status(401).json({ success: false, error: "Authentication required.", requestId });
+        return;
+      }
       const signal = normalizeSignal(parseJsonBody(req.body));
       const payload = await handleInsert(signal);
 
@@ -551,7 +572,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
     res.status(500).json({
       success: false,
-      error: error instanceof Error ? error.message : "Unexpected backend failure.",
+      error: "Unexpected backend failure.",
       requestId,
       timestamp: new Date().toISOString(),
     });

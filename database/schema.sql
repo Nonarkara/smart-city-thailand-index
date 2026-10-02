@@ -511,7 +511,7 @@ CREATE POLICY "Public read" ON city_context_notes FOR SELECT USING (true);
 -- Analytics: anyone can insert (anonymous writes)
 CREATE POLICY "Anyone can insert" ON page_views FOR INSERT WITH CHECK (true);
 CREATE POLICY "Anyone can insert" ON chat_messages FOR INSERT WITH CHECK (true);
-CREATE POLICY "Anyone can insert" ON smart_city_signals FOR INSERT WITH CHECK (true);
+-- Signal ingestion is server-only. Public readers must not fabricate evidence.
 
 -- Write access for content tables requires service role (server-side only)
 -- Supabase service_role key bypasses RLS automatically

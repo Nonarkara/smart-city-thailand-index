@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import handler from "../api/smart-city-signals";
+import rawHandler from "../api/smart-city-signals";
 import { buildStableSignalId, MAX_SIGNAL_THEMES } from "./signalContracts";
 
 type MockResponse = {
@@ -13,6 +13,7 @@ type MockResponse = {
 };
 
 const ENV_KEYS = [
+  "SIGNAL_INGEST_TOKEN",
   "SUPABASE_URL",
   "VITE_SUPABASE_URL",
   "SUPABASE_SERVICE_ROLE_KEY",
@@ -24,6 +25,11 @@ const ENV_KEYS = [
   "TREND_BACKEND",
   "SUPABASE_SIGNALS_TABLE",
 ] as const;
+
+function handler(req: Parameters<typeof rawHandler>[0], res: Parameters<typeof rawHandler>[1]) {
+  process.env.SIGNAL_INGEST_TOKEN = "test-ingestion-token";
+  return rawHandler({ ...req, headers: { authorization: "Bearer test-ingestion-token" } }, res);
+}
 
 const ORIGINAL_ENV = Object.fromEntries(
   ENV_KEYS.map((key) => [key, process.env[key]]),
@@ -61,6 +67,32 @@ function createMockResponse(): MockResponse {
 }
 
 describe("/api/smart-city-signals", () => {
+  it("rejects anonymous ingestion before any backend request", async () => {
+    process.env.SIGNAL_INGEST_TOKEN = "test-ingestion-token";
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    for (const authorization of [undefined, "Bearer wrong-token", ["Bearer test-ingestion-token"]]) {
+      const response = createMockResponse();
+      await rawHandler({ method: "POST", headers: { authorization }, body: "{" }, response);
+      expect(response.statusCode).toBe(401);
+    }
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("disables ingestion unless a server token is configured", async () => {
+    delete process.env.SIGNAL_INGEST_TOKEN;
+    const response = createMockResponse();
+    await rawHandler({ method: "POST", body: {} }, response);
+    expect(response.statusCode).toBe(503);
+  });
+
+  it("rejects non-object and oversized authenticated bodies", async () => {
+    for (const body of ["null", "[]", [], null, { text: "x".repeat(17000) }]) {
+      const response = createMockResponse();
+      await handler({ method: "POST", body }, response);
+      expect(response.statusCode).toBe(400);
+    }
+  });
   afterEach(() => {
     vi.restoreAllMocks();
     vi.unstubAllGlobals();

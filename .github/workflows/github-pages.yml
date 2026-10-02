@@ -25,7 +25,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: npm ci || npm install
+      - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
       # Same gates as scripts/cdpt.sh — the Pages mirror must never publish
       # a build that CDPT would have refused.
       - run: npm run lint

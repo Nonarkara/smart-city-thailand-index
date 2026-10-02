@@ -8,6 +8,9 @@ export default defineConfig({
     globals: true,
     setupFiles: "./src/test/setup.ts",
     testTimeout: 15000,
+    // Bound concurrent jsdom workers: the full UI suite otherwise saturates
+    // local machines and times out interactions that pass in isolation.
+    maxWorkers: 2,
     // .worktrees/ holds checked-out git worktrees of other branches. Without
     // this, vitest collects their copies of every spec too — the suite silently
     // doubles and the CDPT ship gate ends up validating stale branch code
