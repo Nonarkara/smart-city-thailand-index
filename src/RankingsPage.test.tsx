@@ -17,6 +17,21 @@ describe("RankingsPage", () => {
     expect(firstRowAfter?.textContent).not.toBe(initialText);
   });
 
+  it("re-ranks the directory when a pillar axis is selected", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
+
+    const firstRowBefore = container.querySelectorAll(".rank-row-link")[0];
+    const initialText = firstRowBefore?.textContent ?? "";
+
+    await user.click(screen.getByRole("tab", { name: /hospitality/i }));
+
+    const firstRowAfter = container.querySelectorAll(".rank-row-link")[0];
+    expect(firstRowAfter?.textContent).not.toBe(initialText);
+    expect(firstRowAfter?.querySelector(".rank-pillar-bar.is-focus")).toBeTruthy();
+    expect(window.location.search).toContain("pillar=hospitality");
+  });
+
   it("shows the seven pillar bars directly in each ranking row", () => {
     const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
 
@@ -44,9 +59,19 @@ describe("RankingsPage", () => {
     await user.click(container.querySelector(".compare-launch-bar .btn-primary") as HTMLButtonElement);
 
     expect(screen.getByRole("button", { name: /back to directory/i })).toBeInTheDocument();
-    // ComparisonGrid is lazy-loaded — wait for the chunk to resolve through Suspense
     await waitFor(() => expect(container.querySelectorAll(".compare-city-card")).toHaveLength(2));
     expect(screen.getAllByText(/phuket smart city/i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/samyan smart city/i)[0]).toBeInTheDocument();
+  });
+
+  it("places the ranked directory above the lens chips", () => {
+    const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
+    const firstCity = container.querySelector(".rank-row-name");
+    const lenses = container.querySelector(".lens-chip-row");
+    expect(firstCity).toBeTruthy();
+    expect(lenses).toBeTruthy();
+    expect(
+      firstCity!.compareDocumentPosition(lenses!) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 });

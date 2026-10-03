@@ -1,4 +1,4 @@
-import { assignTier, computeComposite, getCompositeBreakdown, roundScore } from "./scoring";
+import { assignTier, blendSafetyScore, computeComposite, getCompositeBreakdown, getStrongestWeakest, roundScore } from "./scoring";
 
 const sampleScores = {
   livability: 80,
@@ -34,6 +34,15 @@ describe("scoring helpers", () => {
     expect(assignTier(64.9)).toBe("beta");
     expect(assignTier(45)).toBe("beta");
     expect(assignTier(44.9)).toBe("gamma");
+  });
+
+  it("leaves safety unblended when the road fatality rate is missing", () => {
+    expect(blendSafetyScore(70, undefined)).toBe(70);
+    expect(blendSafetyScore(70, 20)).toBe(Math.round(0.7 * 70 + 0.3 * Math.round(100 * (40 - 20) / 35)));
+  });
+
+  it("names the strongest and weakest pillars without inventing ties", () => {
+    expect(getStrongestWeakest(sampleScores)).toEqual({ strongest: "hospitality", weakest: "digital" });
   });
 
   it("rejects pillar scores outside the 0-100 domain", () => {

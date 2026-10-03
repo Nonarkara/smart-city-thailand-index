@@ -63,8 +63,16 @@ describe("App", () => {
     await user.click(rankingsItems[0]); // group trigger
     await user.click(rankingsItems[1]); // dropdown item
     await vi.dynamicImportSettled();
-    await screen.findByRole("heading", { name: /the moneyball of thai city investment/i });
+    await screen.findByRole("heading", { name: /who leads each axis/i });
 
     expect(navLinks).not.toHaveClass("nav-links-open");
+  });
+
+  it("skips the scenic photo hero on rankings so the directory can sit in the first viewport", async () => {
+    window.history.pushState({}, "", "/rankings");
+    const { container } = render(<App />);
+    await screen.findByRole("heading", { name: /who leads each axis/i });
+    expect(container.querySelector(".route-photo-hero")).toBeNull();
+    expect(container.querySelector(".rank-row-name")).toBeTruthy();
   });
 });

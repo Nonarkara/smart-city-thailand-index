@@ -1,9 +1,9 @@
 import { getRouteKey, parseRoute } from "./routing";
 
 describe("routing helpers", () => {
-  it("parses static routes", () => {
-    expect(parseRoute("/why")).toEqual({ kind: "why", path: "/why" });
-    expect(parseRoute("/rankings")).toEqual({ kind: "rankings", path: "/rankings" });
+  it("parses rankings query strings as the rankings route, not home", () => {
+    expect(parseRoute("/rankings?pillar=safety")).toEqual({ kind: "rankings", path: "/rankings" });
+    expect(parseRoute("/rankings?pillar=economy#list")).toEqual({ kind: "rankings", path: "/rankings" });
   });
 
   it("parses city detail routes with city ids", () => {

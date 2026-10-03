@@ -271,13 +271,9 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
 
   const headerCity = hoveredCity;
   const headerProvince = hoveredCity ? hoveredCity.province : null;
-  // getFloodScore() falls back to 60 (Thailand average) for provinces
-  // without explicit GISTDA records. We want to show the numeric pill
-  // ONLY for provinces with real data, but always show the methodology
-  // note (dimmed if it's the fallback). So track the explicit-data flag
-  // separately from the score itself.
   const hasExplicitFloodData = headerProvince ? !!PROVINCIAL_FLOOD_SCORE[headerProvince] : false;
   const floodScore = hasExplicitFloodData && headerProvince ? getFloodScore(headerProvince) : undefined;
+  const floodNote = headerCity ? getFloodNote(headerCity.province) : undefined;
 
   return (
     <div className="ranking-map-view">
@@ -400,9 +396,11 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
               </span>
             </div>
           )}
-          <div className="ranking-map-hover-note" style={{ opacity: hasExplicitFloodData ? 1 : 0.7 }}>
-            {getFloodNote(headerCity.province)}
-          </div>
+          {floodNote ? (
+            <div className="ranking-map-hover-note" style={{ opacity: hasExplicitFloodData ? 1 : 0.7 }}>
+              {floodNote}
+            </div>
+          ) : null}
         </div>
       )}
 

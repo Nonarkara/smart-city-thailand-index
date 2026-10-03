@@ -1,6 +1,6 @@
 import { cdpSources } from "./cdpData.ts";
 import { dataSources } from "./evidenceData.ts";
-import { PILLAR_WEIGHTS, type CityMetrics, type CityScores, type DataConfidence, type ScoringPillar } from "./types.ts";
+import { PILLAR_WEIGHTS, type CityMetrics, type CityScores, type CityStatus, type DataConfidence, type ScoringPillar } from "./types.ts";
 
 export const SCITI_METHOD_CODE = "SCITI-2026-METH";
 export const SCITI_METHOD_VERSION = "2026.04";
@@ -154,4 +154,19 @@ export function classifyDataConfidence(score: number): DataConfidence {
   if (score >= 70) return "high";
   if (score >= 40) return "medium";
   return "low";
+}
+
+/**
+ * Completeness of metric slots is not the same as evidence depth.
+ * Registry-only rows stay low. Dossiers with no city-level evidence items
+ * cannot claim high confidence — filled provincial forms are not a dossier.
+ */
+export function applyEvidenceConfidenceCap(
+  classified: DataConfidence,
+  evidenceCount: number,
+  status?: CityStatus,
+): DataConfidence {
+  if (status === "registered") return "low";
+  if (evidenceCount <= 0 && classified === "high") return "medium";
+  return classified;
 }
