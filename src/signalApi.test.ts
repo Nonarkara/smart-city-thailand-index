@@ -121,6 +121,8 @@ describe("/api/smart-city-signals", () => {
       healthy: false,
     });
     expect(body.data).toHaveLength(1);
+    expect(body).toHaveProperty("signals");
+    expect((body as { signals: unknown[] }).signals).toHaveLength(1);
   });
 
   it("rejects malformed JSON payloads", async () => {

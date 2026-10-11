@@ -1,3 +1,4 @@
+import { filterCitySummaries } from "./cityListQuery.ts";
 import { cdpSources, getAirQualityUrl, getBOIInvestmentUrl, getCityDataUrl, getOpenDataSearchUrl } from "./cdpData.ts";
 import { cityContexts, type CityContext } from "./cityContext.ts";
 import { allCities } from "./cityData.ts";
@@ -1660,11 +1661,15 @@ const CITY_DETAIL_LOOKUP = new Map(CITY_BUILDS.map(build => [build.detail.id, bu
 const CITY_SUMMARY_LOOKUP = new Map(CITY_BUILDS.map(build => [build.summary.id, build.summary]));
 const CITY_EXPORT_ROW_LOOKUP = new Map(CITY_BUILDS.map(build => [build.detail.id, build.exportRows]));
 
-function csvEscape(value: string): string {
-  if (value.includes(",") || value.includes("\"") || value.includes("\n")) {
-    return `"${value.replace(/"/g, "\"\"")}"`;
+export function escapeCsvField(value: string): string {
+  // Excel treats a leading = + @ or a non-numeric leading - as a formula.
+  // Keep genuine negative numbers numeric; neutralize everything else.
+  const formula = /^[=+@\t\r]/.test(value) || /^-(?!\d)/.test(value);
+  const text = formula ? `'${value}` : value;
+  if (/[",\n\r]/.test(text) || text !== value) {
+    return `"${text.replace(/"/g, "\"\"")}"`;
   }
-  return value;
+  return text;
 }
 
 function toCsv<Row extends Record<string, string>>(rows: Row[]): string {
@@ -1672,7 +1677,7 @@ function toCsv<Row extends Record<string, string>>(rows: Row[]): string {
   const headers = Object.keys(rows[0]);
   return [
     headers.join(","),
-    ...rows.map(row => headers.map(header => csvEscape(row[header] ?? "")).join(",")),
+    ...rows.map(row => headers.map(header => escapeCsvField(row[header] ?? "")).join(",")),
   ].join("\n");
 }
 
@@ -1744,20 +1749,7 @@ export function getCitiesApiPayload(options?: {
   tier?: "all" | CityTier;
   sort?: "composite" | ScoringPillar;
 }): CitySummaryDTO[] {
-  const status = options?.status ?? "all";
-  const tier = options?.tier ?? "all";
-  const sort = options?.sort ?? "composite";
-
-  return getCitySummaries()
-    .filter(city => (status === "all" ? true : city.status === status))
-    .filter(city => (tier === "all" ? true : city.tier === tier))
-    .slice()
-    .sort((left, right) => {
-      const leftScore = sort === "composite" ? left.compositeScore : left.scores[sort];
-      const rightScore = sort === "composite" ? right.compositeScore : right.scores[sort];
-      if (rightScore !== leftScore) return rightScore - leftScore;
-      return left.nameEn.localeCompare(right.nameEn);
-    });
+  return filterCitySummaries(getCitySummaries(), options);
 }
 
 export function getCityContextSummaryPrompt(limit = 20): string {

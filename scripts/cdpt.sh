@@ -50,6 +50,20 @@ LOCAL_VENDOR="$(grep -oE '/static/vendor-[A-Za-z0-9_-]+\.js' dist/index.html | h
 [[ -n "$LOCAL_VENDOR" ]] || die "could not read built vendor chunk hash from dist/index.html"
 ok "built — main chunk $LOCAL_HASH · vendor $LOCAL_VENDOR"
 grep -q "Generated 118 city OG pages" "$LOG_DIR/cdpt-build.log" && ok "OG pages + sitemap + cities.json generated"
+grep -q "API mirror" "$LOG_DIR/cdpt-build.log" || die "API mirror was not generated (postbuild skipped?)"
+for f in \
+  dist/api-static/cities.json \
+  dist/api-static/cities/phuket.json \
+  dist/api-static/exports/cities-summary.csv \
+  dist/api-static/exports/city-facts.csv \
+  dist/api-static/exports/cities/phuket.csv \
+  dist/api-static/not-found.json \
+  functions/api/cities.ts
+do
+  [[ -s "$f" ]] || die "missing $f"
+done
+grep -q '"id":"phuket"' dist/api-static/cities/phuket.json || die "phuket API dossier is not JSON for phuket"
+ok "API mirror present (cities, dossiers, CSV)"
 
 # ── C — commit ───────────────────────────────────────────────────────────────
 if [[ -n "$MSG" ]]; then
@@ -90,6 +104,23 @@ for path in "/" "/rankings" "/methodology" "/city/phuket/" "/sitemap.xml" "/data
   [[ "$code" == "200" ]] || die "$path returned HTTP $code"
   ok "$path → 200"
 done
+
+# /api/* must not be the SPA shell. A 200 text/html here means _redirects
+# swallowed the route and CSV/JSON clients received index.html.
+bold "Test — city API responds as data, not the SPA shell"
+api_index_type="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/api/cities")"
+api_city_type="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/api/cities/phuket")"
+api_csv_type="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/api/cities/phuket/export.csv")"
+api_summary_type="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/api/exports/cities-summary.csv")"
+api_missing_code="$(curl -s -o /dev/null -w '%{http_code}' "$DOMAIN/api/not-a-real-route")"
+api_missing_type="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/api/not-a-real-route")"
+case "$api_index_type" in *json*) ;; *) die "/api/cities content-type is ${api_index_type:-<none>}, expected JSON" ;; esac
+case "$api_city_type" in *json*) ;; *) die "/api/cities/phuket content-type is ${api_city_type:-<none>}, expected JSON" ;; esac
+case "$api_csv_type" in *csv*) ;; *) die "/api/cities/phuket/export.csv content-type is ${api_csv_type:-<none>}, expected CSV" ;; esac
+case "$api_summary_type" in *csv*) ;; *) die "/api/exports/cities-summary.csv content-type is ${api_summary_type:-<none>}, expected CSV" ;; esac
+[[ "$api_missing_code" == "404" ]] || die "/api/not-a-real-route returned HTTP $api_missing_code, expected 404"
+case "$api_missing_type" in *html*) die "/api/not-a-real-route is HTML — the SPA fallback swallowed the API" ;; esac
+ok "city API serves JSON and CSV; unknown /api routes 404"
 
 # ── Every JS chunk must serve AS JAVASCRIPT ──────────────────────────────────
 # The 200-check above cannot catch a missing asset. _redirects rewrites ANY

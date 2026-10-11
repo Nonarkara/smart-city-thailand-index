@@ -63,7 +63,14 @@ interface ServerSignalPayload {
     healthy?: boolean;
     detail?: string;
   };
-  signals?: unknown[];
+  signals?: unknown;
+  data?: unknown;
+}
+
+function readSignalRows(payload: ServerSignalPayload): unknown[] {
+  if (Array.isArray(payload.signals)) return payload.signals;
+  if (Array.isArray(payload.data)) return payload.data;
+  return [];
 }
 
 const GOOGLE_APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL?.trim() ?? "";
@@ -338,9 +345,7 @@ async function fetchFromSignalApi(limit: number): Promise<SignalSnapshot> {
     cache: "no-store",
   });
 
-  const signals = Array.isArray(payload.signals)
-    ? payload.signals.map(normalizeSignalRecord)
-    : [];
+  const signals = readSignalRows(payload).map(normalizeSignalRecord);
 
   return summarizeSignals(signals, {
     mode: payload.backend?.mode ?? "local",
@@ -386,9 +391,7 @@ async function fetchFromAppsScript(limit: number): Promise<SignalSnapshot> {
     cache: "no-store",
   });
 
-  const signals = Array.isArray(payload.signals)
-    ? payload.signals.map(normalizeSignalRecord)
-    : [];
+  const signals = readSignalRows(payload).map(normalizeSignalRecord);
 
   return summarizeSignals(signals, {
     mode: "google-apps-script",

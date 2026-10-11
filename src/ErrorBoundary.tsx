@@ -60,18 +60,19 @@ export class ErrorBoundary extends Component<Props, State> {
           color: "var(--ink)",
           fontFamily: "var(--font)"
         }}>
-          <h2 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem" }}>{m.title}</h2>
+          <h2 style={{ fontSize: "var(--text-display)", fontWeight: 700, marginBottom: "0.5rem" }}>{m.title}</h2>
           <p style={{ color: "var(--2)", fontSize: "var(--text-body)", marginBottom: "1.5rem" }}>{m.subtitle}</p>
           <button
             onClick={() => window.location.reload()}
             style={{
+              minHeight: "44px",
               padding: "0.6rem 1.5rem",
               background: "var(--ink)",
               color: "var(--bg)",
               border: "none",
               cursor: "pointer",
               fontWeight: 600,
-              fontSize: "0.75rem"
+              fontSize: "var(--text-body)"
             }}
           >
             {m.button}

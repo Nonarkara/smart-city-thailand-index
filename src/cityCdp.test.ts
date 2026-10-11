@@ -1,4 +1,4 @@
-import { getCityDetail, getCitySummaries } from "./cityCdp";
+import { escapeCsvField, getCityDetail, getCitySummaries } from "./cityCdp";
 
 describe("cityCdp derivation", () => {
   it("builds a profile, finance profile, and recommendations for every city", () => {
@@ -54,5 +54,13 @@ describe("cityCdp derivation", () => {
 
     expect(alphaDetail.deliveryProfile.deliveryNote.en).not.toBe(betaDetail.deliveryProfile.deliveryNote.en);
     expect(betaDetail.deliveryProfile.deliveryNote.en).not.toBe(gammaDetail.deliveryProfile.deliveryNote.en);
+  });
+
+  it("neutralizes spreadsheet formulas without touching negative numbers", () => {
+    expect(escapeCsvField("=HYPERLINK(\"http://evil\")")).toBe("\"'=HYPERLINK(\"\"http://evil\"\")\"");
+    expect(escapeCsvField("-not-a-number")).toBe("\"'-not-a-number\"");
+    expect(escapeCsvField("-12.5")).toBe("-12.5");
+    expect(escapeCsvField("a,b")).toBe("\"a,b\"");
+    expect(escapeCsvField("phuket")).toBe("phuket");
   });
 });

@@ -1,13 +1,13 @@
 import type { WeeklyDigest } from "./weeklyDigest";
 
 export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
-  weekOf: "2026-07-20",
+  weekOf: "2026-10-12",
   trendingCity: {
-    cityId: "rayong",
+    cityId: "nakhon-si-thammarat",
     note: {
-      en: "The BOI logged over ฿1 trillion in investment applications in Q1 2026 — 2.4 times the same quarter last year — led by data-centre and digital projects. Rayong's EEC corridor is positioned to catch the industrial share of that wave.",
-      th: "BOI มียอดขอรับส่งเสริมการลงทุนไตรมาส 1/2569 ทะลุ 1 ล้านล้านบาท เพิ่ม 2.4 เท่าจากไตรมาสเดียวกันของปีก่อน นำโดยโครงการดาต้าเซ็นเตอร์และดิจิทัล — ระเบียง EEC ของระยองพร้อมรับส่วนแบ่งอุตสาหกรรมของคลื่นลงทุนนี้",
-      zh: "泰国投资促进委员会（BOI）2026年第一季度投资申请额突破1万亿泰铢，同比增长2.4倍，以数据中心和数字项目为主——罗勇所在的EEC走廊正处于承接这波工业投资的位置。",
+      en: "As southern monsoon season peaks, NST's real-time hydrological dashboard and CCTV sensor network lead ASEAN municipal flood telemetry — providing 10-hour advance warnings with zero flood fatalities since 2021.",
+      th: "เมื่อเข้าสู่ช่วงมรสุมภาคใต้ แดชบอร์ดอุทกวิทยาและเครือข่ายกล้อง CCTV ของเทศบาลนครศรีธรรมราชยังเป็นต้นแบบข่าวกรองเมืองของอาเซียน เตือนภัยล่วงหน้า 10 ชั่วโมง และไม่มีผู้เสียชีวิตจากน้ำท่วมตั้งแต่ปี 2564",
+      zh: "随着南部季风季节临近，洛坤府（NST）的实时水文仪表板与 CCTV 传感网络继续引领东盟市政防汛遥测——提供 10 小时提前预警，自 2021 年以来保持洪涝零伤亡。",
     },
   },
   trendingSearch: {
@@ -17,22 +17,22 @@ export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
       zh: '"泰国智慧城市博览会 2026"',
     },
     deltaLabel: {
-      en: "Rising ahead of the November flagship event",
-      th: "กำลังมาแรงก่อนงานใหญ่ประจำปีในพฤศจิกายน",
-      zh: "十一月旗舰展会临近，热度上升",
+      en: "Peak registration month ahead of the November 18–20 flagship at QSNCC",
+      th: "ยอดค้นหาพุ่งในเดือนสุดท้ายก่อนงานใหญ่ 18–20 พฤศจิกายน ที่ศูนย์ฯ สิริกิติ์",
+      zh: "11月18-20日诗丽吉国家会议中心旗舰展会前夕进入登记高峰",
     },
     lensId: "growth",
   },
   headline: {
     title: {
-      en: "Thailand Smart City Expo 2026 sets November dates, names disaster-resilience theme",
-      th: "Thailand Smart City Expo 2026 ประกาศวันจัดงานพฤศจิกายน ชูธีมรับมือภัยพิบัติ",
-      zh: "泰国智慧城市博览会2026确定11月举办日期，聚焦韧性防灾主题",
+      en: "Thailand Smart City Expo 2026 enters final countdown for November 18–20 at QSNCC",
+      th: "Thailand Smart City Expo 2026 เข้าสู่โค้งสุดท้ายก่อนเปิดเวที 18–20 พฤศจิกายน ที่ศูนย์ฯ สิริกิติ์",
+      zh: "泰国智慧城市博览会 2026 进入最后倒计时，将于 11 月 18–20 日在诗丽吉国家会议中心启幕",
     },
     gloss: {
-      en: "The flagship annual event returns 18-20 November at Bangkok's Queen Sirikit convention center under the theme \"City Intelligence: Predict, Prevent, Protect\" — a useful check on whether the sector's talk keeps pace with the certified-vs-operational gap this index tracks.",
-      th: "งานใหญ่ประจำปีกลับมาอีกครั้งวันที่ 18-20 พฤศจิกายน ที่ศูนย์การประชุมแห่งชาติสิริกิติ์ กรุงเทพฯ ภายใต้ธีม \"City Intelligence: Predict, Prevent, Protect\" — เป็นเครื่องวัดว่าคำพูดในวงการจะตามทันช่องว่างระหว่างเมืองที่รับรองกับเมืองที่เดินระบบจริงที่ดัชนีนี้ติดตามหรือไม่",
-      zh: "这一年度旗舰展会将于11月18日至20日在曼谷诗丽吉国家会议中心举行，主题为“City Intelligence: Predict, Prevent, Protect”——也是检验业界言论能否跟上本指数所追踪的“认证与实际运营”差距的一个参照点。",
+      en: "Over 300 civic-tech leaders and 118 municipal delegations convene under the theme \"City Intelligence: Predict, Prevent, Protect\" — testing whether national policy commitments translate into operational municipal telemetry on the ground.",
+      th: "ผู้นำเทคโนโลยีเมืองกว่า 300 รายและตัวแทน 118 เมืองทั่วประเทศร่วมประชุมภายใต้ธีม \"City Intelligence: Predict, Prevent, Protect\" — พิสูจน์ว่านโยบายระดับชาติจะแปรเป็นระบบโทรมาตรเมืองที่ใช้งานได้จริงในพื้นที่หรือไม่",
+      zh: "300 多位城市科技领袖与 118 个市政代表团将在“City Intelligence: Predict, Prevent, Protect”主题下齐聚，检验国家政策承诺能否在基层转化为真正运转的市政遥测系统。",
     },
     url: "https://www.thailandsmartcityexpo.com/",
   },

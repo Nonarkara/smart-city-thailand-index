@@ -30,39 +30,83 @@ function shouldFetchFromApi(): boolean {
   return !LOCAL_HOSTNAMES.has(window.location.hostname);
 }
 
-async function fetchJson<T>(url: string, retries = 2, backoff = 300): Promise<T> {
+class CityApiError extends Error {
+  retryable: boolean;
+
+  constructor(message: string, retryable: boolean) {
+    super(message);
+    this.name = "CityApiError";
+    this.retryable = retryable;
+  }
+}
+
+export function cityApiFailureIsRetryable(status: number | null): boolean {
+  if (status === null) return true;
+  return status === 429 || status >= 500;
+}
+
+async function fetchJsonOnce<T>(url: string): Promise<T> {
+  let response: Response;
   try {
-    const response = await fetch(url, {
+    response = await fetch(url, {
       headers: {
         Accept: "application/json",
       },
     });
-
-    if (!response.ok) {
-      if (retries > 0 && response.status >= 500) {
-        await new Promise(resolve => setTimeout(resolve, backoff));
-        return fetchJson(url, retries - 1, backoff * 2);
-      }
-      throw new Error(`Request failed: ${response.status}`);
-    }
-
-    const rawEnvelope = await response.json();
-    if (typeof rawEnvelope !== "object" || rawEnvelope === null || !("success" in rawEnvelope)) {
-      throw new Error("API returned malformed payload");
-    }
-    const envelope = rawEnvelope as { success: boolean; data: T; error?: string };
-    if (envelope.success === false) {
-      throw new Error(envelope.error || "API returned failure state");
-    }
-
-    return envelope.data;
   } catch (error) {
-    if (retries > 0) {
-      await new Promise(resolve => setTimeout(resolve, backoff));
-      return fetchJson(url, retries - 1, backoff * 2);
-    }
-    throw error;
+    throw new CityApiError(error instanceof Error ? error.message : "Network error", true);
   }
+
+  if (!response.ok) {
+    throw new CityApiError(`Request failed: ${response.status}`, cityApiFailureIsRetryable(response.status));
+  }
+
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.includes("json")) {
+    throw new CityApiError("API returned a non-JSON response", false);
+  }
+
+  let rawEnvelope: unknown;
+  try {
+    rawEnvelope = await response.json();
+  } catch {
+    throw new CityApiError("API returned malformed JSON", false);
+  }
+
+  if (typeof rawEnvelope !== "object" || rawEnvelope === null || !("success" in rawEnvelope)) {
+    throw new CityApiError("API returned malformed payload", false);
+  }
+
+  const envelope = rawEnvelope as { success: boolean; data: T; error?: string };
+  if (envelope.success === false) {
+    throw new CityApiError(envelope.error || "API returned failure state", false);
+  }
+
+  return envelope.data;
+}
+
+async function fetchJson<T>(urls: string[]): Promise<T> {
+  let lastError: Error | null = null;
+
+  for (const url of urls) {
+    let retries = 2;
+    let backoff = 300;
+
+    for (;;) {
+      try {
+        return await fetchJsonOnce<T>(url);
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error("API request failed");
+        const retryable = error instanceof CityApiError && error.retryable;
+        if (!retryable || retries <= 0) break;
+        retries -= 1;
+        await new Promise(resolve => setTimeout(resolve, backoff));
+        backoff *= 2;
+      }
+    }
+  }
+
+  throw lastError ?? new Error("API request failed");
 }
 
 async function loadCitySummaries(): Promise<CitySummaryDTO[]> {
@@ -74,7 +118,7 @@ async function loadCitySummaries(): Promise<CitySummaryDTO[]> {
     return citySummariesRequest;
   }
 
-  citySummariesRequest = fetchJson<CitySummaryDTO[]>("/api/cities")
+  citySummariesRequest = fetchJson<CitySummaryDTO[]>(["/api/cities", "/api-static/cities.json"])
     .then(data => {
       citySummariesCache = data;
       return data;
@@ -100,7 +144,10 @@ async function loadCityDetail(cityId: string): Promise<CityDetailDTO> {
     return pending;
   }
 
-  const request = fetchJson<CityDetailDTO>(`/api/cities/${cityId}`)
+  const request = fetchJson<CityDetailDTO>([
+    `/api/cities/${encodeURIComponent(cityId)}`,
+    `/api-static/cities/${encodeURIComponent(cityId)}.json`,
+  ])
     .then(data => {
       cityDetailCache.set(cityId, data);
       return data;

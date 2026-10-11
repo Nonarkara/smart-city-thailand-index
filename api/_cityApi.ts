@@ -1,4 +1,5 @@
 import { getCitiesApiPayload, getCityDetail, getCityFactsCsv, getCityFactsRows, getCitySummariesCsv } from "../src/cityCdp";
+import { parseCityListQuery } from "../src/cityListQuery";
 import type { CityStatus, CityTier, ScoringPillar } from "../src/types";
 
 export type ApiRequest = {
@@ -41,27 +42,15 @@ export function getQueryParam(
 }
 
 export function parseStatus(value?: string): "all" | CityStatus {
-  return value === "certified" || value === "promotion" || value === "registered"
-    ? value
-    : "all";
+  return parseCityListQuery({ status: value }).status;
 }
 
 export function parseTier(value?: string): "all" | CityTier {
-  return value === "alpha" || value === "beta" || value === "gamma"
-    ? value
-    : "all";
+  return parseCityListQuery({ tier: value }).tier;
 }
 
 export function parseSort(value?: string): "composite" | ScoringPillar {
-  return value === "livability" ||
-    value === "economy" ||
-    value === "safety" ||
-    value === "wellbeing" ||
-    value === "environment" ||
-    value === "hospitality" ||
-    value === "digital"
-    ? value
-    : "composite";
+  return parseCityListQuery({ sort: value }).sort;
 }
 
 export function setJsonHeaders(response: ApiResponse, requestId: string) {
@@ -71,9 +60,10 @@ export function setJsonHeaders(response: ApiResponse, requestId: string) {
 }
 
 export function setCsvHeaders(response: ApiResponse, filename: string, requestId: string) {
+  const safeName = filename.replace(/[^A-Za-z0-9._-]/g, "") || "export.csv";
   response.setHeader("Content-Type", "text/csv; charset=utf-8");
   response.setHeader("Cache-Control", READ_CACHE_CONTROL);
-  response.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+  response.setHeader("Content-Disposition", `attachment; filename="${safeName}"`);
   response.setHeader("X-Request-Id", requestId);
 }
 

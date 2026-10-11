@@ -15,6 +15,13 @@ npx vite build      # Always verify both before pushing
 - **Production (sciti.nonarkara.org) is Cloudflare Pages — deploy is MANUAL:**
   `VITE_BASE_PATH=/ npm run build && wrangler pages deploy dist --project-name=smart-city-thailand-index --branch=main --commit-dirty=true`
   Pushing to `main` alone does **not** update the live site.
+- **The read API is static on Cloudflare.** `npm run build` postbuild writes
+  `dist/api-static/` (city index, per-city dossiers, CSV). `public/_redirects`
+  maps `/api/cities/:id` and the CSV routes onto those files, and
+  `functions/api/cities.ts` applies `status` / `tier` / `sort` on `/api/cities`.
+  The Vercel handlers in `/api` still run if this repo is deployed to Vercel;
+  they do not run on Cloudflare. Never let `/api/*` fall through to the SPA
+  shell — clients will parse `index.html` as JSON.
 - GitHub Actions also auto-deploys to GitHub Pages on push to `main` (`gh run list --limit 1` to verify), but DNS for `sciti.nonarkara.org` resolves to Cloudflare — the GitHub Pages copy is a live mirror, not what judges/users see.
 
 ### CDPT — the one-command ship sequence

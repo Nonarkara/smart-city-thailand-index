@@ -504,6 +504,9 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       res.status(200).json({
         success: true,
         data: payload.signals,
+        // `data` is the envelope contract. `signals` stays so older readers
+        // (and the Apps Script shape) keep working.
+        signals: payload.signals,
         backend: payload.backend,
         warnings: payload.warnings,
         requestId,

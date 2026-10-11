@@ -113,4 +113,45 @@ describe("signalStore", () => {
       });
     }
   });
+
+  it("reads the API envelope when signals live on data, not signals", async () => {
+    const originalLocation = window.location;
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: new URL("https://sciti.nonarkara.org/") as unknown as Location,
+    });
+
+    try {
+      vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          success: true,
+          data: [
+            {
+              id: "server-1",
+              city_id: "phuket",
+              source: "api",
+              channel: "manual",
+              text_body: "Buses arrived on time.",
+              sentiment_label: "positive",
+              sentiment_score: 0.4,
+              themes: ["mobility"],
+              observed_at: "2026-04-01T00:00:00.000Z",
+              ingested_at: "2026-04-01T00:00:00.000Z",
+            },
+          ],
+          backend: { mode: "supabase", healthy: true, detail: "envelope" },
+        }),
+      }));
+
+      const snapshot = await loadSignalSnapshot(5);
+      expect(snapshot.recentSignals.map(signal => signal.text)).toContain("Buses arrived on time.");
+      expect(snapshot.backend.mode).toBe("supabase");
+    } finally {
+      Object.defineProperty(window, "location", {
+        configurable: true,
+        value: originalLocation,
+      });
+    }
+  });
 });

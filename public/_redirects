@@ -1,7 +1,20 @@
-# Cloudflare Pages SPA fallback.
-# Static assets (/static/*, /city/<id>/index.html OG pages, images, PDFs) are
-# served directly because they match real files BEFORE this rule is consulted.
-# Any client-only route (e.g. /rankings, /compare, /city/<id> without a static
-# page) falls through to here and is REWRITTEN (200, not redirected) to the SPA
-# shell so src/routing.ts can resolve it. Fixes deep-link/shared-link 404s.
+# Cloudflare Pages.
+# Static files are served first. These rules only run when no file matches,
+# and the API rules MUST stay above the SPA catch-all. Otherwise /api/* is
+# rewritten to index.html with status 200 and clients download the shell.
+#
+# The read API itself is generated into dist/api-static by
+# scripts/generate-api-artifacts.mjs. /api/cities (with query filters) is
+# served by functions/api/cities.ts, which reads that same file.
+
+/api/cities/:cityId/export.csv   /api-static/exports/cities/:cityId.csv   200
+/api/exports/cities-summary.csv  /api-static/exports/cities-summary.csv   200
+/api/exports/city-facts.csv      /api-static/exports/city-facts.csv       200
+/api/cities/:cityId              /api-static/cities/:cityId.json          200
+/api/cities                      /api-static/cities.json                  200
+/api/*                           /api-static/not-found.json               404
+/api                            /api-static/not-found.json               404
+
+# Client routes (/rankings, /compare, /city/<id> without a static OG page)
+# are rewritten, not redirected, so shared links stay on their URL.
 /*    /index.html    200

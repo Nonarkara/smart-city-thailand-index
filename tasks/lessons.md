@@ -87,6 +87,12 @@ Per §13: the same mistake never happens twice.
 - **Correct behaviour:** Use `document.documentElement.scrollTo({ top: n, behavior: 'instant' })` to scroll (not `window.scrollTo`). Use `preview_resize` to reset the viewport if `window.innerWidth` reports 0. The actual screenshot tool renders at full desktop size regardless of `window.innerWidth`.
 - **How to recognise:** `window.innerWidth + 'x' + window.innerHeight` returns "0x0" → call `preview_resize` with a preset before proceeding. If `document.documentElement.scrollTop` won't change, the page may use `html { overflow: visible }` — use `document.documentElement.scrollTo()` with `behavior: 'instant'` instead.
 
+## 2026-10-07 · Vercel `/api` handlers do not exist on Cloudflare
+
+- **What went wrong:** The city and signal handlers live in `/api` (Vercel). Production is Cloudflare Pages. `public/_redirects` rewrites every unmatched path, including `/api/cities` and the CSV downloads, to `index.html` with status 200. The client then parsed HTML, retried the failure, and fell back to the bundle. External CSV links downloaded the SPA shell.
+- **Correct behaviour:** `npm run build` must emit `dist/api-static/` (postbuild). `/api/cities/:id` and the CSV routes redirect to those files. `/api/cities` query filters go through `functions/api/cities.ts`. Unknown `/api/*` returns JSON 404, never the shell. The client reads signals from `data` or `signals`, and does not retry a non-JSON body.
+- **How to recognise:** `curl -sI https://sciti.nonarkara.org/api/cities` shows `content-type: text/html`, or a CSV URL starts with `<!doctype html>`.
+
 ## 2026-09-03 · Type audit: grep the cascade in the browser, not the stylesheet
 - **What went wrong:** the stylesheet declared `.source-card-desc { font-size: var(--text-body) }`, yet it rendered at 11.5px. Two hidden overrides defeated the token system: inline `style={{ fontSize: "var(--text-micro)" }}` in JSX, and duplicate later CSS rules (`.callout-card p` declared body at L839 and micro at L3088 — last wins). A stylesheet grep had already been done once ("micro-token floor" pass) and missed both.
 - **Correct behaviour:** audit *computed* styles in the running page — census `getComputedStyle().fontSize` across routes at 375px, classify prose (≥60 chars) vs labels, then ask the browser which rule wins for a sample element. Only then edit.
