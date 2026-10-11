@@ -59,7 +59,7 @@ for f in \
   dist/api-static/exports/cities/phuket.csv \
   dist/api-static/not-found.json \
   functions/api/cities.ts \
-  functions/api/\[...catchall\].ts
+  functions/api/\[\[catchall\]\].ts
 do
   [[ -s "$f" ]] || die "missing $f"
 done
