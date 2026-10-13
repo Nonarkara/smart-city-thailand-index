@@ -177,13 +177,13 @@ export const LEAGUE_LABELS: Record<Locale, Record<CityLeague, string>> = {
 };
 
 export const PILLAR_COLORS: Record<ScoringPillar, string> = {
-  livability: "#2BA89C",    // Andaman teal
-  economy: "#E8913A",       // temple saffron
-  safety: "#3D6BE8",        // Thai silk blue
-  wellbeing: "#E84393",     // bougainvillea pink
-  environment: "#5CBD5C",   // tropical green
-  hospitality: "#D4A843",   // marigold gold
-  digital: "#9B5DE5",       // orchid purple
+  livability: "#0093a5",    // Wada Cerulian Blue (Plate 1, 148, 240)
+  economy: "#f99d1b",       // Wada Yellow Orange (Plate 2, 151, 209)
+  safety: "#1c4286",        // Wada Deep Lyons Blue (Plate 22, 126, 179)
+  wellbeing: "#a94151",     // Wada Hydrangea Red (Plate 142)
+  environment: "#009465",   // Wada Dull Viridian Green (Plate 306)
+  hospitality: "#e2b540",   // Wada Yellow Ocher (Plate 42, 126, 148)
+  digital: "#6450a1",       // Wada Blue Violet (Plate 175, 196)
 };
 
 export const TIER_LABELS: Record<Locale, Record<CityTier, string>> = {

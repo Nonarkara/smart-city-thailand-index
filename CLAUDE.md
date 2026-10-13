@@ -79,6 +79,13 @@ it with no changes just re-deploys and re-verifies.
   surface in this workspace — dashboards, decks, PDFs, signage.
 - **Cards**: flat, hairline-bordered (1px). No border-radius, no gradient,
   no drop shadow — see Anti-Regression / Phase 17 zero tokens below.
+- **Color System — Sanzo Wada × Dr Non Palette (`https://github.com/Nonarkara/palette`).**
+  Governed by relational color harmony, unequal proportions, and authorial restraint.
+  Core brand chord is Wada Plate 002: Dark Tyrian Blue (`#12354e`) and Yellow Orange (`#f99d1b`),
+  with Wada Yellow (`#fff200`) and the single amber focus token (`#f59e0b`). Reality tiers
+  use Wada Antwarp Blue (`#007190` — Operational/Certified), Yellow Orange (`#d98218` / `#f99d1b` —
+  Building/Partial), and Dr Non's About Red (`#a72144` — Planned/Risk: classy & dangerous).
+  All text pairings meet WCAG AA (≥ 4.5:1).
 - **Scroll animations**: `.reveal` class + IntersectionObserver.
 
 ## Trilingual Content (EN / TH / CN)

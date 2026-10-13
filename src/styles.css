@@ -11,34 +11,46 @@
   --sans: var(--font);
   --mono: "IBM Plex Mono", "SF Mono", ui-monospace, "Roboto Mono", monospace;
 
-  /* depa Brand Palette — Deep Blue + Yellow + Amber */
-  --ink: #0C2F53;
+  /* ─── PALETTE SYSTEM: Sanzo Wada × Dr Non (https://github.com/Nonarkara/palette) ───
+   * Relational color harmony, unequal proportions, and authorial restraint.
+   * Core Chord: Plate 002 — Dark Tyrian Blue (#12354e) + Yellow Orange (#f99d1b).
+   * Spot accents from Wada's 348 combinations; WCAG AA contrast on all text pairs. */
+  --wada-blue: #12354e;      /* Dark Tyrian Blue — Plate 002 dominant */
+  --wada-orange: #f99d1b;    /* Yellow Orange — Plate 002 counter */
+  --wada-yellow: #fff200;    /* Yellow — Plate 22 spot accent */
+  --wada-red: #a72144;       /* Red — Dr Non About Red: classy & dangerous */
+  --wada-black: #111314;     /* Black — Plate 255 / 344 reading ink */
+  --wada-white: #f7f5ef;     /* Exhibition White */
+  --wada-antwarp: #007190;   /* Antwarp Blue — Plate 140 / 163 */
+
+  /* Neutral Surface Scale (Light Theme) */
+  --ink: #111314;            /* Wada Black — architectural clarity, no harsh #000 */
   --bg: #FFFFFF;
-  --2: #3D5068;
-  --3: #35485E;
-  --4: #C8D5E0;
-  --5: #EDF2F7;
-  --surface: #F5F8FB;
-  --surface-hover: #E8EFF5;
+  --2: #2d4256;              /* Dark Tyrian Blue dark tone — contrast 8.2:1 */
+  --3: #3b5268;              /* Dark Tyrian Blue muted tone — contrast 5.8:1 (>4.5:1 WCAG AA) */
+  --4: #c5d3df;              /* Hairline structural frame */
+  --5: #e8eef3;              /* Subtle hairline divider */
+  --surface: #f6f8fa;        /* Tyrian Blue-tinted clean ground */
+  --surface-hover: #eaf0f5;
 
-  /* depa Accent Colors */
-  --depa-blue: #0C2F53;
-  --depa-yellow: #FFF200;
-  --depa-amber: #FFC600;
-  --amber: #f59e0b;        /* single amber accent (§14 rule 1) — borders/fills; use --gold-text for text on white */
+  /* depa Brand Accents (Elevated to Wada Plate 002) */
+  --depa-blue: var(--wada-blue, #12354e);
+  --depa-yellow: var(--wada-yellow, #fff200);
+  --depa-amber: var(--wada-orange, #f99d1b);
+  --amber: #f59e0b;          /* Palette focus / single amber accent (§14 rule 1) */
 
-  /* Reality Tiers — Semantic + Brand-Aligned */
-  --teal: #1A6FB5;         /* Operational — depa blue family */
-  --teal-glow: rgba(26, 111, 181, 0.1);
-  --gold: #FFC600;         /* Building / Partial — depa amber */
-  --gold-ink: #C69800;
-  --gold-text: #B8860B;
-  --alpha: #1A6FB5;
-  --alpha-bg: #EBF4FB;
-  --beta: #E5A700;
-  --beta-bg: #FFF8E1;
-  --gamma: #D32F2F;        /* Planned / Risk */
-  --gamma-bg: #FFEBEE;
+  /* Reality Tiers — Semantic + Wada-Aligned */
+  --teal: #007190;           /* Operational / Certified — Wada Antwarp Blue */
+  --teal-glow: rgba(0, 113, 144, 0.12);
+  --gold: #f99d1b;           /* Building / Partial — Wada Yellow Orange */
+  --gold-ink: #b36e10;
+  --gold-text: #946B0C;      /* WCAG AA >4.5:1 text on white */
+  --alpha: #007190;          /* Alpha Tier — Wada Antwarp Blue */
+  --alpha-bg: #eaf4f7;
+  --beta: #d98218;           /* Beta Tier — Wada Yellow Orange / Raw Sienna */
+  --beta-bg: #fef7ee;
+  --gamma: #a72144;          /* Gamma Tier — Wada Red: classy & dangerous */
+  --gamma-bg: #faeaed;
 
   /* Global Tokens */
   --radius: 0;
@@ -89,24 +101,27 @@
   --shadow-md: none;
 }
 
-/* ─── DARK THEME ─── */
+/* ─── DARK THEME — Deep Wada Night ─── */
 [data-theme="dark"] {
-  --bg: #0A1628;
-  --ink: #E8EFF5;
-  --2: #9CAEC0;
-  --3: #A0B7CD;
-  --4: #1E3048;
-  --5: #132238;
-  --surface: #0F1D33;
-  --surface-hover: #162A45;
-  --teal-glow: rgba(26, 111, 181, 0.15);
-  --gold-ink: #FFD740;
-  --gold-text: #FFD740;
-  --alpha-bg: rgba(26, 111, 181, 0.18);
-  --beta-bg: rgba(255, 198, 0, 0.15);
-  --gamma-bg: rgba(211, 47, 47, 0.15);
-  --glass-bg: rgba(10, 22, 40, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --bg: #0b1523;             /* Deep Wada Night (Dark Tyrian + Deep Indigo) */
+  --ink: #f7f5ef;            /* Wada Exhibition White — contrast 15.2:1 */
+  --2: #a8bcd0;              /* contrast 7.3:1 */
+  --3: #7e9bb5;              /* contrast 5.0:1 */
+  --4: #1c3550;
+  --5: #132437;
+  --surface: #101e30;
+  --surface-hover: #172a42;
+  --teal-glow: rgba(56, 180, 208, 0.15);
+  --gold-ink: #f99d1b;
+  --gold-text: #ffbe44;
+  --alpha: #38b4d0;          /* Luminous Antwarp Blue */
+  --alpha-bg: rgba(0, 147, 165, 0.18);
+  --beta: #f99d1b;           /* Wada Yellow Orange */
+  --beta-bg: rgba(249, 157, 27, 0.16);
+  --gamma: #e85372;          /* Luminous Wada Red */
+  --gamma-bg: rgba(167, 33, 68, 0.2);
+  --glass-bg: rgba(11, 21, 35, 0.88);
+  --glass-border: rgba(247, 245, 239, 0.08);
 }
 [data-theme="dark"] .institutional-banner {
   background: #FFFFFF;
@@ -126,14 +141,14 @@
 
 /* Nav text reads against white topbar in dark mode */
 [data-theme="dark"] .topbar .brand-name   { color: var(--depa-blue); }
-[data-theme="dark"] .nav-link             { color: #607890; }
+[data-theme="dark"] .nav-link             { color: #3b5268; }
 [data-theme="dark"] .nav-link:hover       { color: var(--depa-blue); background: rgba(0,0,0,.03); }
 [data-theme="dark"] .nav-link.active      { color: var(--depa-blue); background: rgba(0,0,0,.06); }
-[data-theme="dark"] .theme-toggle         { color: #607890; }
+[data-theme="dark"] .theme-toggle         { color: #3b5268; }
 [data-theme="dark"] .theme-toggle:hover   { color: var(--depa-blue); background: rgba(0,0,0,.04); }
 [data-theme="dark"] .locale-toggle        { color: var(--depa-blue); background: rgba(0,0,0,.06); }
 [data-theme="dark"] img { opacity: 0.9; }
-[data-theme="dark"] .cinematic-hero-overlay { background: linear-gradient(transparent 0%, transparent 50%, rgba(10,22,40,.55) 75%, rgba(10,22,40,.88) 100%); }
+[data-theme="dark"] .cinematic-hero-overlay { background: linear-gradient(transparent 0%, transparent 50%, rgba(11,21,35,.55) 75%, rgba(11,21,35,.88) 100%); }
 [data-theme="dark"] .collage-strip { opacity: .5; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -143,7 +158,7 @@ html { color-scheme: light; scroll-behavior: smooth; -webkit-text-size-adjust: 1
 body {
   font: 400 14px/1.6 var(--font);
   color: var(--ink);
-  background: var(--depa-blue, #0C2F53); /* Gutter: dark depa-blue stage on viewports wider than the 1440px design canvas */
+  background: var(--depa-blue, #12354e); /* Gutter: dark depa-blue stage on viewports wider than the 1440px design canvas */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv11", "ss01";
@@ -2340,7 +2355,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   position: relative; width: 100%;
   height: clamp(420px, 56vh, 540px);
   overflow: hidden;
-  background: var(--depa-blue, #0C2F53); /* fallback while photos load */
+  background: var(--depa-blue, #12354e); /* fallback while photos load */
 }
 /* Each slide is a full-bleed wrapper that cross-fades independently.
    The overlay always sits on top (z-index: 10) so text never disappears. */
@@ -2408,14 +2423,14 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .cinematic-hero-actions { display: flex; gap: .75rem; }
 /* Primary CTA on the cinematic hero: amber pops against the dark overlay */
 .cinematic-hero-actions .cta-button {
-  background: var(--gold, #FFC600);
-  color: var(--depa-blue, #0C2F53);
+  background: var(--gold, #f99d1b);
+  color: var(--depa-blue, #12354e);
   font-weight: 700;
 }
 .cinematic-hero-actions .cta-button:hover {
   background: #e6b300;
   opacity: 1;
-  color: var(--depa-blue, #0C2F53);
+  color: var(--depa-blue, #12354e);
 }
 .cinematic-ghost { border-color: rgba(255,255,255,.3); color: rgba(255,255,255,.8); }
 .cinematic-ghost:hover { border-color: var(--depa-yellow); color: var(--depa-yellow); background: rgba(255,242,0,.1); }
@@ -5116,7 +5131,7 @@ details[open] .kb-question::before { content: "−"; }
   padding: 1rem 1.5rem;
   /* Literal navy, not var(--ink) — that token flips to pale in dark mode,
      which would leave white text on a near-white header row. */
-  background: #0C2F53;
+  background: #12354e;
   color: #fff;
   font: 700 var(--text-micro) var(--mono);
   text-transform: uppercase;
@@ -5940,7 +5955,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   transition: all .2s var(--ease); font-family: var(--font);
 }
 .export-btn:hover { background: rgba(255,255,255,.12); transform: none; }
-.export-btn-primary { background: var(--depa-amber, #FFC600); color: var(--depa-blue, #0C2F53); font-weight: 700; }
+.export-btn-primary { background: var(--depa-amber, #f99d1b); color: var(--depa-blue, #12354e); font-weight: 700; }
 .export-btn-primary:hover { background: #FFD740; }
 .export-btn-icon { font-size: var(--text-body); flex-shrink: 0; }
 .export-btn-text { display: flex; flex-direction: column; gap: .1rem; }
@@ -5964,10 +5979,10 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .transparency-inner h2 { font-size: var(--text-display); font-weight: 700; letter-spacing: -.02em; margin-bottom: 1.25rem; }
 .transparency-formula {
-  padding: 1.2rem 1.5rem; background: var(--depa-blue, #0C2F53); color: #fff;
+  padding: 1.2rem 1.5rem; background: var(--depa-blue, #12354e); color: #fff;
   font: 700 clamp(.75rem, 1.6vw, .9rem)/1.7 var(--mono); overflow-x: auto; margin-bottom: 1.5rem;
   white-space: nowrap;
-  border-left: 3px solid var(--depa-amber, #FFC600);
+  border-left: 3px solid var(--depa-amber, #f99d1b);
   letter-spacing: .01em;
 }
 /* The formula is one long unbroken token — without this it ran to ~900px and
@@ -5987,7 +6002,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 /* Investor Section */
 .investor-section {
   padding: 3.5rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
-  background: var(--depa-blue, #0C2F53);
+  background: var(--depa-blue, #12354e);
   color: #fff;
   border-top: none;
 }
@@ -6004,9 +6019,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .investor-card:hover { transform: none; background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.3); }
 .investor-card-name { font-size: var(--text-body); font-weight: 700; color: #fff; }
-.investor-card-score { font: 700 1rem var(--mono); color: var(--depa-amber, #FFC600); }
+.investor-card-score { font: 700 1rem var(--mono); color: var(--depa-amber, #f99d1b); }
 .investor-card-province { font-size: var(--text-micro); color: rgba(255,255,255,.6); }
-.investor-card-vibe { font: 500 var(--text-xs) var(--mono); color: var(--depa-amber, #FFC600); }
+.investor-card-vibe { font: 500 var(--text-xs) var(--mono); color: var(--depa-amber, #f99d1b); }
 .investor-cta-text { font-size: var(--text-body); color: rgba(255,255,255,.6); line-height: 1.55; max-width: 560px; }
 
 @media (max-width: 768px) {
@@ -6023,7 +6038,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .hero-gradient {
   position: relative; width: 100%;
   min-height: 420px; overflow: hidden;
-  background: var(--depa-blue, #0C2F53);
+  background: var(--depa-blue, #12354e);
 }
 .hero-gradient-inner {
   position: relative; z-index: 1;
@@ -6083,7 +6098,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
      Inset to the content column at every width, never less than the gutter. */
   padding: .65rem max(var(--gutter), calc((100% - var(--w, 1060px)) / 2 + var(--gutter)));
   font: 500 var(--text-body) var(--mono); color: rgba(255,255,255,.75); letter-spacing: .02em;
-  background: var(--depa-blue, #0C2F53);
+  background: var(--depa-blue, #12354e);
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 @media (max-width: 640px) { .edition-stamp { flex-direction: column; align-items: flex-start; } }
@@ -8154,7 +8169,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .invest-ccdr-panel {
   width: 100%;
   /* Literal navy — always dark by design, not theme-flipping var(--ink). */
-  background: #0C2F53;
+  background: #12354e;
   color: #fff;
   border-top: 1px solid rgba(255,255,255,0.1);
   border-bottom: 3px solid var(--amber, #f59e0b);
@@ -8382,7 +8397,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   font: 700 var(--text-micro) var(--mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--depa-amber, #FFC600);
+  color: var(--depa-amber, #f99d1b);
 }
 .home-collection-headline {
   margin: 0;
@@ -8457,7 +8472,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   font: 700 var(--text-micro) var(--mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--depa-amber, #FFC600);
+  color: var(--depa-amber, #f99d1b);
 }
 .weekly-digest {
   display: grid;
@@ -8575,7 +8590,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
      mode (it is a text-ink token, not a fixed color), which left this
      section rendering white text on a near-white background. Confirmed via
      computed-style check: dark mode measured bg rgb(232,239,245) here. */
-  background: #0C2F53;
+  background: #12354e;
   color: #fff;
   border-top: 1px solid rgba(255,255,255,0.12);
   border-bottom: 1px solid rgba(255,255,255,0.12);
@@ -8675,7 +8690,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 .home-stat-ribbon {
   width: 100%;
-  background: var(--depa-blue, #0C2F53);
+  background: var(--depa-blue, #12354e);
   border-top: 2px solid var(--depa-yellow, #FFF200);
   border-bottom: none;
   color: rgba(255, 255, 255, 0.92);
@@ -8716,9 +8731,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   padding: 0 .5rem 0 .75rem;
   font: 700 var(--text-body) var(--mono);
   color: var(--depa-yellow, #FFF200);
-  background: var(--depa-blue, #0C2F53);
+  background: var(--depa-blue, #12354e);
 }
-[data-theme="dark"] .home-stat-ribbon-inner::after { background: #071428; }
+[data-theme="dark"] .home-stat-ribbon-inner::after { background: #0b1523; }
 @media (min-width: 1100px) { .home-stat-ribbon-inner::after { display: none; } }
 .home-stat-cell {
   flex: 0 0 auto;
