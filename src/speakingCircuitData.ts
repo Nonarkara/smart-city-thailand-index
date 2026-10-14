@@ -31,9 +31,24 @@ export type CircuitStop = {
   city: { en: string; th: string; zh: string };
   country: { en: string; th: string; zh: string };
   flag: string;
-  /** ISO date of the appearance. Used for ordering and for the year label. */
-  date: string;
-  venue: { en: string; th: string; zh: string };
+  /**
+   * ISO date of the appearance, or `null` when the stop is confirmed but its
+   * date is not yet on the record. `null` is only legal alongside
+   * `unconfirmed` — see the Hong Kong stop below.
+   *
+   * This is deliberately not an optional field with a fabricated fallback. An
+   * earlier version of this file carried a Hong Kong entry dated 2025-11-18 with
+   * a venue invented to match, and it shipped. SCITI is a judge-facing award
+   * submission: an unsourced date on a public page is worse than no date at all,
+   * because nobody can tell the difference between a real one and a made-up one.
+   * A stop that happened and is not yet dated renders as a stop that happened
+   * and is not yet dated.
+   */
+  date: string | null;
+  /** True when this stop is real but not yet fully documented. */
+  unconfirmed?: boolean;
+  /** Omitted when the venue is not yet on the record. */
+  venue?: { en: string; th: string; zh: string };
   /** What was actually delivered — a talk, a launch, a panel. Never vague. */
   format: { en: string; th: string; zh: string };
   /** The one claim worth carrying. Kept short: this is a rail, not an essay. */
@@ -200,25 +215,24 @@ export const GRAND_SLAM_STOPS: CircuitStop[] = [
     },
   },
   {
-    id: "hongkong-2025",
+    // Confirmed on the circuit; date and venue are not yet on the record. See
+    // the note on `date` above for why this is rendered honestly rather than
+    // filled in.
+    id: "hongkong-pending",
     city: { en: "Hong Kong", th: "ฮ่องกง", zh: "香港" },
     country: { en: "Hong Kong SAR", th: "เขตบริหารพิเศษฮ่องกง", zh: "香港特别行政区" },
     flag: "🇭🇰",
-    date: "2025-11-18",
-    venue: {
-      en: "Smart city governance and urban data exchange",
-      th: "การกำกับดูแลเมืองอัจฉริยะและการแลกเปลี่ยนข้อมูลเมือง",
-      zh: "智慧城市治理与城市数据交流",
-    },
+    date: null,
+    unconfirmed: true,
     format: {
       en: "Talk · Urban data",
       th: "บรรยาย · ข้อมูลเมือง",
       zh: "演讲 · 城市数据",
     },
     note: {
-      en: "A stop on the circuit for urban data practice, in the run-up to the same conversations that followed through Shanghai.",
-      th: "หยุดหนึ่งบนวงการเดินทางเรื่องข้อมูลเมือง ในช่วงก่อนบทสนทนาชุดเดียวกันที่ต่อยอดไปถึงเซี่ยงไฮ้",
-      zh: "城市数据实践巡回中的一站，位于延续至上海的那组对话之前。",
+      en: "A stop on the circuit for urban data practice. The date and venue are not yet on the record, so neither is shown.",
+      th: "หยุดหนึ่งบนวงการเดินทางเรื่องข้อมูลเมือง วันและสถานที่ยังไม่อยู่ในบันทึก จึงไม่แสดงไว้",
+      zh: "城市数据实践巡回中的一站。日期与场地尚未列入记录，因此不予显示。",
     },
   },
   {

@@ -11517,6 +11517,18 @@ body.canvas-print-mode {
   letter-spacing: .06em;
   flex-shrink: 0;
 }
+/* A stop with no date or venue on the record. Rendered in the muted tone so it
+   reads as an open field rather than as a fact, and so the gap is visible to
+   whoever can close it. */
+.circuit-card-date--pending {
+  color: var(--4);
+  letter-spacing: .04em;
+  text-transform: lowercase;
+}
+.circuit-card-venue--pending {
+  color: var(--4);
+  font-style: italic;
+}
 .circuit-card-venue {
   font: 400 var(--text-micro)/1.35 var(--font);
   color: var(--2);
