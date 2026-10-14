@@ -77,11 +77,28 @@ export default function GrandSlamCircuit({ locale }: Props) {
                     <span className="circuit-card-flagmark" aria-hidden="true">{stop.flag}</span>
                     {t(stop.city)}
                   </h3>
-                  <time className="circuit-card-date" dateTime={stop.date}>
-                    {stop.date.slice(0, 4)}
-                  </time>
+                  {stop.date ? (
+                    <time className="circuit-card-date" dateTime={stop.date}>
+                      {stop.date.slice(0, 4)}
+                    </time>
+                  ) : (
+                    /* No date on the record. Say so — never show a plausible year. */
+                    <span className="circuit-card-date circuit-card-date--pending">
+                      {t({ en: "pending", th: "รอข้อมูล", zh: "待确认" })}
+                    </span>
+                  )}
                 </div>
-                <p className="circuit-card-venue">{t(stop.venue)}</p>
+                {stop.venue ? (
+                  <p className="circuit-card-venue">{t(stop.venue)}</p>
+                ) : (
+                  <p className="circuit-card-venue circuit-card-venue--pending">
+                    {t({
+                      en: "Date and venue to confirm",
+                      th: "รอยืนยันวันและสถานที่",
+                      zh: "日期待确认",
+                    })}
+                  </p>
+                )}
                 <p className="circuit-card-format">{t(stop.format)}</p>
                 <p className="circuit-card-note">{t(stop.note)}</p>
                 {stop.photoCredit ? (

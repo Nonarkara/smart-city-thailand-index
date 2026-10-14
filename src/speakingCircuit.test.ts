@@ -79,10 +79,33 @@ describe("speaking circuit — data integrity", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("dates are real ISO dates", () => {
+  it("every date is a real ISO date, or the stop is explicitly marked unconfirmed", () => {
     for (const stop of GRAND_SLAM_STOPS) {
+      if (stop.date === null) {
+        // A null date is only ever legal on a stop that says it is unconfirmed.
+        // This is the rule that keeps an invented date off a judge-facing page.
+        expect(stop.unconfirmed, `${stop.id}: a null date requires unconfirmed: true`).toBe(true);
+        continue;
+      }
       expect(isIsoDate(stop.date), `${stop.id}: "${stop.date}" is not an ISO date`).toBe(true);
+      expect(stop.unconfirmed, `${stop.id}: a dated stop should not also be marked unconfirmed`).toBeFalsy();
     }
+  });
+
+  it("an unconfirmed stop does not invent a venue", () => {
+    for (const stop of GRAND_SLAM_STOPS) {
+      if (!stop.unconfirmed) continue;
+      expect(stop.venue, `${stop.id}: an unconfirmed stop must not carry a venue`).toBeUndefined();
+    }
+  });
+
+  it("at least one stop stays on the circuit as a real but undated appearance", () => {
+    // Hong Kong is a confirmed appearance whose date is not on the record yet.
+    // If this ever goes to zero, either the stop was documented or it was
+    // quietly deleted — both are worth a human noticing.
+    const undated = GRAND_SLAM_STOPS.filter((stop) => stop.unconfirmed);
+    expect(undated.length).toBeGreaterThan(0);
+    expect(undated.map((stop) => stop.city.en)).toContain("Hong Kong");
   });
 
   it("every locale field is present in en, th and zh", () => {
@@ -90,6 +113,7 @@ describe("speaking circuit — data integrity", () => {
     for (const stop of GRAND_SLAM_STOPS) {
       for (const field of fields) {
         const value = stop[field];
+        if (value === undefined) continue; // venue is optional on an unconfirmed stop
         for (const locale of ["en", "th", "zh"] as const) {
           expect(
             typeof value[locale] === "string" && value[locale].trim().length > 0,
