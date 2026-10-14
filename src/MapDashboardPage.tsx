@@ -187,7 +187,7 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
               </div>
               <div className="map-dash-region-detail">
                 {r.alpha > 0 && <span style={{ color: "var(--alpha)" }}>α{r.alpha}</span>}
-                {r.beta > 0 && <span style={{ color: "var(--beta)" }}>β{r.beta}</span>}
+                {r.beta > 0 && <span style={{ color: "var(--beta-text)" }}>β{r.beta}</span>}
                 {r.gamma > 0 && <span style={{ color: "var(--gamma)" }}>γ{r.gamma}</span>}
               </div>
             </div>

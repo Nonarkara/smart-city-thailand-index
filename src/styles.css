@@ -42,15 +42,32 @@
   /* Reality Tiers — Semantic + Wada-Aligned */
   --teal: #007190;           /* Operational / Certified — Wada Antwarp Blue */
   --teal-glow: rgba(0, 113, 144, 0.12);
-  --gold: #f99d1b;           /* Building / Partial — Wada Yellow Orange */
-  --gold-ink: #b36e10;
+  --gold: #f99d1b;           /* Building / Partial — Wada Yellow Orange. FILL/graphic use only —
+                                2.13:1 on white fails as text. Use --gold-ink or --gold-text for type. */
+  --gold-ink: #9a5d0a;        /* Wada Yellow Orange, deepened. 5.32:1 on white — WCAG AA text. */
   --gold-text: #946B0C;      /* WCAG AA >4.5:1 text on white */
   --alpha: #007190;          /* Alpha Tier — Wada Antwarp Blue */
   --alpha-bg: #eaf4f7;
-  --beta: #d98218;           /* Beta Tier — Wada Yellow Orange / Raw Sienna */
+  --beta: #d98218;           /* Beta Tier — Wada Yellow Orange / Raw Sienna.
+                                FILL/graphic use only: 2.93:1 on white, 2.76:1 on --beta-bg.
+                                Use --beta-text wherever the beta token carries type. */
+  --beta-text: #9a5d0a;      /* Deepened sienna for beta TYPE on --beta-bg (5.01:1) and white (5.32:1) */
   --beta-bg: #fef7ee;
   --gamma: #a72144;          /* Gamma Tier — Wada Red: classy & dangerous */
   --gamma-bg: #faeaed;
+
+  /* Pillar spot colours as TEXT. The seven pillar hues are graphic-first:
+     economy #f99d1b sits at 2.13:1 on white and hospitality #e2b540 at 1.92:1,
+     both far below the 4.5:1 text floor. These are the same hues stepped down
+     until they clear 4.5:1 on both white and --surface, so a pillar name can be
+     typeset without a second colour decision. Fills stay on the bright originals. */
+  --pillar-livability-text: #007e8e;   /* 4.80:1 white · 4.51:1 surface */
+  --pillar-economy-text: #9f6411;      /* 4.88:1 white · 4.58:1 surface */
+  --pillar-safety-text: #1c4286;       /* 9.66:1 white · 9.08:1 surface */
+  --pillar-wellbeing-text: #a94151;    /* 5.90:1 white · 5.54:1 surface */
+  --pillar-environment-text: #008259;  /* 4.84:1 white · 4.55:1 surface */
+  --pillar-hospitality-text: #8a6e27;  /* 4.84:1 white · 4.54:1 surface */
+  --pillar-digital-text: #6450a1;      /* 6.55:1 white · 6.16:1 surface */
 
   /* Global Tokens */
   --radius: 0;
@@ -117,6 +134,7 @@
   --alpha: #38b4d0;          /* Luminous Antwarp Blue */
   --alpha-bg: rgba(0, 147, 165, 0.18);
   --beta: #f99d1b;           /* Wada Yellow Orange */
+  --beta-text: #f99d1b;      /* Luminous on the dark beta badge (#312b22) — 6.58:1 */
   --beta-bg: rgba(249, 157, 27, 0.16);
   --gamma: #e85372;          /* Luminous Wada Red */
   --gamma-bg: rgba(167, 33, 68, 0.2);
@@ -634,7 +652,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .tier-card-header { display: flex; align-items: baseline; gap: .25rem; margin-bottom: .25rem; }
 .tier-symbol { font: 700 1.3rem var(--mono); }
 .tier-card-alpha .tier-symbol, .tier-card-alpha .tier-name { color: var(--alpha); }
-.tier-card-beta .tier-symbol, .tier-card-beta .tier-name { color: var(--beta); }
+.tier-card-beta .tier-symbol, .tier-card-beta .tier-name { color: var(--beta-text); }
 .tier-card-gamma .tier-symbol, .tier-card-gamma .tier-name { color: var(--gamma); }
 .tier-name { font-size: var(--text-micro); font-weight: 700; }
 .tier-count { font: 600 var(--text-micro) var(--mono); color: var(--3); margin-left: auto; }
@@ -643,11 +661,11 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 /* ─── BADGES ─── */
 .tier-badge { display: inline-flex; align-items: center; gap: .15rem; padding: .08rem .3rem; font: 700 var(--text-micro) var(--mono); }
 .tier-alpha { background: var(--alpha-bg); color: var(--alpha); }
-.tier-beta { background: var(--beta-bg); color: var(--beta); }
+.tier-beta { background: var(--beta-bg); color: var(--beta-text); }
 .tier-gamma { background: var(--gamma-bg); color: var(--gamma); }
 .tier-badge-large { display: inline-flex; align-items: center; gap: .25rem; padding: .2rem .55rem; font: 700 .75rem var(--mono); }
 .tier-badge-large.tier-alpha { background: var(--alpha-bg); color: var(--alpha); }
-.tier-badge-large.tier-beta { background: var(--beta-bg); color: var(--beta); }
+.tier-badge-large.tier-beta { background: var(--beta-bg); color: var(--beta-text); }
 .tier-badge-large.tier-gamma { background: var(--gamma-bg); color: var(--gamma); }
 
 /* ─── FILTERS ─── */
@@ -717,7 +735,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .tier-section-header { display: flex; align-items: baseline; gap: .4rem; padding-bottom: .35rem; border-bottom: 2px solid var(--ink); margin-bottom: .6rem; }
 .tier-section-symbol { font: 700 1.5rem var(--mono); }
 .tier-section-alpha .tier-section-symbol { color: var(--alpha); }
-.tier-section-beta .tier-section-symbol { color: var(--beta); }
+.tier-section-beta .tier-section-symbol { color: var(--beta-text); }
 .tier-section-gamma .tier-section-symbol { color: var(--gamma); }
 .tier-section-header :is(h2, h3) { font-size: var(--text-body); font-weight: 700; margin-bottom: 0; }
 .tier-section-count { font: 700 var(--text-micro) var(--mono); color: var(--2); margin-left: auto; }
@@ -741,7 +759,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .city-card-composite { font: 700 1.1rem var(--mono); }
 .city-card-status { font: 700 var(--text-micro) var(--mono); padding: .08rem .26rem; }
 .city-card-status.status-operational { background: var(--alpha-bg); color: var(--alpha); }
-.city-card-status.status-partial { background: var(--beta-bg); color: var(--beta); }
+.city-card-status.status-partial { background: var(--beta-bg); color: var(--beta-text); }
 .city-card-status.status-planned { background: var(--gamma-bg); color: var(--gamma); }
 .city-card-bars { display: flex; flex-direction: column; gap: 3px; margin-bottom: .4rem; }
 .hbar-row { display: flex; align-items: center; gap: 4px; }
@@ -791,7 +809,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
   text-transform: uppercase;
 }
 .editorial-story-tier-alpha { background: var(--alpha-bg); color: var(--alpha); }
-.editorial-story-tier-beta { background: var(--beta-bg); color: var(--beta); }
+.editorial-story-tier-beta { background: var(--beta-bg); color: var(--beta-text); }
 .editorial-story-tier-gamma { background: var(--gamma-bg); color: var(--gamma); }
 .editorial-story-title-row {
   display: flex;
@@ -865,7 +883,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .composite-large { font: 700 var(--text-display) var(--mono); letter-spacing: -.03em; }
 .reality-badge { font: 700 .72rem var(--mono); padding: .08rem .35rem; }
 .reality-operational { background: var(--alpha-bg); color: var(--alpha); }
-.reality-partial { background: var(--beta-bg); color: var(--beta); }
+.reality-partial { background: var(--beta-bg); color: var(--beta-text); }
 .reality-planned { background: var(--gamma-bg); color: var(--gamma); }
 .city-detail-tagline { font-size: var(--text-body); line-height: 1.7; color: var(--2); margin-top: .75rem; max-width: 520px; }
 
@@ -1256,7 +1274,7 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .threshold-row { display: flex; align-items: center; gap: .8rem; padding: .6rem 0; border-bottom: 1px solid var(--5); }
 .threshold-symbol { font: 700 1.2rem var(--mono); width: 1.8rem; }
 .threshold-alpha .threshold-symbol { color: var(--alpha); }
-.threshold-beta .threshold-symbol { color: var(--beta); }
+.threshold-beta .threshold-symbol { color: var(--beta-text); }
 .threshold-gamma .threshold-symbol { color: var(--gamma); }
 .threshold-name { font-weight: 700; width: 3rem; font-size: var(--text-micro); }
 .threshold-range { font: 700 .75rem var(--mono); width: 3.5rem; }
@@ -2260,9 +2278,9 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .planning-step-desc { font-size: var(--text-micro); color: var(--2); line-height: 1.55; max-width: 500px; }
 .planning-step-status { font: 700 var(--text-micro) var(--mono); padding: .15rem .45rem; border-radius: var(--radius-xs); white-space: nowrap; flex-shrink: 0; }
 .planning-step-status-ready { background: var(--alpha-bg); color: var(--alpha); }
-.planning-step-status-building { background: var(--beta-bg); color: var(--beta); }
+.planning-step-status-building { background: var(--beta-bg); color: var(--beta-text); }
 .planning-step-status-done { background: var(--alpha-bg); color: var(--alpha); }
-.planning-step-status-partial { background: var(--beta-bg); color: var(--beta); }
+.planning-step-status-partial { background: var(--beta-bg); color: var(--beta-text); }
 .planning-step-status-gap { background: var(--gamma-bg); color: var(--gamma); }
 .planning-step-status-not-started { background: var(--surface); color: var(--3); }
 .planning-step-note { font-size: var(--text-micro); color: var(--3); line-height: 1.55; font-style: italic; }
@@ -2591,7 +2609,7 @@ h2, h3 { font-family: var(--font); }
 .cc-upgrade-tier-label { font: 600 var(--text-micro) var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--3); }
 .cc-upgrade-tier { font: 700 .85rem var(--mono); text-transform: uppercase; }
 .cc-upgrade-tier.tier-gamma { color: var(--gamma); }
-.cc-upgrade-tier.tier-beta { color: var(--beta); }
+.cc-upgrade-tier.tier-beta { color: var(--beta-text); }
 .cc-upgrade-tier.tier-alpha { color: var(--alpha); }
 .cc-upgrade-score { font: 700 1.2rem var(--mono); }
 .cc-upgrade-arrow { font: 700 1.2rem var(--mono); color: var(--teal); display: flex; align-items: center; gap: .4rem; }
@@ -2599,7 +2617,7 @@ h2, h3 { font-family: var(--font); }
 .cc-upgrade-meta { display: flex; flex-direction: column; align-items: center; gap: .2rem; margin-left: auto; }
 .cc-feasibility { font: 700 var(--text-micro) var(--mono); padding: .12rem .4rem; border-radius: var(--radius-xs); letter-spacing: .06em; text-transform: uppercase; }
 .cc-feasibility-achievable { background: var(--alpha-bg); color: var(--alpha); }
-.cc-feasibility-stretch { background: var(--beta-bg); color: var(--beta); }
+.cc-feasibility-stretch { background: var(--beta-bg); color: var(--beta-text); }
 .cc-feasibility-long-term { background: var(--gamma-bg); color: var(--gamma); }
 .cc-timeline { font: 600 var(--text-micro) var(--mono); color: var(--3); }
 .cc-upgrade-summary { font-size: var(--text-micro); line-height: 1.6; color: var(--2); margin-top: .6rem; max-width: 600px; }
@@ -2628,7 +2646,7 @@ h2, h3 { font-family: var(--font); }
 .cc-improvement-main { flex: 1; }
 .cc-priority-badge { font: 700 var(--text-micro) var(--mono); letter-spacing: .1em; padding: .06rem .3rem; text-transform: uppercase; margin-bottom: .2rem; display: inline-block; }
 .cc-priority-badge-critical { background: var(--gamma-bg); color: var(--gamma); }
-.cc-priority-badge-high { background: var(--beta-bg); color: var(--beta); }
+.cc-priority-badge-high { background: var(--beta-bg); color: var(--beta-text); }
 .cc-priority-badge-medium { background: var(--alpha-bg); color: var(--alpha); }
 .cc-improvement-title { font-size: var(--text-body); font-weight: 700; line-height: 1.2; margin-top: .1rem; }
 .cc-improvement-scores { display: flex; align-items: center; gap: .3rem; margin-top: .2rem; font: 600 var(--text-micro) var(--mono); }
@@ -2656,7 +2674,7 @@ h2, h3 { font-family: var(--font); }
 .cc-swot-strengths .cc-swot-letter { color: var(--alpha); }
 .cc-swot-weaknesses .cc-swot-letter { color: var(--gamma); }
 .cc-swot-opportunities .cc-swot-letter { color: var(--teal); }
-.cc-swot-threats .cc-swot-letter { color: var(--beta); }
+.cc-swot-threats .cc-swot-letter { color: var(--beta-text); }
 .cc-swot-label { font: 600 var(--text-micro) var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--3); }
 .cc-swot-items { display: grid; gap: .2rem; }
 .cc-swot-item { font-size: var(--text-micro); color: var(--2); line-height: 1.5; padding-left: .65rem; position: relative; }
@@ -2707,7 +2725,7 @@ h2, h3 { font-family: var(--font); }
 .cc-finance-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .3rem; }
 .cc-finance-priority { font: 700 var(--text-micro) var(--mono); letter-spacing: .08em; padding: .06rem .3rem; text-transform: uppercase; }
 .cc-finance-priority-primary { background: var(--alpha-bg); color: var(--alpha); }
-.cc-finance-priority-secondary { background: var(--beta-bg); color: var(--beta); }
+.cc-finance-priority-secondary { background: var(--beta-bg); color: var(--beta-text); }
 .cc-finance-priority-exploratory { background: var(--surface); color: var(--3); }
 .cc-finance-category { font: 600 var(--text-micro) var(--mono); color: var(--4); text-transform: uppercase; letter-spacing: .06em; }
 .cc-finance-name { font-size: var(--text-micro); font-weight: 700; margin-bottom: .25rem; line-height: 1.2; }
@@ -2944,7 +2962,7 @@ h2, h3 { font-family: var(--font); }
   margin-right: .15rem;
 }
 .ref-tier-alpha { color: var(--alpha); border-bottom: 3px solid var(--alpha); }
-.ref-tier-beta { color: var(--beta); border-bottom: 3px solid var(--beta); }
+.ref-tier-beta { color: var(--beta-text); border-bottom: 3px solid var(--beta); }
 .ref-tier-gamma { color: var(--gamma); border-bottom: 3px solid var(--gamma); }
 .ref-formula-note {
   font-size: var(--text-micro);
@@ -3040,7 +3058,7 @@ h2, h3 { font-family: var(--font); }
   text-transform: uppercase;
   padding: .06rem .25rem;
 }
-.ref-cat-debt { background: var(--beta-bg); color: var(--beta); }
+.ref-cat-debt { background: var(--beta-bg); color: var(--beta-text); }
 .ref-cat-equity { background: var(--alpha-bg); color: var(--alpha); }
 .ref-cat-grant { background: rgba(43, 186, 160, .1); color: var(--teal); }
 .ref-cat-hybrid { background: rgba(212, 168, 67, .12); color: var(--gold-text, #946B0C); }
@@ -3070,7 +3088,7 @@ h2, h3 { font-family: var(--font); }
   justify-content: center;
 }
 .tier-badge.tier-alpha { background: var(--alpha-bg); color: var(--alpha); }
-.tier-badge.tier-beta { background: var(--beta-bg); color: var(--beta); }
+.tier-badge.tier-beta { background: var(--beta-bg); color: var(--beta-text); }
 .tier-badge.tier-gamma { background: var(--gamma-bg); color: var(--gamma); }
 .ref-finance-thai { font-size: var(--text-micro); color: var(--teal); line-height: 1.4; font-weight: 500; margin-bottom: .15rem; }
 .ref-finance-example { font-size: var(--text-micro); color: var(--3); line-height: 1.4; }
@@ -4214,7 +4232,7 @@ details[open] .kb-question::before { content: "−"; }
   text-transform: uppercase;
 }
 .city-dossier-chip-operational { background: var(--alpha-bg); color: var(--alpha); }
-.city-dossier-chip-partial { background: var(--beta-bg); color: var(--beta); }
+.city-dossier-chip-partial { background: var(--beta-bg); color: var(--beta-text); }
 .city-dossier-chip-planned { background: var(--gamma-bg); color: var(--gamma); }
 .city-dossier-chip-tier {
   background: rgba(17, 24, 39, .05);
@@ -4338,7 +4356,7 @@ details[open] .kb-question::before { content: "−"; }
   text-transform: uppercase;
 }
 .city-dossier-step-status-ready { background: var(--alpha-bg); color: var(--alpha); }
-.city-dossier-step-status-building { background: var(--beta-bg); color: var(--beta); }
+.city-dossier-step-status-building { background: var(--beta-bg); color: var(--beta-text); }
 .city-dossier-step-status-gap { background: var(--gamma-bg); color: var(--gamma); }
 
 .city-analog-section,
@@ -5420,7 +5438,7 @@ details[open] .kb-question::before { content: "−"; }
   text-transform: uppercase;
 }
 .compare-city-tier-alpha { background: var(--alpha-bg); color: var(--alpha); }
-.compare-city-tier-beta { background: var(--beta-bg); color: var(--beta); }
+.compare-city-tier-beta { background: var(--beta-bg); color: var(--beta-text); }
 .compare-city-tier-gamma { background: var(--gamma-bg); color: var(--gamma); }
 .compare-city-composite {
   font: 800 1.25rem var(--mono);
@@ -5457,7 +5475,7 @@ details[open] .kb-question::before { content: "−"; }
   font: 700 var(--text-micro) var(--mono);
 }
 .compare-tier-pill-alpha { background: var(--alpha-bg); color: var(--alpha); }
-.compare-tier-pill-beta { background: var(--beta-bg); color: var(--beta); }
+.compare-tier-pill-beta { background: var(--beta-bg); color: var(--beta-text); }
 .compare-tier-pill-gamma { background: var(--gamma-bg); color: var(--gamma); }
 .compare-score-cell {
   display: flex;
