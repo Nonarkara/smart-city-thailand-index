@@ -28,27 +28,32 @@ function json(body: Record<string, unknown>, status: number, extraHeaders?: Head
 /**
  * Fetch a generated API artifact out of the ASSETS binding.
  *
- * `asset.ok` is NOT a sufficient existence check. The static catch-all
- * rewrite in public/_redirects (`/* /index.html 200`) also applies inside
- * ASSETS.fetch, so a request for a missing path comes back 200 with the SPA
- * shell. Treating that as a hit made /api/cities/<unknown> answer
- * 200 application/json containing index.html — the exact failure mode this
- * function exists to prevent.
+ * Neither `asset.ok` nor the Content-Type can be trusted here.
  *
- * So we assert the content type too: a real JSON artifact is
- * application/json, a real CSV is text/csv. Anything else is the shell.
+ * 1. `asset.ok` is always true for a miss. ASSETS.fetch inherits the static
+ *    SPA rewrite (`/* /index.html 200`), so a path with no artifact returns
+ *    200 carrying the shell.
+ * 2. Content-Type cannot be trusted either. public/_headers declares
+ *    `Content-Type: application/json` for /api-static/cities/* and
+ *    `text/csv` for /api-static/exports/*, so the shell comes back wearing
+ *    exactly the content type the caller expects. Checking the header is
+ *    what made this bug invisible in the first place.
+ *
+ * The one signal that survives both is the body. A real artifact is JSON or
+ * CSV; the shell starts with '<'. We read once, reject on that, and hand the
+ * text back so callers do not fetch it twice. These artifacts are all small
+ * (a dossier is ~7 KB, a CSV a few KB), so reading is cheaper than being wrong.
  */
-async function fetchArtifact(
+async function fetchArtifactText(
   context: PagesContext,
   path: string,
-  expectedContentType: "application/json" | "text/csv",
-): Promise<Response | null> {
+): Promise<string | null> {
   const assetUrl = new URL(path, context.request.url);
   const asset = await context.env.ASSETS.fetch(new Request(assetUrl, { method: "GET" }));
   if (!asset.ok) return null;
-  const contentType = asset.headers.get("Content-Type") ?? "";
-  if (!contentType.toLowerCase().startsWith(expectedContentType)) return null;
-  return asset;
+  const text = await asset.text();
+  if (text.trimStart().startsWith("<")) return null;
+  return text;
 }
 
 export async function onRequest(context: PagesContext): Promise<Response> {
@@ -74,11 +79,11 @@ export async function onRequest(context: PagesContext): Promise<Response> {
     if (!CITY_ID.test(cityId)) {
       return json({ success: false, error: "Not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
-    const asset = await fetchArtifact(context, `/api-static/exports/cities/${cityId}.csv`, "text/csv");
-    if (!asset) {
+    const text = await fetchArtifactText(context, `/api-static/exports/cities/${cityId}.csv`);
+    if (text === null) {
       return json({ success: false, error: "City export not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
-    const body = context.request.method === "HEAD" ? null : await asset.text();
+    const body = context.request.method === "HEAD" ? null : text;
     return new Response(body, {
       status: 200,
       headers: {
@@ -93,11 +98,11 @@ export async function onRequest(context: PagesContext): Promise<Response> {
 
   // 2. /api/exports/cities-summary.csv
   if (path === "exports/cities-summary.csv") {
-    const asset = await fetchArtifact(context, "/api-static/exports/cities-summary.csv", "text/csv");
-    if (!asset) {
+    const text = await fetchArtifactText(context, "/api-static/exports/cities-summary.csv");
+    if (text === null) {
       return json({ success: false, error: "Export not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
-    const body = context.request.method === "HEAD" ? null : await asset.text();
+    const body = context.request.method === "HEAD" ? null : text;
     return new Response(body, {
       status: 200,
       headers: {
@@ -112,11 +117,11 @@ export async function onRequest(context: PagesContext): Promise<Response> {
 
   // 3. /api/exports/city-facts.csv
   if (path === "exports/city-facts.csv") {
-    const asset = await fetchArtifact(context, "/api-static/exports/city-facts.csv", "text/csv");
-    if (!asset) {
+    const text = await fetchArtifactText(context, "/api-static/exports/city-facts.csv");
+    if (text === null) {
       return json({ success: false, error: "Export not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
-    const body = context.request.method === "HEAD" ? null : await asset.text();
+    const body = context.request.method === "HEAD" ? null : text;
     return new Response(body, {
       status: 200,
       headers: {
@@ -136,11 +141,18 @@ export async function onRequest(context: PagesContext): Promise<Response> {
     if (!CITY_ID.test(cityId)) {
       return json({ success: false, error: "Not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
-    const asset = await fetchArtifact(context, `/api-static/cities/${cityId}.json`, "application/json");
-    if (!asset) {
+    const text = await fetchArtifactText(context, `/api-static/cities/${cityId}.json`);
+    if (text === null) {
       return json({ success: false, error: "City not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
-    const body = context.request.method === "HEAD" ? null : await asset.text();
+    // The shell is ruled out above; parse as a second guard so a truncated or
+    // corrupted artifact is a clean 404 rather than a JSON parse error downstream.
+    try {
+      JSON.parse(text);
+    } catch {
+      return json({ success: false, error: "City artifact is unreadable", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
+    }
+    const body = context.request.method === "HEAD" ? null : text;
     return new Response(body, {
       status: 200,
       headers: {
