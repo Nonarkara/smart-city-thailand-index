@@ -186,6 +186,24 @@ export const PILLAR_COLORS: Record<ScoringPillar, string> = {
   digital: "#6450a1",       // Wada Blue Violet (Plate 175, 196)
 };
 
+/**
+ * The same seven hues, stepped down until each clears WCAG AA 4.5:1 against
+ * both white and --surface. PILLAR_COLORS is graphic-first — economy sits at
+ * 2.13:1 and hospitality at 1.92:1 on white — so use this map wherever a
+ * pillar colour becomes type: pillar names, diagram labels, inline legends.
+ * Bars, dots and strip segments stay on the bright PILLAR_COLORS.
+ * Mirrors the --pillar-*-text CSS tokens; the two must not drift apart.
+ */
+export const PILLAR_TEXT_COLORS: Record<ScoringPillar, string> = {
+  livability: "#007e8e",   // 4.80:1 white · 4.51:1 surface
+  economy: "#9f6411",      // 4.88:1 white · 4.58:1 surface
+  safety: "#1c4286",       // 9.66:1 white · 9.08:1 surface
+  wellbeing: "#a94151",    // 5.90:1 white · 5.54:1 surface
+  environment: "#008259",  // 4.84:1 white · 4.55:1 surface
+  hospitality: "#8a6e27",  // 4.84:1 white · 4.54:1 surface
+  digital: "#6450a1",      // 6.55:1 white · 6.16:1 surface
+};
+
 export const TIER_LABELS: Record<Locale, Record<CityTier, string>> = {
   en: { alpha: "Alpha", beta: "Beta", gamma: "Gamma" },
   th: { alpha: "อัลฟา", beta: "เบตา", gamma: "แกมมา" },

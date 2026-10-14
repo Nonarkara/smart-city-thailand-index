@@ -25,6 +25,32 @@ function json(body: Record<string, unknown>, status: number, extraHeaders?: Head
   });
 }
 
+/**
+ * Fetch a generated API artifact out of the ASSETS binding.
+ *
+ * `asset.ok` is NOT a sufficient existence check. The static catch-all
+ * rewrite in public/_redirects (`/* /index.html 200`) also applies inside
+ * ASSETS.fetch, so a request for a missing path comes back 200 with the SPA
+ * shell. Treating that as a hit made /api/cities/<unknown> answer
+ * 200 application/json containing index.html — the exact failure mode this
+ * function exists to prevent.
+ *
+ * So we assert the content type too: a real JSON artifact is
+ * application/json, a real CSV is text/csv. Anything else is the shell.
+ */
+async function fetchArtifact(
+  context: PagesContext,
+  path: string,
+  expectedContentType: "application/json" | "text/csv",
+): Promise<Response | null> {
+  const assetUrl = new URL(path, context.request.url);
+  const asset = await context.env.ASSETS.fetch(new Request(assetUrl, { method: "GET" }));
+  if (!asset.ok) return null;
+  const contentType = asset.headers.get("Content-Type") ?? "";
+  if (!contentType.toLowerCase().startsWith(expectedContentType)) return null;
+  return asset;
+}
+
 export async function onRequest(context: PagesContext): Promise<Response> {
   const requestId = crypto.randomUUID();
   const timestamp = new Date().toISOString();
@@ -48,9 +74,8 @@ export async function onRequest(context: PagesContext): Promise<Response> {
     if (!CITY_ID.test(cityId)) {
       return json({ success: false, error: "Not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
-    const assetUrl = new URL(`/api-static/exports/cities/${cityId}.csv`, context.request.url);
-    const asset = await context.env.ASSETS.fetch(new Request(assetUrl, { method: "GET" }));
-    if (!asset.ok) {
+    const asset = await fetchArtifact(context, `/api-static/exports/cities/${cityId}.csv`, "text/csv");
+    if (!asset) {
       return json({ success: false, error: "City export not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
     const body = context.request.method === "HEAD" ? null : await asset.text();
@@ -68,9 +93,8 @@ export async function onRequest(context: PagesContext): Promise<Response> {
 
   // 2. /api/exports/cities-summary.csv
   if (path === "exports/cities-summary.csv") {
-    const assetUrl = new URL("/api-static/exports/cities-summary.csv", context.request.url);
-    const asset = await context.env.ASSETS.fetch(new Request(assetUrl, { method: "GET" }));
-    if (!asset.ok) {
+    const asset = await fetchArtifact(context, "/api-static/exports/cities-summary.csv", "text/csv");
+    if (!asset) {
       return json({ success: false, error: "Export not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
     const body = context.request.method === "HEAD" ? null : await asset.text();
@@ -88,9 +112,8 @@ export async function onRequest(context: PagesContext): Promise<Response> {
 
   // 3. /api/exports/city-facts.csv
   if (path === "exports/city-facts.csv") {
-    const assetUrl = new URL("/api-static/exports/city-facts.csv", context.request.url);
-    const asset = await context.env.ASSETS.fetch(new Request(assetUrl, { method: "GET" }));
-    if (!asset.ok) {
+    const asset = await fetchArtifact(context, "/api-static/exports/city-facts.csv", "text/csv");
+    if (!asset) {
       return json({ success: false, error: "Export not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
     const body = context.request.method === "HEAD" ? null : await asset.text();
@@ -113,9 +136,8 @@ export async function onRequest(context: PagesContext): Promise<Response> {
     if (!CITY_ID.test(cityId)) {
       return json({ success: false, error: "Not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
-    const assetUrl = new URL(`/api-static/cities/${cityId}.json`, context.request.url);
-    const asset = await context.env.ASSETS.fetch(new Request(assetUrl, { method: "GET" }));
-    if (!asset.ok) {
+    const asset = await fetchArtifact(context, `/api-static/cities/${cityId}.json`, "application/json");
+    if (!asset) {
       return json({ success: false, error: "City not found", requestId, timestamp }, 404, { "Cache-Control": "no-store" });
     }
     const body = context.request.method === "HEAD" ? null : await asset.text();

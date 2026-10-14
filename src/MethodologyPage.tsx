@@ -17,7 +17,7 @@ import {
 } from "./methodologySpec";
 import { SCORING_PILLARS } from "./scoring";
 import type { Locale, ScoringPillar } from "./types";
-import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS } from "./types";
+import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_TEXT_COLORS, PILLAR_WEIGHTS } from "./types";
 import { translate } from "./cityPresentation";
 import { assetUrl } from "./assetUtils";
 
@@ -239,6 +239,9 @@ function CompositeDiagram({ locale }: { locale: Locale }) {
     name: PILLAR_LABELS.en[p].slice(0, 3).toUpperCase(),
     weight: PILLAR_WEIGHTS[p],
     color: PILLAR_COLORS[p],
+    // The 9px mono abbreviation is TYPE, not a graphic — economy/hospitality
+    // sit at 2.13:1 / 1.92:1 on the panel surface. Deepen for the glyph only.
+    textColor: PILLAR_TEXT_COLORS[p],
   }));
 
   return (
@@ -251,7 +254,7 @@ function CompositeDiagram({ locale }: { locale: Locale }) {
         return (
           <g key={p.name}>
             <rect x={xBase} y={5} width={82} height={22} fill="var(--surface)" stroke={p.color} strokeWidth="1" rx="0" />
-            <text x={xBase + 8} y={20} fontFamily="var(--mono)" fontSize="9" fontWeight="700" fill={p.color}>{p.name}</text>
+            <text x={xBase + 8} y={20} fontFamily="var(--mono)" fontSize="9" fontWeight="700" fill={p.textColor}>{p.name}</text>
             <text x={xBase + 34} y={20} fontFamily="var(--mono)" fontSize="9" fill="var(--3)">×{p.weight}%</text>
             {i < pillars.length - 1 && (
               <text x={xBase + 84} y={20} fontFamily="var(--mono)" fontSize="9" fill="var(--3)"> +</text>

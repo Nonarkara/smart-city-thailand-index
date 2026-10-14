@@ -121,7 +121,26 @@ case "$api_csv_type" in *csv*) ;; *) die "/api/cities/phuket/export.csv content-
 case "$api_summary_type" in *csv*) ;; *) die "/api/exports/cities-summary.csv content-type is ${api_summary_type:-<none>}, expected CSV" ;; esac
 [[ "$api_missing_code" == "404" ]] || die "/api/not-a-real-route returned HTTP $api_missing_code, expected 404"
 case "$api_missing_type" in *html*) die "/api/not-a-real-route is HTML — the SPA fallback swallowed the API" ;; esac
-ok "city API serves JSON and CSV; unknown /api routes 404"
+
+# A well-formed city id that does not exist must 404, not echo the shell back.
+# The ASSETS binding applies the same SPA rewrite as the edge, so a missing
+# artifact comes back 200 + text/html. If the API only asserted content-type
+# and status, this route would pass while handing clients index.html.
+bold "Test — unknown city ids 404 with JSON, never the shell"
+api_bogus_code="$(curl -s -o /dev/null -w '%{http_code}' "$DOMAIN/api/cities/not-a-real-city")"
+api_bogus_type="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/api/cities/not-a-real-city")"
+api_bogus_body="$(curl -s "$DOMAIN/api/cities/not-a-real-city")"
+[[ "$api_bogus_code" == "404" ]] || die "/api/cities/not-a-real-city returned HTTP $api_bogus_code, expected 404"
+case "$api_bogus_body" in
+  *"<html"*|*"<!DOCTYPE"*) die "/api/cities/not-a-real-city returned the SPA shell, expected a JSON error" ;;
+esac
+case "$api_bogus_body" in
+  *'"success":false'*) ;;
+  *) die "/api/cities/not-a-real-city did not return a JSON error envelope" ;;
+esac
+api_bogus_csv_code="$(curl -s -o /dev/null -w '%{http_code}' "$DOMAIN/api/cities/not-a-real-city/export.csv")"
+[[ "$api_bogus_csv_code" == "404" ]] || die "/api/cities/not-a-real-city/export.csv returned HTTP $api_bogus_csv_code, expected 404"
+ok "unknown city ids and their CSV exports 404 with JSON, not the SPA shell"
 
 # ── Every JS chunk must serve AS JAVASCRIPT ──────────────────────────────────
 # The 200-check above cannot catch a missing asset. _redirects rewrites ANY

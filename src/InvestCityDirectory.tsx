@@ -35,7 +35,7 @@ const REGION_FILTERS: FilterRegion[] = ["all", "bangkok", "central", "east", "no
 const SPOTLIGHT_IDS = ["nakhon-si-thammarat", "phuket", "samyan", "chiang-mai-old-town"];
 
 function tierColor(tier: SmartCity["tier"]): string {
-  return tier === "alpha" ? "var(--teal)" : tier === "beta" ? "var(--gold)" : "var(--3)";
+  return tier === "alpha" ? "var(--teal)" : tier === "beta" ? "var(--beta-text)" : "var(--3)";
 }
 
 function tierBg(tier: SmartCity["tier"]): string {
