@@ -2,6 +2,7 @@ import { translate } from "./cityPresentation";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_WEIGHTS } from "./types";
 import { ResponsiveImage } from "./mediaAssets";
+import GrandSlamCircuit from "./GrandSlamCircuit";
 import DossierTabs from "./DossierTabs";
 import ShowcaseLocatorMap from "./ShowcaseLocatorMap";
 
@@ -639,56 +640,10 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </div>
           </section>
 
-          {/* ── International awards ── */}
-          <section className="section">
-            <p className="eyebrow">{translate(locale, { en: "International recognition", th: "การยอมรับในระดับนานาชาติ", zh: "国际认可" })}</p>
-            <h2>{translate(locale, { en: "From Goyang to Shanghai", th: "จากโกยังถึงเซี่ยงไฮ้", zh: "从高阳到上海" })}</h2>
-            <p>
-              {translate(locale, {
-                en: "In 2023, Nakhon Si Thammarat won the Best Partnership Award at the World Smart City Expo in Goyang, South Korea — in partnership with depa. The award recognised the city's approach to citizen-led digital adoption, not just the technology deployed. In 2025, the city returned to Goyang to represent Thailand's smart city programme at the ASEAN level, then carried the story further — to Tomorrow.City Shanghai, where it was presented as Thailand's featured smart city to an audience of urban investors and policymakers from across East Asia.",
-                th: "ในปี 2566 นครศรีธรรมราชได้รับรางวัล Best Partnership Award ในงาน World Smart City Expo ที่โกยัง ร่วมกับ depa รางวัลนี้ยกย่องแนวทางการนำดิจิทัลโดยประชาชน ไม่ใช่แค่เทคโนโลยี ปี 2568 เมืองกลับโกยังเพื่อเป็นตัวแทนไทยในระดับ ASEAN แล้วนำเรื่องราวไปต่อที่ Tomorrow.City Shanghai ซึ่งถูกนำเสนอในฐานะเมืองอัจฉริยะตัวแทนไทยต่อนักลงทุนและผู้กำหนดนโยบายทั่วเอเชียตะวันออก",
-                zh: "2023年，洛坤与depa合作，在韩国高阳世界智慧城市博览会荣获最佳合作奖。2025年，城市再度赴高阳代表泰国出席ASEAN级别的活动，随后将这个故事带到了更远的地方——Tomorrow.City上海，作为泰国代表智慧城市向东亚各地的城市投资者和政策制定者展示。",
-              })}
-            </p>
-            <div className="showcase-award-photo-grid showcase-award-photo-grid--3">
-              <div>
-                <div className="showcase-award-photo-block">
-                  <ResponsiveImage
-                    src="/Nakhon Si Thammarat/mayor-kanop-goyang-award-2023.jpg"
-                    alt={translate(locale, { en: "NST delegation receiving the Best Partnership Award at WSCE Goyang 2023 with depa", th: "คณะนครศรีธรรมราชรับรางวัล Best Partnership Award ที่ WSCE โกยัง 2566", zh: "NST代表团在2023年高阳WSCE与depa共同领取最佳合作奖" })}
-                    sizes="(max-width: 640px) 100vw, 340px"
-                  />
-                </div>
-                <p className="showcase-award-photo-caption">
-                  {translate(locale, { en: "Best Partnership Award · WSCE Goyang 2023", th: "รางวัล Best Partnership Award · WSCE โกยัง 2566", zh: "最佳合作奖 · 高阳 WSCE 2023" })}
-                </p>
-              </div>
-              <div>
-                <div className="showcase-award-photo-block">
-                  <ResponsiveImage
-                    src="/Nakhon Si Thammarat/mayor-kanop-goyang-2025.jpg"
-                    alt={translate(locale, { en: "Dr. Kanop at the World Smart City Expo 2025 — returning to Goyang as Thailand's ASEAN smart city representative", th: "ดร.กณพ ที่ World Smart City Expo 2025 — กลับโกยังในฐานะตัวแทนสมาร์ทซิตี้ ASEAN ของไทย", zh: "Kanop Ketchart 博士在2025年世界智慧城市博览会——以泰国ASEAN智慧城市代表身份重返高阳" })}
-                    sizes="(max-width: 640px) 100vw, 340px"
-                  />
-                </div>
-                <p className="showcase-award-photo-caption">
-                  {translate(locale, { en: "ASEAN representative · WSCE Goyang 2025", th: "ตัวแทน ASEAN · WSCE โกยัง 2568", zh: "ASEAN 代表 · 高阳 WSCE 2025" })}
-                </p>
-              </div>
-              <div>
-                <div className="showcase-award-photo-block">
-                  <ResponsiveImage
-                    src="/Nakhon Si Thammarat/mayor-kanop-tomorrow-city-shanghai.jpg"
-                    alt={translate(locale, { en: "Dr. Kanop speaking at Tomorrow.City Shanghai — presenting NST's citizen-centric model to urban investors across East Asia", th: "ดร.กณพ บรรยายที่ Tomorrow.City Shanghai — นำเสนอแบบจำลองที่เน้นประชาชนของนครฯ ต่อนักลงทุนเมืองทั่วเอเชียตะวันออก", zh: "Kanop Ketchart 博士在Tomorrow.City上海发言——向东亚城市投资者展示NST的以人为中心模式" })}
-                    sizes="(max-width: 640px) 100vw, 340px"
-                  />
-                </div>
-                <p className="showcase-award-photo-caption">
-                  {translate(locale, { en: "Tomorrow.City Shanghai · 2025", th: "Tomorrow.City Shanghai · 2568", zh: "Tomorrow.City 上海 · 2025" })}
-                </p>
-              </div>
-            </div>
-          </section>
+          {/* ── International circuit ──
+              Fixed-footprint rail. Replaces a prose paragraph plus a photo
+              grid that grew by roughly a viewport per new invitation. */}
+          <GrandSlamCircuit locale={locale} />
 
           {/* ── Progress metrics ── */}
           <section className="section showcase-progress-section">
