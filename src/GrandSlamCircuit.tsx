@@ -121,9 +121,9 @@ export default function GrandSlamCircuit({ locale }: Props) {
 
       <p className="circuit-footnote">
         {t({
-          en: `Seven appearances across ${cityCount} cities. The rail shows at most ${MAX_PHOTOS} photographs — the most recent stages — so adding an eighth invitation extends the scroll rather than the page. Sources: depa announcements, GovMesh 4.0 programme, Tomorrow.City Shanghai, Osaka Asia Roundtable 2026 programme.`,
-          th: `เจ็ดครั้งใน ${cityCount} เมือง รางนี้แสดงรูปไม่เกิน ${MAX_PHOTOS} ภาพ — เฉพาะเวทีล่าสุด — ดังนั้นการเพิ่มเวทีที่แปดจะยืดการเลื่อน ไม่ใช่ยืดหน้า แหล่งที่มา: ประกาศของ depา โปรแกรม GovMesh 4.0 Tomorrow.City เซี่ยงไฮ้ และโปรแกรม Osaka Asia Roundtable 2026`,
-          zh: `${cityCount} 座城市、七次出席。该轨道最多显示 ${MAX_PHOTOS} 张照片——仅最近几场——因此新增第八场只会延长横向滚动，而不会拉长页面。来源：depa 公告、GovMesh 4.0 议程、Tomorrow.City 上海、2026 年大阪亚洲圆桌会议议程。`,
+          en: `Seven appearances across ${cityCount} cities, in date order. The rail shows at most ${MAX_PHOTOS} photographs — the most recent stages — so adding an eighth invitation extends the scroll rather than the page. Sources: depa announcements; GovMesh 4.0 programme; LEAP East 2026 agenda, Orbital Stage, 10 July; Tomorrow.City Shanghai 2026 programme, Zhangjiang Science Hall; Osaka Asia Roundtable 2026 programme.`,
+          th: `เจ็ดครั้งใน ${cityCount} เมือง เรียงตามลำดับวันที่ รางนี้แสดงรูปไม่เกิน ${MAX_PHOTOS} ภาพ — เฉพาะเวทีล่าสุด — ดังนั้นการเพิ่มเวทีที่แปดจะยืดการเลื่อน ไม่ใช่ยืดหน้า แหล่งที่มา: ประกาศของ depา โปรแกรม GovMesh 4.0 รายการหมาย LEAP East 2026 เวที Orbital 10 กรกฎาคม โปรแกรม Tomorrow.City Shanghai 2026 หอวิทยาศาสตร์จางเจียง และโปรแกรม Osaka Asia Roundtable 2026`,
+          zh: `${cityCount} 座城市、七次出席，按日期排序。该轨道最多显示 ${MAX_PHOTOS} 张照片——仅最近几场——因此新增第八场只会延长横向滚动，而不会拉长页面。来源：depa 公告；GovMesh 4.0 议程；2026 年 LEAP East 议程，Orbital 主舞台，7 月 10 日；2026 明日城市·上海议程，张江科学会堂；2026 年大阪亚洲圆桌会议议程。`,
         })}
       </p>
     </section>

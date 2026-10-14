@@ -99,13 +99,33 @@ describe("speaking circuit — data integrity", () => {
     }
   });
 
-  it("at least one stop stays on the circuit as a real but undated appearance", () => {
-    // Hong Kong is a confirmed appearance whose date is not on the record yet.
-    // If this ever goes to zero, either the stop was documented or it was
-    // quietly deleted — both are worth a human noticing.
-    const undated = GRAND_SLAM_STOPS.filter((stop) => stop.unconfirmed);
-    expect(undated.length).toBeGreaterThan(0);
-    expect(undated.map((stop) => stop.city.en)).toContain("Hong Kong");
+  it("the rail is ordered newest first", () => {
+    // The array renders in place — nothing re-sorts at render time — so the
+    // order is data, and a stop inserted in the wrong place silently puts an
+    // older talk above a newer one.
+    const dated = GRAND_SLAM_STOPS
+      .map((stop) => stop.date)
+      .filter((date): date is string => date !== null)
+      .map((date) => Date.parse(date));
+    for (let i = 1; i < dated.length; i += 1) {
+      expect(dated[i]).toBeLessThanOrEqual(dated[i - 1]);
+    }
+  });
+
+  it("no stop carries a date before the circuit began", () => {
+    // Every stop on this rail is a 2026 appearance. A year that predates the
+    // record is the signature of an invented date.
+    for (const stop of GRAND_SLAM_STOPS) {
+      if (!stop.date) continue;
+      expect(stop.date.slice(0, 4), `${stop.id}: ${stop.date}`).toBe("2026");
+    }
+  });
+
+  it("every stop on the circuit is dated", () => {
+    // The undated Hong Kong placeholder is gone: the stop is LEAP East 2026,
+    // Hong Kong Convention and Exhibition Centre, 10 July 2026.
+    const undated = GRAND_SLAM_STOPS.filter((stop) => stop.unconfirmed || !stop.date);
+    expect(undated.map((stop) => stop.id)).toEqual([]);
   });
 
   it("every locale field is present in en, th and zh", () => {

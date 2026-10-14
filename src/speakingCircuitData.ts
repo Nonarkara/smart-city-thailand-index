@@ -171,6 +171,61 @@ export const GRAND_SLAM_STOPS: CircuitStop[] = [
     photoCredit: OAR_PHOTO_CREDIT,
   },
   {
+    // Tomorrow.City Shanghai 2026 — Zhangjiang Science Hall, 22–26 September 2026
+    // (main forum 22–24, city visits 25–26). Previously carried as 2025-11-05,
+    // which no source supports. Sources: tomorrow-city.com, Pudong New Area
+    // Government, 24 September 2026, and the Shanghai conference wrap-up.
+    id: "shanghai-2026",
+    city: { en: "Shanghai", th: "เซี่ยงไฮ้", zh: "上海" },
+    country: { en: "China", th: "จีน", zh: "中国" },
+    flag: "🇨🇳",
+    date: "2026-09-22",
+    venue: {
+      en: "Tomorrow.City Shanghai 2026 · Zhangjiang Science Hall",
+      th: "Tomorrow.City เซี่ยงไฮ้ 2026 · หอวิทยาศาสตร์จางเจียง",
+      zh: "2026 明日城市·上海 · 张江科学会堂",
+    },
+    format: {
+      en: "Panel · Featured smart city",
+      th: "วงเสวนา · เมืองอัจฉริยะตัวแทน",
+      zh: "圆桌 · 代表智慧城市",
+    },
+    note: {
+      en: "Nakhon Si Thammarat presented as Thailand's featured smart city, to urban investors and policymakers from across East Asia. The main forum ran 22–24 September, with city visits on the 25th and 26th.",
+      th: "นครศรีธรรมราชถูกนำเสนอในฐานะเมืองอัจฉริยะตัวแทนไทย ต่อนักลงทุนเมืองและผู้กำหนดนโยบายทั่วเอเชียตะวันออก การประชุมหลักจัด 22–24 กันยายน ก่อนออกเยี่ยมชมเมืองในวันที่ 25 และ 26",
+      zh: "洛坤作为泰国代表智慧城市，向东亚各地的城市投资者与政策制定者展示。主论坛于 9 月 22–24 日举行，25、26 日为城市参访。",
+    },
+  },
+  {
+    // LEAP East 2026 — Hong Kong Convention and Exhibition Centre, 8–10 July 2026.
+    // This is the stop that was sitting on this rail undated. Dr Non's own
+    // account of the year lists "LEAP East, Hong Kong (July)" and the official
+    // agenda places the panel — "From Congestion to Connection: The Tech Powered
+    // Future of Transport in Asia", Orbital Stage — on Day 3, 10 July.
+    // Sources: leapeast.com/events/2026-agenda, InvestHK event listing,
+    // HKSAR Government press release, 8 July 2026.
+    id: "hongkong-2026",
+    city: { en: "Hong Kong", th: "ฮ่องกง", zh: "香港" },
+    country: { en: "Hong Kong SAR", th: "เขตบริหารพิเศษฮ่องกง", zh: "香港特别行政区" },
+    flag: "🇭🇰",
+    date: "2026-07-10",
+    venue: {
+      en: "LEAP East 2026 · Orbital Stage · HKCEC",
+      th: "LEAP East 2026 · เวที Orbital · ศูนย์การประชุมและแสดงสินค้าฮ่องกง",
+      zh: "LEAP East 2026 · Orbital 主舞台 · 香港会议展览中心",
+    },
+    format: {
+      en: "Panel · FloodDash launch",
+      th: "วงเสวนา · เปิดตัว FloodDash",
+      zh: "圆桌 · FloodDash 发布",
+    },
+    note: {
+      en: "From Congestion to Connection, closing the Q1–Q2 arc with a live FloodDash launch — the Thailand flood watch running in the room, not on a slide. Dr Non's own summary of the year calls LEAP East the most important tech event in Asia.",
+      th: "From Congestion to Connection ปิดวงรอบ Q1–Q2 ด้วยการเปิดตัว FloodDash สด — เฝ้าระวังน้ำท่วมไทยทำงานอยู่ในห้อง ไม่ใช่บนสไลด์",
+      zh: "「从拥堵到连接」，以现场发布 FloodDash 收束上半年——泰国洪水监测跑在会场里，而不是躺在幻灯片上。",
+    },
+  },
+  {
     id: "taipei-2026",
     city: { en: "Taipei", th: "ไทเป", zh: "台北" },
     country: { en: "Taiwan", th: "ไต้หวัน", zh: "台湾" },
@@ -212,49 +267,6 @@ export const GRAND_SLAM_STOPS: CircuitStop[] = [
       en: "An invitation-only gathering of emerging digital governments, speaking alongside Sri Lanka and Uzbekistan on deployment and data governance.",
       th: "การประชุมรัฐบาลดิจิทัลแบบเชิญเฉพาะ ร่วมเวทีกับศรีลังกาและอุซเบกิสถาน ในประเด็นการใช้งานจริงและการกำกับดูแลข้อมูล",
       zh: "一次仅限受邀的数字政府会议，与斯里兰卡、乌兹别克斯坦同台讨论部署与数据治理。",
-    },
-  },
-  {
-    // Confirmed on the circuit; date and venue are not yet on the record. See
-    // the note on `date` above for why this is rendered honestly rather than
-    // filled in.
-    id: "hongkong-pending",
-    city: { en: "Hong Kong", th: "ฮ่องกง", zh: "香港" },
-    country: { en: "Hong Kong SAR", th: "เขตบริหารพิเศษฮ่องกง", zh: "香港特别行政区" },
-    flag: "🇭🇰",
-    date: null,
-    unconfirmed: true,
-    format: {
-      en: "Talk · Urban data",
-      th: "บรรยาย · ข้อมูลเมือง",
-      zh: "演讲 · 城市数据",
-    },
-    note: {
-      en: "A stop on the circuit for urban data practice. The date and venue are not yet on the record, so neither is shown.",
-      th: "หยุดหนึ่งบนวงการเดินทางเรื่องข้อมูลเมือง วันและสถานที่ยังไม่อยู่ในบันทึก จึงไม่แสดงไว้",
-      zh: "城市数据实践巡回中的一站。日期与场地尚未列入记录，因此不予显示。",
-    },
-  },
-  {
-    id: "shanghai-2025",
-    city: { en: "Shanghai", th: "เซี่ยงไฮ้", zh: "上海" },
-    country: { en: "China", th: "จีน", zh: "中国" },
-    flag: "🇨🇳",
-    date: "2025-11-05",
-    venue: {
-      en: "Tomorrow.City Shanghai",
-      th: "Tomorrow.City เซี่ยงไฮ้",
-      zh: "Tomorrow.City 上海",
-    },
-    format: {
-      en: "Panel · Featured smart city",
-      th: "วงเสวนา · เมืองอัจฉริยะตัวแทน",
-      zh: "圆桌 · 代表智慧城市",
-    },
-    note: {
-      en: "Nakhon Si Thammarat presented as Thailand's featured smart city, to urban investors and policymakers from across East Asia.",
-      th: "นครศรีธรรมราชถูกนำเสนอในฐานะเมืองอัจฉริยะตัวแทนไทย ต่อนักลงทุนเมืองและผู้กำหนดนโยบายทั่วเอเชียตะวันออก",
-      zh: "洛坤作为泰国代表智慧城市，向东亚各地的城市投资者与政策制定者展示。",
     },
   },
 ];
