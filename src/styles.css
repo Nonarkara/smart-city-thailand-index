@@ -11431,3 +11431,148 @@ body.canvas-print-mode {
   .city-lens-card { padding: 1rem .9rem .85rem; }
   .city-lens-tools { flex-direction: column; }
 }
+
+/* ═══ GRAND SLAM CIRCUIT ═══
+   A rail, not a stack. One row of fixed-height tiles that scrolls sideways.
+   The section's height is independent of how many stops exist — that is the
+   entire point, since the previous treatment grew the page by roughly a
+   viewport per invitation. Hairline borders, no radius, no shadow, no
+   gradient, mono numerals, mobile-first with a single-column collapse. */
+
+.circuit-rail {
+  display: flex;
+  gap: 1px;
+  background: var(--5);
+  border: 1px solid var(--5);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.circuit-card {
+  flex: 0 0 auto;
+  width: 15rem;
+  /* Fixed height: photos and type cards occupy the same box, so the rail
+     does not resize when a stop without a photo is added. */
+  height: 17rem;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+.circuit-card-photo {
+  position: relative;
+  height: 8.5rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--surface);
+}
+.circuit-card-photo picture { display: block; position: absolute; inset: 0; }
+.circuit-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; }
+
+/* Type-only card: same 8.5rem band, so the rail height never changes. */
+.circuit-card-typeface {
+  height: 8.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border-bottom: 1px solid var(--5);
+}
+.circuit-card-typeface .circuit-card-flag { font-size: 2rem; line-height: 1; }
+
+.circuit-card-body {
+  flex: 1;
+  min-height: 0;
+  padding: .7rem .8rem .8rem;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.circuit-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .5rem;
+}
+.circuit-card-city {
+  font: 700 var(--text-body)/1.2 var(--font-heading);
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: .35rem;
+}
+.circuit-card-flagmark { font-size: .8rem; }
+.circuit-card-date {
+  font: 700 var(--text-micro)/1 var(--mono);
+  color: var(--3);
+  letter-spacing: .06em;
+  flex-shrink: 0;
+}
+.circuit-card-venue {
+  font: 400 var(--text-micro)/1.35 var(--font);
+  color: var(--2);
+  margin: 0;
+}
+.circuit-card-format {
+  font: 700 var(--text-micro)/1.3 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0;
+}
+.circuit-card-note {
+  font: 400 var(--text-micro)/1.45 var(--font);
+  color: var(--3);
+  margin: .1rem 0 0;
+}
+.circuit-card-credit {
+  font: 400 var(--text-micro)/1.2 var(--font);
+  color: var(--4);
+  margin: auto 0 0;
+  padding-top: .3rem;
+}
+
+/* "+N more" card — shares the tile box so it never adds height. */
+.circuit-card--count {
+  width: 7rem;
+  align-items: center;
+  justify-content: center;
+  gap: .2rem;
+  background: var(--surface);
+}
+.circuit-count-num {
+  font: 700 1.8rem/1 var(--mono);
+  color: var(--ink);
+}
+.circuit-count-label {
+  font: 700 var(--text-micro)/1.2 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--3);
+  text-align: center;
+}
+
+.circuit-footnote {
+  font: 400 var(--text-micro)/1.5 var(--font);
+  color: var(--3);
+  margin: .8rem 0 0;
+  max-width: 62ch;
+}
+
+@media (max-width: 720px) {
+  /* Phone: fewer, wider tiles so a thumb swipe advances meaningfully, and the
+     band is a little shorter. Still a rail — never a vertical stack. */
+  .circuit-card { width: 78vw; height: 15.5rem; }
+  .circuit-card-photo,
+  .circuit-card-typeface { height: 7rem; }
+  .circuit-card--count { width: 6rem; }
+}
