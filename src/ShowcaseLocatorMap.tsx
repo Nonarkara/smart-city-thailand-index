@@ -11,6 +11,7 @@
 import { useEffect, useRef, useState } from "react";
 import { translate } from "./cityPresentation";
 import type { Locale } from "./types";
+import { BASEMAP_URL, BASEMAP_OPTIONS } from "./basemap";
 
 declare global {
   interface Window {
@@ -48,11 +49,7 @@ export default function ShowcaseLocatorMap({ locale }: { locale: Locale }) {
       attributionControl: true,
       worldCopyJump: false,
     });
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
-      maxZoom: 19,
-    }).addTo(map);
+    L.tileLayer(BASEMAP_URL, BASEMAP_OPTIONS).addTo(map);
 
     L.circleMarker(NST, {
       radius: 7,
