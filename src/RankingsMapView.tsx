@@ -16,6 +16,7 @@ import { PROVINCIAL_FLOOD_SCORE, getFloodScore, getFloodNote } from "./provincia
 import { PILLAR_COLORS } from "./types";
 import { toAppPath } from "./routing";
 import type { Locale, SmartCity } from "./types";
+import { BASEMAP_URL, BASEMAP_OPTIONS } from "./basemap";
 
 // Minimal Leaflet type declaration (CDN-loaded global)
 declare global {
@@ -180,12 +181,8 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
       worldCopyJump: false,
     });
 
-    // Base layer — Carto Positron (clean, neutral, matches Jony-Ive brief)
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
-      maxZoom: 19,
-    }).addTo(map);
+    // Base layer — OSM standard tiles (no key; see src/basemap.ts)
+    L.tileLayer(BASEMAP_URL, BASEMAP_OPTIONS).addTo(map);
 
     mapRef.current = map;
 
