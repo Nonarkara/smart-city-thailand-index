@@ -266,6 +266,13 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   const [query, setQuery] = useState("");
   const [compareMode, setCompareMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  // Progressive disclosure. The directory renders all 118 cities by default,
+  // which measured 16,294px tall at 1440 — a wall with no hierarchy: the eye
+  // lands on row 01 and has no way to know a row 90 exists. Webflow rule 6
+  // (white space) and rule 2 (hierarchy) both fail at that length. The first
+  // RANK_CAP rows carry the story; the rest are one deliberate click away, and
+  // the count is stated so the reader knows the wall is capped, not truncated.
+  const [showAll, setShowAll] = useState(false);
 
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
   const lens = getPresetById(lensId);
@@ -306,6 +313,18 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => b.lensScore - a.lensScore);
   }, [filtered]);
+
+  // A filter in play means the reader already chose what they want — never cap
+  // a narrowed result set. Only the unfiltered 118-city default is capped.
+  const filtersActive =
+    query.trim() !== "" ||
+    tierFilter !== "all" ||
+    statusFilter !== "all" ||
+    regionFilter !== "all";
+  const RANK_CAP = 25;
+  const capped = !filtersActive && !showAll && sorted.length > RANK_CAP;
+  const visibleSorted = capped ? sorted.slice(0, RANK_CAP) : sorted;
+  const hiddenCount = sorted.length - visibleSorted.length;
 
   // Top-1 per tier under the active lens (full unfiltered set, so the panel
   // is stable regardless of filters)
@@ -600,7 +619,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
           {viewMode === "directory" ? (
             <div className="rank-list-wrap">
               <ol className="rank-list">
-                {sorted.map(({ city, edgeCount, lensScore }, idx) => {
+                {visibleSorted.map(({ city, edgeCount, lensScore }, idx) => {
                   const pct = percentile(lensScore, lensScoreValues);
                   const isSelected = selectedIds.includes(city.id);
                   const cityPath = `/city/${city.id}`;
@@ -680,6 +699,40 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                   </li>
                 )}
               </ol>
+
+              {hiddenCount > 0 && (
+                <div className="rank-list-more">
+                  <span className="rank-list-more-count">
+                    {t({
+                      en: `Showing ${visibleSorted.length} of ${sorted.length} cities`,
+                      th: `แสดง ${visibleSorted.length} จาก ${sorted.length} เมือง`,
+                      zh: `显示 ${visibleSorted.length} / ${sorted.length} 座城市`,
+                    })}
+                  </span>
+                  <button
+                    type="button"
+                    className="filter-chip rank-list-more-btn"
+                    onClick={() => setShowAll(true)}
+                  >
+                    {t({
+                      en: `Show all ${sorted.length}`,
+                      th: `ดูทั้งหมด ${sorted.length}`,
+                      zh: `显示全部 ${sorted.length}`,
+                    })}
+                  </button>
+                </div>
+              )}
+              {!filtersActive && !capped && showAll && sorted.length > RANK_CAP && (
+                <div className="rank-list-more">
+                  <button
+                    type="button"
+                    className="filter-chip rank-list-more-btn"
+                    onClick={() => setShowAll(false)}
+                  >
+                    {t({ en: "Collapse to top 25", th: "ย่อเหลือ 25 อันดับ", zh: "收起至前 25" })}
+                  </button>
+                </div>
+              )}
 
               {compareMode && selectedIds.length >= 2 && (
                 <div className="compare-launch-bar">
