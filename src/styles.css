@@ -262,11 +262,19 @@ ul, ol { list-style: none; }
   text-transform: uppercase;
   opacity: .82;
 }
+/* §11.7 hierarchy, Webflow rule 2 — ONE headline per page.
+ * This overlay title used to render at --text-3xl (48.83px at 1440), landing
+ * visually BETWEEN the route hero and the page <h1> (64px). Two display-weight
+ * statements stacked 2rem apart, so the eye had no single entry point — the
+ * exact "where do I start?" failure the composition rules exist to prevent.
+ * The photo keeps the visual weight; the mono place label above carries the
+ * route identity like a drawing title-block, and the title drops to body
+ * weight. The page <h1> is now the only display type on the surface. */
 .route-photo-hero-title {
   color: #fff;
-  font: 800 clamp(1.8rem, 5vw, var(--text-3xl))/.95 var(--font-heading);
-  letter-spacing: 0;
-  margin-top: .25rem;
+  font: 700 var(--text-body)/1.3 var(--font-heading);
+  letter-spacing: -.01em;
+  margin-top: .2rem;
 }
 .route-photo-hero-desc {
   font: 400 var(--text-body)/1.5 var(--font);
@@ -274,7 +282,7 @@ ul, ol { list-style: none; }
   max-width: 520px;
   margin-top: .35rem;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-shadow: 0 1px 8px rgba(0,0,0,.35);
@@ -288,7 +296,7 @@ ul, ol { list-style: none; }
 @media (max-width: 640px) {
   .route-photo-hero {
     width: min(calc(100% - 1rem), var(--w));
-    height: clamp(118px, 18svh, 172px);
+    height: clamp(140px, 22svh, 196px);
     margin-top: .5rem;
     margin-bottom: .75rem;
   }
@@ -297,12 +305,14 @@ ul, ol { list-style: none; }
     margin-bottom: .3rem;
   }
   .route-photo-hero-overlay { padding: .85rem; }
-  .route-photo-hero-title { font-size: clamp(1.45rem, 9vw, 2rem); }
+  .route-photo-hero-title { font-size: var(--text-body); line-height: 1.25; }
   .route-photo-hero-bingo .route-photo-hero-title { font-size: var(--text-body); }
   .route-photo-hero-desc {
     font-size: var(--text-body);
-    /* one line guaranteed a mid-word cut on a ~150-char description */
-    -webkit-line-clamp: 3;
+    /* 3 lines cut a ~165-char caption mid-word on a 390px phone ("…second-largest…"),
+     * which reads as a broken string rather than an ellipsis. The mobile hero has
+     * room for a fourth line; use it so the sentence lands whole. */
+    -webkit-line-clamp: 4;
     margin-top: .2rem;
     max-width: 100%;
   }
@@ -626,7 +636,20 @@ ul, ol { list-style: none; }
 .hero-city-score { font: 700 .78rem var(--mono); text-align: right; }
 
 .rankings-hero, .methodology-hero, .city-detail-hero, .story-hero { padding-top: 3.5rem; padding-bottom: 1rem; }
-h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; margin-bottom: .35rem; }
+/* ─── OUTLINE LEVELS — one size per level, site-wide ───
+ * Measured 2026-10: section headings shipped at five different sizes
+ * (14 / 27.2 / 32 / 38.4 / 51.2px) and <h3> at three (14 / 17.6 / 32), with
+ * /knowledge carrying a 32px <h3> above its 27.2px <h2>. An eye cannot build a
+ * hierarchy from that, and Webflow rule 2 fails outright.
+ *
+ * The scale is now four steps and every one is a canonical token:
+ *   64px  page <h1>          (.hero-title — the page's single statement)
+ *   32px  section <h2>       --text-display
+ *   14px  card / <h3>        --text-body, bold
+ *   11.5px labels            --text-micro
+ * Page title → section → body is a clean ~1.4–2:1 descent on every route. */
+h2 { font-size: var(--text-display); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; margin-bottom: .35rem; }
+h3 { font-size: var(--text-body); font-weight: 700; letter-spacing: -.01em; line-height: 1.3; }
 .section-intro { font-size: var(--text-body); line-height: 1.65; color: var(--2); max-width: 520px; margin-bottom: 1.25rem; letter-spacing: -.005em; }
 
 /* ─── STATS ─── */
@@ -2505,7 +2528,9 @@ h2 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 700; letter-spacing: 
 .story-tl-content { position: relative; padding-bottom: 1.5rem; border-bottom: 1px solid var(--5); }
 .story-tl-item:last-child .story-tl-content { border-bottom: 0; }
 .story-tl-item.active .story-tl-year { color: var(--teal); }
-.story-tl-title { font: 700 1.1rem var(--font-heading); margin-bottom: 0.5rem; color: var(--ink); }
+/* One-off 1.1rem (17.6px) — the only size between the body and display steps
+ * anywhere on the site. Snapped to the <h3> level. */
+.story-tl-title { font: 700 var(--text-body)/1.3 var(--font-heading); margin-bottom: 0.5rem; color: var(--ink); }
 .story-tl-body { font-size: var(--text-body); color: var(--2); line-height: 1.6; }
 
 /* ─── QUOTE SYSTEM ─── */
@@ -3531,7 +3556,9 @@ h2, h3 { font-family: var(--font); }
   margin-bottom: auto;
 }
 .podium-photo-name {
-  font-size: var(--text-display); font-weight: 700; color: #fff;
+  /* Was --text-display (32px) in an <h3>, the same size as the section <h2>
+   * above it. Card labels sit at body weight; only outline levels get scale. */
+  font-size: var(--text-body); font-weight: 700; color: #fff;
   letter-spacing: -.03em; line-height: 1.1;
   text-shadow: 0 1px 4px rgba(0,0,0,.5);
 }
@@ -7493,12 +7520,19 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 /* --- Moneyball picks strip --- */
 .picks-section-header {
+  /* No top margin existed, so the mono eyebrow sat ~22px under the intro
+   * paragraph and the two read as one block. Webflow rule 6: white space is
+   * what separates sections, not a rule. */
+  margin-top: clamp(2rem, 4vw, 3rem);
   margin-bottom: 1rem;
 }
 .picks-section-title {
-  font-size: var(--text-body);
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  /* Was --text-body (14px) — an <h2> rendered the same size as the paragraph
+   * under it, so "Seven cities worth a second look" read as body copy. Now it
+   * takes the one site-wide section size. */
+  font-size: var(--text-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
   margin: 0;
 }
 .picks-strip {
@@ -7988,6 +8022,29 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   border: 1px solid var(--5);
   background: var(--bg);
 }
+/* Progressive-disclosure footer for the 118-city directory. Sits on the same
+ * 1px frame as the list so the block reads as one object with a foot, not a
+ * floating button. The count is stated before the action so the reader knows
+ * the list is capped and how much is behind it. */
+.rank-list-more {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem 1rem;
+  padding: 1rem var(--gutter);
+  border-top: 1px solid var(--5);
+}
+.rank-list-more-count {
+  font: 500 var(--text-micro) var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+.rank-list-more-btn {
+  min-height: 44px; /* §11.8 tap target */
+  cursor: pointer;
+}
 .rank-list {
   list-style: none;
   margin: 0;
@@ -8172,13 +8229,17 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .home-section-title {
   margin: 0.25rem 0 0.9rem;
-  font-size: var(--text-body);
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  font-size: var(--text-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
   color: var(--ink);
 }
+/* This breakpoint used to force the homepage's section headings DOWN to
+ * --text-body at ≥720px, which is why / measured H2@14 for "One city that
+ * wins each axis" and its two siblings while every other route ran 27.2px.
+ * A section heading must not shrink as the viewport grows. */
 @media (min-width: 720px) {
-  .home-section-title { font-size: var(--text-body); }
+  .home-section-title { letter-spacing: -.03em; }
 }
 
 /* ========================================================================
@@ -8625,8 +8686,13 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   color: var(--amber, #f59e0b);
   margin: 0 0 1.25rem;
 }
+/* Webflow rule 2 — hierarchy by scale. This ran at clamp(1.8rem, 5vw, 3.2rem)
+ * = 51.2px at 1440, i.e. 80% of the 64px page <h1> directly above it. Two
+ * near-equal display statements made the opening read as a collision instead
+ * of a section. Dropped to the display token (32px) so the page title keeps
+ * an unambiguous top of the scale and the band below becomes a clear step. */
 .opening-argument-headline {
-  font: 700 clamp(1.8rem, 5vw, 3.2rem)/1.08 var(--font);
+  font: 700 clamp(1.5rem, 3.4vw, 2rem)/1.15 var(--font);
   color: #fff;
   letter-spacing: -0.03em;
   margin: 0 0 clamp(2rem, 5vw, 3.5rem);
@@ -8651,8 +8717,12 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   flex-direction: column;
   gap: 0.75rem;
 }
+/* Was clamp(4rem, 10vw, 6.5rem) = 104px at 1440 — the largest type anywhere on
+ * the site, louder than the 64px page <h1> directly above it. Dropped to the
+ * page-title size so the opening band reads as data held at the same weight as
+ * the statement, rather than shouting over it. */
 .opening-argument-num {
-  font: 800 clamp(4rem, 10vw, 6.5rem)/1 var(--mono);
+  font: 800 clamp(2.75rem, 6.5vw, 4rem)/1 var(--mono);
   color: #fff;
   letter-spacing: -0.04em;
   display: block;
@@ -8821,7 +8891,9 @@ h1, h2, h3,
  * wider screens so they actually feel editorial on a 16" laptop. */
 .cinematic-hero-title { font-size: clamp(2rem, 6vw, 4rem) !important; }
 .dashboard-title { font-size: clamp(1.5rem, 4vw, 3.25rem); }
-.home-section-title { font-size: clamp(1.4rem, 3vw, 2.4rem); }
+/* The rogue clamp(1.4rem, 3vw, 2.4rem) that used to live here is gone — it was
+ * the last thing overriding .home-section-title back to 38.4px, which is why
+ * the homepage's section headings never matched the rest of the site. */
 /* Section headings sit below mono eyebrows — use system-ui so they don't clash */
 h2, h3, .home-section-title { font-family: var(--font); }
 

@@ -489,7 +489,11 @@ export default function App() {
               inboard of every other block on the page. */}
           <section className="newsletter-section" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "3rem 0", textAlign: "center" }}>
             <div className="section" style={{ maxWidth: "600px", margin: "0 auto" }}>
-              <h3 style={{ fontSize: "var(--text-display)", marginBottom: "0.5rem", color: "var(--ink)" }}>
+              {/* §11.7 — this ran at --text-display (32px) in an <h3>, which put
+                  a 32px heading BELOW the 27.2px <h2> sections on every page and
+                  inverted the outline. It is a footer utility panel, not a
+                  section headline, so it sits at body weight. */}
+              <h3 style={{ fontSize: "var(--text-body)", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>
                 {locale === "th" ? "สมัครรับข้อมูลข่าวสาร" : locale === "zh" ? "订阅简报" : "Subscribe to SCITI Data Insights"}
               </h3>
               <p style={{ marginBottom: "1.5rem", color: "var(--2)" }}>

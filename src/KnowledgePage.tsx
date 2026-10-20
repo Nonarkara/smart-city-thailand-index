@@ -1040,7 +1040,12 @@ export default function KnowledgePage({ locale }: Props) {
     <div className="knowledge-page">
       <section className="section rankings-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "SCITI Knowledge Base", th: "คลังความรู้ SCITI", zh: "SCITI 知识库" })}</p>
-        <h1 className="hero-title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)" }}>
+        {/* §11.7 — this inline clamp capped at 2.5rem = 40px, so /knowledge was the
+            only page whose <h1> sat barely above its section headings while
+            every other route ran 64px. Webflow rule 2: hierarchy by scale has
+            to mean the same thing on every page. Removed — .hero-title
+            already carries the house display size. */}
+        <h1 className="hero-title">
           {locale === "th" ? "คลังความรู้เมืองอัจฉริยะ" : locale === "zh" ? "智慧城市知识库" : "Smart City Knowledge Base"}
         </h1>
         <p className="hero-strapline">
