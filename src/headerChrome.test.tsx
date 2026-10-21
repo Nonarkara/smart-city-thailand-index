@@ -11,9 +11,12 @@ import App from "./App";
  * lockup, 44 pixels apart. The same square mark printed twice in immediate
  * succession read as a mistake, not as branding.
  *
- * The rule: the institutional strip carries the institutions that back the
- * index; the lockup carries the mark. Each asset appears in exactly one of
- * the two zones.
+ * The rule now: the institutional strip carries the three marks that belong
+ * to the programme and its institutions — MDES, depa and the Smart City
+ * Thailand Office — in ONE line. The topbar lockup is the product's
+ * wordmark alone, starting with words, not with a mark.
+ *
+ * Each asset still appears in exactly one of the two zones.
  */
 
 function srcsIn(container: Element): string[] {
@@ -54,17 +57,34 @@ describe("header chrome", () => {
     expect(hasMark || hasName).toBe(true);
   });
 
-  it("keeps the institutional marks to the two backing institutions", () => {
+  it("starts the lockup with the wordmark, not with a mark", () => {
+    const { container } = render(<App />);
+    const lockup = container.querySelector(".brand-lockup")!;
+    // The mark moved up to the institutional strip, where the other two
+    // logos live. A logo in front of the site title would put the same
+    // square back at the head of the second line — the duplication that
+    // was removed in the first place.
+    expect(lockup.querySelector("img"), "the lockup still carries a mark").toBeNull();
+    expect(lockup.querySelector(".brand-name")).toBeTruthy();
+  });
+
+  it("keeps the three programme marks in the one institutional line", () => {
     const { container } = render(<App />);
     const banner = container.querySelector(".institutional-banner")!;
     const logos = srcsIn(banner);
-    expect(logos.length).toBeGreaterThan(0);
-    // The strip is MDES and depa. The Smart City Thailand seal belongs to
-    // the lockup, where it is the product's own mark.
+    expect(logos.length).toBe(3);
+    expect(
+      logos.some(src => src.startsWith("mdes_logo")),
+      "the Ministry of Digital Economy and Society mark is missing",
+    ).toBe(true);
+    expect(
+      logos.some(src => src.startsWith("depa_logo")),
+      "the depa mark is missing",
+    ).toBe(true);
     expect(
       logos.some(src => src.startsWith("smart_city_thailand_logo")),
-      "the Smart City Thailand seal is back in the institutional strip",
-    ).toBe(false);
+      "the Smart City Thailand Office mark is missing from the strip",
+    ).toBe(true);
   });
 
   it("renders the site title for assistive technology", () => {

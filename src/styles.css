@@ -1303,7 +1303,12 @@ h3 { font-size: var(--text-body); font-weight: 700; letter-spacing: -.01em; line
 .methodology-pillar-signals { display: flex; flex-wrap: wrap; gap: 2px; }
 .signal-chip { font: 600 var(--text-micro) var(--mono); padding: .04rem .25rem; background: var(--surface); color: var(--3); }
 .threshold-table { margin-bottom: 1.25rem; border-top: 2px solid var(--ink); }
-.threshold-row { display: flex; align-items: center; gap: .8rem; padding: .6rem 0; border-bottom: 1px solid var(--5); }
+/* The three fixed-width columns plus the description's own minimum width
+   exceeded a 390 px phone, and the row pushed its card 38px past the
+   viewport — /methodology scrolled sideways on a phone. The row now wraps
+   rather than widen the card. On a desktop viewport the columns still fit
+   on one line, so nothing changes there. */
+.threshold-row { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; padding: .6rem 0; border-bottom: 1px solid var(--5); }
 .threshold-symbol { font: 700 1.2rem var(--mono); width: 1.8rem; }
 .threshold-alpha .threshold-symbol { color: var(--alpha); }
 .threshold-beta .threshold-symbol { color: var(--beta-text); }

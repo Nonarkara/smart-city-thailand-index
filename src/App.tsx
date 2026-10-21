@@ -299,11 +299,22 @@ export default function App() {
               loading="eager"
             />
           </div>
-          {/* The Smart City Thailand seal is NOT repeated here. It is the
-              product's own mark and it already sits in the topbar lockup
-              directly below — printing the same square seal twice, 44px
-              apart, read as a mistake. This strip is the two backing
-              institutions; the lockup is the mark. */}
+          {/* The Smart City Thailand seal sits here, once, in the same line as
+              the two institutions behind the programme. It used to sit in the
+              topbar lockup directly below, and printing the same square mark
+              twice 44 pixels apart read as a mistake rather than as branding.
+              One line, three marks, and the lockup below is the product's
+              wordmark alone. */}
+          <div className="institutional-logo-container">
+            <ResponsiveImage
+              src={SMART_CITY_LOGO.src}
+              alt={locale === "th" ? "สำนักงานเมืองอัจฉริยะไทย" : locale === "zh" ? "泰国智慧城市办公室" : "Smart City Thailand Office"}
+              className="institutional-logo"
+              width={SMART_CITY_LOGO.width}
+              height={SMART_CITY_LOGO.height}
+              loading="eager"
+            />
+          </div>
         </div>
       </div>
       )}
@@ -312,17 +323,6 @@ export default function App() {
       {!isCanvasRoute && (
         <nav className={`topbar${topbarScrolled ? " topbar-scrolled" : ""}`}>
         <button type="button" className="brand-lockup" onClick={() => navigate("/")}>
-          <div className="institutional-logo-container" style={{ padding: '2px', marginRight: '8px' }}>
-            <ResponsiveImage
-              src={SMART_CITY_LOGO.src}
-              alt="Smart City Thailand"
-              className="brand-logo"
-              width={SMART_CITY_LOGO.width}
-              height={SMART_CITY_LOGO.height}
-              loading="eager"
-              style={{ width: '24px', height: '24px' }}
-            />
-          </div>
           <span className="brand-name">
             {locale === "th" ? "ดัชนีเมืองอัจฉริยะไทย" : locale === "zh" ? "泰国智慧城市指数" : "Smart City Thailand Index"}
           </span>
