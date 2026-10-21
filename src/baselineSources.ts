@@ -1,9 +1,10 @@
 /**
  * VERIFIED SOURCE REGISTRY — SCITI baseline program
  * =================================================
- * Compiled 2026-10-20 by direct HTTP probe, not by search-result reading.
- * Every `verified` field below records the observed status code on that date.
- * Anything that was not probed is `verified: "unprobed"` — never guess a URL.
+ * Compiled 2026-10-20, extended 2026-10-21, by direct HTTP probe — not by
+ * reading search results. Every `verified` field below records the observed
+ * status code on the date named in that entry's caveat. Anything that was
+ * not probed is `verified: "unprobed"` — never guess a URL.
  *
  * Why this file exists
  * -------------------
@@ -61,7 +62,9 @@ export interface SourceRecord {
 }
 
 /**
- * The national backbone. Ten sources, each probed 2026-10-20.
+ * The national backbone. Twelve sources, probed by direct HTTP request —
+ * ten on 2026-10-20, two more on 2026-10-21 when the environment dimension
+ * gained its two province series.
  */
 export const SOURCE_REGISTRY: readonly SourceRecord[] = [
   {
@@ -111,9 +114,57 @@ export const SOURCE_REGISTRY: readonly SourceRecord[] = [
       "Plain HTTP, no HTTPS. Returns 134 KB JSON of live stations, each carrying " +
       "areaEN with subdistrict/district — so station coverage maps to province, but " +
       "coverage is uneven: a province with no station yields nothing, not zero. " +
-      "Absence of a station must not be scored as clean air.",
+      "Absence of a station must not be scored as clean air. NOTE: the baseline does " +
+      "not score this feed. It is a live reading, not a series with a vintage; the " +
+      "scored PM2.5 number comes from PCD's annual station averages (see " +
+      "pcd-pm25-annual), which have a named year and a reproducible province value.",
     serves: ["environment", "living"],
     indicators: ["PM2.5 station readings", "AQI by station", "station count per province"],
+  },
+  {
+    id: "pcd-pm25-annual",
+    publisher: "กรมควบคุมมลพิษษ / PCD — Pollution Control Department",
+    title: "Annual average PM2.5 concentration by monitoring station, 2015–2024",
+    url: "https://data.go.th/dataset/fc3b51fd-91e3-4788-8241-32d418e636d4",
+    verified: "200",
+    caveat:
+      "Probed 2026-10-21: the catalogue API and the CSVs both return 200. The source " +
+      "publishes STATIONS, not province totals, and splits them across three files — " +
+      "provincial stations, Bangkok-area stations, and Bangkok-metropolitan stations — " +
+      "because the provincial file deliberately omits the Bangkok area; all three are " +
+      "needed for a complete province list. The province value SCITI uses is therefore " +
+      "the arithmetic mean of that province's station annual averages, and the station " +
+      "values are stored beside it so the mean can be checked by hand. Rows labelled " +
+      "'ค่ามาตรฐาน' are the regulatory standard (15 µg/m³ annual), not a measurement, and " +
+      "are excluded. One physical station serving both Bangkok and Samut Prakan appears " +
+      "in two files and is counted once. The 2024 file carries a data date of 31 March 2025.",
+    serves: ["environment"],
+    indicators: [
+      "annual average 24-hour PM2.5 per monitoring station, by province",
+      "station maximum, minimum and exceedance count",
+    ],
+  },
+  {
+    id: "rfd-forest-area",
+    publisher: "กรมป่าไม้และสัตว์ป่า / RFD — Royal Forest Department",
+    title: "Province forest area and forest area as a share of province area, BE 2564 (2021)",
+    url: "https://data.forest.go.th/dataset/46cf6f8b-dee3-42d8-9c38-02690af49cc0",
+    verified: "200",
+    caveat:
+      "Probed 2026-10-21: the CSV resource returns 200; the dataset page 302-redirects " +
+      "to /dataset/https-www-forest-go-th-land and then serves 200. TRAP: the file's " +
+      "English province column is a STALE 76-province list in which the labels are " +
+      "shifted — 'อำนาจเจริญ' (Amnat Charoen) is labelled 'Umnad Chareun', the old name " +
+      "for Uttaradit, and every row after it is off by one. The Thai column is correct " +
+      "and is the one SCITI reads. Provinces with no forest area are recorded as " +
+      "'ไม่มีพื้นที่ป่าไม้' and are a VERIFIED ZERO, not a missing value. A later series " +
+      "(BE 2556–2566 and BE 2567) exists as XLSX and would need a spreadsheet reader; " +
+      "SCITI uses the 2021 CSV rather than take that dependency.",
+    serves: ["environment"],
+    indicators: [
+      "forest area by province, square kilometres",
+      "forest area as a share of province area",
+    ],
   },
   {
     id: "rtddi",
@@ -252,7 +303,10 @@ export const BASELINE_COVERAGE: Readonly<Record<DepaDimension, {
   living: {
     strength: "strong",
     sources: 5,
-    note: "Housing tenure, sanitation, drinking water, age structure, air quality, road deaths, tourism load.",
+    note: "Housing tenure, sanitation, drinking water, age structure, air quality, road deaths, tourism load. " +
+          "The household socio-economic survey that carries water, sanitation and tenure stops at 2010, " +
+          "so one province — Bueng Kan, created in 2011 — is absent from every vintage and cannot be " +
+          "measured on those three indicators at all.",
   },
   people: {
     strength: "partial",
@@ -261,8 +315,12 @@ export const BASELINE_COVERAGE: Readonly<Record<DepaDimension, {
   },
   environment: {
     strength: "partial",
-    sources: 3,
-    note: "GISTDA layers + Air4Thai stations. No province is fully covered — station absence ≠ clean air.",
+    sources: 5,
+    note: "Scored for all 118 cities. PCD station PM2.5 (65 provinces) and RFD forest " +
+          "cover (77 provinces) are province series, so every city carries an " +
+          "environment number. Water quality, urban green space and flood recurrence " +
+          "are still city-level only, so 69 cities rest on 2 of 5 environment " +
+          "indicators and their coverage is reported on every row.",
   },
   mobility: {
     strength: "partial",

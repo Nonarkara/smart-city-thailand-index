@@ -18,7 +18,7 @@
  */
 
 import type { SmartCity } from "./types";
-import { NSO_BASELINE_BY_ID, NSO_BASELINE } from "./nsoBaselineData";
+import { PROVINCE_BASELINE_BY_ID, PROVINCE_BASELINE } from "./provinceBaselineData";
 import { resolveProvince, type DepaDimension } from "./dimensionScores";
 
 export interface FacetDef {
@@ -28,7 +28,7 @@ export interface FacetDef {
   unit: string;
   /** The NSO indicator id behind this facet, when there is one. Lets the
    *  dimension of a facet be checked against the source record mechanically. */
-  nsoId?: string;
+  provinceId?: string;
   /** Where the numbers come from, with the year they stop at. */
   source: { en: string; th: string; zh: string };
   /** The year the series ends. */
@@ -42,14 +42,14 @@ export interface FacetDef {
   value: (city: SmartCity) => number | null;
 }
 
-function nsoValue(id: string) {
-  const map = NSO_BASELINE_BY_ID[id];
+function provinceValue(id: string) {
+  const map = PROVINCE_BASELINE_BY_ID[id];
   if (!map) return undefined;
   return (province: string) => map[resolveProvince(province)];
 }
 
-function nsoMeta(id: string) {
-  return NSO_BASELINE.find(i => i.id === id);
+function provinceMeta(id: string) {
+  return PROVINCE_BASELINE.find(i => i.id === id);
 }
 
 /**
@@ -62,8 +62,8 @@ function nsoMeta(id: string) {
  * category error that produces rates over 100%.
  */
 function penetration(province: string, usersId: string): number | null {
-  const users = nsoValue(usersId)?.(province);
-  const pop = nsoValue("nso-province-population")?.(province);
+  const users = provinceValue(usersId)?.(province);
+  const pop = provinceValue("nso-province-population")?.(province);
   if (users == null || pop == null || pop <= 0) return null;
   return (users / pop) * 100;
 }
@@ -81,9 +81,9 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ. — % ของครัวเรือนที่มีน้ำดื่มสะอาด",
         zh: "NSO 家庭社会经济调查 — 有清洁饮用水接入的家庭比例",
       },
-      vintage: String(nsoMeta("nso-drinking-water")?.year ?? ""),
-      nsoId: "nso-drinking-water",
-      value: c => nsoValue("nso-drinking-water")?.(c.province) ?? null,
+      vintage: String(provinceMeta("nso-drinking-water")?.year ?? ""),
+      provinceId: "nso-drinking-water",
+      value: c => provinceValue("nso-drinking-water")?.(c.province) ?? null,
     },
     {
       id: "hygienic-toilet",
@@ -95,9 +95,9 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ. — % ของครัวเรือนที่มีส้วมถูกสุขลักษณะ",
         zh: "NSO 家庭社会经济调查 — 有卫生厕所的家庭比例",
       },
-      vintage: String(nsoMeta("nso-hygienic-toilet")?.year ?? ""),
-      nsoId: "nso-hygienic-toilet",
-      value: c => nsoValue("nso-hygienic-toilet")?.(c.province) ?? null,
+      vintage: String(provinceMeta("nso-hygienic-toilet")?.year ?? ""),
+      provinceId: "nso-hygienic-toilet",
+      value: c => provinceValue("nso-hygienic-toilet")?.(c.province) ?? null,
     },
     {
       id: "home-ownership",
@@ -109,9 +109,9 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ. — % ของครัวเรือนที่เป็นเจ้าของที่อยู่อาศัย",
         zh: "NSO 家庭社会经济调查 — 自有住房家庭比例",
       },
-      vintage: String(nsoMeta("nso-home-ownership")?.year ?? ""),
-      nsoId: "nso-home-ownership",
-      value: c => nsoValue("nso-home-ownership")?.(c.province) ?? null,
+      vintage: String(provinceMeta("nso-home-ownership")?.year ?? ""),
+      provinceId: "nso-home-ownership",
+      value: c => provinceValue("nso-home-ownership")?.(c.province) ?? null,
     },
     {
       id: "non-durable-housing",
@@ -123,9 +123,9 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ. — % ของครัวเรือนที่ใช้วัสดุไม่ถาวร",
         zh: "NSO 家庭社会经济调查 — 使用非耐久材料住房的家庭比例",
       },
-      vintage: String(nsoMeta("nso-non-durable-housing")?.year ?? ""),
-      nsoId: "nso-non-durable-housing",
-      value: c => nsoValue("nso-non-durable-housing")?.(c.province) ?? null,
+      vintage: String(provinceMeta("nso-non-durable-housing")?.year ?? ""),
+      provinceId: "nso-non-durable-housing",
+      value: c => provinceValue("nso-non-durable-housing")?.(c.province) ?? null,
     },
     {
       id: "internal-migration",
@@ -140,9 +140,9 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ. — % ที่ย้ายถิ่นภายในจังหวัดใน 5 ปี",
         zh: "NSO 家庭社会经济调查 — 5 年内省内迁移人口比例",
       },
-      vintage: String(nsoMeta("nso-internal-migration")?.year ?? ""),
-      nsoId: "nso-internal-migration",
-      value: c => nsoValue("nso-internal-migration")?.(c.province) ?? null,
+      vintage: String(provinceMeta("nso-internal-migration")?.year ?? ""),
+      provinceId: "nso-internal-migration",
+      value: c => provinceValue("nso-internal-migration")?.(c.province) ?? null,
     },
     {
       id: "born-elsewhere",
@@ -156,9 +156,9 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ. — % ที่ไม่ได้อาศัยอยู่ในจังหวัดที่เกิด",
         zh: "NSO 家庭社会经济调查 — 居住地非出生地人口比例",
       },
-      vintage: String(nsoMeta("nso-born-elsewhere")?.year ?? ""),
-      nsoId: "nso-born-elsewhere",
-      value: c => nsoValue("nso-born-elsewhere")?.(c.province) ?? null,
+      vintage: String(provinceMeta("nso-born-elsewhere")?.year ?? ""),
+      provinceId: "nso-born-elsewhere",
+      value: c => provinceValue("nso-born-elsewhere")?.(c.province) ?? null,
     },
     {
       id: "residential-permits",
@@ -170,9 +170,9 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "ใบอนุญาตก่อสร้าง สศ. — ใบอนุญาตก่อสร้างอาคารโรงเรือน",
         zh: "NSO 建筑许可 — 住宅建设许可数",
       },
-      vintage: String(nsoMeta("nso-residential-permits")?.year ?? ""),
-      nsoId: "nso-residential-permits",
-      value: c => nsoValue("nso-residential-permits")?.(c.province) ?? null,
+      vintage: String(provinceMeta("nso-residential-permits")?.year ?? ""),
+      provinceId: "nso-residential-permits",
+      value: c => provinceValue("nso-residential-permits")?.(c.province) ?? null,
     },
     {
       id: "labour-force",
@@ -184,11 +184,11 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจกำลังแรงงาน สศ. — มีงานทำ + ว่างงาน ทั้งเพศ ไตรมาสล่าสุด",
         zh: "NSO 劳动力调查 — 就业+失业，两性，最新季度",
       },
-      vintage: nsoMeta("nso-labour-force")
-        ? `${nsoMeta("nso-labour-force")!.year}Q${nsoMeta("nso-labour-force")!.quarter ?? ""}`
+      vintage: provinceMeta("nso-labour-force")
+        ? `${provinceMeta("nso-labour-force")!.year}Q${provinceMeta("nso-labour-force")!.quarter ?? ""}`
         : "",
-      nsoId: "nso-labour-force",
-      value: c => nsoValue("nso-labour-force")?.(c.province) ?? null,
+      provinceId: "nso-labour-force",
+      value: c => provinceValue("nso-labour-force")?.(c.province) ?? null,
     },
     {
       id: "informal-labour",
@@ -200,9 +200,9 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจแรงงานนอกระบบ สศ. — ทั้งเพศ ทุกช่วงอายุ",
         zh: "NSO 非正规就业调查 — 两性，全年龄",
       },
-      vintage: String(nsoMeta("nso-informal-labour")?.year ?? ""),
-      nsoId: "nso-informal-labour",
-      value: c => nsoValue("nso-informal-labour")?.(c.province) ?? null,
+      vintage: String(provinceMeta("nso-informal-labour")?.year ?? ""),
+      provinceId: "nso-informal-labour",
+      value: c => provinceValue("nso-informal-labour")?.(c.province) ?? null,
     },
     {
       id: "internet-penetration",
@@ -217,7 +217,7 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจ ICT ในครัวเรือน สศ. — ผู้ใช้อินเทอร์เน็ตรายจังหวัด (ไตรมาส 1/2566) ÷ ประชากรจังหวัด (ไตรมาส 4/2565)",
         zh: "NSO 家庭 ICT 调查 — 省级网民数（2023Q1）÷ 省级人口（2022Q4）",
       },
-      vintage: `${nsoMeta("nso-internet-users")?.year ?? ""}Q${nsoMeta("nso-internet-users")?.quarter ?? ""}`,
+      vintage: `${provinceMeta("nso-internet-users")?.year ?? ""}Q${provinceMeta("nso-internet-users")?.quarter ?? ""}`,
       value: c => penetration(c.province, "nso-internet-users"),
     },
     {
@@ -230,7 +230,7 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจ ICT ในครัวเรือน สศ. — ผู้ใช้โทรศัพท์มือถือรายจังหวัด (ไตรมาส 4/2565) ÷ ประชากรจังหวัด (ไตรมาส 4/2565)",
         zh: "NSO 家庭 ICT 调查 — 省级手机用户数（2022Q4）÷ 省级人口（2022Q4）",
       },
-      vintage: `${nsoMeta("nso-mobile-users")?.year ?? ""}Q${nsoMeta("nso-mobile-users")?.quarter ?? ""}`,
+      vintage: `${provinceMeta("nso-mobile-users")?.year ?? ""}Q${provinceMeta("nso-mobile-users")?.quarter ?? ""}`,
       value: c => penetration(c.province, "nso-mobile-users"),
     },
     {
@@ -243,8 +243,8 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
         th: "สำรวจ ICT ในครัวเรือน สศ. — ฐานประชากรรายจังหวัด (ไตรมาส 4/2565)",
         zh: "NSO 家庭 ICT 调查 — 调查的省份人口基数（2022Q4）",
       },
-      vintage: `${nsoMeta("nso-province-population")?.year ?? ""}Q${nsoMeta("nso-province-population")?.quarter ?? ""}`,
-      value: c => nsoValue("nso-province-population")?.(c.province) ?? null,
+      vintage: `${provinceMeta("nso-province-population")?.year ?? ""}Q${provinceMeta("nso-province-population")?.quarter ?? ""}`,
+      value: c => provinceValue("nso-province-population")?.(c.province) ?? null,
     },
     {
       id: "gdp-per-capita",
@@ -265,12 +265,27 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
       dimension: "environment",
       unit: "µg/m³",
       source: {
-        en: "Pollution Control Department — annual provincial mean",
-        th: "กรมควบคุมมลพิษษ — ค่าเฉลี่ยรายจังหวัดต่อปี",
-        zh: "泰国污染控制厅 — 省份年均值",
+        en: "Pollution Control Department — annual mean of the province's monitoring stations",
+        th: "กรมควบคุมมลพิษษ — ค่าเฉลี่ยของสถานีตรวจวัดในจังหวัดต่อปี",
+        zh: "泰国污染控制厅 — 省内监测站年均值",
       },
-      vintage: "2026",
-      value: c => c.metrics?.pm25Annual ?? null,
+      vintage: String(provinceMeta("pcd-pm25-annual")?.year ?? ""),
+      provinceId: "pcd-pm25-annual",
+      value: c => provinceValue("pcd-pm25-annual")?.(c.province) ?? null,
+    },
+    {
+      id: "forest-coverage",
+      label: { en: "Forest coverage", th: "สัดส่วนพื้นที่ป่า", zh: "森林覆盖率" },
+      dimension: "environment",
+      unit: "%",
+      source: {
+        en: "Royal Forest Department — forest area as a share of province area",
+        th: "กรมป่าไม้และสัตว์ป่า — สัดส่วนพื้นที่ป่าต่อพื้นที่จังหวัด",
+        zh: "泰国皇家林业厅 — 森林面积占省域比例",
+      },
+      vintage: String(provinceMeta("rfd-forest-coverage")?.year ?? ""),
+      provinceId: "rfd-forest-coverage",
+      value: c => provinceValue("rfd-forest-coverage")?.(c.province) ?? null,
     },
     {
       id: "road-fatality",

@@ -46,6 +46,8 @@ const CATALOG = "https://catalog.nso.go.th/dataset";
 
 const PROVINCE_TH = {
   "กรุงเทพมหานคร": "Bangkok", "กรุงเทพฯ": "Bangkok",
+  // PCD's Bangkok-area file uses the short form "กรุงเทพ" for the province.
+  "กรุงเทพ": "Bangkok",
   "อำนาจเจริญ": "Amnat Charoen", "อ่างทอง": "Ang Thong", "บึงกาฬ": "Bueng Kan",
   "บุรีรัมย์": "Buriram", "ฉะเชิงเทรา": "Chachoengsao", "ชัยนาท": "Chai Nat",
   "ชัยภูมิ": "Chaiyaphum", "จันทบุรี": "Chanthaburi", "เชียงใหม่": "Chiang Mai",
@@ -472,7 +474,170 @@ function applySpec(csv, spec) {
 
 const round1 = n => Math.round(n * 10) / 10;
 
+/* ─────────────────────── Royal Forest Department (กรมป่าไม้) ───────────────────
+   Forest area by province, published as a plain CSV on the department's own
+   CKAN portal at data.forest.go.th.
+
+   THE ENGLISH COLUMN IS MISALIGNED — DO NOT USE IT. The file carries a stale
+   76-province English list, so the row for "อำนาจเจริญ" (Amnat Charoen) is
+   labelled "Umnad Chareun" — the former name of Uttaradit — and every label
+   after it is off by one. The Thai column is correct and complete for all 77
+   current provinces, so the mapping below goes through PROVINCE_TH.
+
+   The numbers were cross-checked against a second, independently published RFD
+   file (2562-64e7.csv): all 77 provinces agree to the last decimal on the
+   2564 forest area. Only the labels are stale.
+
+   A cell reading "ไม่มีพื้นที่ป่าไม้" means the department records NO forest
+   area for that province. That is a verified zero, not a missing value, and
+   it is stored as 0. */
+
+const RFD_FOREST_URL =
+  "https://data.forest.go.th/dataset/46cf6f8b-dee3-42d8-9c38-02690af49cc0" +
+  "/resource/3f9534d5-c30d-403a-a63c-3a2480331698/download/t2564-4.csv";
+const RFD_FOREST_VINTAGE = 2021; // BE 2564
+
+async function harvestRfdForest() {
+  const csv = await get(RFD_FOREST_URL);
+  const rows = parseCsv(csv);
+  // Two header rows: a Thai/English caption row, then the column names.
+  const provinces = {};
+  for (const r of rows.slice(2)) {
+    if (r.length < 4) continue;
+    const th = String(r[0] ?? "").trim();
+    if (!th || th.startsWith("ภาค") || th.includes("รวมทั้งประเทศ")) continue;
+    const canonical = PROVINCE_TH[th];
+    if (!canonical) continue;
+    const raw = String(r[3] ?? "").trim();
+    const value = raw.includes("ไม่มี") ? 0 : parseFloat(raw.replace(/,/g, ""));
+    if (!Number.isFinite(value)) continue;
+    provinces[canonical] = round1(value);
+  }
+  const count = Object.keys(provinces).length;
+  if (count < 70) throw new Error(`RFD forest: only ${count} provinces parsed`);
+  return {
+    id: "rfd-forest-coverage",
+    label: { en: "Forest area as a share of province area", th: "สัดส่วนพื้นที่ป่าต่อพื้นที่จังหวัด" },
+    dimension: "environment",
+    unit: "%",
+    publisher: "กรมป่าไม้และสัตว์ป่า / RFD — Royal Forest Department",
+    dataset: "46cf6f8b-dee3-42d8-9c38-02690af49cc0",
+    table: "t2564-4.csv",
+    catalogUrl: "https://data.forest.go.th/dataset/46cf6f8b-dee3-42d8-9c38-02690af49cc0",
+    includes: "Province rows only; the department's own % of province area",
+    aggregate: "last",
+    year: RFD_FOREST_VINTAGE,
+    quarter: null,
+    provinceCount: count,
+    note: "Royal Forest Department province forest statistics, BE 2564 (2021). " +
+          "The file's English province column is a stale 76-province list and is " +
+          "deliberately ignored; the Thai column is used instead. Provinces with no " +
+          "recorded forest area are a verified zero, not a gap.",
+    provinces,
+  };
+}
+
+/* ── Pollution Control Department — provincial PM2.5 ────────────────────── */
+
+/**
+ * PCD publishes annual PM2.5 as STATIONS, split across three files:
+ * provincial stations, Bangkok-area stations, and Bangkok-metropolitan
+ * stations. The provincial file deliberately omits the Bangkok area, so all
+ * three are needed to reach a complete province list.
+ *
+ * The province value is the arithmetic mean of that province's station
+ * annual averages. The source publishes no province total, so the aggregation
+ * is ours and is stated in the note and in `includes`. Every station value is
+ * kept in `stations` so the mean can be re-derived by hand.
+ *
+ * Two row kinds are excluded:
+ *   "ค่ามาตรฐาน" rows — the regulatory standard, not a measurement.
+ *   The "กรุงเทพมหานคร/สมุทรปราการ" row — one physical station that serves
+ *   both provinces and is already listed in the Bangkok-area file.
+ */
+const PCD_DATASET = "fc3b51fd-91e3-4788-8241-32d418e636d4";
+const PCD_PM25_VINTAGE = 2024; // BE 2567
+const PCD_PM25_FILES = [
+  { resource: "e8ccae77-4d23-498c-8115-bccff5fd45e0", file: "prov_2024_pm2.5.csv", area: "provincial stations" },
+  { resource: "bbd8076b-7fc5-46e4-af84-c5005048d022", file: "bkk-amb_2024_pm2.5.csv", area: "Bangkok area stations" },
+  { resource: "08a04166-1e75-4c03-a117-4bedcdfdb360", file: "bma_2024_pm2.5.csv", area: "Bangkok metropolitan stations" },
+];
+
+async function harvestPcdPm25() {
+  const stationValues = {};
+  const stationCounts = {};
+  for (const f of PCD_PM25_FILES) {
+    const url =
+      `https://pcd.gdcatalog.go.th/dataset/${PCD_DATASET}/resource/${f.resource}/download/${f.file}`;
+    const rows = parseCsv(await get(url));
+    const header = rows[0] ?? [];
+    const iProv = header.indexOf("Province");
+    const iStation = header.indexOf("Station");
+    const iYear = header.findIndex((h) => /24hr1y/.test(h));
+    if (iProv < 0 || iStation < 0 || iYear < 0) {
+      throw new Error(`PCD ${f.file}: expected Province/Station/24hr1y columns`);
+    }
+    for (const r of rows.slice(1)) {
+      if (r.length <= Math.max(iProv, iStation, iYear)) continue;
+      const prov = String(r[iProv] ?? "").trim();
+      const station = String(r[iStation] ?? "").trim();
+      // The regulatory standard, not a measurement.
+      if (prov === "ค่ามาตรฐาน" || station === "มาตรฐาน") continue;
+      // One physical station serving two provinces; already in the Bangkok file.
+      if (prov.includes("/")) continue;
+      const canonical = PROVINCE_TH[prov];
+      if (!canonical) continue;
+      const value = parseFloat(String(r[iYear] ?? ""));
+      if (!Number.isFinite(value)) continue;
+      if (!stationValues[canonical]) stationValues[canonical] = [];
+      stationValues[canonical].push(value);
+      stationCounts[canonical] = (stationCounts[canonical] ?? 0) + 1;
+    }
+  }
+
+  const provinces = {};
+  const stations = {};
+  for (const [canonical, vals] of Object.entries(stationValues)) {
+    provinces[canonical] = round1(vals.reduce((a, b) => a + b, 0) / vals.length);
+    stations[canonical] = vals.map((v) => round1(v));
+  }
+  const count = Object.keys(provinces).length;
+  if (count < 60) throw new Error(`PCD PM2.5: only ${count} provinces parsed`);
+
+  const totalStations = Object.values(stations).reduce((a, s) => a + s.length, 0);
+  return {
+    id: "pcd-pm25-annual",
+    label: { en: "Annual PM2.5 concentration", th: "ค่าเฉลี่ยความเข้มข้น PM2.5 รายปี" },
+    dimension: "environment",
+    unit: "µg/m³",
+    publisher: "พด. / PCD — Pollution Control Department",
+    dataset: PCD_DATASET,
+    table: PCD_PM25_FILES.map((f) => f.file).join(" + "),
+    catalogUrl: "https://data.go.th/dataset/" + PCD_DATASET,
+    includes:
+      "Every PCD monitoring station in the province, across the provincial, " +
+      "Bangkok-area and Bangkok-metropolitan files; province value is the mean " +
+      "of the station annual averages",
+    aggregate: "mean",
+    year: PCD_PM25_VINTAGE,
+    quarter: null,
+    provinceCount: count,
+    note:
+      `Pollution Control Department annual average 24-hour PM2.5, BE 2567 (2024), ` +
+      `published with data date 31 March 2025, across ${totalStations} stations in ` +
+      `${count} provinces. The source publishes stations, not a province total, so the ` +
+      `province value is the arithmetic mean of its stations' annual averages; the ` +
+      `station values are stored alongside so the mean can be checked by hand. ` +
+      `Rows labelled "ค่ามาตรฐาน" are the regulatory standard and are excluded, as is ` +
+      `the single combined Bangkok/Samut Prakan station that also appears in the ` +
+      `Bangkok-area file.`,
+    provinces,
+    stations,
+  };
+}
+
 /* ────────────────────────────── run ────────────────────────────────────── */
+const NSO_PUBLISHER = "สศ. / NSO — National Statistical Office";
 
 const results = [];
 for (const spec of SPECS) {
@@ -492,26 +657,62 @@ for (const spec of SPECS) {
   }
 }
 
+// Royal Forest Department — a different publisher, a different host, and a
+// different file shape, so it is harvested by its own function rather than
+// by the NSO cube spec machinery.
+try {
+  const rfd = await harvestRfdForest();
+  results.push({ direct: rfd });
+  const vals = Object.values(rfd.provinces);
+  console.log(
+    `  ✓ ${rfd.id.padEnd(26)} n=${String(rfd.provinceCount).padStart(2)}  ` +
+    `${rfd.year}  ${Math.min(...vals)}–${Math.max(...vals)} ${rfd.unit}`,
+  );
+} catch (e) {
+  console.log(`  ✗ rfd-forest-coverage  ${e.message}`);
+}
+
+// Pollution Control Department — a third publisher, and a different province
+// aggregation (a mean over stations rather than a single published figure).
+try {
+  const pcd = await harvestPcdPm25();
+  results.push({ direct: pcd });
+  const vals = Object.values(pcd.provinces);
+  const nStations = Object.values(pcd.stations).reduce((a, s) => a + s.length, 0);
+  console.log(
+    `  ✓ ${pcd.id.padEnd(26)} n=${String(pcd.provinceCount).padStart(2)}  ` +
+    `${pcd.year}  ${Math.min(...vals)}–${Math.max(...vals)} ${pcd.unit}  ` +
+    `(${nStations} stations)`,
+  );
+} catch (e) {
+  console.log(`  ✗ pcd-pm25-annual  ${e.message}`);
+}
+
 /* ─────────────────────────── emit the TS module ────────────────────────── */
 
 const ts = `/**
- * NSO PROVINCE BASELINE — harvested ${new Date().toISOString().slice(0, 10)}
+ * PROVINCE BASELINE — harvested ${new Date().toISOString().slice(0, 10)}
  * =====================================================================
- * Generated by scripts/harvest-nso-baseline.mjs. DO NOT HAND-EDIT.
+ * Generated by scripts/harvest-province-baseline.mjs. DO NOT HAND-EDIT.
  *
- * Every value below was fetched from the National Statistical Office's
- * machine-readable API and carries, per indicator: the NSO dataset id, the
- * data table, the cube members included, how the rest was aggregated, the
- * period, and the source URL. A reader can reproduce any number.
+ * Every value below was fetched from a Thai government machine-readable
+ * source and carries, per indicator: the publisher, the dataset id, the data
+ * table, the cube members included, how the rest was aggregated, the period,
+ * and the source URL. A reader can reproduce any number.
+ *
+ * Three publishers so far:
+ *   สศ. / NSO   — National Statistical Office, via catalogapi.nso.go.th
+ *   กรมป่าไม้ / RFD — Royal Forest Department, via data.forest.go.th
+ *   พด. / PCD   — Pollution Control Department, via pcd.gdcatalog.go.th
  *
  * The data is COMMITTED, not fetched at build time — the site must never
  * depend on a government API being up.
  *
- * Note the vintages. The six household-survey indicators are 2010; the
- * digital indicators are 2026. That gap is real and is surfaced in the UI
- * rather than hidden.
+ * Note the vintages. The six household-survey indicators are 2010; the digital
+ * indicators are 2022-2023; forest cover is 2021; PM2.5 is 2024. That spread is
+ * real and is surfaced in the UI rather than hidden.
  *
- * Source: https://catalog.nso.go.th  ·  https://catalogapi.nso.go.th
+ * Source: https://catalog.nso.go.th  ·  https://catalogapi.nso.go.th  ·  https://data.forest.go.th  ·  https://data.go.th
  */
 
 export interface BaselineIndicator {
@@ -519,16 +720,18 @@ export interface BaselineIndicator {
   label: { en: string; th: string };
   dimension: "environment" | "mobility" | "living" | "people" | "energy" | "economy" | "governance";
   unit: string;
-  /** NSO dataset id, e.g. 0703_01_33 */
+  /** Who published it. */
+  publisher: string;
+  /** Dataset id, e.g. 0703_01_33 */
   dataset: string;
-  /** NSO data table, e.g. OS_01_00061_01 */
+  /** Data table, e.g. OS_01_00061_01 */
   table: string;
-  /** The NSO page a reader can open. */
+  /** The catalogue page a reader can open. */
   catalogUrl: string;
   /** Which cube members were included, stated in plain text. */
   includes: string;
   /** How the remaining members were combined within a province-period. */
-  aggregate: "sum" | "last";
+  aggregate: "sum" | "last" | "mean";
   /** Latest period covered. */
   year: number;
   quarter: number | null;
@@ -536,38 +739,45 @@ export interface BaselineIndicator {
   note: string;
   /** Province name (English) -> value. */
   provinces: Record<string, number>;
+  /**
+   * Province name (English) -> the source rows it was built from, for
+   * indicators whose province value is an aggregation the publisher does not
+   * itself publish (currently PM2.5: the station annual averages).
+   */
+  stations?: Record<string, number[]>;
 }
 
-export const NSO_BASELINE: BaselineIndicator[] = ${JSON.stringify(
-  results.map(({ spec, ex }) => ({
-    id: spec.id,
-    label: spec.label,
-    dimension: spec.dimension,
-    unit: spec.unit,
-    dataset: spec.dataset,
-    table: spec.table,
-    catalogUrl: `${CATALOG}/${spec.dataset}`,
-    includes: Object.entries(spec.filters ?? {})
+export const PROVINCE_BASELINE: BaselineIndicator[] = ${JSON.stringify(
+  results.map(r => r.direct ?? {
+    id: r.spec.id,
+    label: r.spec.label,
+    dimension: r.spec.dimension,
+    unit: r.spec.unit,
+    publisher: NSO_PUBLISHER,
+    dataset: r.spec.dataset,
+    table: r.spec.table,
+    catalogUrl: `${CATALOG}/${r.spec.dataset}`,
+    includes: Object.entries(r.spec.filters ?? {})
       .map(([k, v]) => `${k} in [${v.join(" | ")}]`)
       .join("; ") || "all members",
-    aggregate: spec.aggregate,
-    year: ex.year,
-    quarter: ex.quarter,
-    provinceCount: ex.provinceCount,
-    note: spec.note,
-    provinces: ex.provinces,
-  })),
+    aggregate: r.spec.aggregate,
+    year: r.ex.year,
+    quarter: r.ex.quarter,
+    provinceCount: r.ex.provinceCount,
+    note: r.spec.note,
+    provinces: r.ex.provinces,
+  }),
   null,
   2,
 )};
 
 /** Fast lookup: indicator id -> province -> value. */
-export const NSO_BASELINE_BY_ID: Record<string, Record<string, number>> =
-  Object.fromEntries(NSO_BASELINE.map(i => [i.id, i.provinces]));
+export const PROVINCE_BASELINE_BY_ID: Record<string, Record<string, number>> =
+  Object.fromEntries(PROVINCE_BASELINE.map(i => [i.id, i.provinces]));
 
-export const NSO_BASELINE_INDICATORS = NSO_BASELINE.map(i => i.id);
+export const PROVINCE_BASELINE_INDICATORS = PROVINCE_BASELINE.map(i => i.id);
 `;
 
-const outPath = path.resolve(process.cwd(), "src/nsoBaselineData.ts");
+const outPath = path.resolve(process.cwd(), "src/provinceBaselineData.ts");
 fs.writeFileSync(outPath, ts);
 console.log(`\n${results.length} indicators → ${outPath}`);

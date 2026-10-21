@@ -186,6 +186,15 @@ body {
 
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: 0; background: 0; color: inherit; }
+/* The global reset strips the button chrome, so a nav link declared as a
+   <button> renders as bare text — and at 22px tall it is not a tap target.
+   It has to declare its own height. */
+.endpoint-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.endpoint-link:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 img { display: block; max-width: 100%; }
 ul, ol { list-style: none; }
 
@@ -9427,6 +9436,7 @@ h2, h3, .home-section-title { font-family: var(--font); }
 
 .feedback-button {
   padding: .85rem 1.75rem;
+  min-height: 44px;
   background: var(--teal);
   color: #fff;
   font: 700 var(--text-micro) var(--mono);
@@ -11681,9 +11691,20 @@ body.canvas-print-mode {
 .baseline-masthead .hero-strapline { color: rgba(255,255,255,.78); max-width: 46rem; }
 
 /* The seven dimensions as a strip: label, weight bar, state. */
-.baseline-dims {
+.baseline-dims-head {
   margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  padding-top: .5rem;
   border-top: 1px solid rgba(255,255,255,.22);
+  text-align: right;
+}
+.baseline-dims-caption {
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+}
+.baseline-dims {
+  margin-top: 0;
 }
 .baseline-dim {
   display: grid;
@@ -11935,6 +11956,11 @@ body.canvas-print-mode {
   font: 600 var(--text-body)/1.3 var(--font);
   color: var(--depa-blue, #12354e);
   text-decoration: none;
+  /* A tap target on a phone, not a line of text: the source name is the
+     link out to the catalogue, so it has to be reachable with a thumb. */
+  display: flex;
+  align-items: center;
+  min-height: 44px;
 }
 .baseline-source-title {
   grid-column: 1;

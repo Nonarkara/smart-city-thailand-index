@@ -53,6 +53,21 @@ const baselineDimensionRows = (() => {
 
 const baselineScoredCities = baselineDimensionRows.filter(r => r.scored > 0).length;
 
+/**
+ * The coverage range, measured live. A hand-typed range rots the moment an
+ * indicator is added or a province falls out of a series, and this sentence
+ * is the one a committee member checks.
+ */
+const baselineCoverageRange = (() => {
+  const covs = [...deriveAll(allCities).values()]
+    .filter(d => d.composite != null)
+    .map(d => d.weightCoverage);
+  return {
+    min: Math.round(Math.min(...covs) * 100),
+    max: Math.round(Math.max(...covs) * 100),
+  };
+})();
+
 type TriLingual = { en: string; th: string; zh: string };
 
 const pillarDescriptions: Record<ScoringPillar, TriLingual & { signals: TriLingual[] }> = {
@@ -731,9 +746,9 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
 
         <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginTop: "1.25rem" }}>
           {translate(locale, {
-            en: `Two of depa's seven dimensions have no baseline at all. Energy and Governance have no province-level source that can be downloaded, reproduced and cited, so they are published as named gaps rather than filled with an estimate. Where a dimension cannot be measured the score is null, never zero — and the composite reports the share of the published weight it actually covered, between 35% and 85% depending on the city, instead of quietly renormalising over the dimensions it can see. ${baselineScoredCities} of the 7 dimensions are measured today, for all 118 cities.`,
-            th: `สองมิติในเจ็ดมิติของ depa ยังไม่มีข้อมูลพื้นฐานเลย ทั้งพลังงานและการบริหารไม่มีแหล่งข้อมูลระดับจังหวัดที่ดาวน์โหลด ทำซ้ำ และอ้างอิงได้ จึงประกาศเป็นช่องว่างที่มีชื่อ แทนที่จะเดาค่ามาแทน เมื่อมิติใดวัดไม่ได้ คะแนนจะเป็น null ไม่ใช่ศูนย์ และคะแนนรวมจะรายงานสัดส่วนน้ำหนักที่วัดได้จริง ระหว่าง 35% ถึง 85% ขึ้นอยู่กับเมือง แทนการปรับสัดส่วนเงียบ ๆ เฉพาะมิติที่มองเห็น ปัจจุบันวัดได้ ${baselineScoredCities} จาก 7 มิติ ครบทั้ง 118 เมือง`,
-            zh: `depa 七个维度中有两个完全没有基线。能源与治理没有任何可下载、可复现、可引用的省级来源，因此它们被作为「有名字的缺口」公布，而不是用估算填满。凡是无法测量的维度，得分为 null，绝不是 0；综合分报告的是实际覆盖的权重份额（依城市而异，为 35%–85%），而不是悄悄在能看见的维度上重新归一。今天 7 个维度中有 ${baselineScoredCities} 个可测，覆盖全部 118 个城市。`,
+            en: `Two of depa's seven dimensions have no baseline at all. Energy and Governance have no province-level source that can be downloaded, reproduced and cited, so they are published as named gaps rather than filled with an estimate. Where a dimension cannot be measured the score is null, never zero — and every row reports the share of the published weight that actually rests on observations, between ${baselineCoverageRange.min}% and ${baselineCoverageRange.max}% depending on the city, instead of quietly renormalising over the dimensions it can see. ${baselineScoredCities} of the 7 dimensions are measured today, for all 118 cities.`,
+            th: `สองมิติในเจ็ดมิติของ depa ยังไม่มีข้อมูลพื้นฐานเลย ทั้งพลังงานและการบริหารไม่มีแหล่งข้อมูลระดับจังหวัดที่ดาวน์โหลด ทำซ้ำ และอ้างอิงได้ จึงประกาศเป็นช่องว่างที่มีชื่อ แทนที่จะเดาค่ามาแทน เมื่อมิติใดวัดไม่ได้ คะแนนจะเป็น null ไม่ใช่ศูนย์ และทุกแถวจะรายงานสัดส่วนน้ำหนักที่ประกาศไว้ซึ่งมีข้อมูลจริงรองรับ ระหว่าง ${baselineCoverageRange.min}% ถึง ${baselineCoverageRange.max}% ขึ้นอยู่กับเมือง แทนการปรับสัดส่วนเงียบ ๆ เฉพาะมิติที่มองเห็น ปัจจุบันวัดได้ ${baselineScoredCities} จาก 7 มิติ ครบทั้ง 118 เมือง`,
+            zh: `depa 七个维度中有两个完全没有基线。能源与治理没有任何可下载、可复现、可引用的省级来源，因此它们被作为「有名字的缺口」公布，而不是用估算填满。凡是无法测量的维度，得分为 null，绝不是 0；每一行都报告实际有观测支撑的公布权重份额（依城市而异，为 ${baselineCoverageRange.min}%–${baselineCoverageRange.max}%），而不是悄悄在能看见的维度上重新归一。今天 7 个维度中有 ${baselineScoredCities} 个可测，覆盖全部 118 个城市。`,
           })}
         </p>
 
@@ -742,6 +757,14 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
             en: "One provenance note worth stating plainly: the NSO ICT household survey's province table carries a single value column that holds population up to the 2565Q4 vintage and internet users from 2566Q1 onward. The baseline reads the population at 2565Q4 and the users at 2566Q1, and both resulting rates reproduce NSO's own published penetration figure to within 0.08 and 0.00 percentage points.",
             th: "ข้อควรระบุเรื่องที่มาของข้อมูล: ตารางจังหวัดของสำรวจ ICT ในครัวเรือน สศ. มีคอลัมน์ค่าเพียงคอลัมน์เดียว ซึ่งเก็บจำนวนประชากรถึงไตรมาส 4/2565 แล้วเปลี่ยนเป็นจำนวนผู้ใช้อินเทอร์เน็ตตั้งแต่ไตรมาส 1/2566 ข้อมูลพื้นฐานจึงอ่านประชากรที่ไตรมาส 4/2565 และผู้ใช้ที่ไตรมาส 1/2566 และอัตราที่ได้ทั้งสองรูปแบบตรงกับอัตราการใช้งานที่ สศ. เผยแพร่เองภายใน 0.08 และ 0.00 ร้อยละ",
             zh: "有一项溯源说明值得直说：泰国国家统计局家庭 ICT 调查的省级表只有一个数值列，2565Q4 之前存的是人口，2566Q1 起存的是网民数。基线因此在 2565Q4 读取人口、在 2566Q1 读取用户，两个口径算出的普及率与统计局自己公布的普及率相差不超过 0.08 与 0.00 个百分点。",
+          })}
+        </p>
+
+        <p style={{ fontSize: "var(--text-micro)", color: "var(--3)", lineHeight: 1.6, marginTop: ".75rem" }}>
+          {translate(locale, {
+            en: "A second provenance note: the environment dimension's two province series come from two other publishers. PM2.5 is the Pollution Control Department's 2024 annual average per monitoring station — the source publishes stations, not province totals, so the province figure is the mean of its stations' annual averages, and every station value is stored beside it so the mean can be checked by hand. Forest cover is the Royal Forest Department's 2021 province statistics, read from the Thai column: the file's English column is a stale, shifted list and is deliberately ignored. Three provinces record no forest area at all, and that is a verified zero, not a gap.",
+            th: "ข้อควรระบุเรื่องที่มาของข้อมูลอีกข้อ: สองชุดข้อมูลระดับจังหวัดของมิติสิ่งแวดล้อมมาจากหน่วยงานอื่นอีกสองแห่ง PM2.5 คือค่าเฉลี่ยรายปี 2567 รายสถานีตรวจวัดของกรมควบคุมมลพิษษ แหล่งข้อมูลนี้เผยแพร่รายสถานี ไม่ใช่ยอดรวมรายจังหวัด ค่าระดับจังหวัดจึงเป็นค่าเฉลี่ยของค่าเฉลี่ยรายสถานีในจังหวัดนั้น และเก็บค่าของทุกสถานีไว้ข้าง ๆ เพื่อให้ตรวจสอบด้วยมือ ส่วนสัดส่วนพื้นที่ป่าเป็นสถิติรายจังหวัดปี 2564 ของกรมป่าไม้และสัตว์ป่า อ่านจากคอลัมน์ภาษาไทย เพราะคอลัมน์ภาษาอังกฤษในไฟล์เป็นรายการจังหวัดรุ่นเก่าที่เลื่อนตำแหน่งแล้ว จึงถูกข้ามไปโดยเจตนา สามจังหวัดไม่มีพื้นที่ป่าเลย ซึ่งเป็นศูนย์ที่ตรวจสอบแล้ว ไม่ใช่ข้อมูลที่ขาดหาย",
+            zh: "第二条溯源说明：环境维度的两套省级系列来自另外两家发布机构。PM2.5 是泰国污染控制厅 2024 年的逐监测站年均值——该来源发布的是监测站而非省份合计，因此省级数值是本省各站年均值的平均，且每个站点数值都与其一同保存，可手工复核。森林覆盖率是泰国皇家林业厅 2021 年的省级统计，读自泰文列——该文件的英文列是一份陈旧且错位的清单，故被有意忽略。有三个省份完全没有森林面积，这是经过核实的零值，而非数据缺失。",
           })}
         </p>
 

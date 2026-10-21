@@ -32,12 +32,12 @@
  * are SCITI's editorial choice and are labelled as such wherever they are
  * shown. They are not presented as official.
  *
- * Sources: src/nsoBaselineData.ts (harvested NSO province series),
+ * Sources: src/provinceBaselineData.ts (harvested NSO province series),
  *          src/cityData.ts (per-city metrics, each carrying its own source).
  */
 
 import type { SmartCity, CityMetrics } from "./types";
-import { NSO_BASELINE, NSO_BASELINE_BY_ID, type BaselineIndicator } from "./nsoBaselineData";
+import { PROVINCE_BASELINE, PROVINCE_BASELINE_BY_ID, type BaselineIndicator } from "./provinceBaselineData";
 
 export type DepaDimension =
   | "environment" | "mobility" | "living" | "people" | "energy" | "economy" | "governance";
@@ -88,7 +88,7 @@ export type Scale =
 
 /* ───────────────────────────── indicators ──────────────────────────────── */
 
-export type IndicatorOrigin = "nso" | "city-metric" | "derived";
+export type IndicatorOrigin = "province" | "city-metric" | "derived";
 
 export interface IndicatorDef {
   id: string;
@@ -98,8 +98,8 @@ export interface IndicatorDef {
   weight: number;
   scale: Scale;
   origin: IndicatorOrigin;
-  /** For NSO indicators: the id in nsoBaselineData. */
-  nsoId?: string;
+  /** For province indicators: the id in provinceBaselineData. */
+  provinceId?: string;
   /** For city-metric indicators: the CityMetrics key. */
   metricKey?: keyof CityMetrics;
   /** For derived indicators: how to compute it from other inputs. */
@@ -112,8 +112,10 @@ export interface IndicatorDef {
 
 export interface DeriveContext {
   metrics: CityMetrics;
+  /** The province this city sits in, canonical spelling. */
   province: string;
-  nso: (id: string) => number | undefined;
+  /** Read a published province indicator, e.g. "nso-internet-users". */
+  indicator: (id: string) => number | undefined;
 }
 
 /**
@@ -135,9 +137,9 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "environment",
     weight: 30,
     scale: { kind: "target", best: 5, worst: 50, note: "WHO 2021 annual guideline 5 µg/m³ is 100 points; 50 µg/m³ is 0." },
-    origin: "city-metric",
-    metricKey: "pm25Annual",
-    sourceNote: { en: "Pollution Control Department (PCD) annual provincial means.", th: "กรมควบคุมมลพิษษ (พด.) ค่าเฉลี่ยรายจังหวัด", zh: "泰国污染控制厅 省份年均值" },
+    origin: "province",
+    provinceId: "pcd-pm25-annual",
+    sourceNote: { en: "Pollution Control Department (PCD) 2024 provincial station averages.", th: "กรมควบคุมมลพิษษ (พด.) ค่าเฉลี่ยสถานีรายจังหวัด 2567", zh: "泰国污染控制厅 2024 省份监测站年均值" },
     higherIsBetter: false,
   },
   {
@@ -168,9 +170,9 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "environment",
     weight: 15,
     scale: { kind: "target", best: 60, worst: 0, note: "60% forest cover scores 100." },
-    origin: "city-metric",
-    metricKey: "forestCoverage",
-    sourceNote: { en: "Royal Forest Department provincial forest statistics.", th: "กรมป่าไม้และสัตว์ป่า", zh: "泰国皇家林业厅 森林统计" },
+    origin: "province",
+    provinceId: "rfd-forest-coverage",
+    sourceNote: { en: "Royal Forest Department province forest statistics, 2021.", th: "กรมป่าไม้และสัตว์ป่า สถิติพื้นที่ป่ารายจังหวัด 2564", zh: "泰国皇家林业厅 省级森林统计 2021" },
     higherIsBetter: true,
   },
   {
@@ -213,8 +215,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "living",
     weight: 20,
     scale: { kind: "target", best: 100, worst: 40, note: "100% of households with clean water scores 100; 40% scores 0." },
-    origin: "nso",
-    nsoId: "nso-drinking-water",
+    origin: "province",
+    provinceId: "nso-drinking-water",
     sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
@@ -224,8 +226,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "living",
     weight: 15,
     scale: { kind: "target", best: 100, worst: 80, note: "Near-ceiling nationally: 100% scores 100, 80% scores 0." },
-    origin: "nso",
-    nsoId: "nso-hygienic-toilet",
+    origin: "province",
+    provinceId: "nso-hygienic-toilet",
     sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
@@ -235,8 +237,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "living",
     weight: 15,
     scale: { kind: "target", best: 90, worst: 40, note: "90% ownership scores 100; 40% scores 0." },
-    origin: "nso",
-    nsoId: "nso-home-ownership",
+    origin: "province",
+    provinceId: "nso-home-ownership",
     sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
@@ -246,8 +248,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "living",
     weight: 10,
     scale: { kind: "target", best: 0, worst: 10, note: "0% non-durable housing scores 100; 10% scores 0." },
-    origin: "nso",
-    nsoId: "nso-non-durable-housing",
+    origin: "province",
+    provinceId: "nso-non-durable-housing",
     sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: false,
   },
@@ -311,8 +313,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 95, worst: 30, note: "95% of the population online scores 100; 30% scores 0." },
     origin: "derived",
     derive: ctx => {
-      const users = ctx.nso("nso-internet-users");
-      const pop = ctx.nso("nso-province-population");
+      const users = ctx.indicator("nso-internet-users");
+      const pop = ctx.indicator("nso-province-population");
       if (users == null || pop == null || pop <= 0) return null;
       return (users / pop) * 100;
     },
@@ -331,8 +333,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 98, worst: 40, note: "98% of the population with a mobile scores 100; 40% scores 0." },
     origin: "derived",
     derive: ctx => {
-      const users = ctx.nso("nso-mobile-users");
-      const pop = ctx.nso("nso-province-population");
+      const users = ctx.indicator("nso-mobile-users");
+      const pop = ctx.indicator("nso-province-population");
       if (users == null || pop == null || pop <= 0) return null;
       return (users / pop) * 100;
     },
@@ -355,8 +357,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "economy",
     weight: 15,
     scale: { kind: "cohort", note: "Percentile among provinces — no published target." },
-    origin: "nso",
-    nsoId: "nso-internal-migration",
+    origin: "province",
+    provinceId: "nso-internal-migration",
     sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
@@ -366,8 +368,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "economy",
     weight: 15,
     scale: { kind: "cohort", note: "Percentile among provinces — proxy for labour-market pull." },
-    origin: "nso",
-    nsoId: "nso-born-elsewhere",
+    origin: "province",
+    provinceId: "nso-born-elsewhere",
     sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
@@ -377,8 +379,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "economy",
     weight: 15,
     scale: { kind: "cohort", note: "Percentile among provinces — no published target exists for permit volume." },
-    origin: "nso",
-    nsoId: "nso-residential-permits",
+    origin: "province",
+    provinceId: "nso-residential-permits",
     sourceNote: { en: "NSO Building Permits (residential).", th: "ใบอนุญาตก่อสร้าง สศ.", zh: "NSO 建筑许可（住宅）" },
     higherIsBetter: true,
   },
@@ -423,8 +425,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 0, worst: 40, note: "0% informal labour scores 100; 40% scores 0." },
     origin: "derived",
     derive: ctx => {
-      const informal = ctx.nso("nso-informal-labour");
-      const total = ctx.nso("nso-labour-force");
+      const informal = ctx.indicator("nso-informal-labour");
+      const total = ctx.indicator("nso-labour-force");
       if (informal == null || total == null || total <= 0) return null;
       return (informal / total) * 100;
     },
@@ -437,8 +439,8 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "economy",
     weight: 20,
     scale: { kind: "cohort", note: "Percentile among provinces." },
-    origin: "nso",
-    nsoId: "nso-informal-labour",
+    origin: "province",
+    provinceId: "nso-informal-labour",
     sourceNote: { en: "NSO Informal Employment Survey.", th: "สำรวจแรงงานนอกระบบ สศ.", zh: "NSO 非正规就业调查" },
     higherIsBetter: false,
   },
@@ -532,8 +534,8 @@ function rawValue(
     const v = ind.derive(ctx);
     return v == null || !Number.isFinite(v) ? null : v;
   }
-  if (ind.nsoId) {
-    const v = ctx.nso(ind.nsoId);
+  if (ind.provinceId) {
+    const v = ctx.indicator(ind.provinceId);
     return v == null || !Number.isFinite(v) ? null : v;
   }
   if (ind.metricKey) {
@@ -571,8 +573,8 @@ function makeContext(city: SmartCity): DeriveContext {
   return {
     metrics,
     province,
-    nso: (id: string) => {
-      const map = NSO_BASELINE_BY_ID[id];
+    indicator: (id: string) => {
+      const map = PROVINCE_BASELINE_BY_ID[id];
       if (!map) return undefined;
       return map[province];
     },
@@ -628,7 +630,7 @@ export function deriveCity(city: SmartCity, cohort: Map<string, number[]>): City
 
   // Composite: weighted over the dimensions that could be scored, and the
   // weight actually covered is reported alongside.
-  let composite = 0, coveredWeight = 0, totalWeight = 0;
+  let composite = 0, coveredWeight = 0, totalWeight = 0, observedWeight = 0;
   const unscored: DepaDimension[] = [];
   for (const dim of DEPA_DIMENSION_ORDER) {
     const w = DIMENSION_WEIGHTS[dim];
@@ -637,6 +639,11 @@ export function deriveCity(city: SmartCity, cohort: Map<string, number[]>): City
     if (s == null) { unscored.push(dim); continue; }
     composite += s * w;
     coveredWeight += w;
+    // A dimension that was scored from only some of its indicators does not
+    // contribute its full weight to what was actually measured. This is the
+    // share of the published weight that rests on real observations, which is
+    // strictly less than the share of dimensions that happened to be scorable.
+    observedWeight += w * dimensions[dim].coverage;
   }
 
   const compositeValue = coveredWeight > 0 ? Math.round((composite / coveredWeight) * 10) / 10 : null;
@@ -644,7 +651,15 @@ export function deriveCity(city: SmartCity, cohort: Map<string, number[]>): City
     cityId: city.id,
     dimensions,
     composite: compositeValue,
-    weightCoverage: totalWeight > 0 ? coveredWeight / totalWeight : 0,
+    /**
+     * Share of the TOTAL published weight that rests on actual observations.
+     *
+     * A dimension with no score contributes 0. A dimension scored from only
+     * some of its indicators contributes only that share. So this number is
+     * what a reader wants to know: how much of this city's ranking is
+     * measured data rather than absence.
+     */
+    weightCoverage: totalWeight > 0 ? observedWeight / totalWeight : 0,
     unscored,
     tier: compositeValue == null ? null
       : compositeValue >= 65 ? "alpha"
@@ -666,5 +681,5 @@ export function publishedIndicators(): IndicatorDef[] {
   return [...INDICATORS];
 }
 
-export { NSO_BASELINE };
+export { PROVINCE_BASELINE };
 export type { BaselineIndicator };

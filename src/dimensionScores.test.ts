@@ -8,7 +8,7 @@ import {
   buildCohort,
   resolveProvince,
 } from "./dimensionScores";
-import { NSO_BASELINE, NSO_BASELINE_BY_ID } from "./nsoBaselineData";
+import { PROVINCE_BASELINE, PROVINCE_BASELINE_BY_ID } from "./provinceBaselineData";
 
 /**
  * These guards ask questions about the derivation engine that a screenshot
@@ -181,54 +181,73 @@ describe("derivation engine", () => {
     // its coverage says so. The floor is one dimension's weight, not zero.
     expect(Math.min(...covs)).toBeGreaterThan(0);
 
-    // Every city's coverage must equal the published weight of the dimensions
-    // it could score — recomputed independently here.
+    // Every city's coverage must equal the share of the published weight that
+    // rests on actual observations — recomputed independently here.
+    //
+    // This is NOT the same as "which dimensions could be scored". A dimension
+    // scored from only some of its indicators contributes only that share, so
+    // a city measured on 2 of 5 environment indicators reports 45% of the
+    // environment weight, not 100%. Without this, the badge would read 85%
+    // for a city whose environment number rests on two observations.
     for (const d of covered) {
       const expected = DEPA_DIMENSION_ORDER.reduce((s, dim) => {
-        if (d.dimensions[dim].score == null) return s;
-        return s + DIMENSION_WEIGHTS[dim];
+        const r = d.dimensions[dim];
+        if (r.score == null) return s;
+        return s + DIMENSION_WEIGHTS[dim] * r.coverage;
       }, 0) / 100;
       expect(d.weightCoverage).toBeCloseTo(expected, 5);
     }
   });
 });
 
-describe("NSO baseline data", () => {
+describe("province baseline data", () => {
   it("carries provenance for every indicator", () => {
-    for (const i of NSO_BASELINE) {
+    // The baseline draws on three publishers, each with its own catalogue.
+    // The test is that every number names a real, openable source — not that
+    // they all come from NSO.
+    const CATALOGUES = [
+      /^https:\/\/catalog\.nso\.go\.th\/dataset\//,
+      /^https:\/\/data\.forest\.go\.th\/dataset\//,
+      /^https:\/\/data\.go\.th\/dataset\//,
+    ];
+    for (const i of PROVINCE_BASELINE) {
       expect(i.dataset).toBeTruthy();
       expect(i.table).toBeTruthy();
-      expect(i.catalogUrl).toMatch(/^https:\/\/catalog\.nso\.go\.th\/dataset\//);
+      expect(
+        CATALOGUES.some((re) => re.test(i.catalogUrl)),
+        `${i.id} has an unexpected catalogue URL: ${i.catalogUrl}`,
+      ).toBe(true);
+      expect(i.publisher).toBeTruthy();
       expect(i.includes).toBeTruthy();
-      expect(["sum", "last"]).toContain(i.aggregate);
+      expect(["sum", "last", "mean"]).toContain(i.aggregate);
       expect(i.year).toBeGreaterThan(2000);
-      expect(i.provinceCount).toBeGreaterThanOrEqual(70);
+      expect(i.provinceCount).toBeGreaterThanOrEqual(60);
     }
   });
 
   it("covers a real majority of provinces", () => {
-    for (const i of NSO_BASELINE) {
+    for (const i of PROVINCE_BASELINE) {
       expect(Object.keys(i.provinces).length).toBe(i.provinceCount);
     }
   });
 
   it("records the year each series actually stops at", () => {
     // The 2010 vintage of the household survey is a fact the UI must show.
-    const dw = NSO_BASELINE.find(i => i.id === "nso-drinking-water")!;
+    const dw = PROVINCE_BASELINE.find(i => i.id === "nso-drinking-water")!;
     expect(dw.year).toBe(2010);
     // The ICT series are pinned, and the pin is the whole point: the ICT
     // province table's value column stops being population at 2565Q4, so the
     // population series must be read AT 2565Q4 (ISO 2022) and the internet
     // users series AT 2566Q1 (ISO 2023).
-    const internet = NSO_BASELINE.find(i => i.id === "nso-internet-users")!;
+    const internet = PROVINCE_BASELINE.find(i => i.id === "nso-internet-users")!;
     expect([internet.year, internet.quarter]).toEqual([2023, 1]);
-    const pop = NSO_BASELINE.find(i => i.id === "nso-province-population")!;
+    const pop = PROVINCE_BASELINE.find(i => i.id === "nso-province-population")!;
     expect([pop.year, pop.quarter]).toEqual([2022, 4]);
-    const mobile = NSO_BASELINE.find(i => i.id === "nso-mobile-users")!;
+    const mobile = PROVINCE_BASELINE.find(i => i.id === "nso-mobile-users")!;
     expect([mobile.year, mobile.quarter]).toEqual([2022, 4]);
     // The labour force series must be the newest quarter, not the last one
     // whose status labels the harvester happened to match.
-    const lf = NSO_BASELINE.find(i => i.id === "nso-labour-force")!;
+    const lf = PROVINCE_BASELINE.find(i => i.id === "nso-labour-force")!;
     expect(lf.year).toBe(2026);
     expect(lf.quarter).toBe(2);
   });
@@ -236,7 +255,7 @@ describe("NSO baseline data", () => {
   it("uses a table id distinct from its dataset id — they are not the same thing", () => {
     // NSO's catalogue page id and its data table id differ; the harvester
     // must not conflate them.
-    for (const i of NSO_BASELINE) {
+    for (const i of PROVINCE_BASELINE) {
       expect(i.table).not.toBe(i.dataset);
     }
   });
@@ -263,7 +282,7 @@ describe("province resolution", () => {
     // differently in these tables, and an unmapped label was being skipped
     // in silence. Mapping the variants is what brought the household survey
     // from 73 provinces to 76.
-    const nsoProvinces = new Set(Object.keys(NSO_BASELINE_BY_ID["nso-drinking-water"]));
+    const nsoProvinces = new Set(Object.keys(PROVINCE_BASELINE_BY_ID["nso-drinking-water"]));
     const repoProvs = [...new Set(allCities.map(c => resolveProvince(c.province)))];
     const missing = repoProvs.filter(p => !nsoProvinces.has(p)).sort();
     expect(missing).toEqual(["Bueng Kan"]);
@@ -291,7 +310,7 @@ describe("province resolution", () => {
       "nso-mobile-users": ["Surat Thani", "Sisaket", "Phetchabun"],
     };
     for (const [id, provinces] of Object.entries(mustBePresent)) {
-      const map = NSO_BASELINE_BY_ID[id];
+      const map = PROVINCE_BASELINE_BY_ID[id];
       expect(map, `${id} is missing from the baseline`).toBeTruthy();
       for (const p of provinces) {
         expect(map[p], `${id} has no value for ${p}`).toBeDefined();
@@ -308,9 +327,9 @@ describe("province resolution", () => {
  * silently, because the arithmetic is pinned to the published province data.
  */
 describe("Smart People — penetration rates", () => {
-  const POP = NSO_BASELINE_BY_ID["nso-province-population"];
-  const INTERNET = NSO_BASELINE_BY_ID["nso-internet-users"];
-  const MOBILE = NSO_BASELINE_BY_ID["nso-mobile-users"];
+  const POP = PROVINCE_BASELINE_BY_ID["nso-province-population"];
+  const INTERNET = PROVINCE_BASELINE_BY_ID["nso-internet-users"];
+  const MOBILE = PROVINCE_BASELINE_BY_ID["nso-mobile-users"];
 
   it("divides province users by PROVINCE population, never by city population", () => {
     for (const city of allCities) {

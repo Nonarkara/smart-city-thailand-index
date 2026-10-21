@@ -29,26 +29,30 @@ interface DimRow {
   scored: number;
   unscored: number;
   meanScore: number | null;
-  coveragePct: number;
+  /** Share of the 118 cities that have any score for this dimension. */
+  cityCoveragePct: number;
+  /** Mean share of the dimension's PUBLISHED weight actually observed. */
+  weightCoveragePct: number;
   nullIndicators: string[];
 }
 
-console.log("=".repeat(78));
+console.log("=".repeat(92));
 console.log("BASELINE COVERAGE — depa 7 dimensions across all cities");
-console.log("=".repeat(78));
+console.log("=".repeat(92));
 console.log(`cities                ${allCities.length}`);
 const scoredCities = allCities.filter(c => derivations.get(c.id)!.composite != null);
 console.log(`cities scored         ${scoredCities.length}`);
 console.log(`cities unscored       ${allCities.length - scoredCities.length}`);
 console.log();
 
-console.log("DIMENSION      wt  scored  unscored   mean score   weight cov   missing indicators");
-console.log("-".repeat(78));
+console.log("DIMENSION       wt  scored  unscored   mean score   city cov   weight cov   missing indicators");
+console.log("-".repeat(92));
 
 const dimRows: DimRow[] = [];
 for (const dim of DEPA_DIMENSION_ORDER) {
   const scores: number[] = [];
   let nullIndicators = new Set<string>();
+  let weightCoverageSum = 0;
   for (const c of allCities) {
     const d = derivations.get(c.id)!;
     const dr = d.dimensions[dim];
@@ -56,6 +60,7 @@ for (const dim of DEPA_DIMENSION_ORDER) {
       for (const contrib of dr.contributions) nullIndicators.add(contrib.id);
     } else {
       scores.push(dr.score);
+      weightCoverageSum += dr.coverage;
     }
   }
   const mean = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
@@ -65,7 +70,8 @@ for (const dim of DEPA_DIMENSION_ORDER) {
     scored: scores.length,
     unscored: allCities.length - scores.length,
     meanScore: mean,
-    coveragePct: scores.length / allCities.length,
+    cityCoveragePct: scores.length / allCities.length,
+    weightCoveragePct: scores.length ? weightCoverageSum / scores.length : 0,
     nullIndicators: [...nullIndicators],
   };
   dimRows.push(row);
@@ -73,7 +79,8 @@ for (const dim of DEPA_DIMENSION_ORDER) {
     `${DIMENSION_LABELS[dim].en.padEnd(14)} ${String(row.weight).padStart(2)}%  ` +
     `${String(row.scored).padStart(6)}  ${String(row.unscored).padStart(8)}   ` +
     `${mean == null ? "     —     " : mean.toFixed(1).padStart(6)}       ` +
-    `${(row.coveragePct * 100).toFixed(1).padStart(5)}%   ` +
+    `${(row.cityCoveragePct * 100).toFixed(1).padStart(6)}%   ` +
+    `${(row.weightCoveragePct * 100).toFixed(1).padStart(9)}%   ` +
     `${row.nullIndicators.length ? row.nullIndicators.join(", ") : "—"}`,
   );
 }
@@ -83,7 +90,7 @@ for (const dim of DEPA_DIMENSION_ORDER) {
 const coverages = scoredCities.map(c => derivations.get(c.id)!.weightCoverage);
 const covMean = coverages.reduce((a, b) => a + b, 0) / coverages.length;
 console.log();
-console.log(`composite weight coverage   min ${(Math.min(...coverages) * 100).toFixed(1)}%   ` +
+console.log(`observed weight share     min ${(Math.min(...coverages) * 100).toFixed(1)}%   ` +
   `mean ${(covMean * 100).toFixed(1)}%   max ${(Math.max(...coverages) * 100).toFixed(1)}%`);
 
 /* ── The People dimension, indicator by indicator ──────────────────────── */

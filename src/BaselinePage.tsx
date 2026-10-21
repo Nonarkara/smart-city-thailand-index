@@ -107,6 +107,27 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
   /** Only facets that actually have data in this cohort are offered. */
   const usableFacets = useMemo(() => facets.filter(f => f.coverage > 0 && buildThresholds(f).length > 0), [facets]);
 
+  /**
+   * How many of the 118 cities carry a score for each dimension.
+   *
+   * The strip used to label a dimension "measured" or "partial" from the
+   * source registry, which rated Smart People "partial" while every city
+   * carried a full People score — a contradiction the reader could not
+   * resolve. The count is the same number the table below shows, so the
+   * strip can be checked against it.
+   */
+  const dimCityCounts = useMemo(() => {
+    const counts = {} as Record<string, number>;
+    for (const dim of DEPA_DIMENSION_ORDER) {
+      let n = 0;
+      for (const city of cities) {
+        if (derivations.get(city.id)!.dimensions[dim].score != null) n++;
+      }
+      counts[dim] = n;
+    }
+    return counts;
+  }, [cities, derivations]);
+
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
     const list = cities.map(c => {
@@ -165,7 +186,14 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
           </p>
 
           {/* The seven dimensions, as a strip. Weight is the bar length;
-              a hatched cell means the dimension has no baseline yet. */}
+              a hatched cell means the dimension has no baseline yet. The
+              right-hand figure is how many of the 118 cities carry a score
+              for that dimension. */}
+          <div className="baseline-dims-head" aria-hidden="true">
+            <span className="baseline-dims-caption">
+              {t(locale, { en: "cities with a score", th: "เมืองที่มีคะแนน", zh: "有分数的城市" })}
+            </span>
+          </div>
           <div className="baseline-dims" role="list">
             {DEPA_DIMENSION_ORDER.map(dim => {
               const coverage = BASELINE_COVERAGE[dim];
@@ -186,7 +214,7 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
                   </span>
                   <span className="baseline-dim-state">
                     {has
-                      ? t(locale, { en: coverage.strength === "strong" ? "measured" : "partial", th: coverage.strength === "strong" ? "วัดได้" : "วัดได้บางส่วน", zh: coverage.strength === "strong" ? "已测量" : "部分可测" })
+                      ? `${dimCityCounts[dim]}/${cities.length}`
                       : t(locale, { en: "no baseline", th: "ยังไม่มีข้อมูล", zh: "尚无基线" })}
                   </span>
                 </div>
@@ -383,11 +411,16 @@ function BaselineRow({
         <span className="baseline-row-dims">
           {DEPA_DIMENSION_ORDER.map(dim => {
             const s = d.dimensions[dim].score;
+            const cov = d.dimensions[dim].coverage;
             return (
               <span
                 key={dim}
                 className={`baseline-row-dim${s == null ? " is-missing" : ""}`}
-                title={DIMENSION_LABELS[dim][locale]}
+                title={t(locale, {
+                  en: `${DIMENSION_LABELS[dim][locale]} — ${Math.round(cov * 100)}% of its published weight measured`,
+                  th: `${DIMENSION_LABELS[dim][locale]} — วัดได้ ${Math.round(cov * 100)}% ของน้ำหนักที่ประกาศไว้`,
+                  zh: `${DIMENSION_LABELS[dim][locale]} — 已实测其公布权重的 ${Math.round(cov * 100)}%`,
+                })}
               >
                 {s == null ? "—" : Math.round(s)}
               </span>
@@ -396,7 +429,7 @@ function BaselineRow({
         </span>
         <span className="baseline-row-score">
           {d.composite}
-          <span className="baseline-row-coverage" title={t(locale, { en: "share of published weight covered", th: "สัดส่วนน้ำหนักที่วัดได้", zh: "已覆盖权重比例" })}>
+          <span className="baseline-row-coverage" title={t(locale, { en: "share of the published weight measured from source", th: "สัดส่วนน้ำหนักที่ประกาศไว้ซึ่งวัดได้จากแหล่งข้อมูลจริง", zh: "已从来源实测的公布权重比例" })}>
             {Math.round(d.weightCoverage * 100)}%
           </span>
         </span>

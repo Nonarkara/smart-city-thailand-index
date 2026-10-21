@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { allCities } from "./cityData";
 import { buildFacets, matchesFacets } from "./baselineFacets";
 import { INDICATORS, resolveProvince } from "./dimensionScores";
-import { NSO_BASELINE, NSO_BASELINE_BY_ID } from "./nsoBaselineData";
+import { PROVINCE_BASELINE, PROVINCE_BASELINE_BY_ID } from "./provinceBaselineData";
 
 /**
  * The facets are the browsable face of the baseline: a city official picks
@@ -12,7 +12,7 @@ import { NSO_BASELINE, NSO_BASELINE_BY_ID } from "./nsoBaselineData";
  *    earlier version labelled internet and mobile usage as "governance"
  *    while the derivation engine scored them under People — so the same
  *    number appeared under two different dimensions on two different pages.
- *    The `nsoId` link on each facet makes that mismatch mechanically
+ *    The `provinceId` link on each facet makes that mismatch mechanically
  *    checkable instead of a convention.
  *
  * 2. A facet must never be published with nothing behind it. A filter that
@@ -24,24 +24,24 @@ const facets = buildFacets(allCities);
 describe("baseline facets", () => {
   it("agrees with the source record on which dimension each facet belongs to", () => {
     for (const facet of facets) {
-      if (!facet.nsoId) continue;
-      const record = NSO_BASELINE.find(i => i.id === facet.nsoId);
-      expect(record, `${facet.id} points at an unknown NSO indicator ${facet.nsoId}`).toBeTruthy();
+      if (!facet.provinceId) continue;
+      const record = PROVINCE_BASELINE.find(i => i.id === facet.provinceId);
+      expect(record, `${facet.id} points at an unknown NSO indicator ${facet.provinceId}`).toBeTruthy();
       expect(
         facet.dimension,
-        `${facet.id} claims ${facet.dimension} but ${facet.nsoId} is a ${record!.dimension} indicator`,
+        `${facet.id} claims ${facet.dimension} but ${facet.provinceId} is a ${record!.dimension} indicator`,
       ).toBe(record!.dimension);
     }
   });
 
   it("agrees with the derivation engine on which dimension each indicator belongs to", () => {
     for (const ind of INDICATORS) {
-      if (!ind.nsoId) continue;
-      const record = NSO_BASELINE.find(i => i.id === ind.nsoId);
-      expect(record, `${ind.id} points at an unknown NSO indicator ${ind.nsoId}`).toBeTruthy();
+      if (!ind.provinceId) continue;
+      const record = PROVINCE_BASELINE.find(i => i.id === ind.provinceId);
+      expect(record, `${ind.id} points at an unknown NSO indicator ${ind.provinceId}`).toBeTruthy();
       expect(
         ind.dimension,
-        `${ind.id} is scored under ${ind.dimension} but ${ind.nsoId} is a ${record!.dimension} indicator`,
+        `${ind.id} is scored under ${ind.dimension} but ${ind.provinceId} is a ${record!.dimension} indicator`,
       ).toBe(record!.dimension);
     }
   });
@@ -82,8 +82,8 @@ describe("baseline facets", () => {
     // And they must equal the engine's own contribution for the same city.
     const city = allCities.find(c => c.nameEn.includes("Phuket"))!;
     const province = resolveProvince(city.province);
-    const pop = NSO_BASELINE_BY_ID["nso-province-population"][province];
-    const users = NSO_BASELINE_BY_ID["nso-internet-users"][province];
+    const pop = PROVINCE_BASELINE_BY_ID["nso-province-population"][province];
+    const users = PROVINCE_BASELINE_BY_ID["nso-internet-users"][province];
     expect(net.value(city)).toBeCloseTo((users / pop) * 100, 6);
   });
 
