@@ -54,6 +54,24 @@ const baselineDimensionRows = (() => {
 const baselineScoredCities = baselineDimensionRows.filter(r => r.scored > 0).length;
 
 /**
+ * The dimensions with nothing measured for them, named from the engine.
+ *
+ * The gap sentence used to say "Two" and name Energy and Governance in
+ * prose. Both were hand-typed, and both could drift from the model the
+ * page is reporting on — which is exactly the kind of quiet disagreement
+ * this page exists to prevent.
+ */
+const baselineGapDimensions = (() => {
+  const derivations = deriveAll(allCities);
+  return DEPA_DIMENSION_ORDER.filter(dim =>
+    allCities.every(c => derivations.get(c.id)!.dimensions[dim].score == null),
+  );
+})();
+
+const baselineGapNames = (locale: Locale) =>
+  baselineGapDimensions.map(d => DIMENSION_LABELS[d][locale]).join(locale === "th" ? " และ " : locale === "zh" ? " 与 " : " and ");
+
+/**
  * The coverage range, measured live. A hand-typed range rots the moment an
  * indicator is added or a province falls out of a series, and this sentence
  * is the one a committee member checks.
@@ -746,9 +764,9 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
 
         <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginTop: "1.25rem" }}>
           {translate(locale, {
-            en: `Two of depa's seven dimensions have no baseline at all. Energy and Governance have no province-level source that can be downloaded, reproduced and cited, so they are published as named gaps rather than filled with an estimate. Where a dimension cannot be measured the score is null, never zero — and every row reports the share of the published weight that actually rests on observations, between ${baselineCoverageRange.min}% and ${baselineCoverageRange.max}% depending on the city, instead of quietly renormalising over the dimensions it can see. ${baselineScoredCities} of the 7 dimensions are measured today, for all 118 cities.`,
-            th: `สองมิติในเจ็ดมิติของ depa ยังไม่มีข้อมูลพื้นฐานเลย ทั้งพลังงานและการบริหารไม่มีแหล่งข้อมูลระดับจังหวัดที่ดาวน์โหลด ทำซ้ำ และอ้างอิงได้ จึงประกาศเป็นช่องว่างที่มีชื่อ แทนที่จะเดาค่ามาแทน เมื่อมิติใดวัดไม่ได้ คะแนนจะเป็น null ไม่ใช่ศูนย์ และทุกแถวจะรายงานสัดส่วนน้ำหนักที่ประกาศไว้ซึ่งมีข้อมูลจริงรองรับ ระหว่าง ${baselineCoverageRange.min}% ถึง ${baselineCoverageRange.max}% ขึ้นอยู่กับเมือง แทนการปรับสัดส่วนเงียบ ๆ เฉพาะมิติที่มองเห็น ปัจจุบันวัดได้ ${baselineScoredCities} จาก 7 มิติ ครบทั้ง 118 เมือง`,
-            zh: `depa 七个维度中有两个完全没有基线。能源与治理没有任何可下载、可复现、可引用的省级来源，因此它们被作为「有名字的缺口」公布，而不是用估算填满。凡是无法测量的维度，得分为 null，绝不是 0；每一行都报告实际有观测支撑的公布权重份额（依城市而异，为 ${baselineCoverageRange.min}%–${baselineCoverageRange.max}%），而不是悄悄在能看见的维度上重新归一。今天 7 个维度中有 ${baselineScoredCities} 个可测，覆盖全部 118 个城市。`,
+            en: `${baselineGapDimensions.length} of depa's seven dimensions have no baseline at all — ${baselineGapNames("en")}. They have no province-level source that can be downloaded, reproduced and cited, so they are published as named gaps rather than filled with an estimate. Where a dimension cannot be measured the score is null, never zero — and every row reports the share of the published weight that actually rests on observations, between ${baselineCoverageRange.min}% and ${baselineCoverageRange.max}% depending on the city, instead of quietly renormalising over the dimensions it can see. ${baselineScoredCities} of the 7 dimensions are measured today, for all 118 cities.`,
+            th: `${baselineGapDimensions.length} มิติในเจ็ดมิติของ depa ยังไม่มีข้อมูลพื้นฐานเลย — ${baselineGapNames("th")} ไม่มีแหล่งข้อมูลระดับจังหวัดที่ดาวน์โหลด ทำซ้ำ และอ้างอิงได้ จึงประกาศเป็นช่องว่างที่มีชื่อ แทนที่จะเดาค่ามาแทน เมื่อมิติใดวัดไม่ได้ คะแนนจะเป็น null ไม่ใช่ศูนย์ และทุกแถวจะรายงานสัดส่วนน้ำหนักที่ประกาศไว้ซึ่งมีข้อมูลจริงรองรับ ระหว่าง ${baselineCoverageRange.min}% ถึง ${baselineCoverageRange.max}% ขึ้นอยู่กับเมือง แทนการปรับสัดส่วนเงียบ ๆ เฉพาะมิติที่มองเห็น ปัจจุบันวัดได้ ${baselineScoredCities} จาก 7 มิติ ครบทั้ง 118 เมือง`,
+            zh: `depa 七个维度中有 ${baselineGapDimensions.length} 个完全没有基线 —— ${baselineGapNames("zh")}。它们没有任何可下载、可复现、可引用的省级来源，因此被作为「有名字的缺口」公布，而不是用估算填满。凡是无法测量的维度，得分为 null，绝不是 0；每一行都报告实际有观测支撑的公布权重份额（依城市而异，为 ${baselineCoverageRange.min}%–${baselineCoverageRange.max}%），而不是悄悄在能看见的维度上重新归一。今天 7 个维度中有 ${baselineScoredCities} 个可测，覆盖全部 118 个城市。`,
           })}
         </p>
 

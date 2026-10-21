@@ -162,6 +162,17 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
   const activeCount = Object.keys(picks).length + (query.trim() ? 1 : 0);
   const maxDimension = Math.max(...DEPA_DIMENSION_ORDER.map(d => DIMENSION_WEIGHTS[d]));
 
+  /**
+   * The dimensions with nothing measured for them.
+   *
+   * This is the definition the whole page uses — the strip, the gap band and
+   * the count in its heading. It is NOT the source registry's rating of how
+   * thinly a dimension is served: Governance has three probed sources and
+   * zero measured cities, so it is a gap, and calling it "partial" while
+   * every row shows a blank was the contradiction this replaces.
+   */
+  const gapDimensions = DEPA_DIMENSION_ORDER.filter(d => dimCityCounts[d] === 0);
+
   return (
     <>
       {/* ─── MASTHEAD ─────────────────────────────────────────────────── */}
@@ -196,8 +207,12 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
           </div>
           <div className="baseline-dims" role="list">
             {DEPA_DIMENSION_ORDER.map(dim => {
-              const coverage = BASELINE_COVERAGE[dim];
-              const has = coverage.strength !== "none";
+              // A dimension is "missing" when NOTHING is measured for it —
+              // not when the source registry rates it thinly. Governance has
+              // three probed sources and zero measured cities, so it is a
+              // gap, and the strip has to say so next to Energy.
+              const scoredCities = dimCityCounts[dim];
+              const has = scoredCities > 0;
               return (
                 <div
                   key={dim}
@@ -214,7 +229,7 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
                   </span>
                   <span className="baseline-dim-state">
                     {has
-                      ? `${dimCityCounts[dim]}/${cities.length}`
+                      ? `${scoredCities}/${cities.length}`
                       : t(locale, { en: "no baseline", th: "ยังไม่มีข้อมูล", zh: "尚无基线" })}
                   </span>
                 </div>
@@ -232,9 +247,9 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
           </p>
           <h2 className="baseline-gap-title">
             {t(locale, {
-              en: "Two dimensions have no baseline yet",
-              th: "สองมิติที่ยังไม่มีข้อมูลพื้นฐาน",
-              zh: "两个维度尚无基线",
+              en: `${gapDimensions.length} dimensions have no baseline yet`,
+              th: `${gapDimensions.length} มิติที่ยังไม่มีข้อมูลพื้นฐาน`,
+              zh: `${gapDimensions.length} 个维度尚无基线`,
             })}
           </h2>
           <p className="baseline-gap-lede">
@@ -245,7 +260,7 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
             })}
           </p>
           <ul className="baseline-gap-list">
-            {DEPA_DIMENSION_ORDER.filter(d => BASELINE_COVERAGE[d].strength === "none").map(dim => (
+            {gapDimensions.map(dim => (
               <li key={dim} className="baseline-gap-item">
                 <span className="baseline-gap-item-name">{DIMENSION_LABELS[dim][locale]}</span>
                 <span className="baseline-gap-item-note">{BASELINE_COVERAGE[dim].note}</span>
