@@ -293,12 +293,32 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
       dimension: "mobility",
       unit: "per 100k",
       source: {
-        en: "thairsc.com — provincial road deaths per 100,000 population",
-        th: "thairsc.com — ผู้เสียชีวิตบนถนนรายจังหวัดต่อ 100,000 คน",
-        zh: "thairsc.com — 省级每10万人口道路死亡",
+        en: "Integrated road-traffic death registry — deaths where the crash happened ÷ NSO province population",
+        th: "ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน — ผู้เสียชีวิตที่จังหวัดที่เกิดเหตุ ÷ ประชากรจังหวัด สศ.",
+        zh: "道路死亡综合登记系统 — 事故发生地省份的死亡人数 ÷ 统计局省份人口",
       },
-      vintage: "2026",
-      value: c => c.metrics?.roadFatalityRate ?? null,
+      vintage: String(provinceMeta("rtddi-road-deaths")?.year ?? ""),
+      provinceId: "rtddi-road-deaths",
+      value: c => {
+        const deaths = provinceValue("rtddi-road-deaths")?.(c.province);
+        const pop = provinceValue("nso-province-population")?.(c.province);
+        if (deaths == null || pop == null || pop <= 0) return null;
+        return (deaths / pop) * 100;
+      },
+    },
+    {
+      id: "motorcycle-share",
+      label: { en: "Motorcycle share of road deaths", th: "สัดส่วนผู้เสียชีวิตที่เป็นรถจักรยานยนต์", zh: "摩托车占道路死亡比例" },
+      dimension: "mobility",
+      unit: "%",
+      source: {
+        en: "Integrated road-traffic death registry — of road deaths with a recorded vehicle",
+        th: "ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน — จากผู้เสียชีวิตที่มีการบันทึกประเภทพาหนะ",
+        zh: "道路死亡综合登记系统 — 已记录车辆类型的道路死亡中",
+      },
+      vintage: String(provinceMeta("rtddi-motorcycle-share")?.year ?? ""),
+      provinceId: "rtddi-motorcycle-share",
+      value: c => provinceValue("rtddi-motorcycle-share")?.(c.province) ?? null,
     },
   ];
 

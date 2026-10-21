@@ -23,8 +23,11 @@ import {
   DIMENSION_WEIGHTS,
   INDICATORS,
   deriveAll,
+  resolveProvince,
 } from "./dimensionScores";
 import { BASELINE_COVERAGE } from "./baselineSources";
+import { PROVINCE_BASELINE_BY_ID } from "./provinceBaselineData";
+import { PROVINCE_ZH } from "./cityNamesZh";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_TEXT_COLORS, PILLAR_WEIGHTS } from "./types";
 import { translate } from "./cityPresentation";
@@ -52,6 +55,46 @@ const baselineDimensionRows = (() => {
 })();
 
 const baselineScoredCities = baselineDimensionRows.filter(r => r.scored > 0).length;
+
+/**
+ * The fewest cities any measured dimension covers. Living reaches 117 —
+ * Bueng Kan was created in 2011 and does not exist in any vintage of the
+ * household survey — so "for all 118 cities" would be a small lie.
+ */
+const baselineCoverageFloor = Math.min(
+  ...baselineDimensionRows.filter(r => r.scored > 0).map(r => r.scored),
+);
+
+/**
+ * The national road-death rate and the best province, computed live.
+ *
+ * The sentence that quotes them is a claim about the data, so it must not
+ * be a claim about a number someone typed once.
+ */
+const baselineRoadSafety = (() => {
+  const deaths = PROVINCE_BASELINE_BY_ID["rtddi-road-deaths"];
+  const pop = PROVINCE_BASELINE_BY_ID["nso-province-population"];
+  let totalDeaths = 0, totalPop = 0;
+  const rates: { province: string; rate: number }[] = [];
+  for (const [province, n] of Object.entries(deaths)) {
+    const p = pop[province];
+    if (!p) continue;
+    totalDeaths += n;
+    totalPop += p;
+    rates.push({ province, rate: (n / p) * 100 });
+  }
+  const best = rates.reduce((a, b) => (b.rate < a.rate ? b : a));
+  const city = allCities.find(c => resolveProvince(c.province) === best.province);
+  return {
+    national: (totalDeaths / totalPop) * 100,
+    best,
+    bestName: {
+      en: best.province,
+      th: city?.provinceTh ?? best.province,
+      zh: PROVINCE_ZH[best.province] ?? best.province,
+    },
+  };
+})();
 
 /**
  * The dimensions with nothing measured for them, named from the engine.
@@ -764,9 +807,9 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
 
         <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginTop: "1.25rem" }}>
           {translate(locale, {
-            en: `${baselineGapDimensions.length} of depa's seven dimensions have no baseline at all — ${baselineGapNames("en")}. They have no province-level source that can be downloaded, reproduced and cited, so they are published as named gaps rather than filled with an estimate. Where a dimension cannot be measured the score is null, never zero — and every row reports the share of the published weight that actually rests on observations, between ${baselineCoverageRange.min}% and ${baselineCoverageRange.max}% depending on the city, instead of quietly renormalising over the dimensions it can see. ${baselineScoredCities} of the 7 dimensions are measured today, for all 118 cities.`,
-            th: `${baselineGapDimensions.length} มิติในเจ็ดมิติของ depa ยังไม่มีข้อมูลพื้นฐานเลย — ${baselineGapNames("th")} ไม่มีแหล่งข้อมูลระดับจังหวัดที่ดาวน์โหลด ทำซ้ำ และอ้างอิงได้ จึงประกาศเป็นช่องว่างที่มีชื่อ แทนที่จะเดาค่ามาแทน เมื่อมิติใดวัดไม่ได้ คะแนนจะเป็น null ไม่ใช่ศูนย์ และทุกแถวจะรายงานสัดส่วนน้ำหนักที่ประกาศไว้ซึ่งมีข้อมูลจริงรองรับ ระหว่าง ${baselineCoverageRange.min}% ถึง ${baselineCoverageRange.max}% ขึ้นอยู่กับเมือง แทนการปรับสัดส่วนเงียบ ๆ เฉพาะมิติที่มองเห็น ปัจจุบันวัดได้ ${baselineScoredCities} จาก 7 มิติ ครบทั้ง 118 เมือง`,
-            zh: `depa 七个维度中有 ${baselineGapDimensions.length} 个完全没有基线 —— ${baselineGapNames("zh")}。它们没有任何可下载、可复现、可引用的省级来源，因此被作为「有名字的缺口」公布，而不是用估算填满。凡是无法测量的维度，得分为 null，绝不是 0；每一行都报告实际有观测支撑的公布权重份额（依城市而异，为 ${baselineCoverageRange.min}%–${baselineCoverageRange.max}%），而不是悄悄在能看见的维度上重新归一。今天 7 个维度中有 ${baselineScoredCities} 个可测，覆盖全部 118 个城市。`,
+            en: `${baselineGapDimensions.length} of depa's seven dimensions have no baseline at all — ${baselineGapNames("en")}. They have no province-level source that can be downloaded, reproduced and cited, so they are published as named gaps rather than filled with an estimate. Where a dimension cannot be measured the score is null, never zero — and every row reports the share of the published weight that actually rests on observations, between ${baselineCoverageRange.min}% and ${baselineCoverageRange.max}% depending on the city, instead of quietly renormalising over the dimensions it can see. ${baselineScoredCities} of the 7 dimensions are measured today, covering at least ${baselineCoverageFloor} of the 118 cities.`,
+            th: `${baselineGapDimensions.length} มิติในเจ็ดมิติของ depa ยังไม่มีข้อมูลพื้นฐานเลย — ${baselineGapNames("th")} ไม่มีแหล่งข้อมูลระดับจังหวัดที่ดาวน์โหลด ทำซ้ำ และอ้างอิงได้ จึงประกาศเป็นช่องว่างที่มีชื่อ แทนที่จะเดาค่ามาแทน เมื่อมิติใดวัดไม่ได้ คะแนนจะเป็น null ไม่ใช่ศูนย์ และทุกแถวจะรายงานสัดส่วนน้ำหนักที่ประกาศไว้ซึ่งมีข้อมูลจริงรองรับ ระหว่าง ${baselineCoverageRange.min}% ถึง ${baselineCoverageRange.max}% ขึ้นอยู่กับเมือง แทนการปรับสัดส่วนเงียบ ๆ เฉพาะมิติที่มองเห็น ปัจจุบันวัดได้ ${baselineScoredCities} จาก 7 มิติ ครอบคลุมอย่างน้อย ${baselineCoverageFloor} จาก 118 เมือง`,
+            zh: `depa 七个维度中有 ${baselineGapDimensions.length} 个完全没有基线 —— ${baselineGapNames("zh")}。它们没有任何可下载、可复现、可引用的省级来源，因此被作为「有名字的缺口」公布，而不是用估算填满。凡是无法测量的维度，得分为 null，绝不是 0；每一行都报告实际有观测支撑的公布权重份额（依城市而异，为 ${baselineCoverageRange.min}%–${baselineCoverageRange.max}%），而不是悄悄在能看见的维度上重新归一。今天 7 个维度中有 ${baselineScoredCities} 个可测，至少覆盖 118 座城市中的 ${baselineCoverageFloor} 座。`,
           })}
         </p>
 
@@ -783,6 +826,14 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
             en: "A second provenance note: the environment dimension's two province series come from two other publishers. PM2.5 is the Pollution Control Department's 2024 annual average per monitoring station — the source publishes stations, not province totals, so the province figure is the mean of its stations' annual averages, and every station value is stored beside it so the mean can be checked by hand. Forest cover is the Royal Forest Department's 2021 province statistics, read from the Thai column: the file's English column is a stale, shifted list and is deliberately ignored. Three provinces record no forest area at all, and that is a verified zero, not a gap.",
             th: "ข้อควรระบุเรื่องที่มาของข้อมูลอีกข้อ: สองชุดข้อมูลระดับจังหวัดของมิติสิ่งแวดล้อมมาจากหน่วยงานอื่นอีกสองแห่ง PM2.5 คือค่าเฉลี่ยรายปี 2567 รายสถานีตรวจวัดของกรมควบคุมมลพิษษ แหล่งข้อมูลนี้เผยแพร่รายสถานี ไม่ใช่ยอดรวมรายจังหวัด ค่าระดับจังหวัดจึงเป็นค่าเฉลี่ยของค่าเฉลี่ยรายสถานีในจังหวัดนั้น และเก็บค่าของทุกสถานีไว้ข้าง ๆ เพื่อให้ตรวจสอบด้วยมือ ส่วนสัดส่วนพื้นที่ป่าเป็นสถิติรายจังหวัดปี 2564 ของกรมป่าไม้และสัตว์ป่า อ่านจากคอลัมน์ภาษาไทย เพราะคอลัมน์ภาษาอังกฤษในไฟล์เป็นรายการจังหวัดรุ่นเก่าที่เลื่อนตำแหน่งแล้ว จึงถูกข้ามไปโดยเจตนา สามจังหวัดไม่มีพื้นที่ป่าเลย ซึ่งเป็นศูนย์ที่ตรวจสอบแล้ว ไม่ใช่ข้อมูลที่ขาดหาย",
             zh: "第二条溯源说明：环境维度的两套省级系列来自另外两家发布机构。PM2.5 是泰国污染控制厅 2024 年的逐监测站年均值——该来源发布的是监测站而非省份合计，因此省级数值是本省各站年均值的平均，且每个站点数值都与其一同保存，可手工复核。森林覆盖率是泰国皇家林业厅 2021 年的省级统计，读自泰文列——该文件的英文列是一份陈旧且错位的清单，故被有意忽略。有三个省份完全没有森林面积，这是经过核实的零值，而非数据缺失。",
+          })}
+        </p>
+
+        <p style={{ fontSize: "var(--text-micro)", color: "var(--3)", lineHeight: 1.6, marginTop: ".75rem" }}>
+          {translate(locale, {
+            en: `A third provenance note, on Smart Mobility. The score comes from Thailand's integrated road-traffic death registry, which merges the police, hospital and insurance registers into one record per road death. Each death is attributed to the province where the crash happened — the file also carries the victim's home province, and the baseline does not use it, because a crash in Phayao that kills a Khon Kaen resident belongs to Phayao's road-safety record. The 2025 file is the latest complete year; the 2026 file holds only January to March. The rate divides those deaths by the same NSO province population every other rate in the baseline uses. One finding is worth stating plainly: at ${baselineRoadSafety.national.toFixed(1)} deaths per 100,000 nationally, no province in Thailand currently reaches the WHO Decade of Action target of 5 — the best is ${baselineRoadSafety.bestName.en} at ${baselineRoadSafety.best.rate.toFixed(1)}.`,
+            th: `ข้อควรระบุเรื่องที่มาของข้อมูลอีกข้อ เรื่องมิติการเดินทาง คะแนนมาจากระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนนของไทย ซึ่งรวมข้อมูลจากตำรวจ โรงพยาบาล และบริษัทประกัน เป็นหนึ่งระเบียนต่อหนึ่งการเสียชีวิต แต่ละรายการถูกจัดสรรให้จังหวัดที่เกิดอุบัติเหตุ ไม่ใช่จังหวัดที่ผู้เสียชีวิตอาศัยอยู่ เพราะอุบัติเหตุที่เกิดในจังหวัดพะเยาและคร่าชีวิตผู้อยู่อาศัยในจังหวัดขอนแก่น ควรบันทึกอยู่ในบันทึกความปลอดภัยทางถนนของจังหวัดพะเยา ไฟล์ปี 2025 เป็นปีล่าสุดที่สมบูรณ์ ไฟล์ปี 2026 มีเพียงมกราคมถึงมีนาคม อัตราคำนวณจากการเสียชีวิตหารด้วยประชากรจังหวัดของ สศ. ชุดเดียวกับที่ใช้ในทุกอัตราของระบบนี้ ข้อค้นพบหนึ่งข้อควรกล่าวตรง ๆ คือในระดับประเทศมีผู้เสียชีวิต ${baselineRoadSafety.national.toFixed(1)} รายต่อ 100,000 คน และยังไม่มีจังหวัดใดในประเทศที่บรรลุเป้าหมายของ WHO Decade of Action ที่ 5 รายต่อ 100,000 คน ดีที่สุดคือ${baselineRoadSafety.bestName.th} ที่ ${baselineRoadSafety.best.rate.toFixed(1)}`,
+            zh: `第三条溯源说明，关于智慧出行维度。得分来自泰国道路死亡综合登记系统，该系统把警方、医院与保险三方记录合并为每起道路死亡一条记录。每条死亡都归属到事故发生地所在省份——文件同时载有死者登记住址所在省份，而基线不使用后者：发生在帕夭州、导致孔敬府居民身亡的事故，应计入帕夭州的道路安全记录。2025 年文件是最近一个完整年度；2026 年文件只有 1 月至 3 月。该比率以每条基线比率所用的同一份统计局省份人口为分母。有一个发现值得直说：全国每 10 万人死亡 ${baselineRoadSafety.national.toFixed(1)} 例，泰国目前没有任何一个省份达到 WHO「十年行动」每年每 10 万例 5 例的目标——表现最好的是${baselineRoadSafety.bestName.zh}，${baselineRoadSafety.best.rate.toFixed(1)}。`,
           })}
         </p>
 

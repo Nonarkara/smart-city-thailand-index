@@ -194,19 +194,34 @@ export const INDICATORS: readonly IndicatorDef[] = [
     dimension: "mobility",
     weight: 70,
     scale: { kind: "target", best: 5, worst: 40, note: "WHO Decade of Action: ≤5 deaths per 100,000 scores 100; ≥40 scores 0." },
-    origin: "city-metric",
-    metricKey: "roadFatalityRate",
-    sourceNote: { en: "thairsc.com provincial road deaths per 100,000.", th: "thairsc.com ผู้เสียชีวิตบนถนนต่อ 100,000", zh: "thairsc.com 省级道路死亡率" },
+    origin: "derived",
+    derive: ctx => {
+      const deaths = ctx.indicator("rtddi-road-deaths");
+      const pop = ctx.indicator("nso-province-population");
+      if (deaths == null || pop == null || pop <= 0) return null;
+      // The population series is in THOUSANDS, so deaths ÷ (pop × 1000) × 100,000
+      // is deaths ÷ pop × 100.
+      return (deaths / pop) * 100;
+    },
+    sourceNote: {
+      en: "Integrated road-traffic death registry (2025) — deaths in the province where the crash happened ÷ NSO province population (Q4 2022), the same population base the rest of the baseline uses.",
+      th: "ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน (2568) — ผู้เสียชีวิตในจังหวัดที่เกิดอุบัติเหตุ ÷ ประชากรจังหวัด สศ. (ไตรมาส 4/2565) ฐานประชากรเดียวกับทั้งระบบ",
+      zh: "道路死亡综合登记系统（2025）— 事故发生地所在省份的死亡人数 ÷ 泰国统计局省份人口（2022Q4），与全站使用同一人口基数",
+    },
     higherIsBetter: false,
   },
-  // Mobility is the thinnest dimension in the model: road safety is the only
-  // indicator NSO or the transport authorities publish at province level, and
-  // it is a CITY metric, so only the 49 cities with curated road-death data
-  // carry a Smart Mobility score. That gap is shown, not filled with a
-  // neighbouring concept. Building permits used to sit here as a
-  // province-level backbone, but residential construction is an economic
-  // activity, not a transport one — depa's Smart Mobility is about moving
-  // people and goods, and a permit is neither. It is scored under Economy.
+  // Mobility rests on ONE indicator, and now it reaches every city. The
+  // integrated road-traffic death registry publishes a record per death with
+  // the province the crash happened in, so the rate is a province series
+  // rather than a hand-typed city metric. The motorcycle share of those
+  // deaths is published as a browsable indicator but deliberately NOT scored:
+  // a high motorcycle share reflects how a province travels, and scoring it
+  // would systematically penalise rural provinces for being rural.
+  //
+  // Building permits used to sit here as a province-level backbone, but
+  // residential construction is an economic activity, not a transport one —
+  // depa's Smart Mobility is about moving people and goods, and a permit is
+  // neither. It is scored under Economy.
 
   /* ── living ── */
   {

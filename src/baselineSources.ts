@@ -172,8 +172,27 @@ export const SOURCE_REGISTRY: readonly SourceRecord[] = [
     title: "Integrated road-traffic death dataset (rtddi)",
     url: "https://data.go.th/dataset/rtddi",
     verified: "200",
+    caveat:
+      "Probed 2026-10-21. The catalogue id 'rtddi' resolves; the resource itself lives " +
+      "under dataset f5804870-7dc2-42df-86f3-769d6cc2ae23 and is a CSV per year from " +
+      "BE 2554 to BE 2569. TRAP: the BE 2569 file holds ONLY January to March, so it is " +
+      "not a year and is not used; BE 2568 (2025) is the latest complete year, with all " +
+      "twelve months present. TRAP: the file carries TWO province columns and they mean " +
+      "different things. 'Province' is the victim's registered address — filled on only " +
+      "36% of records, and agreeing with the accident's province in just 53.5% of the " +
+      "rows where both could be checked. 'จ.ที่เสียชีวิต' is the province the death is " +
+      "recorded against, which is where the crash occurred; it is filled on 100% of records " +
+      "and matched the accident district's province in 612 of 612 rows resolvable against " +
+      "the DOPA gazetteer. That is the column the baseline uses. Also: the helmet and " +
+      "seatbelt risk columns are empty, and vehicle type is unrecorded on 44.2% of " +
+      "records, so the motorcycle share is computed on the recorded-vehicle subset only.",
     serves: ["mobility", "living"],
-    indicators: ["road deaths per 100,000 population", "accidents by road class"],
+    indicators: [
+      "road deaths by province where the crash occurred",
+      "motorcycle share of road deaths with a recorded vehicle",
+      "accident district and sub-district",
+      "victim age, sex and nationality",
+    ],
   },
   {
     id: "gistda-open",
@@ -325,8 +344,10 @@ export const BASELINE_COVERAGE: Readonly<Record<DepaDimension, {
   mobility: {
     strength: "partial",
     sources: 3,
-    note: "Road deaths are solid via the integrated road-traffic dataset. Commute time " +
-          "and transit coverage have no verified open source.",
+    note: "Scored for all 118 cities from the integrated road-traffic death registry: " +
+          "deaths in the province where the crash happened, per 100,000 residents. " +
+          "Commute time and transit coverage still have no verified open source, and the " +
+          "motorcycle share of those deaths is published for browsing but not scored.",
   },
   governance: {
     strength: "partial",

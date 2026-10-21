@@ -636,6 +636,160 @@ async function harvestPcdPm25() {
   };
 }
 
+/* ── Road-traffic deaths, integrated death registry ─────────────────────── */
+
+/**
+ * The "ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน" integrates three
+ * registers — police, hospital and insurance — into one death record per
+ * road death. It is the most detailed road-safety dataset in Thailand.
+ *
+ * TWO PROVINCE COLUMNS, AND THEY MEAN DIFFERENT THINGS — this was measured,
+ * not assumed:
+ *
+ *   "Province"            the victim's registered address. Filled on only 36%
+ *                         of records. It matches the accident's province in
+ *                         53.5% of the rows where both can be checked, so it
+ *                         is NOT where the crash happened.
+ *   "จ.ที่เสียชีวิต"        the province the death is recorded against — the
+ *                         accident location, because the record is filed
+ *                         where the crash occurred. Filled on 100% of
+ *                         records, and it matched the accident district's
+ *                         province in 612 of 612 rows where the district name
+ *                         could be resolved against the DOPA gazetteer.
+ *
+ * So the crash province is "จ.ที่เสียชีวิต", and it is used.
+ *
+ * The BE 2568 file (2025) is used rather than the newest one: the 2569 file
+ * holds only January to March, and a quarter of a year is not a year.
+ */
+const RTDDI_RESOURCE_URL =
+  "https://data.go.th/dataset/f5804870-7dc2-42df-86f3-769d6cc2ae23" +
+  "/resource/98c51d89-816b-4ce3-8b7f-648d5723e093/download/_2568.csv";
+const RTDDI_VINTAGE = 2025; // BE 2568
+
+/** The vehicle labels that mean "two-wheeled motor vehicle". */
+const MOTORCYCLE_VEHICLES = new Set(["รถจักรยานยนต์", "รถจักรยาน"]);
+/** The label the registry uses when no vehicle was recorded. */
+const VEHICLE_UNSPECIFIED = "ไม่ระบุพาหนะ";
+
+async function harvestRtddi() {
+  const rows = parseCsv(await get(RTDDI_RESOURCE_URL));
+  const header = rows[0] ?? [];
+  const iCrashProv = header.findIndex(h => h.trim() === "จ.ที่เสียชีวิต");
+  const iVehicle = header.findIndex(h => h.trim() === "Vehicle Merge Final");
+  const iYear = header.findIndex(h => /Dead Year|ปีที่เสียชีวิต/i.test(h));
+  const iDate = header.findIndex(h => h.trim() === "Dead Date");
+  if (iCrashProv < 0 || iVehicle < 0 || iYear < 0) {
+    throw new Error(`RTDDI: expected the crash-province / vehicle / year columns`);
+  }
+
+  const deaths = {};
+  const motoDeaths = {};
+  const identifiedVehicleDeaths = {};
+  const months = new Set();
+  let unidentifiedVehicle = 0;
+  let total = 0;
+
+  for (const r of rows.slice(1)) {
+    if (r.length <= Math.max(iCrashProv, iVehicle, iYear)) continue;
+    const year = String(r[iYear] ?? "").trim();
+    if (year && year !== "2568") continue;
+    const th = String(r[iCrashProv] ?? "").trim();
+    if (!th) continue;
+    const canonical = PROVINCE_TH[th];
+    if (!canonical) continue;
+    const date = String(r[iDate] ?? "").trim();
+    if (date.length >= 7) months.add(date.slice(0, 7));
+    total++;
+
+    deaths[canonical] = (deaths[canonical] ?? 0) + 1;
+    const vehicle = String(r[iVehicle] ?? "").trim();
+    if (!vehicle || vehicle === VEHICLE_UNSPECIFIED) {
+      unidentifiedVehicle++;
+      continue;
+    }
+    identifiedVehicleDeaths[canonical] = (identifiedVehicleDeaths[canonical] ?? 0) + 1;
+    if (MOTORCYCLE_VEHICLES.has(vehicle)) {
+      motoDeaths[canonical] = (motoDeaths[canonical] ?? 0) + 1;
+    }
+  }
+
+  const provinceCount = Object.keys(deaths).length;
+  if (provinceCount < 75) throw new Error(`RTDDI road deaths: only ${provinceCount} provinces parsed`);
+  if (months.size < 12) throw new Error(`RTDDI road deaths: only ${months.size} months present, expected a full year`);
+
+  const totalDeaths = Object.values(deaths).reduce((a, b) => a + b, 0);
+  const identifiedTotal = Object.values(identifiedVehicleDeaths).reduce((a, b) => a + b, 0);
+  const motoTotal = Object.values(motoDeaths).reduce((a, b) => a + b, 0);
+  const unidentifiedPct = round1((unidentifiedVehicle / total) * 100);
+
+  const share = {};
+  for (const [province, n] of Object.entries(identifiedVehicleDeaths)) {
+    share[province] = round1((motoDeaths[province] / n) * 100);
+  }
+
+  const publisher = "ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน (3 ฐาน) — Integrated road-traffic death registry";
+
+  return [
+    {
+      id: "rtddi-road-deaths",
+      label: { en: "Road deaths recorded in the province", th: "ผู้เสียชีวิตจากอุบัติเหตุทางถนนที่บันทึกในจังหวัด" },
+      dimension: "mobility",
+      unit: "deaths",
+      publisher,
+      dataset: "rtddi",
+      table: "_2568.csv",
+      catalogUrl: "https://data.go.th/dataset/rtddi",
+      includes:
+        "Every road-death record of calendar year 2568 (2025) in the integrated registry " +
+        "— police, hospital and insurance combined — attributed to the province where the " +
+        "crash occurred",
+      aggregate: "sum",
+      year: RTDDI_VINTAGE,
+      quarter: null,
+      provinceCount,
+      note:
+        `Integrated road-traffic death registry, BE 2568 (2025): ${totalDeaths} road deaths ` +
+        `across ${provinceCount} provinces and all twelve months of the year. The registry ` +
+        `integrates three registers (police, hospital, insurance). Each death is attributed ` +
+        `to the province where the crash occurred, not the victim's home province — the file ` +
+        `carries both, and the crash province was verified against the accident district in ` +
+        `the DOPA gazetteer (612 of 612 resolvable rows agreed). Counts are deaths REGISTERED ` +
+        `in the registry; they are not a population estimate of road risk. The BE 2569 file ` +
+        `exists but holds only January to March, so it is not used.`,
+      provinces: deaths,
+    },
+    {
+      id: "rtddi-motorcycle-share",
+      label: { en: "Motorcycle share of road deaths", th: "สัดส่วนผู้เสียชีวิตจากอุบัติเหตุทางถนนที่เป็นรถจักรยานยนต์" },
+      dimension: "mobility",
+      unit: "%",
+      publisher,
+      dataset: "rtddi",
+      table: "_2568.csv",
+      catalogUrl: "https://data.go.th/dataset/rtddi",
+      includes:
+        "Road deaths of calendar year 2568 (2025) whose vehicle was recorded as a " +
+        "two-wheeled motor vehicle, as a share of the province's road deaths with a " +
+        "recorded vehicle",
+      aggregate: "last",
+      year: RTDDI_VINTAGE,
+      quarter: null,
+      provinceCount,
+      note:
+        `Share of road deaths that were motorcycle deaths, out of the province's road deaths ` +
+        `with a RECORDED vehicle. Vehicle type is missing on ${unidentifiedVehicle} of ${total} ` +
+        `national records (${unidentifiedPct}%), so the denominator is the recorded-vehicle ` +
+        `subset rather than every death — a province that records vehicle type badly would ` +
+        `otherwise look safer than it is. Nationally ${motoTotal} of ${identifiedTotal} ` +
+        `recorded-vehicle deaths were motorcycles. Published as a browsable indicator, not ` +
+        `scored: a high motorcycle share reflects how a province travels, and scoring it would ` +
+        `systematically penalise rural provinces for being rural.`,
+      provinces: share,
+    },
+  ];
+}
+
 /* ────────────────────────────── run ────────────────────────────────────── */
 const NSO_PUBLISHER = "สศ. / NSO — National Statistical Office";
 
@@ -688,6 +842,22 @@ try {
   console.log(`  ✗ pcd-pm25-annual  ${e.message}`);
 }
 
+// Integrated road-traffic death registry — a fourth publisher, and the only
+// one whose province is the CRASH location rather than a residence.
+try {
+  const rtddi = await harvestRtddi();
+  for (const ind of rtddi) {
+    results.push({ direct: ind });
+    const vals = Object.values(ind.provinces);
+    console.log(
+      `  ✓ ${ind.id.padEnd(26)} n=${String(ind.provinceCount).padStart(2)}  ` +
+      `${ind.year}  ${Math.min(...vals)}–${Math.max(...vals)} ${ind.unit}`,
+    );
+  }
+} catch (e) {
+  console.log(`  ✗ rtddi road deaths  ${e.message}`);
+}
+
 /* ─────────────────────────── emit the TS module ────────────────────────── */
 
 const ts = `/**
@@ -700,17 +870,18 @@ const ts = `/**
  * table, the cube members included, how the rest was aggregated, the period,
  * and the source URL. A reader can reproduce any number.
  *
- * Three publishers so far:
+ * Four publishers so far:
  *   สศ. / NSO   — National Statistical Office, via catalogapi.nso.go.th
  *   กรมป่าไม้ / RFD — Royal Forest Department, via data.forest.go.th
  *   พด. / PCD   — Pollution Control Department, via pcd.gdcatalog.go.th
+ *   ระบบบูรณาการข้อมูลการตาย — Integrated road-traffic death registry, via data.go.th
  *
  * The data is COMMITTED, not fetched at build time — the site must never
  * depend on a government API being up.
  *
  * Note the vintages. The six household-survey indicators are 2010; the digital
- * indicators are 2022-2023; forest cover is 2021; PM2.5 is 2024. That spread is
- * real and is surfaced in the UI rather than hidden.
+ * indicators are 2022-2023; forest cover is 2021; PM2.5 is 2024; road deaths
+ * are 2025. That spread is real and is surfaced in the UI rather than hidden.
  *
  * Source: https://catalog.nso.go.th  ·  https://catalogapi.nso.go.th  ·  https://data.forest.go.th  ·  https://data.go.th
  */
