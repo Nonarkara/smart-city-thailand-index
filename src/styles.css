@@ -380,10 +380,15 @@ ul, ol { list-style: none; }
 .skip-link:focus { transform: translateY(0); }
 
 /* ─── TOPBAR ─── */
+/* The bar is deliberately slim. Every control in it used to carry a 44px
+   min-height so the row was 44px of content, and the bar came out 66px
+   thick with a 44px slab for the language switch. The tap-target law is
+   still met: each control paints a compact box and carries a transparent
+   ::after that extends the real hit area to 44px. */
 .topbar {
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: .55rem min(calc((100% - var(--w)) / 2), 1.25rem);
+  padding: .5rem min(calc((100% - var(--w)) / 2), 1.25rem);
   background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   box-shadow: none;
@@ -392,19 +397,29 @@ ul, ol { list-style: none; }
 }
 /* Subtle bottom separator when user has scrolled — makes nav feel grounded */
 .topbar-scrolled { border-bottom: 1px solid var(--5); }
-.brand-lockup { display: flex; align-items: center; gap: .6rem; transition: opacity .2s; min-height: 44px; }
+.brand-lockup {
+  display: flex; align-items: center; gap: .6rem; transition: opacity .2s;
+  position: relative;
+}
 .brand-lockup picture { display: block; }
 .brand-lockup:hover { opacity: .8; }
+/* 44px tall hit area around a 22px wordmark. */
+.brand-lockup::after {
+  content: ""; position: absolute; inset: -12px -8px;
+}
 .brand-logo { width: auto; height: 28px; border-radius: var(--radius-xs); aspect-ratio: 1; }
 .brand-mark { display: none; }
-.brand-name { font-weight: 650; font-size: var(--text-body); color: var(--ink); letter-spacing: -.02em; opacity: .8; }
+.brand-name { font-weight: 650; font-size: var(--text-body); line-height: 1.45; color: var(--ink); letter-spacing: -.02em; opacity: .8; }
 .nav-links { display: flex; align-items: center; gap: 0; }
 .nav-link {
   padding: .35rem .55rem; font-size: var(--text-micro); font-weight: 450; color: var(--3);
+  line-height: 1.45;
   border-radius: var(--radius-sm); transition: all .2s var(--ease);
   white-space: nowrap; letter-spacing: -.01em;
-  display: inline-flex; align-items: center; min-height: 44px; /* §11.8 tap target */
+  display: inline-flex; align-items: center; position: relative;
 }
+/* 44px tall hit area around a ~26px label (§11.8 tap target). */
+.nav-link::after { content: ""; position: absolute; inset: -9px 0; }
 .nav-link:hover { color: var(--ink); background: rgba(0,0,0,.03); }
 .nav-link.active { color: var(--ink); font-weight: 600; background: var(--surface); }
 
@@ -416,7 +431,10 @@ ul, ol { list-style: none; }
 }
 .nav-group {
   position: relative;
-  display: inline-block;
+  /* inline-flex, not inline-block: an inline-block adds a line-box strut
+     that made the row 34px instead of the trigger's 30px. */
+  display: inline-flex;
+  align-items: center;
 }
 .nav-group-trigger {
   display: inline-flex;
@@ -513,9 +531,11 @@ ul, ol { list-style: none; }
 
 .theme-toggle {
   margin-left: .2rem; padding: .18rem .4rem; font-size: var(--text-body); line-height: 1;
-  min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
+  min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
+  position: relative;
   color: var(--3); border-radius: 0; transition: all .2s var(--ease);
 }
+.theme-toggle::after { content: ""; position: absolute; inset: -12px 0; }
 .theme-toggle:hover { color: var(--ink); background: rgba(0,0,0,.04); }
 .locale-toggle {
   margin-left: .1rem; padding: .2rem .5rem; font: 600 var(--text-micro) var(--mono);
@@ -533,20 +553,20 @@ ul, ol { list-style: none; }
   display: inline-flex;
   align-items: stretch;
   margin-left: .1rem;
-  min-height: 44px;
   background: var(--surface);
   border: 1px solid var(--5);
   border-radius: 0;
-  overflow: hidden;
+  /* NOT overflow:hidden — it would clip the buttons' expanded hit areas
+     and leave the language switch with a 21px tap target. */
 }
 .locale-segmented-btn {
   font: 600 var(--text-micro) var(--mono);
   padding: .2rem .5rem;
-  min-height: 44px;
   min-width: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   color: var(--3);
   background: transparent;
   border: 0;
@@ -554,6 +574,8 @@ ul, ol { list-style: none; }
   cursor: pointer;
   transition: all .2s var(--ease);
 }
+/* 44px tall hit area around a ~22px button. */
+.locale-segmented-btn::after { content: ""; position: absolute; inset: -12px 0; }
 .locale-segmented-btn:first-child { border-left: 0; }
 .locale-segmented-btn:hover { color: var(--ink); background: var(--surface-hover); }
 .locale-segmented-btn[aria-pressed="true"] {
@@ -575,8 +597,15 @@ ul, ol { list-style: none; }
     width: auto;
     padding: .55rem .45rem;
     border: 1px solid var(--5);
+    min-height: 44px;
   }
   .nav-links.nav-links-open .locale-segmented-btn:first-child { border-left: 1px solid var(--5); }
+  /* In the open dropdown every item is already 44px tall on its own, so
+     the expanded hit area would only make neighbouring rows overlap and
+     cause off-by-one taps. Turn it off there. */
+  .nav-links.nav-links-open .nav-link::after,
+  .nav-links.nav-links-open .theme-toggle::after,
+  .nav-links.nav-links-open .locale-segmented-btn::after { content: none; }
 }
 
 /* ─── HEADER — ONE LINE ─── */
@@ -2233,7 +2262,16 @@ h3 { font-size: var(--text-body); font-weight: 700; letter-spacing: -.01em; line
 .trend-intelligence-panel { display: none !important; }
 
 @media (max-width: 900px) {
-  .nav-toggle { display: inline-flex; flex-direction: column; gap: .2rem; width: 44px; min-height: 44px; padding: .6rem; border: 1px solid var(--5); border-radius: var(--radius-sm); }
+  /* The three bars were stacking from the top of a 44px box, so the icon
+     sat about 5px above the wordmark's centre. justify-content centres
+     them, and the box is now 36px with a 44px hit area carried by ::after,
+     so the bar can be slim without shrinking the touch target. */
+  .nav-toggle {
+    display: inline-flex; flex-direction: column; justify-content: center; gap: .2rem;
+    width: 36px; height: 36px; padding: 0; border: 1px solid var(--5); border-radius: var(--radius-sm);
+    position: relative;
+  }
+  .nav-toggle::after { content: ""; position: absolute; inset: -4px; }
   .nav-toggle span { display: block; width: 100%; height: 2px; background: var(--ink); border-radius: 0; }
   .nav-links { position: absolute; top: calc(100% + .35rem); right: .75rem; left: .75rem; display: none; flex-direction: column; padding: .75rem; border: 1px solid var(--5); background: rgba(250,251,252,.98); backdrop-filter: blur(20px); box-shadow: none; border-radius: var(--radius); }
   .nav-links.nav-links-open { display: flex; }
@@ -6424,7 +6462,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 /* Mobile nav: allow horizontal scrolling so items never wrap or clip */
 @media (max-width: 640px) {
-  .topbar { padding: .45rem .75rem; gap: .4rem; }
+  .topbar { padding: .3rem .75rem; gap: .4rem; }
   .nav-links {
     overflow-x: auto; -webkit-overflow-scrolling: touch;
     scrollbar-width: none; flex-shrink: 1; min-width: 0;
