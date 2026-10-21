@@ -31,6 +31,7 @@ describe("PAGE_HERO_ASSETS integrity", () => {
         "about",
         "asus",
         "audit",
+        "baseline",
         "bingo",
         "compare",
         "creative-economy",

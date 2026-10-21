@@ -43,6 +43,7 @@ const DiscoverPage = lazy(() => import("./DiscoverPage"));
 const InvestPage = lazy(() => import("./InvestPage"));
 const ComparePage = lazy(() => import("./ComparePage"));
 const ScitiBingoPage = lazy(() => import("./ScitiBingoPage"));
+const BaselinePage = lazy(() => import("./BaselinePage"));
 const CityCanvasPage = lazy(() => import("./CityCanvasPage"));
 const AboutPage = lazy(() => import("./AboutPage"));
 const CreativeEconomyPage = lazy(() => import("./CreativeEconomyPage"));
@@ -298,16 +299,11 @@ export default function App() {
               loading="eager"
             />
           </div>
-          <div className="institutional-logo-container">
-            <ResponsiveImage
-              src={SMART_CITY_LOGO.src}
-              alt={locale === "th" ? "สำนักงานเมืองอัจฉริยะประเทศไทย" : "Smart City Thailand Office"}
-              className="institutional-logo"
-              width={SMART_CITY_LOGO.width}
-              height={SMART_CITY_LOGO.height}
-              loading="eager"
-            />
-          </div>
+          {/* The Smart City Thailand seal is NOT repeated here. It is the
+              product's own mark and it already sits in the topbar lockup
+              directly below — printing the same square seal twice, 44px
+              apart, read as a mistake. This strip is the two backing
+              institutions; the lockup is the mark. */}
         </div>
       </div>
       )}
@@ -418,7 +414,7 @@ export default function App() {
             {route.kind === "rankings" ? (
               <RankingsPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "methodology" ? (
-              <MethodologyPage locale={locale} />
+              <MethodologyPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "story" ? (
               <StoryPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "why" ? (
@@ -447,6 +443,8 @@ export default function App() {
               <ComparePage locale={locale} onNavigate={navigate} />
             ) : route.kind === "bingo" ? (
               <ScitiBingoPage locale={locale} />
+            ) : route.kind === "baseline" ? (
+              <BaselinePage locale={locale} onNavigate={navigate} />
             ) : route.kind === "city" ? (
               <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
             ) : route.kind === "canvas" ? (

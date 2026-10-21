@@ -7,7 +7,6 @@ import {
   deriveAll,
   buildCohort,
   resolveProvince,
-  type DepaDimension,
 } from "./dimensionScores";
 import { NSO_BASELINE, NSO_BASELINE_BY_ID } from "./nsoBaselineData";
 
@@ -29,10 +28,12 @@ const TOTAL_WEIGHT = Object.values(DIMENSION_WEIGHTS).reduce((a, b) => a + b, 0)
 describe("derivation engine", () => {
   it("derives a composite for every city that has any measurable dimension", () => {
     const withComposite = [...derivations.values()].filter(d => d.composite != null);
-    // Two registered cities (Uttaradit, Ratchaburi) have neither NSO province
-    // data nor city metrics, so they CANNOT be scored. They are excluded and
-    // reported, never given a zero.
-    expect(withComposite.length).toBe(allCities.length - 2);
+    // Every city is scored. The province-level NSO series now reach all 118
+    // cities — including the registered ones that carry no city metrics at
+    // all, because province data does not need city metrics. Uttaradit and
+    // Ratchaburi used to be the two exceptions until NSO's spelling
+    // variants for them were mapped.
+    expect(withComposite.length).toBe(allCities.length);
     const unscorable = [...derivations.values()].filter(d => d.composite == null);
     for (const d of unscorable) {
       expect(d.weightCoverage).toBe(0);
@@ -215,8 +216,21 @@ describe("NSO baseline data", () => {
     // The 2010 vintage of the household survey is a fact the UI must show.
     const dw = NSO_BASELINE.find(i => i.id === "nso-drinking-water")!;
     expect(dw.year).toBe(2010);
+    // The ICT series are pinned, and the pin is the whole point: the ICT
+    // province table's value column stops being population at 2565Q4, so the
+    // population series must be read AT 2565Q4 (ISO 2022) and the internet
+    // users series AT 2566Q1 (ISO 2023).
     const internet = NSO_BASELINE.find(i => i.id === "nso-internet-users")!;
-    expect(internet.year).toBe(2026);
+    expect([internet.year, internet.quarter]).toEqual([2023, 1]);
+    const pop = NSO_BASELINE.find(i => i.id === "nso-province-population")!;
+    expect([pop.year, pop.quarter]).toEqual([2022, 4]);
+    const mobile = NSO_BASELINE.find(i => i.id === "nso-mobile-users")!;
+    expect([mobile.year, mobile.quarter]).toEqual([2022, 4]);
+    // The labour force series must be the newest quarter, not the last one
+    // whose status labels the harvester happened to match.
+    const lf = NSO_BASELINE.find(i => i.id === "nso-labour-force")!;
+    expect(lf.year).toBe(2026);
+    expect(lf.quarter).toBe(2);
   });
 
   it("uses a table id distinct from its dataset id — they are not the same thing", () => {
@@ -239,22 +253,122 @@ describe("province resolution", () => {
     }
   });
 
-  it("knows which four provinces the 2010 household survey never published", () => {
-    // Bueng Kan did not exist as a province in 2010; the other three were
-    // not published in that survey. The engine must return null for them,
-    // not a zero and not a guess.
+  it("knows which province the 2010 household survey never published", () => {
+    // Bueng Kan did not exist as a province in 2010 — it was split out of
+    // Nakhon Phanom that year. The engine must return null for it, not a
+    // zero and not a guess.
+    //
+    // Ratchaburi, Uttaradit and Phetchabun used to appear in this list too.
+    // They were not missing from the survey: NSO simply spells them
+    // differently in these tables, and an unmapped label was being skipped
+    // in silence. Mapping the variants is what brought the household survey
+    // from 73 provinces to 76.
     const nsoProvinces = new Set(Object.keys(NSO_BASELINE_BY_ID["nso-drinking-water"]));
     const repoProvs = [...new Set(allCities.map(c => resolveProvince(c.province)))];
     const missing = repoProvs.filter(p => !nsoProvinces.has(p)).sort();
-    expect(missing).toEqual(["Bueng Kan", "Phetchabun", "Ratchaburi", "Uttaradit"]);
+    expect(missing).toEqual(["Bueng Kan"]);
   });
 
   it("returns null — never zero — for a province the survey never published", () => {
-    const miss = allCities.find(c => resolveProvince(c.province) === "Ratchaburi")!;
+    const miss = allCities.find(c => resolveProvince(c.province) === "Bueng Kan")!;
+    expect(miss).toBeTruthy();
     const d = derivations.get(miss.id)!;
     const dw = d.dimensions.living.contributions.find(c => c.id === "drinking-water")!;
     expect(dw.raw).toBeNull();
     expect(dw.score).toBeNull();
+  });
+
+  it("maps every province spelling NSO uses, so none is dropped in silence", () => {
+    // Each of these was silently absent from every indicator it appeared in,
+    // because NSO spells it differently in these tables than in the others.
+    // If a spelling regresses, a province silently loses its data again.
+    const mustBePresent: Record<string, string[]> = {
+      "nso-drinking-water": ["Ratchaburi", "Uttaradit", "Phetchabun"],
+      "nso-labour-force": ["Surat Thani", "Ratchaburi", "Uttaradit"],
+      "nso-residential-permits": ["Sisaket", "Surat Thani", "Phetchabun"],
+      "nso-province-population": ["Surat Thani", "Sisaket", "Phetchabun"],
+      "nso-internet-users": ["Surat Thani", "Sisaket", "Phetchabun"],
+      "nso-mobile-users": ["Surat Thani", "Sisaket", "Phetchabun"],
+    };
+    for (const [id, provinces] of Object.entries(mustBePresent)) {
+      const map = NSO_BASELINE_BY_ID[id];
+      expect(map, `${id} is missing from the baseline`).toBeTruthy();
+      for (const p of provinces) {
+        expect(map[p], `${id} has no value for ${p}`).toBeDefined();
+        expect(map[p]).toBeGreaterThan(0);
+      }
+    }
+  });
+});
+
+/**
+ * The People dimension is where a category error was hiding: NSO publishes
+ * internet and mobile users by PROVINCE, and they were being divided by a
+ * CITY's population. These guards make that mistake impossible to reintroduce
+ * silently, because the arithmetic is pinned to the published province data.
+ */
+describe("Smart People — penetration rates", () => {
+  const POP = NSO_BASELINE_BY_ID["nso-province-population"];
+  const INTERNET = NSO_BASELINE_BY_ID["nso-internet-users"];
+  const MOBILE = NSO_BASELINE_BY_ID["nso-mobile-users"];
+
+  it("divides province users by PROVINCE population, never by city population", () => {
+    for (const city of allCities) {
+      const province = resolveProvince(city.province);
+      const d = derivations.get(city.id)!;
+      const net = d.dimensions.people.contributions.find(c => c.id === "internet-penetration")!;
+      const mob = d.dimensions.people.contributions.find(c => c.id === "mobile-penetration")!;
+
+      const expectedNet = (INTERNET[province] / POP[province]) * 100;
+      const expectedMob = (MOBILE[province] / POP[province]) * 100;
+      expect(net.raw, `${city.name} internet rate`).toBeCloseTo(expectedNet, 6);
+      expect(mob.raw, `${city.name} mobile rate`).toBeCloseTo(expectedMob, 6);
+
+      // The point of the guard: a city whose own population is a tiny
+      // fraction of its province's must still get the PROVINCE rate. If the
+      // engine ever divides by city population again, this fails.
+      if (city.metrics?.population) {
+        const cityRate = (INTERNET[province] / city.metrics.population) * 100;
+        if (cityRate > 100) {
+          expect(net.raw!, `${city.name} used city population`).toBeLessThan(100);
+        }
+      }
+    }
+  });
+
+  it("keeps every penetration rate between 0 and 100", () => {
+    for (const d of derivations.values()) {
+      for (const c of d.dimensions.people.contributions) {
+        if (c.raw == null) continue;
+        expect(c.raw, `${d.cityId}.${c.id} = ${c.raw}`).toBeGreaterThanOrEqual(0);
+        expect(c.raw, `${d.cityId}.${c.id} = ${c.raw}`).toBeLessThanOrEqual(100);
+      }
+    }
+  });
+
+  it("scores the People dimension for every city", () => {
+    for (const d of derivations.values()) {
+      expect(d.dimensions.people.score, `${d.cityId} has no People score`).not.toBeNull();
+      expect(d.dimensions.people.coverage).toBe(1);
+      expect(d.unscored).not.toContain("people");
+    }
+  });
+
+  it("reproduces NSO's own published penetration rate", () => {
+    // NSO publishes the ICT survey's population and users by region as well
+    // as by province. Summing the 77 province values must land on the
+    // published national rate. If this drifts, the province table has been
+    // read at the wrong vintage or the wrong meaning.
+    const sum = (m: Record<string, number>) =>
+      Object.values(m).reduce((a, b) => a + b, 0);
+    // internet: users at 2566Q1 over population at 2565Q4
+    const netRate = (sum(INTERNET) / sum(POP)) * 100;
+    expect(netRate).toBeGreaterThan(80);
+    expect(netRate).toBeLessThan(95);
+    // mobile: same quarter, so it is a pure same-vintage ratio
+    const mobRate = (sum(MOBILE) / sum(POP)) * 100;
+    expect(mobRate).toBeGreaterThan(90);
+    expect(mobRate).toBeLessThan(100);
   });
 });
 

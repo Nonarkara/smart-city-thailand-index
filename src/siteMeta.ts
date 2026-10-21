@@ -104,6 +104,11 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     th: `${SITE_NAME} | SCITI บิงโก`,
     zh: `${SITE_NAME} | SCITI 宾果`,
   },
+  baseline: {
+    en: `${SITE_NAME} | Baseline — 7 dimensions from source`,
+    th: `${SITE_NAME} | ข้อมูลพื้นฐาน — 7 มิติจากแหล่งข้อมูล`,
+    zh: `${SITE_NAME} | 基线 — 来自源头的七大维度`,
+  },
   canvas: {
     en: `${SITE_NAME} | City Canvas`,
     th: `${SITE_NAME} | แคนวาสเมือง`,

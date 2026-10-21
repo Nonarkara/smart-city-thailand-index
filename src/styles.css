@@ -6380,7 +6380,10 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .nav-links::-webkit-scrollbar { display: none; }
   .nav-link { padding: .3rem .4rem; font-size: var(--text-micro); }
   .locale-toggle { padding: .18rem .4rem; font-size: var(--text-micro); }
-  .brand-name { display: none; }
+  /* The lockup keeps its wordmark on a phone. Hiding it left a 24px mark
+     alone at the left edge with a void across the middle and the menu
+     button at the far right — a row that said nothing. */
+  .brand-name { display: block; font-size: var(--text-body); }
 }
 
 /* Spider chart: center on mobile with more room */
@@ -11659,4 +11662,353 @@ body.canvas-print-mode {
   .circuit-card-photo,
   .circuit-card-typeface { height: 7rem; }
   .circuit-card--count { width: 6rem; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BASELINE — depa 7-dimension derived ranking and indicator search
+   ═══════════════════════════════════════════════════════════════════════
+   Phone-first. Hairline rules and solid fields for grouping. No radius, no
+   gradient, no shadow — the house law. Type is the canonical three sizes:
+   32 / 14 / 11. */
+
+.baseline-masthead {
+  background: var(--depa-blue, #12354e);
+  color: #fff;
+  padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(1.5rem, 4vw, 2.5rem);
+}
+.baseline-masthead .eyebrow { color: var(--depa-yellow, #FFF200); }
+.baseline-masthead .hero-title { color: #fff; margin-bottom: .75rem; }
+.baseline-masthead .hero-strapline { color: rgba(255,255,255,.78); max-width: 46rem; }
+
+/* The seven dimensions as a strip: label, weight bar, state. */
+.baseline-dims {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  border-top: 1px solid rgba(255,255,255,.22);
+}
+.baseline-dim {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .15rem .75rem;
+  align-items: baseline;
+  padding: .7rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+}
+.baseline-dim-label {
+  font: 700 var(--text-body)/1.25 var(--font);
+  letter-spacing: -.01em;
+}
+.baseline-dim-weight {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  grid-column: 1;
+}
+.baseline-dim-bar {
+  display: block;
+  height: 4px;
+  background: var(--depa-yellow, #FFF200);
+  min-width: 2px;
+}
+.baseline-dim-weight-num {
+  font: 700 var(--text-micro) var(--mono);
+  color: rgba(255,255,255,.7);
+}
+.baseline-dim-state {
+  grid-column: 2;
+  grid-row: 1;
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.62);
+  white-space: nowrap;
+}
+.baseline-dim.is-missing .baseline-dim-label { color: rgba(255,255,255,.5); }
+.baseline-dim.is-missing .baseline-dim-bar {
+  background: repeating-linear-gradient(
+    90deg, rgba(255,255,255,.4) 0 3px, transparent 3px 6px
+  );
+}
+.baseline-dim.is-missing .baseline-dim-state { color: var(--depa-amber, #f99d1b); }
+
+/* ─── The gap ─── */
+.baseline-gap {
+  background: var(--bg);
+  border-bottom: 1px solid var(--5);
+  padding: clamp(2rem, 5vw, 3rem) 0;
+}
+.baseline-gap-title {
+  font-size: var(--text-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  margin-bottom: .75rem;
+}
+.baseline-gap-lede {
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: var(--2);
+  max-width: 46rem;
+  margin-bottom: 1.25rem;
+}
+.baseline-gap-list { list-style: none; margin: 0; padding: 0; }
+.baseline-gap-item {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: .85rem 0;
+  border-top: 1px solid var(--5);
+}
+.baseline-gap-item-name {
+  font: 700 var(--text-body)/1.3 var(--font);
+}
+.baseline-gap-item-note {
+  font: 400 var(--text-micro)/1.55 var(--font);
+  color: var(--3);
+}
+
+/* ─── Search ─── */
+.baseline-search { padding: clamp(1.5rem, 4vw, 2.5rem) 0 0; }
+.baseline-search-head { margin-bottom: 1.25rem; }
+.baseline-search-label {
+  display: block;
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--3);
+  margin-bottom: .4rem;
+}
+.baseline-search-input {
+  width: 100%;
+  min-height: 44px;
+  padding: .6rem .75rem;
+  font: 400 var(--text-body) var(--font);
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--4);
+  border-radius: 0;
+}
+.baseline-search-input:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+
+.baseline-facets {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  border-top: 1px solid var(--5);
+  padding-top: 1.25rem;
+}
+.baseline-facet { display: flex; flex-direction: column; gap: .3rem; }
+.baseline-facet-label {
+  font: 600 var(--text-body)/1.3 var(--font);
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  align-items: baseline;
+}
+.baseline-facet-unit {
+  font: 400 var(--text-micro) var(--mono);
+  color: var(--3);
+}
+.baseline-facet-select {
+  min-height: 44px;
+  padding: .45rem .5rem;
+  font: 400 var(--text-body) var(--font);
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--4);
+  border-radius: 0;
+  width: 100%;
+}
+.baseline-facet-select:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+.baseline-facet-source {
+  font: 400 var(--text-micro)/1.5 var(--font);
+  color: var(--3);
+}
+.baseline-count {
+  margin-top: 1.25rem;
+  padding-top: .85rem;
+  border-top: 1px solid var(--5);
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--3);
+}
+
+/* ─── The table ─── */
+.baseline-table-section { padding: 1rem 0 clamp(2rem, 5vw, 3rem); }
+.baseline-table-header { display: none; }
+.baseline-table { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.baseline-row { border-bottom: 1px solid var(--5); }
+.baseline-row-link {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: .15rem .6rem;
+  align-items: baseline;
+  padding: .7rem 0;
+  color: inherit;
+  text-decoration: none;
+  min-height: 44px;
+}
+.baseline-row-link:hover .baseline-row-city { color: var(--depa-blue, #12354e); }
+.baseline-row-rank {
+  grid-row: 1 / span 2;
+  font: 700 var(--text-micro) var(--mono);
+  color: var(--3);
+}
+.baseline-row-city {
+  font: 700 var(--text-body)/1.3 var(--font);
+  display: flex;
+  flex-direction: column;
+}
+.baseline-row-province {
+  font: 400 var(--text-micro)/1.4 var(--font);
+  color: var(--3);
+}
+.baseline-row-dims {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  margin-top: .3rem;
+}
+.baseline-row-dim {
+  font: 500 var(--text-micro) var(--mono);
+  text-align: center;
+  padding: .18rem 0;
+  background: var(--surface);
+  color: var(--2);
+}
+.baseline-row-dim.is-missing { background: transparent; color: var(--4); }
+.baseline-row-score {
+  grid-column: 2;
+  justify-self: end;
+  font: 700 var(--text-body) var(--mono);
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: .35rem;
+  margin-top: .2rem;
+}
+.baseline-row-coverage {
+  font: 400 var(--text-micro) var(--mono);
+  color: var(--3);
+}
+.baseline-row.is-unmeasured { opacity: .72; }
+.baseline-row-nodata {
+  font: 400 var(--text-micro) var(--mono);
+  color: var(--3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.baseline-unmeasured-head {
+  margin-top: 1.75rem;
+  font: 600 var(--text-micro) var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--3);
+  border-top: 1px solid var(--ink);
+  padding-top: .85rem;
+}
+.baseline-table.is-unmeasured { border-top-color: var(--4); }
+
+/* ─── Sources ─── */
+.baseline-sources {
+  background: var(--surface);
+  border-top: 1px solid var(--5);
+  padding: clamp(2rem, 5vw, 3rem) 0;
+}
+.baseline-sources-title {
+  font-size: var(--text-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+.baseline-source-list { list-style: none; margin: 0; padding: 0; }
+.baseline-source {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .1rem .75rem;
+  padding: .7rem 0;
+  border-top: 1px solid var(--5);
+}
+.baseline-source-name {
+  font: 600 var(--text-body)/1.3 var(--font);
+  color: var(--depa-blue, #12354e);
+  text-decoration: none;
+}
+.baseline-source-title {
+  grid-column: 1;
+  font: 400 var(--text-micro)/1.5 var(--font);
+  color: var(--3);
+}
+.baseline-source-status {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font: 700 var(--text-micro) var(--mono);
+  color: var(--teal);
+  align-self: center;
+}
+.baseline-source-status[data-status="unreachable"],
+.baseline-source-status[data-status="301"] { color: var(--gold-ink); }
+
+@media (min-width: 720px) {
+  .baseline-dims {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+  }
+  .baseline-facets { grid-template-columns: repeat(2, 1fr); column-gap: 1.5rem; }
+  .baseline-table-header {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(9rem, 1fr) 1fr auto;
+    gap: .15rem .6rem;
+    align-items: center;
+    padding: .5rem 0;
+    border-bottom: 2px solid var(--ink);
+    font: 600 var(--text-micro) var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--3);
+  }
+  .baseline-table { border-top: none; }
+  .baseline-th-score { text-align: right; min-width: 4rem; }
+  .baseline-row-link { grid-template-columns: 2.5rem minmax(9rem, 1fr) 1fr auto; align-items: center; }
+  .baseline-row-rank { grid-row: 1; }
+  .baseline-row-city { grid-column: 2; }
+  .baseline-row-dims { grid-column: 3; margin-top: 0; }
+  .baseline-row-score { grid-column: 4; grid-row: 1; margin-top: 0; }
+}
+@media (min-width: 1024px) {
+  .baseline-dims { grid-template-columns: repeat(7, 1fr); column-gap: 1.25rem; }
+  .baseline-facets { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ─── BASELINE PROGRAM (methodology page) ────────────────────────────────
+   A register of the depa 7-dimension baseline, measured live from the
+   engine. Hairline rules and mono numerics — no cards, no radius, no
+   shadow. The rows collapse to one column on a phone. */
+.meth-baseline-rows { border-top: 1px solid var(--5); }
+.meth-baseline-row {
+  display: grid;
+  grid-template-columns: minmax(9.5rem, 1.05fr) 2.75rem minmax(5.5rem, .55fr) minmax(0, 2.2fr);
+  gap: .35rem 1.25rem;
+  align-items: baseline;
+  padding: .7rem 0;
+  border-bottom: 1px solid var(--5);
+}
+.meth-baseline-name { font: 650 var(--text-body) var(--font); color: var(--ink); }
+.meth-baseline-weight { font: 500 var(--text-micro) var(--mono); color: var(--2); }
+.meth-baseline-coverage { font: 500 var(--text-micro) var(--mono); color: var(--2); white-space: nowrap; }
+.meth-baseline-indicators { font: 400 var(--text-micro) var(--font); color: var(--3); line-height: 1.5; }
+.meth-baseline-row.is-gap .meth-baseline-name { color: var(--amber, #f59e0b); }
+.meth-baseline-row.is-gap .meth-baseline-coverage { color: var(--amber, #f59e0b); }
+@media (max-width: 720px) {
+  .meth-baseline-row {
+    grid-template-columns: 1fr;
+    gap: .15rem;
+    padding: .8rem 0;
+  }
+  .meth-baseline-weight { display: inline; }
+  .meth-baseline-weight::after { content: " ·"; color: var(--3); }
+  .meth-baseline-coverage { display: inline; }
 }

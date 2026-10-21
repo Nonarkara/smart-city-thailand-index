@@ -73,15 +73,24 @@ export const SOURCE_REGISTRY: readonly SourceRecord[] = [
     caveat:
       "Returns HTTP 418 without a User-Agent header. With a browser UA it returns a " +
       "692 KB CSV of every NSO dataset. Filter to geo_coverage containing 'จังหวัด': " +
-      "45 of 690 datasets are province-level, all Database/CSV/JSON.",
+      "45 of 690 datasets are province-level, all Database/CSV/JSON. " +
+      "TRAP: the ICT household survey's province table (ICTH_37_4_Table_31) has ONE value " +
+      "column, Pop_use_In, which holds POPULATION up to the 2565Q4 vintage and INTERNET " +
+      "USERS from 2566Q1 onward. The mobile twin (ICTH_37_10_Table_31) never flipped — " +
+      "Pop_use_Mo has always held users. Every vintage is provable: the 77 province values " +
+      "sum exactly to the region table's Pop_Total before the flip and to its Pop_use_In " +
+      "after it. SCITI pins the population at 2565Q4, internet users at 2566Q1 and mobile " +
+      "users at 2565Q4; both resulting rates reproduce NSO's own published penetration " +
+      "figure to within 0.08 and 0.00 percentage points.",
     serves: ["living", "people", "economy"],
     indicators: [
       "household income Gini coefficient, by province",
       "employment, total and by manufacturing establishment",
       "informal-sector labour force (สำรวจแรงงานนอกระบบ)",
       "household ICT device usage (ICT household survey)",
-      "population using the internet, age 6+",
-      "population using mobile phones",
+      "province population, the ICT survey's own base (2565Q4)",
+      "population using the internet, age 6+ (2566Q1)",
+      "population using mobile phones (2565Q4)",
       "internal migration within 5 years, and not residing in birth province",
       "household home-ownership rate",
       "households with a hygienic toilet",
@@ -258,20 +267,23 @@ export const BASELINE_COVERAGE: Readonly<Record<DepaDimension, {
   mobility: {
     strength: "partial",
     sources: 3,
-    note: "Road deaths are solid via rtddi. Commute time and transit coverage have no verified open source.",
+    note: "Road deaths are solid via the integrated road-traffic dataset. Commute time " +
+          "and transit coverage have no verified open source.",
   },
   governance: {
     strength: "partial",
     sources: 3,
-    note: "Traffy complaints + data.go.th/DGA discovery. depa CDP HTTPS unstable — needs depa confirmation.",
+    note: "Traffy's complaint feed and the DGA's data.go.th catalogue were both probed, " +
+          "and depa's own city-platform endpoint is unstable over HTTPS. Nothing that can " +
+          "be downloaded, reproduced and cited yet, so nothing is scored.",
   },
   energy: {
     strength: "none",
     sources: 1,
-    note: "The one verified energy source is MEA, which covers Bangkok's metropolitan " +
-          "area ONLY — it cannot baseline a province. EGAT/PEA provincial sales need a " +
-          "negotiated feed. GISTDA carries renewable SITING layers, not consumption, and " +
-          "neither measures how a city actually uses energy. Do not score energy yet.",
+    note: "The one verified energy source, the Metropolitan Electricity Authority, covers " +
+          "Bangkok's metropolitan area only — it cannot baseline a province. EGAT and PEA " +
+          "provincial sales need a negotiated feed. GISTDA publishes renewable siting, not " +
+          "consumption, and neither measures how a city actually uses energy.",
   },
 };
 

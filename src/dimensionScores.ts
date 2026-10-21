@@ -38,7 +38,6 @@
 
 import type { SmartCity, CityMetrics } from "./types";
 import { NSO_BASELINE, NSO_BASELINE_BY_ID, type BaselineIndicator } from "./nsoBaselineData";
-import { computeRoadSafetyScore } from "./scoring";
 
 export type DepaDimension =
   | "environment" | "mobility" | "living" | "people" | "energy" | "economy" | "governance";
@@ -116,8 +115,6 @@ export interface DeriveContext {
   province: string;
   nso: (id: string) => number | undefined;
 }
-
-const pct = (v: number) => `${v}%`;
 
 /**
  * The indicator catalogue.
@@ -200,17 +197,14 @@ export const INDICATORS: readonly IndicatorDef[] = [
     sourceNote: { en: "thairsc.com provincial road deaths per 100,000.", th: "thairsc.com ผู้เสียชีวิตบนถนนต่อ 100,000", zh: "thairsc.com 省级道路死亡率" },
     higherIsBetter: false,
   },
-  {
-    id: "building-permits",
-    label: { en: "Residential building permits", th: "ใบอนุญาตก่อสร้างอาคารโรงเรือน", zh: "住宅建筑许可" },
-    dimension: "mobility",
-    weight: 30,
-    scale: { kind: "cohort", note: "Percentile among provinces — no published target exists for permit volume." },
-    origin: "nso",
-    nsoId: "nso-residential-permits",
-    sourceNote: { en: "NSO Building Permits (residential).", th: "ใบอนุญาตก่อสร้าง สศ.", zh: "NSO 建筑许可（住宅）" },
-    higherIsBetter: true,
-  },
+  // Mobility is the thinnest dimension in the model: road safety is the only
+  // indicator NSO or the transport authorities publish at province level, and
+  // it is a CITY metric, so only the 49 cities with curated road-death data
+  // carry a Smart Mobility score. That gap is shown, not filled with a
+  // neighbouring concept. Building permits used to sit here as a
+  // province-level backbone, but residential construction is an economic
+  // activity, not a transport one — depa's Smart Mobility is about moving
+  // people and goods, and a permit is neither. It is scored under Economy.
 
   /* ── living ── */
   {
@@ -282,7 +276,33 @@ export const INDICATORS: readonly IndicatorDef[] = [
 
   /* ── people — depa: "citizens with knowledge and the ability to apply
         technology". Internet and mobile penetration measure that directly,
-        and NSO publishes them for 2026. ── */
+        and NSO publishes them for 2026.
+
+        THE DENOMINATOR IS THE PROVINCE, NOT THE CITY.
+
+        An earlier version of this file divided NSO's province-level user
+        counts by `metrics.population` — a CITY-level figure. That is a
+        category error: a province's users over a city's residents produced
+        rates up to 9,922% and left 70 of 116 cities with no People score at
+        all. NSO publishes the province population on the same projection
+        basis as the survey, so the denominator is province population.
+
+        The vintages are pinned, and the reason is in the source table.
+        `ICTH_37_4_Table_31` has one value column, `Pop_use_In`: up to
+        2565Q4 it holds POPULATION, from 2566Q1 it holds INTERNET USERS.
+        The proof is exact — for every vintage the 77 province values sum to
+        the region table's `Pop_Total` before the flip and to its
+        `Pop_use_In` after it, 0.00% deviation either way. The mobile table
+        never flipped; `Pop_use_Mo` has always held users.
+
+        So: population is read at 2565Q4 (the last population vintage),
+        internet users at 2566Q1 (the first users vintage) and mobile users
+        at 2565Q4 (the same quarter as the population, which makes the
+        mobile ratio a pure same-vintage rate). Both reproduce NSO's own
+        published penetration rate to within 0.08 and 0.00 percentage
+        points. Pairing the newest users vintage against the frozen
+        province population instead pushes 10-14 provinces over 100%, so it
+        is deliberately not done. */
   {
     id: "internet-penetration",
     label: { en: "Internet penetration", th: "สัดส่วนการใช้อินเทอร์เน็ต", zh: "互联网普及率" },
@@ -292,11 +312,15 @@ export const INDICATORS: readonly IndicatorDef[] = [
     origin: "derived",
     derive: ctx => {
       const users = ctx.nso("nso-internet-users");
-      const pop = ctx.metrics.population;
+      const pop = ctx.nso("nso-province-population");
       if (users == null || pop == null || pop <= 0) return null;
       return (users / pop) * 100;
     },
-    sourceNote: { en: "Derived: NSO internet users (thousands) ÷ NSO population.", th: "คำนวณ: ผู้ใช้อินเทอร์เน็ต สศ. ÷ ประชากร สศ.", zh: "推导：NSO 网民数（千人）÷ NSO 人口" },
+    sourceNote: {
+      en: "NSO ICT Household Survey — province internet users (Q1 2023) ÷ province population (Q4 2022), the survey's own population base.",
+      th: "สำรวจ ICT ในครัวเรือน สศ. — ผู้ใช้อินเทอร์เน็ตรายจังหวัด (ไตรมาส 1/2566) ÷ ประชากรจังหวัด (ไตรมาส 4/2565)",
+      zh: "NSO 家庭 ICT 调查 — 省级网民数（2023Q1）÷ 省级人口（2022Q4），即调查自身的人口基数",
+    },
     higherIsBetter: true,
   },
   {
@@ -308,17 +332,23 @@ export const INDICATORS: readonly IndicatorDef[] = [
     origin: "derived",
     derive: ctx => {
       const users = ctx.nso("nso-mobile-users");
-      const pop = ctx.metrics.population;
+      const pop = ctx.nso("nso-province-population");
       if (users == null || pop == null || pop <= 0) return null;
       return (users / pop) * 100;
     },
-    sourceNote: { en: "Derived: NSO mobile-phone users (thousands) ÷ NSO population.", th: "คำนวณ: ผู้ใช้โทรศัพท์มือถือ สศ. ÷ ประชากร สศ.", zh: "推导：NSO 手机用户（千人）÷ NSO 人口" },
+    sourceNote: {
+      en: "NSO ICT Household Survey — province mobile-phone users (Q4 2022) ÷ province population (Q4 2022), the same survey quarter.",
+      th: "สำรวจ ICT ในครัวเรือน สศ. — ผู้ใช้โทรศัพท์มือถือรายจังหวัด (ไตรมาส 4/2565) ÷ ประชากรจังหวัด (ไตรมาส 4/2565)",
+      zh: "NSO 家庭 ICT 调查 — 省级手机用户数（2022Q4）÷ 省级人口（2022Q4），同一调查季度",
+    },
     higherIsBetter: true,
   },
 
   /* ── economy — depa: business fluidity. People arriving from elsewhere are
         the clearest observable signal of a working regional labour market,
-        so labour mobility sits here rather than under People. ── */
+        so labour mobility sits here rather than under People. Construction
+        activity sits here too: a residential permit is real-estate and
+        construction business, not transport. ── */
   {
     id: "internal-migration",
     label: { en: "Internal mobility (moved within province)", th: "การย้ายถิ่นภายในจังหวัด", zh: "省内人口流动" },
@@ -341,8 +371,17 @@ export const INDICATORS: readonly IndicatorDef[] = [
     sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
-
-  /* ── economy ── */
+  {
+    id: "building-permits",
+    label: { en: "Residential building permits", th: "ใบอนุญาตก่อสร้างอาคารโรงเรือน", zh: "住宅建筑许可" },
+    dimension: "economy",
+    weight: 15,
+    scale: { kind: "cohort", note: "Percentile among provinces — no published target exists for permit volume." },
+    origin: "nso",
+    nsoId: "nso-residential-permits",
+    sourceNote: { en: "NSO Building Permits (residential).", th: "ใบอนุญาตก่อสร้าง สศ.", zh: "NSO 建筑许可（住宅）" },
+    higherIsBetter: true,
+  },
   {
     id: "gdp-per-capita",
     label: { en: "GDP per capita", th: "จีดพีต่อหัว", zh: "人均 GDP" },
@@ -448,11 +487,6 @@ export interface CityDerivation {
   /** Dimensions with no measurable data. */
   unscored: DepaDimension[];
   tier: "alpha" | "beta" | "gamma" | null;
-}
-
-/** Percentile table for one indicator across a cohort of raw values. */
-function percentileMap(values: number[]): { sorted: number[] } {
-  return { sorted: [...values].sort((a, b) => a - b) };
 }
 
 function percentileOf(sorted: number[], v: number): number {

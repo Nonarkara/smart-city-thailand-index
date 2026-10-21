@@ -21,3 +21,7 @@ cea-submission/gdrive-pack/
 .worktrees/
 .tmp/
 
+
+# Local probe scripts and screenshots — never committed
+.bauhaus/
+.mavis/

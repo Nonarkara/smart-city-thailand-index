@@ -1,4 +1,4 @@
-export type StaticRoutePath = "/" | "/about" | "/creative-economy" | "/rankings" | "/methodology" | "/story" | "/why" | "/showcase" | "/partners" | "/map" | "/asus" | "/audit" | "/references" | "/program" | "/knowledge" | "/discover" | "/invest" | "/compare" | "/bingo" | "/canvas";
+export type StaticRoutePath = "/" | "/about" | "/creative-economy" | "/rankings" | "/methodology" | "/story" | "/why" | "/showcase" | "/partners" | "/map" | "/asus" | "/audit" | "/references" | "/program" | "/knowledge" | "/discover" | "/invest" | "/compare" | "/bingo" | "/canvas" | "/baseline";
 
 export type Route =
   | { kind: "home"; path: "/" }
@@ -20,6 +20,7 @@ export type Route =
   | { kind: "invest"; path: "/invest" }
   | { kind: "compare"; path: "/compare" }
   | { kind: "bingo"; path: "/bingo" }
+  | { kind: "baseline"; path: "/baseline" }
   | { kind: "city"; path: `/city/${string}`; cityId: string }
   | { kind: "canvas"; path: `/canvas/${string}`; cityId: string };
 
@@ -50,6 +51,7 @@ export function parseRoute(rawPathname: string): Route {
   if (pathname === "/invest") return { kind: "invest", path: "/invest" };
   if (pathname === "/compare") return { kind: "compare", path: "/compare" };
   if (pathname === "/bingo") return { kind: "bingo", path: "/bingo" };
+  if (pathname === "/baseline") return { kind: "baseline", path: "/baseline" };
   if (pathname.startsWith("/city/")) {
     const cityId = pathname.slice("/city/".length).trim();
     if (cityId) {

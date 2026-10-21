@@ -1,38 +1,38 @@
 import type { WeeklyDigest } from "./weeklyDigest";
 
 export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
-  weekOf: "2026-10-12",
+  weekOf: "2026-10-19",
   trendingCity: {
-    cityId: "nakhon-si-thammarat",
+    cityId: "chiang-mai-old-town",
     note: {
-      en: "As southern monsoon season peaks, NST's real-time hydrological dashboard and CCTV sensor network lead ASEAN municipal flood telemetry — providing 10-hour advance warnings with zero flood fatalities since 2021.",
-      th: "เมื่อเข้าสู่ช่วงมรสุมภาคใต้ แดชบอร์ดอุทกวิทยาและเครือข่ายกล้อง CCTV ของเทศบาลนครศรีธรรมราชยังเป็นต้นแบบข่าวกรองเมืองของอาเซียน เตือนภัยล่วงหน้า 10 ชั่วโมง และไม่มีผู้เสียชีวิตจากน้ำท่วมตั้งแต่ปี 2564",
-      zh: "随着南部季风季节临近，洛坤府（NST）的实时水文仪表板与 CCTV 传感网络继续引领东盟市政防汛遥测——提供 10 小时提前预警，自 2021 年以来保持洪涝零伤亡。",
+      en: "Ahead of winter inversion and northern haze season, Chiang Mai's CNX Operations War Room and CMU clean-air room networks are setting measurable resident targets: occupied-room PM2.5 at least 50% below outdoor levels with verified public access.",
+      th: "ก่อนเข้าสู่ฤดูผกผันอุณหภูมิและหมอกควันภาคเหนือ ศูนย์ปฏิบัติการ CNX Operations War Room และเครือข่ายห้องปลอดฝุ่น มช. ร่วมกำหนดเป้าหมายเพื่อผู้อยู่อาศัยที่วัดผลได้: ควบคุม PM2.5 ในห้องต่ำกว่าภายนอกอย่างน้อย 50% พร้อมการเข้าถึงจริงของประชาชน",
+      zh: "在冬季逆温与北部雾霾季到来前，清迈 CNX Operations War Room 与清迈大学防霾洁净室网络确立了可量化的居民保护指标：在室内保障有效通风的同时，将有人使用房间的 PM2.5 降至室外水平的 50% 以下并确保公众可达。",
     },
   },
   trendingSearch: {
     phrase: {
-      en: '"thailand smart city expo 2026"',
-      th: '"thailand smart city expo 2026"',
-      zh: '"泰国智慧城市博览会 2026"',
+      en: '"clean air room chiang mai"',
+      th: '"ห้องปลอดฝุ่น เชียงใหม่"',
+      zh: '"清迈防霾洁净室"',
     },
     deltaLabel: {
-      en: "Peak registration month ahead of the November 18–20 flagship at QSNCC",
-      th: "ยอดค้นหาพุ่งในเดือนสุดท้ายก่อนงานใหญ่ 18–20 พฤศจิกายน ที่ศูนย์ฯ สิริกิติ์",
-      zh: "11月18-20日诗丽吉国家会议中心旗舰展会前夕进入登记高峰",
+      en: "Surging across northern municipal channels as dry-season health prep begins",
+      th: "ยอดค้นหาพุ่งในช่องทางเทศบาลภาคเหนือเมื่อเริ่มเตรียมรับมือสุขภาพช่วงฤดูแล้ง",
+      zh: "随着旱季健康防护启动，在北部市政渠道搜索量快速攀升",
     },
     lensId: "growth",
   },
   headline: {
     title: {
-      en: "Thailand Smart City Expo 2026 enters final countdown for November 18–20 at QSNCC",
-      th: "Thailand Smart City Expo 2026 เข้าสู่โค้งสุดท้ายก่อนเปิดเวที 18–20 พฤศจิกายน ที่ศูนย์ฯ สิริกิติ์",
-      zh: "泰国智慧城市博览会 2026 进入最后倒计时，将于 11 月 18–20 日在诗丽吉国家会议中心启幕",
+      en: "Thailand Smart City Delivery Brief: Connecting Digital Assets to Accountable Operators and Measured Outcomes",
+      th: "สรุปหลักฐานส่งมอบเมืองอัจฉริยะไทย: เชื่อมโยงเทคโนโลยีที่มีอยู่สู่ผู้ปฏิบัติงานที่มีความรับผิดชอบและผลลัพธ์ที่วัดได้จริง",
+      zh: "泰国智慧城市落地证据简报：将数字资产对接至具问责制的运营方与可量化的居民实效",
     },
     gloss: {
-      en: "Over 300 civic-tech leaders and 118 municipal delegations convene under the theme \"City Intelligence: Predict, Prevent, Protect\" — testing whether national policy commitments translate into operational municipal telemetry on the ground.",
-      th: "ผู้นำเทคโนโลยีเมืองกว่า 300 รายและตัวแทน 118 เมืองทั่วประเทศร่วมประชุมภายใต้ธีม \"City Intelligence: Predict, Prevent, Protect\" — พิสูจน์ว่านโยบายระดับชาติจะแปรเป็นระบบโทรมาตรเมืองที่ใช้งานได้จริงในพื้นที่หรือไม่",
-      zh: "300 多位城市科技领袖与 118 个市政代表团将在“City Intelligence: Predict, Prevent, Protect”主题下齐聚，检验国家政策承诺能否在基层转化为真正运转的市政遥测系统。",
+      en: "Reviewed October 2026: Official recognition and installed IoT are not evidence of sustained livability improvements. Prioritizing Chiang Mai clean-air verification and Nakhon Si Thammarat flood telemetry shifts the focus from pilot brochures to verified resident assistance.",
+      th: "ทบทวนตุลาคม 2569: การรับรองทางราชการและเซ็นเซอร์ IoT ที่ติดตั้งไม่ใช่หลักฐานการยกระดับคุณภาพชีวิตอย่างยั่งยืน การจัดลำดับความสำคัญให้การวัดผลห้องปลอดฝุ่นเชียงใหม่และโทรมาตรน้ำท่วมนครศรีธรรมราช เปลี่ยนจุดเน้นจากโบรชัวร์โครงการสู่ความช่วยเหลือประชาชนที่ยืนยันได้",
+      zh: "2026年10月复审：官方认证与物联网安装并不等同于居民生活的持续改善。优先推进清迈洁净空气验证与洛坤防汛遥测，将关注焦点从试点宣传册转向切实核验的居民救助。",
     },
     url: "https://www.thailandsmartcityexpo.com/",
   },

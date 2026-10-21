@@ -15,6 +15,17 @@ export type PageHeroAsset = {
 // from the authored depa / event archive — each file used exactly once site-wide.
 // Guarded by src/heroPhotoIntegrity.test.ts against title/place/description drift.
 export const PAGE_HERO_ASSETS: Record<StaticHeroKind, PageHeroAsset> = {
+  baseline: {
+    src: "/photos/nst-municipal-briefing.jpg",
+    objectPosition: "center 40%",
+    title: { en: "Baseline", th: "ข้อมูลพื้นฐาน", zh: "基线" },
+    place: "Nakhon Si Thammarat",
+    description: {
+      en: "Nakhon Si Thammarat — a municipal briefing, the moment a city receives its own numbers to benchmark against. The same seven dimensions, measured the same way, for every province.",
+      th: "นครศรีธรรมราช — การประชุมชี้แจงในระดับอำเภอ เวลาที่เมืองได้รับตัวเลขของตัวเองเพื่อใช้เทียบเคียง ทั้งเจ็ดมิติ วัดเหมือนกันทุกจังหวัด",
+      zh: "洛坤府 — 一次市政简报会，也就是城市拿到属于自己、可供对标的数字的时刻。七个维度，各省用同一种方法衡量。",
+    },
+  },
   rankings: {
     src: "/photos/wp-makkasan.jpg",
     objectPosition: "center 40%",

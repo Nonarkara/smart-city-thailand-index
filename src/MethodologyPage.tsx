@@ -16,6 +16,15 @@ import {
   TIER_THRESHOLDS,
 } from "./methodologySpec";
 import { SCORING_PILLARS } from "./scoring";
+import { allCities } from "./cityData";
+import {
+  DEPA_DIMENSION_ORDER,
+  DIMENSION_LABELS,
+  DIMENSION_WEIGHTS,
+  INDICATORS,
+  deriveAll,
+} from "./dimensionScores";
+import { BASELINE_COVERAGE } from "./baselineSources";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_COLORS, PILLAR_LABELS, PILLAR_TEXT_COLORS, PILLAR_WEIGHTS } from "./types";
 import { translate } from "./cityPresentation";
@@ -23,7 +32,26 @@ import { assetUrl } from "./assetUtils";
 
 interface Props {
   locale: Locale;
+  onNavigate: (path: string) => void;
 }
+
+/**
+ * The baseline program, measured live from the engine so the page cannot
+ * drift from what /baseline actually computes.
+ */
+const baselineDimensionRows = (() => {
+  const derivations = deriveAll(allCities);
+  return DEPA_DIMENSION_ORDER.map(dim => {
+    const defs = INDICATORS.filter(i => i.dimension === dim && i.weight > 0);
+    let scored = 0;
+    for (const city of allCities) {
+      if (derivations.get(city.id)!.dimensions[dim].score != null) scored++;
+    }
+    return { dim, weight: DIMENSION_WEIGHTS[dim], defs, scored, total: allCities.length };
+  });
+})();
+
+const baselineScoredCities = baselineDimensionRows.filter(r => r.scored > 0).length;
 
 type TriLingual = { en: string; th: string; zh: string };
 
@@ -276,7 +304,7 @@ function CompositeDiagram({ locale }: { locale: Locale }) {
 
 const GITHUB_URL = "https://github.com/Nonarkara/smart-city-thailand-index";
 
-export default function MethodologyPage({ locale }: Props) {
+export default function MethodologyPage({ locale, onNavigate }: Props) {
   const t = (en: string, th: string, zh: string) => translate(locale, { en, th, zh });
 
   return (
@@ -665,6 +693,67 @@ export default function MethodologyPage({ locale }: Props) {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ─── BASELINE PROGRAM ─── */}
+      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+        <p className="eyebrow">{t("Baseline Program", "โครงการข้อมูลพื้นฐาน", "基线项目")}</p>
+        <h2>{t("depa's seven dimensions, measured from source", "7 มิติตาม depa วัดจากแหล่งข้อมูลจริง", "depa 七个维度，全部来自公开数据")}</h2>
+        <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
+          {translate(locale, {
+            en: "The pillar model above is the index. The baseline program is a separate, parallel measurement of the same 118 cities: it re-bases onto depa's own seven dimensions — Environment, Mobility, Living, People, Energy, Economy, Governance — and derives every score from published data instead of hand-assigned values. It exists so a city can open one page, see where its province stands against the country on measures that actually exist, and use that as a reference point without commissioning a new study.",
+            th: "แบบจำลองเสาหลักข้างบนคือดัชนี ส่วนโครงการข้อมูลพื้นฐานเป็นการวัดคู่ขนานของเมืองชุดเดียวกัน โดยย้ายกลับไปใช้ 7 มิติตาม depa เอง คือ สิ่งแวดล้อม การเดินทาง การดำรงชีวิต พลเมือง พลังงาน เศรษฐกิจ และการบริหาร และคำนวณคะแนนทุกตัวจากข้อมูลที่เผยแพร่ ไม่ใช่การประเมินด้วยสายตา เพื่อให้เมืองเปิดหน้าเดียวเห็นว่าตัวเองอยู่ตรงไหนเทียบกับทั้งประเทศ ในตัวชี้วัดที่มีอยู่จริง และใช้เป็นจุดอ้างอิงได้โดยไม่ต้องจ้างงานวิจัยใหม่",
+            zh: "上面的支柱模型是本指数。基线项目则是对同一批 118 个城市的并行测量：它回归 depa 自身的七个维度——环境、出行、生活、市民、能源、经济、治理——每一个分数都由已公开的数据推导而来，而不是人工赋值。它的目的是让一座城市打开一个页面，就能看到自己的省份在全国的真实可比位置上，并把它当作参照点，而不必另行委托研究。",
+          })}
+        </p>
+
+        <div className="meth-baseline-rows">
+          {baselineDimensionRows.map(row => {
+            const isGap = row.defs.length === 0;
+            return (
+              <div key={row.dim} className={`meth-baseline-row${isGap ? " is-gap" : ""}`}>
+                <span className="meth-baseline-name">{DIMENSION_LABELS[row.dim][locale]}</span>
+                <span className="meth-baseline-weight">{row.weight}%</span>
+                <span className="meth-baseline-coverage">
+                  {isGap
+                    ? t("no data", "ไม่มีข้อมูล", "无数据")
+                    : `${row.scored} / ${row.total}`}
+                </span>
+                <span className="meth-baseline-indicators">
+                  {isGap
+                    ? BASELINE_COVERAGE[row.dim].note
+                    : row.defs.map(d => d.label[locale]).join(" · ")}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginTop: "1.25rem" }}>
+          {translate(locale, {
+            en: `Two of depa's seven dimensions have no baseline at all. Energy and Governance have no province-level source that can be downloaded, reproduced and cited, so they are published as named gaps rather than filled with an estimate. Where a dimension cannot be measured the score is null, never zero — and the composite reports the share of the published weight it actually covered, between 35% and 85% depending on the city, instead of quietly renormalising over the dimensions it can see. ${baselineScoredCities} of the 7 dimensions are measured today, for all 118 cities.`,
+            th: `สองมิติในเจ็ดมิติของ depa ยังไม่มีข้อมูลพื้นฐานเลย ทั้งพลังงานและการบริหารไม่มีแหล่งข้อมูลระดับจังหวัดที่ดาวน์โหลด ทำซ้ำ และอ้างอิงได้ จึงประกาศเป็นช่องว่างที่มีชื่อ แทนที่จะเดาค่ามาแทน เมื่อมิติใดวัดไม่ได้ คะแนนจะเป็น null ไม่ใช่ศูนย์ และคะแนนรวมจะรายงานสัดส่วนน้ำหนักที่วัดได้จริง ระหว่าง 35% ถึง 85% ขึ้นอยู่กับเมือง แทนการปรับสัดส่วนเงียบ ๆ เฉพาะมิติที่มองเห็น ปัจจุบันวัดได้ ${baselineScoredCities} จาก 7 มิติ ครบทั้ง 118 เมือง`,
+            zh: `depa 七个维度中有两个完全没有基线。能源与治理没有任何可下载、可复现、可引用的省级来源，因此它们被作为「有名字的缺口」公布，而不是用估算填满。凡是无法测量的维度，得分为 null，绝不是 0；综合分报告的是实际覆盖的权重份额（依城市而异，为 35%–85%），而不是悄悄在能看见的维度上重新归一。今天 7 个维度中有 ${baselineScoredCities} 个可测，覆盖全部 118 个城市。`,
+          })}
+        </p>
+
+        <p style={{ fontSize: "var(--text-micro)", color: "var(--3)", lineHeight: 1.6, marginTop: ".75rem" }}>
+          {translate(locale, {
+            en: "One provenance note worth stating plainly: the NSO ICT household survey's province table carries a single value column that holds population up to the 2565Q4 vintage and internet users from 2566Q1 onward. The baseline reads the population at 2565Q4 and the users at 2566Q1, and both resulting rates reproduce NSO's own published penetration figure to within 0.08 and 0.00 percentage points.",
+            th: "ข้อควรระบุเรื่องที่มาของข้อมูล: ตารางจังหวัดของสำรวจ ICT ในครัวเรือน สศ. มีคอลัมน์ค่าเพียงคอลัมน์เดียว ซึ่งเก็บจำนวนประชากรถึงไตรมาส 4/2565 แล้วเปลี่ยนเป็นจำนวนผู้ใช้อินเทอร์เน็ตตั้งแต่ไตรมาส 1/2566 ข้อมูลพื้นฐานจึงอ่านประชากรที่ไตรมาส 4/2565 และผู้ใช้ที่ไตรมาส 1/2566 และอัตราที่ได้ทั้งสองรูปแบบตรงกับอัตราการใช้งานที่ สศ. เผยแพร่เองภายใน 0.08 และ 0.00 ร้อยละ",
+            zh: "有一项溯源说明值得直说：泰国国家统计局家庭 ICT 调查的省级表只有一个数值列，2565Q4 之前存的是人口，2566Q1 起存的是网民数。基线因此在 2565Q4 读取人口、在 2566Q1 读取用户，两个口径算出的普及率与统计局自己公布的普及率相差不超过 0.08 与 0.00 个百分点。",
+          })}
+        </p>
+
+        <p style={{ marginTop: "1rem" }}>
+          <a
+            href="/baseline"
+            className="ghost-button"
+            onClick={e => { e.preventDefault(); onNavigate("/baseline"); }}
+          >
+            {t("Open the baseline", "เปิดดูข้อมูลพื้นฐาน", "打开基线")}
+          </a>
+        </p>
       </section>
 
       {/* ─── AUDIT RULES ─── */}

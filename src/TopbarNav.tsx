@@ -64,6 +64,7 @@ const NAV_GROUPS: NavGroup[] = [
       { kind: "audit", path: "/audit", label: { en: "Jury walk-through", th: "เส้นทางกรรมการ", zh: "评审导览" } },
       { kind: "knowledge", path: "/knowledge", label: { en: "Knowledge base", th: "คลังความรู้", zh: "知识库" } },
       { kind: "bingo", path: "/bingo", label: { en: "Evidence bingo", th: "บิงโกหลักฐาน", zh: "证据宾果" } },
+      { kind: "baseline", path: "/baseline", label: { en: "Baseline", th: "ข้อมูลพื้นฐาน", zh: "基线" } },
     ],
   },
   {
