@@ -2,7 +2,7 @@ import type { ImgHTMLAttributes, SyntheticEvent } from "react";
 import { assetUrl } from "./assetUtils";
 
 // Brand mark shown when a photo 404s — a broken-image glyph never ships.
-const FALLBACK_SRC = assetUrl("/smart_city_thailand_logo.webp");
+const FALLBACK_SRC = assetUrl("/smart_city_thailand_emblem.webp");
 
 function isLocalRasterAsset(src: string): boolean {
   return src.startsWith("/") && /\.(png|jpe?g)$/i.test(src);

@@ -938,20 +938,13 @@ export default function InvestPage({ locale, onNavigate }: Props) {
           border: "1px solid var(--5)",
         }}>
           {sources.map((s, i) => (
-            <div key={i} style={{
-              display: "grid",
-              gridTemplateColumns: "200px 1fr",
-              gap: "1rem",
-              padding: ".75rem 1rem",
-              borderBottom: i < sources.length - 1 ? "1px solid var(--5)" : "none",
-              alignItems: "baseline",
-            }}>
-              <span style={{ font: "600 var(--text-micro) var(--mono)", color: "var(--ink)", letterSpacing: "-.01em" }}>
-                {s.name}
-              </span>
-              <span style={{ font: "400 var(--text-micro) var(--font)", color: "var(--3)" }}>
-                {translate(locale, s.desc)}
-              </span>
+            <div
+              key={i}
+              className="invest-source-row"
+              style={{ borderBottom: i < sources.length - 1 ? "1px solid var(--5)" : "none" }}
+            >
+              <span className="invest-source-name">{s.name}</span>
+              <span className="invest-source-desc">{translate(locale, s.desc)}</span>
             </div>
           ))}
         </div>

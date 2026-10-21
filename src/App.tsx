@@ -84,26 +84,32 @@ function PageSkeleton({ locale }: { locale: Locale }) {
 // Top nav lives in src/TopbarNav.tsx — 5 grouped dropdowns
 // (Home · Rankings · Method · Stories · Network).
 
+// The three institutional marks. These are the transparent variants built
+// by scripts/build-transparent-logos.py: the shipped JPEGs carry an opaque
+// white ground, which showed as a box floating over the hero photo once
+// the marks moved into the glass topbar.
 const MDES_LOGO = {
-  src: "/mdes_logo.jpg",
+  src: "/mdes_logo.png",
   width: 381,
   height: 132,
 };
 
 const DEPA_LOGO = {
-  src: "/depa_logo.jpg",
+  src: "/depa_logo.png",
   width: 1182,
   height: 798,
 };
 
+// The emblem alone, not the full "SMARTCITY / ไทยแลนด์" lockup: at header
+// size the wordmark is an illegible smudge, and the emblem is the mark.
 const SMART_CITY_LOGO = {
-  src: "/smart_city_thailand_logo.jpg",
-  width: 1182,
-  height: 1182,
+  src: "/smart_city_thailand_emblem.png",
+  width: 365,
+  height: 439,
 };
 
 const SLIC_LOGO = {
-  src: "/slic_logo.jpg",
+  src: "/slic_logo.png",
   width: 200,
   height: 200,
 };
@@ -274,59 +280,61 @@ export default function App() {
           })}
         </script>
       )}
-      {/* ─── INSTITUTIONAL BANNER ─── */}
+      {/* ─── HEADER — ONE LINE ─── */}
       <a href="#main-content" className="skip-link">{locale === "th" ? "ข้ามไปยังเนื้อหา" : locale === "zh" ? "跳转到主要内容" : "Skip to content"}</a>
       {!isCanvasRoute && (
-        <div className="institutional-banner">
-        <div className="institutional-logos">
-          <div className="institutional-logo-container">
-            <ResponsiveImage
-              src={MDES_LOGO.src}
-              alt={locale === "th" ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม" : "Ministry of Digital Economy and Society"}
-              className="institutional-logo"
-              width={MDES_LOGO.width}
-              height={MDES_LOGO.height}
-              loading="eager"
-            />
-          </div>
-          <div className="institutional-logo-container">
-            <ResponsiveImage
-              src={DEPA_LOGO.src}
-              alt={locale === "th" ? "สำนักงานส่งเสริมเศรษฐกิจดิจิทัล" : "Digital Economy Promotion Agency (depa)"}
-              className="institutional-logo"
-              width={DEPA_LOGO.width}
-              height={DEPA_LOGO.height}
-              loading="eager"
-            />
-          </div>
-          {/* The Smart City Thailand seal sits here, once, in the same line as
-              the two institutions behind the programme. It used to sit in the
-              topbar lockup directly below, and printing the same square mark
-              twice 44 pixels apart read as a mistake rather than as branding.
-              One line, three marks, and the lockup below is the product's
-              wordmark alone. */}
-          <div className="institutional-logo-container">
-            <ResponsiveImage
-              src={SMART_CITY_LOGO.src}
-              alt={locale === "th" ? "สำนักงานเมืองอัจฉริยะไทย" : locale === "zh" ? "泰国智慧城市办公室" : "Smart City Thailand Office"}
-              className="institutional-logo"
-              width={SMART_CITY_LOGO.width}
-              height={SMART_CITY_LOGO.height}
-              loading="eager"
-            />
-          </div>
-        </div>
-      </div>
-      )}
-
-      {/* ─── TOPBAR ─── */}
-      {!isCanvasRoute && (
         <nav className={`topbar${topbarScrolled ? " topbar-scrolled" : ""}`}>
-        <button type="button" className="brand-lockup" onClick={() => navigate("/")}>
-          <span className="brand-name">
-            {locale === "th" ? "ดัชนีเมืองอัจฉริยะไทย" : locale === "zh" ? "泰国智慧城市指数" : "Smart City Thailand Index"}
-          </span>
-        </button>
+        {/* One band, one hierarchy. The three institutional marks and the
+            product wordmark used to sit in two stacked rows — a whole row of
+            height given to 130 pixels of logos, then a second row for the
+            name. That second row was the spatial hallucination. Now the
+            marks lead the line, a hairline separates them from the product,
+            and the navigation anchors the right edge. */}
+        <div className="topbar-brand">
+          <div className="institutional-logos">
+            <div className="institutional-logo-container">
+              <ResponsiveImage
+                src={MDES_LOGO.src}
+                alt={locale === "th" ? "กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม" : "Ministry of Digital Economy and Society"}
+                className="institutional-logo"
+                width={MDES_LOGO.width}
+                height={MDES_LOGO.height}
+                loading="eager"
+              />
+            </div>
+            <div className="institutional-logo-container">
+              <ResponsiveImage
+                src={DEPA_LOGO.src}
+                alt={locale === "th" ? "สำนักงานส่งเสริมเศรษฐกิจดิจิทัล" : "Digital Economy Promotion Agency (depa)"}
+                className="institutional-logo"
+                width={DEPA_LOGO.width}
+                height={DEPA_LOGO.height}
+                loading="eager"
+              />
+            </div>
+            {/* The Smart City Thailand seal, once, in the same line as the
+                two institutions behind the programme. It used to sit in the
+                topbar lockup directly below, and printing the same square
+                mark twice 44 pixels apart read as a mistake rather than as
+                branding. */}
+            <div className="institutional-logo-container">
+              <ResponsiveImage
+                src={SMART_CITY_LOGO.src}
+                alt={locale === "th" ? "สำนักงานเมืองอัจฉริยะไทย" : locale === "zh" ? "泰国智慧城市办公室" : "Smart City Thailand Office"}
+                className="institutional-logo"
+                width={SMART_CITY_LOGO.width}
+                height={SMART_CITY_LOGO.height}
+                loading="eager"
+              />
+            </div>
+          </div>
+          <span className="topbar-rule" aria-hidden="true" />
+          <button type="button" className="brand-lockup" onClick={() => navigate("/")}>
+            <span className="brand-name">
+              {locale === "th" ? "ดัชนีเมืองอัจฉริยะไทย" : locale === "zh" ? "泰国智慧城市指数" : "Smart City Thailand Index"}
+            </span>
+          </button>
+        </div>
         <div className="topbar-actions">
           <button
             type="button"

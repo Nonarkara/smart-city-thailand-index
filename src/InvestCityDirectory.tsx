@@ -119,7 +119,7 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
       </div>
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
         gap: "1rem",
         marginBottom: "2rem",
         paddingBottom: "2rem",
@@ -215,7 +215,10 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
       {/* Cards */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+        /* min() lets the 320px floor collapse when the column is narrower
+           than 320px. Without it a 320px phone got a 320px track inside a
+           296px column and the card ran 14px past the viewport. */
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
         gap: "1rem",
       }}>
         {filtered.map(city => (
@@ -239,7 +242,11 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
     }}>
       {/* Header */}
       <div>
-        <div style={{ display: "flex", alignItems: "center", gap: ".5rem", marginBottom: ".35rem", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: ".5rem", marginBottom: ".35rem", flexWrap: "wrap", minWidth: 0 }}>
+          {/* minWidth 0: a wrapping flex row still reports a single-line
+              min-content (the sum of its chips), and that minimum was
+              pushing the whole card 24px past its grid track on a 320px
+              phone. With it removed the chips wrap instead. */}
           <span style={{
             font: "700 var(--text-micro) var(--mono)",
             color: tierColor(city.tier),
