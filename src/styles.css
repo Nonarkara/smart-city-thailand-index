@@ -8674,7 +8674,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
      breaks after the dot and leaves the dot dangling at the line end. */
   white-space: nowrap;
 }
-.cinematic-hero-wordplay-sma { color: var(--amber, #f59e0b); font-weight: 700; }
+.cinematic-hero-wordplay-sma { font-weight: 700; }
 .cinematic-hero-wordplay-sciti { color: #fff; font-weight: 700; }
 
 /* --- Home section note (attribution / footnote line beneath a champions list) --- */
@@ -8931,6 +8931,12 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .cinematic-hero-eyebrow {
   text-shadow: 0 2px 16px rgba(0,0,0,.45);
 }
+/* The eyebrow sits on a photographic scrim that is dark in EVERY theme.
+   --gold-ink resolves to the light-theme token on a light page
+   (#9a5d0a) — 2.80:1 against the scrim, and it cannot reach 4.5:1 on
+   any ground at all. The hero takes the dark-ground amber. The
+   .hero-gradient rule is more specific and keeps its own yellow. */
+.cinematic-hero-eyebrow { color: #f99d1b; }
 
 /* 2. Column-inset pattern — photograph full-bleed, text on the --w column */
 .cinematic-hero-overlay {
