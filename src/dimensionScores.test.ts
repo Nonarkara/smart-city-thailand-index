@@ -54,18 +54,27 @@ describe("derivation engine", () => {
   });
 
   it("covers every depa dimension that has data, and names the ones that do not", () => {
-    // Five of depa's seven dimensions have province-level data. Energy and
-    // governance do not — no verified national source exists for either. The
-    // engine must say so by having no weighted indicator for them, and every
-    // city must report them as unscored.
+    // All SEVEN of depa's dimensions now carry a weighted, province-level
+    // indicator: energy from the Ministry of Energy's own catalogue,
+    // governance from the national open-data portal. The engine must show
+    // no dimension unscored, and the guard is that a dimension cannot
+    // silently return to being unscored without a test failing here.
     const withData = DEPA_DIMENSION_ORDER.filter(
       d => INDICATORS.some(i => i.dimension === d && i.weight > 0),
     );
-    expect(withData.sort()).toEqual(["economy", "environment", "living", "mobility", "people"]);
+    expect(withData.sort()).toEqual([
+      "economy", "energy", "environment", "governance", "living", "mobility", "people",
+    ]);
 
-    for (const d of derivations.values()) {
-      expect(d.unscored).toContain("energy");
-      expect(d.unscored).toContain("governance");
+    // Exactly one city is still unscored, and for one reason: Bueng Kan was
+    // created in 2011, so it appears in no vintage of the 2010 household
+    // survey that carries the Living indicators. That is a fact about Thai
+    // administrative history, not a gap in the data, and the page says so
+    // in the registry note.
+    const unscoredCities = [...derivations.values()].filter(d => d.unscored.length > 0);
+    expect(unscoredCities.map(d => d.cityId)).toEqual(["reg-bueng-kan"]);
+    for (const d of unscoredCities) {
+      expect(d.unscored).toEqual(["living"]);
     }
   });
 
@@ -170,13 +179,13 @@ describe("derivation engine", () => {
       expect(d.weightCoverage).toBeLessThanOrEqual(1);
     }
     // A city's composite covers the published weight of the dimensions it
-    // could actually measure. Energy (5) and governance (10) are the named
-    // gap, so no city exceeds 85%. A city that ALSO lacks environment data
-    // covers less — and must say so rather than being given a flattering
-    // renormalisation.
+    // could actually measure. All seven dimensions are now measured, so a
+    // city with complete province coverage reaches the FULL published
+    // weight. A city that lacks environment data covers less — and must say
+    // so rather than being given a flattering renormalisation.
     const covered = [...derivations.values()].filter(d => d.composite != null);
     const covs = covered.map(d => d.weightCoverage);
-    expect(Math.max(...covs)).toBeCloseTo(0.85, 5);
+    expect(Math.max(...covs)).toBeCloseTo(1, 5);
     // A city with only one measurable dimension still has a composite, and
     // its coverage says so. The floor is one dimension's weight, not zero.
     expect(Math.min(...covs)).toBeGreaterThan(0);
@@ -209,6 +218,11 @@ describe("province baseline data", () => {
       /^https:\/\/catalog\.nso\.go\.th\/dataset\//,
       /^https:\/\/data\.forest\.go\.th\/dataset\//,
       /^https:\/\/data\.go\.th\/dataset\//,
+      // The Ministry of Energy runs its own CKAN catalogue; the two
+      // governance indicators are counted from the national open-data
+      // portal's API, and a reader verifies them there.
+      /^https:\/\/gdcatalog\.energy\.go\.th\/dataset\//,
+      /^https:\/\/data\.go\.th\/api\/3\/action\//,
     ];
     for (const i of PROVINCE_BASELINE) {
       expect(i.dataset).toBeTruthy();

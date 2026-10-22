@@ -84,7 +84,7 @@ export default function WhyPage({ locale, onNavigate }: Props) {
 
   return (
     <div className="why-page">
-      <section className="section reveal visible" style={{ paddingTop: "7rem", paddingBottom: "1.5rem" }}>
+      <section className="page-hero section reveal visible" style={{ paddingTop: "7rem" }}>
         <p className="eyebrow">{translate(locale, { en: "Why this index", th: "ทำไมดัชนีนี้", zh: "为什么需要这个指数" })}</p>
         <h1 className="hero-title">
           {translate(locale, {
@@ -136,7 +136,7 @@ export default function WhyPage({ locale, onNavigate }: Props) {
         ))}
       </section>
 
-      <section ref={sourceRef} className={`section reveal stagger-3 ${sourceVisible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
+      <section ref={sourceRef} className={`section reveal stagger-3 ${sourceVisible ? "visible" : ""}`}>
         <p className="story-source-note">
           {translate(locale, {
             en: "These references explain why benchmarking matters. Some are Thailand-specific, some are broader smart-city research, and together they justify the need for a transparent city index.",
@@ -156,7 +156,7 @@ export default function WhyPage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section ref={ctaRef} className={`section reveal stagger-4 ${ctaVisible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
+      <section ref={ctaRef} className={`section reveal stagger-4 ${ctaVisible ? "visible" : ""}`}>
         <div className="callout-card glass-card shadow-premium">
           <h2>{translate(locale, { en: "This index is open. Use it.", th: "ดัชนีนี้เปิดเผย ใช้ได้เลย", zh: "本指数是开放的。请使用。" })}</h2>
           <p>{translate(locale, {

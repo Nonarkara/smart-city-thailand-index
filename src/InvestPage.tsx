@@ -452,7 +452,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
+            <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
               {translate(locale, {
                 en: "What Is Moneyball?",
                 th: "Moneyball คืออะไร",
@@ -488,7 +488,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
+            <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
               {translate(locale, {
                 en: "For Investors: Look Beyond Bangkok",
                 th: "สำหรับนักลงทุน: มองข้ามกรุงเทพฯ ไปอีกขั้น",
@@ -503,7 +503,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               })}
             </p>
 
-            <h3 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
+            <h3 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
               {translate(locale, { en: "What SCITI Gives You", th: "สิ่งที่ SCITI มอบให้คุณ", zh: "SCITI 能给您什么" })}
             </h3>
             
@@ -534,7 +534,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               </div>
             </div>
 
-            <h3 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
+            <h3 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
               {translate(locale, { en: "How to Read the Data", th: "วิธีอ่านข้อมูล", zh: "如何解读数据" })}
             </h3>
             <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.6 }}>
@@ -575,7 +575,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
+            <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
               {translate(locale, { en: "Who Signs", th: "ใครเป็นคนเซ็น", zh: "谁来签字" })}
             </h2>
             <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
@@ -670,31 +670,12 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             zh: "来自真实机构的真实数据。没有预测，没有虚言——泰国智慧城市投资论点的基准线。",
           })}
         </p>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-          gap: 0,
-          border: "1px solid var(--5)",
-        }}>
+        <div className="invest-macro-grid">
           {macroStats.map((s, i) => (
-            <div key={i} className="glass-card" style={{
-              border: 0,
-              borderRadius: 0,
-              borderRight: i < macroStats.length - 1 ? "1px solid var(--5)" : "none",
-              padding: "1.25rem 1rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: ".35rem",
-            }}>
-              <span style={{ font: "700 var(--text-micro) var(--mono)", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--3)" }}>
-                {translate(locale, s.label)}
-              </span>
-              <span style={{ font: "800 var(--text-display) var(--font-heading)", letterSpacing: "-.04em", color: "var(--ink)" }}>
-                {s.value}
-              </span>
-              <span style={{ font: "500 var(--text-micro) var(--font)", color: "var(--2)" }}>
-                {translate(locale, s.sub)}
-              </span>
+            <div key={i} className="invest-macro-cell">
+              <span className="invest-macro-label">{translate(locale, s.label)}</span>
+              <span className="invest-macro-value">{s.value}</span>
+              <span className="invest-macro-sub">{translate(locale, s.sub)}</span>
             </div>
           ))}
         </div>

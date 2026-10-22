@@ -232,6 +232,64 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
 function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; locale: Locale; onNavigate: (path: string) => void; featured?: boolean }) {
   const pitch = useMemo(() => getInvestorPitchForLocale(city, locale), [city, locale]);
 
+  // The full investment story is earned content and every word of it stays.
+  // What changes is WHEN it is open. Open 118 times over, each card grew to
+  // 966px and /invest ran to 54,618px — a wall of equal-weight blocks with
+  // no reading order, which is the exact failure this section exists to
+  // fix: finding the city where the capital fits. The featured cities keep
+  // the story open, because they are the curated ones; the atlas below
+  // opens it on request.
+  const story = (
+    <>
+      <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.6, margin: 0 }}>
+        {pitch.whyLook}
+      </p>
+
+      <div style={{ borderTop: "1px solid var(--5)", paddingTop: ".6rem", marginTop: ".2rem" }}>
+        <p style={{ font: "500 var(--text-body) var(--font)", color: "var(--teal)", margin: 0, lineHeight: 1.5 }}>
+          {pitch.competitiveEdge}
+        </p>
+      </div>
+
+      <div>
+        <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: ".08em" }}>
+          {translate(locale, { en: "Opportunity", th: "โอกาส", zh: "机遇" })}
+        </span>
+        <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.6, margin: ".15rem 0 0" }}>
+          {pitch.opportunity}
+        </p>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: ".5rem" }}>
+        <div>
+          <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--3)", textTransform: "uppercase", letterSpacing: ".08em" }}>
+            {translate(locale, { en: "Right for", th: "เหมาะกับ", zh: "适合" })}
+          </span>
+          <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.55, margin: ".15rem 0 0" }}>
+            {pitch.idealInvestor}
+          </p>
+        </div>
+        <div>
+          <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--3)", textTransform: "uppercase", letterSpacing: ".08em" }}>
+            {translate(locale, { en: "Risk", th: "ความเสี่ยง", zh: "风险" })}
+          </span>
+          <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.55, margin: ".15rem 0 0" }}>
+            {pitch.riskNote}
+          </p>
+        </div>
+      </div>
+
+      <div style={{ borderTop: "1px solid var(--5)", paddingTop: ".6rem", marginTop: "auto" }}>
+        <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--ink)", textTransform: "uppercase", letterSpacing: ".08em" }}>
+          {translate(locale, { en: "Next step", th: "ขั้นตอนถัดไป", zh: "下一步" })}
+        </span>
+        <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.6, margin: ".15rem 0 0" }}>
+          {pitch.nextStep}
+        </p>
+      </div>
+    </>
+  );
+
   return (
     <div className="glass-card shadow-premium" style={{
       padding: "1.25rem",
@@ -290,52 +348,14 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
       <p style={{ font: "600 var(--text-body) var(--font)", color: "var(--ink)", lineHeight: 1.5, margin: 0 }}>
         {pitch.headline}
       </p>
-      <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.6, margin: 0 }}>
-        {pitch.whyLook}
-      </p>
-
-      <div style={{ borderTop: "1px solid var(--5)", paddingTop: ".6rem", marginTop: ".2rem" }}>
-        <p style={{ font: "500 var(--text-body) var(--font)", color: "var(--teal)", margin: 0, lineHeight: 1.5 }}>
-          {pitch.competitiveEdge}
-        </p>
-      </div>
-
-      <div>
-        <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: ".08em" }}>
-          {translate(locale, { en: "Opportunity", th: "โอกาส", zh: "机遇" })}
-        </span>
-        <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.6, margin: ".15rem 0 0" }}>
-          {pitch.opportunity}
-        </p>
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: ".5rem" }}>
-        <div>
-          <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--3)", textTransform: "uppercase", letterSpacing: ".08em" }}>
-            {translate(locale, { en: "Right for", th: "เหมาะกับ", zh: "适合" })}
-          </span>
-          <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.55, margin: ".15rem 0 0" }}>
-            {pitch.idealInvestor}
-          </p>
-        </div>
-        <div>
-          <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--3)", textTransform: "uppercase", letterSpacing: ".08em" }}>
-            {translate(locale, { en: "Risk", th: "ความเสี่ยง", zh: "风险" })}
-          </span>
-          <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.55, margin: ".15rem 0 0" }}>
-            {pitch.riskNote}
-          </p>
-        </div>
-      </div>
-
-      <div style={{ borderTop: "1px solid var(--5)", paddingTop: ".6rem", marginTop: "auto" }}>
-        <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--ink)", textTransform: "uppercase", letterSpacing: ".08em" }}>
-          {translate(locale, { en: "Next step", th: "ขั้นตอนถัดไป", zh: "下一步" })}
-        </span>
-        <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.6, margin: ".15rem 0 0" }}>
-          {pitch.nextStep}
-        </p>
-      </div>
+      {featured ? story : (
+        <details className="city-story">
+          <summary className="city-story-toggle">
+            {translate(locale, { en: "Read the full story", th: "อ่านเรื่องราวฉบับเต็ม", zh: "阅读完整故事" })}
+          </summary>
+          <div className="city-story-body">{story}</div>
+        </details>
+      )}
 
       <button
         className="ghost-button"

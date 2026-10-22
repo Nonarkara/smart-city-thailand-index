@@ -262,7 +262,7 @@ export default function ReferencesPage({ locale }: Props) {
           <div className="formula-box" style={{ marginTop: ".75rem" }}>
              <code>Confidence = w(core coverage 65%, extended coverage 15%, provenance 10%, freshness 10%)</code>
           </div>
-          <p style={{ fontSize: ".72rem", color: "var(--2)", lineHeight: 1.65, marginTop: "1rem" }}>
+          <p style={{ fontSize: "var(--text-micro)", color: "var(--2)", lineHeight: 1.65, marginTop: "1rem" }}>
             {t(locale, {
               en: `Once the seven pillar scores are fixed, the composite is fully deterministic. Confidence is computed separately and does not secretly alter the score. Tier thresholds are fixed at Alpha ≥ ${TIER_THRESHOLDS.alpha}, Beta ≥ ${TIER_THRESHOLDS.beta}, Gamma < ${TIER_THRESHOLDS.beta}.`,
               th: `เมื่อคะแนน 7 เสาหลักล็อกแล้ว คะแนนรวมจะถูกคำนวณเชิงกำหนดทั้งหมด ความเชื่อมั่นคำนวณแยกต่างหากและไม่แอบปรับคะแนน เกณฑ์ระดับคงที่: Alpha ≥ ${TIER_THRESHOLDS.alpha}, Beta ≥ ${TIER_THRESHOLDS.beta}, Gamma < ${TIER_THRESHOLDS.beta}`,
@@ -286,7 +286,7 @@ export default function ReferencesPage({ locale }: Props) {
       <section className="section reveal stagger-3 visible">
         <p className="eyebrow">{t(locale, { en: "Photo Credits", th: "เครดิตภาพ", zh: "图片致谢" })}</p>
         <h2>{t(locale, { en: "Wikimedia Commons Attribution", th: "การอ้างอิงภาพจาก Wikimedia Commons", zh: "Wikimedia Commons 图片致谢" })}</h2>
-        <p style={{ fontSize: ".75rem", color: "var(--2)", lineHeight: 1.6, maxWidth: "620px", marginBottom: "1rem" }}>
+        <p style={{ fontSize: "var(--text-micro)", color: "var(--2)", lineHeight: 1.6, maxWidth: "620px", marginBottom: "1rem" }}>
           {t(locale, {
             en: "City photos on this site are sourced from Wikimedia Commons under Creative Commons licenses. Each requires attribution to the original photographer. The full list is below, with direct links to the source file on Wikimedia.",
             th: "ภาพเมืองบนเว็บไซต์นี้มาจาก Wikimedia Commons ภายใต้สัญญาอนุญาต Creative Commons ซึ่งกำหนดให้ต้องอ้างอิงช่างภาพต้นฉบับ รายการทั้งหมดอยู่ด้านล่าง พร้อมลิงก์ไปยังไฟล์ต้นฉบับบน Wikimedia",

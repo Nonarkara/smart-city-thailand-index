@@ -9,7 +9,7 @@ import {
   type CityDerivation,
 } from "./dimensionScores";
 import { buildFacets, type FacetDef } from "./baselineFacets";
-import { BASELINE_COVERAGE, SOURCE_REGISTRY } from "./baselineSources";
+import { BASELINE_COVERAGE, SOURCE_REGISTRY, RESIDUAL_GAPS } from "./baselineSources";
 import { getCityName, getProvinceName } from "./cityPresentation";
 import { toAppPath } from "./routing";
 import type { Locale } from "./types";
@@ -208,9 +208,9 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
           <div className="baseline-dims" role="list">
             {DEPA_DIMENSION_ORDER.map(dim => {
               // A dimension is "missing" when NOTHING is measured for it —
-              // not when the source registry rates it thinly. Governance has
-              // three probed sources and zero measured cities, so it is a
-              // gap, and the strip has to say so next to Energy.
+              // not when the source registry rates it thinly. The registry
+              // rates a dimension by how many sources serve it; this strip
+              // says whether a number actually exists.
               const scoredCities = dimCityCounts[dim];
               const has = scoredCities > 0;
               return (
@@ -239,33 +239,61 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      {/* ─── THE GAP, STATED ──────────────────────────────────────────── */}
+      {/* ─── THE GAP, STATED ──────────────────────────────────────────────
+          All seven dimensions carry a measured indicator now, so there is no
+          dimension with nothing behind it. The band therefore names what is
+          still absent INSIDE the dimensions we score — two specific
+          measurements, each with the reason it cannot be had. A named
+          absence is a research instruction; an unstated one is an
+          over-claim. The band never renders empty: if there were no gap of
+          either kind, it would be a section that says nothing, which is
+          exactly the spatial hallucination this project is trying to
+          remove. ── */}
       <section className="baseline-gap">
         <div className="section baseline-gap-inner">
           <p className="eyebrow">
             {t(locale, { en: "What is missing", th: "สิ่งที่ยังขาด", zh: "尚缺的部分" })}
           </p>
           <h2 className="baseline-gap-title">
-            {t(locale, {
-              en: `${gapDimensions.length} dimensions have no baseline yet`,
-              th: `${gapDimensions.length} มิติที่ยังไม่มีข้อมูลพื้นฐาน`,
-              zh: `${gapDimensions.length} 个维度尚无基线`,
-            })}
+            {gapDimensions.length > 0
+              ? t(locale, {
+                  en: `${gapDimensions.length} dimensions have no baseline yet`,
+                  th: `${gapDimensions.length} มิติที่ยังไม่มีข้อมูลพื้นฐาน`,
+                  zh: `${gapDimensions.length} 个维度尚无基线`,
+                })
+              : t(locale, {
+                  en: `${RESIDUAL_GAPS.length} measurements are still missing`,
+                  th: `ยังขาดอีก ${RESIDUAL_GAPS.length} ตัวชี้วัด`,
+                  zh: `仍缺失 ${RESIDUAL_GAPS.length} 项测量`,
+                })}
           </h2>
           <p className="baseline-gap-lede">
-            {t(locale, {
-              en: "No province-level national source was verified for these. Rather than score them by judgement, SCITI publishes them empty, with the negotiation in progress. The composite therefore covers at most 85% of the published weight — and says so.",
-              th: "ยังไม่มีแหล่งข้อมูลระดับจังหวัดที่ยืนยันได้สำหรับสองมิตินี้ SCITI จึงเผยแพร่เป็นค่าว่าง พร้อมความคืบหน้าการเจรจาข้อมูล แทนที่จะให้คะแนนด้วยการตัดสินใจ คะแนนรวมจึงครอบคลุมน้ำหนักที่ประกาศไว้ได้มากที่สุด 85%",
-              zh: "这两个维度尚未核实到省级全国数据源。SCITI 不以主观判断评分，而是将其公开为空，并持续推进数据谈判。因此综合分最多覆盖已公布权重的 85%，并如实标注。",
-            })}
+            {gapDimensions.length > 0
+              ? t(locale, {
+                  en: "No province-level national source was verified for these. Rather than score them by judgement, SCITI publishes them empty. The composite covers less than the full published weight — and says so.",
+                  th: "ยังไม่มีแหล่งข้อมูลระดับจังหวัดที่ยืนยันได้สำหรับมิติเหล่านี้ SCITI จึงเผยแพร่เป็นค่าว่าง แทนที่จะให้คะแนนด้วยการตัดสินใจ คะแนนรวมจึงครอบคลุมน้ำหนักที่ประกาศไว้ไม่ครบ และระบุไว้เช่นนั้น",
+                  zh: "这些维度尚未核实到省级全国数据源。SCITI 不以主观判断评分，而是将其公开为空。因此综合分未覆盖全部已公布权重，并如实标注。",
+                })
+              : t(locale, {
+                  en: "All seven dimensions are measured from a named source. Two measurements inside them are still absent, and both are named rather than approximated: there is no machine-readable province-level renewable-energy share, and Thailand publishes no province-level e-government index.",
+                  th: "ทั้งเจ็ดมิติวัดจากแหล่งข้อมูลที่ระบุชื่อแล้ว ภายในนั้นยังขาดตัวชี้วัดสองตัว ซึ่งถูกระบุไว้แทนการประมาณ ได้แก่ สัดส่วนพลังงานทดแทนระดับจังหวัดที่อ่านเป็นตัวเลขได้ และดัชนีรัฐบาลอิเล็กทรอนิกส์ระดับจังหวัดซึ่งประเทศไทยไม่มี",
+                  zh: "七个维度均已由具名来源测量。其中仍有两项测量缺失，均如实列明而非估算：没有机器可读的省级可再生能源占比，泰国也没有省级电子政务指数。",
+                })}
           </p>
           <ul className="baseline-gap-list">
-            {gapDimensions.map(dim => (
-              <li key={dim} className="baseline-gap-item">
-                <span className="baseline-gap-item-name">{DIMENSION_LABELS[dim][locale]}</span>
-                <span className="baseline-gap-item-note">{BASELINE_COVERAGE[dim].note}</span>
-              </li>
-            ))}
+            {gapDimensions.length > 0
+              ? gapDimensions.map(dim => (
+                  <li key={dim} className="baseline-gap-item">
+                    <span className="baseline-gap-item-name">{DIMENSION_LABELS[dim][locale]}</span>
+                    <span className="baseline-gap-item-note">{BASELINE_COVERAGE[dim].note}</span>
+                  </li>
+                ))
+              : RESIDUAL_GAPS.map(gap => (
+                  <li key={gap.id} className="baseline-gap-item">
+                    <span className="baseline-gap-item-name">{gap.label[locale]}</span>
+                    <span className="baseline-gap-item-note">{gap.note[locale]}</span>
+                  </li>
+                ))}
           </ul>
         </div>
       </section>

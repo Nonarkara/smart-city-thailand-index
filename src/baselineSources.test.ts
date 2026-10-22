@@ -65,19 +65,21 @@ describe("baseline source registry", () => {
     }
   });
 
-  // The question this guards: can a dimension marked "none" still be silently
-  // scored? The honest answer for energy is that no province-level national
-  // source was verified, so it must stay unscoreable rather than be backfilled
-  // from MEA (Bangkok only).
-  it("keeps energy unscorable — no verified national province-level source exists", () => {
-    expect(BASELINE_COVERAGE.energy.strength).toBe("none");
-    const nationalEnergySources = SOURCE_REGISTRY.filter(
-      s => s.serves.includes("energy") && !s.caveat?.includes("Bangkok"),
-    );
+  // The question this guards: can a dimension rated "partial" quietly claim
+  // more than it has? Energy is scored from the Ministry of Energy's own
+  // province table — PEA and MEA reporting, re-tabulated by the Ministry —
+  // which covers all 77 provinces. It is rated "partial" because two things
+  // inside it are still missing (a renewable share, a fuel-sales ratio), not
+  // because the province table is unavailable.
+  it("rates energy partial because a measurement is missing, not because the source is", () => {
+    expect(BASELINE_COVERAGE.energy.strength).toBe("partial");
+    const energySources = SOURCE_REGISTRY.filter(s => s.serves.includes("energy"));
     expect(
-      nationalEnergySources.map(s => s.id),
-      "a national energy source appeared — re-assess the 'none' rating",
-    ).toEqual([]);
+      energySources.map(s => s.id),
+      "the energy source list changed — re-check the rating and the note",
+    ).toContain("moe-province-electricity");
+    // The rating must stay honest about what is still absent.
+    expect(BASELINE_COVERAGE.energy.note).toMatch(/renewable/i);
   });
 
   // The question this guards: is a "none" rating allowed to hide behind a

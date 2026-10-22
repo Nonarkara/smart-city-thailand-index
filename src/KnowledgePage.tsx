@@ -1057,7 +1057,7 @@ export default function KnowledgePage({ locale }: Props) {
         </p>
       </section>
 
-      <section ref={listRef} className={`section reveal stagger-1 ${listVisible ? "visible" : ""}`} style={{ marginBottom: "3rem" }}>
+      <section ref={listRef} className={`section reveal stagger-1 ${listVisible ? "visible" : ""}`}>
         <input
           type="text"
           className="kb-search shadow-premium"

@@ -547,7 +547,7 @@ export default function App() {
               </nav>
 
               <div className="footer-fineprint">
-                <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: "0.5rem", fontSize: "1rem" }}>
+                <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: "0.5rem", fontSize: "var(--text-body)" }}>
                   {locale === "th" ? "SCITI (sciti.nonarkara.org) -- แพลตฟอร์มข้อมูลเศรษฐกิจสร้างสรรค์ระดับจังหวัดของไทย" : locale === "zh" ? "SCITI (sciti.nonarkara.org) —— 泰国省级创意经济数据平台" : "SCITI (sciti.nonarkara.org) -- Thailand's Provincial Creative Economy Data Platform"}
                 </p>
                 <p style={{ fontWeight: 600, color: "var(--teal)", marginBottom: "1rem", fontSize: "var(--text-body)", letterSpacing: "0.05em", textTransform: "uppercase" as const }}>
@@ -584,7 +584,7 @@ export default function App() {
                       ? "有关数据查询、合作提案或更正，请通过 sciti.nonarkara.org 联系 SCITI 团队。"
                       : "For data inquiries, partnership proposals, or corrections, contact the SCITI team via sciti.nonarkara.org"}
                 </p>
-                <p style={{ borderTop: "1px solid var(--5)", paddingTop: ".5rem", marginTop: "1rem", fontSize: "0.75rem" }}>
+                <p style={{ borderTop: "1px solid var(--5)", paddingTop: ".5rem", marginTop: "1rem", fontSize: "var(--text-micro)" }}>
                   {locale === "th"
                     ? "© 2026 สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa) · วิธีการ SLIC · ข้อมูลเปิดเผยภายใต้ CC BY 4.0"
                     : locale === "zh"

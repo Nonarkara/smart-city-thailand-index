@@ -15,7 +15,7 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
 
   return (
     <div className="about-page">
-      <section className="section reveal visible" style={{ paddingTop: "7rem", paddingBottom: "1.5rem" }}>
+      <section className="page-hero section reveal visible" style={{ paddingTop: "7rem" }}>
         <p className="eyebrow">{translate(locale, { en: "Creative Economy", th: "เศรษฐกิจสร้างสรรค์", zh: "创意经济" })}</p>
         <h1 className="hero-title">
           {translate(locale, {
@@ -33,7 +33,7 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
         </p>
       </section>
 
-      <section ref={section1Ref} className={`section reveal stagger-1 ${section1Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
+      <section ref={section1Ref} className={`section reveal stagger-1 ${section1Visible ? "visible" : ""}`}>
         <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
           <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-display)" }}>
             {translate(locale, {
@@ -45,9 +45,9 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section ref={section2Ref} className={`section reveal stagger-2 ${section2Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
+      <section ref={section2Ref} className={`section reveal stagger-2 ${section2Visible ? "visible" : ""}`}>
         <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
-          <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
+          <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
             {translate(locale, { en: "How SCITI Maps Creative Assets", th: "SCITI ทำแผนที่สินทรัพย์เชิงสร้างสรรค์อย่างไร", zh: "SCITI如何绘制创意资产地图" })}
           </h2>
           <p style={{ marginBottom: "1.5rem" }}>
@@ -78,9 +78,9 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section ref={section3Ref} className={`section reveal stagger-3 ${section3Visible ? "visible" : ""}`} style={{ marginBottom: "2.5rem" }}>
+      <section ref={section3Ref} className={`section reveal stagger-3 ${section3Visible ? "visible" : ""}`}>
         <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
-          <h2 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>
+          <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
             {translate(locale, { en: "CEA & UNESCO Alignment", th: "ความสอดคล้องกับ CEA และ ยูเนสโก", zh: "与CEA和联合国教科文组织的协同" })}
           </h2>
           <p style={{ marginBottom: "1.5rem" }}>
@@ -100,7 +100,7 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section ref={section4Ref} className={`section reveal stagger-4 ${section4Visible ? "visible" : ""}`} style={{ marginBottom: "5rem" }}>
+      <section ref={section4Ref} className={`section reveal stagger-4 ${section4Visible ? "visible" : ""}`}>
         <div className="callout-card glass-card shadow-premium" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center", padding: "3rem 2rem" }}>
           <p style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
             {translate(locale, {

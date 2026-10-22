@@ -58,12 +58,24 @@ function PillarStrip({ city }: { city: SmartCity }) {
   );
 }
 
-// --- CityRadar: 140x140 heptagon spider over the 7 pillars (0-100 scale) ---
+// --- CityRadar: heptagon spider over the 7 pillars (0-100 scale) ---
+//
+// The labels were the defect. Measured in the browser: "Hospitality"
+// began 27px LEFT of the SVG's own box, so it was clipped, and
+// "Environment" overlapped "Wellbeing" by 15px. A 160-unit box cannot
+// hold labels up to 76 units wide.
+//
+// The box now has the room the labels need, and each label is anchored
+// AWAY from the centre — a label on the left grows leftward, one on the
+// right grows rightward. The two labels that share a baseline therefore
+// grow in opposite directions and can never meet, in any language.
 function CityRadar({ city, locale }: { city: SmartCity; locale: Locale }) {
-  const SIZE = 160;
-  const CX = SIZE / 2;
-  const CY = SIZE / 2;
-  const R = 54;
+  const W = 276;
+  const H = 124;
+  const CX = 142;
+  const CY = 65;
+  const R = 46;
+  const RING = 56;
   const n = SCORING_PILLARS.length;
   const label = PILLAR_LABELS[locale];
 
@@ -74,8 +86,8 @@ function CityRadar({ city, locale }: { city: SmartCity; locale: Locale }) {
       pillar,
       x: CX + Math.cos(angle) * R * v,
       y: CY + Math.sin(angle) * R * v,
-      lx: CX + Math.cos(angle) * (R + 14),
-      ly: CY + Math.sin(angle) * (R + 14),
+      lx: CX + Math.cos(angle) * RING,
+      ly: CY + Math.sin(angle) * RING,
     };
   });
   const outer = SCORING_PILLARS.map((_, i) => {
@@ -86,10 +98,10 @@ function CityRadar({ city, locale }: { city: SmartCity; locale: Locale }) {
 
   return (
     <svg
-      className="lens-radar"
-      width={SIZE}
-      height={SIZE}
-      viewBox={`0 0 ${SIZE} ${SIZE}`}
+      className="lens-radar compare-radar"
+      width={W}
+      height={H}
+      viewBox={`0 0 ${W} ${H}`}
       role="img"
       aria-label={getCityName(city, locale)}
     >
@@ -118,7 +130,9 @@ function CityRadar({ city, locale }: { city: SmartCity; locale: Locale }) {
           x={p.lx}
           y={p.ly}
           className="lens-radar-label"
-          textAnchor="middle"
+          textAnchor={
+            Math.abs(p.lx - CX) < 2 ? "middle" : p.lx < CX ? "end" : "start"
+          }
           dominantBaseline="middle"
         >
           {label[p.pillar as ScoringPillar]}
@@ -187,7 +201,7 @@ export default function ComparePage({ locale, onNavigate }: Props) {
   });
 
   return (
-    <section className="section compare-page">
+    <section className="page-hero section compare-page">
       <p className="eyebrow">
         {translate(locale, { en: "Side by side", th: "เทียบเคียง", zh: "并排对比" })}
       </p>
@@ -331,7 +345,7 @@ export default function ComparePage({ locale, onNavigate }: Props) {
       ) : (
         <div
           className="compare-grid"
-          style={{ gridTemplateColumns: `repeat(${selectedCities.length}, minmax(240px, 1fr))` }}
+          style={{ "--compare-cols": selectedCities.length } as React.CSSProperties}
         >
           {selectedCities.map(city => {
             const photo = getCityPhotoAsset(city);

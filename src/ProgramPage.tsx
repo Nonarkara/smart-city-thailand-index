@@ -311,7 +311,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
           th: "depa · กระทรวง DE · ราชอาณาจักรไทย", 
           zh: "depa · MDES · 泰王国" 
         })}</p>
-        <h1 className="hero-title" style={{ fontSize: "clamp(1.8rem, 4.5vw, 3rem)" }}>
+        <h1 className="hero-title" style={{ fontSize: "var(--text-display)" }}>
           {translate(locale, { en: "Smart City Thailand", th: "เมืองอัจฉริยะประเทศไทย", zh: "泰国智慧城市" })}
         </h1>
         <p className="hero-strapline">
@@ -332,7 +332,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── THREE CONCEPTS ─── */}
-      <section ref={dnaRef} className={`section reveal stagger-1 ${dnaVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+      <section ref={dnaRef} className={`section reveal stagger-1 ${dnaVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Three concepts", th: "สามแนวคิดหลัก", zh: "三大概念" })}</p>
         <h2>{translate(locale, { en: "The DNA of Thai smart cities", th: "DNA ของเมืองอัจฉริยะไทย", zh: "泰国智慧城市的DNA" })}</h2>
         <div className="program-concepts-grid">
@@ -381,7 +381,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </div>
 
       {/* ─── TWO-FIVE-SEVEN ─── */}
-      <section ref={mref257} className={`section reveal stagger-2 ${visible257 ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+      <section ref={mref257} className={`section reveal stagger-2 ${visible257 ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Two-Five-Seven", th: "สอง-ห้า-เจ็ด", zh: "二-五-七" })}</p>
         <h2>{translate(locale, { en: "The mnemonic that drives the program", th: "สูตรที่ขับเคลื่อนโครงการ", zh: "驱动项目的口诀" })}</h2>
         <div className="program-257-grid">
@@ -428,7 +428,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </div>
 
       {/* ─── CERTIFICATION PROCESS ─── */}
-      <section id="smart-city-logo-guideline" ref={certRef} className={`section reveal stagger-3 ${certVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+      <section id="smart-city-logo-guideline" ref={certRef} className={`section reveal stagger-3 ${certVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Process", th: "กระบวนการ", zh: "流程" })}</p>
         <h2>{translate(locale, { en: "How a city gets the logo", th: "เมืองได้ตราสัญลักษณ์อย่างไร", zh: "城市如何获得标识" })}</h2>
         <p className="program-section-intro">
@@ -504,7 +504,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── THAILAND DIGITAL CATALOG ─── */}
-      <section id="thailand-digital-catalog" ref={catalogRef} className={`section reveal stagger-3 ${catalogVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+      <section id="thailand-digital-catalog" ref={catalogRef} className={`section reveal stagger-3 ${catalogVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Procurement gateway", th: "ประตูสู่การจัดซื้อจัดจ้าง", zh: "采购入口" })}</p>
         <h2>{translate(locale, { en: "Thailand Digital Catalog", th: "บัญชีบริการดิจิทัล", zh: "泰国数字服务名录" })}</h2>
         <p className="program-section-intro">
@@ -582,7 +582,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── MEASUREMENT FRAMEWORK ─── */}
-      <section ref={measureRef} className={`section reveal stagger-4 ${measureVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+      <section ref={measureRef} className={`section reveal stagger-4 ${measureVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Measurement Framework", th: "กรอบการวัดผล", zh: "测量框架" })}</p>
         <h2>{translate(locale, { en: "What the evaluation committee actually checks", th: "สิ่งที่คณะกรรมการประเมินตรวจสอบจริงๆ", zh: "评估委员会实际审查的内容" })}</h2>
         <p style={{ maxWidth: "680px", marginBottom: "1.5rem" }}>
@@ -614,7 +614,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── BATCH TIMELINE + KEY STATS ─── */}
-      <section ref={batchRef} className={`section reveal stagger-4 ${batchVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+      <section ref={batchRef} className={`section reveal stagger-4 ${batchVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Timeline", th: "ไทม์ไลน์", zh: "时间线" })}</p>
         <h2>{translate(locale, { en: "Four batches, eight years", th: "สี่รุ่น แปดปี", zh: "四批次，八年" })}</h2>
         <div className="program-batch-grid">
@@ -649,7 +649,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── CDP + Primer Source ─── */}
-      <section ref={cdpRef} className={`section reveal stagger-3 ${cdpVisible ? "visible" : ""}`} style={{ marginBottom: "3rem" }}>
+      <section ref={cdpRef} className={`section reveal stagger-3 ${cdpVisible ? "visible" : ""}`}>
         <div className="callout-card glass-card shadow-heavy" style={{ borderLeftColor: "var(--teal)" }}>
           <p className="eyebrow">{translate(locale, { en: "City Data Platform", th: "แพลตฟอร์มข้อมูลเมือง", zh: "城市数据平台" })}</p>
           <h2>{translate(locale, { en: "CDP: the digital backbone", th: "CDP: กระดูกสันหลังดิจิทัล", zh: "CDP: 数字主干" })}</h2>
@@ -672,7 +672,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── KEY INCENTIVES ─── */}
-      <section ref={incentivesRef} className={`section reveal stagger-4 ${incentivesVisible ? "visible" : ""}`} style={{ marginBottom: "2rem" }}>
+      <section ref={incentivesRef} className={`section reveal stagger-4 ${incentivesVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Incentives", th: "สิทธิประโยชน์", zh: "激励措施" })}</p>
         <h2>{translate(locale, { en: "Why invest in a Thai smart city?", th: "ทำไมต้องลงทุนในเมืองอัจฉริยะไทย?", zh: "为什么投资泰国智慧城市？" })}</h2>
         <p style={{ marginBottom: "1.5rem", maxWidth: "680px" }}>
@@ -723,7 +723,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── SOURCES ─── */}
-      <section ref={sourcesRef} className={`section reveal stagger-1 ${sourcesVisible ? "visible" : ""}`} style={{ marginBottom: "3rem" }}>
+      <section ref={sourcesRef} className={`section reveal stagger-1 ${sourcesVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Academic Sources", th: "แหล่งอ้างอิงทางวิชาการ", zh: "学术来源" })}</p>
         <h2>{translate(locale, { en: "This page draws on peer-reviewed research", th: "หน้านี้อ้างอิงจากงานวิจัยที่ผ่านการตรวจสอบ", zh: "本页内容来自同行评审研究" })}</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>

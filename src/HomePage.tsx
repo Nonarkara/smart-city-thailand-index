@@ -237,14 +237,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
       >
         <div className="home-stat-ribbon-inner">
           <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Cities indexed", th: "เมืองในดัชนี", zh: "入选城市" })}</span>
-            <span className="home-stat-value">{stats.total}</span>
-          </div>
-          <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "depa-certified", th: "ได้รับการรับรองจาก depa", zh: "depa 认证" })}</span>
-            <span className="home-stat-value">{stats.certified}</span>
-          </div>
-          <div className="home-stat-cell">
             <span className="home-stat-label">{t({ en: "Provinces covered", th: "จังหวัดครอบคลุม", zh: "覆盖省份" })}</span>
             <span className="home-stat-value">{provinceCount}</span>
           </div>

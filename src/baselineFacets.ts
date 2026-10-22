@@ -320,6 +320,62 @@ export function buildFacets(cities: SmartCity[]): FacetDef[] {
       provinceId: "rtddi-motorcycle-share",
       value: c => provinceValue("rtddi-motorcycle-share")?.(c.province) ?? null,
     },
+    {
+      id: "electricity-per-capita",
+      label: { en: "Electricity per person", th: "ไฟฟ้าที่ใช้ต่อหัวประชากร", zh: "人均用电量" },
+      dimension: "energy",
+      unit: "kWh/person",
+      source: {
+        en: "Ministry of Energy province electricity consumption, 2023 ÷ NSO province population, 2022",
+        th: "การใช้ไฟฟ้ารายจังหวัด สำนักงานปลัดกระทรวงพลังงาน 2566 ÷ ประชากรจังหวัด สศ. 2565",
+        zh: "能源部省级用电量 2023 ÷ 统计局省级人口 2022",
+      },
+      vintage: String(provinceMeta("moe-electricity-per-capita")?.year ?? ""),
+      provinceId: "moe-electricity-per-capita",
+      value: c => provinceValue("moe-electricity-per-capita")?.(c.province) ?? null,
+    },
+    {
+      id: "residential-electricity-share",
+      label: { en: "Share of the grid serving homes", th: "สัดส่วนไฟฟ้าที่ใช้ในบ้านอยู่อาศัย", zh: "居民用电占比" },
+      dimension: "energy",
+      unit: "%",
+      source: {
+        en: "Ministry of Energy province electricity consumption, 2023 — residential tariff class ÷ all tariff classes",
+        th: "การใช้ไฟฟ้ารายจังหวัด สำนักงานปลัดกระทรวงพลังงาน 2566 — สาขาบ้านอยู่อาศัย ÷ ทุกสาขา",
+        zh: "能源部省级用电量 2023 — 居民电价类别 ÷ 全部类别",
+      },
+      vintage: String(provinceMeta("moe-residential-electricity-share")?.year ?? ""),
+      provinceId: "moe-residential-electricity-share",
+      value: c => provinceValue("moe-residential-electricity-share")?.(c.province) ?? null,
+    },
+    {
+      id: "open-datasets",
+      label: { en: "Open datasets published", th: "ชุดข้อมูลเปิดที่เผยแพร่", zh: "已发布开放数据集" },
+      dimension: "governance",
+      unit: "datasets",
+      source: {
+        en: "data.go.th — datasets published by the provincial administration organisation",
+        th: "data.go.th — ชุดข้อมูลที่สำนักงานจังหวัดเผยแพร่บนแพลตฟอร์มข้อมูลเปิดภาครัฐ",
+        zh: "data.go.th — 省级管理机构在开放数据门户发布的数据集",
+      },
+      vintage: String(provinceMeta("data-go-th-open-datasets")?.year ?? ""),
+      provinceId: "data-go-th-open-datasets",
+      value: c => provinceValue("data-go-th-open-datasets")?.(c.province) ?? null,
+    },
+    {
+      id: "open-data-tabular",
+      label: { en: "Open data offered as a data table", th: "ข้อมูลเปิดที่เป็นตารางข้อมูล", zh: "以数据表形式发布的开放数据" },
+      dimension: "governance",
+      unit: "%",
+      source: {
+        en: "data.go.th — share of the province's published datasets carrying a downloadable CSV",
+        th: "data.go.th — สัดส่วนชุดข้อมูลของจังหวัดที่มีไฟล์ CSV ให้ดาวน์โหลด",
+        zh: "data.go.th — 该省已发布数据集中附带可下载 CSV 的比例",
+      },
+      vintage: String(provinceMeta("data-go-th-open-data-tabular")?.year ?? ""),
+      provinceId: "data-go-th-open-data-tabular",
+      value: c => provinceValue("data-go-th-open-data-tabular")?.(c.province) ?? null,
+    },
   ];
 
   // Compute the real cohort range and coverage for each facet.

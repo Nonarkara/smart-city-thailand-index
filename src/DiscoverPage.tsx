@@ -82,7 +82,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
       {/* ─── HERO ─── */}
       <section className="section rankings-hero reveal visible">
         <p className="eyebrow">{translate(locale, { en: "City matcher", th: "จับคู่เมือง", zh: "城市匹配" })}</p>
-        <h1 className="hero-title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)" }}>
+        <h1 className="hero-title" style={{ fontSize: "var(--text-display)" }}>
           {translate(locale, { en: "What is your city?", th: "เมืองของคุณคือเมืองไหน?", zh: "你的城市是哪座？" })}
         </h1>
         <p className="hero-strapline">
@@ -160,7 +160,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── MISSING CITY CTA ─── */}
-      <section className="section" style={{ marginBottom: "2rem", textAlign: "center" }}>
+      <section className="section" style={{ textAlign: "center" }}>
         <p style={{ font: "500 var(--text-micro) var(--font)", color: "var(--2)", marginBottom: ".4rem" }}>
           {translate(locale, {
             en: "Is your city missing?",

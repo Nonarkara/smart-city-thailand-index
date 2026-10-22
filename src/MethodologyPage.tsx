@@ -735,7 +735,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── EVIDENCE BASE ─── */}
-      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+      <section className="section reveal visible">
         <p className="eyebrow">{t("Evidence Base", "ฐานหลักฐาน", "证据基础")}</p>
         <h2>{t("Source registries behind the method", "ทะเบียนแหล่งข้อมูลหลังวิธีวิจัย", "方法背后的来源名录")}</h2>
         <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginBottom: "1rem" }}>
@@ -772,7 +772,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── BASELINE PROGRAM ─── */}
-      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+      <section className="section reveal visible">
         <p className="eyebrow">{t("Baseline Program", "โครงการข้อมูลพื้นฐาน", "基线项目")}</p>
         <h2>{t("depa's seven dimensions, measured from source", "7 มิติตาม depa วัดจากแหล่งข้อมูลจริง", "depa 七个维度，全部来自公开数据")}</h2>
         <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
@@ -849,7 +849,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── AUDIT RULES ─── */}
-      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+      <section className="section reveal visible">
         <p className="eyebrow">{t("Audit Rules", "กฎการตรวจสอบ", "审计规则")}</p>
         <h2>{t("What the method does not do", "สิ่งที่วิธีนี้ไม่ทำ", "本方法不做什么")}</h2>
         <div className="sources-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
@@ -883,7 +883,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── CREATIVE ECONOMY METHODOLOGY ─── */}
-      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+      <section className="section reveal visible">
         <p className="eyebrow">{t("Creative Economy", "เศรษฐกิจสร้างสรรค์", "创意经济")}</p>
         <h2>{t("Creative Economy Indicators", "ตัวชี้วัดเศรษฐกิจสร้างสรรค์", "创意经济指标")}</h2>
         <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginBottom: "2rem" }}>
@@ -894,7 +894,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
           })}
         </p>
 
-        <h3 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>{t("The Moneyball Score: Composite", "คะแนน Moneyball: การคำนวณรวม", "Moneyball评分：综合计算")}</h3>
+        <h3 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>{t("The Moneyball Score: Composite", "คะแนน Moneyball: การคำนวณรวม", "Moneyball评分：综合计算")}</h3>
         <p style={{ fontSize: "var(--text-body)", color: "var(--3)", lineHeight: 1.6, marginBottom: "1rem", borderLeft: "2px solid var(--5, #E5E5E5)", paddingLeft: "0.75rem" }}>
           {translate(locale, {
             en: "Note: the SCITI index score is the 7-pillar composite described above. The Moneyball Score below is a separate, downloadable investment analysis built on top of the index — it is not the index score itself.",
@@ -924,7 +924,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
           })}
         </p>
 
-        <h3 style={{ fontSize: "var(--text-display)", marginBottom: "1rem" }}>{t("Limitations & Transparency", "ข้อจำกัดและความโปร่งใส", "局限性与透明度")}</h3>
+        <h3 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>{t("Limitations & Transparency", "ข้อจำกัดและความโปร่งใส", "局限性与透明度")}</h3>
         <ul style={{ paddingLeft: "1.5rem", marginBottom: "2rem", color: "var(--3)", fontSize: "var(--text-body)" }}>
           <li style={{ marginBottom: "0.5rem", listStyleType: "square" }}>{translate(locale, {
             en: "GPP data reflects 2019 chain-volume measures and may not capture post-pandemic recovery dynamics in real time.",
@@ -950,7 +950,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── DOWNLOADS ─── */}
-      <section className="section reveal visible" style={{ marginTop: "2rem" }}>
+      <section className="section reveal visible">
         <p className="eyebrow">{t("Downloads", "ดาวน์โหลด", "下载")}</p>
         <h2>{t("Method paper and source", "เอกสารวิธีวิจัยและต้นฉบับ", "方法论文与源文件")}</h2>
         <p className="hero-strapline" style={{ maxWidth: "56rem" }}>

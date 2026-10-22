@@ -299,6 +299,53 @@ export const SOURCE_REGISTRY: readonly SourceRecord[] = [
     serves: ["governance", "mobility"],
     indicators: ["government dataset discovery", "administrative boundaries", "transport/accident datasets"],
   },
+
+  {
+    id: "moe-province-electricity",
+    publisher: "สำนักงานปลัดกระทรัฐ กระทรวงพลังงาน / Office of the Permanent Secretary, Ministry of Energy",
+    title: "Electricity consumed per province per tariff class, BE 2566 (2023)",
+    url: "https://gdcatalog.energy.go.th/dataset/7fc9e90f-0433-4612-81ab-7f1d689f9271",
+    verified: "200",
+    caveat:
+      "Probed 2026-10-22: the Ministry of Energy runs its OWN CKAN catalogue at " +
+      "gdcatalog.energy.go.th, and its dataset ids COLLIDE with data.go.th's — " +
+      "`dataset_41_07` is the electricity table here and 'จำนวนครัวเรือนยากจน' on " +
+      "data.go.th. Never resolve an id without naming the host. The workbook is XLSX " +
+      "(a ZIP of XML); there is no xlsx dependency in this repo, so the sheet is read " +
+      "with unzip plus a small shared-strings reader. The file covers all 77 provinces " +
+      "across twelve tariff classes, including EV charging stations. Underlying numbers " +
+      "are PEA and MEA reporting, re-tabulated by the Ministry.",
+    serves: ["energy"],
+    indicators: [
+      "electricity consumed per province, by tariff class (kWh)",
+      "electricity per person, per province",
+      "residential share of a province's electricity",
+    ],
+  },
+  {
+    id: "data-go-th-open-data",
+    publisher: "กรมธุรกิจปฏิรูปและพัฒนาระบบคอมพิวเตอร์ / Government Data Management Office",
+    title: "data.go.th — the national open-data portal, and the provincial administration organisations inside it",
+    url: "https://data.go.th/api/3/action/organization_list?q=%E0%B8%AA%E0%B8%B3%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%94",
+    verified: "200",
+    caveat:
+      "Probed 2026-10-22. TRAP: asking for 1,000 packages with their resources TIMES " +
+      "OUT (90s, 0 bytes). Every number here is a `rows=0` COUNT query, never a bulk " +
+      "listing. Bangkok is not a 'สำนักงานจังหวัด' — it publishes through the Bangkok " +
+      "Metropolitan Administration, counted under its own organisation. All 77 " +
+      "provinces have a publishing organisation, so no province is missing here; " +
+      "nothing is scored as zero for absence. THIS IS NOT AN E-GOVERNMENT INDEX: " +
+      "Thailand publishes none. The DGA readiness score is agency-level; the ITA " +
+      "integrity assessment is organisation-level and reaches the portal from only " +
+      "some provinces (Phichit 94 files, Lopburi 3, Rayong 1, Nan 0); the NSO " +
+      "citizen-satisfaction series POS_01_Table_0002..0004 is national only.",
+    serves: ["governance"],
+    indicators: [
+      "datasets published by a provincial administration organisation",
+      "share of those datasets carrying a downloadable CSV data table",
+    ],
+  },
+
 ];
 
 /**
@@ -351,20 +398,81 @@ export const BASELINE_COVERAGE: Readonly<Record<DepaDimension, {
   },
   governance: {
     strength: "partial",
-    sources: 3,
-    note: "Traffy's complaint feed and the DGA's data.go.th catalogue were both probed, " +
-          "and depa's own city-platform endpoint is unstable over HTTPS. Nothing that can " +
-          "be downloaded, reproduced and cited yet, so nothing is scored.",
+    sources: 4,
+    note: "Scored for all 118 cities from the national open-data portal: what the " +
+          "provincial administration has published there, and whether it published DATA " +
+          "or DOCUMENTS. Thailand publishes NO province-level e-government index — the " +
+          "DGA readiness score is agency-level, the ITA integrity assessment is " +
+          "organisation-level and reaches the portal from only some provinces, and the " +
+          "NSO citizen-satisfaction series is national only. So this dimension measures " +
+          "digital transparency capacity and is labelled as exactly that. Traffy's " +
+          "complaint feed and depa's own city-platform endpoint were also probed and " +
+          "rejected.",
   },
   energy: {
-    strength: "none",
-    sources: 1,
-    note: "The one verified energy source, the Metropolitan Electricity Authority, covers " +
-          "Bangkok's metropolitan area only — it cannot baseline a province. EGAT and PEA " +
-          "provincial sales need a negotiated feed. GISTDA publishes renewable siting, not " +
-          "consumption, and neither measures how a city actually uses energy.",
+    strength: "partial",
+    sources: 2,
+    note: "Scored for all 118 cities from the Ministry of Energy's own catalogue: " +
+          "electricity consumed per person (2023) for all 77 provinces. The share of a " +
+          "province's grid that serves homes is published and browsable but deliberately " +
+          "NOT scored — it is a structural descriptor, and scoring it would reward a " +
+          "province for having no industry. NO renewable share is claimed: DEDE " +
+          "publishes province renewable potential only as maps, not as machine-readable " +
+          "values. EGAT's public sales tables are national, split by utility, not by " +
+          "province; the Energy Business Department's province fuel files stop three " +
+          "years before the electricity series, so no fuel ratio is computed.",
   },
 };
+
+/**
+ * WHAT IS STILL MISSING, INSIDE THE DIMENSIONS WE NOW MEASURE
+ * ===========================================================
+ *
+ * All seven depa dimensions carry a measured indicator, so there is no
+ * dimension with nothing behind it. But "measured" is not "complete", and
+ * two specific measurements are still absent. They are named here — with
+ * the reason they are absent — because a named absence is a research
+ * instruction, and an unstated one is a quiet over-claim.
+ *
+ * Nothing in this list is scored, and nothing in it is approximated.
+ */
+export interface ResidualGap {
+  id: string;
+  dimension: DepaDimension;
+  label: { en: string; th: string; zh: string };
+  note: { en: string; th: string; zh: string };
+}
+
+export const RESIDUAL_GAPS: readonly ResidualGap[] = [
+  {
+    id: "renewable-share",
+    dimension: "energy",
+    label: {
+      en: "Renewable share of a province's energy",
+      th: "สัดส่วนพลังงานทดแทนของจังหวัด",
+      zh: "省级能源中的可再生能源占比",
+    },
+    note: {
+      en: "DEDE publishes renewable-energy potential by province — solar, wind, biomass — but only as maps. The machine-readable layer is not published, so there is no number to score. Not approximated from the national share, which would be an invention.",
+      th: "กรมพัฒนาพลังงานทดแทนเผยแพร่ศักยภาพพลังงานทดแทนรายจังหวัด (แสงอาทิตย์ ลม ชีวมวล) แต่เป็นเพียงแผนที่ ไม่มีชั้นข้อมูลที่อ่านเป็นตัวเลขได้ จึงไม่มีค่าที่จะให้คะแนน และไม่ถูกประมาณจากสัดส่วนระดับประเทศ ซึ่งจะเป็นการกุขึ้นมา",
+      zh: "泰国可再生能源发展署按省公布可再生能源潜力（太阳能、风能、生物质），但仅以地图形式发布，机器可读图层未发布，因此没有可评分的数值。也不用全国占比推算——那等于编造。",
+    },
+  },
+  {
+    id: "province-egov-index",
+    dimension: "governance",
+    label: {
+      en: "A province-level e-government index",
+      th: "ดัชนีรัฐบาลอิเล็กทรอนิกส์ระดับจังหวัด",
+      zh: "省级电子政务指数",
+    },
+    note: {
+      en: "Thailand publishes none. DGA's digital-government readiness score is agency-level; the ITA integrity assessment is organisation-level and reaches the national portal from only some provinces; NSO's citizen-satisfaction series is national only. All three were probed. Governance is therefore measured by open-data publication, and labelled as exactly that.",
+      th: "ประเทศไทยไม่มีการจัดทำ คะแนนความพร้อมรัฐบาลดิจิทัลของ DGA เป็นระดับหน่วยงาน ผลประเมิน ITA เป็นระดับองค์กรและมาถึงแพลตฟอร์มกลางเพียงบางจังหวัด ส่วนชุดข้อมูลความพึงพอใจของ สศ. เป็นระดับประเทศ ทั้งสามแหล่งถูกตรวจสอบแล้ว มิติการบริหารจึงวัดจากการเผยแพร่ข้อมูลเปิด และระบุไว้ว่าเป็นการวัดเช่นนั้น",
+      zh: "泰国没有此类指数。DGA 的数字政府就绪度评分是机构级的；ITA 诚信评估是组织级的，且只有部分省份发布到国家门户；统计局的公民满意度数据是全国级的。三者均已实测核查。治理维度因此以开放数据发布量衡量，并如实如此标注。",
+    },
+  },
+];
 
 /** Human-readable summary used by the methodology page and the test suite. */
 export function baselineCoverageRows() {

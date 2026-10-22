@@ -460,15 +460,76 @@ export const INDICATORS: readonly IndicatorDef[] = [
     higherIsBetter: false,
   },
 
-  /* ── governance and energy ──
-     These two depa dimensions have NO weighted indicator, and that is the
-     finding, not an oversight. No province-level national open source was
-     verified for either (see src/baselineSources.ts). They are reported as
-     unscored gaps rather than filled with judgement. The digitisation
-     indicators they would need live under People, where depa's own
-     definition of Smart People — citizens able to apply technology — puts
-     them. ── */
+  /* ── energy — depa: smart energy. Measured on the scale of a province's
+        electrified economy: that is what the Ministry of Energy publishes
+        per province, and it is what separates a wired-up city from a
+        powered one. It is a SCALE measure, not an efficiency measure — a
+        province can score well here and badly on Environment, and the
+        dimension says so rather than pretending otherwise.
 
+        The residential share of the grid is published and browsable but
+        deliberately NOT scored, on the same principle as the motorcycle
+        share of road deaths: it is a structural descriptor (Samut Sakhon's
+        grid serves factories, Uthai Thani's serves homes), and scoring it
+        would reward a province for having no industry. ── */
+  {
+    id: "electricity-per-capita",
+    label: { en: "Electricity consumed per person", th: "ปริมาณการใช้ไฟฟ้าต่อหัวประชากร", zh: "人均用电量" },
+    dimension: "energy",
+    weight: 100,
+    scale: { kind: "cohort", note: "Percentile among provinces — no published target exists for electricity per person." },
+    origin: "province",
+    provinceId: "moe-electricity-per-capita",
+    sourceNote: {
+      en: "Ministry of Energy province electricity consumption, 2023 (PEA + MEA reporting, re-tabulated by the Ministry), ÷ NSO province population, 2022.",
+      th: "การใช้ไฟฟ้ารายจังหวัด สำนักงานปลัดกระทรวงพลังงาน 2566 (ข้อมูล กฟภ. และ กนช.) ÷ ประชากรจังหวัด สศ. 2565",
+      zh: "能源部省级用电量 2023（PEA+MEA 上报）÷ 统计局省级人口 2022",
+    },
+    higherIsBetter: true,
+  },
+
+  /* ── governance — depa: smart governance. Thailand publishes NO
+        province-level e-government index; that is not a gap in SCITI's
+        searching, it is a gap in the national statistics. So this dimension
+        measures the one slice of Thai public administration that IS
+        published per province and IS machine-readable: what the provincial
+        administration has published to the national open-data portal, and
+        whether it published DATA or DOCUMENTS.
+
+        It is labelled as exactly that — digital transparency capacity — and
+        the methodology page says plainly that it is not an e-government
+        index. What was probed and rejected is written down in
+        src/baselineSources.ts, so the absence is a finding, not a shrug. ── */
+  {
+    id: "open-data-volume",
+    label: { en: "Open datasets published by the province", th: "ชุดข้อมูลเปิดที่จังหวัดเผยแพร่", zh: "省级开放数据集数量" },
+    dimension: "governance",
+    weight: 60,
+    scale: { kind: "cohort", note: "Percentile among provinces — no published target exists for open-data volume." },
+    origin: "province",
+    provinceId: "data-go-th-open-datasets",
+    sourceNote: {
+      en: "data.go.th — datasets published by the provincial administration organisation, counted from the government open-data portal, 2026.",
+      th: "data.go.th — จำนวนชุดข้อมูลที่สำนักงานจังหวัดเผยแพร่บนแพลตฟอร์มข้อมูลเปิดภาครัฐ 2569",
+      zh: "data.go.th — 省级管理机构在国家开放数据门户发布的数据集数量，2026",
+    },
+    higherIsBetter: true,
+  },
+  {
+    id: "open-data-usability",
+    label: { en: "Open data published as a data table", th: "ข้อมูลเปิดที่เผยแพร่เป็นตารางข้อมูล", zh: "以数据表形式发布的开放数据" },
+    dimension: "governance",
+    weight: 40,
+    scale: { kind: "cohort", note: "Percentile among provinces — the share of a province's published datasets that carry a downloadable CSV." },
+    origin: "province",
+    provinceId: "data-go-th-open-data-tabular",
+    sourceNote: {
+      en: "data.go.th — share of the province's published datasets that carry a downloadable CSV data table rather than a document, 2026.",
+      th: "data.go.th — สัดส่วนชุดข้อมูลของจังหวัดที่มีไฟล์ CSV ให้ดาวน์โหลด 2569",
+      zh: "data.go.th — 该省已发布数据集中附带可下载 CSV 的比例，2026",
+    },
+    higherIsBetter: true,
+  },
 ];
 
 /* ─────────────────────────────── the engine ────────────────────────────── */

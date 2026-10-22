@@ -73,9 +73,9 @@ function tri(locale: Locale, key: string, dict: Record<string, Tri>): string {
 export default function AsusPage({ locale, onNavigate }: Props) {
   return (
     <>
-      <section className="section" style={{ paddingTop: "4.5rem", paddingBottom: "1rem" }}>
+      <section className="page-hero section" style={{ paddingTop: "4.5rem" }}>
         <p className="eyebrow">{t(locale, "UN-Habitat", "UN-Habitat", "联合国人居署")}</p>
-        <h1 style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800, letterSpacing: "-.03em", lineHeight: ".95", marginBottom: ".5rem" }}>
+        <h1 style={{ fontFamily: "var(--font-heading)", fontSize: "var(--text-display)", fontWeight: 800, letterSpacing: "-.03em", lineHeight: ".95", marginBottom: ".5rem" }}>
           {t(locale,
             "Accelerating Sustainable Urbanisation in ASEAN",
             "เร่งรัดการพัฒนาเมืองอย่างยั่งยืนในอาเซียน",
@@ -91,7 +91,7 @@ export default function AsusPage({ locale, onNavigate }: Props) {
         </p>
       </section>
 
-      <section className="section" style={{ marginBottom: "2rem" }}>
+      <section className="section">
         <p className="eyebrow">{t(locale, "Phase II Cities", "เมือง Phase II", "二期城市")}</p>
         <h2>{t(locale, "15 cities, 8 countries, 8 focus areas", "15 เมือง 8 ประเทศ 8 ด้าน", "15座城市，8个国家，8个重点领域")}</h2>
         <div style={{ borderTop: "2px solid var(--ink, #111)" }}>
@@ -113,7 +113,7 @@ export default function AsusPage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="section" style={{ marginBottom: "2rem" }}>
+      <section className="section">
         <p className="eyebrow">{t(locale, "Methodology", "วิธีการ", "方法论")}</p>
         <h2>{t(locale, "Inception → Diagnostic → Co-Design → Technical Proposal", "เริ่มต้น → วินิจฉัย → ร่วมออกแบบ → ข้อเสนอทางเทคนิค", "启动 → 诊断 → 共同设计 → 技术方案")}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 0, border: "1px solid var(--5, #E5E5E5)" }}>
@@ -132,7 +132,7 @@ export default function AsusPage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="section" style={{ marginBottom: "2rem" }}>
+      <section className="section">
         <div className="callout-card" style={{ borderLeftColor: "var(--teal, #2BBAA0)" }}>
           <h2>{t(locale, "Thailand's Two ASUS Cities", "สองเมือง ASUS ของไทย", "泰国的两座ASUS城市")}</h2>
           <p>{t(locale,

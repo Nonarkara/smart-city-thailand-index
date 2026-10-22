@@ -354,7 +354,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   return (
     <div className="rankings-page">
       <div className="rankings-column">
-        <section className="section reveal visible">
+        <section className="page-hero section reveal visible">
           <p className="eyebrow">{t({ en: "Directory", th: "สารบบ", zh: "名录" })}</p>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "1rem", marginBottom: "1rem" }}>
             <h1 className="hero-title" style={{ margin: 0 }}>

@@ -17,12 +17,18 @@
  * The data is COMMITTED, not fetched at build time — the site must never
  * depend on a government API being up.
  *
+ * The Energy and Governance indicators live in a second generated module,
+ * src/energyGovernanceData.ts, and are merged in below — see that file for the
+ * two extra publishers and for what was probed and deliberately left out.
+ *
  * Note the vintages. The six household-survey indicators are 2010; the digital
  * indicators are 2022-2023; forest cover is 2021; PM2.5 is 2024; road deaths
  * are 2025. That spread is real and is surfaced in the UI rather than hidden.
  *
  * Source: https://catalog.nso.go.th  ·  https://catalogapi.nso.go.th  ·  https://data.forest.go.th  ·  https://data.go.th
  */
+
+import { ENERGY_GOVERNANCE_BASELINE } from "./energyGovernanceData";
 
 export interface BaselineIndicator {
   id: string;
@@ -1828,7 +1834,8 @@ export const PROVINCE_BASELINE: BaselineIndicator[] = [
       "Mae Hong Son": 82.6,
       "Ranong": 93.3
     }
-  }
+  },
+  ...ENERGY_GOVERNANCE_BASELINE
 ];
 
 /** Fast lookup: indicator id -> province -> value. */

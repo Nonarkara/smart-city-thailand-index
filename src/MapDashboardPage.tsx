@@ -71,7 +71,7 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
       <div className="map-dash-header">
         <div>
           <p className="eyebrow">{translate(locale, { en: "Smart City Map", th: "แผนที่เมืองอัจฉริยะ", zh: "智慧城市地图" })}</p>
-          <h1 style={{ fontSize: "clamp(1.3rem, 3vw, 2rem)", fontWeight: 800, letterSpacing: "-.03em" }}>
+          <h1 style={{ fontSize: "var(--text-display)", fontWeight: 800, letterSpacing: "-.03em" }}>
             {translate(locale, {
               en: `${filtered.length} cities across Thailand`,
               th: `${filtered.length} เมืองทั่วประเทศ`,
