@@ -149,14 +149,32 @@ ok "unknown city ids and their CSV exports 404 with JSON, not the SPA shell"
 # the dynamic import throws, and React never mounts. That is a fully blank site
 # passing a green gate. It has happened. Assert the content-type instead.
 bold "Test — every JS chunk serves as JavaScript (not the SPA fallback)"
+# The edge does not switch over atomically: the poll above can pass on the
+# index chunk while one lazy chunk is still missing, and _redirects then
+# answers that path with the shell. That is a propagation gap, not a broken
+# deploy — but it must not pass either, and it must not abort a healthy
+# deploy on its first breath. Sweep up to 4 times; a chunk that is still
+# wrong on the last sweep is a real failure.
 chunk_fail=0
-for f in dist/static/*.js; do
-  name="$(basename "$f")"
-  ctype="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/static/$name")"
-  case "$ctype" in
-    *javascript*) ;;
-    *) printf "  \033[31m✗\033[0m %s → %s\n" "$name" "${ctype:-<none>}"; chunk_fail=$((chunk_fail+1)) ;;
-  esac
+for attempt in 1 2 3 4; do
+  chunk_fail=0
+  chunk_bad=()
+  for f in dist/static/*.js; do
+    name="$(basename "$f")"
+    ctype="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/static/$name")"
+    case "$ctype" in
+      *javascript*) ;;
+      *) chunk_bad+=("$name → ${ctype:-<none>}"); chunk_fail=$((chunk_fail+1)) ;;
+    esac
+  done
+  if [[ "$chunk_fail" = 0 ]]; then break; fi
+  if [[ "$attempt" != 4 ]]; then
+    printf "  \033[33m…\033[0m %d chunk(s) not yet propagated (sweep %d/4) — retrying\n" "$chunk_fail" "$attempt"
+    sleep 10
+  fi
+done
+for bad in "${chunk_bad[@]:-}"; do
+  [[ -n "$bad" ]] && printf "  \033[31m✗\033[0m %s\n" "$bad"
 done
 [[ "$chunk_fail" = 0 ]] || die "$chunk_fail chunk(s) are not being served as JavaScript — the site will render blank. Re-run the deploy, then re-check."
 ok "all $(ls dist/static/*.js | wc -l | tr -d ' ') JS chunks serve with a JavaScript content-type"
