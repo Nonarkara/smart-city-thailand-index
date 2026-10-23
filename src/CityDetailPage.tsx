@@ -6,6 +6,8 @@ import CityFingerprint from "./CityFingerprint";
 import NeedsLadder from "./NeedsLadder";
 import CityHeritageGallery from "./CityHeritageGallery";
 import OfficialRecognition from "./OfficialRecognition";
+import CityQuickRead from "./CityQuickRead";
+import DossierReadingNotes from "./DossierReadingNotes";
 import { computeNeedsLadder } from "./needsLadderEngine";
 import { getCityById } from "./cityData";
 import { getDepaOfficial } from "./depaOfficialData";
@@ -1330,11 +1332,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
         </div>
 
-        <p className="city-detail-tagline">{translate(locale, {
-          en: `Curated profile: ${PILLAR_LABELS[locale][strongestPillar]} ${city.scores[strongestPillar]}/100 is the strongest pillar; ${PILLAR_LABELS[locale][weakestPillar]} ${city.scores[weakestPillar]}/100 is the weakest. Use the Evidence tab to examine sources, observation dates, and provincial context before assessing a project.`,
-          th: `ผลประเมินที่คัดสรร: ${PILLAR_LABELS[locale][strongestPillar]} ${city.scores[strongestPillar]}/100 สูงสุด และ${PILLAR_LABELS[locale][weakestPillar]} ${city.scores[weakestPillar]}/100 ต่ำสุด ดูแหล่งข้อมูล ช่วงเวลาสำรวจ และบริบทจังหวัดในแท็บหลักฐานก่อนประเมินโครงการ`,
-          zh: `编辑评估概况：${PILLAR_LABELS[locale][strongestPillar]} ${city.scores[strongestPillar]}/100 最高，${PILLAR_LABELS[locale][weakestPillar]} ${city.scores[weakestPillar]}/100 最低。评估项目前，请在证据页核查来源、观测时期与省级背景。`,
-        })}</p>
+        <CityQuickRead city={city} locale={locale} highest={strongestPillar} lowest={weakestPillar} />
         <details className="city-background-note"><summary>{translate(locale, {
           en: "Curated background narrative — source review required",
           th: "เรื่องราวเมืองที่คัดสรร — ต้องตรวจสอบแหล่งอ้างอิง",
@@ -1533,9 +1531,9 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         <section className="section city-dossier-section">
           <p className="eyebrow">{translate(locale, { en: "Reality gap dossier", th: "แฟ้มช่องว่างระหว่างแผนกับความจริง", zh: "现实缺口档案" })}</p>
           <h2>{translate(locale, {
-            en: "What is real now, what is missing, and what unlocks the next step",
-            th: "อะไรจริงแล้ว อะไรยังขาด และอะไรจะปลดล็อกก้าวถัดไป",
-            zh: "什么已经真实落地，什么仍然缺失，以及下一步靠什么被解锁",
+            en: "What needs a closer look",
+            th: "เรื่องที่ต้องดูให้ชัด",
+            zh: "哪些问题值得深究",
           })}</h2>
           <div className="city-dossier-shell">
             <div className="city-dossier-main">
@@ -1569,15 +1567,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                 </div>
               </div>
 
-              <div className="city-dossier-grid">
-                {dossier.cards.map(card => (
-                  <article key={card.id} className="city-dossier-card">
-                    <span className="city-dossier-card-label">{card.label}</span>
-                    <p className="city-dossier-card-body">{card.body}</p>
-                    <span className="city-dossier-card-meta">{card.meta}</span>
-                  </article>
-                ))}
-              </div>
+              <DossierReadingNotes notes={dossier.cards} />
             </div>
 
             <aside className="city-dossier-rail">
@@ -1684,7 +1674,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
 
       <section className="section performance-triptych city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "Performance", th: "ประสิทธิภาพ", zh: "表现" })}</p>
-        <h2>{translate(locale, { en: "Pillar scores, score math, and developability", th: "คะแนนรายเสาหลัก วิธีคำนวณ และความสามารถในการพัฒนา", zh: "七大支柱、计算方式与可开发性" })}</h2>
+        <h2>{translate(locale, { en: "Scores and what shapes them", th: "คะแนนและสิ่งที่อยู่เบื้องหลัง", zh: "分数及其依据" })}</h2>
 
         <div className="rpg-layout">
           <div className="rpg-radar-panel">

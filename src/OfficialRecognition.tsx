@@ -13,7 +13,7 @@ export default function OfficialRecognition({ record, locale }: { record: DepaOf
     </header>
     <div className="depa-plan-layout">
       <div className="depa-plan-summary">
-        {record.projectCount != null && <p className="depa-plan-count"><strong>{record.projectCount}</strong><span>{t('projects in the certification record', 'โครงการในระเบียนการรับรอง', '认证记录中的项目')}</span></p>}
+        {record.projectCount != null && <p className="depa-plan-count"><strong>{record.projectCount}</strong><span>{t('planned projects', 'โครงการตามแผน', '规划项目')}</span></p>}
         <h3>{t('Stated vision', 'วิสัยทัศน์ตามแผน', '规划愿景')}</h3>
         <p className="depa-official-vision">{locale === 'th' ? record.visionTh : record.vision}</p>
         {record.brandline && <p className="depa-official-brandline">“{record.brandline}”</p>}

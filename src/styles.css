@@ -12688,3 +12688,47 @@ main .invest-ccdr-inner > p:first-of-type { color: var(--ink) !important; font-w
 main .section, main .depa-official-section, main .section h2 { scroll-margin-top: 7rem; }
 @media print { .depa-official-section { break-inside: avoid; } }
 main .opening-argument-headline { font-size: var(--text-display); line-height: 1.14; max-width: 30ch; }
+
+/* Compact the frame, not the type. Source prose retains its reading measure. */
+main .city-detail-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem .75rem; }
+main .city-detail-header .eyebrow { margin: 0; }
+main .city-detail-score-block { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: .25rem .4rem; padding: 0; border: 0; background: none; }
+.city-profile-read { margin-block: .65rem; }
+.city-profile-read dl { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin: 0; }
+.city-profile-read dl > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem; }
+.city-profile-read dt { color: var(--2); font-size: var(--text-body); }
+.city-profile-read dd { margin: 0; font-size: var(--text-body); }
+.city-profile-read strong { font-family: var(--mono); }
+.city-profile-read p { margin: .3rem 0 0; max-width: 65ch; font-size: var(--text-body); color: var(--2); line-height: 1.45; }
+main .depa-official-header { margin-bottom: .65rem; }
+main .depa-plan-layout { gap: .9rem 1.5rem; }
+main .depa-plan-count { margin-bottom: .65rem; max-width: none; }
+main .depa-official-project-item { padding-block: .35rem; }
+main .depa-official-project-item span { display: inline; margin: 0; }
+main .depa-official-project-list { padding-left: 1.45rem; }
+main .depa-plan-footer { gap: .5rem; margin-top: .65rem; padding-top: .5rem; }
+main .city-dossier-shell { gap: .75rem; margin-top: .75rem; }
+main .city-dossier-lead, main .city-dossier-panel, main .city-analog-lead, main .city-analog-panel { padding: .7rem; }
+main .city-dossier-card { padding: .65rem 0; border-inline: 0; border-bottom: 0; background: none; gap: .25rem; }
+main .city-dossier-card-label { line-height: 1.25; }
+main .city-dossier-card-meta { letter-spacing: 0; text-transform: none; font-family: var(--font); }
+main .city-dossier-main, main .city-dossier-rail { gap: .65rem; }
+main .city-dossier-grid { column-gap: 1rem; row-gap: .25rem; }
+main .city-factbook-title { padding: .5rem .65rem; letter-spacing: 0; text-transform: none; }
+main .city-factbook-row { padding: .45rem .65rem; gap: .35rem .65rem; }
+main .city-factbook-label { letter-spacing: 0; text-transform: none; }
+main .city-qm { flex-direction: row; align-items: baseline; gap: .35rem; padding: .25rem 0; background: none; min-width: 0; }
+main .city-qm-lab { letter-spacing: 0; text-transform: none; font-family: var(--font); }
+main .city-quick-metrics { column-gap: 1rem; row-gap: .1rem; margin-bottom: .25rem; }
+@media (max-width: 719px) {
+  main .city-factbook-row { grid-template-columns: minmax(5rem, .8fr) minmax(0, 1.6fr); }
+  main .city-decision-item { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .15rem .5rem; padding: .5rem .65rem; align-items: baseline; }
+  main .city-decision-label { grid-row: 1 / span 2; letter-spacing: 0; text-transform: none; }
+  main .city-decision-value, main .city-decision-note { grid-column: 2; margin: 0; }
+}
+main .planning-step-copy, main .finance-card-body, main .data-rail-body {
+  font-size: var(--text-body); line-height: 1.5; max-width: 65ch;
+}
+/* Header words must fit their tracks as well as the numeric values below. */
+main .decomp-row { grid-template-columns: minmax(0, 1fr) 3rem 3.25rem 6rem; }
+main .decomp-row-header { letter-spacing: 0; text-transform: none; line-height: 1.3; }

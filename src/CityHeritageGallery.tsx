@@ -10,7 +10,7 @@ export default function CityHeritageGallery({city,locale}:{city:SmartCity;locale
   const t=(copy:{en:string;th:string;zh:string})=>translate(locale,copy);
   const search=`https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(getCityName(city,"en").replace(/Smart City|Smart /g,""))}&title=Special:MediaSearch&type=image`;
   return <section className="city-heritage" aria-labelledby={`heritage-${city.id}`}>
-    <h2 id={`heritage-${city.id}`}>{t({en:"A place seen through its objects",th:"อ่านเมืองผ่านวัตถุและสถานที่",zh:"通过文物与场所认识城市"})}</h2>
+    <h2 id={`heritage-${city.id}`}>{t({en:"A closer look",th:"มองเมืองใกล้ขึ้น",zh:"走近这座城"})}</h2>
     {selected?<>
       {records.length>1&&<label className="heritage-selector">{t({en:"Choose a visual record",th:"เลือกภาพหรือวัตถุ",zh:"选择影像或文物"})}<select value={selected.id} onChange={event=>setSelectedId(event.target.value)}>{records.map(record=><option key={record.id} value={record.id}>{record.title[locale]}</option>)}</select></label>}
       <figure className="heritage-layout">
