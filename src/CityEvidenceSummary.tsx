@@ -2,7 +2,7 @@ import CityResearchAppendix from "./CityResearchAppendix";
 import { allCities } from "./cityData";
 import { buildCohort, deriveCity, DEPA_DIMENSION_ORDER, DIMENSION_LABELS, INDICATORS } from "./dimensionScores";
 import { SOURCE_REGISTRY } from "./baselineSources";
-import { getCityName, getProvinceName, translate } from "./cityPresentation";
+import { getProvinceName, translate } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
 
 const cohort = buildCohort(allCities);
@@ -13,7 +13,7 @@ export default function CityEvidenceSummary({ city, locale }: { city: SmartCity;
   const measured = DEPA_DIMENSION_ORDER.filter(domain => result.dimensions[domain].contributions.some(row => row.raw !== null)).length;
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
   return <section className="section city-evidence-summary" aria-labelledby="city-evidence-title">
-    <h1 id="city-evidence-title">{getCityName(city, locale)}</h1>
+    <h2 id="city-evidence-title">{t({ en: "What the baseline observes — and what it does not", th: "สิ่งที่ข้อมูลฐานบอกได้ — และสิ่งที่บอกไม่ได้", zh: "基线能说明什么 — 不能说明什么" })}</h2>
     <p className="city-evidence-finding">{t({ en: `Baseline observations in ${measured} of 7 domains; local infrastructure adequacy remains unverified`, th: `มีข้อมูลฐาน ${measured} จาก 7 มิติ แต่ยังยืนยันความเพียงพอของโครงสร้างพื้นฐานในพื้นที่ไม่ได้`, zh: `${measured} 个领域有基线观测（共 7 个）；当地基础设施是否充足仍待核实` })}</p>
     <p>{t({ en: "The livability assessment uses SCITI’s curated seven pillars. The depa baseline below measures a different set of seven domains. Available observations do not establish whether local infrastructure is sufficient.", th: "การประเมินความน่าอยู่ใช้เกณฑ์เจ็ดด้านที่ SCITI คัดสรร ส่วนข้อมูลฐานตามกรอบ depa ด้านล่างวัดเจ็ดมิติอีกชุดหนึ่ง การมีข้อมูลไม่ได้ยืนยันว่าโครงสร้างพื้นฐานในพื้นที่เพียงพอ", zh: "宜居评估采用 SCITI 策划的七项支柱。下方 depa 基线衡量另一组七个领域。有观测数据并不代表当地基础设施充足。" })}</p>
     <details className="city-evidence-details"><summary>{t({ en: "Explore evidence across seven domains", th: "ดูหลักฐานทั้งเจ็ดมิติ", zh: "查看七个领域的证据" })}</summary>

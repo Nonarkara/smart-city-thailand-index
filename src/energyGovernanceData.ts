@@ -12,7 +12,7 @@
  *
  * Two publishers, each with its own catalogue:
  *   สำนักงานปลัดกระทรัฐ กระทรวงพลังงาน — via gdcatalog.energy.go.th
- *   กรมธุรกิจปฏิรูปและพัฒนาระบบคอมพิวเตอร์ — via data.go.th
+ *   สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน) — via data.go.th
  *
  * The data is COMMITTED, not fetched at build time — the site must never
  * depend on a government API being up.
@@ -234,7 +234,7 @@ export const ENERGY_GOVERNANCE_BASELINE: BaselineIndicator[] = [
     },
     "dimension": "governance",
     "unit": "datasets",
-    "publisher": "กรมธุรกิจปฏิรูปและพัฒนาระบบคอมพิวเตอร์ / Government Data Management Office — data.go.th",
+    "publisher": "สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน) / Digital Government Development Agency (DGA) — data.go.th",
     "dataset": "data-go-th-ckan",
     "table": "package_search?fq=organization:{province-slug}&rows=0",
     "catalogUrl": "https://data.go.th/api/3/action/organization_list?q=%E0%B8%AA%E0%B8%B3%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%94",
@@ -332,7 +332,7 @@ export const ENERGY_GOVERNANCE_BASELINE: BaselineIndicator[] = [
     },
     "dimension": "governance",
     "unit": "%",
-    "publisher": "กรมธุรกิจปฏิรูปและพัฒนาระบบคอมพิวเตอร์ / Government Data Management Office — data.go.th",
+    "publisher": "สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน) / Digital Government Development Agency (DGA) — data.go.th",
     "dataset": "data-go-th-ckan",
     "table": "package_search?fq=organization:{province-slug} res_format:CSV&rows=0",
     "catalogUrl": "https://data.go.th/api/3/action/organization_list?q=%E0%B8%AA%E0%B8%B3%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%94",

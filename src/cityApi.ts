@@ -45,7 +45,40 @@ export function cityApiFailureIsRetryable(status: number | null): boolean {
   return status === 429 || status >= 500;
 }
 
-async function fetchJsonOnce<T>(url: string): Promise<T> {
+// Validate at each transport boundary before a remote response can replace bundled data.
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+export function isCitySummaryPayload(value: unknown): value is CitySummaryDTO {
+  if (!isRecord(value) || typeof value.id !== "string" || !value.id.trim()) return false;
+  const scores = value.scores;
+  return typeof value.nameEn === "string" && typeof value.nameTh === "string"
+    && typeof value.status === "string" && typeof value.tier === "string"
+    && typeof value.compositeScore === "number" && Number.isFinite(value.compositeScore)
+    && isRecord(scores)
+    && ["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"]
+      .every(key => typeof scores[key] === "number" && Number.isFinite(scores[key]))
+    && Array.isArray(value.keyMetrics) && isRecord(value.freshness)
+    && isRecord(value.financeSignal) && isRecord(value.shortTailoredNote);
+}
+
+export function isCityIndexPayload(value: unknown): value is CitySummaryDTO[] {
+  return Array.isArray(value) && value.length > 0 && value.every(isCitySummaryPayload)
+    && new Set(value.map(city => city.id)).size === value.length;
+}
+
+export function isCityDetailPayload(value: unknown, cityId: string): value is CityDetailDTO {
+  return isCitySummaryPayload(value) && value.id === cityId
+    && ["metricBlocks", "contextNotes", "financeRecommendations", "financeInstrumentCatalog", "evidenceItems", "dataRails"]
+      .every(key => Array.isArray((value as unknown as Record<string, unknown>)[key]))
+    && isRecord((value as CityDetailDTO).deliveryProfile)
+    && isRecord((value as CityDetailDTO).financeProfile)
+    && (value as CityDetailDTO).financeProfile.cityId === cityId
+    && isRecord((value as CityDetailDTO).exportMetadata);
+}
+
+async function fetchJsonOnce<T>(url: string, validate: (value: unknown) => value is T): Promise<T> {
   let response: Response;
   try {
     response = await fetch(url, {
@@ -82,10 +115,13 @@ async function fetchJsonOnce<T>(url: string): Promise<T> {
     throw new CityApiError(envelope.error || "API returned failure state", false);
   }
 
+  if (envelope.success !== true || !validate(envelope.data)) {
+    throw new CityApiError("API returned malformed payload", false);
+  }
   return envelope.data;
 }
 
-async function fetchJson<T>(urls: string[]): Promise<T> {
+async function fetchJson<T>(urls: string[], validate: (value: unknown) => value is T): Promise<T> {
   let lastError: Error | null = null;
 
   for (const url of urls) {
@@ -94,7 +130,7 @@ async function fetchJson<T>(urls: string[]): Promise<T> {
 
     for (;;) {
       try {
-        return await fetchJsonOnce<T>(url);
+        return await fetchJsonOnce<T>(url, validate);
       } catch (error) {
         lastError = error instanceof Error ? error : new Error("API request failed");
         const retryable = error instanceof CityApiError && error.retryable;
@@ -118,7 +154,7 @@ async function loadCitySummaries(): Promise<CitySummaryDTO[]> {
     return citySummariesRequest;
   }
 
-  citySummariesRequest = fetchJson<CitySummaryDTO[]>(["/api/cities", "/api-static/cities.json"])
+  citySummariesRequest = fetchJson<CitySummaryDTO[]>(["/api/cities", "/api-static/cities.json"], isCityIndexPayload)
     .then(data => {
       citySummariesCache = data;
       return data;
@@ -147,7 +183,7 @@ async function loadCityDetail(cityId: string): Promise<CityDetailDTO> {
   const request = fetchJson<CityDetailDTO>([
     `/api/cities/${encodeURIComponent(cityId)}`,
     `/api-static/cities/${encodeURIComponent(cityId)}.json`,
-  ])
+  ], (value): value is CityDetailDTO => isCityDetailPayload(value, cityId))
     .then(data => {
       cityDetailCache.set(cityId, data);
       return data;

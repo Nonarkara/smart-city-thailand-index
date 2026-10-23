@@ -752,7 +752,7 @@ async function harvestRtddi() {
 }
 
 /* ────────────────────────────── run ────────────────────────────────────── */
-const NSO_PUBLISHER = "สศ. / NSO — National Statistical Office";
+const NSO_PUBLISHER = "สสช. / NSO — National Statistical Office";
 
 const results = [];
 for (const spec of SPECS) {
@@ -832,7 +832,7 @@ const ts = `/**
  * and the source URL. A reader can reproduce any number.
  *
  * Four publishers so far:
- *   สศ. / NSO   — National Statistical Office, via catalogapi.nso.go.th
+ *   สสช. / NSO   — National Statistical Office, via catalogapi.nso.go.th
  *   กรมป่าไม้ / RFD — Royal Forest Department, via data.forest.go.th
  *   พด. / PCD   — Pollution Control Department, via pcd.gdcatalog.go.th
  *   ระบบบูรณาการข้อมูลการตาย — Integrated road-traffic death registry, via data.go.th

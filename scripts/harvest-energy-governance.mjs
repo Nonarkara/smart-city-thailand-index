@@ -37,7 +37,7 @@
  *    machine-readable values. So no renewable share is claimed.
  *
  * ── GOVERNANCE ──────────────────────────────────────────────────────────
- * Publisher: กรมธุรกิจปฏิรูปและพัฒนาระบบคอมพิวเตอร์ / Government Data
+ * Publisher: สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน) / Government Data
  *            Management Office, which runs data.go.th, the national open-data
  *            portal, and the สำนักงานจังหวัด (provincial administration)
  *            organisations inside it.
@@ -188,7 +188,7 @@ const ENERGY_PUBLISHER =
   "สำนักงานปลัดกระทรัฐ กระทรวงพลังงาน / Office of the Permanent Secretary, Ministry of Energy";
 
 const GOV_PUBLISHER =
-  "กรมธุรกิจปฏิรูปและพัฒนาระบบคอมพิวเตอร์ / Government Data Management Office — data.go.th";
+  "สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน) / Digital Government Development Agency (DGA) — data.go.th";
 
 /** Machine-readable = a CSV you can load into a spreadsheet or a program. */
 const TABULAR = "CSV";
@@ -392,7 +392,7 @@ async function main() {
  *
  * Two publishers, each with its own catalogue:
  *   สำนักงานปลัดกระทรัฐ กระทรวงพลังงาน — via gdcatalog.energy.go.th
- *   กรมธุรกิจปฏิรูปและพัฒนาระบบคอมพิวเตอร์ — via data.go.th
+ *   สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน) — via data.go.th
  *
  * The data is COMMITTED, not fetched at build time — the site must never
  * depend on a government API being up.

@@ -1,6 +1,7 @@
 import { filterCitySummaries } from "../../src/cityListQuery";
 
 type CitySummary = {
+  id: string;
   status: string;
   tier: string;
   compositeScore: number;
@@ -71,7 +72,19 @@ export async function onRequest(context: PagesContext): Promise<Response> {
     }
 
     const payload = await asset.json() as Envelope;
-    const cities = Array.isArray(payload.data) ? payload.data : [];
+    if (!payload || payload.success !== true || !Array.isArray(payload.data)
+      || payload.data.length === 0 || !payload.data.every(city => city
+        && typeof city.id === "string" && city.id.trim().length > 0
+        && typeof city.nameEn === "string" && typeof city.status === "string"
+        && typeof city.tier === "string" && Number.isFinite(city.compositeScore)
+        && city.scores && ["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"]
+          .every(key => Number.isFinite(city.scores[key as keyof CitySummary["scores"]])))) {
+      throw new Error("Malformed city index");
+    }
+    if (new Set(payload.data.map(city => city.id)).size !== payload.data.length) {
+      throw new Error("Duplicate city identity");
+    }
+    const cities = payload.data;
     const url = new URL(context.request.url);
     const data = filterCitySummaries(cities, {
       status: url.searchParams.get("status") ?? undefined,

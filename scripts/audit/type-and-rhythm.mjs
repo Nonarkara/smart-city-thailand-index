@@ -13,7 +13,7 @@
  *
  * Run: node scripts/audit/type-and-rhythm.mjs [baseUrl] [outDir]
  */
-import { chromium } from "/Users/nonarkara/Projects/soccer/node_modules/playwright/index.mjs";
+import { chromium } from "@playwright/test";
 import fs from "node:fs";
 
 const BASE = process.argv[2] || "http://localhost:5188";
@@ -101,7 +101,21 @@ for (const route of ROUTES) {
         if (prev !== null) gaps.push(Math.round(r.top - prev));
         prev = r.bottom;
       }
-      return { sizes, offenders, headings, gaps, barH, displayProse, displayBlocks };
+      // DUPLICATE DISPLAY TEXT. The statement counter below only fires on a
+      // 3+-word sentence, so a city name repeated at the display size passed
+      // the old instrument unnoticed. One fact, one place, one size.
+      const dispSeen = new Map();
+      for (const el of document.querySelectorAll("body *")) {
+        if (el.closest("svg, .site-footer, .topbar, nav, footer, .site-header")) continue;
+        const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent.trim()).join(" ").replace(/\s+/g, " ").trim();
+        if (!own) continue;
+        const fs = Math.round(parseFloat(getComputedStyle(el).fontSize) * 10) / 10;
+        if (fs < 30) continue;
+        const key = own.toLowerCase();
+        dispSeen.set(key, [...(dispSeen.get(key) || []), { tag: el.tagName.toLowerCase(), cls: String(el.className || "").slice(0, 34), text: own.slice(0, 40) }]);
+      }
+      const dupDisplay = [...dispSeen.values()].filter(v => v.length > 1);
+      return { sizes, offenders, headings, gaps, barH, displayProse, displayBlocks, dupDisplay };
     });
 
     const sizeEntries = Object.entries(m.sizes).sort((a, b) => b[0] - a[0]);
@@ -132,6 +146,57 @@ for (const route of ROUTES) {
     }
     console.log("   gaps: " + m.gaps.join(","));
     if (off.length) console.log("   OFF-SCALE: " + off.map(([s, c]) => `${s}px×${c}`).join(" "));
+
+    // THE TABS ARE SEPARATE SCREENS. The dossier keeps all five panels in
+    // the DOM so the print pass can lay them out itself, which means the
+    // measurement above sees only the visible one. Each tab is measured
+    // as a screen of its own — before this, the Analysis tab's three
+    // display-size text statements were invisible to this instrument.
+    const tabCount = await page.evaluate(() => document.querySelectorAll(".dossier-tab").length);
+    for (let t = 0; t < tabCount; t++) {
+      await page.evaluate((n) => document.querySelectorAll(".dossier-tab")[n].click(), t);
+      await page.waitForTimeout(450);
+      const tab = await page.evaluate(() => {
+        const sizes = {}; const offenders = {}; const display = [];
+        for (const el of document.querySelectorAll("body *")) {
+          if (el.closest("svg, .site-footer, .topbar, nav, footer, .site-header")) continue;
+          const own = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim().length > 0);
+          if (!own) continue;
+          const cs = getComputedStyle(el);
+          if (cs.display === "none" || cs.visibility === "hidden" || parseFloat(cs.opacity) === 0) continue;
+          if (el.getBoundingClientRect().height === 0) continue;
+          const fs = Math.round(parseFloat(cs.fontSize) * 10) / 10;
+          sizes[fs] = (sizes[fs] || 0) + 1;
+          if (![32, 14, 11.5].includes(fs)) offenders[fs] = (offenders[fs] || 0) + 1;
+          if (fs === 32) {
+            const txt = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent.trim()).join(" ").replace(/\s+/g, " ").trim();
+            if (txt) display.push({ tag: el.tagName.toLowerCase(), cls: String(el.className || "").slice(0, 26), text: txt.slice(0, 34) });
+          }
+        }
+        return { sizes, offenders, display };
+      });
+      const tabLabel = await page.evaluate((n) => document.querySelectorAll(".dossier-tab")[n].textContent.trim(), t);
+      const tabOff = Object.entries(tab.offenders);
+      const tabSizes = Object.keys(tab.sizes).sort((a, b) => b - a);
+      console.log(`   TAB "${tabLabel}": sizes ${tabSizes.join("/")} · off-scale ${tabOff.length ? tabOff.map(([s, c]) => `${s}px×${c}`).join(" ") : "0"} · display ${tab.display.length}`);
+      if (tabOff.length) {
+        totalOff += tabOff.reduce((a, [, c]) => a + c, 0);
+      }
+      // A text statement at the display size is a second announcement.
+      const textStatements = tab.display.filter(d => {
+        const words = d.text.split(/\s+/).filter(w => /[A-Za-z]{3,}/.test(w)).length;
+        const numerals = (d.text.match(/[\d.,%]/g) || []).length;
+        return words >= 2 && numerals < d.text.length * 0.4;
+      });
+      if (textStatements.length) {
+        totalStatements += textStatements.length;
+        for (const d of textStatements) console.log(`      DISPLAY TEXT STATEMENT IN TAB: ${d.tag}.${d.cls} "${d.text}"`);
+      }
+    }
+    if (tabCount > 1) {
+      await page.evaluate(() => document.querySelectorAll(".dossier-tab")[0].click());
+      await page.waitForTimeout(250);
+    }
   } catch (e) {
     console.log(`=== ${route} FAILED: ${String(e).slice(0, 120)}`);
   }

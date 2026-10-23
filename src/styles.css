@@ -5,9 +5,50 @@
  * NO Libre Baskerville, NO Montserrat, NO Noto Serif — the fat-serif and cliché
  * instincts are the Codex Incident. They are banned. */
 
+/* ─── SAO CHINGCHA — the Thai display face ──────────────────────────────
+ * เส้นชิงชา, named after the Giant Swing in front of Wat Suthat.
+ * NON-LOOPED, verified by rendering against a looped reference: the หัว on
+ * ป/ญ/ส are open terminals, not closed curls. That matters — a Thai reader
+ * clocks a looped head-loop in one glance and reads it as "learner material".
+ *
+ * It is a DISPLAY face: high contrast, flat terminals, squarish geometry.
+ * So it is applied to the page's ONE display statement and nowhere else.
+ * The reading faces stay IBM Plex Sans Thai, which holds up at 14px and 11px.
+ *
+ * Per-glyph fallback is what keeps the Latin law intact: system-ui comes
+ * first, so Latin glyphs are taken from the OS and only Thai glyphs fall
+ * through to Sao Chingcha. No decorative Latin typeface is introduced.
+ *
+ * Self-hosted from /fonts/ (never hotlinked across projects).
+ */
+@font-face {
+  font-family: "Sao Chingcha";
+  src: url("/fonts/sao-chingcha-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sao Chingcha";
+  src: url("/fonts/sao-chingcha-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sao Chingcha";
+  src: url("/fonts/sao-chingcha-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --font: system-ui, -apple-system, "Segoe UI", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
   --font-heading: system-ui, -apple-system, "Segoe UI", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
+  /* The display stack. Latin still comes from system-ui; Thai falls through
+     to Sao Chingcha. Same for the heading stack, which stays readable. */
+  --font-display: system-ui, -apple-system, "Segoe UI", "Sao Chingcha", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
   --sans: var(--font);
   /* Thai first falls to Plex Sans Thai — already loaded, non-looped —
      instead of whatever the platform maps `monospace` to for Thai. */
@@ -1104,10 +1145,7 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .back-link { font: 600 var(--text-micro) var(--font); color: var(--3); margin-bottom: .75rem; display: inline-block; text-transform: uppercase; letter-spacing: .08em; }
 .back-link:hover { color: var(--teal); }
 .city-detail-header { display: grid; grid-template-columns: 1fr auto; gap: 1.25rem; align-items: start; }
-.city-detail-header h1 { font-size: var(--text-display); font-weight: 700; letter-spacing: -.04em; line-height: .95; margin-bottom: .15rem; }
-.city-detail-province { font-size: var(--text-body); color: var(--3); }
 .city-detail-score-block { display: flex; flex-direction: column; align-items: flex-end; gap: .25rem; }
-.composite-large { font: 700 var(--text-display) var(--mono); letter-spacing: -.03em; }
 .reality-badge { font: 700 var(--text-micro) var(--mono); padding: .08rem .35rem; }
 .reality-operational { background: var(--alpha-bg); color: var(--alpha); }
 .reality-partial { background: var(--beta-bg); color: var(--beta-text); }
@@ -1125,6 +1163,12 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .dossier-tab:hover { color: var(--teal); }
 .dossier-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
 .dossier-tab-panel { padding: 1.25rem 0; }
+/* All five panels are in the DOM; only the active one is painted. The print
+   stylesheet turns the rest on, so the print pass does its own layout
+   rather than racing a mount it would snapshot before it had painted. */
+.dossier-panel-slot { display: none; }
+.dossier-panel-slot[data-active="true"] { display: block; }
+.dossier-panel-heading { display: none; }
 .dossier-tab-content { animation: tabFade .2s ease; }
 @keyframes tabFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -3133,7 +3177,7 @@ h2, h3 { font-family: var(--font); }
 .tier-badge, .tier-badge-large { border-radius: 0; }
 
 /* Score values: mono font + tabular nums = aligned, scannable */
-.composite-large, .city-card-composite, .stat-value,
+.city-card-composite, .stat-value,
 .rpg-stat-value, .decomp-total-value,
 .audit-kpi-value, .ref-proof-composite {
   font-variant-numeric: tabular-nums;
@@ -4569,6 +4613,14 @@ details[open] .kb-question::before { content: "−"; }
 .city-dossier-record-grid {
   margin-top: .85rem;
   background: rgba(255,255,255,.55);
+  /* Four figures. The columns are chosen from the count — three columns
+     stranded the last figure beside two empty cells. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.city-dossier-record-grid .record-item:nth-child(2n) { border-right: 0; }
+@media (min-width: 1024px) {
+  .city-dossier-record-grid .record-item:nth-child(2n) { border-right: 1px solid var(--5); }
+  .city-dossier-record-grid .record-item:nth-child(4n) { border-right: 0; }
 }
 .city-dossier-grid {
   display: grid;
@@ -5145,7 +5197,11 @@ details[open] .kb-question::before { content: "−"; }
   background: linear-gradient(rgba(0,0,0,.1) 0%, rgba(0,0,0,.82) 60%);
   display: flex; align-items: flex-end; padding: 1.25rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem);
 }
-.city-hero-photo-title { font-size: var(--text-body); font-weight: 700; color: #fff; letter-spacing: -.03em; }
+.city-hero-photo-title {
+  font-size: clamp(1.75rem, 6vw, var(--text-display));
+  font-weight: 700; color: #fff; letter-spacing: -.03em; margin: 0;
+  max-width: 100%; overflow-wrap: anywhere; text-wrap: balance;
+}
 .city-hero-photo-score { font: 700 var(--text-display) var(--mono); color: var(--gold); margin-left: auto; }
 
 /* ─── CITY FINGERPRINT — hero overlay + rank row thumbnail ─── */
@@ -5407,7 +5463,6 @@ details[open] .kb-question::before { content: "−"; }
   .city-context-grid { grid-template-columns: 1fr; }
 
   .city-hero-photo { height: 30vh; min-height: 160px; }
-  .city-hero-photo-title { font-size: var(--text-body); }
 
   .fieldboard-title { font-size: var(--text-body); }
   .dashboard-ranking-name { font-size: var(--text-body); }
@@ -6786,7 +6841,6 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .city-hero-photo-title {
     display: block;
     font-family: var(--font-heading);
-    font-size: var(--text-body);
     font-weight: 700;
     line-height: .92;
     letter-spacing: 0;
@@ -6852,19 +6906,6 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     gap: 1.5rem;
   }
 
-  .city-detail-header h1 {
-    max-width: 760px;
-    font-size: var(--text-display);
-    line-height: .98;
-    letter-spacing: -.055em;
-  }
-
-  .city-detail-province {
-    margin-top: .22rem;
-    font: 600 var(--text-body)/1.4 var(--font);
-    color: var(--3);
-  }
-
   .city-detail-score-block {
     padding: .72rem .82rem;
     border: 1px solid var(--5);
@@ -6873,12 +6914,6 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   }
 
   [data-theme="dark"] .city-detail-score-block { background: rgba(255, 255, 255, .04); }
-
-  .composite-large {
-    font-size: var(--text-display);
-    line-height: .95;
-    color: var(--ink);
-  }
 
   .city-detail-tagline {
     max-width: 850px;
@@ -6968,9 +7003,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   .city-analog-section > h2,
   .city-factbook-header h2 {
     max-width: 900px;
-    font-size: var(--text-display);
-    line-height: .98;
-    letter-spacing: -.06em;
+    font-size: var(--text-body);
+    line-height: 1.3;
+    letter-spacing: -.02em;
   }
 
   .city-dossier-shell,
@@ -7052,9 +7087,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
   .city-analog-headline {
     max-width: 760px;
-    font-size: var(--text-display);
-    line-height: 1.06;
-    letter-spacing: -.055em;
+    font-size: var(--text-body);
+    line-height: 1.35;
+    letter-spacing: -.02em;
   }
 
   .city-analog-metric-grid {
@@ -7068,9 +7103,9 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   }
 
   .city-analog-metric-value {
-    font-size: var(--text-display);
-    line-height: 1.15;
-    letter-spacing: -.045em;
+    font-size: var(--text-body);
+    line-height: 1.35;
+    letter-spacing: -.02em;
   }
 
   .city-analog-metric-note {
@@ -7204,7 +7239,6 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     min-height: 360px;
   }
 
-  .city-hero-photo-title { font-size: var(--text-body); }
   .city-hero-photo-subtitle { font-size: var(--text-micro); }
   .city-hero-photo-score-card { padding: .82rem .9rem; border-radius: 0; }
 
@@ -9166,12 +9200,37 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 html[lang="th"] {
   --font: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, "Segoe UI", sans-serif;
   --font-heading: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+  /* One family carries both scripts here, so the Thai headline and the
+     Latin fragments inside it share a voice — the point of the face. */
+  --font-display: "Sao Chingcha", "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+}
+
+/* THAI IS NOT A TRACKED SCRIPT.
+ * Tracking opens the counters of an uppercase Latin word so the letters read
+ * as one unit. Thai has no uppercase and no counters to open: its vowel and
+ * tone marks stack above the base and its strokes join into continuous
+ * shapes. Tracking pulls those marks off their base and separates the
+ * strokes, and the result reads as a foreigner's typesetting.
+ *
+ * So in the Thai locale the tracking comes off. !important is deliberate:
+ * 409 rules in this file set letter-spacing, and a locale-scoped override
+ * has to beat every one of them. */
+html[lang="th"] :is(
+  p, span, div, dd, dt, strong, em, a, button, h1, h2, h3, h4, h5, h6,
+  li, ul, ol, label, summary, td, th, code, small, figcaption,
+  section, article, blockquote, legend, caption
+) {
+  letter-spacing: normal !important;
+}
+html[lang="th"] svg text {
+  letter-spacing: normal !important;
 }
 
 /* Chinese locale — system CJK faces; system-ui for Latin. No decorative serifs. */
 html[lang="zh"] {
   --font: system-ui, "PingFang SC", "Microsoft YaHei", "IBM Plex Sans Thai", sans-serif;
   --font-heading: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-display: system-ui, "PingFang SC", "Microsoft YaHei", "Sao Chingcha", "IBM Plex Sans Thai", sans-serif;
 }
 
 /* Editorial headings — let the serif breathe; compressed tracking makes
@@ -9184,6 +9243,17 @@ h1, h2, h3,
 .timeline-title {
   font-family: var(--font-heading);
   letter-spacing: 0;
+}
+
+/* THE DISPLAY STATEMENT speaks in Sao Chingcha. Every other size stays on
+ * the reading face. Placed AFTER the heading group so it wins on order.
+ * Latin still comes from system-ui; only Thai glyphs fall through. */
+h1,
+.hero-title,
+.dashboard-title,
+.cinematic-hero-title,
+.city-hero-photo-title {
+  font-family: var(--font-display);
 }
 .hero-title,
 .dashboard-title,
@@ -10268,19 +10338,12 @@ body:has(.bingo-page) { overflow: hidden; }
 }
 .city-hero-photo-title {
   max-width: 900px;
-  font-size: var(--text-body);
   line-height: .95;
   text-wrap: balance;
 }
 .city-hero-photo-overlay {
   padding-bottom: clamp(5rem, 8vw, 6.25rem);
 }
-.city-detail-header h1 {
-  max-width: 100%;
-  overflow-wrap: anywhere;
-  text-wrap: balance;
-}
-
 @media (max-width: 900px) {
   body:has(.nav-links-open) .chat-fab,
   body:has(.nav-links-open) .chat-panel {
@@ -10395,20 +10458,11 @@ body:has(.bingo-page) { overflow: hidden; }
     padding-bottom: 2.6rem;
   }
   .city-hero-photo-title {
-    /* 11.8vw put a 375px phone at 44px — cap at the display token (28px floor per §11.8) */
-    font-size: var(--text-body);
+    /* §11.8: hero headline, 28px floor, display token ceiling */
     line-height: .98;
-  }
-  .city-detail-header h1 {
-    font-size: var(--text-display);
-    line-height: 1.02;
-    letter-spacing: -.035em;
   }
   .city-detail-score-block {
     align-items: center;
-  }
-  .city-detail-score-block .composite-large {
-    font-size: clamp(1.75rem, 9vw, var(--text-display));
   }
 }
 
@@ -12351,7 +12405,7 @@ body.canvas-print-mode {
 
 /* City reference: the reading task leads; evidence remains adjacent. */
 .city-evidence-summary { padding-block: 1rem; }
-.city-evidence-summary h1 { margin: 0; font-size: var(--text-display); }
+.city-evidence-summary h2 { margin: 0; }
 .city-evidence-summary p { max-width: 65ch; font-size: var(--text-body); }
 .city-evidence-finding { font-weight: 700; }
 .city-evidence-details summary { cursor: pointer; padding-block: .5rem; font-size: var(--text-body); }
@@ -12371,22 +12425,27 @@ body.canvas-print-mode {
   .city-evidence-details tr, .city-readable-radar { break-inside: avoid; }
   .city-evidence-details a { color: #000; text-decoration: underline; }
 }
-/* The dossier photograph supplies context without displacing the finding. */
-.city-evidence-summary + .city-hero-photo { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
+
+/* Four delivery-step figures in four columns once there is room for
+ * them. Below that they pair. Never three — that strands the last. */
+@media (min-width: 1024px) {
+  .city-dossier-record-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* ─── INFRASTRUCTURE ABSORPTION ────────────────────────────────────────
+ * Three rows of figures and the limit of what they establish. The number
+ * that carries the argument is the electricity restatement: the same grid,
+ * a crowd the register never counted. */
+.city-absorption-grid { display: grid; gap: 0; margin: 0 0 1rem; border-top: 1px solid var(--5); }
+.city-absorption-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .1rem .75rem; padding: .6rem 0; border-bottom: 1px solid var(--5); }
+.city-absorption-label { font: 700 var(--text-body) var(--font); color: var(--ink); }
+.city-absorption-value { margin: 0; font: 700 var(--text-body) var(--mono); color: var(--ink); text-align: end; }
+.city-absorption-note { grid-column: 1 / -1; font: var(--text-micro)/1.5 var(--font); color: var(--3); margin: .15rem 0 0; max-width: 62ch; }
+.city-absorption-adjust { font: 600 var(--text-body)/1.6 var(--font); color: var(--ink); border-left: 2px solid var(--teal); padding-left: .75rem; margin: 0 0 .75rem; }
+.city-absorption-caveat { font: var(--text-body)/1.6 var(--font); color: var(--3); max-width: 68ch; margin: 0 0 .5rem; }
+.city-absorption-source { font: var(--text-micro)/1.5 var(--mono); color: var(--3); margin: 0; }
 @media (min-width: 720px) {
-  .city-evidence-summary + .city-hero-photo { aspect-ratio: 6 / 1; }
-}
-@media (max-width: 719px) {
-  .city-evidence-summary + .city-hero-photo { aspect-ratio: 3 / 2; }
-}
-.city-repeat-name { font-size: var(--text-display); font-weight: 700; margin: 0; }
-@media (min-width: 720px) and (max-width: 1199px) {
-  .city-evidence-summary + .city-hero-photo { aspect-ratio: 4 / 1; }
-}
-@media (min-width: 901px) and (max-width: 1199px) {
-  .city-evidence-summary + .city-hero-photo .city-hero-fingerprint {
-    top: .5rem; bottom: auto; width: 72px !important; height: 72px !important;
-  }
+  .city-absorption-row { grid-template-columns: minmax(0, 22rem) auto; }
 }
 
 .city-research-appendix { margin-top: .5rem; font-size: var(--text-body); }
@@ -12413,8 +12472,9 @@ body.canvas-print-mode {
   .research-domain > summary { display: block; }
   .research-indicator { break-inside: avoid; }
   .research-indicator a::after { content: " (" attr(href) ")"; overflow-wrap: anywhere; }
-  .dossier-print-section { break-before: page; }
-  .dossier-print-section .reveal { opacity: 1 !important; transform: none !important; }
+  .dossier-panel-slot { display: block !important; break-before: page; }
+  .dossier-panel-slot .reveal { opacity: 1 !important; transform: none !important; }
+  .dossier-panel-heading { display: block; }
 }
 @media print {
   body:has(.city-evidence-summary) { page: city-reference; }
@@ -12424,13 +12484,91 @@ body.canvas-print-mode {
   @page city-reference {
     size: A4;
     margin: 14mm;
-    @bottom-center { content: "SCITI 2026 · " counter(page); font-size: 11pt; }
+    @bottom-center { content: "SCITI 2026 · " counter(page); font-size: var(--text-micro); }
   }
 }
 @media print {
   body:has(.city-evidence-summary) .news-section { display: none !important; }
 }
 @media print {
-  .dossier-print-section .city-print-hide { display: block !important; }
-  .dossier-print-section .reveal { visibility: visible !important; }
+  .dossier-panel-slot .city-print-hide { display: block !important; }
+  .dossier-panel-slot .reveal { visibility: visible !important; }
+}
+
+/* Investment atlas: the comparison is dominant; its interpretation stays beside it. */
+.investment-explorer { padding-block: 1rem; }
+.investment-explorer > p { max-width: 65ch; }
+.investment-explorer h2 { font-size: var(--text-display); }
+.investment-explorer h3 { font-size: var(--text-body); }
+.investment-explorer-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-block: 1rem; }
+.investment-explorer-controls select { max-width: 100%; min-height: 44px; font: inherit; background: var(--surface); color: var(--ink); padding: .5rem; border: 1px solid var(--3); }
+.investment-explorer-controls label { font-size: var(--text-body); }
+.investment-explorer-controls label:has(input) { display: flex; align-items: center; gap: .5rem; min-height: 44px; }
+.investment-explorer-layout { display: grid; gap: 1rem; }
+.investment-explorer-figure { margin: 0; min-width: 0; }
+.investment-explorer-stage { position: relative; }
+.investment-explorer-chart { display: block; width: 100%; height: auto; overflow: visible; }
+.investment-explorer-grid line { stroke: var(--3); stroke-opacity: .2; stroke-width: 1; }
+.investment-explorer-dot { fill: var(--3); fill-opacity: .48; stroke: var(--surface); stroke-width: 1; cursor: pointer; }
+.investment-explorer-dot:hover { fill: var(--gold); fill-opacity: 1; stroke: var(--ink); }
+.investment-explorer-dot.is-selected { fill: var(--gold); fill-opacity: 1; stroke: var(--ink); stroke-width: 2; }
+.investment-explorer-scale { display: flex; justify-content: space-between; margin-inline: 6.667%; font: var(--text-body) var(--mono); }
+.investment-explorer-y-scale { position: absolute; top: 4.55%; bottom: 9.09%; left: 0; display: flex; flex-direction: column; justify-content: space-between; font: var(--text-body) var(--mono); pointer-events: none; }
+.investment-explorer-figure figcaption { font-size: var(--text-body); margin-block: .5rem; }
+.investment-explorer-detail { border-top: 3px solid var(--ink); padding-top: .75rem; }
+.investment-explorer-detail p { font-size: var(--text-body); }
+.investment-explorer-scores { display: flex; gap: 1.5rem; border-block: 1px solid var(--3); padding-block: .75rem; }
+.investment-explorer-scores dd { margin: 0; font: 700 var(--text-display) var(--mono); }
+.investment-explorer-population { display: grid; gap: .5rem; }
+.investment-explorer-population > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; }
+.investment-explorer-population dd { margin: 0; font-family: var(--mono); }
+.investment-explorer-source { font-size: var(--text-body); color: var(--2); }
+.investment-explorer-table summary { padding-block: .75rem; cursor: pointer; }
+.investment-explorer-table table { width: 100%; border-collapse: collapse; font-size: var(--text-body); }
+.investment-explorer-table th, .investment-explorer-table td { padding: .5rem .25rem; text-align: start; border-bottom: 1px solid var(--3); }
+.investment-explorer-table caption { text-align: start; }
+@media (min-width: 900px) { .investment-explorer-layout { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 2rem; } }
+@media print {
+  .investment-explorer-controls { display: none; }
+  .investment-explorer-layout { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .investment-explorer-figure, .investment-explorer-detail { break-inside: avoid; }
+  .investment-explorer-table::details-content { display: block; content-visibility: visible; }
+}
+/* Tick centers match the SVG plot coordinates at every width. */
+.investment-explorer-scale { display: block; position: relative; height: 1.5em; }
+.investment-explorer-scale span { position: absolute; transform: translateX(-50%); }
+.investment-explorer-y-scale { display: block; }
+.investment-explorer-y-scale span { position: absolute; transform: translateY(-50%); }
+.invest-page > .story-hero { padding-block: 1rem; }
+.invest-page > .investment-explorer h2 { font-size: var(--text-body); }
+/* Identity and score fit together; the photograph retains its context. */
+@media screen and (max-width: 719px) {
+  .city-hero-photo, .city-hero-gradient { height: 250px; min-height: 250px; max-height: 250px; margin-bottom: 0; }
+  .city-hero-photo-overlay { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; align-content: end; gap: .75rem; padding: 1rem; }
+  .city-hero-photo-copy { min-width: 0; }
+  .city-hero-photo-title { font-size: var(--text-display); line-height: 1.05; }
+  .city-hero-photo-score-card { min-width: 0; width: auto; padding: .5rem; }
+  .city-hero-photo-score-note { max-width: 10ch; white-space: normal; }
+  .city-hero-fingerprint { top: .75rem; bottom: auto; right: .75rem; width: 48px !important; height: 48px !important; }
+}
+@media print {
+  .dossier-panel-slot:first-child { break-before: auto; }
+  .dossier-panel-heading { break-after: avoid-page; }
+  .dossier-panel-slot .section { break-inside: auto; }
+}
+.city-background-note { font-size: var(--text-body); max-width: 65ch; }
+.city-background-note summary { padding-block: .5rem; cursor: pointer; }
+.city-background-note p { font-size: var(--text-body); }
+@media print { .city-background-note::details-content { display: block; content-visibility: visible; } }
+.city-print-identity { display: none; }
+@media print {
+  .city-print-identity { display: block; margin-bottom: .5rem; }
+  .city-print-identity p { font-size: var(--text-display); font-weight: 700; margin: 0; }
+  .city-print-identity div { font-size: var(--text-body); }
+  .dossier-panel-slot .city-detail-hero > div:first-child { display: none !important; }
+}
+@media print {
+  /* A first print must not capture a tab halfway through its entrance fade. */
+  .dossier-tab-content { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .dossier-panel-slot .reveal { transition: none !important; }
 }

@@ -1,5 +1,7 @@
 import { useMemo } from "react";
+import researchSnapshot from "./researchSnapshot.json";
 import CityEvidenceSummary from "./CityEvidenceSummary";
+import AbsorptionReadout from "./AbsorptionReadout";
 import CityFingerprint from "./CityFingerprint";
 import NeedsLadder from "./NeedsLadder";
 import { computeNeedsLadder } from "./needsLadderEngine";
@@ -210,12 +212,12 @@ function getContextText(
   return defaultValue ?? zhFallback;
 }
 
-function getStatusSummary(city: SmartCity, locale: Locale): string {
+function getStatusSummary(city: SmartCity, locale: Locale, includeBatch = true): string {
   if (city.status === "certified") {
     return translate(locale, {
-      en: `Certified · Batch ${city.batch ?? "n/a"}`,
-      th: `รับรองแล้ว · รุ่น ${city.batch ?? "n/a"}`,
-      zh: `已认证 · 第 ${city.batch ?? "n/a"} 批`,
+      en: includeBatch ? `Certified · Batch ${city.batch ?? "n/a"}` : "Certified",
+      th: includeBatch ? `รับรองแล้ว · รุ่น ${city.batch ?? "n/a"}` : "รับรองแล้ว",
+      zh: includeBatch ? `已认证 · 第 ${city.batch ?? "n/a"} 批` : "已认证",
     });
   }
 
@@ -676,6 +678,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const cityName = getCityName(city, locale);
   const provinceName = getProvinceName(city, locale);
   const cityTagline = getCityTagline(city, locale);
+  const orderedPillars = [...SCORING_PILLARS].sort((a, b) => city.scores[b] - city.scores[a]);
+  const strongestPillar = orderedPillars[0];
+  const weakestPillar = orderedPillars[orderedPillars.length - 1];
   const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
   const overallGrade = statGrade(city.compositeScore);
   const photoSet = getCityPhotoSet(city);
@@ -688,7 +693,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const financing = getFinancingAdvice(city);
   // Rank across all cities by composite score (descending). Ties share position; we use 1-indexed.
   const citiesByComposite = [...allCities].sort((a, b) => b.compositeScore - a.compositeScore);
-  const cityRank = citiesByComposite.findIndex(c => c.id === city.id) + 1;
+  const cityRank = citiesByComposite.filter(c => c.compositeScore > city.compositeScore).length + 1;
   const cityRankTotal = citiesByComposite.length;
   // Tier-median developability delta.
   const tierDevScores = allCities
@@ -842,11 +847,10 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       ? developability.labelTh
       : developability.label;
   const heroMeta = translate(locale, {
-    en: `${provinceName} · ${getStatusSummary(city, locale)} · ${city.smartDimensions.length} smart dimensions`,
-    th: `${provinceName} · ${getStatusSummary(city, locale)} · ${city.smartDimensions.length} มิติอัจฉริยะ`,
-    zh: `${provinceName} · ${getStatusSummary(city, locale)} · ${city.smartDimensions.length} 个智慧维度`,
-  });
-  const riskProfileLabel = FINANCE_RISK_LABELS[city.financeProfile.riskProfile][locale];
+    en: `${provinceName} · ${getStatusSummary(city, locale, false)} · ${city.smartDimensions.length} smart dimensions`,
+    th: `${provinceName} · ${getStatusSummary(city, locale, false)} · ${city.smartDimensions.length} มิติอัจฉริยะ`,
+    zh: `${provinceName} · ${getStatusSummary(city, locale, false)} · ${city.smartDimensions.length} 个智慧维度`,
+  });  const riskProfileLabel = FINANCE_RISK_LABELS[city.financeProfile.riskProfile][locale];
   const deliveryReadinessLabel = FINANCE_READINESS_LABELS[city.financeProfile.deliveryReadiness][locale];
   const riskPostureNote = city.financeProfile.riskProfile === "low"
     ? translate(locale, {
@@ -1179,9 +1183,8 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         }}
       />
 
-      {/* ─── HERO ─── Always-visible city identity */}
+      {/* ─── HERO ─── Always-visible city identity and verdict */}
 
-      <CityEvidenceSummary city={city} locale={locale} />
       {cityPhoto ? (
         <div className="city-hero-photo">
           <ResponsiveImage
@@ -1197,13 +1200,17 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
               <span className="city-hero-photo-kicker">
                 {translate(locale, { en: "SCITI 2026 city dossier", th: "แฟ้มข้อมูลเมือง SCITI 2026", zh: "SCITI 2026 城市档案" })}
               </span>
-              <span className="city-hero-photo-title">{cityName}</span>
+              <h1 className="city-hero-photo-title">{cityName}</h1>
               <span className="city-hero-photo-subtitle">{heroMeta}</span>
             </div>
             <div className="city-hero-photo-score-card" aria-label={translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}>
-              <span className="city-hero-photo-score-label">{translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合" })}</span>
+              <span className="city-hero-photo-score-label">{translate(locale, { en: "Curated score", th: "คะแนนคัดสรร", zh: "编辑评估分" })}</span>
               <span className="city-hero-photo-score">{city.compositeScore.toFixed(1)}</span>
-              <span className="city-hero-photo-score-note">{tierSymbol} {TIER_LABELS[locale][city.tier]}</span>
+              <span className="city-hero-photo-score-note">{translate(locale, {
+                en: `RANK #${cityRank} OF ${cityRankTotal}`,
+                th: `อันดับ #${cityRank} จาก ${cityRankTotal}`,
+                zh: `排名 #${cityRank} / ${cityRankTotal}`,
+              })}</span>
             </div>
             {/* City fingerprint — unique 7-pillar visual DNA, positioned bottom-right */}
             <CityFingerprint
@@ -1223,13 +1230,17 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
               <span className="city-hero-photo-kicker">
                 {translate(locale, { en: "SCITI 2026 city dossier", th: "แฟ้มข้อมูลเมือง SCITI 2026", zh: "SCITI 2026 城市档案" })}
               </span>
-              <span className="city-hero-photo-title city-hero-gradient-title">{cityName}</span>
+              <h1 className="city-hero-photo-title city-hero-gradient-title">{cityName}</h1>
               <span className="city-hero-photo-subtitle">{heroMeta}</span>
             </div>
             <div className="city-hero-photo-score-card" aria-label={translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}>
               <span className="city-hero-photo-score-label">{translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合" })}</span>
               <span className="city-hero-photo-score city-hero-gradient-score">{city.compositeScore.toFixed(1)}</span>
-              <span className="city-hero-photo-score-note">{tierSymbol} {TIER_LABELS[locale][city.tier]}</span>
+              <span className="city-hero-photo-score-note">{translate(locale, {
+                en: `RANK #${cityRank} OF ${cityRankTotal}`,
+                th: `อันดับ #${cityRank} จาก ${cityRankTotal}`,
+                zh: `排名 #${cityRank} / ${cityRankTotal}`,
+              })}</span>
             </div>
             <CityFingerprint
               scores={city.scores}
@@ -1244,6 +1255,15 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
       )}
 
 
+
+      <header className="city-print-identity">
+        <p>{cityName}</p>
+        <div>{translate(locale, {
+          en: "SCITI 2026 city dossier · research snapshot",
+          th: "แฟ้มเมือง SCITI 2026 · รุ่นข้อมูลวิจัย",
+          zh: "SCITI 2026 城市档案 · 研究快照",
+        })} {researchSnapshot.releaseDate} · {researchSnapshot.sha256.slice(0, 16)}</div>
+      </header>
 
       <DossierTabs
 
@@ -1292,20 +1312,10 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                   ? (locale === "th" ? "เขตส่งเสริมเมืองอัจฉริยะ" : locale === "zh" ? "智慧城市推广区" : "Smart City Promotion Zone")
                   : (locale === "th" ? "ข้อเสนอเมืองอัจฉริยะที่ขึ้นทะเบียน" : locale === "zh" ? "已登记智慧城市提案" : "Registered Smart City Proposal")}
             </p>
-            <p className="city-repeat-name">{cityName}</p>
-            <p className="city-detail-province">{provinceName}</p>
           </div>
           <div className="city-detail-score-block">
             <div className={`tier-badge-large tier-${city.tier}`}>
               {tierSymbol} {TIER_LABELS[locale][city.tier]}
-            </div>
-            <div className="composite-large">{city.compositeScore.toFixed(1)}</div>
-            <div className="composite-rank-chip" title={translate(locale, { en: "Rank across all tracked cities", th: "อันดับในเมืองที่เราติดตามทั้งหมด", zh: "在所有受追踪城市中的排名" })}>
-              {translate(locale, {
-                en: `Rank #${cityRank} of ${cityRankTotal}`,
-                th: `อันดับ #${cityRank} จาก ${cityRankTotal}`,
-                zh: `排名 #${cityRank} / ${cityRankTotal}`,
-              })}
             </div>
             <div className={`reality-badge reality-${city.reality}`}>
               {getCityRealityLabel(city.reality, locale)}
@@ -1318,7 +1328,16 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
         </div>
 
-        <p className="city-detail-tagline">{cityTagline}</p>
+        <p className="city-detail-tagline">{translate(locale, {
+          en: `Curated profile: ${PILLAR_LABELS[locale][strongestPillar]} ${city.scores[strongestPillar]}/100 is the strongest pillar; ${PILLAR_LABELS[locale][weakestPillar]} ${city.scores[weakestPillar]}/100 is the weakest. Use the Evidence tab to examine sources, observation dates, and provincial context before assessing a project.`,
+          th: `ผลประเมินที่คัดสรร: ${PILLAR_LABELS[locale][strongestPillar]} ${city.scores[strongestPillar]}/100 สูงสุด และ${PILLAR_LABELS[locale][weakestPillar]} ${city.scores[weakestPillar]}/100 ต่ำสุด ดูแหล่งข้อมูล ช่วงเวลาสำรวจ และบริบทจังหวัดในแท็บหลักฐานก่อนประเมินโครงการ`,
+          zh: `编辑评估概况：${PILLAR_LABELS[locale][strongestPillar]} ${city.scores[strongestPillar]}/100 最高，${PILLAR_LABELS[locale][weakestPillar]} ${city.scores[weakestPillar]}/100 最低。评估项目前，请在证据页核查来源、观测时期与省级背景。`,
+        })}</p>
+        <details className="city-background-note"><summary>{translate(locale, {
+          en: "Curated background narrative — source review required",
+          th: "เรื่องราวเมืองที่คัดสรร — ต้องตรวจสอบแหล่งอ้างอิง",
+          zh: "编辑背景叙述——仍需核查来源",
+        })}</summary><p>{cityTagline}</p></details>
         <p className="section-intro">{cityOrientation}</p>
 
         {(() => {
@@ -2176,6 +2195,10 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         {/* ─── TAB 4 · Evidence ─── */}
 
         <div className="dossier-tab-content">
+
+      <CityEvidenceSummary city={city} locale={locale} />
+
+      <AbsorptionReadout city={city} locale={locale} />
 
       <section className="section city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "Metric blocks", th: "ชุดตัวชี้วัด", zh: "指标模块" })}</p>

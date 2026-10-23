@@ -418,3 +418,31 @@ describe("cohort percentiles", () => {
     }
   });
 });
+
+
+describe("cohort meaning", () => {
+  it("rewards lower crime exposure while preserving a measured zero", () => {
+    const base = allCities[0];
+    const cities = [0, 50, 100].map((crimeRatePer100k, i) => ({
+      ...base, id: `crime-case-${i}`, metrics: { ...base.metrics, crimeRatePer100k },
+    }));
+    const results = deriveAll(cities);
+    const scores = cities.map(city => results.get(city.id)!.dimensions.living.contributions
+      .find(c => c.id === "personal-safety")!);
+    expect(scores.map(c => c.raw)).toEqual([0, 50, 100]);
+    expect(scores.map(c => c.score)).toEqual([100, 50, 0]);
+  });
+
+  it("counts each province once for provincial cohort indicators", () => {
+    const original = buildCohort(allCities);
+    const duplicated = buildCohort([...allCities, { ...allCities[0], id: "duplicate-province" }]);
+    for (const indicator of INDICATORS.filter(i => i.origin === "province" && i.scale.kind === "cohort")) {
+      expect(duplicated.get(indicator.id), indicator.id).toEqual(original.get(indicator.id));
+      const expected = new Set(allCities.filter(city => {
+        const value = PROVINCE_BASELINE_BY_ID[indicator.provinceId!]?.[resolveProvince(city.province)];
+        return value != null && Number.isFinite(value);
+      }).map(city => resolveProvince(city.province))).size;
+      expect(original.get(indicator.id)?.length, indicator.id).toBe(expected);
+    }
+  });
+});

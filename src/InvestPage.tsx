@@ -1,4 +1,5 @@
 import { translate } from "./cityPresentation";
+import InvestmentExplorer from "./InvestmentExplorer";
 import InvestCityDirectory from "./InvestCityDirectory";
 import InvestCityLens from "./InvestCityLens";
 import type { Locale } from "./types";
@@ -13,220 +14,269 @@ interface Props {
 /* ─── DATA STRUCTURES ─── */
 
 interface MacroStat {
-  label: { en: string; th: string; zh: string };
+  sourceUrl?: string;
+  label: {
+      en: string; th: string; zh: string };
   value: string;
-  sub: { en: string; th: string; zh: string };
+  sub: {
+      en: string; th: string; zh: string };
 }
 
 const macroStats: MacroStat[] = [
   {
-    label: { en: "GDP (2024)", th: "GDP (2567)", zh: "GDP (2024)" },
-    value: "$515B",
-    sub: { en: "2.5% growth YoY", th: "เติบโต 2.5% YoY", zh: "同比增长2.5%" },
+    label: {
+      en: "GDP (2024)",
+      th: "GDP (2567)",
+      zh: "GDP (2024)" },
+    value: "—",
+    sub: {
+      en: "Source reconciliation pending · do not use as a current investment input",
+      th: "อยู่ระหว่างตรวจสอบแหล่งข้อมูล · ยังไม่ควรใช้ประกอบการลงทุนในปัจจุบัน",
+      zh: "来源核对中 · 暂不作为当前投资依据" },
   },
   {
-    label: { en: "FDI Inflows", th: "FDI ไหลเข้า", zh: "FDI流入" },
-    value: "$10.2B",
-    sub: { en: "BOI 2024 Annual Report", th: "รายงานประจำปี BOI 2567", zh: "BOI 2024年度报告" },
+    label: {
+      en: "FDI Inflows",
+      th: "FDI ไหลเข้า",
+      zh: "FDI流入" },
+    value: "—",
+    sub: {
+      en: "Source reconciliation pending · do not use as a current investment input",
+      th: "อยู่ระหว่างตรวจสอบแหล่งข้อมูล · ยังไม่ควรใช้ประกอบการลงทุนในปัจจุบัน",
+      zh: "来源核对中 · 暂不作为当前投资依据" },
   },
   {
-    label: { en: "Digital Economy Target", th: "เป้าหมายเศรษฐกิจดิจิทัล", zh: "数字经济目标" },
-    value: "22%",
-    sub: { en: "of GDP by 2027 (NESDC)", th: "ของ GDP ภายใน 2570 (สศช.)", zh: "占GDP比重，2027年目标 (NESDC)" },
+    label: {
+      en: "Digital Economy Target",
+      th: "เป้าหมายเศรษฐกิจดิจิทัล",
+      zh: "数字经济目标" },
+    value: "—",
+    sub: {
+      en: "Source reconciliation pending · do not use as a current investment input",
+      th: "อยู่ระหว่างตรวจสอบแหล่งข้อมูล · ยังไม่ควรใช้ประกอบการลงทุนในปัจจุบัน",
+      zh: "来源核对中 · 暂不作为当前投资依据" },
   },
   {
-    label: { en: "Smart City National Target", th: "เป้าหมายเมืองอัจฉริยะ", zh: "智慧城市国家目标" },
-    value: "105",
-    sub: { en: "cities by 2027 (depa)", th: "เมือง ภายใน 2570 (depa)", zh: "座城市，2027年目标 (depa)" },
+    label: {
+      en: "Smart City National Target",
+      th: "เป้าหมายเมืองอัจฉริยะ",
+      zh: "智慧城市国家目标" },
+    value: "—",
+    sub: {
+      en: "Source reconciliation pending · do not use as a current investment input",
+      th: "อยู่ระหว่างตรวจสอบแหล่งข้อมูล · ยังไม่ควรใช้ประกอบการลงทุนในปัจจุบัน",
+      zh: "来源核对中 · 暂不作为当前投资依据" },
   },
   {
-    label: { en: "BOI Tax Holiday", th: "สิทธิประโยชน์ BOI", zh: "BOI税收优惠" },
-    value: "8yr",
-    sub: { en: "CIT exemption, targeted industries", th: "ยกเว้น CIT สำหรับอุตสาหกรรมเป้าหมาย", zh: "企业所得税免除，目标产业" },
+    label: {
+      en: "BOI Tax Holiday",
+      th: "สิทธิประโยชน์ BOI",
+      zh: "BOI税收优惠" },
+    value: "—",
+    sub: {
+      en: "Source reconciliation pending · do not use as a current investment input",
+      th: "อยู่ระหว่างตรวจสอบแหล่งข้อมูล · ยังไม่ควรใช้ประกอบการลงทุนในปัจจุบัน",
+      zh: "来源核对中 · 暂不作为当前投资依据" },
   },
   {
-    label: { en: "EEC Committed Investment", th: "การลงทุน EEC ที่ผูกพัน", zh: "EEC承诺投资" },
-    value: "$43B",
-    sub: { en: "Eastern Economic Corridor", th: "ระเบียงเศรษฐกิจพิเศษภาคตะวันออก", zh: "东部经济走廊" },
+    label: {
+      en: "EEC Committed Investment",
+      th: "การลงทุน EEC ที่ผูกพัน",
+      zh: "EEC承诺投资" },
+    value: "—",
+    sub: {
+      en: "Source reconciliation pending · do not use as a current investment input",
+      th: "อยู่ระหว่างตรวจสอบแหล่งข้อมูล · ยังไม่ควรใช้ประกอบการลงทุนในปัจจุบัน",
+      zh: "来源核对中 · 暂不作为当前投资依据" },
   },
   {
-    label: { en: "Climate Investment Needed", th: "การลงทุนด้านภูมิอากาศที่ต้องการ", zh: "所需气候投资" },
+    label: {
+      en: "Climate Investment Needed",
+      th: "การลงทุนด้านภูมิอากาศที่ต้องการ",
+      zh: "所需气候投资" },
     value: "$219B",
-    sub: { en: "over 25 years · World Bank CCDR 2025", th: "ใน 25 ปี · ธนาคารโลก CCDR 2568", zh: "25年内 · 世界银行CCDR 2025" },
+    sourceUrl: "https://www.worldbank.org/en/country/thailand/publication/th-ccdr",
+    sub: {
+      en: "2025–2050 · discounted NPV · World Bank CCDR 2025",
+      th: "2568–2593 · มูลค่าปัจจุบันสุทธิ · ธนาคารโลก CCDR 2568",
+      zh: "2025–2050 · 折现净现值 · 世界银行CCDR 2025" },
   },
   {
-    label: { en: "GDP at Risk by 2050", th: "GDP ที่เสี่ยงภายในปี 2593", zh: "2050年GDP风险" },
+    label: {
+      en: "GDP at Risk by 2050",
+      th: "GDP ที่เสี่ยงภายในปี 2593",
+      zh: "2050年GDP风险" },
     value: "7–14%",
-    sub: { en: "BAU climate scenario · World Bank CCDR 2025", th: "กรณีฐานภูมิอากาศ · ธนาคารโลก CCDR 2568", zh: "常规气候情景 · 世界银行CCDR 2025" },
+    sourceUrl: "https://www.worldbank.org/en/country/thailand/publication/th-ccdr",
+    sub: {
+      en: "Modeled loss vs baseline without adaptation · CCDR 2025",
+      th: "ผลจำลองเทียบฐานหากไม่ปรับตัว · CCDR 2568",
+      zh: "无额外适应措施时相对基线的模型损失 · CCDR 2025" },
   },
 ];
 
 interface InsightCard {
   tier: string;
   tierColor: string;
-  headline: { en: string; th: string; zh: string };
-  body: { en: string; th: string; zh: string };
+  headline: {
+      en: string; th: string; zh: string };
+  body: {
+      en: string; th: string; zh: string };
 }
 
 const insightCards: InsightCard[] = [
-  {
-    tier: "Alpha",
-    tierColor: "var(--teal)",
-    headline: {
-      en: "Composite score 65+ = Investable NOW",
-      th: "คะแนนรวม 65+ = ลงทุนได้ทันที",
-      zh: "综合评分65+ = 当下可投资",
-    },
-    body: {
-      en: "Alpha cities have operational infrastructure, live data pipelines, and measurable citizen outcomes. Currently 9 cities qualify. These are not promises — they are running systems.",
-      th: "เมือง Alpha มีโครงสร้างพื้นฐานที่ใช้งานจริง มี data pipeline ที่ทำงานอยู่ และมีผลลัพธ์สำหรับพลเมืองที่วัดได้ ปัจจุบันมี 9 เมืองที่ผ่านเกณฑ์ สิ่งเหล่านี้ไม่ใช่คำสัญญา แต่คือระบบที่ทำงานจริง",
-      zh: "Alpha城市拥有运营中的基础设施、实时数据管道和可衡量的市民成效。目前有9座城市达标。这些不是承诺，而是运行中的系统。",
-    },
-  },
-  {
-    tier: "Beta",
-    tierColor: "var(--gold)",
-    headline: {
-      en: "Score 45-64.9 = The growth arbitrage",
-      th: "คะแนน 45-64.9 = โอกาสเก็งกำไรจากการเติบโต",
-      zh: "评分45-64.9 = 增长套利机会",
-    },
-    body: {
-      en: "Infrastructure is actively building, governance is partially digitized, and community buy-in is emerging. Entry at a discount before operational maturity. The 2-3 year window is open.",
-      th: "โครงสร้างพื้นฐานกำลังก่อสร้าง การปกครองดิจิทัลเริ่มเป็นรูปเป็นร่าง และชุมชนเริ่มยอมรับ เข้าลงทุนในราคาส่วนลดก่อนจะเติบโตเต็มที่ หน้าต่าง 2-3 ปียังเปิดอยู่",
-      zh: "基础设施正在积极建设，治理部分数字化，社区参与度正在提升。在运营成熟之前以折价进入。2-3年的窗口期仍然开放。",
-    },
-  },
-  {
-    tier: "Gamma",
-    tierColor: "var(--3)",
-    headline: {
-      en: "Score below 45 = Too early for most capital",
-      th: "คะแนนต่ำกว่า 45 = เร็วเกินไปสำหรับทุนส่วนใหญ่",
-      zh: "评分低于45 = 对多数资本而言为时尚早",
-    },
-    body: {
-      en: "Paper plans, no live data, limited governance capacity. May have depa certification but zero operational evidence. Wait for Beta transition signals before committing capital.",
-      th: "มีแค่แผนบนกระดาษ ไม่มีข้อมูลจริง ศักยภาพการปกครองจำกัด อาจมีการรับรองจาก depa แต่ไม่มีหลักฐานการดำเนินงานจริง รอสัญญาณการเปลี่ยนผ่านสู่ Beta ก่อนลงเงิน",
-      zh: "仅有纸面规划，无实时数据，治理能力有限。可能持有depa认证，但零运营证据。等待Beta转型信号后再投入资本。",
-    },
-  },
-  {
-    tier: "LIV 25%",
-    tierColor: "var(--teal)",
-    headline: {
-      en: "Livability score correlates with property demand",
-      th: "คะแนนความน่าอยู่สัมพันธ์กับอุปสงค์อสังหาริมทรัพย์",
-      zh: "宜居评分与房产需求正相关",
-    },
-    body: {
-      en: "Cities with high livability scores (top quartile) see 3-5% annual property appreciation. The 25% weighting in SCITI reflects this: livability is the single largest driver of long-term urban value.",
-      th: "เมืองที่มีคะแนนความน่าอยู่สูง (ควอไทล์บน) มีราคาอสังหาริมทรัพย์เพิ่มขึ้น 3-5% ต่อปี น้ำหนัก 25% ใน SCITI สะท้อนสิ่งนี้: ความน่าอยู่คือตัวขับเคลื่อนหลักของมูลค่าเมืองระยะยาว",
-      zh: "宜居评分高（上四分位）的城市年房产增值率达3-5%。SCITI中25%的权重反映了这一点：宜居性是城市长期价值的最大驱动因素。",
-    },
-  },
-  {
-    tier: "DIG 5%",
-    tierColor: "#9B5DE5",
-    headline: {
-      en: "Digital score = Leading indicator of future readiness",
-      th: "คะแนนดิจิทัล = ตัวชี้นำความพร้อมในอนาคต",
-      zh: "数字评分 = 未来就绪度的领先指标",
-    },
-    body: {
-      en: "Only 5% weight, but diagnostic. Cities that score high on Digital today are building the infrastructure for tomorrow's services. Low digital + high livability = a city coasting on legacy. High digital + low livability = investment thesis in motion.",
-      th: "มีน้ำหนักเพียง 5% แต่เป็นตัวชี้วัดสำคัญ เมืองที่ได้คะแนน Digital สูงวันนี้กำลังสร้างโครงสร้างพื้นฐานเพื่อบริการในอนาคต Digital ต่ำ + ความน่าอยู่สูง = เมืองที่พึ่งพามรดกเดิม Digital สูง + ความน่าอยู่ต่ำ = สมมติฐานการลงทุนที่กำลังก่อตัว",
-      zh: "仅占5%权重，但具诊断性。今天数字评分高的城市正在为明天的服务构建基础设施。低数字+高宜居=依赖存量的城市。高数字+低宜居=正在验证中的投资论点。",
-    },
-  },
+{ tier: "Alpha", tierColor: "var(--teal)", headline: {
+      en: "65+ · A stronger curated profile",
+      th: "65+ · ภาพรวมตามเกณฑ์คัดสรรที่สูงกว่า",
+      zh: "65+ · 较强的编辑评估表现" }, body: {
+      en: "Use the pillar breakdown to shortlist questions for a site visit. This tier does not establish infrastructure adequacy, project viability, or expected returns. Verify operating services and local coverage separately.",
+      th: "ใช้คะแนนรายด้านเตรียมคำถามสำหรับลงพื้นที่ ระดับนี้ไม่ได้ยืนยันความเพียงพอของโครงสร้างพื้นฐาน ความเป็นไปได้ของโครงการ หรือผลตอบแทน ต้องตรวจสอบบริการที่เปิดใช้งานและพื้นที่ให้บริการแยกกัน",
+      zh: "用支柱评分准备实地考察问题。该层级不证明基础设施充足、项目可行或预期回报；须另行核实服务运营及覆盖范围。" } },
+{ tier: "Beta", tierColor: "var(--gold)", headline: {
+      en: "45–64.9 · Investigate the trade-offs",
+      th: "45–64.9 · ตรวจสอบข้อแลกเปลี่ยน",
+      zh: "45–64.9 · 调查取舍" }, body: {
+      en: "A middle-range composite can conceal very different strengths and gaps. Check contracts, service capacity, demand, and project costs. SCITI does not demonstrate a price discount or a 2–3 year investment window.",
+      th: "คะแนนรวมระดับกลางอาจซ่อนจุดแข็งและช่องว่างที่ต่างกัน ตรวจสอบสัญญา กำลังให้บริการ อุปสงค์ และต้นทุนโครงการ SCITI ไม่ได้พิสูจน์ส่วนลดราคาหรือจังหวะลงทุน 2–3 ปี",
+      zh: "中段综合分可能掩盖不同的优势与缺口。核实合同、服务能力、需求和成本；SCITI不证明价格折让或两至三年的投资窗口。" } },
+{ tier: "Gamma", tierColor: "var(--3)", headline: {
+      en: "Below 45 · Identify what needs verification",
+      th: "ต่ำกว่า 45 · ระบุสิ่งที่ต้องตรวจสอบ",
+      zh: "低于45 · 明确待核实事项" }, body: {
+      en: "A lower curated score is a starting point for investigation, not evidence that services do not exist. Distinguish a measured shortfall from missing evidence, and inspect each project on its own merits.",
+      th: "คะแนนคัดสรรที่ต่ำกว่าเป็นจุดเริ่มต้นของการตรวจสอบ ไม่ใช่หลักฐานว่าไม่มีบริการ แยกข้อบกพร่องที่วัดได้ออกจากข้อมูลที่ยังขาด และประเมินแต่ละโครงการตามข้อเท็จจริง",
+      zh: "较低的编辑评分是调查起点，不代表服务不存在。区分已测量的不足与证据缺失，并逐项评估项目。" } },
+{ tier: "LIV 25%", tierColor: "var(--teal)", headline: {
+      en: "Livability · A stated editorial priority",
+      th: "ความน่าอยู่ · ลำดับความสำคัญของดัชนี",
+      zh: "宜居性 · 明示的编辑权重" }, body: {
+      en: "The 25% weight expresses the index methodology. It is not an estimated effect on property prices. Test local rents, occupancy, affordability, and resident needs before making a demand claim.",
+      th: "น้ำหนัก 25% เป็นทางเลือกตามวิธีวิทยาของดัชนี ไม่ใช่ผลประมาณการต่อราคาอสังหาริมทรัพย์ ตรวจสอบค่าเช่า อัตราเข้าพัก ความสามารถในการจ่าย และความต้องการของคนในพื้นที่ก่อนสรุปอุปสงค์",
+      zh: "25%的权重体现指数方法，并非对房价影响的估计。判断需求前，应核实当地租金、入住率、可负担性和居民需求。" } },
+{ tier: "DIG 5%", tierColor: "var(--teal)", headline: {
+      en: "Digital · Verify the service behind the score",
+      th: "ดิจิทัล · ตรวจสอบบริการเบื้องหลังคะแนน",
+      zh: "数字化 · 核实评分背后的服务" }, body: {
+      en: "The 5% digital pillar adds one perspective. Check uptime, accessibility, usage, maintenance funding, and evidence dates. A high score alone does not establish future readiness or a commercial opportunity.",
+      th: "เสาดิจิทัลน้ำหนัก 5% เพิ่มมุมมองหนึ่ง ตรวจสอบเวลาพร้อมใช้งาน การเข้าถึง การใช้งานจริง งบบำรุงรักษา และวันที่ข้อมูล คะแนนสูงเพียงอย่างเดียวไม่ยืนยันความพร้อมในอนาคตหรือโอกาสเชิงพาณิชย์",
+      zh: "5%的数字支柱提供一个观察角度。核实可用率、无障碍、使用量、维护预算和证据日期；高分本身不证明未来准备度或商业机会。" } }
 ];
 
 interface Mechanism {
-  name: { en: string; th: string; zh: string };
-  desc: { en: string; th: string; zh: string };
+  name: {
+      en: string; th: string; zh: string };
+  desc: {
+      en: string; th: string; zh: string };
   tag: string;
 }
 
 const mechanisms: Mechanism[] = [
   {
-    name: { en: "BOI Privileges (Section 31)", th: "สิทธิประโยชน์ BOI (มาตรา 31)", zh: "BOI优惠 (第31条)" },
+    name: {
+      en: "BOI Privileges (Section 31)",
+      th: "สิทธิประโยชน์ BOI (มาตรา 31)",
+      zh: "BOI优惠 (第31条)" },
     desc: {
-      en: "8-year corporate income tax exemption for S-Curve industries including digital, robotics, aviation, biofuel, and medical hub sectors.",
-      th: "ยกเว้นภาษีเงินได้นิติบุคคล 8 ปี สำหรับอุตสาหกรรม S-Curve ได้แก่ ดิจิทัล หุ่นยนต์ การบิน เชื้อเพลิงชีวภาพ และศูนย์กลางการแพทย์",
-      zh: "S曲线产业（包括数字、机器人、航空、生物燃料和医疗中心）可享8年企业所得税免除。",
+      en: "Check the current BOI activity classification, qualifying expenditure, approval conditions, and tax treatment directly with BOI. A city score or location does not confer a tax holiday.",
+      th: "ตรวจหมวดกิจการ BOI รายจ่ายที่เข้าเกณฑ์ เงื่อนไขอนุมัติ และสิทธิภาษีปัจจุบันกับ BOI โดยตรง คะแนนเมืองหรือทำเลไม่ทำให้ได้รับยกเว้นภาษีอัตโนมัติ",
+      zh: "直接向BOI核实当前业务类别、合格支出、审批条件和税务待遇。城市评分或选址不会自动赋予免税期。"
     },
     tag: "Tax",
   },
   {
-    name: { en: "ADB ACGF", th: "ADB ACGF", zh: "亚行ACGF" },
+    name: {
+      en: "ADB ACGF",
+      th: "ADB ACGF",
+      zh: "亚行ACGF" },
     desc: {
-      en: "ASEAN Catalytic Green Finance Facility. De-risks green infrastructure investments via co-lending and credit enhancement for smart city projects.",
-      th: "ASEAN Catalytic Green Finance Facility ลดความเสี่ยงการลงทุนโครงสร้างพื้นฐานสีเขียวผ่านการร่วมให้กู้และการเพิ่มเครดิตสำหรับโครงการเมืองอัจฉริยะ",
-      zh: "东盟催化绿色金融机制。通过联合贷款和信用增强为智慧城市项目的绿色基础设施投资降低风险。",
+      en: "Investigate ACGF as a potential green infrastructure financing route. Confirm eligible borrowers, current facilities, project preparation requirements, and terms with ADB.",
+      th: "ศึกษาช่องทาง ACGF สำหรับโครงสร้างพื้นฐานสีเขียว ยืนยันผู้กู้ที่เข้าเกณฑ์ วงเงินปัจจุบัน การเตรียมโครงการ และเงื่อนไขกับ ADB",
+      zh: "可调查ACGF绿色基础设施融资渠道，向亚行核实借款主体资格、现行安排、项目准备要求和条款。"
     },
     tag: "Green",
   },
   {
-    name: { en: "Thailand Green Bond Framework", th: "กรอบพันธบัตรเขียวไทย", zh: "泰国绿色债券框架" },
+    name: {
+      en: "Thailand Green Bond Framework",
+      th: "กรอบพันธบัตรเขียวไทย",
+      zh: "泰国绿色债券框架" },
     desc: {
-      en: "SEC-regulated framework allowing municipal and corporate green bond issuance for sustainable urban development.",
-      th: "กรอบที่ กลต. กำกับดูแล อนุญาตให้เทศบาลและบริษัทออกพันธบัตรเขียวเพื่อการพัฒนาเมืองอย่างยั่งยืน",
-      zh: "证监会监管框架，允许市政和企业发行绿色债券用于可持续城市发展。",
+      en: "Evaluate green bond financing against issuer authority, disclosure, use-of-proceeds rules, and current regulator requirements. Do not assume that a municipality is authorised to issue a bond.",
+      th: "ประเมินพันธบัตรเขียวจากอำนาจผู้ออก การเปิดเผยข้อมูล การใช้เงิน และกฎปัจจุบัน อย่าสันนิษฐานว่าเทศบาลมีอำนาจออกพันธบัตร",
+      zh: "依据发行权限、披露、资金用途和现行监管要求评估绿债，不应假定市政府有发行权限。"
     },
     tag: "Bond",
   },
   {
-    name: { en: "PPP Frameworks (KKTS Model)", th: "กรอบ PPP (โมเดล KKTS)", zh: "PPP框架 (KKTS模式)" },
+    name: {
+      en: "PPP Frameworks (KKTS Model)",
+      th: "กรอบ PPP (โมเดล KKTS)",
+      zh: "PPP框架 (KKTS模式)" },
     desc: {
-      en: "Public-Private Partnership templates pioneered by Khon Kaen. Local consortium co-invests in transit, digital health, and urban services. Replicable to other secondary cities.",
-      th: "รูปแบบ PPP ที่บุกเบิกโดยขอนแก่น กลุ่มเอกชนในพื้นที่ร่วมลงทุนในระบบขนส่ง สุขภาพดิจิทัล และบริการเมือง สามารถจำลองไปยังเมืองรองอื่นได้",
-      zh: "由孔敬开创的公私合作模板。地方联盟共同投资交通、数字健康和城市服务。可复制到其他二线城市。",
+      en: "Public-Private Partnership templates pioneered by Khon Kaen. Local consortium co-invests in transit, digital health, and urban services. Replicable to other secondary cities. Availability and eligibility require project-specific confirmation with the responsible institution; this is not an offer of funding or an entitlement.",
+      th: "รูปแบบ PPP ที่บุกเบิกโดยขอนแก่น กลุ่มเอกชนในพื้นที่ร่วมลงทุนในระบบขนส่ง สุขภาพดิจิทัล และบริการเมือง สามารถจำลองไปยังเมืองรองอื่นได้ ต้องยืนยันการเปิดรับและคุณสมบัติรายโครงการกับหน่วยงานที่รับผิดชอบ ข้อมูลนี้ไม่ใช่ข้อเสนอเงินทุนหรือการรับรองสิทธิ",
+      zh: "由孔敬开创的公私合作模板。地方联盟共同投资交通、数字健康和城市服务。可复制到其他二线城市。 是否开放及是否符合资格须向主管机构逐项目核实；此处不构成融资要约或权益保证。",
     },
     tag: "PPP",
   },
   {
-    name: { en: "ASEAN Smart City Financing Toolkit", th: "ชุดเครื่องมือการเงินเมืองอัจฉริยะ ASEAN", zh: "东盟智慧城市融资工具包" },
+    name: {
+      en: "ASEAN Smart City Financing Toolkit",
+      th: "ชุดเครื่องมือการเงินเมืองอัจฉริยะ ASEAN",
+      zh: "东盟智慧城市融资工具包" },
     desc: {
-      en: "Regional framework providing blended finance templates, risk assessment tools, and cross-border investment facilitation for ASCN member cities.",
-      th: "กรอบระดับภูมิภาคที่ให้แม่แบบการเงินผสม เครื่องมือประเมินความเสี่ยง และการอำนวยความสะดวกการลงทุนข้ามพรมแดนสำหรับเมืองสมาชิก ASCN",
-      zh: "区域框架，为ASCN成员城市提供混合融资模板、风险评估工具和跨境投资便利化。",
+      en: "Regional framework providing blended finance templates, risk assessment tools, and cross-border investment facilitation for ASCN member cities. Availability and eligibility require project-specific confirmation with the responsible institution; this is not an offer of funding or an entitlement.",
+      th: "กรอบระดับภูมิภาคที่ให้แม่แบบการเงินผสม เครื่องมือประเมินความเสี่ยง และการอำนวยความสะดวกการลงทุนข้ามพรมแดนสำหรับเมืองสมาชิก ASCN ต้องยืนยันการเปิดรับและคุณสมบัติรายโครงการกับหน่วยงานที่รับผิดชอบ ข้อมูลนี้ไม่ใช่ข้อเสนอเงินทุนหรือการรับรองสิทธิ",
+      zh: "区域框架，为ASCN成员城市提供混合融资模板、风险评估工具和跨境投资便利化。 是否开放及是否符合资格须向主管机构逐项目核实；此处不构成融资要约或权益保证。",
     },
     tag: "ASEAN",
   },
   {
-    name: { en: "UNCDF Smart Green ASEAN Cities", th: "UNCDF Smart Green ASEAN Cities", zh: "UNCDF智慧绿色东盟城市" },
+    name: {
+      en: "UNCDF Smart Green ASEAN Cities",
+      th: "UNCDF Smart Green ASEAN Cities",
+      zh: "UNCDF智慧绿色东盟城市" },
     desc: {
-      en: "UN Capital Development Fund program supporting municipal finance innovation and climate-resilient urban infrastructure in ASEAN cities.",
-      th: "โครงการกองทุนพัฒนาเมืองหลวงแห่งสหประชาชาติ สนับสนุนนวัตกรรมการเงินเทศบาลและโครงสร้างพื้นฐานเมืองที่ทนต่อสภาพภูมิอากาศในเมือง ASEAN",
-      zh: "联合国资本发展基金项目，支持东盟城市的市政金融创新和气候适应型城市基础设施。",
+      en: "UN Capital Development Fund program supporting municipal finance innovation and climate-resilient urban infrastructure in ASEAN cities. Availability and eligibility require project-specific confirmation with the responsible institution; this is not an offer of funding or an entitlement.",
+      th: "โครงการกองทุนพัฒนาเมืองหลวงแห่งสหประชาชาติ สนับสนุนนวัตกรรมการเงินเทศบาลและโครงสร้างพื้นฐานเมืองที่ทนต่อสภาพภูมิอากาศในเมือง ASEAN ต้องยืนยันการเปิดรับและคุณสมบัติรายโครงการกับหน่วยงานที่รับผิดชอบ ข้อมูลนี้ไม่ใช่ข้อเสนอเงินทุนหรือการรับรองสิทธิ",
+      zh: "联合国资本发展基金项目，支持东盟城市的市政金融创新和气候适应型城市基础设施。 是否开放及是否符合资格须向主管机构逐项目核实；此处不构成融资要约或权益保证。",
     },
     tag: "UN",
   },
   // ─── World Bank CCDR 2025 — three additional mechanisms from the climate finance analysis ───
   {
-    name: { en: "Carbon Pricing Revenue Mechanism", th: "กลไกรายได้จากราคาคาร์บอน", zh: "碳定价收入机制" },
+    name: {
+      en: "Carbon Pricing Revenue Mechanism",
+      th: "กลไกรายได้จากราคาคาร์บอน",
+      zh: "碳定价收入机制" },
     desc: {
-      en: "World Bank CCDR 2025: carbon pricing could generate revenue equivalent to ~1% of GDP annually. Thailand's voluntary carbon market and emerging carbon tax framework create early-mover positioning for climate-smart city bonds and green project finance.",
-      th: "ธนาคารโลก CCDR 2025: การกำหนดราคาคาร์บอนสามารถสร้างรายได้เทียบเท่า ~1% ของ GDP ต่อปี ตลาดคาร์บอนโดยสมัครใจของไทยและกรอบภาษีคาร์บอนที่กำลังเกิดขึ้นสร้างตำแหน่งผู้เข้าก่อนสำหรับพันธบัตรเมืองอัจฉริยะที่เป็นมิตรกับสภาพภูมิอากาศ",
-      zh: "世银CCDR 2025：碳定价每年可产生约1% GDP的收入。泰国自愿碳市场和新兴碳税框架为气候智慧城市债券和绿色项目融资创造了先发优势。",
+      en: "World Bank CCDR 2025: carbon pricing could generate revenue equivalent to ~1% of GDP annually. Thailand's voluntary carbon market and emerging carbon tax framework create early-mover positioning for climate-smart city bonds and green project finance. Availability and eligibility require project-specific confirmation with the responsible institution; this is not an offer of funding or an entitlement.",
+      th: "ธนาคารโลก CCDR 2025: การกำหนดราคาคาร์บอนสามารถสร้างรายได้เทียบเท่า ~1% ของ GDP ต่อปี ตลาดคาร์บอนโดยสมัครใจของไทยและกรอบภาษีคาร์บอนที่กำลังเกิดขึ้นสร้างตำแหน่งผู้เข้าก่อนสำหรับพันธบัตรเมืองอัจฉริยะที่เป็นมิตรกับสภาพภูมิอากาศ ต้องยืนยันการเปิดรับและคุณสมบัติรายโครงการกับหน่วยงานที่รับผิดชอบ ข้อมูลนี้ไม่ใช่ข้อเสนอเงินทุนหรือการรับรองสิทธิ",
+      zh: "世银CCDR 2025：碳定价每年可产生约1% GDP的收入。泰国自愿碳市场和新兴碳税框架为气候智慧城市债券和绿色项目融资创造了先发优势。 是否开放及是否符合资格须向主管机构逐项目核实；此处不构成融资要约或权益保证。",
     },
     tag: "Carbon",
   },
   {
-    name: { en: "Concessional Co-Finance (Climate Resilience)", th: "การร่วมจัดหาเงินทุนแบบผ่อนปรน (ความยืดหยุ่นด้านสภาพภูมิอากาศ)", zh: "优惠联合融资（气候韧性）" },
+    name: {
+      en: "Concessional Co-Finance (Climate Resilience)",
+      th: "การร่วมจัดหาเงินทุนแบบผ่อนปรน (ความยืดหยุ่นด้านสภาพภูมิอากาศ)",
+      zh: "优惠联合融资（气候韧性）" },
     desc: {
-      en: "World Bank CCDR 2025 recommends concessional loans, results-based subsidies, and co-financing tied explicitly to climate resilience outcomes — particularly for nature-based solutions (coastal mangroves, watershed management) where private returns are below social returns. ADB, World Bank, and bilateral donors are actively deploying in Thailand.",
-      th: "ธนาคารโลก CCDR 2025 แนะนำเงินกู้ผ่อนปรน เงินอุดหนุนตามผลลัพธ์ และการร่วมจัดหาเงินทุนที่ผูกโยงกับผลลัพธ์ความยืดหยุ่นด้านสภาพภูมิอากาศโดยเฉพาะ — โดยเฉพาะสำหรับโซลูชันที่อิงธรรมชาติที่ผลตอบแทนส่วนตัวต่ำกว่าผลตอบแทนทางสังคม",
-      zh: "世银CCDR 2025建议优惠贷款、基于结果的补贴和与气候韧性成效明确挂钩的联合融资——特别是对于自然解决方案（滨海红树林、流域管理），这些领域私人回报低于社会回报。",
+      en: "World Bank CCDR 2025 recommends concessional loans, results-based subsidies, and co-financing tied explicitly to climate resilience outcomes — particularly for nature-based solutions (coastal mangroves, watershed management) where private returns are below social returns. ADB, World Bank, and bilateral donors are actively deploying in Thailand. Availability and eligibility require project-specific confirmation with the responsible institution; this is not an offer of funding or an entitlement.",
+      th: "ธนาคารโลก CCDR 2025 แนะนำเงินกู้ผ่อนปรน เงินอุดหนุนตามผลลัพธ์ และการร่วมจัดหาเงินทุนที่ผูกโยงกับผลลัพธ์ความยืดหยุ่นด้านสภาพภูมิอากาศโดยเฉพาะ — โดยเฉพาะสำหรับโซลูชันที่อิงธรรมชาติที่ผลตอบแทนส่วนตัวต่ำกว่าผลตอบแทนทางสังคม ต้องยืนยันการเปิดรับและคุณสมบัติรายโครงการกับหน่วยงานที่รับผิดชอบ ข้อมูลนี้ไม่ใช่ข้อเสนอเงินทุนหรือการรับรองสิทธิ",
+      zh: "世银CCDR 2025建议优惠贷款、基于结果的补贴和与气候韧性成效明确挂钩的联合融资——特别是对于自然解决方案（滨海红树林、流域管理），这些领域私人回报低于社会回报。 是否开放及是否符合资格须向主管机构逐项目核实；此处不构成融资要约或权益保证。",
     },
     tag: "Blended",
   },
   {
-    name: { en: "Catastrophe Bonds + Climate Insurance", th: "พันธบัตรหายนะ + ประกันสภาพภูมิอากาศ", zh: "巨灾债券 + 气候保险" },
+    name: {
+      en: "Catastrophe Bonds + Climate Insurance",
+      th: "พันธบัตรหายนะ + ประกันสภาพภูมิอากาศ",
+      zh: "巨灾债券 + 气候保险" },
     desc: {
-      en: "World Bank CCDR 2025 explicitly recommends catastrophe bonds, biodiversity bonds, and climate insurance as financial instruments that need to be scaled in Thailand. The 2011 floods (USD 46.5B damage, 12.6% of GDP) with a 50% chance of recurrence by 2050 make parametric flood insurance and cat bonds a structurally necessary risk-transfer instrument — not a niche product.",
-      th: "ธนาคารโลก CCDR 2025 แนะนำพันธบัตรหายนะ พันธบัตรความหลากหลายทางชีวภาพ และประกันสภาพภูมิอากาศเป็นเครื่องมือทางการเงินที่ต้องขยายใหญ่ขึ้นในไทย น้ำท่วมปี 2554 (เสียหาย 4.65 หมื่นล้าน USD, 12.6% ของ GDP) ที่มีโอกาสเกิดซ้ำ 50% ภายในปี 2593 ทำให้ประกันน้ำท่วมแบบพารามิเตอร์และ cat bonds เป็นเครื่องมือโอนความเสี่ยงที่จำเป็นเชิงโครงสร้าง",
-      zh: "世银CCDR 2025明确建议将巨灾债券、生物多样性债券和气候保险作为需要在泰国扩大规模的金融工具。2011年洪灾（损失465亿美元，占GDP12.6%）到2050年有50%的复发概率，使得参数化洪水保险和巨灾债券成为结构性必要的风险转移工具——而非利基产品。",
+      en: "World Bank CCDR 2025 explicitly recommends catastrophe bonds, biodiversity bonds, and climate insurance as financial instruments that need to be scaled in Thailand. The 2011 floods (USD 46.5B damage, 12.6% of GDP) with a 50% chance of recurrence by 2050 make parametric flood insurance and cat bonds a structurally necessary risk-transfer instrument — not a niche product. Availability and eligibility require project-specific confirmation with the responsible institution; this is not an offer of funding or an entitlement.",
+      th: "ธนาคารโลก CCDR 2025 แนะนำพันธบัตรหายนะ พันธบัตรความหลากหลายทางชีวภาพ และประกันสภาพภูมิอากาศเป็นเครื่องมือทางการเงินที่ต้องขยายใหญ่ขึ้นในไทย น้ำท่วมปี 2554 (เสียหาย 4.65 หมื่นล้าน USD, 12.6% ของ GDP) ที่มีโอกาสเกิดซ้ำ 50% ภายในปี 2593 ทำให้ประกันน้ำท่วมแบบพารามิเตอร์และ cat bonds เป็นเครื่องมือโอนความเสี่ยงที่จำเป็นเชิงโครงสร้าง ต้องยืนยันการเปิดรับและคุณสมบัติรายโครงการกับหน่วยงานที่รับผิดชอบ ข้อมูลนี้ไม่ใช่ข้อเสนอเงินทุนหรือการรับรองสิทธิ",
+      zh: "世银CCDR 2025明确建议将巨灾债券、生物多样性债券和气候保险作为需要在泰国扩大规模的金融工具。2011年洪灾（损失465亿美元，占GDP12.6%）到2050年有50%的复发概率，使得参数化洪水保险和巨灾债券成为结构性必要的风险转移工具——而非利基产品。 是否开放及是否符合资格须向主管机构逐项目核实；此处不构成融资要约或权益保证。",
     },
     tag: "Risk",
   },
@@ -234,8 +284,10 @@ const mechanisms: Mechanism[] = [
 
 interface Risk {
   icon: string;
-  title: { en: string; th: string; zh: string };
-  body: { en: string; th: string; zh: string };
+  title: {
+      en: string; th: string; zh: string };
+  body: {
+      en: string; th: string; zh: string };
   severity: "high" | "medium" | "low";
 }
 
@@ -248,10 +300,9 @@ const risks: Risk[] = [
       zh: "中央集权官僚体制",
     },
     body: {
-      en: "Local governments cannot issue bonds independently. Budget approval flows through Bangkok, creating 12-18 month delays. Municipal autonomy remains aspirational.",
-      th: "องค์กรปกครองส่วนท้องถิ่นไม่สามารถออกพันธบัตรได้อย่างอิสระ การอนุมัติงบประมาณผ่านกรุงเทพฯ ทำให้เกิดความล่าช้า 12-18 เดือน ความเป็นอิสระของเทศบาลยังเป็นเพียงความใฝ่ฝัน",
-      zh: "地方政府无法独立发行债券。预算审批需经曼谷，造成12-18个月延误。市政自治仍是愿景。",
-    },
+      en: "Identify the authority that can approve, procure, borrow, and operate the project. Obtain the actual approval sequence and budget commitments; SCITI has not established a universal approval delay.",
+      th: "ระบุหน่วยงานที่มีอำนาจอนุมัติ จัดซื้อ กู้ยืม และดำเนินโครงการ ขอขั้นตอนอนุมัติและงบผูกพันจริง SCITI ไม่ได้ยืนยันระยะเวลาล่าช้าที่ใช้ได้กับทุกโครงการ",
+      zh: "明确项目审批、采购、借款和运营主体，取得实际审批流程和预算承诺；SCITI未建立通用的审批延误估计。" },
     severity: "high",
   },
   {
@@ -262,10 +313,9 @@ const risks: Risk[] = [
       zh: "数字鸿沟",
     },
     body: {
-      en: "Only 21% household computer ownership outside Bangkok (NSO 2023). Smart city platforms assume connectivity that doesn't exist in target populations. Mobile-first is not a choice — it's a constraint.",
-      th: "ครัวเรือนที่มีคอมพิวเตอร์นอกกรุงเทพฯ เพียง 21% (สสช. 2566) แพลตฟอร์มเมืองอัจฉริยะสมมติว่ามีการเชื่อมต่อที่ไม่มีอยู่จริงในกลุ่มเป้าหมาย Mobile-first ไม่ใช่ทางเลือก แต่เป็นข้อจำกัด",
-      zh: "曼谷以外家庭电脑拥有率仅21%（NSO 2023）。智慧城市平台假设了目标人群中不存在的连接性。移动优先不是选择——而是约束条件。",
-    },
+      en: "Test the service with its intended users. Computer ownership alone cannot establish internet access or exclusion. Check device access, affordability, accessibility, and assisted service options locally.",
+      th: "ทดสอบบริการกับผู้ใช้เป้าหมาย การมีคอมพิวเตอร์เพียงอย่างเดียวไม่ยืนยันการเข้าถึงอินเทอร์เน็ต ตรวจสอบอุปกรณ์ ค่าใช้จ่าย การเข้าถึง และช่องทางช่วยเหลือในพื้นที่",
+      zh: "与目标用户测试服务。电脑拥有率不能单独证明联网或排斥程度；核实设备、费用、无障碍及辅助服务。" },
     severity: "high",
   },
   {
@@ -276,10 +326,9 @@ const risks: Risk[] = [
       zh: "数据质量与连续性",
     },
     body: {
-      en: "Many City Data Platforms (CDPs) go offline within 18 months of launch. Sensor maintenance budgets are rarely provisioned beyond the initial grant cycle. What you see at a demo may not exist 2 years later.",
-      th: "City Data Platform (CDP) จำนวนมากหยุดทำงานภายใน 18 เดือนหลังเปิดตัว งบประมาณบำรุงรักษาเซ็นเซอร์แทบไม่ได้รับการจัดสรรหลังรอบทุนเริ่มต้น สิ่งที่เห็นในการสาธิตอาจไม่มีอยู่ในอีก 2 ปี",
-      zh: "许多城市数据平台（CDP）在启动18个月内下线。传感器维护预算很少在初始资助周期之后得到拨备。演示中看到的可能两年后就不存在了。",
-    },
+      en: "Inspect historical uptime, observation dates, maintenance contracts, and the funded operating budget. A demonstration does not establish continuity; SCITI has not quantified a platform failure rate.",
+      th: "ตรวจสอบประวัติเวลาพร้อมใช้งาน วันที่สังเกตการณ์ สัญญาบำรุงรักษา และงบดำเนินงานที่จัดสรรแล้ว การสาธิตไม่ยืนยันความต่อเนื่อง SCITI ยังไม่ได้วัดอัตราล้มเหลวของแพลตฟอร์ม",
+      zh: "核实历史可用率、观测日期、维护合同及已落实的运营预算。演示不证明持续运营；SCITI尚未量化平台故障率。" },
     severity: "high",
   },
   {
@@ -290,10 +339,9 @@ const risks: Risk[] = [
       zh: "政治过渡",
     },
     body: {
-      en: "Smart city projects span 5-10 year horizons. Thai political cycles are shorter. New administrations may deprioritize or rebrand predecessors' initiatives. Seek projects with private-sector co-ownership.",
-      th: "โครงการเมืองอัจฉริยะมีระยะเวลา 5-10 ปี วัฏจักรการเมืองไทยสั้นกว่า รัฐบาลใหม่อาจลดความสำคัญหรือเปลี่ยนชื่อโครงการของรัฐบาลก่อน ควรหาโครงการที่มีภาคเอกชนร่วมเป็นเจ้าของ",
-      zh: "智慧城市项目跨度5-10年。泰国政治周期更短。新政府可能降低优先级或重新包装前任的项目。应寻求有私营部门共同所有权的项目。",
-    },
+      en: "Compare the project schedule with procurement mandates and budget cycles. Document which contracts and operating responsibilities continue across changes in leadership.",
+      th: "เทียบกำหนดโครงการกับอำนาจจัดซื้อและรอบงบประมาณ ระบุสัญญาและความรับผิดชอบดำเนินงานที่จะต่อเนื่องเมื่อเปลี่ยนผู้บริหาร",
+      zh: "将项目进度与采购权限及预算周期对照，记录领导更替后继续有效的合同和运营责任。" },
     severity: "medium",
   },
   {
@@ -304,10 +352,9 @@ const risks: Risk[] = [
       zh: "外资持股限制",
     },
     body: {
-      en: "Foreign investors are limited to 49% ownership in most sectors under the Foreign Business Act. Land ownership is prohibited for non-Thai nationals, though BOI-promoted companies receive exemptions on certain restrictions.",
-      th: "นักลงทุนต่างชาติถูกจำกัดการถือหุ้นไม่เกิน 49% ในส่วนใหญ่ภายใต้ พ.ร.บ. การประกอบธุรกิจของคนต่างด้าว การถือครองที่ดินไม่อนุญาตสำหรับชาวต่างชาติ แม้บริษัทที่ได้รับส่งเสริมจาก BOI จะได้รับยกเว้นข้อจำกัดบางประการ",
-      zh: "根据《外商经营法》，外国投资者在大多数行业的持股比例限制为49%。非泰国国民禁止拥有土地，但BOI促进的企业可豁免某些限制。",
-    },
+      en: "Confirm the specific activity, entity structure, land rights, licences, and any promotion conditions with the responsible authority. This index does not determine legal eligibility or a universal ownership percentage.",
+      th: "ตรวจสอบกิจกรรม โครงสร้างนิติบุคคล สิทธิในที่ดิน ใบอนุญาต และเงื่อนไขส่งเสริมกับหน่วยงานที่รับผิดชอบ ดัชนีนี้ไม่ได้วินิจฉัยสิทธิทางกฎหมายหรือสัดส่วนถือหุ้นที่ใช้ได้ทุกกรณี",
+      zh: "向主管机关核实具体业务、实体结构、土地权利、许可和促进条件。本指数不判定法律资格或通用持股比例。" },
     severity: "medium",
   },
   {
@@ -318,91 +365,189 @@ const risks: Risk[] = [
       zh: "汇率风险 (泰铢)",
     },
     body: {
-      en: "THB has shown 8-12% volatility against USD over 5-year periods. Revenue in baht, returns expected in hard currency — the mismatch can erode margins on infrastructure-scale investments.",
-      th: "เงินบาทมีความผันผวน 8-12% เทียบกับดอลลาร์สหรัฐในช่วง 5 ปี รายได้เป็นบาท ผลตอบแทนคาดหวังเป็นสกุลเงินแข็ง ความไม่สอดคล้องกันนี้สามารถกัดกร่อนมาร์จินของการลงทุนระดับโครงสร้างพื้นฐาน",
-      zh: "泰铢兑美元在5年期间波动率为8-12%。收入以泰铢计，回报以硬通货预期——这种不匹配可能侵蚀基础设施规模投资的利润率。",
-    },
+      en: "Model revenue, debt service, and investor distributions by currency. Stress-test exchange-rate changes over the project horizon; no historical volatility estimate has been validated on this page.",
+      th: "จำลองรายได้ ภาระหนี้ และเงินจ่ายผู้ลงทุนแยกตามสกุลเงิน ทดสอบผลจากอัตราแลกเปลี่ยนตลอดอายุโครงการ หน้านี้ยังไม่ได้ตรวจสอบค่าความผันผวนย้อนหลัง",
+      zh: "按币种建模收入、偿债及投资者分配，并在项目期限内进行汇率压力测试；本页尚未核实历史波动率估计。" },
     severity: "low",
   },
 ];
 
 interface ChecklistItem {
   num: string;
-  title: { en: string; th: string; zh: string };
-  desc: { en: string; th: string; zh: string };
+  title: {
+      en: string; th: string; zh: string };
+  desc: {
+      en: string; th: string; zh: string };
 }
 
 const checklist: ChecklistItem[] = [
   {
     num: "01",
-    title: { en: "Verify SCITI tier independently", th: "ตรวจสอบระดับ SCITI อย่างอิสระ", zh: "独立验证SCITI层级" },
-    desc: { en: "Don't rely on depa certification alone. Check the SCITI composite score, pillar breakdown, and data confidence rating.", th: "อย่าพึ่งพาเฉพาะการรับรอง depa ตรวจสอบคะแนนรวม SCITI การแยกตามเสาหลัก และระดับความเชื่อมั่นของข้อมูล", zh: "不要仅依赖depa认证。检查SCITI综合评分、支柱分解和数据置信度评级。" },
+    title: {
+      en: "Verify SCITI tier independently",
+      th: "ตรวจสอบระดับ SCITI อย่างอิสระ",
+      zh: "独立验证SCITI层级" },
+    desc: {
+      en: "Don't rely on depa certification alone. Check the SCITI composite score, pillar breakdown, and data confidence rating.",
+      th: "อย่าพึ่งพาเฉพาะการรับรอง depa ตรวจสอบคะแนนรวม SCITI การแยกตามเสาหลัก และระดับความเชื่อมั่นของข้อมูล",
+      zh: "不要仅依赖depa认证。检查SCITI综合评分、支柱分解和数据置信度评级。" },
   },
   {
     num: "02",
-    title: { en: "Test the City Data Platform live", th: "ทดสอบ City Data Platform แบบสด", zh: "实时测试城市数据平台" },
-    desc: { en: "Access the CDP. If the dashboard is offline or data is stale (>30 days), the operational maturity is overstated.", th: "เข้าถึง CDP ถ้าแดชบอร์ดออฟไลน์หรือข้อมูลเก่า (>30 วัน) ความสมบูรณ์ในการดำเนินงานถูกพูดเกินจริง", zh: "访问CDP。如果仪表板离线或数据过时（>30天），则运营成熟度被夸大。" },
+    title: {
+      en: "Test the City Data Platform live",
+      th: "ทดสอบ City Data Platform แบบสด",
+      zh: "实时测试城市数据平台" },
+    desc: {
+      en: "Access the CDP. If the dashboard is offline or data is stale (>30 days), the operational maturity is overstated.",
+      th: "เข้าถึง CDP ถ้าแดชบอร์ดออฟไลน์หรือข้อมูลเก่า (>30 วัน) ความสมบูรณ์ในการดำเนินงานถูกพูดเกินจริง",
+      zh: "访问CDP。如果仪表板离线或数据过时（>30天），则运营成熟度被夸大。" },
   },
   {
     num: "03",
-    title: { en: "Map the local governance structure", th: "วิเคราะห์โครงสร้างการปกครองท้องถิ่น", zh: "梳理地方治理架构" },
-    desc: { en: "Who decides? Municipality, PAO, special zone authority, or private consortium? Each has different procurement timelines and risk profiles.", th: "ใครตัดสินใจ? เทศบาล อบจ. เขตพิเศษ หรือกลุ่มเอกชน? แต่ละแห่งมีระยะเวลาจัดซื้อจัดจ้างและโปรไฟล์ความเสี่ยงต่างกัน", zh: "谁做决策？市政府、省级行政组织、特区管理局还是民间联盟？各有不同的采购时间线和风险特征。" },
+    title: {
+      en: "Map the local governance structure",
+      th: "วิเคราะห์โครงสร้างการปกครองท้องถิ่น",
+      zh: "梳理地方治理架构" },
+    desc: {
+      en: "Who decides? Municipality, PAO, special zone authority, or private consortium? Each has different procurement timelines and risk profiles.",
+      th: "ใครตัดสินใจ? เทศบาล อบจ. เขตพิเศษ หรือกลุ่มเอกชน? แต่ละแห่งมีระยะเวลาจัดซื้อจัดจ้างและโปรไฟล์ความเสี่ยงต่างกัน",
+      zh: "谁做决策？市政府、省级行政组织、特区管理局还是民间联盟？各有不同的采购时间线和风险特征。" },
   },
   {
     num: "04",
-    title: { en: "Check BOI eligibility before structuring", th: "ตรวจสอบสิทธิ์ BOI ก่อนจัดโครงสร้าง", zh: "结构设计前检查BOI资格" },
-    desc: { en: "BOI incentives vary dramatically by sector, location (EEC vs. non-EEC), and activity type. Structure the entity before committing capital.", th: "สิทธิประโยชน์ BOI แตกต่างมากตามภาค สถานที่ (EEC vs. ไม่ใช่ EEC) และประเภทกิจกรรม จัดโครงสร้างนิติบุคคลก่อนลงเงิน", zh: "BOI优惠因行业、地点（EEC与非EEC）和活动类型差异巨大。在投入资本前确定实体结构。" },
+    title: {
+      en: "Check BOI eligibility before structuring",
+      th: "ตรวจสอบสิทธิ์ BOI ก่อนจัดโครงสร้าง",
+      zh: "结构设计前检查BOI资格" },
+    desc: {
+      en: "BOI incentives vary dramatically by sector, location (EEC vs. non-EEC), and activity type. Structure the entity before committing capital.",
+      th: "สิทธิประโยชน์ BOI แตกต่างมากตามภาค สถานที่ (EEC vs. ไม่ใช่ EEC) และประเภทกิจกรรม จัดโครงสร้างนิติบุคคลก่อนลงเงิน",
+      zh: "BOI优惠因行业、地点（EEC与非EEC）和活动类型差异巨大。在投入资本前确定实体结构。" },
   },
   {
     num: "05",
-    title: { en: "Audit the maintenance budget", th: "ตรวจสอบงบประมาณบำรุงรักษา", zh: "审计维护预算" },
-    desc: { en: "Smart city projects fail post-launch, not during construction. Is there a 5-year OpEx budget for sensor maintenance, software updates, and staff training?", th: "โครงการเมืองอัจฉริยะล้มเหลวหลังเปิดตัว ไม่ใช่ระหว่างก่อสร้าง มีงบ OpEx 5 ปีสำหรับบำรุงรักษาเซ็นเซอร์ อัปเดตซอฟต์แวร์ และฝึกอบรมบุคลากรหรือไม่?", zh: "智慧城市项目在启动后失败，而非建设期间。是否有5年运维预算用于传感器维护、软件更新和人员培训？" },
+    title: {
+      en: "Audit the maintenance budget",
+      th: "ตรวจสอบงบประมาณบำรุงรักษา",
+      zh: "审计维护预算" },
+    desc: {
+      en: "Smart city projects fail post-launch, not during construction. Is there a 5-year OpEx budget for sensor maintenance, software updates, and staff training?",
+      th: "โครงการเมืองอัจฉริยะล้มเหลวหลังเปิดตัว ไม่ใช่ระหว่างก่อสร้าง มีงบ OpEx 5 ปีสำหรับบำรุงรักษาเซ็นเซอร์ อัปเดตซอฟต์แวร์ และฝึกอบรมบุคลากรหรือไม่?",
+      zh: "智慧城市项目在启动后失败，而非建设期间。是否有5年运维预算用于传感器维护、软件更新和人员培训？" },
   },
   {
     num: "06",
-    title: { en: "Assess community buy-in on the ground", th: "ประเมินการยอมรับของชุมชนในพื้นที่", zh: "实地评估社区接受度" },
-    desc: { en: "Visit. Talk to residents, not officials. If citizens don't know the smart city program exists, adoption risk is severe.", th: "ไปเยี่ยมชม พูดคุยกับชาวบ้าน ไม่ใช่เจ้าหน้าที่ ถ้าประชาชนไม่รู้ว่ามีโครงการเมืองอัจฉริยะ ความเสี่ยงด้านการยอมรับรุนแรง", zh: "实地走访。与居民交谈，而非官员。如果市民不知道智慧城市项目的存在，采用风险极高。" },
+    title: {
+      en: "Assess community buy-in on the ground",
+      th: "ประเมินการยอมรับของชุมชนในพื้นที่",
+      zh: "实地评估社区接受度" },
+    desc: {
+      en: "Visit. Talk to residents, not officials. If citizens don't know the smart city program exists, adoption risk is severe.",
+      th: "ไปเยี่ยมชม พูดคุยกับชาวบ้าน ไม่ใช่เจ้าหน้าที่ ถ้าประชาชนไม่รู้ว่ามีโครงการเมืองอัจฉริยะ ความเสี่ยงด้านการยอมรับรุนแรง",
+      zh: "实地走访。与居民交谈，而非官员。如果市民不知道智慧城市项目的存在，采用风险极高。" },
   },
   {
     num: "07",
-    title: { en: "Model currency exposure explicitly", th: "จำลองความเสี่ยงค่าเงินอย่างชัดเจน", zh: "明确建模汇率敞口" },
-    desc: { en: "Revenue in THB, returns expected in USD/EUR/CNY. Model the FX impact over 5-10 year horizons. Consider natural hedges via export revenue.", th: "รายได้เป็นบาท ผลตอบแทนคาดหวังเป็น USD/EUR/CNY จำลองผลกระทบ FX ในระยะ 5-10 ปี พิจารณาการป้องกันความเสี่ยงธรรมชาติผ่านรายได้ส่งออก", zh: "收入以泰铢计，回报以USD/EUR/CNY预期。对5-10年期进行汇率影响建模。考虑通过出口收入进行自然对冲。" },
+    title: {
+      en: "Model currency exposure explicitly",
+      th: "จำลองความเสี่ยงค่าเงินอย่างชัดเจน",
+      zh: "明确建模汇率敞口" },
+    desc: {
+      en: "Revenue in THB, returns expected in USD/EUR/CNY. Model the FX impact over 5-10 year horizons. Consider natural hedges via export revenue.",
+      th: "รายได้เป็นบาท ผลตอบแทนคาดหวังเป็น USD/EUR/CNY จำลองผลกระทบ FX ในระยะ 5-10 ปี พิจารณาการป้องกันความเสี่ยงธรรมชาติผ่านรายได้ส่งออก",
+      zh: "收入以泰铢计，回报以USD/EUR/CNY预期。对5-10年期进行汇率影响建模。考虑通过出口收入进行自然对冲。" },
   },
   {
     num: "08",
-    title: { en: "Evaluate the political cycle alignment", th: "ประเมินความสอดคล้องกับวัฏจักรการเมือง", zh: "评估政治周期对齐度" },
-    desc: { en: "When is the next election? Who championed this project? Is there cross-party support or single-patron dependency?", th: "การเลือกตั้งครั้งต่อไปเมื่อไร? ใครผลักดันโครงการนี้? มีการสนับสนุนข้ามพรรคหรือพึ่งพาผู้อุปถัมภ์คนเดียว?", zh: "下次选举是什么时候？谁推动了该项目？是跨党派支持还是单一庇护人依赖？" },
+    title: {
+      en: "Evaluate the political cycle alignment",
+      th: "ประเมินความสอดคล้องกับวัฏจักรการเมือง",
+      zh: "评估政治周期对齐度" },
+    desc: {
+      en: "When is the next election? Who championed this project? Is there cross-party support or single-patron dependency?",
+      th: "การเลือกตั้งครั้งต่อไปเมื่อไร? ใครผลักดันโครงการนี้? มีการสนับสนุนข้ามพรรคหรือพึ่งพาผู้อุปถัมภ์คนเดียว?",
+      zh: "下次选举是什么时候？谁推动了该项目？是跨党派支持还是单一庇护人依赖？" },
   },
   {
     num: "09",
-    title: { en: "Confirm data sovereignty and privacy compliance", th: "ยืนยันอธิปไตยข้อมูลและการปฏิบัติตามความเป็นส่วนตัว", zh: "确认数据主权和隐私合规" },
-    desc: { en: "Thailand's PDPA (Personal Data Protection Act) is now enforced. Ensure IoT data collection, storage, and cross-border transfer comply.", th: "พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคลของไทย (PDPA) บังคับใช้แล้ว ตรวจสอบให้แน่ใจว่าการเก็บ จัดเก็บ และโอนข้อมูล IoT ข้ามพรมแดนเป็นไปตามกฎหมาย", zh: "泰国《个人数据保护法》（PDPA）已生效。确保物联网数据的采集、存储和跨境传输合规。" },
+    title: {
+      en: "Confirm data sovereignty and privacy compliance",
+      th: "ยืนยันอธิปไตยข้อมูลและการปฏิบัติตามความเป็นส่วนตัว",
+      zh: "确认数据主权和隐私合规" },
+    desc: {
+      en: "Thailand's PDPA (Personal Data Protection Act) is now enforced. Ensure IoT data collection, storage, and cross-border transfer comply.",
+      th: "พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคลของไทย (PDPA) บังคับใช้แล้ว ตรวจสอบให้แน่ใจว่าการเก็บ จัดเก็บ และโอนข้อมูล IoT ข้ามพรมแดนเป็นไปตามกฎหมาย",
+      zh: "泰国《个人数据保护法》（PDPA）已生效。确保物联网数据的采集、存储和跨境传输合规。" },
   },
   {
     num: "10",
-    title: { en: "Benchmark against SCITI, not marketing decks", th: "เปรียบเทียบกับ SCITI ไม่ใช่สไลด์การตลาด", zh: "以SCITI为基准，而非营销材料" },
-    desc: { en: "Our index is designed to be the brutally honest mirror. Use the pillar scores, data confidence ratings, and tier classifications as your baseline — not the city's own promotional material.", th: "ดัชนีของเราถูกออกแบบให้เป็นกระจกสะท้อนความจริงอย่างตรงไปตรงมา ใช้คะแนนเสาหลัก ระดับความเชื่อมั่นข้อมูล และการจัดระดับเป็นพื้นฐาน ไม่ใช่สื่อโฆษณาของเมืองเอง", zh: "我们的指数旨在成为残酷诚实的镜子。以支柱评分、数据置信度评级和层级分类作为基准——而非城市自身的宣传材料。" },
+    title: {
+      en: "Benchmark against SCITI, not marketing decks",
+      th: "เปรียบเทียบกับ SCITI ไม่ใช่สไลด์การตลาด",
+      zh: "以SCITI为基准，而非营销材料" },
+    desc: {
+      en: "Our index is designed to be the brutally honest mirror. Use the pillar scores, data confidence ratings, and tier classifications as your baseline — not the city's own promotional material.",
+      th: "ดัชนีของเราถูกออกแบบให้เป็นกระจกสะท้อนความจริงอย่างตรงไปตรงมา ใช้คะแนนเสาหลัก ระดับความเชื่อมั่นข้อมูล และการจัดระดับเป็นพื้นฐาน ไม่ใช่สื่อโฆษณาของเมืองเอง",
+      zh: "我们的指数旨在成为残酷诚实的镜子。以支柱评分、数据置信度评级和层级分类作为基准——而非城市自身的宣传材料。" },
   },
 ];
 
 interface Source {
   name: string;
-  desc: { en: string; th: string; zh: string };
+  desc: {
+      en: string; th: string; zh: string };
 }
 
 const sources: Source[] = [
-  { name: "World Bank Open Data", desc: { en: "GDP, FDI aggregates, development indicators", th: "GDP, FDI รวม, ตัวชี้วัดการพัฒนา", zh: "GDP、FDI总量、发展指标" } },
-  { name: "BOI Annual Report 2024", desc: { en: "FDI inflows, investment incentive structures, EEC commitments", th: "FDI ไหลเข้า, โครงสร้างสิทธิประโยชน์การลงทุน, พันธสัญญา EEC", zh: "FDI流入、投资优惠结构、EEC承诺" } },
-  { name: "NESDC (National Economic and Social Development Council)", desc: { en: "GDP growth forecasts, digital economy targets, national strategy", th: "คาดการณ์การเติบโต GDP, เป้าหมายเศรษฐกิจดิจิทัล, ยุทธศาสตร์ชาติ", zh: "GDP增长预测、数字经济目标、国家战略" } },
-  { name: "NSO Thailand (National Statistical Office)", desc: { en: "Household computer ownership, labor force statistics, demographic data", th: "การถือครองคอมพิวเตอร์ครัวเรือน, สถิติแรงงาน, ข้อมูลประชากร", zh: "家庭电脑拥有率、劳动力统计、人口数据" } },
-  { name: "depa Smart City Thailand Office", desc: { en: "Smart city designations, CDP status, 105-city roadmap", th: "การกำหนดเมืองอัจฉริยะ, สถานะ CDP, แผน 105 เมือง", zh: "智慧城市认定、CDP状态、105城路线图" } },
-  { name: "SCITI 2026 Index", desc: { en: "Composite scores, pillar breakdowns, tier classifications, data confidence ratings", th: "คะแนนรวม, การแยกตามเสาหลัก, การจัดระดับ, ระดับความเชื่อมั่นข้อมูล", zh: "综合评分、支柱分解、层级分类、数据置信度评级" } },
-  { name: "ASEAN Smart City Financing Toolkit", desc: { en: "Blended finance frameworks, regional investment facilitation", th: "กรอบการเงินผสม, การอำนวยความสะดวกการลงทุนระดับภูมิภาค", zh: "混合融资框架、区域投资便利化" } },
-  { name: "ADB ACGF Reports", desc: { en: "Green finance mechanisms, catalytic co-lending structures", th: "กลไกการเงินสีเขียว, โครงสร้างร่วมให้กู้เชิงเร่งปฏิกิริยา", zh: "绿色金融机制、催化联合贷款结构" } },
-  { name: "SEC Thailand Green Bond Framework", desc: { en: "Municipal bond issuance guidelines, sustainable finance taxonomy", th: "แนวทางการออกพันธบัตรเทศบาล, อนุกรมวิธานการเงินอย่างยั่งยืน", zh: "市政债券发行指引、可持续金融分类法" } },
-  { name: "IMF World Economic Outlook", desc: { en: "Thailand macroeconomic context, ASEAN growth projections", th: "บริบทเศรษฐกิจมหภาคไทย, ประมาณการเติบโต ASEAN", zh: "泰国宏观经济背景、东盟增长预测" } },
-  { name: "UNCTAD World Investment Report", desc: { en: "Cross-border FDI trends, ASEAN investment competitiveness", th: "แนวโน้ม FDI ข้ามพรมแดน, ความสามารถแข่งขันด้านการลงทุน ASEAN", zh: "跨境FDI趋势、东盟投资竞争力" } },
-  { name: "World Bank Thailand Country Climate & Development Report (CCDR) 2025", desc: { en: "Climate-economy modelling, $219B investment needs, EEC water security, flood risk projections, coastal erosion, heat stress, carbon pricing mechanisms, financing instruments. Primary source for climate risk data in city dossiers.", th: "แบบจำลองภูมิอากาศ-เศรษฐกิจ, ความต้องการลงทุน 2.19 แสนล้าน USD, ความมั่นคงทางน้ำ EEC, การคาดการณ์ความเสี่ยงน้ำท่วม, การกัดเซาะชายฝั่ง, ความเครียดจากความร้อน, กลไกราคาคาร์บอน, เครื่องมือทางการเงิน แหล่งข้อมูลหลักสำหรับข้อมูลความเสี่ยงด้านภูมิอากาศในแฟ้มเมือง", zh: "气候-经济模型，2190亿美元投资需求，EEC水安全，洪水风险预测，海岸侵蚀，热应力，碳定价机制，金融工具。城市档案气候风险数据的主要来源。" } },
+  { name: "World Bank Open Data", desc: {
+      en: "GDP, FDI aggregates, development indicators",
+      th: "GDP, FDI รวม, ตัวชี้วัดการพัฒนา",
+      zh: "GDP、FDI总量、发展指标" } },
+  { name: "BOI Annual Report 2024", desc: {
+      en: "FDI inflows, investment incentive structures, EEC commitments",
+      th: "FDI ไหลเข้า, โครงสร้างสิทธิประโยชน์การลงทุน, พันธสัญญา EEC",
+      zh: "FDI流入、投资优惠结构、EEC承诺" } },
+  { name: "NESDC (National Economic and Social Development Council)", desc: {
+      en: "GDP growth forecasts, digital economy targets, national strategy",
+      th: "คาดการณ์การเติบโต GDP, เป้าหมายเศรษฐกิจดิจิทัล, ยุทธศาสตร์ชาติ",
+      zh: "GDP增长预测、数字经济目标、国家战略" } },
+  { name: "NSO Thailand (National Statistical Office)", desc: {
+      en: "Household computer ownership, labor force statistics, demographic data",
+      th: "การถือครองคอมพิวเตอร์ครัวเรือน, สถิติแรงงาน, ข้อมูลประชากร",
+      zh: "家庭电脑拥有率、劳动力统计、人口数据" } },
+  { name: "depa Smart City Thailand Office", desc: {
+      en: "Smart city designations, CDP status, 105-city roadmap",
+      th: "การกำหนดเมืองอัจฉริยะ, สถานะ CDP, แผน 105 เมือง",
+      zh: "智慧城市认定、CDP状态、105城路线图" } },
+  { name: "SCITI 2026 Index", desc: {
+      en: "Composite scores, pillar breakdowns, tier classifications, data confidence ratings",
+      th: "คะแนนรวม, การแยกตามเสาหลัก, การจัดระดับ, ระดับความเชื่อมั่นข้อมูล",
+      zh: "综合评分、支柱分解、层级分类、数据置信度评级" } },
+  { name: "ASEAN Smart City Financing Toolkit", desc: {
+      en: "Blended finance frameworks, regional investment facilitation",
+      th: "กรอบการเงินผสม, การอำนวยความสะดวกการลงทุนระดับภูมิภาค",
+      zh: "混合融资框架、区域投资便利化" } },
+  { name: "ADB ACGF Reports", desc: {
+      en: "Green finance mechanisms, catalytic co-lending structures",
+      th: "กลไกการเงินสีเขียว, โครงสร้างร่วมให้กู้เชิงเร่งปฏิกิริยา",
+      zh: "绿色金融机制、催化联合贷款结构" } },
+  { name: "SEC Thailand Green Bond Framework", desc: {
+      en: "Municipal bond issuance guidelines, sustainable finance taxonomy",
+      th: "แนวทางการออกพันธบัตรเทศบาล, อนุกรมวิธานการเงินอย่างยั่งยืน",
+      zh: "市政债券发行指引、可持续金融分类法" } },
+  { name: "IMF World Economic Outlook", desc: {
+      en: "Thailand macroeconomic context, ASEAN growth projections",
+      th: "บริบทเศรษฐกิจมหภาคไทย, ประมาณการเติบโต ASEAN",
+      zh: "泰国宏观经济背景、东盟增长预测" } },
+  { name: "UNCTAD World Investment Report", desc: {
+      en: "Cross-border FDI trends, ASEAN investment competitiveness",
+      th: "แนวโน้ม FDI ข้ามพรมแดน, ความสามารถแข่งขันด้านการลงทุน ASEAN",
+      zh: "跨境FDI趋势、东盟投资竞争力" } },
+  { name: "World Bank Thailand Country Climate & Development Report (CCDR) 2025", desc: {
+      en: "Climate-economy modelling, $219B investment needs, EEC water security, flood risk projections, coastal erosion, heat stress, carbon pricing mechanisms, financing instruments. Primary source for climate risk data in city dossiers.",
+      th: "แบบจำลองภูมิอากาศ-เศรษฐกิจ, ความต้องการลงทุน 2.19 แสนล้าน USD, ความมั่นคงทางน้ำ EEC, การคาดการณ์ความเสี่ยงน้ำท่วม, การกัดเซาะชายฝั่ง, ความเครียดจากความร้อน, กลไกราคาคาร์บอน, เครื่องมือทางการเงิน แหล่งข้อมูลหลักสำหรับข้อมูลความเสี่ยงด้านภูมิอากาศในแฟ้มเมือง",
+      zh: "气候-经济模型，2190亿美元投资需求，EEC水安全，洪水风险预测，海岸侵蚀，热应力，碳定价机制，金融工具。城市档案气候风险数据的主要来源。" } },
 ];
 
 /* ─── COMPONENT ─── */
@@ -421,17 +566,29 @@ export default function InvestPage({ locale, onNavigate }: Props) {
 
   const severityLabel = (s: string) =>
     translate(locale, s === "high"
-      ? { en: "High", th: "สูง", zh: "高" }
+      ? {
+      en: "High",
+      th: "สูง",
+      zh: "高" }
       : s === "medium"
-        ? { en: "Medium", th: "กลาง", zh: "中" }
-        : { en: "Low", th: "ต่ำ", zh: "低" });
+        ? {
+      en: "Medium",
+      th: "กลาง",
+      zh: "中" }
+        : {
+      en: "Low",
+      th: "ต่ำ",
+      zh: "低" });
 
   return (
     <div className="invest-page">
 
       {/* ═══════════ 1. HERO / THESIS ═══════════ */}
       <section className="section story-hero reveal visible">
-        <p className="eyebrow">{translate(locale, { en: "Invest Thailand", th: "ลงทุนไทย", zh: "投资泰国" })}</p>
+        <p className="eyebrow">{translate(locale, {
+      en: "Invest Thailand",
+      th: "ลงทุนไทย",
+      zh: "投资泰国" })}</p>
         <h1 className="hero-title">
           {translate(locale, {
             en: "Invest Thailand: The Smart City Opportunity",
@@ -447,6 +604,8 @@ export default function InvestPage({ locale, onNavigate }: Props) {
           })}
         </p>
       </section>
+
+      <InvestmentExplorer locale={locale} onNavigate={onNavigate} />
 
       {/* ═══════════ SECTION 2: WHAT IS MONEYBALL ═══════════ */}
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
@@ -475,9 +634,9 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             </p>
             <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
-                en: "What the postcard leaves out is measurable, and this index measures it. A day of labor costs 337–400 baht depending on province (Ministry of Labour, 2025). Appraised urban land runs from under 9,000 baht per square meter in provincial cities to 250,000 in central Bangkok (Treasury Department). Bangkok's cost of living indexes at 43.7 against New York's 100 (Numbeo). Kindness is scored here: hospitality is one of the seven pillars, weighted at 10% — alongside safety, wellbeing, and environment, built from crime rates, road fatalities, hospital beds, and PM2.5, cited per city. Every city page carries a Needs Ladder: eight rungs of what a place must actually get right, from clean air to commute stress, scored only where real data exists. The gap between what Thailand is and what Thailand is priced at — that is the trade.",
-                th: "สิ่งที่โปสการ์ดไม่ได้บอกนั้นวัดได้ และดัชนีนี้วัดมันอยู่: ค่าแรงหนึ่งวันอยู่ที่ 337–400 บาทแล้วแต่จังหวัด (กระทรวงแรงงาน 2568) ราคาประเมินที่ดินในเมืองเริ่มจากไม่ถึง 9,000 บาท/ตร.ม. ในเมืองภูมิภาค จนถึง 250,000 บาทใจกลางกรุงเทพฯ (กรมธนารักษ์) ค่าครองชีพกรุงเทพฯ อยู่ที่ 43.7 เทียบนิวยอร์ก 100 (Numbeo) ความมีน้ำใจถูกให้คะแนนที่นี่: อัธยาศัยคือหนึ่งในเจ็ดเสาหลัก น้ำหนัก 10% — เคียงข้างความปลอดภัย คุณภาพชีวิต และสิ่งแวดล้อม ซึ่งสร้างจากอัตราอาชญากรรม ผู้เสียชีวิตบนถนน เตียงโรงพยาบาล และ PM2.5 อ้างอิงแหล่งที่มารายเมือง ทุกหน้าเมืองมี 「บันไดความสำคัญ」 แปดขั้นของสิ่งที่เมืองต้องทำให้ได้จริง ตั้งแต่อากาศสะอาดจนถึงความเครียดจากการเดินทาง ให้คะแนนเฉพาะจุดที่มีข้อมูลจริงเท่านั้น ช่องว่างระหว่างสิ่งที่ประเทศไทยเป็น กับราคาที่ประเทศไทยถูกตั้งไว้ — นั่นคือโอกาสของนักลงทุน",
-                zh: "明信片没有印出的东西是可以测量的，本指数正在测量它：一天的劳动力成本因府而异，为337–400泰铢（劳工部，2025）；城市评估地价从府级城市的每平方米不到9,000泰铢，到曼谷市中心的250,000泰铢（财政部国库厅）；曼谷生活成本指数为43.7，纽约为100（Numbeo）。善意在这里被打分：待客之道是七大支柱之一，权重10%——与安全、福祉、环境并列，由犯罪率、道路死亡、医院床位和PM2.5构成，每座城市均注明来源。每个城市页面都有一座「需求阶梯」：一个地方必须真正做对的八层要素，从清洁空气到通勤压力，只在有真实数据处评分。泰国的实际面貌与泰国的市场定价之间的差距——就是这笔交易。",
+                en: "Compare a location through documented needs: housing affordability, access to care, mobility, safety, air quality, and digital services. Provincial statistics describe provincial context; they do not establish conditions at a proposed site. The curated hospitality score is an editorial assessment, not a direct measurement of kindness. Use the city dossier to identify evidence dates, geographic scope, and questions for residents. A location becomes an investment case only after project demand, costs, permissions, and delivery capacity are tested.",
+      th: "เปรียบเทียบทำเลจากความต้องการที่มีหลักฐาน: ที่อยู่อาศัย การเข้าถึงการรักษา การเดินทาง ความปลอดภัย อากาศ และบริการดิจิทัล สถิติจังหวัดให้บริบทระดับจังหวัด ไม่ได้ยืนยันสภาพพื้นที่โครงการ คะแนนอัธยาศัยเป็นการประเมินเชิงบรรณาธิการ ไม่ใช่การวัดความมีน้ำใจโดยตรง ใช้แฟ้มเมืองตรวจวันที่ ขอบเขตข้อมูล และคำถามสำหรับคนในพื้นที่ แล้วตรวจอุปสงค์ ต้นทุน ใบอนุญาต และศักยภาพส่งมอบของโครงการ",
+      zh: "以有据可查的需求比较选址：住房可负担性、医疗、出行、安全、空气及数字服务。省级统计提供省级背景，并不证明项目所在地条件。待客评分属于编辑评估，并非直接测量善意。通过城市档案核实日期、地理范围及居民问题，再验证项目需求、成本、许可和交付能力。"
               })}
             </p>
           </div>
@@ -497,45 +656,87 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             </h2>
             <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "2rem", lineHeight: 1.6 }}>
               {translate(locale, {
-                en: "If you are making location decisions in Thailand, you face an information asymmetry. Everyone knows Bangkok. Everyone knows the Eastern Economic Corridor. But what about the provinces where your capital goes 3x further and the talent competition is half as fierce?",
-                th: "หากคุณกำลังตัดสินใจเลือกสถานที่ลงทุนในไทย คุณจะพบกับความไม่สมมาตรของข้อมูล ทุกคนรู้จักกรุงเทพฯ ทุกคนรู้จักเขตพัฒนาพิเศษภาคตะวันออก (EEC) แต่จังหวัดที่เงินทุนของคุณมีค่ามากกว่า 3 เท่าและการแข่งขันแย่งบุคลากรน้อยกว่าครึ่งหนึ่งล่ะ?",
-                zh: "如果您正在泰国做选址决定，您会面临信息不对称。每个人都知道曼谷。每个人都知道东部经济走廊。但在那些您的资本能发挥3倍作用，且人才竞争只有一半激烈的省份呢？",
+                en: "For a location decision, compare places beyond the familiar destinations. Investigate wages by activity and effective date, land by parcel and tenure, workforce availability, and access to customers. SCITI helps structure that investigation; it does not establish a universal cost advantage.",
+      th: "การเลือกทำเลควรเปรียบเทียบพื้นที่นอกจุดหมายที่คุ้นเคย ตรวจค่าแรงตามกิจกรรมและวันที่มีผล ที่ดินรายแปลงและสิทธิถือครอง แรงงานที่หาได้ และการเข้าถึงลูกค้า SCITI ช่วยจัดกรอบการตรวจสอบ แต่ไม่ได้ยืนยันว่าทุกพื้นที่มีต้นทุนได้เปรียบ",
+      zh: "选址时应比较熟悉目的地之外的地方，按业务及生效日期核实工资，按地块和权属核实土地，并调查人才及客户可达性。SCITI帮助组织调查，不证明普遍的成本优势。"
               })}
             </p>
 
             <h3 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
-              {translate(locale, { en: "What SCITI Gives You", th: "สิ่งที่ SCITI มอบให้คุณ", zh: "SCITI 能给您什么" })}
+              {translate(locale, {
+      en: "What SCITI Gives You",
+      th: "สิ่งที่ SCITI มอบให้คุณ",
+      zh: "SCITI 能给您什么" })}
             </h3>
             
             <div className="invest-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "GPP & GPP/Capita", th: "GPP และ GPP ต่อหัว", zh: "GPP与人均GPP" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Provincial productivity and economic scale (NESDC).", th: "ผลิตภาพและขนาดเศรษฐกิจระดับจังหวัด (สภาพัฒน์)", zh: "省级生产力和经济规模 (NESDC)。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+      en: "GPP & GPP/Capita",
+      th: "GPP และ GPP ต่อหัว",
+      zh: "GPP与人均GPP" })}</h4>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+      en: "Provincial productivity and economic scale (NESDC).",
+      th: "ผลิตภาพและขนาดเศรษฐกิจระดับจังหวัด (สภาพัฒน์)",
+      zh: "省级生产力和经济规模 (NESDC)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "BOI Incentive Zones", th: "เขตส่งเสริมการลงทุน BOI", zh: "BOI投资优惠区" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Tax holidays and special privileges (BOI).", th: "การยกเว้นภาษีและสิทธิพิเศษ (BOI)", zh: "免税期和特殊待遇 (BOI)。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+      en: "BOI Incentive Zones",
+      th: "เขตส่งเสริมการลงทุน BOI",
+      zh: "BOI投资优惠区" })}</h4>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+      en: "Tax holidays and special privileges (BOI).",
+      th: "การยกเว้นภาษีและสิทธิพิเศษ (BOI)",
+      zh: "免税期和特殊待遇 (BOI)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Minimum Wage Tiers", th: "ระดับค่าแรงขั้นต่ำ", zh: "最低工资层级" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Labor cost benchmarking (Min. of Labour).", th: "การเปรียบเทียบต้นทุนแรงงาน (กระทรวงแรงงาน)", zh: "劳动力成本基准 (劳工部)。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+      en: "Minimum Wage Tiers",
+      th: "ระดับค่าแรงขั้นต่ำ",
+      zh: "最低工资层级" })}</h4>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+      en: "Labor cost benchmarking (Min. of Labour).",
+      th: "การเปรียบเทียบต้นทุนแรงงาน (กระทรวงแรงงาน)",
+      zh: "劳动力成本基准 (劳工部)。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Infrastructure Scorecard", th: "ตารางคะแนนโครงสร้างพื้นฐาน", zh: "基础设施记分卡" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Airport, rail, port, 5G, and broadband.", th: "สนามบิน รถไฟ ท่าเรือ 5G และบรอดแบนด์", zh: "机场、铁路、港口、5G和宽带。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+      en: "Infrastructure Scorecard",
+      th: "ตารางคะแนนโครงสร้างพื้นฐาน",
+      zh: "基础设施记分卡" })}</h4>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+      en: "Airport, rail, port, 5G, and broadband.",
+      th: "สนามบิน รถไฟ ท่าเรือ 5G และบรอดแบนด์",
+      zh: "机场、铁路、港口、5G和宽带。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Creative Economy Heatmap", th: "แผนที่ความเข้มเศรษฐกิจสร้างสรรค์", zh: "创意经济热力图" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "15 creative industries by province.", th: "15 อุตสาหกรรมสร้างสรรค์แยกตามจังหวัด", zh: "按省份划分的15个创意产业。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+      en: "Creative Economy Heatmap",
+      th: "แผนที่ความเข้มเศรษฐกิจสร้างสรรค์",
+      zh: "创意经济热力图" })}</h4>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+      en: "15 creative industries by province.",
+      th: "15 อุตสาหกรรมสร้างสรรค์แยกตามจังหวัด",
+      zh: "按省份划分的15个创意产业。" })}</p>
               </div>
               <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, { en: "Moneyball Score", th: "คะแนน Moneyball", zh: "Moneyball评分" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, { en: "Composite: growth + cost + infra + creative.", th: "คะแนนรวม: การเติบโต + ต้นทุน + โครงสร้างพื้นฐาน + สร้างสรรค์", zh: "综合：增长 + 成本 + 基础设施 + 创意。" })}</p>
+                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+      en: "Moneyball Score",
+      th: "คะแนน Moneyball",
+      zh: "Moneyball评分" })}</h4>
+                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+      en: "Composite: growth + cost + infra + creative.",
+      th: "คะแนนรวม: การเติบโต + ต้นทุน + โครงสร้างพื้นฐาน + สร้างสรรค์",
+      zh: "综合：增长 + 成本 + 基础设施 + 创意。" })}</p>
               </div>
             </div>
 
             <h3 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
-              {translate(locale, { en: "How to Read the Data", th: "วิธีอ่านข้อมูล", zh: "如何解读数据" })}
+              {translate(locale, {
+      en: "How to Read the Data",
+      th: "วิธีอ่านข้อมูล",
+      zh: "如何解读数据" })}
             </h3>
             <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.6 }}>
               {translate(locale, {
@@ -576,7 +777,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
             <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
-              {translate(locale, { en: "Who Signs", th: "ใครเป็นคนเซ็น", zh: "谁来签字" })}
+              {translate(locale, {
+      en: "Who Signs",
+      th: "ใครเป็นคนเซ็น",
+      zh: "谁来签字" })}
             </h2>
             <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
@@ -657,7 +861,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
 
       {/* ═══════════ 2. THAILAND MACRO SNAPSHOT ═══════════ */}
       <section ref={macroRef} className={`section reveal stagger-1 ${macroVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Macro Snapshot", th: "ภาพรวมมหภาค", zh: "宏观概况" })}</p>
+        <p className="eyebrow">{translate(locale, {
+      en: "Macro Snapshot",
+      th: "ภาพรวมมหภาค",
+      zh: "宏观概况" })}</p>
         <h2>{translate(locale, {
           en: "Thailand at a Glance",
           th: "ประเทศไทยในภาพรวม",
@@ -665,9 +872,9 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         })}</h2>
         <p className="section-intro">
           {translate(locale, {
-            en: "Real numbers from real institutions. No forecasts, no fluff — the baseline for any investment thesis in Thai smart cities.",
-            th: "ตัวเลขจริงจากสถาบันจริง ไม่มีการคาดการณ์ ไม่มีสิ่งฟุ่มเฟือย พื้นฐานสำหรับทฤษฎีการลงทุนในเมืองอัจฉริยะไทย",
-            zh: "来自真实机构的真实数据。没有预测，没有虚言——泰国智慧城市投资论点的基准线。",
+            en: "Separate historical observations, policy targets, and modeled scenarios. Values awaiting source reconciliation are withheld; national context does not establish a city-level investment case.",
+            th: "แยกข้อมูลย้อนหลัง เป้าหมายนโยบาย และผลจำลอง ค่าที่ยังตรวจสอบแหล่งข้อมูลไม่เสร็จจะไม่แสดง บริบทระดับประเทศไม่ยืนยันความเป็นไปได้ของการลงทุนรายเมือง",
+            zh: "区分历史观测、政策目标及模型情景。待核对来源的数值暂不展示；国家背景不能单独证明城市投资可行。",
           })}
         </p>
         <div className="invest-macro-grid">
@@ -675,7 +882,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             <div key={i} className="invest-macro-cell">
               <span className="invest-macro-label">{translate(locale, s.label)}</span>
               <span className="invest-macro-value">{s.value}</span>
-              <span className="invest-macro-sub">{translate(locale, s.sub)}</span>
+              <span className="invest-macro-sub">{s.sourceUrl ? <a href={s.sourceUrl} target="_blank" rel="noopener noreferrer">{translate(locale, s.sub)}</a> : translate(locale, s.sub)}</span>
             </div>
           ))}
         </div>
@@ -683,7 +890,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
 
       {/* ═══════════ 3. WHAT SCITI TELLS INVESTORS ═══════════ */}
       <section ref={insightRef} className={`section reveal stagger-2 ${insightVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Index Intelligence", th: "ข้อมูลเชิงลึกจากดัชนี", zh: "指数洞察" })}</p>
+        <p className="eyebrow">{translate(locale, {
+      en: "Index Intelligence",
+      th: "ข้อมูลเชิงลึกจากดัชนี",
+      zh: "指数洞察" })}</p>
         <h2>{translate(locale, {
           en: "What SCITI Tells Investors",
           th: "SCITI บอกอะไรแก่นักลงทุน",
@@ -740,7 +950,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
 
       {/* ═══════════ 5. FINANCIAL MECHANISMS ═══════════ */}
       <section ref={mechRef} className={`section reveal stagger-4 ${mechVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Financial Instruments", th: "เครื่องมือทางการเงิน", zh: "金融工具" })}</p>
+        <p className="eyebrow">{translate(locale, {
+      en: "Financial Instruments",
+      th: "เครื่องมือทางการเงิน",
+      zh: "金融工具" })}</p>
         <h2>{translate(locale, {
           en: "How to Finance Smart City Investment",
           th: "วิธีระดมทุนลงทุนเมืองอัจฉริยะ",
@@ -793,7 +1006,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
 
       {/* ═══════════ 6. RISK MATRIX ═══════════ */}
       <section ref={riskRef} className={`section reveal stagger-5 ${riskVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Risk Matrix", th: "เมทริกซ์ความเสี่ยง", zh: "风险矩阵" })}</p>
+        <p className="eyebrow">{translate(locale, {
+      en: "Risk Matrix",
+      th: "เมทริกซ์ความเสี่ยง",
+      zh: "风险矩阵" })}</p>
         <h2>{translate(locale, {
           en: "Where the Risks Hide",
           th: "ความเสี่ยงซ่อนอยู่ที่ไหน",
@@ -853,7 +1069,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
 
       {/* ═══════════ 7. DUE DILIGENCE CHECKLIST ═══════════ */}
       <section ref={ddRef} className={`section reveal stagger-1 ${ddVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Due Diligence", th: "การตรวจสอบสถานะ", zh: "尽职调查" })}</p>
+        <p className="eyebrow">{translate(locale, {
+      en: "Due Diligence",
+      th: "การตรวจสอบสถานะ",
+      zh: "尽职调查" })}</p>
         <h2>{translate(locale, {
           en: "10-Point Investment Checklist",
           th: "รายการตรวจสอบการลงทุน 10 ข้อ",
@@ -901,7 +1120,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
 
       {/* ═══════════ 8. SOURCES ═══════════ */}
       <section ref={srcRef} className={`section reveal stagger-2 ${srcVisible ? "visible" : ""}`}>
-        <p className="eyebrow">{translate(locale, { en: "Sources", th: "แหล่งอ้างอิง", zh: "数据来源" })}</p>
+        <p className="eyebrow">{translate(locale, {
+      en: "Sources",
+      th: "แหล่งอ้างอิง",
+      zh: "数据来源" })}</p>
         <h2>{translate(locale, {
           en: "Data Sources & References",
           th: "แหล่งข้อมูลและเอกสารอ้างอิง",
@@ -946,10 +1168,16 @@ export default function InvestPage({ locale, onNavigate }: Props) {
           })}</p>
           <div style={{ display: "flex", gap: ".75rem", flexWrap: "wrap", marginTop: ".75rem" }}>
             <button className="cta-button" onClick={() => onNavigate("/rankings")}>
-              {translate(locale, { en: "See the Rankings", th: "ดูการจัดอันดับ", zh: "查看排名" })}
+              {translate(locale, {
+      en: "See the Rankings",
+      th: "ดูการจัดอันดับ",
+      zh: "查看排名" })}
             </button>
             <button className="ghost-button" onClick={() => onNavigate("/methodology")}>
-              {translate(locale, { en: "Read Methodology", th: "อ่านระเบียบวิธีวิจัย", zh: "阅读方法论" })}
+              {translate(locale, {
+      en: "Read Methodology",
+      th: "อ่านระเบียบวิธีวิจัย",
+      zh: "阅读方法论" })}
             </button>
           </div>
         </div>

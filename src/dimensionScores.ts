@@ -633,8 +633,15 @@ export function buildCohort(cities: SmartCity[]): Map<string, number[]> {
   for (const ind of INDICATORS) {
     if (ind.scale.kind !== "cohort") continue;
     const vals: number[] = [];
+    const seenProvinces = new Set<string>();
     for (const city of cities) {
       const ctx = makeContext(city);
+      // Provincial observations count once, regardless of how many cities
+      // from that province are included in the catalogue.
+      if (ind.origin === "province") {
+        if (seenProvinces.has(ctx.province)) continue;
+        seenProvinces.add(ctx.province);
+      }
       const v = rawValue(ind, ctx);
       if (v != null) vals.push(v);
     }
@@ -674,7 +681,12 @@ export function deriveCity(city: SmartCity, cohort: Map<string, number[]>): City
       let relative = ind.scale.kind === "cohort";
       if (raw != null) {
         const applied = applyScale(ind.scale, raw, cohortSorted);
-        score = Math.round(applied.score * 10) / 10;
+        // Target scales encode direction in best/worst already. Only
+        // cohort ranks need inversion for adverse indicators.
+        const directedScore = ind.scale.kind === "cohort" && !ind.higherIsBetter
+          ? 100 - applied.score
+          : applied.score;
+        score = Math.round(directedScore * 10) / 10;
         relative = applied.relative;
         weightSum += ind.weight;
         scoreSum += score * ind.weight;

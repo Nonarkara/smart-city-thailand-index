@@ -69,7 +69,7 @@ export interface SourceRecord {
 export const SOURCE_REGISTRY: readonly SourceRecord[] = [
   {
     id: "nso-catalog-index",
-    publisher: "สศ. / NSO — National Statistical Office",
+    publisher: "สสช. / NSO — National Statistical Office",
     title: "NSO Data Catalog machine-readable index",
     url: "https://catalogapi.nso.go.th/api/index?table=GSI_NSO_DATASET&format=csv&div=1",
     verified: "200",
@@ -324,7 +324,7 @@ export const SOURCE_REGISTRY: readonly SourceRecord[] = [
   },
   {
     id: "data-go-th-open-data",
-    publisher: "กรมธุรกิจปฏิรูปและพัฒนาระบบคอมพิวเตอร์ / Government Data Management Office",
+    publisher: "สำนักงานพัฒนารัฐบาลดิจิทัล (องค์การมหาชน) / Digital Government Development Agency (DGA)",
     title: "data.go.th — the national open-data portal, and the provincial administration organisations inside it",
     url: "https://data.go.th/api/3/action/organization_list?q=%E0%B8%AA%E0%B8%B3%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%94",
     verified: "200",
@@ -335,7 +335,7 @@ export const SOURCE_REGISTRY: readonly SourceRecord[] = [
       "Metropolitan Administration, counted under its own organisation. All 77 " +
       "provinces have a publishing organisation, so no province is missing here; " +
       "nothing is scored as zero for absence. THIS IS NOT AN E-GOVERNMENT INDEX: " +
-      "Thailand publishes none. The DGA readiness score is agency-level; the ITA " +
+      "SCITI has not verified a suitable province-level series among the sources checked. The DGA readiness score is agency-level; the ITA " +
       "integrity assessment is organisation-level and reaches the portal from only " +
       "some provinces (Phichit 94 files, Lopburi 3, Rayong 1, Nan 0); the NSO " +
       "citizen-satisfaction series POS_01_Table_0002..0004 is national only.",
@@ -468,7 +468,7 @@ export const RESIDUAL_GAPS: readonly ResidualGap[] = [
     },
     note: {
       en: "SCITI has not verified a downloadable province-level series among the sources checked. DGA's digital-government readiness score is agency-level; the ITA integrity assessment is organisation-level and reaches the national portal from only some provinces; NSO's citizen-satisfaction series is national only. All three were probed. Governance is therefore measured by open-data publication, and labelled as exactly that.",
-      th: "SCITI ยังไม่พบชุดข้อมูลระดับจังหวัดที่ดาวน์โหลดได้จากแหล่งที่ตรวจสอบ คะแนนความพร้อมรัฐบาลดิจิทัลของ DGA เป็นระดับหน่วยงาน ผลประเมิน ITA เป็นระดับองค์กรและมาถึงแพลตฟอร์มกลางเพียงบางจังหวัด ส่วนชุดข้อมูลความพึงพอใจของ สศ. เป็นระดับประเทศ ทั้งสามแหล่งถูกตรวจสอบแล้ว มิติการบริหารจึงวัดจากการเผยแพร่ข้อมูลเปิด และระบุไว้ว่าเป็นการวัดเช่นนั้น",
+      th: "SCITI ยังไม่พบชุดข้อมูลระดับจังหวัดที่ดาวน์โหลดได้จากแหล่งที่ตรวจสอบ คะแนนความพร้อมรัฐบาลดิจิทัลของ DGA เป็นระดับหน่วยงาน ผลประเมิน ITA เป็นระดับองค์กรและมาถึงแพลตฟอร์มกลางเพียงบางจังหวัด ส่วนชุดข้อมูลความพึงพอใจของ สสช. เป็นระดับประเทศ ทั้งสามแหล่งถูกตรวจสอบแล้ว มิติการบริหารจึงวัดจากการเผยแพร่ข้อมูลเปิด และระบุไว้ว่าเป็นการวัดเช่นนั้น",
       zh: "SCITI 尚未在已核查来源中确认可下载的省级序列。DGA 的数字政府就绪度评分是机构级的；ITA 诚信评估是组织级的，且只有部分省份发布到国家门户；统计局的公民满意度数据是全国级的。三者均已实测核查。治理维度因此以开放数据发布量衡量，并如实如此标注。",
     },
   },

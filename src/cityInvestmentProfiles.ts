@@ -237,9 +237,9 @@ export const CITY_INVESTMENT_PROFILES: CityInvestmentProfile[] = [
     primaryTool: "gsss-bond",
     secondaryTool: "tourism-levy",
     oneLiner: {
-      en: "Thailand's most functional smart-tourism city. ASCN member. The Thai case study the ASEAN Toolkit carries is a wind-farm Green Bond — same GSSS instrument, climate-resilient infrastructure.",
-      th: "เมืองท่องเที่ยวอัจฉริยะที่ทำงานได้มากที่สุดของไทย สมาชิก ASCN เคสไทยใน ASEAN Toolkit คือ Green Bond กังหันลม — เครื่องมือ GSSS เดียวกัน โครงสร้างพื้นฐานทนภูมิอากาศ",
-      zh: "泰国最实用的智能旅游城市。ASCN 成员。ASEAN 工具包中的泰国案例是风电绿色债券 — 同样 GSSS 工具、气候韧性基础设施。",
+      en: "Phuket smart-tourism profile; individual operating claims require local evidence. ASCN member. The Thai case study the ASEAN Toolkit carries is a wind-farm Green Bond — same GSSS instrument, climate-resilient infrastructure.",
+      th: "ข้อมูลเมืองท่องเที่ยวอัจฉริยะภูเก็ต ต้องตรวจสอบการดำเนินงานด้วยหลักฐานพื้นที่ สมาชิก ASCN เคสไทยใน ASEAN Toolkit คือ Green Bond กังหันลม — เครื่องมือ GSSS เดียวกัน โครงสร้างพื้นฐานทนภูมิอากาศ",
+      zh: "普吉智慧旅游概况，运营情况仍需当地证据核实。ASCN 成员。ASEAN 工具包中的泰国案例是风电绿色债券 — 同样 GSSS 工具、气候韧性基础设施。",
     },
     bestFor: {
       en: "Climate-resilient coastal infrastructure (GSSS Bond), mangrove restoration with a revenue model (Nai Nang model), smart-tourism platforms.",
@@ -247,9 +247,9 @@ export const CITY_INVESTMENT_PROFILES: CityInvestmentProfile[] = [
       zh: "气候韧性海岸基础设施（GSSS 债券）、带收入模型的红树林修复（Nai Nang 模式）、智能旅游平台。",
     },
     keyRisk: {
-      en: "Heat stress shortening outdoor tourism seasons (World Bank CCDR 2025). 695 hotels on TAT's CF-Hotels platform; only 160 self-reported emissions in 2024 — sustainability narrative is ahead of operational reporting.",
-      th: "ความเครียดร้อนทำให้ฤดูท่องเที่ยวกลางแจ้งสั้นลง (ธนาคารโลก CCDR 2568) โรงแรม 695 แห่งอยู่บนแพลตฟอร์ม CF-Hotels ของ TAT มีเพียง 160 แห่งที่รายงานการปล่อยในปี 2567 — เรื่องเล่าเรื่องความยั่งยืนนำหน้าการรายงานจริง",
-      zh: "高温压力缩短户外旅游季（世银 CCDR 2025）。695 家酒店在 TAT 的 CF-Hotels 平台；2024 年仅 160 家自报排放数据 — 可持续叙事领先于运营报告。",
+      en: "World Bank climate chapter identifies coastal tourism heat risks. Nationally, over 695 hotels joined CF-Hotels by August 2025 and 160 reported emissions-reduction efforts in 2024. These are different periods, not Phuket counts or an adoption rate.",
+      th: "บทวิเคราะห์ภูมิอากาศธนาคารโลกระบุความเสี่ยงความร้อนต่อการท่องเที่ยวชายฝั่ง ระดับประเทศมีโรงแรมกว่า 695 แห่งเข้าร่วม CF-Hotels ภายในสิงหาคม 2568 และ 160 แห่งรายงานกิจกรรมลดการปล่อยในปี 2567 เป็นคนละช่วงเวลา ไม่ใช่จำนวนหรืออัตราการเข้าร่วมของภูเก็ต",
+      zh: "世银气候章节指出沿海旅游面临高温风险。全国截至2025年8月有超过695家酒店加入CF-Hotels，160家报告了2024年减排行动。时期不同，并非普吉数据或参与率。",
     },
     comparableCase: {
       country: "Thailand",

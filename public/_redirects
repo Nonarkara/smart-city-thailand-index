@@ -15,6 +15,11 @@
 /api/*                           /api-static/not-found.json               404
 /api                            /api-static/not-found.json               404
 
+# The cited research snapshot. The dossier links to it as a JSON download,
+# and a client that receives the SPA shell instead of JSON will try to parse
+# index.html. Same hazard as /api/* — it must never fall through.
+/research/*                      /api-static/not-found.json               404
+
 # Client routes (/rankings, /compare, /city/<id> without a static OG page)
 # are rewritten, not redirected, so shared links stay on their URL.
 /*    /index.html    200

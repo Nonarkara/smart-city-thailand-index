@@ -8,6 +8,9 @@ export default defineConfig({
     globals: true,
     setupFiles: "./src/test/setup.ts",
     testTimeout: 15000,
+    // Threads avoid repeated OS-process startup stalls on a busy shared host.
+    // Keep isolation, worker limits and the existing assertion timeouts intact.
+    pool: "threads",
     // Bound concurrent jsdom workers: the full UI suite otherwise saturates
     // local machines and times out interactions that pass in isolation.
     maxWorkers: 2,
