@@ -12579,3 +12579,29 @@ body.canvas-print-mode {
 
 .chat-fab-tucked:focus-visible { transform: none; opacity: 1; pointer-events: auto; }
 @media (prefers-reduced-motion: reduce) { .chat-fab { transition: none; } }
+
+/* Visual heritage is evidence: retain the whole object and its attribution. */
+.city-heritage { margin-block: 1rem; border-top: 3px solid var(--ink); padding-top: .75rem; }
+.city-heritage h2, .city-heritage h3 { font-size: var(--text-body); }
+.city-heritage p { font-size: var(--text-body); max-width: 65ch; }
+.heritage-selector { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-block: .75rem; }
+.heritage-selector select { max-width: 100%; min-height: 44px; padding: .5rem; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--3); }
+.heritage-layout { margin: 0; display: grid; gap: 1rem; }
+.heritage-image-link { display: block; min-width: 0; }
+.heritage-image-link img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; }
+.heritage-scope { font-weight: 700; }
+.heritage-layout figcaption { min-width: 0; overflow-wrap: anywhere; }
+.heritage-layout figcaption h3 { margin-top: 0; }
+.heritage-image-note { color: var(--2); }
+@media (min-width: 900px) { .heritage-layout { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } }
+@media print {
+  .heritage-selector, .heritage-search { display: none; }
+  .heritage-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); break-inside: avoid; }
+  .heritage-image-link img { max-height: 105mm; }
+  .heritage-layout a::after { content: " (" attr(href) ")"; font-size: var(--text-micro); overflow-wrap: anywhere; }
+  .heritage-image-link::after { display: none; }
+}
+@media (max-width: 719px) {
+  /* Leave the floating help control clear of the collection-source link. */
+  .heritage-search { margin-right: 64px; }
+}

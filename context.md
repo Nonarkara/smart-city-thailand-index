@@ -196,3 +196,6 @@ npx wrangler pages deploy dist --project-name=smart-city-thailand-index --branch
 
 ## Known exposures (resolved)
 - 2026-07-04: A Gemini API key was committed to this public repo's history (commits `c84a517`..`105159f`). Confirmed dead on testing (backing GCP project was deleted). Chat widget now uses BYO-key model (localStorage), no bundled key needed. `.webui_secret_key` (unused, unrelated tool artifact) also removed from tracking.
+
+## Visual heritage · 23 October 2026
+Design Read: a city dossier pairs one uncropped cultural image with its catalogue record, so readers can see a place and check what the image actually proves. Reference: The Metropolitan Museum of Art collection object pages. The image dominates a 60/40 composition; a 3px section rule separates this evidence from ordinary 1px controls. Provincial association is not a municipal findspot. Heritage does not contribute to SCITI scores.

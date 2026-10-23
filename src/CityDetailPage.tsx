@@ -4,6 +4,7 @@ import CityEvidenceSummary from "./CityEvidenceSummary";
 import AbsorptionReadout from "./AbsorptionReadout";
 import CityFingerprint from "./CityFingerprint";
 import NeedsLadder from "./NeedsLadder";
+import CityHeritageGallery from "./CityHeritageGallery";
 import { computeNeedsLadder } from "./needsLadderEngine";
 import { getCityById } from "./cityData";
 import { getDepaOfficial } from "./depaOfficialData";
@@ -1339,6 +1340,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           zh: "编辑背景叙述——仍需核查来源",
         })}</summary><p>{cityTagline}</p></details>
         <p className="section-intro">{cityOrientation}</p>
+        <CityHeritageGallery city={city} locale={locale} />
 
         {(() => {
           const rawCity = getCityById(cityId);
