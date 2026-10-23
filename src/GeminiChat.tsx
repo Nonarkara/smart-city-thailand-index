@@ -185,9 +185,47 @@ export default function GeminiChat({ locale }: Props) {
 
   const t = (en: string, th: string, zh?: string) => locale === "zh" ? (zh ?? en) : locale === "th" ? th : en;
 
+  /* ON A PHONE THE BUTTON SAT ON THE TEXT.
+   * The content column is full width at 390px, so a 44px button pinned to
+   * the bottom right covered the end of every line that passed beneath it —
+   * 21 collisions across 12 routes, one of them cutting a number in half.
+   * On a desktop the content column is centred and narrow, so the button
+   * sits clear of it and nothing is covered.
+   *
+   * So on a phone the button tucks away while the reader scrolls down
+   * through the text, and comes back the moment they scroll up or return to
+   * the top. A control that never sits over the words being read. */
+  const [tucked, setTucked] = useState(false);
+  useEffect(() => {
+    const narrow = typeof window.matchMedia === "function"
+      ? window.matchMedia("(max-width: 719px)")
+      : { matches: window.innerWidth <= 719 };
+    let lastY = window.scrollY;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const y = window.scrollY;
+        if (!narrow.matches || y <= 8) {
+          setTucked(false);
+        } else {
+          const delta = y - lastY;
+          if (Math.abs(delta) > 8) setTucked(delta > 0);
+        }
+        lastY = y;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   if (!open) {
     return (
-      <button className="chat-fab" onClick={() => setOpen(true)} aria-expanded={false} title={t("Ask about Thai smart cities", "ถามเกี่ยวกับเมืองอัจฉริยะไทย", "询问泰国智慧城市")}>
+      <button className={`chat-fab${tucked ? " chat-fab-tucked" : ""}`} onClick={() => setOpen(true)} aria-expanded={false} title={t("Ask about Thai smart cities", "ถามเกี่ยวกับเมืองอัจฉริยะไทย", "询问泰国智慧城市")}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>

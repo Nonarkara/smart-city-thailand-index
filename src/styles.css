@@ -1608,7 +1608,11 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 /* Phase 21 — FAB pinned to the canvas right edge. On viewports wider than
  * the 1440px design canvas, the right offset grows to keep the FAB inside
  * the white page-shell instead of floating in the depa-blue gutter. */
-.chat-fab { position: fixed; bottom: 1.25rem; right: max(1.25rem, calc(50vw - 720px + 1.25rem)); z-index: 150; width: 44px; height: 44px; display: grid; place-items: center; background: var(--teal); color: #fff; }
+.chat-fab { position: fixed; bottom: 1.25rem; right: max(1.25rem, calc(50vw - 720px + 1.25rem)); z-index: 150; width: 44px; height: 44px; display: grid; place-items: center; background: var(--teal); color: #fff; transition: transform .22s ease-out, opacity .22s ease-out; }
+/* On a phone the content column is full width, so the button would sit on
+ * the text. It tucks away while the reader scrolls down and returns when
+ * they scroll up. */
+.chat-fab-tucked { transform: translateY(72px); opacity: 0; pointer-events: none; }
 .chat-fab:hover { opacity: .85; }
 .chat-panel { position: fixed; bottom: 1.25rem; right: max(1.25rem, calc(50vw - 720px + 1.25rem)); z-index: 150; width: 340px; max-height: 480px; display: flex; flex-direction: column; border: 1px solid var(--5); background: var(--bg); box-shadow: none; }
 .chat-header { display: flex; align-items: center; gap: .3rem; padding: .4rem .6rem; border-bottom: 1px solid var(--5); }
@@ -12572,3 +12576,6 @@ body.canvas-print-mode {
   .dossier-tab-content { animation: none !important; opacity: 1 !important; transform: none !important; }
   .dossier-panel-slot .reveal { transition: none !important; }
 }
+
+.chat-fab-tucked:focus-visible { transform: none; opacity: 1; pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) { .chat-fab { transition: none; } }
