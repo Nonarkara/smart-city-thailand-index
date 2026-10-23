@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import CityEvidenceSummary from "./CityEvidenceSummary";
 import CityFingerprint from "./CityFingerprint";
 import NeedsLadder from "./NeedsLadder";
 import { computeNeedsLadder } from "./needsLadderEngine";
@@ -368,7 +369,7 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
   const dataPath = dataPoints.map((pt, index) => `${index === 0 ? "M" : "L"} ${pt.x},${pt.y}`).join(" ") + " Z";
 
   return (
-    <svg viewBox="0 0 280 280" className="radar-chart" role="img" aria-labelledby="radar-title">
+    <figure className="city-readable-radar"><svg viewBox="0 0 280 280" className="radar-chart" role="img" aria-labelledby="radar-title">
       <title id="radar-title">{pillars.map(p => `${PILLAR_LABELS[locale][p]}: ${scores[p]}/100`).join(", ")}</title>
       {rings.map(ring => {
         const points = pillars.map((_, index) => getPoint(index, ring));
@@ -381,31 +382,14 @@ function RadarChart({ scores, locale }: { scores: Record<ScoringPillar, number>;
         return <line key={index} x1={cx} y1={cy} x2={pt.x} y2={pt.y} stroke="#E8E8EC" strokeWidth="0.5" opacity="0.3" />;
       })}
 
+      {pillars.map((pillar, index) => { const point = getPoint(index, 113); return <text key={pillar} x={point.x} y={point.y} textAnchor="middle" dominantBaseline="middle" fontSize="14" fill="currentColor">{index + 1}</text>; })}
       <path d={dataPath} fill="rgba(43, 186, 160, 0.15)" stroke="#2BBAA0" strokeWidth="2" />
 
       {dataPoints.map((pt, index) => (
         <circle key={index} cx={pt.x} cy={pt.y} r="3.5" fill={PILLAR_COLORS[pillars[index]]} />
       ))}
 
-      {pillars.map((pillar, index) => {
-        const labelPt = getPoint(index, 128);
-        return (
-          <text
-            key={pillar}
-            x={labelPt.x}
-            y={labelPt.y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="9"
-            fontFamily="var(--font)"
-            fontWeight="600"
-            fill="var(--3, #888)"
-          >
-            {PILLAR_LABELS[locale][pillar]}
-          </text>
-        );
-      })}
-    </svg>
+    </svg><figcaption>{pillars.map((pillar, index) => <span key={pillar}>{index + 1}. {PILLAR_LABELS[locale][pillar]}: {scores[pillar]}/100</span>)}</figcaption></figure>
   );
 }
 
@@ -1197,6 +1181,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
 
       {/* ─── HERO ─── Always-visible city identity */}
 
+      <CityEvidenceSummary city={city} locale={locale} />
       {cityPhoto ? (
         <div className="city-hero-photo">
           <ResponsiveImage
@@ -1307,7 +1292,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                   ? (locale === "th" ? "เขตส่งเสริมเมืองอัจฉริยะ" : locale === "zh" ? "智慧城市推广区" : "Smart City Promotion Zone")
                   : (locale === "th" ? "ข้อเสนอเมืองอัจฉริยะที่ขึ้นทะเบียน" : locale === "zh" ? "已登记智慧城市提案" : "Registered Smart City Proposal")}
             </p>
-            <h1>{cityName}</h1>
+            <p className="city-repeat-name">{cityName}</p>
             <p className="city-detail-province">{provinceName}</p>
           </div>
           <div className="city-detail-score-block">

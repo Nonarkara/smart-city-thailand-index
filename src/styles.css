@@ -12348,3 +12348,43 @@ body.canvas-print-mode {
   .meth-baseline-weight::after { content: " ·"; color: var(--3); }
   .meth-baseline-coverage { display: inline; }
 }
+
+/* City reference: the reading task leads; evidence remains adjacent. */
+.city-evidence-summary { padding-block: 1rem; }
+.city-evidence-summary h1 { margin: 0; font-size: var(--text-display); }
+.city-evidence-summary p { max-width: 65ch; font-size: var(--text-body); }
+.city-evidence-finding { font-weight: 700; }
+.city-evidence-details summary { cursor: pointer; padding-block: .5rem; font-size: var(--text-body); }
+.city-evidence-details table { width: 100%; border-collapse: collapse; font-size: var(--text-body); }
+.city-evidence-details th, .city-evidence-details td { text-align: start; padding: .5rem .25rem; border-bottom: 1px solid currentColor; }
+.city-evidence-details caption { text-align: start; font-weight: 700; padding-block: .5rem; }
+.city-evidence-details ul { padding-inline-start: 1.25rem; }
+.city-evidence-details li { margin-block: .5rem; overflow-wrap: anywhere; }
+.city-readable-radar { margin: 0; min-width: 0; }
+.city-readable-radar figcaption { display: grid; gap: .25rem; font-size: var(--text-body); }
+@media print {
+  .city-evidence-summary { color: #000; background: #fff; }
+  .city-evidence-details::details-content { display: block; content-visibility: visible; }
+  .city-evidence-details > * { display: revert; }
+  .city-evidence-details summary { display: none; }
+  .city-evidence-details thead { display: table-header-group; }
+  .city-evidence-details tr, .city-readable-radar { break-inside: avoid; }
+  .city-evidence-details a { color: #000; text-decoration: underline; }
+}
+/* The dossier photograph supplies context without displacing the finding. */
+.city-evidence-summary + .city-hero-photo { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
+@media (min-width: 720px) {
+  .city-evidence-summary + .city-hero-photo { aspect-ratio: 6 / 1; }
+}
+@media (max-width: 719px) {
+  .city-evidence-summary + .city-hero-photo { aspect-ratio: 3 / 2; }
+}
+.city-repeat-name { font-size: var(--text-display); font-weight: 700; margin: 0; }
+@media (min-width: 720px) and (max-width: 1199px) {
+  .city-evidence-summary + .city-hero-photo { aspect-ratio: 4 / 1; }
+}
+@media (min-width: 901px) and (max-width: 1199px) {
+  .city-evidence-summary + .city-hero-photo .city-hero-fingerprint {
+    top: .5rem; bottom: auto; width: 72px !important; height: 72px !important;
+  }
+}

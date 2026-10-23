@@ -467,9 +467,9 @@ export const RESIDUAL_GAPS: readonly ResidualGap[] = [
       zh: "省级电子政务指数",
     },
     note: {
-      en: "Thailand publishes none. DGA's digital-government readiness score is agency-level; the ITA integrity assessment is organisation-level and reaches the national portal from only some provinces; NSO's citizen-satisfaction series is national only. All three were probed. Governance is therefore measured by open-data publication, and labelled as exactly that.",
-      th: "ประเทศไทยไม่มีการจัดทำ คะแนนความพร้อมรัฐบาลดิจิทัลของ DGA เป็นระดับหน่วยงาน ผลประเมิน ITA เป็นระดับองค์กรและมาถึงแพลตฟอร์มกลางเพียงบางจังหวัด ส่วนชุดข้อมูลความพึงพอใจของ สศ. เป็นระดับประเทศ ทั้งสามแหล่งถูกตรวจสอบแล้ว มิติการบริหารจึงวัดจากการเผยแพร่ข้อมูลเปิด และระบุไว้ว่าเป็นการวัดเช่นนั้น",
-      zh: "泰国没有此类指数。DGA 的数字政府就绪度评分是机构级的；ITA 诚信评估是组织级的，且只有部分省份发布到国家门户；统计局的公民满意度数据是全国级的。三者均已实测核查。治理维度因此以开放数据发布量衡量，并如实如此标注。",
+      en: "SCITI has not verified a downloadable province-level series among the sources checked. DGA's digital-government readiness score is agency-level; the ITA integrity assessment is organisation-level and reaches the national portal from only some provinces; NSO's citizen-satisfaction series is national only. All three were probed. Governance is therefore measured by open-data publication, and labelled as exactly that.",
+      th: "SCITI ยังไม่พบชุดข้อมูลระดับจังหวัดที่ดาวน์โหลดได้จากแหล่งที่ตรวจสอบ คะแนนความพร้อมรัฐบาลดิจิทัลของ DGA เป็นระดับหน่วยงาน ผลประเมิน ITA เป็นระดับองค์กรและมาถึงแพลตฟอร์มกลางเพียงบางจังหวัด ส่วนชุดข้อมูลความพึงพอใจของ สศ. เป็นระดับประเทศ ทั้งสามแหล่งถูกตรวจสอบแล้ว มิติการบริหารจึงวัดจากการเผยแพร่ข้อมูลเปิด และระบุไว้ว่าเป็นการวัดเช่นนั้น",
+      zh: "SCITI 尚未在已核查来源中确认可下载的省级序列。DGA 的数字政府就绪度评分是机构级的；ITA 诚信评估是组织级的，且只有部分省份发布到国家门户；统计局的公民满意度数据是全国级的。三者均已实测核查。治理维度因此以开放数据发布量衡量，并如实如此标注。",
     },
   },
 ];
