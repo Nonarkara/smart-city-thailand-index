@@ -611,7 +611,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
+            <h2 className="invest-reading-title">
               {translate(locale, {
                 en: "What Is Moneyball?",
                 th: "Moneyball คืออะไร",
@@ -647,7 +647,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
+            <h2 className="invest-reading-title">
               {translate(locale, {
                 en: "For Investors: Look Beyond Bangkok",
                 th: "สำหรับนักลงทุน: มองข้ามกรุงเทพฯ ไปอีกขั้น",
@@ -776,7 +776,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
           <div className="invest-ccdr-inner">
-            <h2 style={{ fontSize: "var(--text-body)", marginBottom: "1rem" }}>
+            <h2 className="invest-reading-title">
               {translate(locale, {
       en: "Who Signs",
       th: "ใครเป็นคนเซ็น",

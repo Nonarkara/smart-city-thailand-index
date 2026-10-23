@@ -12605,3 +12605,86 @@ body.canvas-print-mode {
   /* Leave the floating help control clear of the collection-source link. */
   .heritage-search { margin-right: 64px; }
 }
+
+/* Reading hierarchy: chapter > explanation > source. Same three type tokens. */
+main .section > h2,
+main .section > header > h2,
+main .section > .reveal > h2,
+main .section > div > h2,
+main .city-heritage > h2 {
+  font-size: var(--text-display);
+  font-weight: 750;
+  line-height: 1.14;
+  letter-spacing: -.025em;
+  max-width: 30ch;
+  margin: 0 0 .75rem;
+  padding-top: .65rem;
+  border-top: 3px solid var(--ink);
+  text-wrap: balance;
+}
+main .section > p, main .section > div > p { max-width: 65ch; }
+main .section > p + p { margin-top: .5rem; }
+main .section > h2 + p, main .section > div > h2 + p { margin-top: 0; }
+main .section h3 { color: var(--ink); font-weight: 750; }
+main .city-heritage { border-top: 0; }
+main .city-heritage h3 { margin-block: .25rem .5rem; }
+main .heritage-layout figcaption p + p { margin-top: .5rem; }
+
+/* Certification is a source brief, with a count, a vision and a project index. */
+main .depa-official-section { max-width: none; padding: .85rem 0 0; border: 0; border-top: 3px solid var(--ink); background: none; }
+.depa-official-header { display: block; margin-bottom: 1rem; }
+.depa-official-header h2 { font-size: var(--text-display); line-height: 1.14; letter-spacing: -.025em; margin: 0 0 .35rem; }
+.depa-official-header .depa-official-date { margin: 0; color: var(--2); font: 500 var(--text-micro)/1.5 var(--mono); }
+.depa-plan-layout { display: grid; gap: 1.5rem; align-items: start; }
+.depa-plan-count { display: flex; align-items: baseline; gap: .65rem; margin: 0 0 1rem; max-width: 30ch; }
+.depa-plan-count strong { font: 750 var(--text-display)/1 var(--mono); color: var(--teal); }
+.depa-plan-count span { font-size: var(--text-body); line-height: 1.35; }
+.depa-plan-summary h3, .depa-plan-projects h3, .depa-plan-footer h3 { font-size: var(--text-body); margin: 0 0 .3rem; letter-spacing: 0; }
+.depa-official-vision { max-width: 55ch; margin: 0; line-height: 1.55; }
+.depa-official-brandline { margin: .65rem 0 0; font-style: normal; color: var(--ink); }
+.depa-plan-caveat { margin: .75rem 0 0; max-width: 55ch; color: var(--2); font-size: var(--text-body); line-height: 1.5; }
+.depa-plan-selection { font-size: var(--text-micro); color: var(--2); margin: 0 0 .6rem; }
+.depa-official-project-list { list-style: decimal-leading-zero; display: block; margin: 0; padding-left: 1.8rem; }
+.depa-official-project-item { padding: .55rem 0 .55rem .25rem; color: var(--ink); border-top: 1px solid var(--5); line-height: 1.45; }
+.depa-official-project-item::before { content: none; }
+.depa-official-project-item::marker { font: 500 var(--text-micro) var(--mono); color: var(--2); }
+.depa-official-project-item strong { font-weight: 650; }
+.depa-official-project-item span { display: block; margin-top: .2rem; color: var(--2); }
+.depa-plan-footer { border-top: 1px solid var(--3); margin-top: 1rem; padding-top: .75rem; display: grid; gap: .75rem; justify-items: start; }
+.depa-official-partnerships { margin: 0; max-width: 65ch; color: var(--2); }
+.depa-official-source { background: none; color: var(--teal); font: 650 var(--text-body)/1.4 var(--font); text-transform: none; letter-spacing: 0; padding: .3rem 0; text-decoration: underline; text-underline-offset: .2em; max-width: 100%; }
+.depa-official-source::before { content: none; }
+@media (min-width: 900px) {
+  .depa-plan-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 2rem; }
+  .depa-plan-footer { grid-template-columns: minmax(0, 1fr) auto; align-items: start; }
+}
+@media print {
+  .depa-plan-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 1rem; }
+  .depa-official-project-item { break-inside: avoid; }
+  .depa-official-header { break-after: avoid; }
+  .depa-official-source::after { content: " (" attr(href) ")"; font-size: var(--text-micro); overflow-wrap: anywhere; }
+}
+/* Decision-making prose is content, never micro metadata. */
+main .city-dossier-card-body,
+main .city-dossier-panel-copy,
+main .city-dossier-summary,
+main .city-analog-copy,
+main .city-analog-panel-copy {
+  font-size: var(--text-body); line-height: 1.55; letter-spacing: 0;
+  max-width: 65ch; color: var(--ink);
+}
+main .city-dossier-card { min-height: 0; align-content: start; gap: .4rem; }
+main .city-dossier-card-label,
+main .city-dossier-panel-title { font-size: var(--text-body); letter-spacing: 0; text-transform: none; font-family: var(--font); font-weight: 750; color: var(--ink); }
+main .city-dossier-grid { align-items: start; }
+main .invest-page > .investment-explorer h2,
+main .invest-reading-title { font-size: var(--text-display); line-height: 1.14; max-width: 30ch; margin-bottom: .75rem; letter-spacing: -.025em; }
+main .invest-ccdr-inner > p { max-width: 65ch; }
+main .invest-ccdr-inner > p:first-of-type { color: var(--ink) !important; font-weight: 550; }
+@media (max-width: 719px) {
+  .depa-plan-footer { padding-right: 3.5rem; }
+}
+/* Jumping between chapters must leave the heading below persistent navigation. */
+main .section, main .depa-official-section, main .section h2 { scroll-margin-top: 7rem; }
+@media print { .depa-official-section { break-inside: avoid; } }
+main .opening-argument-headline { font-size: var(--text-display); line-height: 1.14; max-width: 30ch; }

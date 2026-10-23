@@ -5,6 +5,7 @@ import AbsorptionReadout from "./AbsorptionReadout";
 import CityFingerprint from "./CityFingerprint";
 import NeedsLadder from "./NeedsLadder";
 import CityHeritageGallery from "./CityHeritageGallery";
+import OfficialRecognition from "./OfficialRecognition";
 import { computeNeedsLadder } from "./needsLadderEngine";
 import { getCityById } from "./cityData";
 import { getDepaOfficial } from "./depaOfficialData";
@@ -1351,59 +1352,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         {(() => {
           const depa = getDepaOfficial(city.id);
           if (!depa) return null;
-          const batchLabel = translate(locale, {
-            en: `Smart City Local · Batch ${depa.batch}`,
-            th: `เมืองอัจฉริยะสัญจร · รุ่นที่ ${depa.batch}`,
-            zh: `智慧城市认证 · 第 ${depa.batch} 批`,
-          });
-          const endorsedLabel = translate(locale, {
-            en: `Endorsed ${new Date(depa.endorsedDate).toLocaleDateString("en", { month: "long", day: "numeric", year: "numeric" })}`,
-            th: `ผ่านมติคณะอนุกรรมการ ${new Date(depa.endorsedDate).toLocaleDateString("th-TH", { month: "long", day: "numeric", year: "numeric" })}`,
-            zh: `委员会通过日期：${new Date(depa.endorsedDate).toLocaleDateString("zh-CN", { month: "long", day: "numeric", year: "numeric" })}`,
-          });
-          return (
-            <section className="depa-official-section" aria-label={translate(locale, { en: "Official depa Recognition", th: "การรับรองอย่างเป็นทางการจาก depa", zh: "depa 官方认证" })}>
-              <div className="depa-official-header">
-                <span className="depa-official-badge">depa</span>
-                <span className="depa-official-batch">{batchLabel}</span>
-                <span className="depa-official-date">{endorsedLabel}</span>
-              </div>
-              <p className="depa-official-vision">{depa.vision}</p>
-              {depa.brandline && (
-                <p className="depa-official-brandline">"{depa.brandline}"</p>
-              )}
-              <div className="depa-official-projects">
-                <p className="depa-official-projects-label">
-                  {translate(locale, {
-                    en: depa.projectCount ? `${depa.projectCount} official smart city projects` : "Official smart city projects",
-                    th: depa.projectCount ? `${depa.projectCount} โครงการเมืองอัจฉริยะอย่างเป็นทางการ` : "โครงการเมืองอัจฉริยะอย่างเป็นทางการ",
-                    zh: depa.projectCount ? `${depa.projectCount} 项官方智慧城市项目` : "官方智慧城市项目",
-                  })}
-                </p>
-                <ul className="depa-official-project-list">
-                  {depa.keyProjects.map((project, i) => (
-                    <li key={i} className="depa-official-project-item">{project}</li>
-                  ))}
-                </ul>
-              </div>
-              {depa.partnerships && depa.partnerships.length > 0 && (
-                <p className="depa-official-partnerships">
-                  <span className="depa-official-meta-label">
-                    {translate(locale, { en: "Key partners", th: "พันธมิตรสำคัญ", zh: "关键合作方" })}:
-                  </span>{" "}
-                  {depa.partnerships.join(" · ")}
-                </p>
-              )}
-              <a
-                href={depa.depaUrl}
-                className="depa-official-source"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {translate(locale, { en: "Official certification plan", th: "แผนพัฒนาเมืองอัจฉริยะอย่างเป็นทางการ", zh: "官方城市认证计划" })}
-              </a>
-            </section>
-          );
+          return <OfficialRecognition record={depa} locale={locale} />;
         })()}
 
         <div className="city-decision-strip" aria-label={translate(locale, { en: "Investor decision brief", th: "สรุปเพื่อการตัดสินใจลงทุน", zh: "投资决策速览" })}>
