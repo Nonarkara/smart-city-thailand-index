@@ -25,3 +25,6 @@ cea-submission/gdrive-pack/
 # Local probe scripts and screenshots — never committed
 .bauhaus/
 .mavis/
+
+# Cloudflare local deployment state
+.wrangler/

@@ -12509,7 +12509,7 @@ body.canvas-print-mode {
 .investment-explorer-stage { position: relative; }
 .investment-explorer-chart { display: block; width: 100%; height: auto; overflow: visible; }
 .investment-explorer-grid line { stroke: var(--3); stroke-opacity: .2; stroke-width: 1; }
-.investment-explorer-dot { fill: var(--3); fill-opacity: .48; stroke: var(--surface); stroke-width: 1; cursor: pointer; }
+.investment-explorer-dot { fill: var(--3); fill-opacity: .8; stroke: var(--surface); stroke-width: 1; cursor: pointer; }
 .investment-explorer-dot:hover { fill: var(--gold); fill-opacity: 1; stroke: var(--ink); }
 .investment-explorer-dot.is-selected { fill: var(--gold); fill-opacity: 1; stroke: var(--ink); stroke-width: 2; }
 .investment-explorer-scale { display: flex; justify-content: space-between; margin-inline: 6.667%; font: var(--text-body) var(--mono); }

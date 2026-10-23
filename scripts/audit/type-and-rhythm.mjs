@@ -137,6 +137,13 @@ for (const route of ROUTES) {
         console.log(`   DISPLAY STATEMENT: ${st.tag}.${st.cls} — "${st.text}"`);
       }
     }
+    // One fact, one place. The same words at the display size twice on one
+    // page is repetition the reader can see at a glance. The sentence
+    // counter above cannot catch it: a city name is one word.
+    for (const v of m.dupDisplay ?? []) {
+      console.log(`   DUPLICATE DISPLAY TEXT: "${v[0].text}" ×${v.length} — ${v.map(x => x.tag + "." + x.cls).join(" | ")}`);
+      totalStatements += v.length - 1;
+    }
 
     console.log(`\n=== ${route} — ${sizeEntries.length} sizes, ${offCount} off-scale, bar ${m.barH}px`);
     console.log("   sizes: " + sizeEntries.map(([s, c]) => `${s}×${c}`).join(" "));
