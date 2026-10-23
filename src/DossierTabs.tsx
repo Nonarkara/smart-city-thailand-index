@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { flushSync } from "react-dom";
+import { useEffect, useState } from "react";
 import type { Locale } from "./types";
 
 interface Props {
@@ -9,6 +10,14 @@ interface Props {
 
 export default function DossierTabs({ labels, children, locale }: Props) {
   const [active, setActive] = useState(0);
+  const [printing, setPrinting] = useState(false);
+  useEffect(() => {
+    const before = () => flushSync(() => setPrinting(true));
+    const after = () => setPrinting(false);
+    window.addEventListener("beforeprint", before);
+    window.addEventListener("afterprint", after);
+    return () => { window.removeEventListener("beforeprint", before); window.removeEventListener("afterprint", after); };
+  }, []);
 
   return (
     <div className="dossier-tabs">
@@ -32,7 +41,7 @@ export default function DossierTabs({ labels, children, locale }: Props) {
         ))}
       </div>
       <div className="dossier-tab-panel" role="tabpanel">
-        {children[active]}
+        {printing ? children.map((child, index) => <section key={index} className="dossier-print-section"><h2>{labels[index]}</h2>{child}</section>) : children[active]}
       </div>
     </div>
   );

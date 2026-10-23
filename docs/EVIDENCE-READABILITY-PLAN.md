@@ -23,3 +23,13 @@ Design read: a city reference begins with what is known and what remains unknown
 ## Release evidence
 
 Run lint, tests, production build; render at 390/1024/1440; test Thai and Chinese; check A4 output. Preserve maps, charts, institutional marks, and curated city content. Deploy via CDPT and verify the changed dossier on the live domain. No file reductions above 30%.
+
+## Research release — 23 October 2026
+
+CityResearchAppendix exposes each selected indicator's raw observation, recorded period, scope, source/table identifier, and scale interpretation. Only directly linked provincial series receive a recorded observation period; missing dates remain explicit. Source publication and checking dates are not invented. Calculation specifications remain English and are labelled accordingly in all locales.
+
+The content-addressed JSON in public/research freezes all 118 cities, provincial inputs, indicator definitions/formulas, weights, results, and the calculation source. src/researchSnapshot.json carries its SHA-256; scripts/build-research-snapshot.mjs is an explicit release step, not a build-time refresh. Existing snapshot files must be retained when creating later releases.
+
+DossierTabs mounts all five panels on beforeprint and restores the active panel afterward. The appendix expands for print; chat controls are hidden. Content sections previously marked city-print-hide are restored within printed dossier panels; screen controls and unrelated news/signup panels are omitted. Interactive charts print as their current static rendering, not as archived interactive state. Domain-specific infrastructure adequacy still requires local service inventories and justified benchmarks; no pass/fail thresholds are inferred from the observation scales.
+
+Validation of this increment: five focused tests passed; TypeScript passed; independent reviewer approved 390/1024/1440 captures and populated 24-page A4 print output. Snapshot checksum and all calculated results match published local inputs. The full release gate failed on UI timing checks while host load averages exceeded 400; isolated rankings tests also timed out. Release is withheld, with no production deployment from this increment. Re-run CDPT on a responsive host. The PDF is not accessibility-tagged and remains a full dossier, not the planned concise brief. Existing curated and provincial PM2.5 values differ; reconciling historical claims remains outstanding.

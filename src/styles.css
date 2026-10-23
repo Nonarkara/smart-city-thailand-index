@@ -12388,3 +12388,49 @@ body.canvas-print-mode {
     top: .5rem; bottom: auto; width: 72px !important; height: 72px !important;
   }
 }
+
+.city-research-appendix { margin-top: .5rem; font-size: var(--text-body); }
+.city-research-appendix summary { padding-block: .5rem; cursor: pointer; font-weight: 600; }
+.city-research-appendix p { overflow-wrap: anywhere; }
+.city-research-actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.city-research-actions button { font: inherit; padding: .5rem; background: var(--surface); color: var(--ink); border: 1px solid currentColor; cursor: pointer; min-height: 44px; }
+.research-domain { border-top: 2px solid currentColor; margin-block: .75rem; }
+.research-indicator { padding-block: .5rem; border-top: 1px solid var(--5); }
+.research-indicator h3 { font-size: var(--text-body); margin-block: .5rem; }
+.research-indicator dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: .4rem .75rem; margin: 0; }
+.research-indicator dd { margin: 0; overflow-wrap: anywhere; }
+.research-indicator dt { font-weight: 600; }
+@media print {
+  body:has(.city-evidence-summary) .chat-fab,
+  body:has(.city-evidence-summary) .chat-panel,
+  body:has(.city-evidence-summary) .data-feedback-section,
+  body:has(.city-evidence-summary) .dossier-tab-list,
+  .city-research-actions { display: none !important; }
+  body:has(.city-evidence-summary) main { padding: 12mm !important; }
+  .city-research-appendix::details-content,
+  .research-domain::details-content { display: block; content-visibility: visible; }
+  .city-research-appendix > summary,
+  .research-domain > summary { display: block; }
+  .research-indicator { break-inside: avoid; }
+  .research-indicator a::after { content: " (" attr(href) ")"; overflow-wrap: anywhere; }
+  .dossier-print-section { break-before: page; }
+  .dossier-print-section .reveal { opacity: 1 !important; transform: none !important; }
+}
+@media print {
+  body:has(.city-evidence-summary) { page: city-reference; }
+  body:has(.city-evidence-summary) main { padding: 0 !important; }
+  body:has(.city-evidence-summary) .newsletter-section,
+  body:has(.city-evidence-summary) .footer-nav { display: none !important; }
+  @page city-reference {
+    size: A4;
+    margin: 14mm;
+    @bottom-center { content: "SCITI 2026 · " counter(page); font-size: 11pt; }
+  }
+}
+@media print {
+  body:has(.city-evidence-summary) .news-section { display: none !important; }
+}
+@media print {
+  .dossier-print-section .city-print-hide { display: block !important; }
+  .dossier-print-section .reveal { visibility: visible !important; }
+}

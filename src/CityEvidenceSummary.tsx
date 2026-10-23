@@ -1,3 +1,4 @@
+import CityResearchAppendix from "./CityResearchAppendix";
 import { allCities } from "./cityData";
 import { buildCohort, deriveCity, DEPA_DIMENSION_ORDER, DIMENSION_LABELS, INDICATORS } from "./dimensionScores";
 import { SOURCE_REGISTRY } from "./baselineSources";
@@ -31,5 +32,6 @@ export default function CityEvidenceSummary({ city, locale }: { city: SmartCity;
       <ul>{SOURCE_REGISTRY.filter(source => source.serves.length > 0).map(source => <li key={source.id}><a href={source.url}>{source.publisher}: {source.title}</a></li>)}</ul>
       <p>{t({ en: "Source-link checks are not observation dates. These series have different vintages; they are not a real-time service monitor.", th: "วันที่ตรวจสอบลิงก์ไม่ใช่วันที่สำรวจ ข้อมูลแต่ละชุดมาจากต่างช่วงเวลา และไม่ใช่ระบบติดตามบริการแบบเรียลไทม์", zh: "链接核查日期并非观测日期。各序列年份不同，不能视为实时服务监测。" })}</p>
     </details>
+    <CityResearchAppendix city={city} locale={locale} />
   </section>;
 }
