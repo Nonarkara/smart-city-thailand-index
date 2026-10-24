@@ -1609,6 +1609,54 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
  * the 1440px design canvas, the right offset grows to keep the FAB inside
  * the white page-shell instead of floating in the depa-blue gutter. */
 .chat-fab { position: fixed; bottom: 1.25rem; right: max(1.25rem, calc(50vw - 720px + 1.25rem)); z-index: 150; width: 44px; height: 44px; display: grid; place-items: center; background: var(--teal); color: #fff; transition: transform .22s ease-out, opacity .22s ease-out; }
+/* Measured gutter: the content column only leaves a lane at 1280px and
+ * above. Below that the button would sit on the words being read, so it
+ * gives way to the navigation entry (.chat-nav-btn). */
+@media (max-width: 1279px) {
+  .chat-fab { display: none; }
+}
+/* The assistant, in the navigation. Same control as the floating button,
+ * in the only place it can live without covering the text. */
+.chat-nav-btn {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--5);
+  background: var(--surface);
+  color: var(--2);
+  cursor: pointer;
+}
+.chat-nav-btn:hover { background: var(--bg-2); }
+/* At 1280px and above the gutter exists and the floating button is the
+ * better placement, so the navigation entry stands down. */
+@media (min-width: 1280px) {
+  .chat-nav-btn { display: none; }
+}
+/* In the hamburger panel the entry becomes a full-width row, matching the
+ * other controls there. */
+@media (max-width: 900px) {
+  .nav-links.nav-links-open .chat-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    margin: 0;
+    padding: .55rem .45rem;
+    border: 1px solid var(--5);
+    background: var(--surface);
+    color: var(--2);
+  }
+}
+/* The floating button and the navigation entry are never both live. */
+@media (max-width: 900px) {
+  body:has(.nav-links-open) .chat-panel {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
 /* On a phone the content column is full width, so the button would sit on
  * the text. It tucks away while the reader scrolls down and returns when
  * they scroll up. */
@@ -2808,7 +2856,7 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
   padding: 1.5rem; border: 1px solid var(--5); border-radius: var(--radius);
   background: var(--bg); text-align: center;
 }
-.audit-kpi-value { font: 800 var(--text-display) var(--font-heading); line-height: 1; margin-bottom: 0.25rem; }
+.audit-kpi-value { font: 800 var(--text-body) var(--mono); line-height: 1.2; margin-bottom: 0.25rem; }
 .audit-kpi-label { font: 600 var(--text-micro) var(--mono); text-transform: uppercase; color: var(--3); letter-spacing: 0.05em; }
 .audit-kpi-sub { font-size: var(--text-micro); color: var(--2); margin-top: 0.5rem; }
 
@@ -2839,9 +2887,15 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
   letter-spacing: .1em;
   color: var(--3);
 }
+/* Body size, not display. Six of the eight cells hold an em-dash
+ * standing for "source reconciliation pending" — at display size that is
+ * six holes in the page's hierarchy, and the two real figures were
+ * repeated at display size again in the CCDR panel below. The strip is a
+ * reference band; the CCDR panel keeps display size for the page's
+ * actual finding. */
 .invest-macro-value {
-  font: 800 var(--text-display) var(--font-heading);
-  letter-spacing: -.04em;
+  font: 800 var(--text-body) var(--mono);
+  letter-spacing: -.01em;
   color: var(--ink);
 }
 .invest-macro-sub {
@@ -3102,7 +3156,7 @@ h2, h3 { font-family: var(--font); }
 .audit-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--5); margin-top: .6rem; }
 .audit-kpi { padding: .75rem .65rem; border-right: 1px solid var(--5); text-align: center; }
 .audit-kpi:last-child { border-right: 0; }
-.audit-kpi-value { font: 700 var(--text-display) var(--mono); margin-bottom: .1rem; }
+.audit-kpi-value { font: 700 var(--text-body) var(--mono); margin-bottom: .1rem; }
 .audit-kpi-label { font: 600 var(--text-micro) var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--3); }
 .audit-kpi-sub { font: 500 var(--text-micro) var(--mono); color: var(--4); margin-top: .1rem; }
 .audit-gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .6rem; }
@@ -5903,7 +5957,7 @@ details[open] .kb-question::before { content: "−"; }
 
 .audit-kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--5); border: 1px solid var(--5); margin-top: 1rem; }
 .audit-kpi { background: var(--bg); padding: 1.25rem 1rem; text-align: center; }
-.audit-kpi-value { font: 700 var(--text-display) var(--mono); line-height: 1; margin-bottom: 0.25rem; }
+.audit-kpi-value { font: 700 var(--text-body) var(--mono); line-height: 1.2; margin-bottom: 0.25rem; }
 .audit-kpi-label { font: 600 var(--text-micro) var(--font); color: var(--ink); margin-bottom: 0.1rem; }
 .audit-kpi-sub { font: 600 var(--text-micro) var(--mono); color: var(--3); text-transform: uppercase; letter-spacing: 0.05em; }
 .audit-kpi-badge { display: inline-block; font: 600 var(--text-micro) var(--mono); text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.4rem; border-radius: 0; margin-top: 0.4rem; }
@@ -5921,6 +5975,14 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .audit-domain-score-box { text-align: center; }
 .audit-domain-score-label { font: 600 var(--text-micro) var(--mono); color: var(--3); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.15rem; }
 .audit-domain-score-val { font: 800 var(--text-display) var(--mono); line-height: 1; }
+/* The unit the figure counts. It is what distinguishes this "49" from
+ * the "49" in the scope KPI above it. */
+.audit-domain-score-unit {
+  font: 600 var(--text-body) var(--mono);
+  color: var(--3);
+  margin-left: .35rem;
+  letter-spacing: 0;
+}
 .audit-domain-divider { font: 700 var(--text-micro) var(--mono); color: var(--4); align-self: center; }
 .audit-gap-meter { height: 4px; background: var(--5); border-radius: 0; margin-top: 0.75rem; position: relative; overflow: hidden; }
 .audit-gap-fill-pr { height: 100%; background: var(--4); position: absolute; left: 0; top: 0; }
@@ -6167,7 +6229,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .audit-open-links a:hover { background: var(--ink); color: var(--bg); }
 .audit-open-links a:active { transform: scale(.97); }
 
-.audit-page .audit-kpi-value,
+.audit-page .audit-kpi-value { font-size: var(--text-body); }
 .audit-page .audit-verified-claim > span,
 .audit-page .audit-proof-result strong { font-size: var(--text-display); }
 .audit-page .audit-kpi-label,
@@ -7455,12 +7517,15 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   border-radius: 0;
   background: var(--bg);
 }
+/* No tracking. The chip carries a figure and the baht sign
+ * (U+0E3F), which is a Thai-block character; tracking pulls it away
+ * from the digits. Mono numerals do not need their counters opened. */
 .dev-score-delta {
   display: inline-block;
   margin-top: .4rem;
   padding: .18rem .5rem;
   font: 600 var(--text-micro) var(--mono);
-  letter-spacing: .06em;
+  letter-spacing: normal;
   border-radius: 0;
   border: 1px solid var(--5);
 }
@@ -9066,13 +9131,17 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
  * page-title size so the opening band reads as data held at the same weight as
  * the statement, rather than shouting over it. */
 .opening-argument-num {
-  font: 800 var(--text-display)/1 var(--mono);
+  /* Body size, not display. The hero's telemetry band already states
+   * 118 and 37 at display size, 537px above this one; repeating the
+   * same numeral in the same size is the mechanical repetition this
+   * pass removes. The numeral still opens its sentence. */
+  font: 800 var(--text-body)/1.25 var(--mono);
   color: #fff;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.01em;
   display: block;
   /* Amber underline accent — the equals-key on the Braun ET66 */
   border-bottom: 3px solid var(--amber, #f59e0b);
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
   width: fit-content;
   margin-bottom: 0.25rem;
 }
@@ -9111,14 +9180,18 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 /* Mobile: compress vertical padding */
 @media (max-width: 480px) {
-  .opening-argument-num { font-size: var(--text-display); }
+  .opening-argument-num { font-size: var(--text-body); }
   .opening-argument-headline { font-size: var(--text-body); }
   .opening-argument-copy { max-width: 100%; }
 }
 
 /* Content-visibility: allow browser to skip offscreen rendering of heavy sections */
-.site-footer { content-visibility: auto; contain-intrinsic-size: 0 400px; }
-.news-section { content-visibility: auto; contain-intrinsic-size: 0 300px; }
+/* "auto" makes the browser remember the last rendered size and use it
+ * as the placeholder, so the section does not shift the page under the
+ * reader on the way down. The number after it is the first-visit
+ * fallback. */
+.site-footer { content-visibility: auto; contain-intrinsic-size: auto 400px; }
+.news-section { content-visibility: auto; contain-intrinsic-size: auto 300px; }
 
 .home-stat-ribbon {
   width: 100%;
@@ -9328,7 +9401,11 @@ h2, h3, .home-section-title { font-family: var(--font); }
   color: var(--2);
 }
 .regional-champion-score {
-  font: 600 var(--text-display) var(--mono);
+  /* Body size. A six-item list is a reference band, and in the
+   * road-safety variant this class carries the UNIT "deaths/yr" — five
+   * units at display size, side by side. It also duplicated the podium
+   * scores for the same cities. */
+  font: 700 var(--text-body) var(--mono);
   color: var(--ink);
   letter-spacing: -0.01em;
 }
@@ -12464,7 +12541,8 @@ body.canvas-print-mode {
 .research-indicator dd { margin: 0; overflow-wrap: anywhere; }
 .research-indicator dt { font-weight: 600; }
 @media print {
-  body:has(.city-evidence-summary) .chat-fab,
+  .chat-nav-btn,
+body:has(.city-evidence-summary) .chat-fab,
   body:has(.city-evidence-summary) .chat-panel,
   body:has(.city-evidence-summary) .data-feedback-section,
   body:has(.city-evidence-summary) .dossier-tab-list,

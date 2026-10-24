@@ -85,7 +85,7 @@ function upsertSignal_(record) {
     record.themes,
     record.observed_at,
     record.ingested_at,
-  ];
+  ].map(literalCell_);
   const existingRow = findSignalRow_(sheet, record.id);
 
   if (existingRow > 0) {
@@ -94,6 +94,14 @@ function upsertSignal_(record) {
   }
 
   sheet.appendRow(rowValues);
+}
+
+// Sheets interprets strings beginning with '=' as formulas, even through APIs.
+// Prefix spreadsheet formula markers so imported text remains literal cell data.
+function literalCell_(value) {
+  return typeof value === "string" && /^[=+@\-\t\r\n]/.test(value)
+    ? "'" + value
+    : value;
 }
 
 function findSignalRow_(sheet, id) {
@@ -156,8 +164,8 @@ function ensureHeaders_(sheet) {
 
 function isAuthorized_(e) {
   const expected = PropertiesService.getScriptProperties().getProperty("SMART_CITY_SIGNAL_SECRET");
-  if (!expected) return true;
-  return e.parameter.secret === expected;
+  if (!expected) return false;
+  return Boolean(e && e.parameter && e.parameter.secret === expected);
 }
 
 function jsonResponse_(payload, status) {

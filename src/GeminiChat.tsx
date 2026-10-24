@@ -4,6 +4,7 @@ import { useCitySummaries } from "./cityApi";
 import { getCityContextSummaryPrompt, getCityDataRailReferenceText, getCityFinanceInstrumentCatalog } from "./cityCdp";
 import { dataSources } from "./evidenceData";
 import { getClaimValue } from "./claimRegistry";
+import { OPEN_CHAT_EVENT } from "./chatEvents";
 
 interface Props {
   locale: Locale;
@@ -119,6 +120,17 @@ export default function GeminiChat({ locale }: Props) {
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open, hasApiKey]);
+
+  // The navigation holds the chat entry on every viewport narrower than
+  // 1280px, because a fixed bottom-right button has nowhere to sit that
+  // does not cover the words being read. The button and the navigation
+  // entry are the same control in two places, so they are opened through
+  // one event rather than by lifting the dialog state into the shell.
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener(OPEN_CHAT_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_CHAT_EVENT, onOpen);
+  }, []);
 
   const persistApiKey = useCallback(() => {
     const nextKey = apiKeyDraft.trim();

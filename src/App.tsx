@@ -5,6 +5,7 @@ import { ResponsiveImage } from "./mediaAssets";
 import TopbarNav from "./TopbarNav";
 import type { Locale } from "./types";
 import { trackVisitor } from "./visitorTracking";
+import { openChat } from "./chatEvents";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { PAGE_HERO_ASSETS, type StaticHeroKind } from "./pageHeroAssets";
 
@@ -375,6 +376,31 @@ export default function App() {
               onClick={toggleTheme}
             >
               {theme === "light" ? "\u263E" : "\u2600"}
+            </button>
+            {/* The assistant, in the navigation. Below 1280px the content
+                column has no gutter, so a fixed button would cover the
+                words being read; there it belongs with the other
+                controls. Above 1280px the floating button takes over and
+                this entry is hidden, so it is never in two places at
+                once. */}
+            <button
+              type="button"
+              className="chat-nav-btn"
+              aria-label={
+                locale === "th"
+                  ? "ถามเกี่ยวกับเมืองอัจฉริยะไทย"
+                  : locale === "zh"
+                    ? "询问泰国智慧城市"
+                    : "Ask about Thai smart cities"
+              }
+              onClick={() => {
+                setMobileMenuOpen(false);
+                openChat();
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
             </button>
             <div
               className="locale-segmented"

@@ -162,7 +162,12 @@ export default function AuditPage({ locale, onNavigate }: Props) {
           {confidenceRows.map(row => (
             <div key={row.key} className="audit-domain-card">
               <h3 className="audit-domain-name">{t(row.label)}</h3>
-              <div className="audit-domain-score-val">{row.value}</div>
+              <div className="audit-domain-score-val">
+                {row.value}
+                <span className="audit-domain-score-unit">
+                  {t({ en: "cities", th: "เมือง", zh: "座城市" })}
+                </span>
+              </div>
               <p className="audit-domain-description">{t(row.desc)}</p>
             </div>
           ))}

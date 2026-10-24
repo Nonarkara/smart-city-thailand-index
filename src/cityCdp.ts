@@ -66,6 +66,7 @@ export interface CityMetricObservation {
   methodNote: string;
   verifiedAt: string;
   version: string;
+  provenance: BaselineProvenance;
 }
 
 export interface CityMetricBlock {
@@ -175,7 +176,27 @@ export interface CityExportMetadata {
   cityCsvUrl: string;
 }
 
+export interface BaselineProvenance {
+  inputBasis: "curated_seed_baseline";
+  locallyVerified: false;
+  confidenceBasis: "input_coverage_not_local_verification";
+  dateBasis: "editorial_defaults_not_observation_or_verification";
+  geographicScope: "mixed_city_and_province_context";
+  limitation: string;
+}
+
+const BASELINE_PROVENANCE: BaselineProvenance = {
+  inputBasis: "curated_seed_baseline",
+  locallyVerified: false,
+  confidenceBasis: "input_coverage_not_local_verification",
+  dateBasis: "editorial_defaults_not_observation_or_verification",
+  geographicScope: "mixed_city_and_province_context",
+  limitation: "Scores and highlights are curated inputs. Agency links identify source families, not row-level verification. Provincial context does not establish city or site conditions. Legacy observedAt and verifiedAt fields are baseline defaults, not evidence of checking.",
+};
+
 export interface CitySummaryDTO extends SmartCity {
+  provenance: BaselineProvenance;
+  rawMetricUnits: { population: "thousand people"; laborForce: "thousand people"; fdiInflow: "million THB" };
   keyMetrics: CityKeyMetric[];
   shortTailoredNote: LocalizedText;
   financeSignal: CityFinanceSignal;
@@ -508,7 +529,7 @@ function formatMetricValue(metricKey: string, value: number | string | undefined
     if (metricKey === "landPriceBaht") {
       return { text: `฿${value.toLocaleString()}`, unit: "THB/m²" };
     }
-    return { text: `฿${value.toLocaleString()}`, unit: "THB" };
+    return { text: `฿${value.toLocaleString()}`, unit: metricKey === "fdiInflow" ? "million THB" : "THB" };
   }
   if (metricKey === "pm25Annual") {
     return { text: `${value}`, unit: "ug/m3" };
@@ -744,9 +765,12 @@ function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
 
       return {
         cityId: city.id,
+        provenance: BASELINE_PROVENANCE,
         metricKey,
         label: metricLabel(metricKey),
-        metricValueNum: typeof value === "number" && !isPendingPopulation ? value : null,
+        metricValueNum: typeof value === "number" && !isPendingPopulation
+          ? value * (metricKey === "population" || metricKey === "laborForce" ? 1000 : 1)
+          : null,
         metricValueText: typeof value === "string" ? value : formatted.text,
         unit: formatted.unit || null,
         periodLabel: metricKey === "pm25Annual" ? "2025 annual average" : "2025 baseline",
@@ -1602,6 +1626,8 @@ function buildCitySummary(
 
   return {
     ...city,
+    provenance: BASELINE_PROVENANCE,
+    rawMetricUnits: { population: "thousand people", laborForce: "thousand people", fdiInflow: "million THB" },
     dataConfidence: classifyDataConfidence(dataConfidenceScore),
     keyMetrics: buildKeyMetrics(city, observations),
     shortTailoredNote: buildShortTailoredNote(city, context),
@@ -1723,6 +1749,11 @@ export function getCitySummariesCsv(): string {
     last_verified_at: city.freshness.lastVerifiedAt,
     provenance_count: String(city.provenanceCount),
     export_ready: city.exportReady ? "true" : "false",
+    input_basis: city.provenance.inputBasis,
+    locally_verified: String(city.provenance.locallyVerified),
+    confidence_basis: city.provenance.confidenceBasis,
+    date_basis: city.provenance.dateBasis,
+    geographic_scope: city.provenance.geographicScope,
   })));
 }
 
@@ -1741,6 +1772,11 @@ export function getCityFactsCsv(cityId?: string): string {
     observed_at: row.observed_at,
     confidence: row.confidence,
     version: row.version,
+    input_basis: BASELINE_PROVENANCE.inputBasis,
+    locally_verified: String(BASELINE_PROVENANCE.locallyVerified),
+    confidence_basis: BASELINE_PROVENANCE.confidenceBasis,
+    date_basis: BASELINE_PROVENANCE.dateBasis,
+    geographic_scope: BASELINE_PROVENANCE.geographicScope,
   })));
 }
 

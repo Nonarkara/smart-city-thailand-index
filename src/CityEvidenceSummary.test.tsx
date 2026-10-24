@@ -17,3 +17,8 @@ describe("city evidence interpretation", () => {
     expect(screen.getByText(/not a real-time service monitor/)).toBeTruthy();
   });
 });
+
+it('does not present catalogue defaults as local verification', () => {
+  render(<CityEvidenceSummary city={allCities[0]} locale="en" />);
+  expect(screen.getByText(/Catalogue dates and confidence labels describe the baseline, not local observation or verification/)).toBeTruthy();
+});

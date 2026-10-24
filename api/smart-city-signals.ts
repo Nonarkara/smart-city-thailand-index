@@ -319,7 +319,10 @@ async function listFromAppsScript(limit: number): Promise<ListResponse> {
     throw new Error(`Apps Script ${response.status} ${response.statusText}`.trim());
   }
 
-  const payload = await response.json() as { signals?: SignalRecord[] };
+  const payload = await response.json() as { signals?: SignalRecord[]; error?: unknown; status?: number };
+  if (payload.error || (payload.status !== undefined && payload.status >= 400) || !Array.isArray(payload.signals)) {
+    throw new Error("Apps Script rejected the signal read or returned an invalid response.");
+  }
 
   return {
     backend: {
@@ -346,8 +349,12 @@ async function insertIntoAppsScript(signal: SignalRecord): Promise<SignalRecord>
     throw new Error(`Apps Script ${response.status} ${response.statusText}`.trim());
   }
 
-  const payload = await response.json() as { signal?: SignalRecord };
-  return payload.signal ?? signal;
+  const payload = await response.json() as { ok?: boolean; signal?: SignalRecord; error?: unknown; status?: number };
+  if (payload.ok !== true || payload.error || (payload.status !== undefined && payload.status >= 400)
+    || !payload.signal || payload.signal.id !== signal.id || typeof payload.signal.text_body !== "string") {
+    throw new Error("Apps Script did not confirm a persisted signal.");
+  }
+  return payload.signal;
 }
 
 function getRequestedOrder(): SignalBackendMode[] {

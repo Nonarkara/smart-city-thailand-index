@@ -585,9 +585,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           zh: "五步交付梯度中暂时没有明显亮红灯的结构性缺口。真正的挑战在于规模扩大后还能否维持质量。",
         });
     const verificationSummary = translate(locale, {
-      en: `Latest observed ${formatIsoDate(city.freshness.latestObservedAt)}. Last verified ${formatIsoDate(city.freshness.lastVerifiedAt)}. ${city.provenanceCount} provenance rows and ${city.evidenceItems.length} evidence items support this dossier.`,
-      th: `สังเกตล่าสุด ${formatIsoDate(city.freshness.latestObservedAt)} ตรวจสอบล่าสุด ${formatIsoDate(city.freshness.lastVerifiedAt)} โดย dossier นี้รองรับด้วยแถวหลักฐาน ${city.provenanceCount} แถว และหลักฐาน ${city.evidenceItems.length} รายการ.`,
-      zh: `最近观测日期为 ${formatIsoDate(city.freshness.latestObservedAt)}，最近核验日期为 ${formatIsoDate(city.freshness.lastVerifiedAt)}。这份档案由 ${city.provenanceCount} 条溯源记录和 ${city.evidenceItems.length} 条证据支撑。`,
+      en: `Baseline date ${formatIsoDate(city.freshness.latestObservedAt)}. Catalogue date ${formatIsoDate(city.freshness.lastVerifiedAt)}. ${city.provenanceCount} provenance rows and ${city.evidenceItems.length} evidence items are catalogued. These default dates do not establish local verification.`,
+      th: `วันที่ฐานข้อมูล ${formatIsoDate(city.freshness.latestObservedAt)} วันที่ในทะเบียน ${formatIsoDate(city.freshness.lastVerifiedAt)} มีรายการอ้างอิง ${city.provenanceCount} แถว และหลักฐาน ${city.evidenceItems.length} รายการ วันที่ตั้งต้นนี้ไม่ยืนยันการตรวจสอบในพื้นที่`,
+      zh: `基线日期为 ${formatIsoDate(city.freshness.latestObservedAt)}，目录日期为 ${formatIsoDate(city.freshness.lastVerifiedAt)}。目录含 ${city.provenanceCount} 条溯源记录及 ${city.evidenceItems.length} 条证据。这些默认日期不代表本地核验。`,
     });
 
     return {
@@ -1148,9 +1148,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           label: translate(locale, { en: "Evidence posture", th: "สถานะหลักฐาน", zh: "证据状态" }),
           value: `${dossier?.confidenceLabel ?? DATA_CONFIDENCE_LABELS[city.dataConfidence ?? "medium"][locale]} · ${city.provenanceCount}`,
           note: translate(locale, {
-            en: `Latest verified ${formatIsoDate(city.freshness.lastVerifiedAt)} · ${city.evidenceItems.length} evidence items`,
-            th: `ตรวจสอบล่าสุด ${formatIsoDate(city.freshness.lastVerifiedAt)} · หลักฐาน ${city.evidenceItems.length} รายการ`,
-            zh: `最近核验 ${formatIsoDate(city.freshness.lastVerifiedAt)} · ${city.evidenceItems.length} 条证据`,
+            en: `Catalogue date ${formatIsoDate(city.freshness.lastVerifiedAt)} · ${city.evidenceItems.length} evidence items`,
+            th: `วันที่ในทะเบียน ${formatIsoDate(city.freshness.lastVerifiedAt)} · หลักฐาน ${city.evidenceItems.length} รายการ`,
+            zh: `目录日期 ${formatIsoDate(city.freshness.lastVerifiedAt)} · ${city.evidenceItems.length} 条证据`,
           }),
         },
       ]),
@@ -1576,14 +1576,14 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                 <p className="city-dossier-panel-copy">{dossier.verificationSummary}</p>
                 <div className="record-grid city-dossier-record-grid">
                   <div className="record-item">
-                    <span className="record-label">{translate(locale, { en: "Latest observed", th: "ข้อมูลล่าสุด", zh: "最新观测" })}</span>
+                    <span className="record-label">{translate(locale, { en: "Baseline date", th: "วันที่ฐานข้อมูล", zh: "基线日期" })}</span>
                     <span className="record-value">
                       {formatIsoDate(city.freshness.latestObservedAt)}
                       <span className={`freshness-chip freshness-chip-${freshnessTone}`}>{freshnessChipText}</span>
                     </span>
                   </div>
                   <div className="record-item">
-                    <span className="record-label">{translate(locale, { en: "Last verified", th: "ตรวจสอบล่าสุด", zh: "最近核验" })}</span>
+                    <span className="record-label">{translate(locale, { en: "Catalogue date", th: "วันที่ในทะเบียน", zh: "目录日期" })}</span>
                     <span className="record-value">{formatIsoDate(city.freshness.lastVerifiedAt)}</span>
                   </div>
                   <div className="record-item">
@@ -1924,9 +1924,9 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
           <p className="city-factbook-freshness">
             {translate(locale, {
-              en: `Latest observed ${formatIsoDate(city.freshness.latestObservedAt)} · Last verified ${formatIsoDate(city.freshness.lastVerifiedAt)}`,
-              th: `ข้อมูลล่าสุด ${formatIsoDate(city.freshness.latestObservedAt)} · ตรวจสอบล่าสุด ${formatIsoDate(city.freshness.lastVerifiedAt)}`,
-              zh: `最新观测 ${formatIsoDate(city.freshness.latestObservedAt)} · 最近核验 ${formatIsoDate(city.freshness.lastVerifiedAt)}`,
+              en: `Baseline date ${formatIsoDate(city.freshness.latestObservedAt)} · Catalogue date ${formatIsoDate(city.freshness.lastVerifiedAt)}`,
+              th: `วันที่ฐานข้อมูล ${formatIsoDate(city.freshness.latestObservedAt)} · วันที่ในทะเบียน ${formatIsoDate(city.freshness.lastVerifiedAt)}`,
+              zh: `基线日期 ${formatIsoDate(city.freshness.latestObservedAt)} · 目录日期 ${formatIsoDate(city.freshness.lastVerifiedAt)}`,
             })}
             <span className={`freshness-chip freshness-chip-${freshnessTone}`} style={{ marginLeft: ".5rem" }}>{freshnessChipText}</span>
           </p>
@@ -2033,7 +2033,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             <span className="record-value">{city.deliveryProfile.recommendedLeadStep}</span>
           </div>
           <div className="record-item">
-            <span className="record-label">{translate(locale, { en: "Latest observed", th: "ข้อมูลล่าสุด", zh: "最新观测" })}</span>
+            <span className="record-label">{translate(locale, { en: "Baseline date", th: "วันที่ฐานข้อมูล", zh: "基线日期" })}</span>
             <span className="record-value">{formatIsoDate(city.freshness.latestObservedAt)}</span>
           </div>
           <div className="record-item">

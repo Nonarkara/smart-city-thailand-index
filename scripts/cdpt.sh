@@ -32,7 +32,7 @@ mkdir -p "$LOG_DIR"
 
 # ── PREFLIGHT GATES — never ship red ─────────────────────────────────────────
 bold "Preflight — tests"
-npx vitest run >"$LOG_DIR/cdpt-test.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-test.log"; die "tests failed"; }
+npx vitest run --maxWorkers=1 >"$LOG_DIR/cdpt-test.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-test.log"; die "tests failed"; }
 ok "$(grep -oE 'Tests +[0-9]+ passed[^)]*\)' "$LOG_DIR/cdpt-test.log" | tail -1)"
 
 bold "Preflight — lint"
@@ -178,5 +178,9 @@ for bad in "${chunk_bad[@]:-}"; do
 done
 [[ "$chunk_fail" = 0 ]] || die "$chunk_fail chunk(s) are not being served as JavaScript — the site will render blank. Re-run the deploy, then re-check."
 ok "all $(ls dist/static/*.js | wc -l | tr -d ' ') JS chunks serve with a JavaScript content-type"
+
+bold "Test — full city and research publication contract"
+AUDIT_ORIGIN="$DOMAIN" node scripts/verify-release.mjs >"$LOG_DIR/cdpt-contract.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-contract.log"; die "published city data does not match this build"; }
+ok "$(tail -1 "$LOG_DIR/cdpt-contract.log")"
 
 printf "\n\033[1;32m✓ CDPT complete — %s is live and verified.\033[0m\n" "$DOMAIN"

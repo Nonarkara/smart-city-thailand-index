@@ -7,6 +7,7 @@
 // ---------------------------------------------------------------------------
 
 import { allCities } from "./cityData.ts";
+import { buildProvinceVoice } from "./provinceNarrative.ts";
 import type { SmartCity } from "./types.ts";
 
 export interface CityContext {
@@ -387,52 +388,58 @@ function buildFallbackContext(city: SmartCity): CityContext {
   const primary = dimensionName(city.smartDimensions[0] ?? "governance");
   const secondary = dimensionName(city.smartDimensions[1] ?? "living");
   const role = regionRole(city);
+
+  // The province voice is built from that province's own measured values —
+  // NSO population and labour force, NSO/DOPA unplanned population, PCD
+  // air quality, RFD forest cover, RTDDI road deaths, Ministry of Energy
+  // electricity. Each of the four sentences draws on a different set of
+  // readings, so none repeats another and no two cities read alike.
+  //
+  // The regional role and the smart dimensions are kept as a short
+  // qualifier, not as the substance: they describe how the city is
+  // classified, not what is true about it.
+  const voice = buildProvinceVoice(city);
+
   const statusPhrase =
     city.status === "registered"
       ? {
-        en: "a registered smart-city promotion zone with public implementation evidence still thin",
-        th: "เขตส่งเสริมเมืองอัจฉริยะที่ขึ้นทะเบียนแล้ว แต่หลักฐานสาธารณะด้านการดำเนินงานยังมีจำกัด",
-        zh: "已登记的智慧城市推广区，公开实施证据尚薄",
+        en: "a registered smart-city promotion zone",
+        th: "เขตส่งเสริมเมืองอัจฉริยะที่ขึ้นทะเบียนแล้ว",
+        zh: "已登记的智慧城市推广区",
       }
       : city.status === "promotion"
         ? {
-          en: "a promotion-zone dossier where the strongest public evidence should be read project by project",
-          th: "เมืองในกลุ่มส่งเสริมที่ควรอ่านหลักฐานสาธารณะเป็นรายโครงการ",
-          zh: "推广区档案，公开证据应逐项目查阅",
+          en: "a promotion-zone entry whose strongest public evidence should be read project by project",
+          th: "รายการเขตส่งเสริมที่หลักฐานสาธารณะที่แข็งแรงที่สุดควรอ่านเป็นรายโครงการ",
+          zh: "推广区条目，其最强公开证据应逐项目查阅",
         }
         : {
-          en: "a certified smart-city dossier whose claims still need to be checked against visible operating evidence",
-          th: "เมืองอัจฉริยะที่ได้รับการรับรองแล้ว แต่คำอ้างยังต้องตรวจเทียบกับหลักฐานการเดินระบบที่มองเห็นได้",
-          zh: "已认证的智慧城市档案，相关声明仍需与可见运营证据核对",
+          en: "a certified smart-city entry whose claims still need to be checked against visible operating evidence",
+          th: "รายการเมืองอัจฉริยะที่ได้รับการรับรองแล้ว แต่คำอ้างยังต้องตรวจเทียบกับหลักฐานการเดินระบบที่มองเห็นได้",
+          zh: "已认证的智慧城市条目，相关声明仍需与可见运营证据核对",
         };
 
   return {
     livelihood: {
-      en: `${city.nameEn} is ${role.en}. Daily life is best read through ${primary.en}, ${secondary.en}, and the ordinary municipal services residents actually touch.`,
-      th: `${city.nameTh} เป็น${role.th} ชีวิตประจำวันควรอ่านผ่าน${primary.th} ${secondary.th} และบริการเทศบาลธรรมดาที่ประชาชนใช้งานจริง`,
-      zh: `${city.nameEn}是${role.zh}。日常生活最宜通过${primary.zh}、${secondary.zh}及居民实际接触的普通市政服务来理解。`,
+      en: `${city.nameEn} is ${role.en}. ${voice.livelihood.en}`,
+      th: `${city.nameTh} เป็น${role.th} ${voice.livelihood.th}`,
+      zh: `${city.nameEn}是${role.zh}。${voice.livelihood.zh}`,
     },
     famousFor: {
-      en: `${city.nameEn} is currently documented as ${statusPhrase.en}. The safest public claim is its registry position, location, and stated smart-city dimensions.`,
-      th: `${city.nameTh} ถูกบันทึกไว้ในฐานะ${statusPhrase.th} คำอ้างที่ปลอดภัยที่สุดคือสถานะในทะเบียน ทำเล และมิติเมืองอัจฉริยะที่ระบุไว้`,
-      zh: `${city.nameEn}目前被记录为${statusPhrase.zh}。最安全的公开表述是其登记状态、位置及所述智慧城市维度。`,
+      en: `${voice.famousFor.en} ${city.nameEn} is currently documented as ${statusPhrase.en}.`,
+      th: `${voice.famousFor.th} ขณะนี้${city.nameTh} ถูกบันทึกไว้ในฐานะ${statusPhrase.th}`,
+      zh: `${voice.famousFor.zh}${city.nameEn}目前被记录为${statusPhrase.zh}。`,
     },
     opportunity: {
-      en: `The practical opportunity is to turn the ${primary.en} agenda into a measurable service: publish baseline data, name the operator, and show residents what changed.`,
-      th: `โอกาสที่จับต้องได้คือเปลี่ยนวาระ${primary.th}ให้เป็นบริการที่วัดผลได้: เปิดข้อมูลตั้งต้น ระบุผู้เดินระบบ และแสดงให้ประชาชนเห็นว่าอะไรเปลี่ยนไป`,
-      zh: `实际机遇在于将${primary.zh}议程转化为可衡量的服务：发布基线数据、公示运营方，并向居民展示改变了什么。`,
+      en: `${voice.opportunity.en} The practical opportunity is to turn the ${primary.en} agenda into a measurable service: publish baseline data, name the operator, and show residents what changed.`,
+      th: `${voice.opportunity.th} โอกาสที่จับต้องได้คือเปลี่ยนวาระ${primary.th}ให้เป็นบริการที่วัดผลได้: เปิดข้อมูลตั้งต้น ระบุผู้เดินระบบ และแสดงให้ประชาชนเห็นว่าอะไรเปลี่ยนไป`,
+      zh: `${voice.opportunity.zh}实际机遇在于将${primary.zh}议程转化为可衡量的服务：发布基线数据、公示运营方，并向居民展示改变了什么。`,
     },
-    theCatch: city.status === "registered"
-      ? {
-        en: "The key constraint is registry status: being in the depa promotion registry is not the same thing as live deployment, so this dossier should stay conservative until public implementation evidence appears.",
-        th: "ข้อจำกัดหลักคือสถานะในทะเบียน: การอยู่ในทะเบียนส่งเสริมของ depa ไม่ใช่สิ่งเดียวกับการมีระบบใช้งานจริง ดอสซิเยร์นี้จึงควรเล่าอย่างระมัดระวังจนกว่าจะมีหลักฐานสาธารณะของการดำเนินงาน",
-        zh: "核心制约是登记状态：列入depa推广名录不等于系统已上线运行，因此在公开实施证据出现之前，本档案应保持审慎表述。",
-      }
-      : {
-        en: `The risk is over-claiming. ${city.nameEn} needs evidence that the ${primary.en} work is operating, not just listed in a plan.`,
-        th: `ความเสี่ยงคือการกล่าวอ้างเกินจริง ${city.nameTh} ต้องมีหลักฐานว่างานด้าน${primary.th}กำลังใช้งาน ไม่ใช่แค่ถูกเขียนไว้ในแผน`,
-        zh: `风险在于过度声明。${city.nameEn}需要证据表明${primary.zh}工作正在运行，而非仅列于规划之中。`,
-      },
+    theCatch: {
+      en: `${voice.theCatch.en} ${secondary.en.charAt(0).toUpperCase()}${secondary.en.slice(1)} is the agenda this dossier has to answer to.`,
+      th: `${voice.theCatch.th} วาระ${secondary.th}คือสิ่งที่ดอสซิเยร์นี้ต้องตอบให้ได้`,
+      zh: `${voice.theCatch.zh}${secondary.zh}议程正是本档案必须回应的问题。`,
+    },
   };
 }
 

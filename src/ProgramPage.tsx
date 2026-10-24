@@ -337,7 +337,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
         <h2>{translate(locale, { en: "The DNA of Thai smart cities", th: "DNA ของเมืองอัจฉริยะไทย", zh: "泰国智慧城市的DNA" })}</h2>
         <div className="program-concepts-grid">
           <div className="program-concept-card">
-            <span className="program-concept-num">1</span>
+            <span className="program-concept-num">01</span>
             <h3>{translate(locale, { en: "Citizens at the center, technology in the background", th: "ประชาชนอยู่ตรงกลาง เทคโนโลยีอยู่เบื้องหลัง", zh: "市民在中心，技术在幕后" })}</h3>
             <p>{translate(locale, {
               en: "Cities are for people. A smart city should not force residents to be hooked on smartphones 12 hours a day. Instead, it uses appropriate technology to enhance quality of life in the background — less travel time, worry-free healthcare, more spare time. The evidence of success lies in measurable outcomes, not hardware specs.",
@@ -346,7 +346,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
             })}</p>
           </div>
           <div className="program-concept-card">
-            <span className="program-concept-num">2</span>
+            <span className="program-concept-num">02</span>
             <h3>{translate(locale, { en: "People-Public-Private-Partnership (PPPP)", th: "ความร่วมมือ ประชาชน-รัฐ-เอกชน (PPPP)", zh: "人民-政府-私营合作 (PPPP)" })}</h3>
             <p>{translate(locale, {
               en: "Not PPP but PPPP. The extra P is for People. Recent successes and failures of smart city projects worldwide show the crucial need to communicate with citizens and galvanize their support.",
@@ -355,7 +355,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
             })}</p>
           </div>
           <div className="program-concept-card">
-            <span className="program-concept-num">3</span>
+            <span className="program-concept-num">03</span>
             <h3>{translate(locale, { en: "Simultaneous physical + digital development", th: "พัฒนากายภาพและดิจิทัลไปพร้อมกัน", zh: "物理+数字同步发展" })}</h3>
             <p>{translate(locale, {
               en: "Cities still consist of connected physical spaces. Digital platforms are meaningless if goods and services cannot physically reach people.",

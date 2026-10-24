@@ -67,6 +67,27 @@ function createMockResponse(): MockResponse {
 }
 
 describe("/api/smart-city-signals", () => {
+  it.each([{ status: 401, error: "Unauthorized" }, {}, { ok: true }])("rejects Apps Script HTTP-200 error or incomplete write envelopes: %j", async (payload) => {
+    ENV_KEYS.forEach(key => delete process.env[key]);
+    process.env.TREND_BACKEND = "google-apps-script";
+    process.env.GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/test";
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify(payload), { status: 200 })));
+    const response = createMockResponse();
+    await handler({ method: "POST", body: { text: "Evidence" } }, response);
+    expect(response.statusCode).toBe(503);
+    expect(response.body).toMatchObject({ success: false, backend: { healthy: false, mode: "local" } });
+  });
+
+  it("marks an Apps Script HTTP-200 authorization error unavailable on reads", async () => {
+    ENV_KEYS.forEach(key => delete process.env[key]);
+    process.env.TREND_BACKEND = "google-apps-script";
+    process.env.GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/test";
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({ status: 401, error: "Unauthorized" }), { status: 200 })));
+    const response = createMockResponse();
+    await handler({ method: "GET" }, response);
+    expect(response.body).toMatchObject({ backend: { healthy: false, mode: "local" } });
+  });
+
   it("rejects anonymous ingestion before any backend request", async () => {
     process.env.SIGNAL_INGEST_TOKEN = "test-ingestion-token";
     const fetchMock = vi.fn();

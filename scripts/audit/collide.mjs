@@ -131,11 +131,149 @@ for (const route of ROUTES) {
         //    from Range.getClientRects() are actual painted text, so only
         //    those are compared. Measuring boxes produced 3,419 phantom
         //    overlaps on /invest and zero real ones.
+        //
+        //    But geometry alone is not "painted". Three cases report a box
+        //    for ink that is never drawn, and all three produced thousands
+        //    of phantom pairs:
+        //      · content inside a CLOSED <details> — hidden with
+        //        content-visibility, so nothing is painted, yet
+        //        getClientRects() still returns layout geometry;
+        //      · <option> inside a <select> — the options live in a
+        //        dropdown list, not the flow, and their range reports the
+        //        select's own box;
+        //      · a section with `content-visibility: auto` that is still
+        //        off screen — the browser lays it out at its
+        //        contain-intrinsic-size placeholder, so its children
+        //        report positions the real content never occupies.
+        //        Scrolling the section into view moved the density strip
+        //        2,301px and left ZERO real overlaps, which is what
+        //        settled it.
+        //    checkVisibility() — with contentVisibilityAuto — is the
+        //    browser's own answer to "is this actually painted", so the
+        //    instrument asks it rather than guessing.
+        //
+        //    AND the box a Range reports is a FONT BOX, not an ink box.
+        //    For a 32px mono numeral the range rect is ~42px tall — the
+        //    font's ascent and descent — while the glyphs occupy about
+        //    22px of it. Two stacked elements can therefore report a 5px
+        //    "overlap" while the digits and the label above them are
+        //    plainly clear of each other on screen.
+        //
+        //    The instrument therefore converts every range rect into its
+        //    true ink band using the browser's own text metrics: canvas
+        //    measureText() reports actualBoundingBoxAscent/Descent (the
+        //    glyph extent) and fontBoundingBoxAscent (where the baseline
+        //    sits inside the rect). What is compared is where the ink is,
+        //    not where the font's leading is.
+        const measureCanvas = document.createElement("canvas");
+        const mctx = measureCanvas.getContext("2d");
+        const inkCache = new Map();
+
+        /**
+         * The box a Range reports is a FONT BOX, not an ink box.
+         * For a 32px mono numeral the range rect is ~42px tall — the
+         * font's ascent and descent — while the glyphs occupy about
+         * 22px of it. Two stacked elements can therefore report a 5px
+         * "overlap" while the digits and the label above them are
+         * plainly clear of each other on screen.
+         *
+         * The instrument converts every range rect into its true ink band
+         * using the browser's own text metrics: canvas measureText()
+         * reports actualBoundingBoxAscent/Descent (the glyph extent)
+         * and fontBoundingBoxAscent (where the baseline sits inside the
+         * rect). What is compared is where the ink is, not where the
+         * font's leading is.
+         */
+        function inkBand(el, rect, text) {
+          const cs = getComputedStyle(el);
+          const key = `${cs.fontStyle}|${cs.fontVariant}|${cs.fontWeight}|${cs.fontSize}|${cs.fontFamily}|${text}`;
+          let m = inkCache.get(key);
+          if (!m) {
+            mctx.font = `${cs.fontStyle} ${cs.fontVariant} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+            m = mctx.measureText(text || "Ag");
+            inkCache.set(key, m);
+          }
+          const size = parseFloat(cs.fontSize) || 16;
+          const asc = m.fontBoundingBoxAscent || size * 0.8;
+          const inkAsc = m.actualBoundingBoxAscent;
+          const inkDesc = m.actualBoundingBoxDescent;
+          if (!Number.isFinite(inkAsc) || !Number.isFinite(inkDesc) || (inkAsc === 0 && inkDesc === 0)) {
+            return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+          }
+          const baseline = rect.top + asc;
+          return {
+            left: rect.left,
+            right: rect.right,
+            top: baseline - inkAsc,
+            bottom: baseline + inkDesc,
+          };
+        }
+
+        /**
+         * The box the text is actually PAINTED inside.
+         *
+         * A Range reports a rect for every laid-out line, including lines
+         * that a clamp or an overflow rule keeps from being drawn:
+         * `-webkit-line-clamp: 3` clips the painting but the layout still
+         * has a fourth and fifth line, and their rects sit over whatever
+         * is below. That produced 53 phantom overlaps on the homepage,
+         * where a three-line news summary was reported as covering its
+         * own source line.
+         *
+         * So the band is clipped to the padding box of every ancestor
+         * that clips, which is exactly the region the browser paints in.
+         */
+        function clipBox(el) {
+          let box = null;
+          let node = el;
+          while (node && node !== document.body && node !== document.documentElement) {
+            const cs = getComputedStyle(node);
+            if (cs.overflow !== "visible" || cs.overflowX !== "visible" || cs.overflowY !== "visible") {
+              const b = node.getBoundingClientRect();
+              const c = {
+                left: b.left + node.clientLeft,
+                top: b.top + node.clientTop,
+                right: b.left + node.clientLeft + node.clientWidth,
+                bottom: b.top + node.clientTop + node.clientHeight,
+              };
+              if (!box) box = c;
+              else {
+                box.left = Math.max(box.left, c.left);
+                box.top = Math.max(box.top, c.top);
+                box.right = Math.min(box.right, c.right);
+                box.bottom = Math.min(box.bottom, c.bottom);
+              }
+            }
+            node = node.parentElement;
+          }
+          return box;
+        }
+
+        function applyClip(rect, box) {
+          if (!box) return rect;
+          const left = Math.max(rect.left, box.left);
+          const right = Math.min(rect.right, box.right);
+          const top = Math.max(rect.top, box.top);
+          const bottom = Math.min(rect.bottom, box.bottom);
+          if (right - left <= 0 || bottom - top <= 0) return null;
+          return { left, right, top, bottom };
+        }
+
         const inkRects = [];
         for (const el of textNodes) {
           if (!TEXTISH.has(el.tagName)) continue;
+          if (el.closest("details:not([open])")) continue;
+          if (el.closest("select")) continue;
           const cs = getComputedStyle(el);
           if (cs.position === "fixed" || cs.position === "absolute") continue;
+          let visible = true;
+          try {
+            visible = el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true, contentVisibilityAuto: true });
+          } catch {
+            visible = cs.display !== "none" && cs.visibility !== "hidden";
+          }
+          if (!visible) continue;
+          const clip = clipBox(el);
           const range = document.createRange();
           const rects = [];
           for (const node of el.childNodes) {
@@ -143,7 +281,10 @@ for (const route of ROUTES) {
             try {
               range.selectNodeContents(node);
               for (const r of range.getClientRects()) {
-                if (r.width > 1 && r.height > 1) rects.push(r);
+                if (r.width > 1 && r.height > 1) {
+                  const band = applyClip(inkBand(el, r, node.textContent), clip);
+                  if (band) rects.push(band);
+                }
               }
             } catch { /* detached node */ }
           }
@@ -165,6 +306,13 @@ for (const route of ROUTES) {
               for (const rb of b.rects) {
                 const ox = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left);
                 const oy = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
+                // 2px, because the band is derived from font metrics and
+                // carries its own error of about a pixel. Below that the
+                // instrument cannot tell a contact from a graze. The one
+                // finding this threshold excluded was checked by hand: a
+                // 1.4px reported contact between the Thai hero kicker and
+                // the Sao Chingcha title, and a photograph of the two
+                // shows clear space between them.
                 if (ox > 2 && oy > 2) { hit = { ox: Math.round(ox), oy: Math.round(oy) }; break; }
               }
               if (hit) break;
