@@ -178,3 +178,120 @@ The five-tab audit also found literal horizontal bleed in the existing score tab
 - Every city's province resolves to a dataset key.
 - A province with no record is never rendered as a zero.
 
+
+## The second pass — what the live page showed
+
+The voice shipped and the unit tests were green, but the rendered page
+was read, and it showed three defects the tests could not see.
+
+### The prose ran on
+
+"A known for" read: *"Annual PM2.5 is 23.0 µg/m³ (Pollution Control
+Department) Electricity runs at 6,281 kWh per person a year…"* — a
+sentence with no full stop between it and the next one, so two claims
+read as one. It happened wherever a sentence ended in a source
+attribution instead of a mark: `(Royal Forest Department)`, `(NSO, 2022–26)`,
+`(Pollution Control Department)`.
+
+The terminator is now applied **when the sentence is built**, not when
+the sentences are joined. A terminator added later cannot guarantee that
+every clause ended properly, and one fragment is enough to make a whole
+page read as machine output. English takes a full stop, Chinese takes
+。, and Thai takes none — Thai is written with spaces between clauses,
+and a full stop in a Thai sentence is a foreigner's mark.
+
+### The air quality was said twice
+
+PM2.5 appeared in "Known for" and again in "Main constraint" on the
+same page. Both sentences were true, and together they made the page
+look generated. **Each measured quantity is now owned by exactly one
+field**, and the test that enforces it follows the *quantity*, not the
+numeral: 0.3% of households in non-durable housing and 0.3% of the
+household register not counted are two different facts that happen to
+share a value, and a numeral scan flagged them for a while before it
+was clear it was measuring coincidence.
+
+### Every city said it the same way
+
+The data was per-city; the *frame* was not. Sixty-eight cities shared
+one sentence frame per field, with the digits swapped. That is what
+"mechanical" actually looked like.
+
+The fix is not more adjectives. Every reading is now placed in its
+**quartile band** among the provinces that indicator covers, and the
+sentence frame is chosen by that band. A province in the top quarter of
+forest cover is described differently from one in the bottom quarter.
+The boundaries are computed from the values the dataset holds — no
+threshold is hand-picked, so a band always means the same thing: the
+top quarter, the middle, or the bottom quarter of the provinces that
+indicator covers.
+
+**How far it moved:** before, one frame served all 68 cities and all 77
+provinces. Now the widest frame spans four provinces — Sakon Nakhon,
+Kalasin, Chaiyaphum and Sisaket — and those four were checked by hand
+against their measured values: populations of 730 to 866 thousand,
+labour forces of 396 to 556 thousand, the same informal band and the
+same migration band. They *are* the same kind of place, and the prose
+says so because the data says so. Manufacturing a difference the data
+does not support would be a worse failure than the repetition.
+
+Two further readings were added because they were unused and they
+discriminate: the residential share of the grid (Ministry of Energy,
+2023) and the condition of the housing stock (NSO household survey,
+**2010** — the year is stated in the sentence, because a decade-old
+baseline must never be dressed as a current one).
+
+### The open question was 67 identical sentences
+
+The unanswered question was keyed to the city's smart dimension, and 67
+of the 68 generated cities share the same dimension. The question is now
+keyed to the province's **most extreme reading** instead: the traffic
+question for the worst road-death count, the reach question where most
+work is informal, the usage question where the network is thinnest. It
+never quotes a number, because every number it could quote already
+appears in another field on the same page.
+
+### The page printed the same paragraph three times
+
+This is the one that was not about the generated layer at all. On every
+city page the "Reality gap" card, the "Strategic advantage" card and
+the "Exportable lesson" card echoed the context voices verbatim, and
+the Analysis tab printed the same voices again in its factbook rows.
+Three voices, seven slots, and several slots fell back to the same
+text.
+
+**The instrument that found it** is `scripts/audit/probe-repeat-blocks.mjs`:
+it reads the rendered page and reports any paragraph that appears twice,
+or that is nested inside another. It was falsified against the
+pre-fix production build first — **46 repeated blocks across seven
+pages** — and it reports **0** after the fix.
+
+The voices are now *split* rather than repeated:
+
+| Surface | Carries |
+|---|---|
+| Factbook · Known for | the measured character + registry status |
+| Factbook · Livelihood pattern | the city framing sentence |
+| Factbook · Main constraint | the constraint voice |
+| Factbook · Global analog (note) | the open question |
+| Texture · Major industries | the registered smart dimensions |
+| Texture · How people live | the measured livelihood |
+| Texture · Signature story | the opportunity readings |
+| Texture · Fun fact | the single most distinctive fact |
+| Dossier · Reality gap | the computed gap, not the voice |
+| Dossier · Strategic advantage | the CDP's own lens, not the voice |
+
+The instrument has one trap worth naming: it must NOT filter by
+visibility. The dossier keeps every tab in the DOM and hides the
+inactive ones with CSS, so a visibility filter skips the whole
+Analysis tab and the probe reports nothing at all — a probe that
+passes because it looked at nothing.
+
+## Acceptance for this pass
+
+- Every English and Chinese sentence in every generated field ends with
+  a terminator; 0 unterminated across 68 cities × 4 fields × 3 locales.
+- Each measured quantity appears in exactly one field; 0 offenders.
+- No frame is shared across more than four provinces, in any locale.
+- No paragraph is printed twice on any city page, in English or Thai;
+  0 repeated blocks across seven pages, against 46 before.

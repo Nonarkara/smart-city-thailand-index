@@ -543,7 +543,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
     const noteLookup = new Map(city.contextNotes.map(note => [note.kind, note]));
     const opportunity = noteLookup.get("opportunity");
-    const constraint = noteLookup.get("constraint");
     const warning = noteLookup.get("implementation_warning");
     const lesson = noteLookup.get("exportable_lesson");
     const leadRecommendation = city.financeRecommendations.find(item => item.priority === "lead") ?? city.financeRecommendations[0] ?? null;
@@ -611,7 +610,11 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         {
           id: "constraint",
           label: translate(locale, { en: "Reality gap", th: "ช่องว่างความจริง", zh: "现实缺口" }),
-          body: constraint?.body[locale] ?? gapSummary,
+          // The computed gap, not the context's constraint voice: the
+          // Analysis tab prints that voice in the "Main constraint" row, and
+          // the same paragraph twice on one page is the friction this
+          // section exists to remove.
+          body: gapSummary,
           meta: nextCriticalSteps.length > 0
             ? translate(locale, {
                 en: `Watch next: ${nextCriticalSteps.join(" · ")}`,
@@ -844,7 +847,10 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         zh: "尚未指定类比城市",
       });
   const leadAction = dossier?.leadRecommendation?.nextStep[locale] ?? getActionStepText(locale, primaryStep);
-  const leadActionEvidence = dossier?.leadRecommendation?.reasonSummary[locale] ?? getActionExampleText(locale, primaryStep);
+  // The evidence line under "Immediate next move" must not be the same
+  // sentence as the note under "Lead mechanism" — they sit two rows apart
+  // in the same block, and a repeated note reads as a rendering fault.
+  const leadActionEvidence = getActionExampleText(locale, primaryStep);
   const developabilityLabel = locale === "zh"
     ? developability.labelZh
     : locale === "th"
@@ -1087,7 +1093,11 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           value: analogHeadline,
           note: comparison
             ? (locale === "zh" ? comparison.whyZh : locale === "th" ? comparison.whyTh : comparison.why)
-            : getLocalizedText(locale, research.compareNote),
+            : cityContext?.unanswered
+              // A city with no analog says what is open instead of repeating
+              // a comparison it does not have.
+              ? getLocalizedText(locale, cityContext.unanswered)
+              : getLocalizedText(locale, research.compareNote),
         },
         {
           label: translate(locale, { en: "Known for", th: "ขึ้นชื่อเรื่อง", zh: "代表特征" }),
@@ -1095,9 +1105,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         },
         {
           label: translate(locale, { en: "Livelihood pattern", th: "วิถีเศรษฐกิจหลัก", zh: "生计结构" }),
+          // The row carries the city framing; the texture card carries the
+          // measured livelihood. Printing both here would put the same
+          // paragraph on the screen twice.
           value: getContextText(
             locale,
-            cityContext?.livelihood,
+            cityContext?.cityLine ?? cityContext?.livelihood,
             getLocalizedText(locale, research.dailyLife),
             getLocalizedText(locale, research.dailyLife),
           ),
@@ -1818,7 +1831,10 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                       zh: `${cityName} 需要一个适合投资者快速理解的心智模型。`,
                     })}
               </h3>
-              <p className="city-analog-copy">{getLocalizedText(locale, research.dailyLife)}</p>
+              {/* The finance line, not the daily-life paragraph: the texture
+                  card already prints that one, and the same words twice on a
+                  page is the friction this section is supposed to remove. */}
+              <p className="city-analog-copy">{city.financeSignal.line[locale]}</p>
               <div className="city-analog-tag-row">
                 <span className="city-analog-tag">{geographicSignal}</span>
                 <span className="city-analog-tag">{economicDNA}</span>

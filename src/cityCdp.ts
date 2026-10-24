@@ -578,7 +578,11 @@ function pillarLabel(pillar: ScoringPillar): string {
 }
 
 function citySpecificOpportunity(city: SmartCity, context?: CityContext): LocalizedText {
-  if (context) {
+  // A GENERATED city already prints its opportunity voice in the texture
+  // card, so echoing it here would put the same paragraph on the page
+  // twice. The note carries the CDP's own lens instead. A curated city has
+  // no such duplicate, so its hand-written opportunity is kept here.
+  if (context && !context.landmark) {
     return localized(
       context.opportunity.en,
       context.opportunity.th,
@@ -642,7 +646,12 @@ function citySpecificWarning(city: SmartCity): LocalizedText {
 }
 
 function citySpecificLesson(city: SmartCity, context?: CityContext): LocalizedText {
-  if (context) {
+  // Same rule as the opportunity note: a generated city already prints its
+  // opportunity voice in the texture card, so the lesson takes the CDP's own
+  // lens. A curated city keeps its hand-written text, which the reading-notes
+  // component groups with the opportunity note into a single card so the
+  // same paragraph is not printed twice.
+  if (context && !context.landmark) {
     return localized(
       context.opportunity.en,
       context.opportunity.th,

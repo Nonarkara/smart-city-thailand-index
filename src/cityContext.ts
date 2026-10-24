@@ -7,7 +7,7 @@
 // ---------------------------------------------------------------------------
 
 import { allCities } from "./cityData.ts";
-import { buildProvinceVoice } from "./provinceNarrative.ts";
+import { buildProvinceSentenceSets, buildProvinceVoice } from "./provinceNarrative.ts";
 import type { SmartCity } from "./types.ts";
 
 export interface CityContext {
@@ -17,6 +17,24 @@ export interface CityContext {
   theCatch: { en: string; th: string; zh: string };
   landArea?: number; // sq km
   established?: string; // year or era
+  // ── The generated layer, split so that no paragraph is printed twice ──
+  //
+  // A generated city has four voices and seven places on the page that
+  // want prose. Printing the same paragraph in two of them is what a reader
+  // notices first, so the voices are SPLIT across the surfaces instead:
+  // the city framing goes to the summary row, the measured livelihood to
+  // the texture card, and the single most distinctive fact to the pull
+  // quote. Curated cities carry none of these fields and are untouched.
+  /** The city-level framing: what kind of place this is. */
+  cityLine?: { en: string; th: string; zh: string };
+  /** The measured livelihood, without the framing sentence. */
+  livelihoodEvidence?: { en: string; th: string; zh: string };
+  /** The single most distinctive measured fact — the one-line texture. */
+  landmark?: { en: string; th: string; zh: string };
+  /** One sentence on the registered smart dimensions. */
+  dimensionLine?: { en: string; th: string; zh: string };
+  /** The question this index cannot answer for this city. */
+  unanswered?: { en: string; th: string; zh: string };
 }
 
 export const cityContexts: Record<string, CityContext> = {
@@ -348,6 +366,13 @@ export const cityContexts: Record<string, CityContext> = {
   },
 };
 
+/** Join a short list the way a sentence reads: "a", "a and b", "a, b and c". */
+function joinList(items: string[], conjunction: string): string {
+  if (items.length === 0) return "";
+  if (items.length === 1) return items[0];
+  return `${items.slice(0, -1).join(", ")} ${conjunction} ${items[items.length - 1]}`;
+}
+
 function dimensionName(dimension: SmartCity["smartDimensions"][number]): { en: string; th: string; zh: string } {
   switch (dimension) {
     case "economy":
@@ -385,7 +410,6 @@ function regionRole(city: SmartCity): { en: string; th: string; zh: string } {
 }
 
 function buildFallbackContext(city: SmartCity): CityContext {
-  const primary = dimensionName(city.smartDimensions[0] ?? "governance");
   const secondary = dimensionName(city.smartDimensions[1] ?? "living");
   const role = regionRole(city);
 
@@ -399,6 +423,31 @@ function buildFallbackContext(city: SmartCity): CityContext {
   // qualifier, not as the substance: they describe how the city is
   // classified, not what is true about it.
   const voice = buildProvinceVoice(city);
+  const sets = buildProvinceSentenceSets(city);
+
+  // The city framing and the measured livelihood are two different things
+  // and they are printed in two different places, so they are kept apart
+  // here rather than concatenated and split again downstream.
+  const cityLine = {
+    en: `${city.nameEn} is ${role.en}.`,
+    th: `${city.nameTh} เป็น${role.th}`,
+    zh: `${city.nameEn}是${role.zh}。`,
+  };
+  const livelihoodEvidence = {
+    en: sets.livelihood.en.join(" "),
+    th: sets.livelihood.th.join(" "),
+    zh: sets.livelihood.zh.join(" "),
+  };
+  // The pull quote is the reading this province is most unusual on, and
+  // the row keeps the rest — chosen by band, not by position.
+  const landmark = voice.landmark.en ? voice.landmark : undefined;
+  const famousForRest = voice.famousForRest;
+  const dimNames = city.smartDimensions.map(d => dimensionName(d));
+  const dimensionLine = {
+    en: `The registered smart dimensions for ${city.nameEn} are ${joinList(dimNames.map(d => d.en), "and")}.`,
+    th: `มิติอัจฉริยะที่ขึ้นทะเบียนของ${city.nameTh}คือ ${joinList(dimNames.map(d => d.th), "และ")}`,
+    zh: `${city.nameEn}登记的智慧维度为${joinList(dimNames.map(d => d.zh), "和")}。`,
+  };
 
   const statusPhrase =
     city.status === "registered"
@@ -421,20 +470,28 @@ function buildFallbackContext(city: SmartCity): CityContext {
 
   return {
     livelihood: {
-      en: `${city.nameEn} is ${role.en}. ${voice.livelihood.en}`,
-      th: `${city.nameTh} เป็น${role.th} ${voice.livelihood.th}`,
-      zh: `${city.nameEn}是${role.zh}。${voice.livelihood.zh}`,
+      en: `${cityLine.en} ${voice.livelihood.en}`,
+      th: `${cityLine.th} ${voice.livelihood.th}`,
+      zh: `${cityLine.zh}${voice.livelihood.zh}`,
     },
     famousFor: {
-      en: `${voice.famousFor.en} ${city.nameEn} is currently documented as ${statusPhrase.en}.`,
-      th: `${voice.famousFor.th} ขณะนี้${city.nameTh} ถูกบันทึกไว้ในฐานะ${statusPhrase.th}`,
-      zh: `${voice.famousFor.zh}${city.nameEn}目前被记录为${statusPhrase.zh}。`,
+      en: `${famousForRest.en} ${city.nameEn} is currently documented as ${statusPhrase.en}.`,
+      th: `${famousForRest.th} ขณะนี้${city.nameTh} ถูกบันทึกไว้ในฐานะ${statusPhrase.th}`,
+      zh: `${famousForRest.zh}${city.nameEn}目前被记录为${statusPhrase.zh}。`,
     },
     opportunity: {
-      en: `${voice.opportunity.en} The practical opportunity is to turn the ${primary.en} agenda into a measurable service: publish baseline data, name the operator, and show residents what changed.`,
-      th: `${voice.opportunity.th} โอกาสที่จับต้องได้คือเปลี่ยนวาระ${primary.th}ให้เป็นบริการที่วัดผลได้: เปิดข้อมูลตั้งต้น ระบุผู้เดินระบบ และแสดงให้ประชาชนเห็นว่าอะไรเปลี่ยนไป`,
-      zh: `${voice.opportunity.zh}实际机遇在于将${primary.zh}议程转化为可衡量的服务：发布基线数据、公示运营方，并向居民展示改变了什么。`,
+      // The readings only. The question this index cannot answer is held
+      // separately so that it can be printed once, next to the row that
+      // has no answer to give.
+      en: voice.opportunity.en,
+      th: voice.opportunity.th,
+      zh: voice.opportunity.zh,
     },
+    unanswered: voice.unanswered,
+    cityLine,
+    livelihoodEvidence,
+    landmark,
+    dimensionLine,
     theCatch: {
       en: `${voice.theCatch.en} ${secondary.en.charAt(0).toUpperCase()}${secondary.en.slice(1)} is the agenda this dossier has to answer to.`,
       th: `${voice.theCatch.th} วาระ${secondary.th}คือสิ่งที่ดอสซิเยร์นี้ต้องตอบให้ได้`,

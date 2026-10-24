@@ -206,6 +206,148 @@ export function absorptionRank(province: string): { rank: number; of: number; va
   return { rank: idx + 1, of: sorted.length, value: rec.unplannedShare };
 }
 
+// ── Bands: which quarter of the measured set a province sits in ─────────
+//
+// A rank says "unusual". A band says WHICH QUARTER of the country it sits
+// in, and that is what lets the prose change shape with the data instead of
+// reciting one frame for all sixty-eight cities.
+//
+// The boundaries are computed from the values the dataset actually holds. No
+// threshold here is hand-picked, so a band always means the same thing: the
+// top quarter, the middle, or the bottom quarter of the provinces that this
+// particular indicator covers.
+
+export interface Band {
+  /** 0 = top quarter for the direction, 3 = bottom quarter. */
+  band: 0 | 1 | 2 | 3;
+  /** 1-based rank, 1 = best for the direction. */
+  rank: number;
+  /** How many provinces carry the reading. */
+  of: number;
+  /** The value itself. */
+  value: number;
+}
+
+function bandFromSorted(sortedBestFirst: number[], value: number): Band | undefined {
+  const idx = sortedBestFirst.indexOf(value);
+  if (idx < 0) return undefined;
+  const of = sortedBestFirst.length;
+  if (of === 0) return undefined;
+  const band = Math.min(3, Math.max(0, Math.floor((idx / of) * 4))) as 0 | 1 | 2 | 3;
+  return { band, rank: idx + 1, of, value };
+}
+
+const INDICATOR_VALUES = new Map<string, number[]>();
+
+function indicatorValues(indicator: string, direction: "high" | "low"): number[] {
+  const key = `${indicator}|${direction}`;
+  const hit = INDICATOR_VALUES.get(key);
+  if (hit) return hit;
+  const map = PROVINCE_BASELINE_BY_ID[indicator];
+  const values = map
+    ? Object.values(map).filter((v): v is number => typeof v === "number" && Number.isFinite(v))
+    : [];
+  values.sort((a, b) => (direction === "high" ? b - a : a - b));
+  INDICATOR_VALUES.set(key, values);
+  return values;
+}
+
+/** Which quarter of the measured provinces this province sits in. */
+export function bandIn(
+  indicator: string,
+  province: string,
+  direction: "high" | "low" = "high",
+): Band | undefined {
+  const map = PROVINCE_BASELINE_BY_ID[indicator];
+  if (!map) return undefined;
+  const canonical = canonicalProvince(province) ?? province;
+  const value = map[canonical];
+  if (typeof value !== "number" || !Number.isFinite(value)) return undefined;
+  return bandFromSorted(indicatorValues(indicator, direction), value);
+}
+
+// ── Derived measures: ratios the indicators do not carry directly ────────
+
+export type DerivedMeasure = (r: ProvinceReading) => number | undefined;
+
+const DERIVED_VALUES = new Map<string, number[]>();
+
+/** Every province any dataset in this project actually names. */
+function allProvinceKeys(): string[] {
+  const keys = new Set<string>();
+  for (const map of Object.values(PROVINCE_BASELINE_BY_ID)) {
+    for (const k of Object.keys(map)) keys.add(k);
+  }
+  for (const k of Object.keys(ABSORPTION_PROVINCES)) keys.add(k);
+  return [...keys];
+}
+
+function derivedValues(name: string, measure: DerivedMeasure): number[] {
+  const hit = DERIVED_VALUES.get(name);
+  if (hit) return hit;
+  const values: number[] = [];
+  for (const p of allProvinceKeys()) {
+    const v = measure(readProvince(p));
+    if (v !== undefined && Number.isFinite(v)) values.push(v);
+  }
+  values.sort((a, b) => b - a);
+  DERIVED_VALUES.set(name, values);
+  return values;
+}
+
+/** Band for a measure computed from two indicators rather than read directly. */
+export function bandOfDerived(name: string, measure: DerivedMeasure, value: number): Band | undefined {
+  return bandFromSorted(derivedValues(name, measure), value);
+}
+
+/** Share of residents who are internet users — NSO counts over NSO population. */
+export function internetShare(r: ProvinceReading): number | undefined {
+  if (r.internetUsers === undefined || r.population === undefined || r.population <= 0) return undefined;
+  return (r.internetUsers / r.population) * 100;
+}
+
+/** Share of residents who hold a mobile subscription. */
+export function mobileShare(r: ProvinceReading): number | undefined {
+  if (r.mobileUsers === undefined || r.population === undefined || r.population <= 0) return undefined;
+  return (r.mobileUsers / r.population) * 100;
+}
+
+/** Band for the informal share of the labour force. */
+export function informalBand(r: ProvinceReading): Band | undefined {
+  const share = informalShare(r);
+  if (share === undefined) return undefined;
+  return bandOfDerived("informal", informalShare, share);
+}
+
+/** Band for the internet-user share of residents. */
+export function internetBand(r: ProvinceReading): Band | undefined {
+  const share = internetShare(r);
+  if (share === undefined) return undefined;
+  return bandOfDerived("internet", internetShare, share);
+}
+
+/** Band for the mobile-subscription share of residents. */
+export function mobileBand(r: ProvinceReading): Band | undefined {
+  const share = mobileShare(r);
+  if (share === undefined) return undefined;
+  return bandOfDerived("mobile", mobileShare, share);
+}
+
+/** Band for the share of the household register that the register does not count. */
+export function absorptionBand(province: string): Band | undefined {
+  const canonical = canonicalProvince(province) ?? province;
+  const rec = ABSORPTION_PROVINCES[canonical];
+  if (!rec || typeof rec.unplannedShare !== "number") return undefined;
+  return bandOfDerived("absorption", (x) => x.absorptionUnplannedShare, rec.unplannedShare);
+}
+
+/** 1st, 2nd, 3rd, 11th, 21st — the naive version gets 21st wrong. */
+export function ordinal(n: number): string {
+  const suffix = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return `${n}${suffix[(v - 20) % 10] || suffix[v] || suffix[0]}`;
+}
+
 /** How much of the province's labour force is in informal work. */
 export function informalShare(r: ProvinceReading): number | undefined {
   if (r.informalLabour === undefined || r.labourForce === undefined) return undefined;

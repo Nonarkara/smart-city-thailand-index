@@ -1437,12 +1437,19 @@ export function resolveCityResearch(city: SmartCity): CityResearchProfile {
     });
   }
 
+  // A generated city has four voices and seven places on the page that want
+  // prose. Each of these three slots therefore takes a DIFFERENT piece of
+  // the voice, so the same paragraph is never printed twice: the card takes
+  // the measured livelihood, the pull quote takes the single most distinctive
+  // fact, and the comparison note takes the registered dimensions. The
+  // curated fifty are untouched — their research is hand-written and
+  // already distinct from their context.
   return polishResearchProfile({
     industries,
-    dailyLife: curated?.dailyLife ?? fallbackText(context.livelihood),
+    dailyLife: curated?.dailyLife ?? fallbackText(context.livelihoodEvidence ?? context.livelihood),
     signatureStory: curated?.signatureStory ?? fallbackText(context.opportunity),
-    funFact: curated?.funFact ?? fallbackText(context.famousFor),
-    compareNote: curated?.compareNote ?? fallbackText(context.opportunity),
+    funFact: curated?.funFact ?? fallbackText(context.landmark ?? context.famousFor),
+    compareNote: curated?.compareNote ?? fallbackText(context.dimensionLine ?? context.opportunity),
     sources,
   });
 }
