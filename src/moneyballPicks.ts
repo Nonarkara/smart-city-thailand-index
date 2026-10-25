@@ -2,27 +2,24 @@
 // Moneyball Picks — editorial, not algorithmic
 // ---------------------------------------------------------------------------
 // Hand-selected. The Michelin-guide layer over the directory.
-// Each pick frames one city against the Big Three (Bangkok / Phuket / Chiang Mai)
-// with two concrete, comparable chips. Benchmarks anchor every claim (verified
-// against src/cityData.ts, July 2026 — the Bangkok anchor is "samyan", which
-// carries Bangkok-province metrics):
-//   Bangkok (samyan): GPP/cap ฿628k, PM2.5 32.4 µg/m³, crime 285/100k, beds 42/10k
-//   Phuket:  composite 72.6, hospitality 88
-//   Chiang Mai (old town): composite 67.0, PM2.5 46.1 annual (burn season)
-//   Big-3 averages: GPP/cap ฿429k, PM2.5 32.2, crime 208/100k, beds 33/10k
+// Picks are editorial starting points, not investment recommendations.
+// Values are read from the current city record rather than repeated constants.
+// Historical comparisons and operating claims require dated local evidence;
+// they are not inferred from a score, annual air value or provincial GPP.
 // ---------------------------------------------------------------------------
 
 import type { LocalizedText } from "./cityCdp";
+import type { SmartCity } from "./types";
 
 export interface MoneyballChip {
   label: LocalizedText;
-  value: string;          // plain string — already formatted
-  anchor: LocalizedText;  // comparison anchor, e.g. "half of Bangkok"
+  value: (city: SmartCity) => string; // current record, never a duplicated editorial constant
+  anchor: LocalizedText;  // provenance qualification
 }
 
 export interface MoneyballPick {
   cityId: string;
-  kicker: LocalizedText;  // the frame: "Undervalued gamma", "Climate outperformer"...
+  kicker: LocalizedText;  // the subject for further investigation
   why: LocalizedText;     // one editorial sentence
   chips: [MoneyballChip, MoneyballChip];
 }
@@ -31,32 +28,32 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
   {
     cityId: "nakhon-si-thammarat",
     kicker: {
-      en: "Climate outperformer",
-      th: "โดดเด่นด้านภูมิอากาศ",
-      zh: "气候佼佼者",
+      en: "Southern city context",
+      th: "บริบทเมืองภาคใต้",
+      zh: "南部城市背景",
     },
     why: {
-      en: "Ancient southern capital with working flood telemetry and air that shames Bangkok — the kind of second-tier city you move to, not past.",
-      th: "เมืองหลวงโบราณภาคใต้ ระบบเตือนน้ำท่วมใช้ได้จริง อากาศดีกว่ากรุงเทพเกินครึ่ง เป็นเมืองรองที่ควรย้ายไปอยู่ ไม่ใช่ผ่านเลย",
-      zh: "南部古都，防洪遥测系统真实运行，空气质量让曼谷汗颜——是那种你会搬去而非路过的二线城市。",
+      en: "Compare annual air exposure with seasonal conditions, flood coverage and actual access to services.",
+      th: "ควรเทียบอากาศเฉลี่ยรายปีกับสภาพตามฤดูกาล ความครอบคลุมการป้องกันน้ำท่วม และการเข้าถึงบริการจริง",
+      zh: "请结合季节状况、防洪覆盖与实际服务可达性比较年均空气暴露。",
     },
     chips: [
       {
         label: { en: "PM₂.₅", th: "PM₂.₅", zh: "PM₂.₅" },
-        value: "15.8 µg/m³",
+        value: city => formatPickValue(city.metrics.pm25Annual, " µg/m³"),
         anchor: {
-          en: "half of Bangkok's 32",
-          th: "ครึ่งหนึ่งของกรุงเทพ (32)",
-          zh: "曼谷 32 的一半",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
       {
         label: { en: "Hospitality", th: "อัธยาศัย", zh: "人文" },
-        value: "74",
+        value: city => formatPickValue(city.scores.hospitality, " / 100"),
         anchor: {
-          en: "top-quartile, β tier",
-          th: "25% แรก ระดับเบตา",
-          zh: "前四分之一，β 层",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
     ],
@@ -64,32 +61,32 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
   {
     cityId: "yala",
     kicker: {
-      en: "Cleanest-air play",
-      th: "เดิมพันอากาศสะอาดที่สุด",
-      zh: "最清新空气押注",
+      en: "Air & green space",
+      th: "อากาศและพื้นที่สีเขียว",
+      zh: "空气与绿地",
     },
     why: {
-      en: "Deep-south city that wins Thailand's cleanest-city award year after year. The security narrative obscures a genuinely green, walkable core.",
-      th: "เมืองชายแดนใต้ที่คว้ารางวัลเมืองสะอาดที่สุดของประเทศติดต่อกันหลายปี เรื่องความมั่นคงบังภาพแก่นเมืองที่เขียวและเดินได้จริง",
-      zh: "深南部城市，年年摘得泰国最洁净城市奖。安全叙事遮蔽了这里真正绿意盎然、步行友好的核心。",
+      en: "Annual air and green-cover figures are a starting point. Check neighbourhood conditions and current travel advice separately.",
+      th: "ข้อมูลอากาศรายปีและพื้นที่สีเขียวใช้เริ่มศึกษาต่อ ควรตรวจสภาพรายย่านและคำแนะนำการเดินทางปัจจุบันแยกกัน",
+      zh: "年均空气与绿地数据可作为起点；请另查街区状况及当前旅行建议。",
     },
     chips: [
       {
         label: { en: "PM₂.₅", th: "PM₂.₅", zh: "PM₂.₅" },
-        value: "14.2 µg/m³",
+        value: city => formatPickValue(city.metrics.pm25Annual, " µg/m³"),
         anchor: {
-          en: "among the five cleanest in the index",
-          th: "หนึ่งในห้าเมืองอากาศสะอาดสุดของดัชนี",
-          zh: "位列本指数空气最洁净前五",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
       {
         label: { en: "Green cover", th: "พื้นที่สีเขียว", zh: "绿地覆盖" },
-        value: "58%",
+        value: city => formatPickValue(city.metrics.greenCoverage, "%"),
         anchor: {
-          en: "vs index median 45%",
-          th: "เทียบมัธยฐานดัชนี 45%",
-          zh: "对比指数中位数 45%",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
     ],
@@ -97,32 +94,32 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
   {
     cityId: "khon-kaen",
     kicker: {
-      en: "Momentum play",
-      th: "เดิมพันโมเมนตัม",
-      zh: "势能之选",
+      en: "Regional economy",
+      th: "เศรษฐกิจภูมิภาค",
+      zh: "区域经济",
     },
     why: {
-      en: "Isan's economic capital has a BRT running, an LRT under construction, and a university–industry corridor that actually ships. The Big Three without the price tag.",
-      th: "เมืองหลวงเศรษฐกิจอีสาน มี BRT วิ่งแล้ว LRT กำลังสร้าง ระเบียงมหาวิทยาลัย–อุตสาหกรรมส่งมอบงานจริง คุณภาพสามใหญ่แต่ราคาไม่ใหญ่",
-      zh: "东北部经济之都：BRT 已通车、LRT 在建，产学走廊真出成果。无需付出「三大城市」的代价即可获得同等品质。",
+      en: "Compare provincial economic figures with demand at your site. Verify transport project status, timelines and costs directly.",
+      th: "ควรเทียบตัวเลขเศรษฐกิจจังหวัดกับอุปสงค์ ณ พื้นที่จริง และตรวจสถานะโครงการคมนาคม กำหนดเวลา และต้นทุนโดยตรง",
+      zh: "请将省级经济数据与项目地点需求比较，并直接核查交通项目进度、时间及成本。",
     },
     chips: [
       {
         label: { en: "GPP growth", th: "GPP เติบโต", zh: "GPP 增速" },
-        value: "+3.5% YoY",
+        value: city => formatPickValue(city.metrics.gppGrowthRate, "%"),
         anchor: {
-          en: "~70% faster than Bangkok",
-          th: "เร็วกว่ากรุงเทพราว 70%",
-          zh: "比曼谷快约 70%",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
       {
         label: { en: "FDI inflow", th: "FDI เข้า", zh: "外资流入" },
-        value: "฿2.8B",
+        value: city => formatPickValue(city.metrics.fdiInflow, " million THB"),
         anchor: {
-          en: "tied-4th outside Bangkok & EEC",
-          th: "ร่วมอันดับ 4 นอกกรุงเทพและ EEC",
-          zh: "曼谷与 EEC 以外并列第四",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
     ],
@@ -130,32 +127,32 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
   {
     cityId: "nan",
     kicker: {
-      en: "Undervalued beta",
-      th: "เบต้าที่ถูกประเมินต่ำ",
-      zh: "被低估的 β 城",
+      en: "Forest & hospitality",
+      th: "ป่าไม้และการต้อนรับ",
+      zh: "森林与接待条件",
     },
     why: {
-      en: "A quiet northern town holding the index's highest forest cover and a hospitality score in the top five — the composite score hides what the metrics actually say.",
-      th: "เมืองเหนือเงียบๆ ที่มีพื้นที่ป่าสูงสุดในดัชนีและคะแนนอัธยาศัยติดห้าอันดับแรก คะแนนรวมบังสิ่งที่ตัวเลขบอกเอาไว้",
-      zh: "静谧的北部小城，森林覆盖率居本指数之首，人文得分位列前五——综合分掩盖了指标真正的声音。",
+      en: "Province-level forest cover does not describe every neighbourhood. Check seasonal air, access and local services before choosing a site.",
+      th: "พื้นที่ป่าระดับจังหวัดไม่ได้บอกสภาพทุกย่าน ควรตรวจอากาศตามฤดูกาล การเดินทาง และบริการในพื้นที่ก่อนเลือกทำเล",
+      zh: "省级森林覆盖不代表每个街区；选址前请核查季节性空气、交通及本地服务。",
     },
     chips: [
       {
         label: { en: "Hospitality", th: "อัธยาศัย", zh: "人文" },
-        value: "82",
+        value: city => formatPickValue(city.scores.hospitality, " / 100"),
         anchor: {
-          en: "top-five in the index",
-          th: "ติดห้าอันดับแรกของดัชนี",
-          zh: "位列指数前五",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
       {
         label: { en: "Forest cover", th: "พื้นที่ป่า", zh: "森林覆盖" },
-        value: "75%",
+        value: city => formatPickValue(city.metrics.forestCoverage, "%"),
         anchor: {
-          en: "highest in this index",
-          th: "สูงสุดในดัชนีนี้",
-          zh: "本指数之最",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
     ],
@@ -163,32 +160,32 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
   {
     cityId: "rayong",
     kicker: {
-      en: "Wealth per head",
-      th: "ความมั่งคั่งต่อหัว",
-      zh: "人均财富",
+      en: "Production per person",
+      th: "ผลผลิตต่อคน",
+      zh: "人均产出",
     },
     why: {
-      en: "EEC anchor city where GPP per capita runs ~60% above Bangkok's. Not a lifestyle pick — an investor's pick. Environmental monitoring is genuine, not ornamental.",
-      th: "เมืองหลักใน EEC ที่ GPP ต่อหัวสูงกว่ากรุงเทพราว 60% ไม่ใช่เดิมพันไลฟ์สไตล์ แต่เป็นเดิมพันนักลงทุน การเฝ้าระวังสิ่งแวดล้อมเป็นจริง ไม่ประดับ",
-      zh: "EEC 锚点城市，人均 GPP 比曼谷高约 60%。非生活方式之选，是投资人之选。环境监测真实运作，绝非装饰。",
+      en: "GPP per person measures production, not household wealth or investment returns. Check local pollution, costs and sector demand.",
+      th: "GPP ต่อคนวัดผลผลิต ไม่ใช่ความมั่งคั่งครัวเรือนหรือผลตอบแทนการลงทุน ควรตรวจมลพิษ ต้นทุน และอุปสงค์รายสาขาในพื้นที่",
+      zh: "人均GPP衡量产出，不是家庭财富或投资回报；请核查本地污染、成本及行业需求。",
     },
     chips: [
       {
         label: { en: "GPP / capita", th: "GPP ต่อหัว", zh: "人均 GPP" },
-        value: "฿1.02M",
+        value: city => formatPickValue(city.metrics.gppPerCapita, " THB/person"),
         anchor: {
-          en: "1.6× Bangkok",
-          th: "1.6 เท่าของกรุงเทพ",
-          zh: "曼谷的 1.6 倍",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
       {
         label: { en: "FDI inflow", th: "FDI เข้า", zh: "外资流入" },
-        value: "฿5.8B",
+        value: city => formatPickValue(city.metrics.fdiInflow, " million THB"),
         anchor: {
-          en: "top-10 FDI inflow in the index",
-          th: "FDI ติดสิบอันดับแรกของดัชนี",
-          zh: "外资流入位列指数前十",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
     ],
@@ -196,32 +193,32 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
   {
     cityId: "phitsanulok-muni",
     kicker: {
-      en: "Governance dividend",
-      th: "เงินปันผลการบริหาร",
-      zh: "治理红利",
+      en: "Municipal delivery",
+      th: "บริการเทศบาล",
+      zh: "市政服务",
     },
     why: {
-      en: "An unshowy lower-north municipality where the digital citizen platform crossed 80% adoption and the flood-management stack actually runs. Delivery over pitch deck.",
-      th: "เทศบาลภาคเหนือตอนล่างที่ไม่โอ้อวด แพลตฟอร์มพลเมืองดิจิทัลเกิน 80% และระบบจัดการน้ำท่วมทำงานจริง ส่งมอบจริง ไม่ใช่เดคพิทช์",
-      zh: "低调的下北部市政——市民数字平台使用率突破 80%，防洪系统真实运行。交付胜过路演。",
+      en: "Use the digital and environment scores to frame questions. Confirm service use, savings and flood operations in dated local records.",
+      th: "ใช้คะแนนดิจิทัลและสิ่งแวดล้อมตั้งคำถาม แล้วตรวจการใช้บริการ การประหยัด และการจัดการน้ำท่วมจากหลักฐานท้องถิ่นที่ระบุวันที่",
+      zh: "用数字与环境评分提出问题，并以注明日期的本地记录核实使用率、节省额及防洪运行。",
     },
     chips: [
       {
-        label: { en: "Civic adoption", th: "การใช้งานพลเมือง", zh: "市民采用率" },
-        value: "80%+",
+        label: { en: "Digital score", th: "คะแนนดิจิทัล", zh: "数字评分" },
+        value: city => formatPickValue(city.scores.digital, " / 100"),
         anchor: {
-          en: "rare at any tier",
-          th: "หายากทุกระดับ",
-          zh: "任何层级皆罕见",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
       {
-        label: { en: "Street-light savings", th: "ประหยัดไฟถนน", zh: "路灯节能" },
-        value: "−35%",
+        label: { en: "Environment score", th: "คะแนนสิ่งแวดล้อม", zh: "环境评分" },
+        value: city => formatPickValue(city.scores.environment, " / 100"),
         anchor: {
-          en: "measured, not modelled",
-          th: "วัดจริง ไม่ใช่จำลอง",
-          zh: "实测而非建模",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
     ],
@@ -229,34 +226,39 @@ export const MONEYBALL_PICKS: MoneyballPick[] = [
   {
     cityId: "korat",
     kicker: {
-      en: "Logistics hub waiting",
-      th: "ศูนย์โลจิสติกส์รอเวลา",
-      zh: "物流枢纽待启",
+      en: "Workforce & air",
+      th: "แรงงานและอากาศ",
+      zh: "劳动力与空气",
     },
     why: {
-      en: "Gateway to Isan, on the Bangkok–Nong Khai high-speed rail path. Improving air, rising GPP, manufacturing-heavy base. A five-year bet, not a one-year one.",
-      th: "ประตูสู่อีสาน อยู่บนเส้นทางรถไฟความเร็วสูงกรุงเทพ–หนองคาย อากาศดีขึ้น GPP โต ฐานการผลิตหนัก เดิมพันห้าปี ไม่ใช่หนึ่งปี",
-      zh: "通往东北之门，位于曼谷—廊开高铁沿线。空气改善、GPP 上扬、制造业基础厚。五年之注，非一年之博。",
+      en: "Provincial labour supply does not establish vacancies or available skills. Check employers, wages, commuting and current air conditions.",
+      th: "แรงงานระดับจังหวัดไม่ได้ยืนยันตำแหน่งว่างหรือทักษะที่หาได้ ควรตรวจนายจ้าง ค่าจ้าง การเดินทาง และอากาศปัจจุบัน",
+      zh: "省级劳动力规模不证明岗位空缺或可用技能；请核查雇主、工资、通勤及当前空气。",
     },
     chips: [
       {
-        label: { en: "PM₂.₅ trend", th: "แนวโน้ม PM₂.₅", zh: "PM₂.₅ 趋势" },
-        value: "improving",
+        label: { en: "Annual PM₂.₅", th: "PM₂.₅ รายปี", zh: "年均PM₂.₅" },
+        value: city => formatPickValue(city.metrics.pm25Annual, " µg/m³"),
         anchor: {
-          en: "while Chiang Rai worsens",
-          th: "ขณะที่เชียงรายแย่ลง",
-          zh: "而清莱在恶化",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
       {
         label: { en: "Labour force", th: "แรงงาน", zh: "劳动力" },
-        value: "1.38M",
+        value: city => formatPickValue(city.metrics.laborForce, " thousand people"),
         anchor: {
-          en: "deepest pool in Isan",
-          th: "ลึกที่สุดในอีสาน",
-          zh: "东北最深",
+          en: "Curated baseline · check sources and dates in dossier",
+          th: "ข้อมูลฐานที่คัดสรร · ตรวจแหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+          zh: "编辑基线 · 请核查城市档案中的来源及日期",
         },
       },
     ],
   },
 ];
+
+/** Preserve missing values; no invented editorial number fills a source gap. */
+function formatPickValue(value: number | undefined, unit: string): string {
+  return value == null || !Number.isFinite(value) ? "—" : value.toLocaleString("en-US", { maximumFractionDigits: 1 }) + unit;
+}

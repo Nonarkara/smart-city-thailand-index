@@ -1,3 +1,4 @@
+import { isEecProvince } from "./eecGeography";
 // ---------------------------------------------------------------------------
 // City Analytics — Developability, Global Comparisons, Tailored Steps
 // ---------------------------------------------------------------------------
@@ -342,7 +343,7 @@ export interface FinancingAdvice {
 export function getFinancingAdvice(city: SmartCity): FinancingAdvice {
   const gpp = city.metrics.gppPerCapita ?? 0;
   const ecoScore = city.scores.economy;
-  const isEEC = city.region === "east";
+  const isEEC = isEecProvince(city.province);
   const isSouth = city.region === "south";
   const isTourism = city.scores.hospitality >= 75;
 
@@ -366,9 +367,9 @@ export function getFinancingAdvice(city: SmartCity): FinancingAdvice {
       primaryInstrument: "BOI S-Curve Incentives + PPP",
       primaryInstrumentTh: "สิทธิประโยชน์ BOI S-Curve + PPP",
       primaryInstrumentZh: "BOI S曲线激励 + 公私合营",
-      rationale: "EEC zone gives automatic 8-year CIT exemption + import duty waiver. Use this to attract private smart infrastructure operators.",
-      rationaleTh: "เขต EEC ให้ยกเว้น CIT 8 ปี + ยกเว้นอากรนำเข้าอัตโนมัติ ใช้ดึงผู้ประกอบการโครงสร้างพื้นฐานอัจฉริยะเอกชน",
-      rationaleZh: "EEC区域自动享有8年企业所得税豁免+进口关税豁免。利用此吸引私营智慧基础设施运营商。",
+      rationale: "EEC province location is a starting point for checking support. Verify eligible activities, approval conditions and the actual promotion certificate; tax relief is not automatic.",
+      rationaleTh: "ทำเลในจังหวัด EEC ใช้เริ่มตรวจมาตรการสนับสนุน ต้องตรวจกิจการที่มีสิทธิ เงื่อนไขอนุมัติ และบัตรส่งเสริมจริง การยกเว้นภาษีไม่ใช่สิทธิอัตโนมัติ",
+      rationaleZh: "位于EEC府可作为核查支持政策的起点；须核查合格业务、审批条件及实际促进证书，税收优惠并非自动获得。",
       typicalSize: "THB 200M - 5B",
       competitiveAdvantage: "EEC adjacency + BOI S-Curve = strongest investment incentive package in Thailand.",
       competitiveAdvantageTh: "ใกล้ EEC + BOI S-Curve = แพ็คเกจจูงใจการลงทุนแข็งแกร่งที่สุดในไทย",
@@ -463,17 +464,16 @@ const BIG3_AVG = {
 
 export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
   const gpp = city.metrics.gppPerCapita ?? 0;
-  const pm = city.metrics.pm25Annual ?? 25;
-  const crime = city.metrics.crimeRatePer100k ?? 150;
-  const beds = city.metrics.hospitalBedsPer10k ?? 20;
-  const green = city.metrics.greenCoverage ?? 30;
-  const isEEC = city.region === "east";
-  const hasBOI = city.scores.economy >= 50;
+  const pm = city.metrics.pm25Annual;
+  const crime = city.metrics.crimeRatePer100k;
+  const beds = city.metrics.hospitalBedsPer10k;
+  const green = city.metrics.greenCoverage;
+  const isEEC = isEecProvince(city.province);
 
   const edges: MoneyballEdge[] = [];
 
   // Air quality edge
-  if (pm < BIG3_AVG.pm25) {
+  if (pm != null && Number.isFinite(pm) && pm < BIG3_AVG.pm25) {
     edges.push({
       label: "Cleaner air",
       labelTh: "อากาศสะอาดกว่า",
@@ -486,7 +486,7 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
   }
 
   // Safety edge
-  if (crime < BIG3_AVG.crime) {
+  if (crime != null && Number.isFinite(crime) && crime < BIG3_AVG.crime) {
     edges.push({
       label: "Lower crime",
       labelTh: "อาชญากรรมต่ำกว่า",
@@ -499,7 +499,7 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
   }
 
   // Green coverage edge
-  if (green > BIG3_AVG.green) {
+  if (green != null && Number.isFinite(green) && green > BIG3_AVG.green) {
     edges.push({
       label: "More green space",
       labelTh: "พื้นที่สีเขียวมากกว่า",
@@ -512,11 +512,11 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
   }
 
   // Healthcare edge
-  if (beds > 20) {
+  if (beds != null && Number.isFinite(beds) && beds > 20) {
     edges.push({
-      label: "Healthcare access",
-      labelTh: "เข้าถึงสาธารณสุข",
-      labelZh: "医疗保障更佳",
+      label: "Hospital bed capacity",
+      labelTh: "จำนวนเตียงโรงพยาบาล",
+      labelZh: "医院床位容量",
       value: `${beds} beds/10K`,
       valueTh: `${beds} เตียงต่อหมื่นประชากร`,
       valueZh: `每万人床位数为 ${beds} 张`,
@@ -524,32 +524,32 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
     });
   }
 
-  // BOI incentive edge
-  if (hasBOI) {
-    const boiYears = isEEC ? "8-15 year CIT exemption (EEC zone)" : "3-8 year CIT exemption (S-Curve)";
-    const boiYearsTh = isEEC ? "ยกเว้น CIT 8-15 ปี (เขต EEC)" : "ยกเว้น CIT 3-8 ปี (S-Curve)";
-    const boiYearsZh = isEEC ? "免征企业所得税 8-15 年（EEC 特区）" : "免征企业所得税 3-8 年（S曲线产业）";
+  // Geography identifies a place to investigate, never automatic tax entitlement.
+  if (isEEC) {
+    const boiYears = "EEC province; verify project activity and approved BOI certificate";
+    const boiYearsTh = "จังหวัด EEC ต้องตรวจกิจการและบัตรส่งเสริม BOI ที่อนุมัติ";
+    const boiYearsZh = "EEC府；须核查业务类别及获批BOI促进证书";
     edges.push({
-      label: "BOI tax incentive",
-      labelTh: "สิทธิประโยชน์ภาษี BOI",
-      labelZh: "BOI 税收优惠",
+      label: "BOI eligibility check",
+      labelTh: "ตรวจสิทธิ BOI",
+      labelZh: "核查BOI资格",
       value: boiYears,
       valueTh: boiYearsTh,
       valueZh: boiYearsZh,
-      advantage: true
+      advantage: false
     });
   }
 
-  // Cost advantage (lower GPP = lower labor/rent costs)
+  // Provincial output is context; it does not establish rents or wage costs.
   if (gpp > 0 && gpp < 200000) {
     edges.push({
-      label: "Lower operating costs",
-      labelTh: "ต้นทุนดำเนินการต่ำกว่า",
-      labelZh: "运营成本更低",
-      value: `GPP ฿${(gpp/1000).toFixed(0)}K — labor and rent 2-4x cheaper than Bangkok`,
-      valueTh: `GPP ฿${(gpp/1000).toFixed(0)}K — ค่าแรงและค่าเช่าถูกกว่ากรุงเทพฯ 2-4 เท่า`,
-      valueZh: `人均GPP为 ฿${(gpp/1000).toFixed(0)}K——劳动力和租金成本比曼谷便宜 2-4 倍`,
-      advantage: true
+      label: "Production context",
+      labelTh: "บริบทผลผลิต",
+      labelZh: "产出背景",
+      value: `GPP ฿${(gpp/1000).toFixed(0)}K — verify rents and wages separately`,
+      valueTh: `GPP ฿${(gpp/1000).toFixed(0)}K — ต้องตรวจค่าเช่าและค่าจ้างแยกกัน`,
+      valueZh: `人均GPP为 ฿${(gpp/1000).toFixed(0)}K——租金与工资须另行核查`,
+      advantage: false
     });
   }
 
@@ -560,9 +560,9 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
       label: "University talent pipeline",
       labelTh: "สายพานบุคลากรจากมหาวิทยาลัย",
       labelZh: "高校人才输送",
-      value: "Local university provides graduate recruitment pool",
-      valueTh: "มหาวิทยาลัยในท้องถิ่นเป็นแหล่งสรรหาบัณฑิตจบใหม่",
-      valueZh: "本地大学可直接提供优秀的毕业生人才池",
+      value: "Investigate local courses, graduate numbers and skills; availability is not measured here",
+      valueTh: "ควรตรวจหลักสูตร จำนวนบัณฑิต และทักษะในพื้นที่ ยังไม่ได้วัดความพร้อมของบุคลากรที่นี่",
+      valueZh: "请核查本地课程、毕业生数量及技能；本视图未测量人才可用性",
       advantage: true
     });
   }
@@ -570,12 +570,12 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
   // Digital readiness
   if (city.scores.digital >= 55) {
     edges.push({
-      label: "Digital infrastructure ready",
-      labelTh: "โครงสร้างพื้นฐานดิจิทัลพร้อม",
-      labelZh: "数字基础设施就绪",
-      value: `Digital score ${city.scores.digital}/100 — IoT, data platforms operational`,
-      valueTh: `คะแนนดิจิทัล ${city.scores.digital}/100 — IoT และแพลตฟอร์มข้อมูลเปิดใช้งานจริง`,
-      valueZh: `数字得分 ${city.scores.digital}/100——物联网及数据平台均已投入运行`,
+      label: "Digital research score",
+      labelTh: "คะแนนวิจัยดิจิทัล",
+      labelZh: "数字研究评分",
+      value: `Digital score ${city.scores.digital}/100 — verify service coverage and operating status`,
+      valueTh: `คะแนนดิจิทัล ${city.scores.digital}/100 — ต้องตรวจความครอบคลุมบริการและสถานะดำเนินงาน`,
+      valueZh: `数字得分 ${city.scores.digital}/100——须核查服务覆盖及运营状态`,
       advantage: true
     });
   }
@@ -583,39 +583,21 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
   // Hospitality/tourism edge
   if (city.scores.hospitality >= 75 && city.id !== "phuket" && city.id !== "chiang-mai-old-town") {
     edges.push({
-      label: "Tourism economy without Big 3 competition",
-      labelTh: "เศรษฐกิจท่องเที่ยวโดยไม่แข่งกับ Big 3",
-      labelZh: "避开三大核心城市竞争的旅游经济",
-      value: `Hospitality ${city.scores.hospitality}/100 — strong but less saturated market`,
-      valueTh: `คะแนนต้อนรับ ${city.scores.hospitality}/100 — ตลาดแข็งแกร่งแต่ยังไม่ล้นตัว`,
-      valueZh: `文旅得分 ${city.scores.hospitality}/100——市场强劲且尚未饱和`,
+      label: "Hospitality research score",
+      labelTh: "คะแนนวิจัยการต้อนรับ",
+      labelZh: "接待条件研究评分",
+      value: `Hospitality ${city.scores.hospitality}/100 — check visitor demand and competing supply`,
+      valueTh: `คะแนนต้อนรับ ${city.scores.hospitality}/100 — ต้องตรวจอุปสงค์ผู้เยี่ยมเยือนและอุปทานคู่แข่ง`,
+      valueZh: `文旅得分 ${city.scores.hospitality}/100——须核查游客需求及竞争供给`,
       advantage: true
     });
   }
 
-  // Generate headline
+  // A count of curated signals does not establish market value or returns.
   const edgeCount = edges.filter(e => e.advantage).length;
-  let headline = "";
-  let headlineTh = "";
-  let headlineZh = "";
-
-  if (edgeCount >= 5) {
-    headline = `${edgeCount} advantages over Bangkok/Phuket/Chiang Mai. This is a moneyball city — undervalued by the market, strong on fundamentals.`;
-    headlineTh = `${edgeCount} ข้อได้เปรียบเหนือกรุงเทพฯ/ภูเก็ต/เชียงใหม่ นี่คือเมือง moneyball — ตลาดประเมินต่ำ แต่พื้นฐานแข็ง`;
-    headlineZh = `相较于曼谷/普吉/清迈拥有 ${edgeCount} 项优势。这是一座典型的“点球成金”式城市——被市场低估，但基本面极其扎实。`;
-  } else if (edgeCount >= 3) {
-    headline = `${edgeCount} clear edges. Not the obvious choice, but the smart one — lower cost, less competition, real infrastructure.`;
-    headlineTh = `${edgeCount} จุดแข็งชัด ไม่ใช่ตัวเลือกที่เห็นชัด แต่เป็นตัวเลือกที่ฉลาด — ต้นทุนต่ำ แข่งขันน้อย โครงสร้างพื้นฐานจริง`;
-    headlineZh = `具备 ${edgeCount} 项明确优势。虽然不是最显眼的选择，但绝对是明智之选——成本更低、竞争更少、基础设施扎实。`;
-  } else if (edgeCount >= 1) {
-    headline = `Niche opportunity. Specific advantages in ${edges.filter(e => e.advantage).map(e => e.label.toLowerCase()).join(", ")}. Not for every investor, but right for the right one.`;
-    headlineTh = `โอกาสเฉพาะทาง จุดแข็งเฉพาะด้าน ไม่ใช่สำหรับทุกนักลงทุน แต่ใช่สำหรับคนที่ใช่`;
-    headlineZh = `利基市场机遇。在特定领域具备独特优势。并非适合所有投资者，但完美契合对口资本的需求。`;
-  } else {
-    headline = `Early-stage opportunity. Fundamentals still building. Best suited for impact investors and development finance, not commercial returns yet.`;
-    headlineTh = `โอกาสระยะเริ่มต้น พื้นฐานยังอยู่ระหว่างสร้าง เหมาะกับนักลงทุนเพื่อผลกระทบและการเงินเพื่อพัฒนา ยังไม่ใช่ผลตอบแทนเชิงพาณิชย์`;
-    headlineZh = `早期投资机遇。基本面仍在构建中。最适合影响力投资者和开发性金融机构，目前尚不适合追求商业回报的资金。`;
-  }
+  const headline = `${edgeCount} research signals to investigate. Check source dates, geographic scope and local conditions before treating them as an advantage.`;
+  const headlineTh = `มี ${edgeCount} ประเด็นวิจัยให้ศึกษาต่อ ควรตรวจวันที่ ขอบเขตพื้นที่ และสภาพจริงก่อนถือเป็นข้อได้เปรียบ`;
+  const headlineZh = `有 ${edgeCount} 项研究信号可深入调查；视作优势前，请核查来源日期、地理范围及本地状况。`;
 
   return { edges, headline, headlineTh, headlineZh };
 }

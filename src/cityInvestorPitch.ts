@@ -1,3 +1,4 @@
+import { isEecProvince } from "./eecGeography";
 // ---------------------------------------------------------------------------
 // City Investor Pitch — Uniform, data-driven, trilingual value proposition
 // ---------------------------------------------------------------------------
@@ -318,7 +319,7 @@ export function getInvestorPitch(city: SmartCity): InvestorPitch {
   const context = getCityContext(city.id);
   const developability = computeDevelopability(city);
   const financing = getFinancingAdvice(city);
-  const isEEC = city.region === "east";
+  const isEEC = isEecProvince(city.province);
 
   const headline = buildHeadline(city, standout);
   const whyLook = buildWhyLook(city, standout, context);

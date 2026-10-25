@@ -26,3 +26,11 @@ export function checkSnapshot(bytes, manifest) {
   assert.equal(createHash('sha256').update(bytes).digest('hex'), manifest.sha256, 'research snapshot hash differs');
   JSON.parse(bytes.toString());
 }
+
+/** Accept remote validation only for this exact clean revision and full release workflow. */
+export function checkValidationRun(run, expectedHead) {
+  assert.equal(run.workflowName, 'Deploy to GitHub Pages', 'unexpected validation workflow');
+  assert.equal(run.headSha, expectedHead, 'validation belongs to another revision');
+  assert.equal(run.status, 'completed', 'validation is still running');
+  assert.equal(run.conclusion, 'success', 'validation did not succeed');
+}

@@ -100,9 +100,9 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
       })}</h2>
       <p className="section-intro">
         {translate(locale, {
-          en: "SCITI turns each city's data into a precise, comparable value proposition. Pick a tier and region to find where your capital fits.",
-          th: "SCITI แปลงข้อมูลของแต่ละเมืองเป็นข้อเสนอคุณค่าที่แม่นยำและเปรียบเทียบได้ เลือกระดับและภาคเพื่อหาว่าทุนของคุณเหมาะกับที่ไหน",
-          zh: "SCITI将每座城市的数据转化为精确、可比较的价值主张。选择层级和地区，找到您的资本适合哪里。",
+          en: "These are curated research proposals, not verified financing offers or forecasts of returns. Project sizes and suggested instruments are indicative. Compare cities here, then verify local demand, operating evidence, costs, and eligibility with the responsible institution.",
+          th: "นี่คือข้อเสนอจากงานวิจัยที่เรียบเรียงไว้ ไม่ใช่ข้อเสนอเงินทุนที่ยืนยันแล้วหรือการพยากรณ์ผลตอบแทน ขนาดโครงการและเครื่องมือที่แนะนำเป็นเพียงแนวทาง ใช้เทียบเมือง แล้วตรวจอุปสงค์ หลักฐานการดำเนินงาน ต้นทุน และสิทธิกับหน่วยงานที่รับผิดชอบ",
+          zh: "这些是编辑整理的研究设想，并非经核实的融资要约或回报预测。项目规模及建议工具仅供参考。比较城市后，请向负责机构核查当地需求、运营证据、成本和资格。",
         })}
       </p>
 
@@ -253,7 +253,7 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
 
       <div>
         <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: ".08em" }}>
-          {translate(locale, { en: "Opportunity", th: "โอกาส", zh: "机遇" })}
+          {translate(locale, { en: "Proposal to investigate", th: "ข้อเสนอที่ควรศึกษาต่อ", zh: "待调查的设想" })}
         </span>
         <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.6, margin: ".15rem 0 0" }}>
           {pitch.opportunity}
@@ -263,7 +263,7 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: ".5rem" }}>
         <div>
           <span style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--3)", textTransform: "uppercase", letterSpacing: ".08em" }}>
-            {translate(locale, { en: "Right for", th: "เหมาะกับ", zh: "适合" })}
+            {translate(locale, { en: "Possible audience", th: "กลุ่มที่อาจสนใจ", zh: "潜在对象" })}
           </span>
           <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.55, margin: ".15rem 0 0" }}>
             {pitch.idealInvestor}

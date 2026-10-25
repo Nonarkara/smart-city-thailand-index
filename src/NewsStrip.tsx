@@ -2,21 +2,18 @@ import { useInView } from "./useInView";
 import { NEWS_ITEMS, TAG_COLORS, TAG_LABELS } from "./newsData";
 import { translate } from "./cityPresentation";
 import type { Locale } from "./types";
+import { useCitySummaries } from "./cityApi";
+import { CDP_PLATFORM_COUNT, EVIDENCE_SOURCE_FAMILY_COUNT, SCITI_DATA_CUTOFF_ISO } from "./methodologySpec";
+import { SCORING_PILLARS } from "./scoring";
 
 interface Props {
   locale: Locale;
 }
 
-// ─── INDEX META ───
-const INDEX_META = {
-  lastUpdated: "2026-06-09",
-  citiesTracked: 48,
-  dataSources: 6,
-  totalSignals: 420,
-  provinces: 23,
-};
 
 export default function NewsStrip({ locale }: Props) {
+  const { data: cities } = useCitySummaries();
+  const provinceCount = new Set(cities.map(city => city.province)).size;
   const [newsRef, newsVisible] = useInView(0.05);
   const [metaRef, metaVisible] = useInView(0.05);
   const [legalRef, legalVisible] = useInView(0.05);
@@ -31,12 +28,12 @@ export default function NewsStrip({ locale }: Props) {
               {translate(locale, { en: "Smart City Intelligence", th: "ข่าวกรองเมืองอัจฉริยะ", zh: "智慧城市情报" })}
             </p>
             <h2 className="news-section-title">
-              {translate(locale, { en: "Latest dispatches", th: "ข่าวล่าสุด", zh: "最新动态" })}
+              {translate(locale, { en: "Selected reading", th: "บทอ่านคัดสรร", zh: "精选阅读" })}
             </h2>
           </div>
           <span className="news-live-badge">
             <span className="news-live-dot" />
-            {translate(locale, { en: "Updated weekly", th: "อัปเดตรายสัปดาห์", zh: "每周更新" })}
+            {translate(locale, { en: "Dated articles", th: "บทความระบุวันที่", zh: "文章附日期" })}
           </span>
         </div>
 
@@ -70,39 +67,39 @@ export default function NewsStrip({ locale }: Props) {
         <div className="section data-density-inner">
           <div className="data-density-grid">
             <div className="density-stat">
-              <span className="density-value">{INDEX_META.citiesTracked}</span>
+              <span className="density-value">{cities.length}</span>
               <span className="density-label">
                 {translate(locale, { en: "Cities tracked", th: "เมืองที่ติดตาม", zh: "追踪城市" })}
               </span>
             </div>
             <div className="density-stat">
-              <span className="density-value">{INDEX_META.provinces}</span>
+              <span className="density-value">{provinceCount}</span>
               <span className="density-label">
                 {translate(locale, { en: "Provinces covered", th: "จังหวัดที่ครอบคลุม", zh: "覆盖省份" })}
               </span>
             </div>
             <div className="density-stat">
-              <span className="density-value">{INDEX_META.totalSignals}</span>
+              <span className="density-value">{CDP_PLATFORM_COUNT}</span>
               <span className="density-label">
-                {translate(locale, { en: "Data signals", th: "สัญญาณข้อมูล", zh: "数据信号" })}
+                {translate(locale, { en: "Public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}
               </span>
             </div>
             <div className="density-stat">
-              <span className="density-value">{INDEX_META.dataSources}</span>
+              <span className="density-value">{EVIDENCE_SOURCE_FAMILY_COUNT}</span>
               <span className="density-label">
-                {translate(locale, { en: "Verified sources", th: "แหล่งข้อมูลที่ยืนยัน", zh: "经核实来源" })}
+                {translate(locale, { en: "Source families", th: "ตระกูลแหล่งข้อมูล", zh: "来源类别" })}
               </span>
             </div>
             <div className="density-stat">
-              <span className="density-value">7</span>
+              <span className="density-value">{SCORING_PILLARS.length}</span>
               <span className="density-label">
                 {translate(locale, { en: "Scoring pillars", th: "เสาคะแนน", zh: "评分支柱" })}
               </span>
             </div>
             <div className="density-stat density-stat-date">
-              <span className="density-value">{INDEX_META.lastUpdated}</span>
+              <span className="density-value">{SCITI_DATA_CUTOFF_ISO.slice(0, 10)}</span>
               <span className="density-label">
-                {translate(locale, { en: "Index date", th: "วันที่ดัชนี", zh: "指数日期" })}
+                {translate(locale, { en: "Baseline cut-off", th: "วันตัดข้อมูลฐาน", zh: "基线截点" })}
               </span>
             </div>
           </div>
@@ -159,9 +156,9 @@ export default function NewsStrip({ locale }: Props) {
               <span className="legal-badge legal-badge-standard">ISO 37122</span>
               <p className="legal-text">
                 {translate(locale, {
-                  en: "Methodology aligned with ISO 37122:2019 (smart city indicators), UN-Habitat CPI, and ASEAN Smart Cities Framework (ASCF).",
-                  th: "วิธีการสอดคล้องกับ ISO 37122:2019 (ตัวชี้วัดเมืองอัจฉริยะ) UN-Habitat CPI และกรอบเมืองอัจฉริยะอาเซียน",
-                  zh: "方法论与ISO 37122:2019（智慧城市指标）、联合国人居署CPI和东盟智慧城市框架（ASCF）保持一致。",
+                  en: "Framework references include ISO 37122:2019, UN-Habitat CPI, and the ASEAN Smart Cities Framework. This is not an ISO certification or a claim that every indicator is implemented.",
+                  th: "อ้างอิงกรอบ ISO 37122:2019, UN-Habitat CPI และกรอบเมืองอัจฉริยะอาเซียน ไม่ใช่การรับรอง ISO หรือการยืนยันว่าใช้ครบทุกตัวชี้วัด",
+                  zh: "参考框架包括ISO 37122:2019、联合国人居署CPI及东盟智慧城市框架；这不是ISO认证，也不声称已实施全部指标。",
                 })}
               </p>
             </div>

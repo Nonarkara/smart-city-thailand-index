@@ -186,9 +186,10 @@ function PagePhotoHero({ route, locale }: { route: Route; locale: Locale }) {
   if (route.kind === "home" || route.kind === "city" || route.kind === "showcase" || route.kind === "canvas") return null;
   const hero = PAGE_HERO_ASSETS[route.kind as StaticHeroKind];
   if (!hero) return null;
+  const compact = ["rankings", "compare", "invest", "discover", "baseline"].includes(route.kind);
 
   return (
-    <section className={`route-photo-hero route-photo-hero-${route.kind}`} aria-label={hero.title[locale]}>
+    <section className={`route-photo-hero route-photo-hero-${route.kind}${compact ? " route-photo-context" : ""}`} aria-label={hero.title[locale]}>
       <ResponsiveImage
         src={hero.src}
         alt={hero.place}
@@ -198,8 +199,13 @@ function PagePhotoHero({ route, locale }: { route: Route; locale: Locale }) {
       />
       <div className="route-photo-hero-overlay">
         <span className="route-photo-hero-place">{hero.place}</span>
-        <p className="route-photo-hero-title">{hero.title[locale]}</p>
-        <p className="route-photo-hero-desc">{hero.description[locale]}</p>
+        {compact ? <details>
+          <summary className="route-photo-hero-title">{hero.title[locale]}</summary>
+          <p className="route-photo-hero-desc">{hero.description[locale]}</p>
+        </details> : <>
+          <p className="route-photo-hero-title">{hero.title[locale]}</p>
+          <p className="route-photo-hero-desc">{hero.description[locale]}</p>
+        </>}
       </div>
     </section>
   );
@@ -255,7 +261,7 @@ export default function App() {
       window.history.pushState({}, "", fullPath);
     }
     window.scrollTo({ top: 0, behavior: "auto" });
-    setRoute(parseRoute(fullPath));
+    setRoute(parseRoute(new URL(fullPath, window.location.origin).pathname));
     setMobileMenuOpen(false);
   };
 

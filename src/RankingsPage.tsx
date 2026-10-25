@@ -244,7 +244,7 @@ function MoneyballPicksStrip({
               {pick.chips.map((chip, idx) => (
                 <div key={idx} className="pick-chip">
                   <span className="pick-chip-label">{translate(locale, chip.label)}</span>
-                  <span className="pick-chip-value">{chip.value}</span>
+                  <span className="pick-chip-value">{chip.value(city)}</span>
                   <span className="pick-chip-anchor">{translate(locale, chip.anchor)}</span>
                 </div>
               ))}
@@ -259,7 +259,7 @@ function MoneyballPicksStrip({
 export default function RankingsPage({ locale, onNavigate }: Props) {
   const { data: cities } = useCitySummaries();
   const [viewMode, setViewMode] = useState<"directory" | "compare" | "map" | "gallery">("directory");
-  const [lensId, setLensId] = useState<string>("balanced");
+  const [lensId, setLensId] = useState<string>(() => getPresetById(new URLSearchParams(window.location.search).get("lens") ?? "balanced").id);
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
@@ -390,22 +390,24 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
           </div>
           <p className="hero-strapline">
             {t({
-              en: "You already know Bangkok, Chiang Mai, and Phuket. Pick a lens and the directory re-ranks under that worldview — growth at all costs, retirement paradise, climate refuge. The spider shows the shape of each lens.",
-              th: "คุณรู้จักกรุงเทพ เชียงใหม่ และภูเก็ตอยู่แล้ว เลือกเลนส์ แล้วสารบบจะจัดอันดับใหม่ตามมุมมองนั้น — เติบโตล้วนๆ สวรรค์วัยเกษียณ ที่พักพิงภูมิอากาศ ใยแมงมุมแสดงรูปร่างของแต่ละเลนส์",
-              zh: "你已熟悉曼谷、清迈、普吉。选一副镜头，名录便按那套世界观重排——只看增长、退休天堂、气候避风港。蛛网呈现每副镜头的形状。",
+              en: "Choose a purpose to reweight the seven research scores. The diagram shows the weights; there are no hidden city bonuses. These are screening priorities, not forecasts of returns or personal suitability.",
+              th: "เลือกวัตถุประสงค์เพื่อปรับน้ำหนักคะแนนวิจัยทั้งเจ็ด แผนภาพแสดงน้ำหนัก ไม่มีโบนัสเมืองที่ซ่อนไว้ ใช้คัดกรองเบื้องต้น ไม่ใช่พยากรณ์ผลตอบแทนหรือความเหมาะสมส่วนบุคคล",
+              zh: "按用途调整七项研究评分的权重。图示列明权重，不含隐藏城市加分；用于初步筛选，不预测回报或个人适合程度。",
             })}
           </p>
+          <div className="rankings-primary-search">
+            <input
+              type="search"
+              className="directory-search"
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+              placeholder={t({ en: "Search city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })}
+              aria-label={t({ en: "Search", th: "ค้นหา", zh: "搜索" })}
+            />
+          </div>
         </section>
 
-        <section className="section reveal visible">
-          <div className="picks-section-header">
-            <p className="eyebrow">{t({ en: "Editor's picks", th: "คัดสรรโดยบรรณาธิการ", zh: "编辑精选" })}</p>
-            <h2 className="picks-section-title">
-              {t({ en: "Seven cities worth a second look", th: "เจ็ดเมืองที่ควรมองครั้งที่สอง", zh: "七座值得重新审视的城市" })}
-            </h2>
-          </div>
-          <MoneyballPicksStrip locale={locale} onNavigate={onNavigate} cities={cities} />
-        </section>
+
 
         <section className="section reveal visible">
           <p className="eyebrow">{t({ en: "Lenses", th: "เลนส์", zh: "镜头" })}</p>
@@ -424,6 +426,9 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             ))}
           </div>
 
+          <p className="lens-screening-note">{translate(locale, lens.tagline)}</p>
+          <details className="lens-method-details">
+            <summary>{t({ en: "Weights, limits, and leading cities", th: "น้ำหนัก ข้อจำกัด และเมืองที่ได้คะแนนสูง", zh: "权重、局限与领先城市" })}</summary>
           <div className="lens-panel glass-card">
             <div className="lens-panel-copy">
               <p className="lens-panel-label">{translate(locale, lens.label)}</p>
@@ -459,6 +464,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               })}
             </div>
           </div>
+          </details>
         </section>
 
         <section className="section reveal visible">
@@ -497,7 +503,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
           </div>
 
           {viewMode === "map" ? (
-            <RankingsMapView locale={locale} cities={cities} onNavigate={onNavigate} />
+            <RankingsMapView locale={locale} cities={sorted.map(entry => entry.city)} onNavigate={onNavigate} />
           ) : viewMode === "gallery" ? (
             /* ─── GALLERY VIEW — editorial photo + fingerprint cards ─── */
             <div className="rankings-gallery">
@@ -553,14 +559,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             </div>
           ) : (<>
           <div className="directory-toolbar">
-            <input
-              type="search"
-              className="directory-search"
-              value={query}
-              onChange={event => setQuery(event.target.value)}
-              placeholder={t({ en: "Search city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })}
-              aria-label={t({ en: "Search", th: "ค้นหา", zh: "搜索" })}
-            />
+
 
             <div className="filter-chip-row" role="group" aria-label={t({ en: "Tier filter", th: "ตัวกรองระดับ", zh: "层级筛选" })}>
               {(["all", "alpha", "beta", "gamma"] as const).map(key => (
@@ -760,6 +759,15 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             </div>
           )}
           </>)}
+        </section>
+        <section className="section reveal visible">
+          <div className="picks-section-header">
+            <p className="eyebrow">{t({ en: "Editor's picks", th: "คัดสรรโดยบรรณาธิการ", zh: "编辑精选" })}</p>
+            <h2 className="picks-section-title">
+              {t({ en: "Seven cities worth a second look", th: "เจ็ดเมืองที่ควรมองครั้งที่สอง", zh: "七座值得重新审视的城市" })}
+            </h2>
+          </div>
+          <MoneyballPicksStrip locale={locale} onNavigate={onNavigate} cities={cities} />
         </section>
       </div>
     </div>

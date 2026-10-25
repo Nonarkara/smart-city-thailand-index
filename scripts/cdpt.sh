@@ -32,8 +32,19 @@ mkdir -p "$LOG_DIR"
 
 # ── PREFLIGHT GATES — never ship red ─────────────────────────────────────────
 bold "Preflight — tests"
-npx vitest run --maxWorkers=1 >"$LOG_DIR/cdpt-test.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-test.log"; die "tests failed"; }
-ok "$(grep -oE 'Tests +[0-9]+ passed[^)]*\)' "$LOG_DIR/cdpt-test.log" | tail -1)"
+if [[ -n "${CDPT_REMOTE_TEST_RUN:-}" ]]; then
+  [[ -z "$(git status --porcelain)" ]] || die "remote validation requires a clean checkout"
+  gh run view "$CDPT_REMOTE_TEST_RUN" --json workflowName,headSha,status,conclusion,url >"$LOG_DIR/cdpt-validation-run.json" || die "cannot read remote validation"
+  node --input-type=module - "$(git rev-parse HEAD)" "$LOG_DIR/cdpt-validation-run.json" <<'JS' || die "remote validation does not cover this release"
+import fs from 'node:fs';
+import { checkValidationRun } from './scripts/lib/release-contract.mjs';
+checkValidationRun(JSON.parse(fs.readFileSync(process.argv[3], 'utf8')), process.argv[2]);
+JS
+  ok "full tests, lint and build passed remotely for $(git rev-parse --short HEAD) (run $CDPT_REMOTE_TEST_RUN)"
+else
+  npx vitest run --maxWorkers=1 --reporter=verbose >"$LOG_DIR/cdpt-test.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-test.log"; die "tests failed"; }
+  ok "$(grep -oE 'Tests +[0-9]+ passed[^)]*\)' "$LOG_DIR/cdpt-test.log" | tail -1)"
+fi
 
 bold "Preflight — lint"
 npm run lint >"$LOG_DIR/cdpt-lint.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-lint.log"; die "lint failed"; }

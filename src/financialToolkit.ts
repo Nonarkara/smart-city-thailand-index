@@ -1,3 +1,4 @@
+import { isEecProvince } from "./eecGeography";
 // ---------------------------------------------------------------------------
 // ASEAN Smart City Financial Toolkit
 // ---------------------------------------------------------------------------
@@ -438,7 +439,7 @@ export function assessBankability(city: SmartCity): BankabilityAssessment {
 
   // Private sector interest (economy score + EEC bonus)
   let privateInterest: BankabilityAssessment["privateInterest"] = "low";
-  if (city.scores.economy >= 70 || city.region === "east") {
+  if (city.scores.economy >= 70 || isEecProvince(city.province)) {
     privateInterest = "high";
     score += 20;
   } else if (city.scores.economy >= 55) {
@@ -526,7 +527,7 @@ export function recommendInstruments(city: SmartCity): FinancialRecommendation[]
       reasonTh = reasonTh || "เมืองระยะเริ่มต้นต้องการเงินช่วยเหลือและความช่วยเหลือทางเทคนิคก่อนการเงินเชิงพาณิชย์";
     }
 
-    if (city.region === "east" && inst.id === "sez") {
+    if (isEecProvince(city.province) && inst.id === "sez") {
       relevance += 20;
       reason = reason || "Located in Eastern region — eligible for EEC Special Economic Zone incentives.";
       reasonTh = reasonTh || "ตั้งอยู่ในภาคตะวันออก — มีสิทธิ์รับสิทธิประโยชน์ EEC";

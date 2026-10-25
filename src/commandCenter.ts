@@ -1,3 +1,4 @@
+import { isEecProvince } from "./eecGeography";
 // ---------------------------------------------------------------------------
 // Command Center Intelligence Module
 // ---------------------------------------------------------------------------
@@ -324,7 +325,7 @@ function getCityContextTags(city: SmartCity): string[] {
   const tags: string[] = [];
 
   // Region-based
-  if (city.region === "east") tags.push("eec", "industrial");
+  if (isEecProvince(city.province)) tags.push("eec", "industrial");
   if (city.region === "north") tags.push("heritage", "air-quality", "tourism");
   if (city.region === "south") tags.push("tourism");
   if (city.region === "northeast") tags.push("developing", "mid-size-city");

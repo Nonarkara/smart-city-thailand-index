@@ -41,8 +41,8 @@ export type InvestmentTool =
   | "crowdfunding";         // Citizen / community crowdfunding
 
 export const TOOL_LABELS: Record<InvestmentTool, { en: string; th: string; zh: string }> = {
-  "boi-section-31":      { en: "BOI Section 31 (8yr CIT, EEC)",   th: "BOI มาตรา 31 (CIT 8 ปี, EEC)",   zh: "BOI 第31条（EEC 8年免税）" },
-  "boi-non-eec":         { en: "BOI 5yr CIT (non-EEC)",           th: "BOI CIT 5 ปี (นอก EEC)",          zh: "BOI 5年免税（非EEC）" },
+  "boi-section-31":      { en: "BOI Section 31 (eligibility required)",   th: "BOI มาตรา 31 (ต้องตรวจสิทธิ)",   zh: "BOI 第31条（须核查资格）" },
+  "boi-non-eec":         { en: "BOI tax promotion (eligibility required)",           th: "สิทธิภาษี BOI (ต้องตรวจสิทธิ)",          zh: "BOI税收优惠（须核查资格）" },
   "gsss-bond":           { en: "GSSS Bond",                        th: "พันธบัตร GSSS",                     zh: "GSSS 债券" },
   "sec-green-bond":      { en: "SEC Green Bond Framework",         th: "กรอบพันธบัตรเขียว ก.ล.ต.",          zh: "SEC绿色债券框架" },
   "ppp-bot":             { en: "PPP / Build-Operate-Transfer",    th: "PPP / Build-Operate-Transfer",      zh: "PPP / BOT" },
@@ -149,9 +149,9 @@ export const CITY_INVESTMENT_PROFILES: CityInvestmentProfile[] = [
     primaryTool: "boi-section-31",
     secondaryTool: "adb-acgf",
     oneLiner: {
-      en: "EEC gateway. The 8-year CIT exemption plus import-duty waiver is the strongest incentive package in Thailand. World Bank CCDR 2025 names this the EEC province with the largest water deficit (897 MCM by 2037).",
-      th: "ประตูสู่ EEC ยกเว้น CIT 8 ปี + ยกเว้นอากรนำเข้า แพ็คเกจจูงใจแข็งแกร่งที่สุดในไทย ธนาคารโลก CCDR 2568: จังหวัด EEC ที่ขาดแคลนน้ำมากที่สุด (897 ล้านลบ.ม. ปี 2580)",
-      zh: "EEC 门户。8 年免税加进口关税豁免是泰国最强的激励组合。世银 CCDR 2025 将其列为 EEC 中水缺口最大的府（到2037年缺口8.97亿立方米）。",
+      en: "EEC gateway. Tax exemptions and import-duty support depend on eligible activities and the approved promotion certificate; location alone does not establish entitlement. World Bank CCDR 2025 names this the EEC province with the largest water deficit (897 MCM by 2037).",
+      th: "ประตูสู่ EEC การยกเว้นภาษีและอากรขึ้นกับกิจการที่มีสิทธิและบัตรส่งเสริมที่อนุมัติ ทำเลเพียงอย่างเดียวไม่ได้ยืนยันสิทธิ ธนาคารโลก CCDR 2568: จังหวัด EEC ที่ขาดแคลนน้ำมากที่สุด (897 ล้านลบ.ม. ปี 2580)",
+      zh: "EEC门户。税收与进口关税优惠取决于合格业务及获批的投资促进证书；仅凭地点不能确定资格。世银 CCDR 2025 将其列为 EEC 中水缺口最大的府（到2037年缺口8.97亿立方米）。",
     },
     bestFor: {
       en: "EEC-located manufacturing with smart-factory ops, 5G infrastructure that follows the EEC corridor, water-efficiency technology — the deficit is also a market.",
@@ -359,9 +359,9 @@ export const CITY_INVESTMENT_PROFILES: CityInvestmentProfile[] = [
     primaryTool: "boi-non-eec",
     secondaryTool: "tourism-levy",
     oneLiner: {
-      en: "Southern commercial capital. Cross-border gateway to Malaysia. BOI Section 31 (5-year CIT, non-EEC) plus tourism-levy reinvestment. ASEAN Toolkit's Malaysia sukuk precedent applies to the regional bond market.",
-      th: "เมืองหลวงการค้าภาคใต้ ประตูข้ามพรมแดนมาเลเซีย BOI มาตรา 31 (CIT 5 ปี นอก EEC) บวกการลงทุนซ้ำจากค่าธรรมเนียมท่องเที่ยว บรรทัดฐานสุกุกมาเลเซียใน ASEAN Toolkit ใช้กับตลาดพันธบัตรภูมิภาคได้",
-      zh: "南部商业之都。通往马来西亚的跨境门户。BOI 第31条（5年免税，非EEC）加上旅游税再投资。ASEAN 工具包的马来西亚 sukuk 先例适用于区域债券市场。",
+      en: "Southern commercial capital. Cross-border gateway to Malaysia. BOI support subject to activity and certificate eligibility plus tourism-levy reinvestment. ASEAN Toolkit's Malaysia sukuk precedent applies to the regional bond market.",
+      th: "เมืองหลวงการค้าภาคใต้ ประตูข้ามพรมแดนมาเลเซีย มาตรการ BOI ขึ้นกับกิจการและบัตรส่งเสริมที่มีสิทธิ บวกการลงทุนซ้ำจากค่าธรรมเนียมท่องเที่ยว บรรทัดฐานสุกุกมาเลเซียใน ASEAN Toolkit ใช้กับตลาดพันธบัตรภูมิภาคได้",
+      zh: "南部商业之都。通往马来西亚的跨境门户。BOI支持须核查业务及促进证书资格加上旅游税再投资。ASEAN 工具包的马来西亚 sukuk 先例适用于区域债券市场。",
     },
     bestFor: {
       en: "Cross-border logistics and trade, halal-economy plays (Malaysia sukuk framework is the regional reference), tourism reinvestment into TAT priority destinations.",

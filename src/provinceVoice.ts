@@ -75,12 +75,28 @@ export function canonicalProvince(province: string): string | undefined {
   return PROVINCE_ALIASES[norm(province)];
 }
 
+// Generated city copy repeats the same two locale/precision combinations.
+// Reuse the formatter rather than negotiating locale data for every number.
+// Intl retains the exact rounding, grouping and special-value semantics of
+// Number.toLocaleString with these same options.
+const numberFormatters = new Map<string, Intl.NumberFormat>();
+
+function formatLocalizedNumber(n: number, locale: "en-US" | "th-TH", digits: number): string {
+  const key = `${locale}:${digits}`;
+  let formatter = numberFormatters.get(key);
+  if (!formatter) {
+    formatter = new Intl.NumberFormat(locale, { maximumFractionDigits: digits, minimumFractionDigits: digits });
+    numberFormatters.set(key, formatter);
+  }
+  return formatter.format(n);
+}
+
 function fmt(n: number, digits = 0): string {
-  return n.toLocaleString("en-US", { maximumFractionDigits: digits, minimumFractionDigits: digits });
+  return formatLocalizedNumber(n, "en-US", digits);
 }
 
 function fmtTh(n: number, digits = 0): string {
-  return n.toLocaleString("th-TH", { maximumFractionDigits: digits, minimumFractionDigits: digits });
+  return formatLocalizedNumber(n, "th-TH", digits);
 }
 
 // ── The measured picture of one province ──────────────────────────────────

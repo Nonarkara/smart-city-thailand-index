@@ -1,3 +1,4 @@
+import { isEecProvince } from "./eecGeography";
 // ---------------------------------------------------------------------------
 // City Investment Profiles integrity test
 // ---------------------------------------------------------------------------
@@ -59,15 +60,15 @@ describe("city investment profiles — /invest section", () => {
     expect(ranks).toEqual(CITY_INVESTMENT_PROFILES.map((_, i) => i + 1));
   });
 
-  it("EEC zone flag matches the city region (east ⇒ EEC)", () => {
+  it("EEC zone flag matches the three EEC provinces, not the entire east region", () => {
     // The regional EEC provinces (Chachoengsao, Chonburi, Rayong) are the
     // only cities that should carry the EEC tag. Anywhere else is a bug.
     for (const p of CITY_INVESTMENT_PROFILES) {
       const city = allCities.find(c => c.id === p.cityId);
       if (p.eecZone) {
-        expect(city?.region, `${p.cityId} flagged EEC but region is ${city?.region}`).toBe("east");
+        expect(isEecProvince(city?.province ?? p.provinceEn), `${p.cityId} flagged EEC outside the three provinces`).toBe(true);
       } else {
-        expect(city?.region, `${p.cityId} flagged non-EEC but region is ${city?.region}`).not.toBe("east");
+        expect(isEecProvince(city?.province ?? p.provinceEn), `${p.cityId} flagged non-EEC inside the three provinces`).toBe(false);
       }
     }
   });

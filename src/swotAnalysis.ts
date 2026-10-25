@@ -1,3 +1,4 @@
+import { isEecProvince } from "./eecGeography";
 // ---------------------------------------------------------------------------
 // SWOT Analysis Generator — auto-generated from city data
 // ---------------------------------------------------------------------------
@@ -45,7 +46,7 @@ export function generateSWOT(city: SmartCity, locale: "en" | "th" | "zh" = "en")
   if (city.metrics.greenCoverage && city.metrics.greenCoverage > 50) s.push(`Green coverage ${city.metrics.greenCoverage}% — strong environmental base`);
 
   // Regional opportunities
-  if (city.region === "east") o.push("EEC zone proximity — BOI tax incentives, industrial investment");
+  if (isEecProvince(city.province)) o.push("EEC zone proximity — BOI tax incentives, industrial investment");
   if (city.region === "south" && city.scores.hospitality > 60) o.push("Tourism potential — Andaman/Gulf coast appeal");
   if (city.region === "northeast") o.push("Isan economic corridor — growing logistics and agriculture hub");
   if (city.smartDimensions.includes("energy")) o.push("Smart Energy focus — green bond eligibility");

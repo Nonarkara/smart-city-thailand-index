@@ -5,6 +5,7 @@ import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_LABELS, PILLAR_COLORS, TIER_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
 import { useInView } from "./useInView";
+import { computePreferenceScore } from "./preferenceScore";
 
 interface Props {
   locale: Locale;
@@ -13,10 +14,10 @@ interface Props {
 
 type Grade = "A" | "B" | "C";
 
-const GRADE_LABELS: Record<Grade, { en: string; th: string; zh: string; min: number }> = {
-  A: { en: "Strong (65+)", th: "สูง (65+)", zh: "强 (65+)", min: 65 },
-  B: { en: "Moderate (45-64)", th: "ปานกลาง (45-64)", zh: "中等 (45-64)", min: 45 },
-  C: { en: "Any level", th: "ทุกระดับ", zh: "任何水平", min: 0 },
+const GRADE_LABELS: Record<Grade, { en: string; th: string; zh: string }> = {
+  A: { en: "High priority", th: "สำคัญมาก", zh: "高优先级" },
+  B: { en: "Medium priority", th: "สำคัญปานกลาง", zh: "中优先级" },
+  C: { en: "No preference", th: "ไม่กำหนด", zh: "无偏好" },
 };
 
 function gradeColor(g: Grade): string {
@@ -45,31 +46,8 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
   // Score each city against preferences — higher = better match
   const ranked = useMemo(() => {
     return cities
-      .map(city => {
-        let matchScore = 0;
-        let totalWeight = 0;
-
-        SCORING_PILLARS.forEach(p => {
-          const pref = prefs[p];
-          const score = city.scores[p];
-          const threshold = GRADE_LABELS[pref].min;
-
-          // Weight: A preferences matter 3x, B 2x, C 1x
-          const weight = pref === "A" ? 3 : pref === "B" ? 2 : 1;
-          totalWeight += weight;
-
-          if (score >= threshold) {
-            // Bonus for exceeding threshold
-            matchScore += weight * (1 + (score - threshold) / 100);
-          } else {
-            // Penalty for missing threshold — proportional to gap
-            matchScore += weight * Math.max(0, score / Math.max(threshold, 1));
-          }
-        });
-
-        return { city, matchScore: Math.min(100, Math.round((matchScore / totalWeight) * 100)) };
-      })
-      .sort((a, b) => b.matchScore - a.matchScore)
+      .map(city => ({ city, matchScore: computePreferenceScore(city.scores, prefs, city.compositeScore) }))
+      .sort((a, b) => b.matchScore - a.matchScore || b.city.compositeScore - a.city.compositeScore || a.city.id.localeCompare(b.city.id))
       .slice(0, 10);
   }, [cities, prefs]);
 
@@ -87,9 +65,9 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
         </h1>
         <p className="hero-strapline">
           {translate(locale, {
-            en: "Set your priorities across 7 pillars. We'll find which Thai smart cities match what you care about. Click a pillar to cycle: A (strong) → B (moderate) → C (any).",
-            th: "ตั้งลำดับความสำคัญใน 7 เสาหลัก แล้วเราจะจับคู่เมืองอัจฉริยะที่ตรงกับสิ่งที่คุณให้ค่า คลิกเสาหลักเพื่อสลับ: A (สูง) → B (ปานกลาง) → C (ทุกระดับ)",
-            zh: "在7个支柱上设定你的优先级。我们将找出哪些泰国智慧城市最匹配你的关注点。点击支柱循环：A(强) → B(中等) → C(任意)。",
+            en: "Choose priorities across seven research scores: A gets weight 3, B weight 2, and C no weight. Results are weighted scores out of 100, not a probability of fit. With no preferences, the published composite applies.",
+            th: "เลือกลำดับความสำคัญของคะแนนวิจัยเจ็ดด้าน: A น้ำหนัก 3, B น้ำหนัก 2 และ C ไม่นับน้ำหนัก ผลลัพธ์เป็นคะแนนถ่วงน้ำหนักเต็ม 100 ไม่ใช่โอกาสที่เหมาะกับคุณ หากไม่กำหนดด้านใด จะใช้คะแนนรวมที่เผยแพร่",
+            zh: "设置七项研究评分的优先级：A权重3、B权重2、C不计权重。结果为满分100的加权分，不是个人匹配概率。全部无偏好时使用已发布综合分。",
           })}
         </p>
       </section>
@@ -123,7 +101,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
 
       {/* ─── RESULTS ─── */}
       <section ref={resultsRef} className={`section discover-results reveal ${resultsVisible ? "visible" : ""}`}>
-        <h2>{translate(locale, { en: "Your top 10 matches", th: "10 เมืองที่ตรงที่สุด", zh: "你的前10名匹配" })}</h2>
+        <h2>{translate(locale, { en: "Top 10 by your priorities", th: "10 อันดับตามลำดับความสำคัญ", zh: "按优先级排列的前十名" })}</h2>
         <div className="discover-list">
           {ranked.map(({ city, matchScore }, i) => (
             <button
@@ -140,7 +118,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
               </div>
               <div className="discover-pillars">
                 {SCORING_PILLARS.map(p => {
-                  const meets = city.scores[p] >= GRADE_LABELS[prefs[p]].min;
+                  const meets = prefs[p] !== "C";
                   return (
                     <span
                       key={p}
@@ -153,7 +131,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
                   );
                 })}
               </div>
-              <span className="discover-match">{matchScore}%</span>
+              <span className="discover-match">{matchScore.toFixed(1)} / 100</span>
             </button>
           ))}
         </div>

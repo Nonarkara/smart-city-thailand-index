@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useInView } from "./useInView";
 import AnimatedScore from "./AnimatedScore";
 import NewsStrip from "./NewsStrip";
+import HomeDecisionGuide from "./HomeDecisionGuide";
 import { useCitySummaries } from "./cityApi";
 import { summarizeCities } from "./cityCollections";
 import { getCityPhotoAsset, HOME_HERO_ASSETS, type HeroAsset } from "./cityMedia";
@@ -28,36 +29,8 @@ function getCityVibe(city: SmartCity, locale: Locale): string {
   const sorted = [...pillars].sort((a, b) => city.scores[b] - city.scores[a]);
   const strongest = sorted[0];
 
-  const vibes: Record<string, { en: string; th: string; zh: string }> = {
-    "phuket": { en: "Tourism engine, real tech", th: "เครื่องยนต์ท่องเที่ยวที่ใช้เทคโนโลยีจริง", zh: "旅游引擎，真技术" },
-    "samyan": { en: "Innovation district, alive", th: "ย่านนวัตกรรมที่มีชีวิต", zh: "创新区，活的" },
-    "chiang-mai-old-town": { en: "Heritage meets sensors", th: "มรดกเมืองเก่าคู่เซ็นเซอร์อัจฉริยะ", zh: "遗产遇上传感器" },
-    "khon-kaen": { en: "Isan's economic engine", th: "เครื่องยนต์เศรษฐกิจของอีสาน", zh: "伊桑经济引擎" },
-    "saensuk": { en: "Beach town, clean data", th: "เมืองชายหาดที่ข้อมูลไว้ใจได้", zh: "海滩小城，干净数据" },
-    "yala": { en: "Cleanest city, real grit", th: "เมืองสะอาดที่สุด ด้วยความมุ่งมั่นของคนในพื้นที่", zh: "最干净城市，真韧性" },
-    "wangchan-valley": { en: "Innovation hub, in development", th: "ศูนย์กลางนวัตกรรมที่ยังอยู่ระหว่างพัฒนา", zh: "创新中心，开发中" },
-  };
+  return `${PILLAR_LABELS[locale][strongest]} ${city.scores[strongest]}/100`;
 
-  if (vibes[city.id]) return vibes[city.id][locale];
-
-  const pillarVibes: Record<string, { en: string; th: string; zh: string }> = {
-    livability: { en: "Built for living", th: "สร้างมาเพื่อการอยู่อาศัย", zh: "为生活而建" },
-    economy: { en: "Money moves here", th: "เม็ดเงินหมุนเวียนที่นี่", zh: "资金流动之地" },
-    safety: { en: "Quiet streets, real data", th: "ถนนสงบ ข้อมูลยืนยันได้", zh: "安静街道，真实数据" },
-    wellbeing: { en: "People-first signal", th: "เมืองที่ให้คนมาก่อน", zh: "以人为先信号" },
-    environment: { en: "Green signal, verified", th: "สัญญาณสีเขียวที่ตรวจสอบแล้ว", zh: "绿色信号，已验证" },
-    hospitality: { en: "Warm city, open doors", th: "เมืองอบอุ่นที่เปิดรับทุกคน", zh: "温暖城市，敞开大门" },
-    digital: { en: "Wired and running", th: "เชื่อมต่อและเดินระบบแล้ว", zh: "已联网，运行中" },
-  };
-
-  if (city.reality === "planned") {
-    return locale === "th" ? "ยังอยู่ในขั้นวางแผน" : locale === "zh" ? "处于规划阶段" : "In planning phase";
-  }
-  if (city.reality === "partial") {
-    return locale === "th" ? "กำลังก่อร่าง ยังมีช่องว่างอยู่" : locale === "zh" ? "建设中，有缺口" : "Building, gaps remain";
-  }
-
-  return pillarVibes[strongest]?.[locale] ?? (locale === "th" ? "เดินระบบจริงแล้ว" : locale === "zh" ? "运行中" : "Running");
 }
 
 interface Props {
@@ -191,20 +164,14 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </h1>
           <p className="cinematic-hero-why">
             {t({
-              en: "The Moneyball approach to Thailand's provinces — find undervalued creative assets before the market does.",
-              th: "แนวทาง Moneyball สำหรับจังหวัดในไทย — ค้นหาสินทรัพย์สร้างสรรค์ที่ถูกประเมินต่ำไป ก่อนที่ตลาดจะรู้ตัว",
-              zh: "泰国各府的 Moneyball 方法——在市场发现之前找到被低估的创意资产。",
+              en: "Compare Thai cities across seven research scores. Choose your priorities, then check the sources and local conditions.",
+              th: "เทียบเมืองไทยผ่านคะแนนวิจัยเจ็ดด้าน เลือกสิ่งที่สำคัญกับคุณ แล้วตรวจแหล่งข้อมูลและสภาพจริงในพื้นที่",
+              zh: "按七项研究评分比较泰国城市。选择优先事项，再核查来源及当地实际情况。",
             })}
           </p>
           {/* On-ramp: the headline asserts a baseball metaphor, so give the reader
               who does not know it a one-click route to the explanation. */}
-          <button type="button" className="cinematic-hero-explainer" onClick={() => onNavigate("/invest")}>
-            {t({
-              en: "What is Moneyball?",
-              th: "Moneyball คืออะไร?",
-              zh: "什么是 Moneyball？",
-            })}
-          </button>
+
           <div className="cinematic-hero-stats">
             <div className="hero-stat-cell">
               <AnimatedScore target={stats.total} from={0} decimals={0} duration={1600} className="hero-stat-num" />
@@ -212,20 +179,29 @@ export default function HomePage({ locale, onNavigate }: Props) {
             </div>
             <div className="hero-stat-cell">
               <AnimatedScore target={stats.operational} from={0} decimals={0} duration={1600} className="hero-stat-num" />
-              <span className="hero-stat-label">{t({ en: "operational", th: "เดินระบบแล้ว", zh: "运营中" })}</span>
+              <span className="hero-stat-label">{t({ en: "labelled operational", th: "ระบุว่าเดินระบบ", zh: "标记为运营中" })}</span>
             </div>
             <div className="hero-stat-cell">
               <AnimatedScore target={stats.certified} from={0} decimals={0} duration={1600} className="hero-stat-num" />
               <span className="hero-stat-label">{t({ en: "depa-certified", th: "รับรองโดย depa", zh: "depa 认证" })}</span>
             </div>
           </div>
+          <p className="hero-status-note">{t({ en: "Curated baseline; operating status needs local verification.", th: "ข้อมูลฐานที่เรียบเรียงไว้ สถานะการดำเนินงานต้องตรวจสอบในพื้นที่", zh: "编辑基线；运营状态须在当地核实。" })}</p>
           <div className="cinematic-hero-actions">
             <button className="cta-button" onClick={() => onNavigate("/rankings")}>
               {t({ en: "Get Rankings", th: "ดูอันดับ", zh: "查看排名" })}
             </button>
+          <button type="button" className="cinematic-hero-explainer" onClick={() => onNavigate("/invest")}>
+            {t({
+              en: "What is Moneyball?",
+              th: "Moneyball คืออะไร?",
+              zh: "什么是 Moneyball？",
+            })}
+          </button>
             <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/audit")}>
               {t({ en: "Jury: start here", th: "กรรมการ: เริ่มที่นี่", zh: "评审：从这里开始" })}
             </button>
+
           </div>
         </div>
       </section>
@@ -273,9 +249,11 @@ export default function HomePage({ locale, onNavigate }: Props) {
             {t({ en: "Opening argument", th: "ประเด็นตั้งต้น", zh: "开篇论点" })}
           </p>
           <h2 className="opening-argument-headline">
-            {t({ en: "How to read this index", th: "อ่านดัชนีนี้อย่างไร", zh: "如何阅读本指数" })}
+            {t({ en: "What are you choosing a city for?", th: "คุณกำลังเลือกเมืองเพื่ออะไร", zh: "您选择城市的目的是什么？" })}
           </h2>
-
+          <HomeDecisionGuide locale={locale} onNavigate={onNavigate} />
+          <details className="home-evidence-guide">
+            <summary>{t({ en: "How to read this index: scope, certification, evidence", th: "อ่านดัชนีนี้อย่างไร: ขอบเขต การรับรอง หลักฐาน", zh: "如何阅读本指数：范围、认证与证据" })}</summary>
           <div className="opening-argument-grid">
             <div className="opening-argument-block">
               <span className="opening-argument-num">{t({ en: "Scope", th: "ขอบเขต", zh: "范围" })}</span>
@@ -326,6 +304,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
           >
             {t({ en: "Start the jury walk-through →", th: "เริ่มเส้นทางสำหรับคณะกรรมการ →", zh: "开始评审导览 →" })}
           </button>
+          </details>
         </div>
       </section>
 
@@ -746,12 +725,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ═══ INVESTOR: Secondary city opportunities ═══ */}
       <section className="investor-section">
         <div className="investor-inner">
-          <h2>{t({ en: "Beyond Bangkok: where the real opportunity is", th: "ไกลกว่ากรุงเทพฯ: โอกาสจริงอยู่ที่ไหน", zh: "超越曼谷：真正的机会在哪里" })}</h2>
+          <h2>{t({ en: "Secondary cities to investigate", th: "เมืองรองที่ควรศึกษาต่อ", zh: "值得深入调查的二线城市" })}</h2>
           <p className="investor-lead">
             {t({
-              en: "Not every investor needs to pile into Bangkok or Phuket. Thailand's secondary cities offer BOI incentives, lower costs, better air, and less competition — with the same legal protections and digital infrastructure. This index helps match the right capital with the right city.",
-              th: "นักลงทุนไม่จำเป็นต้องกระจุกอยู่แค่กรุงเทพฯ หรือภูเก็ต เมืองรองของไทยมีสิทธิประโยชน์ BOI ต้นทุนต่ำกว่า อากาศดีกว่า และการแข่งขันน้อยกว่า — โดยได้รับการคุ้มครองทางกฎหมายและโครงสร้างพื้นฐานดิจิทัลในระดับเดียวกัน ดัชนีนี้ช่วยจับคู่ทุนที่เหมาะสมกับเมืองที่ใช่",
-              zh: "不是每个投资者都需要挤进曼谷或普吉。泰国二线城市提供BOI激励、更低成本、更好空气和更少竞争——享有同样的法律保护和数字基础设施。这个指数帮助将合适的资本匹配到合适的城市。",
+              en: "This shortlist filters the curated baseline for Beta cities labelled operational with an economy score of at least 55. It does not establish current service operation, lower costs, cleaner air, or investment suitability. Open each dossier to check evidence and dates.",
+              th: "รายชื่อนี้คัดจากข้อมูลฐานที่เรียบเรียงไว้ โดยเลือกเมืองระดับ Beta ที่ระบุว่าเดินระบบแล้วและมีคะแนนเศรษฐกิจอย่างน้อย 55 ไม่ได้ยืนยันสถานะบริการปัจจุบัน ต้นทุนที่ต่ำกว่า อากาศที่ดีกว่า หรือความเหมาะสมในการลงทุน ควรเปิดแฟ้มเมืองเพื่อตรวจหลักฐานและวันที่",
+              zh: "此名单从编辑基线中筛选被标为运营中且经济评分至少为 55 的 Beta 城市，并不证明当前服务运转、成本更低、空气更好或适合投资。请打开城市档案核查证据与日期。",
             })}
           </p>
           <div className="investor-grid">
@@ -766,11 +745,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </div>
           <p className="investor-cta-text">
             {t({
-              en: "These are cities with real infrastructure, working governance, and room to grow — not yet Alpha, but building fast. BOI S-Curve incentives apply. EEC adjacency benefits included. Every city profile shows bankability score, financial toolkit, and specific opportunities.",
-              th: "เมืองเหล่านี้มีโครงสร้างพื้นฐานจริง มีการบริหารที่เดินได้ และยังมีพื้นที่เหลือให้เติบโต — ยังไม่ถึงระดับ Alpha แต่กำลังขยายตัวเร็ว ใช้สิทธิประโยชน์ BOI S-Curve ได้ รวมถึงอานิสงส์จากพื้นที่ติดกับ EEC โปรไฟล์ของทุกเมืองจะแสดงคะแนนความพร้อมทางการเงิน ชุดเครื่องมือทางการเงิน และโอกาสเฉพาะของเมืองนั้น",
-              zh: "这些城市拥有真实基础设施、运转中的治理体系和增长空间——尚未达到Alpha但建设迅速。BOI S-Curve激励适用。EEC邻近利益包含在内。",
+              en: "Compare actual land and lease prices, utility capacity, demand, and staffing before committing. BOI eligibility depends on the project’s activity and conditions; inclusion here or proximity to the EEC grants no automatic benefit.",
+              th: "เปรียบเทียบราคาที่ดินและค่าเช่าจริง กำลังสาธารณูปโภค อุปสงค์ และบุคลากรก่อนตัดสินใจ สิทธิ BOI ขึ้นกับประเภทกิจการและเงื่อนไขโครงการ การอยู่ในรายชื่อนี้หรือใกล้ EEC ไม่ทำให้ได้รับสิทธิโดยอัตโนมัติ",
+              zh: "决策前比较实际土地及租金、公用设施容量、需求和人员条件。BOI 资格取决于项目活动及条件；入选本名单或靠近 EEC 不会自动获得优惠。",
             })}
           </p>
+          <a href="https://www.boi.go.th/index.php?page=eligible_activities&amp;language=en" target="_blank" rel="noreferrer">{t({ en: "Check BOI eligible activities and conditions ↗", th: "ตรวจประเภทกิจการและเงื่อนไข BOI ↗", zh: "核查 BOI 合格活动与条件 ↗" })}</a>
         </div>
       </section>
 
