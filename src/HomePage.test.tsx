@@ -2,6 +2,16 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import HomePage from "./HomePage";
 
 describe("HomePage", () => {
+  it("explains recognition limits without repeating headline counts", () => {
+    const { container } = render(<HomePage locale="en" onNavigate={vi.fn()} />);
+    const guide = container.querySelector('.opening-argument');
+    expect(guide).toHaveTextContent("How to read this index");
+    expect(guide).toHaveTextContent("It does not establish that every service operates today");
+    expect(guide).not.toHaveTextContent("This index measures outcomes");
+    expect(Array.from(guide!.querySelectorAll('.opening-argument-num')).map(e => e.textContent))
+      .toEqual(["Scope", "Certification", "Evidence"]);
+  });
+
   it("allows keyboard activation on ranking rows", () => {
     const onNavigate = vi.fn();
     render(<HomePage locale="en" onNavigate={onNavigate} />);

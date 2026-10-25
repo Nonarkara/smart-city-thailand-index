@@ -249,7 +249,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="home-stat-value">SCITI 2026</span>
           </div>
           <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Refreshed", th: "อัปเดต", zh: "最近更新" })}</span>
+            <span className="home-stat-label">{t({ en: "Digest", th: "บันทึกรายสัปดาห์", zh: "周报" })}</span>
             <span className="home-stat-value">{formatWeeklyStamp(WEEKLY_DIGEST.weekOf, locale)}</span>
           </div>
         </div>
@@ -273,20 +273,15 @@ export default function HomePage({ locale, onNavigate }: Props) {
             {t({ en: "Opening argument", th: "ประเด็นตั้งต้น", zh: "开篇论点" })}
           </p>
           <h2 className="opening-argument-headline">
-            {locale === "th"
-              ? <>{stats.total} เมือง. {stats.certified} รับรองแล้ว.<br />นี่คือสิ่งที่แยกพวกเขาออกจากกัน</>
-              : locale === "zh"
-                ? <>{stats.total} 座城市。{stats.certified} 座已认证。<br />这就是区别它们的东西。</>
-                : <>{stats.total} cities, {stats.certified} certified.<br />Here is what separates them.</>
-            }
+            {t({ en: "How to read this index", th: "อ่านดัชนีนี้อย่างไร", zh: "如何阅读本指数" })}
           </h2>
 
           <div className="opening-argument-grid">
             <div className="opening-argument-block">
-              <span className="opening-argument-num">{stats.total}</span>
+              <span className="opening-argument-num">{t({ en: "Scope", th: "ขอบเขต", zh: "范围" })}</span>
               <p className="opening-argument-copy">
                 {t({
-                  en: "city records in this release, spanning certified cities, modeled promotion zones, and registry-only entries. Scope is explicit; evidence depth is not presented as equal.",
+                  en: "Records cover certified cities, modeled promotion zones, and registry-only entries. Evidence depth differs; check each city’s coverage.",
                   th: "ระเบียนเมืองในฉบับนี้ ครอบคลุมเมืองรับรอง เขตส่งเสริมที่นำมาสร้างแบบจำลอง และรายการระดับทะเบียน โดยระบุขอบเขตชัดเจน และไม่อ้างว่าความลึกของหลักฐานเท่ากัน",
                   zh: "条城市记录，涵盖认证城市、已建模推广区与仅名录条目。范围明确，也不声称证据深度相同。",
                 })}
@@ -294,23 +289,23 @@ export default function HomePage({ locale, onNavigate }: Props) {
             </div>
 
             <div className="opening-argument-block">
-              <span className="opening-argument-num">{stats.certified}</span>
+              <span className="opening-argument-num">{t({ en: "Certification", th: "การรับรอง", zh: "认证" })}</span>
               <p className="opening-argument-copy">
                 {t({
-                  en: "cities hold depa certification. Seven of them still run partial or merely planned systems as of 2026. The certification measures intent. This index measures outcomes.",
-                  th: "เมืองถือครองการรับรอง depa เจ็ดเมืองในจำนวนนี้ยังมีระบบเพียงบางส่วนหรืออยู่ในขั้นวางแผนในปี 2569 การรับรองวัดเจตนา ดัชนีนี้วัดผลลัพธ์",
-                  zh: "座城市持有 depa 认证。截至 2026 年，其中仍有七座的系统只是部分运行或停留在规划阶段。认证衡量意图，本指数衡量结果。",
+                  en: "depa certification records recognition of a city plan. It does not establish that every service operates today. Check dated sources and local operating evidence.",
+                  th: "การรับรอง depa ยืนยันการรับรองแผนเมือง ไม่ได้ยืนยันว่าทุกบริการใช้งานได้ในวันนี้ ควรตรวจวันที่ของแหล่งข้อมูลและหลักฐานการดำเนินงานในพื้นที่",
+                  zh: "depa 认证记录城市规划获得认可，并不证明每项服务目前都在运行。请核查来源日期及本地运营证据。",
                 })}
               </p>
             </div>
 
             <div className="opening-argument-block">
-              <span className="opening-argument-num">{SCORING_PILLARS.length}</span>
+              <span className="opening-argument-num">{t({ en: "Evidence", th: "หลักฐาน", zh: "证据" })}</span>
               <p className="opening-argument-copy">
                 {t({
-                  en: "pillars assessed against public baselines and research evidence. Provincial proxies are disclosed when municipal values are unavailable. Missing evidence lowers confidence; it is not silently converted to zero.",
-                  th: "เสาหลักที่ประเมินเทียบกับข้อมูลฐานสาธารณะและหลักฐานวิจัย เมื่อไม่มีค่าระดับเทศบาล จะระบุชัดว่าใช้ตัวแทนระดับจังหวัด หลักฐานที่ขาดจะลดค่าความเชื่อมั่น ไม่ถูกเปลี่ยนเป็นศูนย์อย่างเงียบๆ",
-                  zh: "个支柱，以公开基线与研究证据评估。缺少市级值时会明确标注省级代理；证据缺失会降低置信度，不会被悄然改成零。",
+                  en: "Seven pillars are assessed against public baselines and research evidence. Provincial proxies are disclosed when municipal values are unavailable. Missing evidence lowers confidence; it is not silently converted to zero.",
+                  th: "ประเมินเจ็ดเสาหลักเทียบกับข้อมูลฐานสาธารณะและหลักฐานวิจัย เมื่อไม่มีค่าระดับเทศบาล จะระบุชัดว่าใช้ตัวแทนระดับจังหวัด หลักฐานที่ขาดจะลดค่าความเชื่อมั่น ไม่ถูกเปลี่ยนเป็นศูนย์อย่างเงียบๆ",
+                  zh: "以七个支柱及公开基线与研究证据评估。缺少市级值时会明确标注省级代理；证据缺失会降低置信度，不会被悄然改成零。",
                 })}
               </p>
             </div>
@@ -318,9 +313,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
           <p className="opening-argument-thesis">
             {t({
-              en: "The city that buys hardware and cuts the ribbon scores the same as the city that never bothers — unless the data says otherwise. That is the only rule this index follows.",
-              th: "เมืองที่ซื้อฮาร์ดแวร์และตัดริบบิ้นได้คะแนนเท่ากับเมืองที่ไม่สนใจ — เว้นเสียแต่ข้อมูลจะบอกเป็นอย่างอื่น นั่นคือกฎเดียวที่ดัชนีนี้ยึดถือ",
-              zh: "买了设备、剪了彩的城市，与根本没有努力的城市，得分相同——除非数据另有说法。这是本指数遵守的唯一规则。",
+              en: "Use the rank to choose what to investigate. Before investing, verify local figures, service coverage, and operating status in the city’s evidence dossier.",
+              th: "ใช้อันดับเลือกประเด็นที่จะศึกษาต่อ ก่อนลงทุน ควรตรวจสอบตัวเลขในพื้นที่ ความครอบคลุมของบริการ และสถานะการดำเนินงานจากแฟ้มหลักฐานของเมือง",
+              zh: "用排名选择值得深入调查的问题。投资前，请核查城市证据档案中的本地数据、服务覆盖范围及运营状态。",
             })}
           </p>
 
