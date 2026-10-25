@@ -18,9 +18,15 @@ import fs from "node:fs";
 
 const BASE = process.argv[2] || "http://localhost:5188";
 const OUT = process.argv[3] || "/tmp/sciti-audit";
+// EVERY live route. A massacre that samples half the routes is a sample.
+// The list is the routing table in src/routing.ts, plus one city dossier
+// (the five tabs are measured as screens of their own below) and one
+// canvas, which is a separate surface with its own title.
 const ROUTES = [
-  "/", "/rankings", "/methodology", "/baseline", "/city/phuket", "/invest",
-  "/compare", "/story", "/program", "/partners", "/audit", "/why",
+  "/", "/about", "/creative-economy", "/rankings", "/methodology", "/story",
+  "/why", "/showcase", "/partners", "/map", "/asus", "/audit", "/references",
+  "/program", "/knowledge", "/discover", "/invest", "/compare", "/bingo",
+  "/baseline", "/city/phuket", "/canvas/phuket",
 ];
 const CANON = new Set([32, 14, 11.5]);
 
@@ -28,6 +34,13 @@ fs.mkdirSync(OUT, { recursive: true });
 const browser = await chromium.launch();
 let totalOff = 0;
 let totalStatements = 0;
+/** GATE — §11.7: "Display — page title only. One per page." A display-size
+ *  sentence that is not the page's <h1>, or a second one, is a violation.
+ *  The instrument reported this number for weeks without failing anything,
+ *  so a regression could ship quietly. It fails now. */
+const gateFailures = [];
+/** Routes that could not be loaded are routes that were not measured. */
+const failedRoutes = [];
 
 for (const route of ROUTES) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
@@ -53,7 +66,7 @@ for (const route of ROUTES) {
       const bar = document.querySelector(".topbar");
       const barH = bar ? Math.round(bar.getBoundingClientRect().height) : 0;
       for (const el of document.querySelectorAll("body *")) {
-        if (el.closest("svg, .site-footer, .topbar, .skip-link, nav, footer, .site-header")) continue;
+        if (el.closest("svg, .leaflet-container, .site-footer, .topbar, .skip-link, nav, footer, .site-header")) continue;
         const hasText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim().length > 0);
         if (!hasText) continue;
         const cs = getComputedStyle(el);
@@ -90,7 +103,7 @@ for (const route of ROUTES) {
           displayBlocks.push(rec);
           // A sentence of words at the display size: the page's one
           // statement is allowed; a second one is not.
-          if (words >= 3 && !isNumeral) displayProse.push(rec);
+          if (words >= 2 && !isNumeral) displayProse.push(rec);
         }
       }
       const secs = [...document.querySelectorAll("main > section, main > div > section")];
@@ -106,7 +119,7 @@ for (const route of ROUTES) {
       // the old instrument unnoticed. One fact, one place, one size.
       const dispSeen = new Map();
       for (const el of document.querySelectorAll("body *")) {
-        if (el.closest("svg, .site-footer, .topbar, nav, footer, .site-header")) continue;
+        if (el.closest("svg, .leaflet-container, .site-footer, .topbar, nav, footer, .site-header")) continue;
         const own = [...el.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent.trim()).join(" ").replace(/\s+/g, " ").trim();
         if (!own) continue;
         const fs = Math.round(parseFloat(getComputedStyle(el).fontSize) * 10) / 10;
@@ -126,17 +139,25 @@ for (const route of ROUTES) {
     const h2s = m.headings.filter(h => h.tag === "H2");
     const h3s = m.headings.filter(h => h.tag === "H3");
 
-    // ONE statement per page. The h1 may hold the display size; so may
-    // a composite numeral. A second SENTENCE at the display size means
-    // the page announces itself twice, and the reader cannot tell which
-    // is the statement.
+    // ONE statement per page — §11.7: "Display — page title only. One per
+    // page." The page title is the <h1>. A second sentence at the display
+    // size, or a display-size sentence that is NOT the title, is a
+    // violation. Codex's 8c7d4b1 made every section heading display-size:
+    // 97 statements across twelve routes where the law allows one per
+    // page, which is why every section shouted and nothing led the eye.
     const statements = m.displayProse;
-    if (statements.length) {
-      totalStatements += statements.length;
-      for (const st of statements) {
-        console.log(`   DISPLAY STATEMENT: ${st.tag}.${st.cls} — "${st.text}"`);
-      }
+    const titles = statements.filter((s) => s.tag === "h1");
+    for (const st of statements) {
+      console.log(`   DISPLAY STATEMENT: ${st.tag}.${st.cls} — "${st.text}"`);
     }
+    if (titles.length > 1) {
+      gateFailures.push(`${route}: ${titles.length} display-size titles — one per page is the law`);
+    }
+    for (const st of statements) {
+      if (st.tag === "h1") continue;
+      gateFailures.push(`${route}: display-size text that is not the page title — ${st.tag}.${st.cls} "${st.text}"`);
+    }
+    totalStatements += statements.length;
     // One fact, one place. The same words at the display size twice on one
     // page is repetition the reader can see at a glance. The sentence
     // counter above cannot catch it: a city name is one word.
@@ -197,7 +218,14 @@ for (const route of ROUTES) {
       });
       if (textStatements.length) {
         totalStatements += textStatements.length;
-        for (const d of textStatements) console.log(`      DISPLAY TEXT STATEMENT IN TAB: ${d.tag}.${d.cls} "${d.text}"`);
+        for (const d of textStatements) {
+          console.log(`      DISPLAY TEXT STATEMENT IN TAB: ${d.tag}.${d.cls} "${d.text}"`);
+          // The city page's <h1> is outside the tab panels, so the sweep sees
+          // it in every tab. Anything else at the display size inside a tab
+          // is a statement the tab does not own.
+          if (d.tag === "h1") continue;
+          gateFailures.push(`${route} tab "${tabLabel}": display-size text that is not the page title — ${d.tag}.${d.cls} "${d.text}"`);
+        }
       }
     }
     if (tabCount > 1) {
@@ -206,9 +234,22 @@ for (const route of ROUTES) {
     }
   } catch (e) {
     console.log(`=== ${route} FAILED: ${String(e).slice(0, 120)}`);
+    // A route that could not be loaded was NOT measured. Reporting that as
+    // a pass is how a probe fault gets dressed up as a finding — the
+    // instrument used to swallow it, and a dead server read as a clean run.
+    failedRoutes.push(route);
+    gateFailures.push(`${route}: could not be loaded, so it was not measured — ${String(e).slice(0, 90)}`);
   }
   await ctx.close();
 }
 await browser.close();
 console.log(`\nTOTAL off-scale text nodes: ${totalOff}`);
 console.log(`TOTAL display-size statements: ${totalStatements} (one per page is the law)`);
+console.log(`ROUTES MEASURED: ${ROUTES.length - failedRoutes.length}/${ROUTES.length}${failedRoutes.length ? " (not measured: " + failedRoutes.join(", ") + ")" : ""}`);
+if (totalOff > 0) gateFailures.push(`${totalOff} application text nodes use an off-scale size (Leaflet widget controls excluded)`);
+if (gateFailures.length) {
+  console.log(`\n✗ GATE FAILED — §11.7, one display statement per page:`);
+  for (const f of gateFailures) console.log(`   ${f}`);
+  process.exit(1);
+}
+console.log(`\n✓ GATE PASSED — every display-size statement on every route is the page title.`);

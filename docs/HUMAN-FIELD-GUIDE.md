@@ -295,3 +295,107 @@ passes because it looked at nothing.
 - No frame is shared across more than four provinces, in any locale.
 - No paragraph is printed twice on any city page, in English or Thai;
   0 repeated blocks across seven pages, against 46 before.
+
+## The third pass — every section was shouting
+
+### The prose was fixed. The type was still a machine.
+
+The second pass made 68 cities speak in their own measured data. The page
+still read as a machine, and the reason was not the words. It was the
+scale.
+
+Run against production, the site's own type instrument reported:
+
+```
+TOTAL display-size statements: 97 (one per page is the law)
+```
+
+Workspace `CLAUDE.md` §11.7 is explicit: *"**Display** (`--text-display`,
+32px) — page title only. One per page."* Composite numerals are exempt
+(*"a single hero number like a score or a date … reads as a number, not as
+text"*). Ninety-seven statements across twelve routes means the law was
+being broken six to seventeen times on a single page.
+
+The culprit was one commit — Codex's `8c7d4b1` *"Restore reading
+hierarchy across city and research pages"* — which set every section
+heading to the display token:
+
+```css
+main .section > h2, … { font-size: var(--text-display); border-top: 3px solid var(--ink); }
+```
+
+Sixteen section headings on the city dossier became the same size as the
+city's own name. Every section carried the same 32px type and the same 3px
+black rule, so the eye had nothing to follow. That sameness *is* what
+"mechanical" means — not the vocabulary.
+
+### The stylesheet had already written the answer down
+
+Before that commit, `styles.css` carried the law in its own words:
+
+> **THE SECTION LANDMARK** — "With three text sizes, the section level
+> cannot be carried by scale. It is carried by a RULE and by AIR: a hairline
+> above the heading, and a fixed step between sections."
+
+And the page proved the rule was broken by accident, not by design. On one
+homepage screen:
+
+| Heading | Size before | Size after |
+|---|---|---|
+| "How the numbers work" | 14px | 14px |
+| "One city that wins each axis" | 32px | 14px |
+
+Two section headings on the same page, at two different sizes, decided by
+**how deeply they were nested in the DOM**. Nothing to do with meaning.
+
+The restoration is therefore a restoration, not a redesign: the pre-`8c7d4b1`
+build was measured in a worktree and it passed the law with exactly one
+display statement per route.
+
+### What changed
+
+| Rule | Before | After |
+|---|---|---|
+| `main .section > h2` (+ 4 siblings) | `--text-display` 32px, 3px ink rule | `--text-body` 14px / 800, 1px hairline |
+| `.depa-official-header h2` | 32px | 14px / 800 |
+| `main .invest-reading-title` | 32px | 14px / 800 |
+| `main .opening-argument-headline` | 32px | 14px / 700 (a lede, not a second title) |
+
+The heading keeps the base `<h2>` voice — 800 weight, ink, tight tracking —
+so it still reads as a chapter rather than as the paragraph beneath it.
+The landmark returns to a hairline. The composite numerals keep the
+display token, as §11.7 allows, so the city score, the tier letter and
+the pillar figures still read as figures and not as text.
+
+Result: **97 → 17** display statements, and every one of the seventeen is
+a page title. The city dossier went from sixteen display headings to
+none. The homepage's opening-argument band became a *lede* under the
+title, with the numerals carrying the band.
+
+### The instrument now fails the build
+
+`scripts/audit/type-and-rhythm.mjs` counted display statements for weeks
+and never failed anything, so the regression could ship quietly. It now
+gates:
+
+- a display-size sentence that is **not** the page's `<h1>` → failure;
+- a second display-size title on one page → failure;
+- a display-size sentence inside a dossier tab → failure;
+- **a route that could not be loaded → failure**, because a route that was
+  not measured is not a pass. This one was added after a dead preview
+  server produced a clean-looking run on half its routes.
+
+Falsified against production before the fix: exit 1, naming every
+offending heading. Passing against the patched build: 12/12 routes
+measured, exit 0.
+
+## Acceptance for the third pass
+
+- One display-size statement per route, and it is the page title: 12/12
+  routes measured, 17 statements counted (12 titles + the city title seen
+  once per dossier tab), 0 offenders.
+- The gate fails against production (exit 1) and passes against the
+  patched build (exit 0), and it fails when a route cannot be loaded.
+- Every CSS edit went through a brace-matched, asserted script that
+  verifies the selector resolves to exactly one rule and that braces
+  balance before and after.

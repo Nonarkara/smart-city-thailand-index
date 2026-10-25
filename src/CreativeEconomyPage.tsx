@@ -35,7 +35,7 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
 
       <section ref={section1Ref} className={`section reveal stagger-1 ${section1Visible ? "visible" : ""}`}>
         <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
-          <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-display)" }}>
+          <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-body)" }}>
             {translate(locale, {
               en: "SCITI goes deeper, mapping creative assets province by province so that Bangkok is no longer the default.",
               th: "SCITI เจาะลึกลงไปกว่านั้น โดยทำแผนที่สินทรัพย์เชิงสร้างสรรค์แบบรายจังหวัด เพื่อไม่ให้กรุงเทพฯ เป็นเพียงตัวเลือกเดียวอีกต่อไป",

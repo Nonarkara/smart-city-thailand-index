@@ -52,7 +52,6 @@ import {
   internetShare,
   mobileBand,
   mobileShare,
-  ordinal,
   populationText,
   readProvince,
   type ProvinceReading,
@@ -148,15 +147,15 @@ function joinLocale(sentences: string[], locale: "en" | "th" | "zh"): string {
 
 /** The sources, in the order they are cited. Each carries its own spacing. */
 const SRC = {
-  nsoPop: { en: " (NSO, 2022–26)", th: " (สชิต 2565–69)", zh: "（泰国国家统计局，2022–26年）" },
-  nso: { en: " (NSO)", th: " (สชิต)", zh: "（泰国国家统计局）" },
+  nsoPop: { en: " (NSO, 2022–26)", th: " (สสช. 2565–69)", zh: "（泰国国家统计局，2022–26年）" },
+  nso: { en: " (NSO)", th: " (สสช.)", zh: "（泰国国家统计局）" },
   rfd: { en: " (Royal Forest Department)", th: " (กรมป่าไม้)", zh: "（皇家林业厅）" },
-  moe: { en: " (Ministry of Energy, 2023)", th: " (กรมพลังงาน 2566)", zh: "（能源厅，2023年）" },
+  moe: { en: " (Ministry of Energy, 2023)", th: " (กระทรวงพลังงาน 2566)", zh: "（能源部，2023年）" },
   pcd: { en: " (Pollution Control Department)", th: " (กรมควบคุมมลพิษ)", zh: "（污染控制厅）" },
   rtddi: { en: " (RTDDI)", th: " (สทช.)", zh: "（陆路交通安全中心）" },
   absorption: {
     en: " (NSO/DOPA, BE 2568)",
-    th: " (สชิต/กรมการปกครอง พ.ศ. 2568)",
+    th: " (สสช./กรมการปกครอง พ.ศ. 2568)",
     zh: "（泰国国家统计局/内政厅，2568佛历）",
   },
 } as const;
@@ -189,30 +188,30 @@ function buildLivelihood(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (pop !== undefined) {
     const band = bandIn("nso-province-population", city.province, "high");
     const base: L = {
-      en: `The province carries ${populationText(pop, "en")}${lf !== undefined ? ` and a labour force of ${populationText(lf, "en")}` : ""}`,
-      th: `จังหวัดมีประชากร ${populationText(pop, "th")}${lf !== undefined ? ` แรงงาน ${populationText(lf, "th")}` : ""}`,
-      zh: `该府有 ${populationText(pop, "zh")}${lf !== undefined ? `，劳动力 ${populationText(lf, "zh")}` : ""}`,
+      en: `The province population in 2022 was ${populationText(pop, "en")}${lf !== undefined ? ` and its labour force in Q2 2026 was ${populationText(lf, "en")}` : ""}`,
+      th: `ประชากรจังหวัดในปี 2565 มี ${populationText(pop, "th")}${lf !== undefined ? ` และกำลังแรงงานไตรมาส 2 ปี 2569 มี ${populationText(lf, "th")}` : ""}`,
+      zh: `该府2022年人口为 ${populationText(pop, "zh")}${lf !== undefined ? `，2026年第二季度劳动力为 ${populationText(lf, "zh")}` : ""}`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, among the largest of the ${band?.of} measured provinces`,
-        th: ` อยู่ในกลุ่มที่ใหญ่ที่สุดของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中规模最大的一组`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, mid-sized among the ${band?.of} measured provinces`,
-        th: ` อยู่ในกลุ่มกลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中规模居中`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, smaller than most of the ${band?.of} measured provinces`,
-        th: ` เล็กกว่าจังหวัดส่วนใหญ่ใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，小于 ${band?.of} 个有数据府中的大多数`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the smallest of the ${band?.of} measured provinces`,
-        th: ` อยู่ในกลุ่มที่เล็กที่สุดของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中规模最小的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.nsoPop));
@@ -229,30 +228,30 @@ function buildLivelihood(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (informal !== undefined) {
     const band = informalBand(r);
     const base: L = {
-      en: `${fmt(informal, 1)}% of that labour force is in informal work`,
-      th: `ร้อยละ ${fmtTh(informal, 1)} ของแรงงานนั้นอยู่ในการจ้างงานนอกระบบ`,
-      zh: `该府劳动力中有 ${fmt(informal, 1)}% 从事非正规就业`,
+      en: `Informal workers counted in 2025 equal approximately ${fmt(informal, 1)}% of the Q2 2026 labour force; these are different survey periods`,
+      th: `จำนวนแรงงานนอกระบบปี 2568 เทียบได้ประมาณร้อยละ ${fmtTh(informal, 1)} ของกำลังแรงงานไตรมาส 2 ปี 2569 โดยเป็นข้อมูลคนละช่วงเวลา`,
+      zh: `2025年非正规就业人数约相当于2026年第二季度劳动力的 ${fmt(informal, 1)}%，两者来自不同调查时期`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, the highest-cost fact for any service designed around employment records`,
-        th: ` ซึ่งเป็นข้อเท็จจริงที่แพงที่สุดสำหรับบริการใดที่ออกแบบโดยยึดทะเบียนการจ้างงาน`,
-        zh: `——这是任何以就业登记为设计前提的服务最昂贵的事实`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, so a service keyed to formal records will miss most of them`,
-        th: ` บริการที่ออกแบบยึดทะเบียนการจ้างงานจึงมองไม่เห็นคนส่วนใหญ่`,
-        zh: `，因此以正式登记为基础的服务会漏掉大多数人`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, close to the middle of the ${band?.of} provinces measured`,
-        th: ` ใกล้เคียงค่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，接近 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, the lowest share of the ${band?.of} provinces measured, so formal records reach further here than anywhere else in the set`,
-        th: ` ต่ำที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล บริการที่ยึดทะเบียนจึงเข้าถึงคนได้กว้างที่นี่กว่าที่อื่น`,
-        zh: `，是 ${band?.of} 个有数据府中最低的份额，因此以正式登记为基础的服务在这里能触达更广`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.nso));
@@ -262,30 +261,30 @@ function buildLivelihood(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (migration !== undefined) {
     const band = bandIn("nso-internal-migration", city.province, "high");
     const base: L = {
-      en: `Internal migration runs at ${fmt(migration, 1)}% of the province's population — the share who moved in or out`,
-      th: `การย้ายถิ่นภายในจังหวัดอยู่ที่ ${fmtTh(migration, 1)}% ของประชากรจังหวัด คือสัดส่วนผู้ย้ายเข้าหรือย้ายออก`,
-      zh: `省内迁移占该府人口的 ${fmt(migration, 1)}%——即迁入或迁出者的份额`,
+      en: `In the 2010 NSO survey, ${fmt(migration, 1)}% of the province's population had moved within the province in the preceding five years`,
+      th: `ในการสำรวจของ สสช. พ.ศ. 2553 ประชากรจังหวัด ${fmtTh(migration, 1)}% ย้ายถิ่นภายในจังหวัดในช่วงห้าปีก่อนการสำรวจ`,
+      zh: `在泰国国家统计局2010年调查中，该府人口的 ${fmt(migration, 1)}% 在调查前五年内曾在府内迁居`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, the highest rate in the ${band?.of} provinces measured`,
-        th: ` เป็นอัตราสูงที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，是 ${band?.of} 个有数据府中最高的比例`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, around the middle of the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มกลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，处于 ${band?.of} 个有数据府的中游`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, below the middle of the ${band?.of} provinces measured`,
-        th: ` ต่ำกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，低于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the lowest rates in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่ต่ำที่สุดของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，是 ${band?.of} 个有数据府中最低的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.nso));
@@ -322,36 +321,36 @@ function buildFamousFor(city: SmartCity, r: ProvinceReading): SentenceSet {
       // precision the reading does not carry.
       pushSentence(out, sentence({
         en: `The Royal Forest Department records no forest cover for ${city.province}`,
-        th: `กรมป่าไม้ไม่มีข้อมูลพื้นที่ป่าสำหรับจังหวัด${city.provinceTh}`,
-        zh: `皇家林业厅未记录${city.province}的森林覆盖`,
+        th: `กรมป่าไม้บันทึกพื้นที่ป่าเป็นศูนย์สำหรับจังหวัด${city.provinceTh}`,
+        zh: `皇家林业厅记录${city.province}的森林覆盖为零`,
       }, null, null));
       out.bands?.push(band?.band);
     } else {
       const base: L = {
-        en: `${fmt(forest, 1)}% of ${city.province} is forest`,
-        th: `${fmtTh(forest, 1)}% ของจังหวัด${city.provinceTh} เป็นพื้นที่ป่า`,
-        zh: `${city.province}有 ${fmt(forest, 1)}% 为森林`,
+        en: `In 2021, ${fmt(forest, 1)}% of ${city.province} was forest`,
+        th: `ในปี 2564 พื้นที่ ${fmtTh(forest, 1)}% ของจังหวัด${city.provinceTh} เป็นป่า`,
+        zh: `2021年${city.province}有 ${fmt(forest, 1)}% 为森林`,
       };
       const clause = clauseByBand(band?.band, [
         {
-          en: `, the ${ordinal(band?.rank ?? 1)} most forested of the ${band?.of} measured provinces`,
-          th: ` เป็นอันดับ ${band?.rank} จาก ${band?.of} จังหวัดที่มีข้อมูลที่มีพื้นที่ป่ามากที่สุด`,
-          zh: `，在 ${band?.of} 个有数据府中森林覆盖第 ${band?.rank} 高`,
+          en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+          th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+          zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
         },
         {
-          en: `, more forested than the middle of the ${band?.of} measured provinces`,
-          th: ` มีพื้นที่ป่ามากกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-          zh: `，森林覆盖高于 ${band?.of} 个有数据府的中位水平`,
+          en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+          th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+          zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
         },
         {
-          en: `, less forested than most of the ${band?.of} measured provinces`,
-          th: ` มีพื้นที่ป่าน้อยกว่าจังหวัดส่วนใหญ่ใน ${band?.of} จังหวัดที่มีข้อมูล`,
-          zh: `，森林覆盖少于 ${band?.of} 个有数据府中的大多数`,
+          en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+          th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+          zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
         },
         {
-          en: `, among the least forested of the ${band?.of} measured provinces`,
-          th: ` อยู่ในกลุ่มที่มีพื้นที่ป่าน้อยที่สุดของ ${band?.of} จังหวัดที่มีข้อมูล`,
-          zh: `，是 ${band?.of} 个有数据府中森林覆盖最低的一组`,
+          en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+          th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+          zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
         },
       ]);
       pushSentence(out, sentence(base, clause, SRC.rfd));
@@ -369,24 +368,24 @@ function buildFamousFor(city: SmartCity, r: ProvinceReading): SentenceSet {
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, among the highest per head in the ${band?.of} provinces measured`,
-        th: ` เป็นหนึ่งในกลุ่มที่ใช้ไฟฟ้าต่อคนสูงที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中人均用电最高的一组`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, around the middle of the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มกลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，处于 ${band?.of} 个有数据府的中游`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, below the middle of the ${band?.of} provinces measured`,
-        th: ` ต่ำกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，低于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the lowest per head in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่ใช้ไฟฟ้าต่อคนต่ำที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中人均用电最低的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.moe));
@@ -406,24 +405,24 @@ function buildFamousFor(city: SmartCity, r: ProvinceReading): SentenceSet {
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, among the highest residential shares in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่มีสัดส่วนบ้านอยู่อาศัยสูงที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中居民用电占比最高的一组`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, above the middle of the ${band?.of} provinces measured`,
-        th: ` สูงกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，高于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, below the middle of the ${band?.of} provinces measured`,
-        th: ` ต่ำกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，低于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the lowest residential shares in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่มีสัดส่วนบ้านอยู่อาศัยต่ำที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中居民用电占比最低的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.moe));
@@ -433,30 +432,30 @@ function buildFamousFor(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (water !== undefined) {
     const band = bandIn("nso-drinking-water", city.province, "high");
     const base: L = {
-      en: `Drinking water reaches ${fmt(water, 1)}% of residents`,
-      th: `น้ำดื่มเข้าถึงประชากร ${fmtTh(water, 1)}%`,
-      zh: `饮用水覆盖 ${fmt(water, 1)}% 的居民`,
+      en: `In the 2010 NSO survey, ${fmt(water, 1)}% of provincial households had access to clean drinking water`,
+      th: `ในการสำรวจของ สสช. พ.ศ. 2553 ครัวเรือนในจังหวัด ${fmtTh(water, 1)}% มีน้ำดื่มสะอาด`,
+      zh: `在泰国国家统计局2010年调查中，该府 ${fmt(water, 1)}% 的住户可获得清洁饮用水`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, among the highest coverage in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่ครอบคลุมสูงที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中覆盖率最高的一组`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, around the middle of the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มกลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，处于 ${band?.of} 个有数据府的中游`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, below the middle of the ${band?.of} provinces measured`,
-        th: ` ต่ำกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，低于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the lowest coverage in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่ครอบคลุมต่ำที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，是 ${band?.of} 个有数据府中覆盖率最低的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.nso));
@@ -496,30 +495,30 @@ function buildOpportunity(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (netShare !== undefined) {
     const band = internetBand(r);
     const base: L = {
-      en: `About ${fmt(netShare, 0)}% of residents are internet users`,
-      th: `ประมาณ ${fmtTh(netShare, 0)}% ของประชากรเป็นผู้ใช้อินเทอร์เน็ต`,
-      zh: `约 ${fmt(netShare, 0)}% 的居民是互联网用户`,
+      en: `Internet users in Q1 2023 equal about ${fmt(netShare, 0)}% of the Q4 2022 population; the survey periods differ`,
+      th: `ผู้ใช้อินเทอร์เน็ตไตรมาส 1 ปี 2566 คิดเป็นประมาณ ${fmtTh(netShare, 0)}% ของประชากรไตรมาส 4 ปี 2565 โดยเป็นข้อมูลคนละช่วงเวลา`,
+      zh: `2023年第一季度互联网用户数约相当于2022年第四季度人口的 ${fmt(netShare, 0)}%，两者调查时期不同`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, rank ${band?.rank} of ${band?.of} measured provinces`,
-        th: ` อันดับ ${band?.rank} จาก ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中排第 ${band?.rank}`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, around the middle of the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มกลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，处于 ${band?.of} 个有数据府的中游`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, below the middle of the ${band?.of} provinces measured`,
-        th: ` ต่ำกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，低于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the lowest penetration in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่มีการเข้าถึงต่ำที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中普及率最低的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.nso));
@@ -535,38 +534,38 @@ function buildOpportunity(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (mobilePct !== undefined) {
     const band = mobileBand(r);
     const base: L = {
-      en: `About ${fmt(mobilePct, 0)}% of residents hold a mobile subscription`,
-      th: `ประมาณ ${fmtTh(mobilePct, 0)}% ของประชากรมีการสมัครใช้โทรศัพท์เคลื่อนที่`,
-      zh: `约 ${fmt(mobilePct, 0)}% 的居民持有移动电话订阅`,
+      en: `In Q4 2022, about ${fmt(mobilePct, 0)}% of residents used mobile phones`,
+      th: `ในไตรมาส 4 ปี 2565 ประชากรประมาณ ${fmtTh(mobilePct, 0)}% ใช้โทรศัพท์มือถือ`,
+      zh: `2022年第四季度约 ${fmt(mobilePct, 0)}% 的居民使用手机`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, so a phone-first service starts from the widest reach of any province measured`,
-        th: ` บริการที่ออกแบบให้ใช้โทรศัพท์ก่อนจึงเริ่มจากการเข้าถึงที่กว้างที่สุดในกลุ่มจังหวัดที่มีข้อมูล`,
-        zh: `，因此以手机为先的服务从所有有数据府中最大的触达面起步`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, so a phone-first service reaches most residents without new hardware`,
-        th: ` บริการที่ออกแบบให้ใช้โทรศัพท์ก่อนจึงเข้าถึงคนส่วนใหญ่โดยไม่ต้องซื้อฮาร์ดแวร์ใหม่`,
-        zh: `，因此以手机为先的服务无需新增硬件即可触达大多数居民`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, so a phone-first service still misses the residents without a subscription`,
-        th: ` บริการที่ออกแบบให้ใช้โทรศัพท์ก่อนจึงยังมองไม่เห็นผู้ที่ไม่มีการสมัครใช้`,
-        zh: `，因此以手机为先的服务仍会漏掉没有订阅的居民`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, the lowest subscription rate in the ${band?.of} provinces measured, so a phone-first service would reach a minority of residents`,
-        th: ` ต่ำที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล บริการที่ออกแบบให้ใช้โทรศัพท์ก่อนจึงจะเข้าถึงเพียงสัดส่วนเล็กน้อยของประชากร`,
-        zh: `，是 ${band?.of} 个有数据府中订阅率最低的，因此以手机为先的服务只能触达少数居民`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.nso));
   } else if (mobile !== undefined) {
     pushSentence(out, sentence({
-      en: `${populationText(mobile, "en")} hold a mobile subscription`,
-      th: `มีผู้สมัครใช้โทรศัพท์เคลื่อนที่ ${populationText(mobile, "th")}`,
-      zh: `移动电话订阅用户 ${populationText(mobile, "zh")}`,
+      en: `${populationText(mobile, "en")} use mobile phones`,
+      th: `มีผู้ใช้โทรศัพท์มือถือ ${populationText(mobile, "th")}`,
+      zh: `手机使用者 ${populationText(mobile, "zh")}`,
     }, null, SRC.nso));
   }
 
@@ -574,30 +573,30 @@ function buildOpportunity(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (permits !== undefined) {
     const band = bandIn("nso-residential-permits", city.province, "high");
     const base: L = {
-      en: `${fmt(permits)} building permits were issued`,
-      th: `มีการอนุญาตก่อสร้าง ${fmtTh(permits)} ใบ`,
-      zh: `已签发 ${fmt(permits)} 份建筑许可`,
+      en: `In 2019, ${fmt(permits)} residential building permits were issued`,
+      th: `ในปี 2562 มีใบอนุญาตก่อสร้างอาคารโรงเรือน ${fmtTh(permits)} ใบ`,
+      zh: `2019年签发了 ${fmt(permits)} 份住宅建筑许可`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, the ${ordinal(band?.rank ?? 1)} busiest of the ${band?.of} provinces measured — where a capacity constraint bites first`,
-        th: ` เป็นอันดับ ${band?.rank} จาก ${band?.of} จังหวัดที่มีข้อมูลที่มีการก่อสร้างหนานแน่นที่สุด ซึ่งเป็นจุดที่ข้อจำกัดด้านศักยภาพจะกัดก่อน`,
-        zh: `，在 ${band?.of} 个有数据府中建设最活跃的第 ${band?.rank} 位——容量约束最先在这里发作`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, around the middle of the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มกลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，处于 ${band?.of} 个有数据府的中游`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, below the middle of the ${band?.of} provinces measured`,
-        th: ` ต่ำกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，低于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the quietest of the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่มีการก่อสร้างน้อยที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，是 ${band?.of} 个有数据府中建设最清淡的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, SRC.nso));
@@ -613,29 +612,29 @@ function buildOpportunity(city: SmartCity, r: ProvinceReading): SentenceSet {
     const band = bandIn("nso-non-durable-housing", city.province, "high");
     const base: L = {
       en: `In the 2010 NSO household survey, ${fmt(nonDurable, 1)}% of the province's households were living in non-durable housing`,
-      th: `ในการสำรวจครัวเรือนของสศิต พ.ศ. 2553 มี ${fmtTh(nonDurable, 1)}% ของครัวเรือนในจังหวัดอาศัยอยู่ในที่อยู่อาศัยที่ใช้วัสดุไม่ถาวร`,
+      th: `ในการสำรวจครัวเรือนของสสช. พ.ศ. 2553 มี ${fmtTh(nonDurable, 1)}% ของครัวเรือนในจังหวัดอาศัยอยู่ในที่อยู่อาศัยที่ใช้วัสดุไม่ถาวร`,
       zh: `在泰国国家统计局 2010 年住户调查中，该府有 ${fmt(nonDurable, 1)}% 的住户居住于非耐久建材住房`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, the highest share of non-durable housing in the ${band?.of} provinces measured`,
-        th: ` เป็นสัดส่วนที่อยู่อาศัยที่ใช้วัสดุไม่ถาวรสูงที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，是 ${band?.of} 个有数据府中非耐久住房占比最高的`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, above the middle of the ${band?.of} provinces measured`,
-        th: ` สูงกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，高于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, below the middle of the ${band?.of} provinces measured`,
-        th: ` ต่ำกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，低于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the lowest shares of non-durable housing in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่มีสัดส่วนที่อยู่อาศัยที่ใช้วัสดุไม่ถาวรต่ำที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，是 ${band?.of} 个有数据府中非耐久住房占比最低的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     pushSentence(out, sentence(base, clause, null));
@@ -692,24 +691,24 @@ function buildTheCatch(city: SmartCity, r: ProvinceReading): SentenceSet {
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, the widest gap in the ${band?.of} provinces measured — infrastructure planned against the register alone will be sized for a fraction of the people who actually live here`,
-        th: ` เป็นช่องว่างที่กว้างที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล โครงสร้างพื้นฐานที่วางแผนจากทะเบียนเพียงอย่างเดียวจึงถูกขนาดไว้สำหรับคนเพียงส่วนหนึ่งของผู้อาศัยจริง`,
-        zh: `，是 ${band?.of} 个有数据府中差距最大的——仅按登记册规划的基建，其规模只对应实际居住人口的一部分`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, an above-average gap in the ${band?.of} provinces measured`,
-        th: ` เป็นช่องว่างที่สูงกว่าค่าเฉลี่ยของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，差距高于 ${band?.of} 个有数据府的平均水平`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, a below-average gap in the ${band?.of} provinces measured`,
-        th: ` เป็นช่องว่างที่ต่ำกว่าค่าเฉลี่ยของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，差距低于 ${band?.of} 个有数据府的平均水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the narrowest gaps in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่ช่องว่างแคบที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，是 ${band?.of} 个有数据府中差距最小的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     facts.push(sentence(base, clause, SRC.absorption));
@@ -720,30 +719,30 @@ function buildTheCatch(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (deaths !== undefined) {
     const band = bandIn("rtddi-road-deaths", city.province, "high");
     const base: L = {
-      en: `Road deaths in the province were ${fmt(deaths)}`,
-      th: `ผู้เสียชีวิตจากอุบัติเหตุทางถนนในจังหวัดอยู่ที่ ${fmtTh(deaths)} ราย`,
-      zh: `该府道路死亡 ${fmt(deaths)} 人`,
+      en: `In 2025, road deaths in the province were ${fmt(deaths)}`,
+      th: `ในปี 2568 ผู้เสียชีวิตจากอุบัติเหตุทางถนนในจังหวัดอยู่ที่ ${fmtTh(deaths)} ราย`,
+      zh: `2025年该府道路死亡 ${fmt(deaths)} 人`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, among the highest counts in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่มีจำนวนผู้เสียชีวิตสูงที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中死亡人数最高的一组`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, around the middle of the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มกลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，处于 ${band?.of} 个有数据府的中游`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, below the middle of the ${band?.of} provinces measured`,
-        th: ` ต่ำกว่ากลางของ ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，低于 ${band?.of} 个有数据府的中位水平`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the lowest counts in the ${band?.of} provinces measured`,
-        th: ` อยู่ในกลุ่มที่มีจำนวนผู้เสียชีวิตต่ำที่สุดใน ${band?.of} จังหวัดที่มีข้อมูล`,
-        zh: `，在 ${band?.of} 个有数据府中死亡人数最低的一组`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     facts.push(sentence(base, clause, SRC.rtddi));
@@ -753,30 +752,30 @@ function buildTheCatch(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (moto !== undefined) {
     const band = bandIn("rtddi-motorcycle-share", city.province, "high");
     const base: L = {
-      en: `Motorcycles carry ${fmt(moto, 1)}% of registered vehicles`,
-      th: `รถจักรยานยนต์มีสัดส่วน ${fmtTh(moto, 1)}% ของยานจดทะเบียน`,
-      zh: `摩托车占注册车辆的 ${fmt(moto, 1)}%`,
+      en: `In 2025, motorcycles accounted for ${fmt(moto, 1)}% of provincial road deaths with a recorded vehicle type; nationwide, vehicle type was missing for 44.2% of road-death records`,
+      th: `ในปี 2568 ผู้ใช้รถจักรยานยนต์มีสัดส่วน ${fmtTh(moto, 1)}% ของผู้เสียชีวิตจากอุบัติเหตุทางถนนในจังหวัดที่มีการบันทึกประเภทยานพาหนะ โดยข้อมูลผู้เสียชีวิตทั่วประเทศ 44.2% ไม่ระบุประเภทยานพาหนะ`,
+      zh: `2025年，在该府有车辆类型记录的道路死亡案例中，摩托车占 ${fmt(moto, 1)}%；全国道路死亡记录中有44.2%缺少车辆类型`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, so the exposure sits almost entirely with the riders who commute on the same roads the service would use`,
-        th: ` ความเสี่ยงจึงอยู่กับผู้ใช้รถจักรยานยนต์เกือบทั้งหมดที่สัญจรบนถนนเดียวกับที่บริการจะใช้`,
-        zh: `，风险几乎全部集中在与服务使用同一批道路通勤的骑行者身上`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, so the exposure sits with the riders who commute on the same roads the service would use`,
-        th: ` ความเสี่ยงจึงอยู่ที่ผู้ใช้รถจักรยานยนต์ที่สัญจรบนถนนเดียวกับที่บริการจะใช้`,
-        zh: `，风险集中在与服务使用同一批道路通勤的骑行者身上`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, and the riders on those roads are the people any service will meet first`,
-        th: ` และผู้ใช้รถจักรยานยนต์บนถนนเหล่านั้นคือคนแรกที่บริการจะพบ`,
-        zh: `，而那些道路上的骑行者，是任何服务最先遇见的人`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, lower than in most of the ${band?.of} provinces measured, so the risk profile leans elsewhere`,
-        th: ` ต่ำกว่าจังหวัดส่วนใหญ่ใน ${band?.of} จังหวัดที่มีข้อมูล รูปแบบความเสี่ยงจึงอยู่ที่อื่น`,
-        zh: `，低于 ${band?.of} 个有数据府中的大多数，风险分布因此偏向别处`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, highest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่ามากไปน้อย`,
+        zh: `，按数值从高到低排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     facts.push(sentence(base, clause, SRC.rtddi));
@@ -787,30 +786,30 @@ function buildTheCatch(city: SmartCity, r: ProvinceReading): SentenceSet {
   if (r.pm25 !== undefined) {
     const band = bandIn("pcd-pm25-annual", city.province, "low");
     const base: L = {
-      en: `Annual PM2.5 is ${fmt(r.pm25, 1)} µg/m³`,
-      th: `PM2.5 เฉลี่ยต่อปี ${fmtTh(r.pm25, 1)} ไมโครกรัม/ลบ.ม.`,
-      zh: `PM2.5 年均 ${fmt(r.pm25, 1)} µg/m³`,
+      en: `In 2024, annual PM2.5 was ${fmt(r.pm25, 1)} µg/m³`,
+      th: `ในปี 2567 PM2.5 เฉลี่ยต่อปี ${fmtTh(r.pm25, 1)} ไมโครกรัม/ลบ.ม.`,
+      zh: `2024年 PM2.5 年均 ${fmt(r.pm25, 1)} µg/m³`,
     };
     const clause = clauseByBand(band?.band, [
       {
-        en: `, among the cleanest air in the ${band?.of} provinces measured, so outdoor waiting and queuing carry little health penalty here`,
-        th: ` อยู่ในกลุ่มที่อากาศดีที่สุดของ ${band?.of} จังหวัดที่มีข้อมูล การรอและต่อคิวกลางแจ้งจึงมีต้นทุนด้านสุขภาพน้อย`,
-        zh: `，在 ${band?.of} 个有数据府中空气最洁净之列，户外候车排队带来的健康代价很小`,
+        en: `, in the first quarter by rank (${band?.rank} of ${band?.of}, lowest first)`,
+        th: ` อยู่ในควอไทล์ที่หนึ่ง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่าน้อยไปมาก`,
+        zh: `，按数值从低到高排列，位于第一四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, so the air carries a modest penalty for anything that puts people outdoors`,
-        th: ` อากาศจึงมีต้นทุนด้านสุขภาพเล็กน้อยสำหรับบริการที่ให้คนอยู่กลางแจ้ง`,
-        zh: `，因此空气对任何让人待在户外的服务都有轻微的健康代价`,
+        en: `, in the second quarter by rank (${band?.rank} of ${band?.of}, lowest first)`,
+        th: ` อยู่ในควอไทล์ที่สอง ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่าน้อยไปมาก`,
+        zh: `，按数值从低到高排列，位于第二四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, so any service that depends on people standing outdoors — waiting, walking, queuing — starts from a health penalty`,
-        th: ` บริการใดที่ต้องให้คนยืนกลางแจ้ง เช่น การรอ การเดิน การต่อคิว จึงเริ่มต้นจากต้นทุนด้านสุขภาพ`,
-        zh: `，任何需要人站在户外——候车、步行、排队——的服务都从一笔健康代价起步`,
+        en: `, in the third quarter by rank (${band?.rank} of ${band?.of}, lowest first)`,
+        th: ` อยู่ในควอไทล์ที่สาม ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่าน้อยไปมาก`,
+        zh: `，按数值从低到高排列，位于第三四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
       {
-        en: `, among the most polluted air in the ${band?.of} provinces measured, which sets a hard ceiling on any outdoor-facing service`,
-        th: ` อยู่ในกลุ่มที่มีมลพิษสูงที่สุดของ ${band?.of} จังหวัดที่มีข้อมูล ซึ่งกำหนดเพดานของบริการกลางแจ้งไว้ต่ำ`,
-        zh: `，在 ${band?.of} 个有数据府中污染最重之列，这为一切户外服务设下了硬上限`,
+        en: `, in the fourth quarter by rank (${band?.rank} of ${band?.of}, lowest first)`,
+        th: ` อยู่ในควอไทล์ที่สี่ ตามอันดับ ${band?.rank} จาก ${band?.of} จังหวัด เรียงค่าน้อยไปมาก`,
+        zh: `，按数值从低到高排列，位于第四四分位组（第 ${band?.rank} 名，共 ${band?.of} 府）`,
       },
     ]);
     facts.push(sentence(base, clause, SRC.pcd));

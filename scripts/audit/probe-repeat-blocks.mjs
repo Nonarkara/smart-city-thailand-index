@@ -31,6 +31,8 @@ const SELECTORS = [
   ".city-factbook-value",
   ".city-factbook-note",
   ".city-research-body",
+  ".city-dossier-summary",
+  ".city-dossier-thesis",
   ".city-dossier-card-body",
   ".city-dossier-card-meta",
   ".city-analog-copy",

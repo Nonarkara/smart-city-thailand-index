@@ -42,7 +42,7 @@ export default function AboutPage({ locale, onNavigate }: Props) {
               zh: "曼谷及其周边省份吸收了投资、人才和政策关注，而其他76个省份只能在旁观望。这不仅不公平，而且效率低下。"
             })}
           </p>
-          <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-display)" }}>
+          <p style={{ marginBottom: "1.5rem", fontWeight: "bold", fontSize: "var(--text-body)" }}>
             {translate(locale, {
               en: "SCITI was built on a simple conviction: data can level the playing field.",
               th: "SCITI สร้างขึ้นจากความเชื่อมั่นง่ายๆ ว่า: ข้อมูลสามารถสร้างความเท่าเทียมได้",

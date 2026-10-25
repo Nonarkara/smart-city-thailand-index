@@ -17,8 +17,10 @@ import { chromium } from "@playwright/test";
 const BASE = process.argv[2] || "http://localhost:5188";
 const LOCALES = (process.argv[3] || "en,th").split(",");
 const ROUTES = [
-  "/", "/rankings", "/methodology", "/baseline", "/city/phuket", "/invest",
-  "/compare", "/story", "/program", "/partners", "/audit", "/why",
+  "/", "/about", "/creative-economy", "/rankings", "/methodology", "/story",
+  "/why", "/showcase", "/partners", "/map", "/asus", "/audit", "/references",
+  "/program", "/knowledge", "/discover", "/invest", "/compare", "/bingo",
+  "/baseline", "/city/phuket", "/canvas/phuket",
 ];
 const VIEWPORTS = [390, 1440];
 

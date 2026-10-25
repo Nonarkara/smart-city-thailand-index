@@ -17,9 +17,9 @@ try {
     const metrics = await page.evaluate(() => {
       const size = selector => parseFloat(getComputedStyle(document.querySelector(selector)).fontSize);
       const source = document.querySelector('.depa-official-source').getBoundingClientRect();
-      return { heading: size('.depa-official-header h2'), body: size('.depa-official-vision'), overflow: document.documentElement.scrollWidth - innerWidth, sourceRight: source.right, width: innerWidth };
+      return { heading: size('.depa-official-header h2'), body: size('.depa-official-vision'), overflow: document.documentElement.scrollWidth - innerWidth, sourceRight: source.right, width: innerWidth, headingWeight: parseInt(getComputedStyle(document.querySelector('.depa-official-header h2')).fontWeight), bodyWeight: parseInt(getComputedStyle(document.querySelector('.depa-official-vision')).fontWeight) };
     });
-    assert.ok(metrics.heading / metrics.body >= 1.5, JSON.stringify(metrics));
+    assert.ok(metrics.heading >= metrics.body && metrics.headingWeight - metrics.bodyWeight >= 200, JSON.stringify(metrics));
     assert.equal(metrics.overflow, 0);
     assert.ok(metrics.sourceRight <= metrics.width);
     await page.getByRole('tab', { name: 'Analysis', exact: true }).click();
@@ -33,7 +33,8 @@ try {
       await page.goto(`${origin}/${route}`);
       await page.locator('main h2').first().scrollIntoViewIfNeeded();
       await page.screenshot({ path: `${output}/${route || 'home'}-${width}.png` });
-      assert.equal(await page.locator('main h2').first().evaluate(e => getComputedStyle(e).fontSize), '32px');
+      assert.ok(await page.locator('main h2').first().evaluate(e => parseFloat(getComputedStyle(e).fontSize) >= 14 && parseInt(getComputedStyle(e).fontWeight) >= 700));
+      assert.ok(await page.locator('main h1').evaluateAll(es => es.some(e => e.getClientRects().length && parseFloat(getComputedStyle(e).fontSize) === 32)), 'page title is missing its display role');
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     }
   }

@@ -1559,7 +1559,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                   </span>
                 </div>
                 <p className="city-dossier-thesis">{dossier.operatingSummary}</p>
-                <p className="city-dossier-summary">{dossier.gapSummary}</p>
                 <div className="record-grid city-dossier-record-grid">
                   <div className="record-item">
                     <span className="record-label">{translate(locale, { en: "Lead step", th: "ขั้นนำ", zh: "领先步骤" })}</span>

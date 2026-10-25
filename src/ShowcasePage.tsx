@@ -1013,13 +1013,13 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                     </span>
                   </div>
                   <div className="showcase-data-callout-cell">
-                    <span className="showcase-data-callout-num">BOO</span>
+                    <span className="showcase-data-callout-text">BOO</span>
                     <span className="showcase-data-callout-label">
                       {translate(locale, { en: "Build-Own-Operate: private pays upfront, city pays monthly", th: "BOO: เอกชนลงทุน รัฐจ่ายรายเดือน", zh: "建设-拥有-经营：私方先行投入，市政按月付费" })}
                     </span>
                   </div>
                   <div className="showcase-data-callout-cell">
-                    <span className="showcase-data-callout-num">{translate(locale, { en: "Same visit", th: "รู้ผลในครั้งเดียว", zh: "当日完成" })}</span>
+                    <span className="showcase-data-callout-text">{translate(locale, { en: "Same visit", th: "รู้ผลในครั้งเดียว", zh: "当日完成" })}</span>
                     <span className="showcase-data-callout-label">
                       {translate(locale, { en: "Preliminary result — no more waiting days for a radiologist", th: "รู้ผลเบื้องต้นในวันเดียวกัน ไม่ต้องรอรังสีแพทย์หลายวัน", zh: "初步结果即时出具——无需等待放射科医生数天" })}
                     </span>
@@ -1056,13 +1056,13 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                     </span>
                   </div>
                   <div className="showcase-data-callout-cell">
-                    <span className="showcase-data-callout-num">STEM</span>
+                    <span className="showcase-data-callout-text">STEM</span>
                     <span className="showcase-data-callout-label">
                       {translate(locale, { en: "Notable math & science comprehension gains, strongest among students who previously underperformed", th: "คะแนนความเข้าใจคณิตและวิทย์ดีขึ้นชัดเจน โดยเฉพาะในกลุ่มนักเรียนที่เคยเรียนอ่อน", zh: "数学与科学理解成绩明显提升，在原本成绩落后的学生中尤为显著" })}
                     </span>
                   </div>
                   <div className="showcase-data-callout-cell">
-                    <span className="showcase-data-callout-num">OPEX</span>
+                    <span className="showcase-data-callout-text">OPEX</span>
                     <span className="showcase-data-callout-label">
                       {translate(locale, { en: "Per-student licensing — no hardware capex", th: "ค่าบริการต่อนักเรียน — ไม่มีงบ CAPEX ฮาร์ดแวร์", zh: "按生收费许可证——无硬件资本支出" })}
                     </span>
