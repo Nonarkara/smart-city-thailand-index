@@ -1,13 +1,13 @@
 import type { WeeklyDigest } from "./weeklyDigest";
 
 export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
-  weekOf: "2026-10-19",
+  weekOf: "2026-10-25",
   trendingCity: {
     cityId: "chiang-mai-old-town",
     note: {
-      en: "Ahead of winter inversion and northern haze season, Chiang Mai's CNX Operations War Room and CMU clean-air room networks are setting measurable resident targets: occupied-room PM2.5 at least 50% below outdoor levels with verified public access.",
-      th: "ก่อนเข้าสู่ฤดูผกผันอุณหภูมิและหมอกควันภาคเหนือ ศูนย์ปฏิบัติการ CNX Operations War Room และเครือข่ายห้องปลอดฝุ่น มช. ร่วมกำหนดเป้าหมายเพื่อผู้อยู่อาศัยที่วัดผลได้: ควบคุม PM2.5 ในห้องต่ำกว่าภายนอกอย่างน้อย 50% พร้อมการเข้าถึงจริงของประชาชน",
-      zh: "在冬季逆温与北部雾霾季到来前，清迈 CNX Operations War Room 与清迈大学防霾洁净室网络确立了可量化的居民保护指标：在室内保障有效通风的同时，将有人使用房间的 PM2.5 降至室外水平的 50% 以下并确保公众可达。",
+      en: "Use Chiang Mai's dossier to compare source years and geographic scope. A provincial annual air-quality figure does not tell you the air inside a particular room or whether that room is publicly accessible.",
+      th: "ใช้แฟ้มเชียงใหม่เปรียบเทียบปีและขอบเขตพื้นที่ของข้อมูล ค่าคุณภาพอากาศรายปีระดับจังหวัดไม่ได้บอกคุณภาพอากาศภายในห้องใดห้องหนึ่ง หรือยืนยันว่าประชาชนเข้าใช้ห้องนั้นได้",
+      zh: "查看清迈档案，比较数据年份与地理范围。省级年度空气质量数据无法说明某个房间内的空气状况，也不能证明该房间对公众开放。",
     },
   },
   trendingSearch: {
@@ -17,23 +17,23 @@ export const WEEKLY_DIGEST_DATA: WeeklyDigest = {
       zh: '"清迈防霾洁净室"',
     },
     deltaLabel: {
-      en: "Surging across northern municipal channels as dry-season health prep begins",
-      th: "ยอดค้นหาพุ่งในช่องทางเทศบาลภาคเหนือเมื่อเริ่มเตรียมรับมือสุขภาพช่วงฤดูแล้ง",
-      zh: "随着旱季健康防护启动，在北部市政渠道搜索量快速攀升",
+      en: "Editorial search suggestion; no search-volume or trend measurement is available here. Verify room-level readings and public access directly.",
+      th: "คำค้นที่บรรณาธิการเสนอ ไม่มีข้อมูลปริมาณหรือแนวโน้มการค้นหาในระบบนี้ ควรตรวจค่าที่วัดในห้องและสิทธิการเข้าใช้โดยตรง",
+      zh: "编辑建议的检索词；本站没有搜索量或趋势测量数据。请直接核查室内实测值与公众使用条件。",
     },
     lensId: "growth",
   },
   headline: {
     title: {
-      en: "Thailand Smart City Delivery Brief: Connecting Digital Assets to Accountable Operators and Measured Outcomes",
-      th: "สรุปหลักฐานส่งมอบเมืองอัจฉริยะไทย: เชื่อมโยงเทคโนโลยีที่มีอยู่สู่ผู้ปฏิบัติงานที่มีความรับผิดชอบและผลลัพธ์ที่วัดได้จริง",
-      zh: "泰国智慧城市落地证据简报：将数字资产对接至具问责制的运营方与可量化的居民实效",
+      en: "Integrated road-traffic death registry: annual source files",
+      th: "ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน: ไฟล์ต้นทางรายปี",
+      zh: "道路交通死亡综合登记系统：年度原始文件",
     },
     gloss: {
-      en: "Reviewed October 2026: Official recognition and installed IoT are not evidence of sustained livability improvements. Prioritizing Chiang Mai clean-air verification and Nakhon Si Thammarat flood telemetry shifts the focus from pilot brochures to verified resident assistance.",
-      th: "ทบทวนตุลาคม 2569: การรับรองทางราชการและเซ็นเซอร์ IoT ที่ติดตั้งไม่ใช่หลักฐานการยกระดับคุณภาพชีวิตอย่างยั่งยืน การจัดลำดับความสำคัญให้การวัดผลห้องปลอดฝุ่นเชียงใหม่และโทรมาตรน้ำท่วมนครศรีธรรมราช เปลี่ยนจุดเน้นจากโบรชัวร์โครงการสู่ความช่วยเหลือประชาชนที่ยืนยันได้",
-      zh: "2026年10月复审：官方认证与物联网安装并不等同于居民生活的持续改善。优先推进清迈洁净空气验证与洛坤防汛遥测，将关注焦点从试点宣传册转向切实核验的居民救助。",
+      en: "Open the government catalogue behind the road-death baseline. Choose the relevant year and check province definitions before comparing figures. Annual counts do not measure an individual's travel risk.",
+      th: "เปิดบัญชีข้อมูลภาครัฐที่เป็นต้นทางของข้อมูลฐานการเสียชีวิตบนถนน เลือกปีและตรวจความหมายของจังหวัดก่อนเปรียบเทียบ จำนวนรายปีไม่ได้วัดความเสี่ยงในการเดินทางของแต่ละบุคคล",
+      zh: "打开道路死亡基线所用的政府数据目录。比较前请选择相应年份并核查省份字段定义。年度计数不衡量个人出行风险。",
     },
-    url: "https://www.thailandsmartcityexpo.com/",
+    url: "https://data.go.th/dataset/rtddi",
   },
 };

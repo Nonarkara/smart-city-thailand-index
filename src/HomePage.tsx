@@ -3,6 +3,7 @@ import { useInView } from "./useInView";
 import AnimatedScore from "./AnimatedScore";
 import NewsStrip from "./NewsStrip";
 import HomeDecisionGuide from "./HomeDecisionGuide";
+import { getHomeRoadEvidence } from "./homeRoadEvidence";
 import { useCitySummaries } from "./cityApi";
 import { summarizeCities } from "./cityCollections";
 import { getCityPhotoAsset, HOME_HERO_ASSETS, type HeroAsset } from "./cityMedia";
@@ -87,21 +88,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
     [cities],
   );
 
-  // Road safety champions — cities with the lowest provincial road fatality
-  // rate (deaths per 100,000 pop, source: thairsc.com). De-duplicated by
-  // province so Bangkok doesn't fill all 5 slots. Max 5 entries.
-  const roadSafetyChampions = useMemo(() => {
-    const seen = new Set<string>();
-    return [...cities]
-      .filter(c => c.metrics.roadFatalityRate != null)
-      .sort((a, b) => (a.metrics.roadFatalityRate ?? 99) - (b.metrics.roadFatalityRate ?? 99))
-      .filter(c => {
-        if (seen.has(c.province)) return false;
-        seen.add(c.province);
-        return true;
-      })
-      .slice(0, 5);
-  }, [cities]);
+  // Registry counts have a source year; legacy seed rates do not.
+  const roadEvidence = useMemo(() => getHomeRoadEvidence(cities), [cities]);
 
   // Phase 14 — regional champions. One highest-composite city per region,
   // in canonical north→south order. Gives the homepage a geographic read
@@ -225,7 +213,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="home-stat-value">SCITI 2026</span>
           </div>
           <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Digest", th: "บันทึกรายสัปดาห์", zh: "周报" })}</span>
+            <span className="home-stat-label">{t({ en: "Reading list", th: "เรื่องคัดอ่าน", zh: "编辑选读" })}</span>
             <span className="home-stat-value">{formatWeeklyStamp(WEEKLY_DIGEST.weekOf, locale)}</span>
           </div>
         </div>
@@ -381,21 +369,21 @@ export default function HomePage({ locale, onNavigate }: Props) {
         )}
 
         {/* ─── ROAD SAFETY CHAMPIONS ─── */}
-        {roadSafetyChampions.length > 0 && (
+        {roadEvidence.source && roadEvidence.entries.length > 0 ? (
           <section
             className="section reveal visible"
-            aria-label={t({ en: "Road safety leaders", th: "เมืองผู้นำความปลอดภัยทางถนน", zh: "道路安全领先城市" })}
+            aria-label={t({ en: "Provincial road-death evidence", th: "หลักฐานการเสียชีวิตบนถนนระดับจังหวัด", zh: "省级道路死亡记录" })}
           >
-            <p className="eyebrow">{t({ en: "Road safety · Source: thairsc.com", th: "ความปลอดภัยทางถนน · ที่มา: thairsc.com", zh: "道路安全 · 来源：thairsc.com" })}</p>
+            <p className="eyebrow">{t({ en: "Road deaths · Reference data", th: "ผู้เสียชีวิตบนถนน · ข้อมูลอ้างอิง", zh: "道路死亡 · 参考数据" })} · {roadEvidence.source.year}</p>
             <h2 className="home-section-title">
               {t({
-                en: "Lowest road fatality rate in Thailand",
-                th: "อัตราการเสียชีวิตบนท้องถนนต่ำที่สุดในประเทศไทย",
-                zh: "全泰国道路死亡率最低城市",
+                en: "Five largest recorded totals among indexed provinces",
+                th: "ห้าจังหวัดในดัชนีที่มีจำนวนผู้เสียชีวิตบันทึกไว้สูงสุด",
+                zh: "本指数所涉省份中记录死亡人数最多的五省",
               })}
             </h2>
             <ul className="regional-champions road-safety-champions">
-              {roadSafetyChampions.map(city => (
+              {roadEvidence.entries.map(({ city, deaths }) => (
                 <li key={city.id}>
                   <button
                     type="button"
@@ -403,13 +391,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
                     onClick={() => onNavigate(`/city/${city.id}`)}
                   >
                     <span className="regional-champion-region" style={{ color: "var(--gold-text, #946B0C)" }}>
-                      {city.metrics.roadFatalityRate}/100K
+                      {t({ en: `Dossier: ${getCityName(city, locale)}`, th: `แฟ้มเมือง: ${getCityName(city, locale)}`, zh: `档案：${getCityName(city, locale)}` })}
                     </span>
-                    <span className="regional-champion-city">{getCityName(city, locale)}</span>
+                    <span className="regional-champion-city">{getProvinceName(city, locale)}</span>
                     <span className="regional-champion-meta">
-                      <span>{getProvinceName(city, locale)}</span>
+                      <span>{t({ en: "deaths", th: "ผู้เสียชีวิต", zh: "登记死亡" })}</span>
                       <span className="regional-champion-score" style={{ color: "var(--gold-text, #946B0C)" }}>
-                        {t({ en: "deaths/yr", th: "เสียชีวิต/ปี", zh: "死亡/年" })}
+                        {deaths.toLocaleString(locale === "zh" ? "zh-CN" : locale === "th" ? "th-TH" : "en-US")}
                       </span>
                     </span>
                   </button>
@@ -418,11 +406,21 @@ export default function HomePage({ locale, onNavigate }: Props) {
             </ul>
             <p className="home-section-note">
               {t({
-                en: "Thai national average: ~25 deaths per 100,000. WHO target: ≤5. Source: thairsc.com provincial annual data.",
-                th: "ค่าเฉลี่ยประเทศไทย: ~25 ต่อแสนคน เป้าหมาย WHO: ≤5 ที่มา: ข้อมูลรายปีรายจังหวัด thairsc.com",
-                zh: "泰国全国平均：约每十万人25人死亡。WHO目标：≤5。来源：thairsc.com 省级年度数据。",
+                en: "Annual registered deaths in the province, not in the named city. Counts are not population-adjusted rates or a ranking of personal risk. City names open the associated dossiers.",
+                th: "จำนวนผู้เสียชีวิตที่บันทึกในจังหวัดตลอดปี ไม่ใช่จำนวนในเมืองที่ระบุ ตัวเลขนี้ไม่ได้ปรับตามประชากรและไม่ใช่อันดับความเสี่ยงส่วนบุคคล ชื่อเมืองเปิดแฟ้มเมืองที่เกี่ยวข้อง",
+                zh: "全年省级登记死亡人数，并非所列城市的死亡人数。原始计数未经人口调整，不是个人风险排名。城市名称链接至相关档案。",
               })}
+              {" "}<a href={roadEvidence.source.catalogUrl} target="_blank" rel="noreferrer">{t({ en: "Source: integrated road-traffic death registry ↗", th: "ที่มา: ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน ↗", zh: "来源：道路交通死亡综合登记系统 ↗" })}</a>
+              {" "}<button type="button" onClick={() => onNavigate("/baseline")}>{t({ en: "Inspect the baseline →", th: "ตรวจข้อมูลฐาน →", zh: "查看基线数据 →" })}</button>
             </p>
+          </section>
+        ) : (
+          <section className="section reveal visible" aria-label={t({ en: "Road-death data unavailable", th: "ไม่มีข้อมูลการเสียชีวิตบนถนนที่ใช้เปรียบเทียบได้", zh: "道路死亡数据不可用" })}>
+            <p className="home-section-note">{t({
+              en: "No comparable province records are available for this selection. No estimates are substituted.",
+              th: "ไม่มีข้อมูลระดับจังหวัดที่ใช้เปรียบเทียบได้สำหรับรายการนี้ ระบบไม่แทนค่าด้วยข้อมูลประมาณการ",
+              zh: "当前选择没有可比较的省级记录，系统不会用估算值填补。",
+            })}</p>
           </section>
         )}
 
@@ -571,7 +569,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
           className={`section reveal stagger-4 ${digestVisible ? "visible" : ""}`}
         >
           <div className="weekly-digest-header">
-            <p className="eyebrow">{t({ en: "This week", th: "สัปดาห์นี้", zh: "本周" })}</p>
+            <p className="eyebrow">{t({ en: "Editor's reading list", th: "เรื่องคัดอ่านโดยบรรณาธิการ", zh: "编辑选读" })}</p>
             <span className="weekly-stamp">{formatWeeklyStamp(WEEKLY_DIGEST.weekOf, locale)}</span>
           </div>
           <div className="weekly-digest glass-card">
@@ -581,27 +579,28 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 className="weekly-digest-slot"
                 onClick={() => onNavigate(`/city/${digestCity.id}`)}
               >
-                <span className="weekly-digest-label">{t({ en: "Trending city", th: "เมืองมาแรง", zh: "热门城市" })}</span>
+                <span className="weekly-digest-label">{t({ en: "City to investigate", th: "เมืองที่ควรศึกษาต่อ", zh: "待研究城市" })}</span>
                 <span className="weekly-digest-headline">{getCityName(digestCity, locale)}</span>
                 <span className="weekly-digest-note">{translate(locale, WEEKLY_DIGEST.trendingCity.note)}</span>
               </button>
             )}
-            <button
-              type="button"
+            <a
               className="weekly-digest-slot"
-              onClick={() => onNavigate("/rankings")}
+              href={`https://www.google.com/search?q=${encodeURIComponent(translate(locale, WEEKLY_DIGEST.trendingSearch.phrase))}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <span className="weekly-digest-label">{t({ en: "Trending search", th: "คำค้นมาแรง", zh: "热门搜索" })}</span>
-              <span className="weekly-digest-headline">{translate(locale, WEEKLY_DIGEST.trendingSearch.phrase)}</span>
+              <span className="weekly-digest-label">{t({ en: "Suggested research query", th: "คำค้นสำหรับศึกษาต่อ", zh: "建议检索词" })}</span>
+              <span className="weekly-digest-headline">{translate(locale, WEEKLY_DIGEST.trendingSearch.phrase)} ↗</span>
               <span className="weekly-digest-note">{translate(locale, WEEKLY_DIGEST.trendingSearch.deltaLabel)}</span>
-            </button>
+            </a>
             <a
               className="weekly-digest-slot"
               href={WEEKLY_DIGEST.headline.url}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span className="weekly-digest-label">{t({ en: "Headline", th: "ข่าวเด่น", zh: "头条" })}</span>
+              <span className="weekly-digest-label">{t({ en: "Primary source", th: "แหล่งข้อมูลต้นทาง", zh: "一手来源" })}</span>
               <span className="weekly-digest-headline">{translate(locale, WEEKLY_DIGEST.headline.title)}</span>
               <span className="weekly-digest-note">{translate(locale, WEEKLY_DIGEST.headline.gloss)} ↗</span>
             </a>

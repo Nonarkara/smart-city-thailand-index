@@ -1,25 +1,25 @@
 // ---------------------------------------------------------------------------
-// Weekly digest — the "this week" strip on the homepage
+// Editorial reading list — dated selections on the homepage
 // ---------------------------------------------------------------------------
 // The SCITI dataset is static, rebuilt once per edition. But smart-city
 // conversation in Thailand is not — headlines, policy drops, Google Trends
 // searches, city openings all move week to week. The weekly digest gives
-// the homepage a single living heartbeat.
+// readers a dated route into sources, not a simulated live news feed.
 //
 // EDITORIAL RITUAL — every Monday:
-//   1. Update `weekOf` to today's ISO date (YYYY-MM-DD).
-//   2. Pick one trending city — a one-line, trilingual reason it's on
-//      everybody's tongue this week (news, Google Trends, ministry drop).
-//   3. Pull the highest-velocity SCITI-adjacent search phrase from
-//      trends.google.com (Thailand, past 7 days). Paste the phrase,
-//      note the delta, optionally deep-link to the matching lens on
-//      /rankings via `lensId` (see src/presetLenses.ts for ids).
-//   4. Pick one external news/policy link. One-line gloss, trilingual.
+//   1. Set `weekOf` to the actual editorial selection date (YYYY-MM-DD).
+//   2. Pick one city and explain what the reader can investigate there.
+//      Do not claim popularity, operating services, or outcomes without evidence.
+//   3. Suggest a useful SCITI-adjacent research phrase. Any measured trend
+//      requires a cited measurement, source, population and period.
+//      Without those, the phrase is an editorial suggestion, not trend data.
+//      Suggested searches link to the actual query, not an unrelated tool.
+//   4. Pick one primary-source link. Use its real title and scope, trilingually.
 //   5. `git commit -m "Weekly digest: YYYY-MM-DD" && git push`. GitHub
-//      Pages redeploys. The "Updated N days ago" stamp resets.
+//      Pages redeploys. The selection age is not the underlying data age.
 //
 // No API, no scraper, no CI — just a human touching the file each Monday.
-// That's the "illusion of real time" the index runs on.
+// Never use this selection date to imply real-time data or current operation.
 // ---------------------------------------------------------------------------
 
 import type { LocalizedText } from "./cityCdp";
@@ -46,7 +46,7 @@ export interface WeeklyDigest {
 export const WEEKLY_DIGEST: WeeklyDigest = WEEKLY_DIGEST_DATA;
 
 /**
- * Returns a short trilingual "Updated N days/weeks ago" label derived from
+ * Returns a short trilingual editorial-selection age label derived from
  * `weekOf`. Computed at render time so the stamp stays honest without
  * editing the data file. Falls back to the ISO date if parsing fails.
  */
@@ -56,24 +56,27 @@ export function formatWeeklyStamp(
 ): string {
   const parsed = Date.parse(weekOf);
   if (Number.isNaN(parsed)) return weekOf;
-  const days = Math.max(0, Math.floor((Date.now() - parsed) / 86_400_000));
+  const days = Math.floor((Date.now() - parsed) / 86_400_000);
+  if (days < 0) {
+    return locale === "th" ? `วันที่คัดอ่าน ${weekOf}` : locale === "zh" ? `选编日期 ${weekOf}` : `Selection dated ${weekOf}`;
+  }
   if (days === 0) {
-    return locale === "th" ? "อัปเดตวันนี้" : locale === "zh" ? "今日更新" : "Updated today";
+    return locale === "th" ? "คัดอ่านวันนี้" : locale === "zh" ? "今日选编" : "Selected today";
   }
   if (days === 1) {
-    return locale === "th" ? "อัปเดตเมื่อวาน" : locale === "zh" ? "昨日更新" : "Updated yesterday";
+    return locale === "th" ? "คัดอ่านเมื่อวาน" : locale === "zh" ? "昨日选编" : "Selected yesterday";
   }
   if (days < 7) {
     return locale === "th"
-      ? `อัปเดต ${days} วันก่อน`
+      ? `คัดอ่าน ${days} วันก่อน`
       : locale === "zh"
-        ? `${days} 天前更新`
-        : `Updated ${days} days ago`;
+        ? `${days} 天前选编`
+        : `Selected ${days} days ago`;
   }
   const weeks = Math.floor(days / 7);
   return locale === "th"
-    ? `อัปเดต ${weeks} สัปดาห์ก่อน`
+    ? `คัดอ่าน ${weeks} สัปดาห์ก่อน`
     : locale === "zh"
-      ? `${weeks} 周前更新`
-      : `Updated ${weeks} week${weeks === 1 ? "" : "s"} ago`;
+      ? `${weeks} 周前选编`
+      : `Selected ${weeks} week${weeks === 1 ? "" : "s"} ago`;
 }

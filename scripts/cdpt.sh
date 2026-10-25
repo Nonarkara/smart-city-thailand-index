@@ -104,7 +104,8 @@ fi
 
 # ── P — push (updates the GitHub Pages mirror) ───────────────────────────────
 bold "Push — origin main"
-git push origin main 2>&1 | tail -1
+# Release the checked-out revision, never another chat's shared local main.
+git push origin HEAD:main 2>&1 | tail -1
 ok "pushed $(git rev-parse --short HEAD)"
 
 # ── D — deploy (Cloudflare Pages: the step that actually updates prod) ────────
