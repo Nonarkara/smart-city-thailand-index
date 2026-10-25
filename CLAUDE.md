@@ -47,7 +47,7 @@ the candidate to run the existing full GitHub Pages workflow (tests, lint,
 build and production-dependency audit). After that run succeeds, use
 `CDPT_REMOTE_TEST_RUN=<run-id> npm run cdpt` from a clean checkout. CDPT requires
 the completed successful workflow to match the exact current commit, then
-repeats local lint/build and performs the normal Cloudflare/live checks.
+downloads that run's validated Pages artifact and performs the normal Cloudflare/live checks.
 This changes the test runner location, not the assertions or timeouts.
 
 ## Design Philosophy

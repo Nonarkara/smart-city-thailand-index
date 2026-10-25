@@ -46,12 +46,25 @@ else
   ok "$(grep -oE 'Tests +[0-9]+ passed[^)]*\)' "$LOG_DIR/cdpt-test.log" | tail -1)"
 fi
 
-bold "Preflight — lint"
-npm run lint >"$LOG_DIR/cdpt-lint.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-lint.log"; die "lint failed"; }
-ok "eslint clean"
-
-bold "Preflight — build (base=/, the production artifact)"
-VITE_BASE_PATH=/ npm run build >"$LOG_DIR/cdpt-build.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-build.log"; die "build failed"; }
+if [[ -n "${CDPT_REMOTE_TEST_RUN:-}" ]]; then
+  bold "Build — use the artifact produced by the validated workflow"
+  ARTIFACT_DIR="$(mktemp -d "$LOG_DIR/cdpt-ci.XXXXXX")"
+  gh run download "$CDPT_REMOTE_TEST_RUN" --name github-pages --dir "$ARTIFACT_DIR" || die "cannot download validated build"
+  [[ -s "$ARTIFACT_DIR/artifact.tar" ]] || die "validated workflow has no Pages archive"
+  mkdir "$ARTIFACT_DIR/site"
+  tar -xf "$ARTIFACT_DIR/artifact.tar" -C "$ARTIFACT_DIR/site" || die "cannot extract validated build"
+  [[ -s "$ARTIFACT_DIR/site/index.html" ]] || die "validated build has no index.html"
+  shasum -a 256 "$ARTIFACT_DIR/artifact.tar" >"$LOG_DIR/cdpt-artifact.sha256"
+  [[ ! -e dist ]] || mv dist "$ARTIFACT_DIR/previous-dist"
+  mv "$ARTIFACT_DIR/site" dist
+  ok "reusing the exact build that passed full tests, lint, build and dependency audit"
+else
+  bold "Preflight — lint"
+  npm run lint >"$LOG_DIR/cdpt-lint.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-lint.log"; die "lint failed"; }
+  ok "eslint clean"
+  bold "Preflight — build (base=/, the production artifact)"
+  VITE_BASE_PATH=/ npm run build >"$LOG_DIR/cdpt-build.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-build.log"; die "build failed"; }
+fi
 LOCAL_HASH="$(grep -oE '/static/index-[A-Za-z0-9_-]+\.js' dist/index.html | head -1)"
 [[ -n "$LOCAL_HASH" ]] || die "could not read built index chunk hash from dist/index.html"
 # The vendor chunk is modulepreloaded from index.html; a partial deploy that
@@ -60,8 +73,7 @@ LOCAL_HASH="$(grep -oE '/static/index-[A-Za-z0-9_-]+\.js' dist/index.html | head
 LOCAL_VENDOR="$(grep -oE '/static/vendor-[A-Za-z0-9_-]+\.js' dist/index.html | head -1)"
 [[ -n "$LOCAL_VENDOR" ]] || die "could not read built vendor chunk hash from dist/index.html"
 ok "built — main chunk $LOCAL_HASH · vendor $LOCAL_VENDOR"
-grep -q "Generated 118 city OG pages" "$LOG_DIR/cdpt-build.log" && ok "OG pages + sitemap + cities.json generated"
-grep -q "API mirror" "$LOG_DIR/cdpt-build.log" || die "API mirror was not generated (postbuild skipped?)"
+[[ -s dist/sitemap.xml && -s dist/data/cities.json ]] || die "missing sitemap or city index"
 for f in \
   dist/api-static/cities.json \
   dist/api-static/cities/phuket.json \
