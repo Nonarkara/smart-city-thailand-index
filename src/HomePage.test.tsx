@@ -12,7 +12,7 @@ describe("HomePage", () => {
       const {container} = render(<HomePage locale="en" onNavigate={vi.fn()} />);
       expect(container.querySelector('.podium-photo-stats')).toHaveTextContent("Livability 47/100");
       expect(container.querySelector('.podium-photo-stats')).not.toHaveTextContent('%');
-      expect(screen.getByText('Lower road fatality rates in this dataset')).toBeInTheDocument();
+      expect(screen.getByText('Five largest recorded totals among indexed provinces')).toBeInTheDocument();
       expect(container).not.toHaveTextContent('WHO target');
     } finally { spy.mockRestore(); }
   });
