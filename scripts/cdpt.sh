@@ -188,7 +188,9 @@ for attempt in 1 2 3 4; do
   chunk_bad=()
   for f in dist/static/*.js; do
     name="$(basename "$f")"
-    ctype="$(curl -s -o /dev/null -w '%{content_type}' "$DOMAIN/static/$name")"
+    if ! ctype="$(curl --http1.1 --retry 2 --connect-timeout 10 --max-time 30 -fsS -o /dev/null -w '%{content_type}' "$DOMAIN/static/$name")"; then
+      ctype=""
+    fi
     case "$ctype" in
       *javascript*) ;;
       *) chunk_bad+=("$name → ${ctype:-<none>}"); chunk_fail=$((chunk_fail+1)) ;;

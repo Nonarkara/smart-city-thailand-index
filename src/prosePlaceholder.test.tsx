@@ -36,11 +36,13 @@ describe("no unrendered template placeholder reaches the reader", () => {
     }
   });
 
-  it("actually shows the live road-safety numbers, not a placeholder", () => {
+  it("shows snapshot road-safety numbers and distinguishes editorial anchors from WHO policy", () => {
     const { container } = render(<MethodologyPage locale="en" onNavigate={() => {}} />);
     const text = container.textContent ?? "";
     // A national rate in the right order of magnitude, and the best province.
-    expect(text).toMatch(/\d+\.\d deaths per 100,000 nationally/);
-    expect(text).toMatch(/the best is [A-Za-z ]+ at \d+\.\d/);
+    expect(text).toMatch(/national screening rate is \d+\.\d per 100,000/);
+    expect(text).toMatch(/has the lowest provincial rate at \d+\.\d/);
+    expect(text).toContain("scoring anchor is a SCITI research choice");
+    expect(text).toContain("WHO's global goal is a 50% reduction");
   });
 });

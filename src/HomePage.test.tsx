@@ -1,7 +1,21 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import HomePage from "./HomePage";
+import * as cityApi from "./cityApi";
+import { allCities } from "./cityData";
 
 describe("HomePage", () => {
+  it("uses current research scores instead of invented adoption percentages or WHO targets", () => {
+    const leader = [...allCities].sort((a,b) => b.compositeScore-a.compositeScore)[0];
+    const data = allCities.map(city => city.id === leader.id ? {...city, scores:{...city.scores,livability:47}} : city);
+    const spy = vi.spyOn(cityApi, "useCitySummaries").mockReturnValue({data} as ReturnType<typeof cityApi.useCitySummaries>);
+    try {
+      const {container} = render(<HomePage locale="en" onNavigate={vi.fn()} />);
+      expect(container.querySelector('.podium-photo-stats')).toHaveTextContent("Livability 47/100");
+      expect(container.querySelector('.podium-photo-stats')).not.toHaveTextContent('%');
+      expect(screen.getByText('Lower road fatality rates in this dataset')).toBeInTheDocument();
+      expect(container).not.toHaveTextContent('WHO target');
+    } finally { spy.mockRestore(); }
+  });
   it("explains recognition limits without repeating headline counts", () => {
     const { container } = render(<HomePage locale="en" onNavigate={vi.fn()} />);
     const guide = container.querySelector('.opening-argument');

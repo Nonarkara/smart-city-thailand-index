@@ -139,7 +139,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 5, worst: 50, note: "WHO 2021 annual guideline 5 µg/m³ is 100 points; 50 µg/m³ is 0." },
     origin: "province",
     provinceId: "pcd-pm25-annual",
-    sourceNote: { en: "Pollution Control Department (PCD) 2024 provincial station averages.", th: "กรมควบคุมมลพิษษ (พด.) ค่าเฉลี่ยสถานีรายจังหวัด 2567", zh: "泰国污染控制厅 2024 省份监测站年均值" },
+    sourceNote: { en: "Pollution Control Department (PCD) 2024 provincial station averages.", th: "กรมควบคุมมลพิษ (คพ.) ค่าเฉลี่ยสถานีรายจังหวัด 2567", zh: "泰国污染控制厅 2024 省份监测站年均值" },
     higherIsBetter: false,
   },
   {
@@ -161,7 +161,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 60, worst: 0, note: "60% green coverage is the 100-point mark; 0% is 0 points." },
     origin: "city-metric",
     metricKey: "greenCoverage",
-    sourceNote: { en: "Royal Forest Department / provincial green-area reporting.", th: "กรมป่าไม้และสัตว์ป่า", zh: "泰国皇家林业厅" },
+    sourceNote: { en: "Royal Forest Department / provincial green-area reporting.", th: "กรมป่าไม้", zh: "泰国皇家林业厅" },
     higherIsBetter: true,
   },
   {
@@ -172,7 +172,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 60, worst: 0, note: "60% forest cover scores 100." },
     origin: "province",
     provinceId: "rfd-forest-coverage",
-    sourceNote: { en: "Royal Forest Department province forest statistics, 2021.", th: "กรมป่าไม้และสัตว์ป่า สถิติพื้นที่ป่ารายจังหวัด 2564", zh: "泰国皇家林业厅 省级森林统计 2021" },
+    sourceNote: { en: "Royal Forest Department province forest statistics, 2021.", th: "กรมป่าไม้ สถิติพื้นที่ป่ารายจังหวัด 2564", zh: "泰国皇家林业厅 省级森林统计 2021" },
     higherIsBetter: true,
   },
   {
@@ -193,7 +193,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     label: { en: "Road fatality rate", th: "อัตราการเสียชีวิตบนถนน", zh: "道路死亡率" },
     dimension: "mobility",
     weight: 70,
-    scale: { kind: "target", best: 5, worst: 40, note: "WHO Decade of Action: ≤5 deaths per 100,000 scores 100; ≥40 scores 0." },
+    scale: { kind: "target", best: 5, worst: 40, note: "SCITI editorial reference scale: ≤5 deaths per 100,000 scores 100; ≥40 scores 0. This is not a WHO target." },
     origin: "derived",
     derive: ctx => {
       const deaths = ctx.indicator("rtddi-road-deaths");
@@ -205,7 +205,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     },
     sourceNote: {
       en: "Integrated road-traffic death registry (2025) — deaths in the province where the crash happened ÷ NSO province population (Q4 2022), the same population base the rest of the baseline uses.",
-      th: "ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน (2568) — ผู้เสียชีวิตในจังหวัดที่เกิดอุบัติเหตุ ÷ ประชากรจังหวัด สศ. (ไตรมาส 4/2565) ฐานประชากรเดียวกับทั้งระบบ",
+      th: "ระบบบูรณาการข้อมูลการตายจากอุบัติเหตุทางถนน (2568) — ผู้เสียชีวิตในจังหวัดที่เกิดอุบัติเหตุ ÷ ประชากรจังหวัด สสช. (ไตรมาส 4/2565) ฐานประชากรเดียวกับทั้งระบบ",
       zh: "道路死亡综合登记系统（2025）— 事故发生地所在省份的死亡人数 ÷ 泰国统计局省份人口（2022Q4），与全站使用同一人口基数",
     },
     higherIsBetter: false,
@@ -232,7 +232,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 100, worst: 40, note: "100% of households with clean water scores 100; 40% scores 0." },
     origin: "province",
     provinceId: "nso-drinking-water",
-    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
+    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สสช.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
   {
@@ -243,7 +243,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 100, worst: 80, note: "Near-ceiling nationally: 100% scores 100, 80% scores 0." },
     origin: "province",
     provinceId: "nso-hygienic-toilet",
-    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
+    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สสช.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
   {
@@ -254,7 +254,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 90, worst: 40, note: "90% ownership scores 100; 40% scores 0." },
     origin: "province",
     provinceId: "nso-home-ownership",
-    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
+    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สสช.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
   {
@@ -265,7 +265,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "target", best: 0, worst: 10, note: "0% non-durable housing scores 100; 10% scores 0." },
     origin: "province",
     provinceId: "nso-non-durable-housing",
-    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
+    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สสช.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: false,
   },
   {
@@ -335,7 +335,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     },
     sourceNote: {
       en: "NSO ICT Household Survey — province internet users (Q1 2023) ÷ province population (Q4 2022), the survey's own population base.",
-      th: "สำรวจ ICT ในครัวเรือน สศ. — ผู้ใช้อินเทอร์เน็ตรายจังหวัด (ไตรมาส 1/2566) ÷ ประชากรจังหวัด (ไตรมาส 4/2565)",
+      th: "สำรวจ ICT ในครัวเรือน สสช. — ผู้ใช้อินเทอร์เน็ตรายจังหวัด (ไตรมาส 1/2566) ÷ ประชากรจังหวัด (ไตรมาส 4/2565)",
       zh: "NSO 家庭 ICT 调查 — 省级网民数（2023Q1）÷ 省级人口（2022Q4），即调查自身的人口基数",
     },
     higherIsBetter: true,
@@ -355,7 +355,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     },
     sourceNote: {
       en: "NSO ICT Household Survey — province mobile-phone users (Q4 2022) ÷ province population (Q4 2022), the same survey quarter.",
-      th: "สำรวจ ICT ในครัวเรือน สศ. — ผู้ใช้โทรศัพท์มือถือรายจังหวัด (ไตรมาส 4/2565) ÷ ประชากรจังหวัด (ไตรมาส 4/2565)",
+      th: "สำรวจ ICT ในครัวเรือน สสช. — ผู้ใช้โทรศัพท์มือถือรายจังหวัด (ไตรมาส 4/2565) ÷ ประชากรจังหวัด (ไตรมาส 4/2565)",
       zh: "NSO 家庭 ICT 调查 — 省级手机用户数（2022Q4）÷ 省级人口（2022Q4），同一调查季度",
     },
     higherIsBetter: true,
@@ -374,7 +374,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "cohort", note: "Percentile among provinces — no published target." },
     origin: "province",
     provinceId: "nso-internal-migration",
-    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
+    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สสช.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
   {
@@ -385,7 +385,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "cohort", note: "Percentile among provinces — proxy for labour-market pull." },
     origin: "province",
     provinceId: "nso-born-elsewhere",
-    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สศ.", zh: "NSO 家庭社会经济调查" },
+    sourceNote: { en: "NSO Household Socio-Economic Survey.", th: "สำรวจภาวะเศรษฐกิจและสังคมของครัวเรือน สสช.", zh: "NSO 家庭社会经济调查" },
     higherIsBetter: true,
   },
   {
@@ -396,7 +396,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "cohort", note: "Percentile among provinces — no published target exists for permit volume." },
     origin: "province",
     provinceId: "nso-residential-permits",
-    sourceNote: { en: "NSO Building Permits (residential).", th: "ใบอนุญาตก่อสร้าง สศ.", zh: "NSO 建筑许可（住宅）" },
+    sourceNote: { en: "NSO Building Permits (residential).", th: "ใบอนุญาตก่อสร้าง สสช.", zh: "NSO 建筑许可（住宅）" },
     higherIsBetter: true,
   },
   {
@@ -407,7 +407,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "cohort", note: "Percentile among cities — GDP per capita has no ceiling target." },
     origin: "city-metric",
     metricKey: "gppPerCapita",
-    sourceNote: { en: "NESDC provincial accounts (GRPP per capita).", th: "สศ. บัญชีภาค/จังหวัด (GRPP ต่อหัว)", zh: "NESDC 省级账户（人均 GRPP）" },
+    sourceNote: { en: "NESDC provincial accounts (GRPP per capita).", th: "สสช. บัญชีภาค/จังหวัด (GRPP ต่อหัว)", zh: "NESDC 省级账户（人均 GRPP）" },
     higherIsBetter: true,
   },
   {
@@ -418,7 +418,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "cohort", note: "Percentile among cities." },
     origin: "city-metric",
     metricKey: "gppGrowthRate",
-    sourceNote: { en: "NESDC year-on-year provincial growth.", th: "สศ. การเติบโตรายปีรายจังหวัด", zh: "NESDC 省级同比增速" },
+    sourceNote: { en: "NESDC year-on-year provincial growth.", th: "สสช. การเติบโตรายปีรายจังหวัด", zh: "NESDC 省级同比增速" },
     higherIsBetter: true,
   },
   {
@@ -445,7 +445,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
       if (informal == null || total == null || total <= 0) return null;
       return (informal / total) * 100;
     },
-    sourceNote: { en: "Derived: NSO informal employment ÷ NSO labour force, same province.", th: "คำนวณ: แรงงานนอกระบบ สศ. ÷ กำลังแรงงาน สศ.", zh: "推导：NSO 非正规就业 ÷ NSO 劳动力" },
+    sourceNote: { en: "Derived: NSO informal employment ÷ NSO labour force, same province.", th: "คำนวณ: แรงงานนอกระบบ สสช. ÷ กำลังแรงงาน สสช.", zh: "推导：NSO 非正规就业 ÷ NSO 劳动力" },
     higherIsBetter: false,
   },
   {
@@ -456,7 +456,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     scale: { kind: "cohort", note: "Percentile among provinces." },
     origin: "province",
     provinceId: "nso-informal-labour",
-    sourceNote: { en: "NSO Informal Employment Survey.", th: "สำรวจแรงงานนอกระบบ สศ.", zh: "NSO 非正规就业调查" },
+    sourceNote: { en: "NSO Informal Employment Survey.", th: "สำรวจแรงงานนอกระบบ สสช.", zh: "NSO 非正规就业调查" },
     higherIsBetter: false,
   },
 
@@ -482,7 +482,7 @@ export const INDICATORS: readonly IndicatorDef[] = [
     provinceId: "moe-electricity-per-capita",
     sourceNote: {
       en: "Ministry of Energy province electricity consumption, 2023 (PEA + MEA reporting, re-tabulated by the Ministry), ÷ NSO province population, 2022.",
-      th: "การใช้ไฟฟ้ารายจังหวัด สำนักงานปลัดกระทรวงพลังงาน 2566 (ข้อมูล กฟภ. และ กนช.) ÷ ประชากรจังหวัด สศ. 2565",
+      th: "การใช้ไฟฟ้ารายจังหวัด สำนักงานปลัดกระทรวงพลังงาน 2566 (ข้อมูล กฟภ. และ กนช.) ÷ ประชากรจังหวัด สสช. 2565",
       zh: "能源部省级用电量 2023（PEA+MEA 上报）÷ 统计局省级人口 2022",
     },
     higherIsBetter: true,

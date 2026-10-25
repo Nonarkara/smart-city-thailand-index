@@ -386,12 +386,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
             className="section reveal visible"
             aria-label={t({ en: "Road safety leaders", th: "เมืองผู้นำความปลอดภัยทางถนน", zh: "道路安全领先城市" })}
           >
-            <p className="eyebrow">{t({ en: "Road safety · Source: thairsc.com", th: "ความปลอดภัยทางถนน · ที่มา: thairsc.com", zh: "道路安全 · 来源：thairsc.com" })}</p>
+            <p className="eyebrow">{t({ en: "Road safety · curated provincial baseline", th: "ความปลอดภัยทางถนน · ข้อมูลฐานระดับจังหวัด", zh: "道路安全 · 编辑省级基线" })}</p>
             <h2 className="home-section-title">
               {t({
-                en: "Lowest road fatality rate in Thailand",
-                th: "อัตราการเสียชีวิตบนท้องถนนต่ำที่สุดในประเทศไทย",
-                zh: "全泰国道路死亡率最低城市",
+                en: "Lower road fatality rates in this dataset",
+                th: "อัตราเสียชีวิตบนถนนที่ต่ำกว่าในชุดข้อมูลนี้",
+                zh: "本数据集中较低的道路死亡率",
               })}
             </h2>
             <ul className="regional-champions road-safety-champions">
@@ -418,9 +418,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
             </ul>
             <p className="home-section-note">
               {t({
-                en: "Thai national average: ~25 deaths per 100,000. WHO target: ≤5. Source: thairsc.com provincial annual data.",
-                th: "ค่าเฉลี่ยประเทศไทย: ~25 ต่อแสนคน เป้าหมาย WHO: ≤5 ที่มา: ข้อมูลรายปีรายจังหวัด thairsc.com",
-                zh: "泰国全国平均：约每十万人25人死亡。WHO目标：≤5。来源：thairsc.com 省级年度数据。",
+                en: "Curated provincial annual rates per 100,000 people. These are not municipal or live safety measurements. Check dates, definitions and ThaiRSC source records in each dossier.",
+                th: "อัตรารายปีระดับจังหวัดต่อประชากรแสนคนจากข้อมูลฐาน ไม่ใช่ค่าระดับเทศบาลหรือการวัดความปลอดภัยปัจจุบัน ควรตรวจวันที่ นิยาม และบันทึกต้นทาง ThaiRSC ในแฟ้มเมือง",
+                zh: "编辑整理的省级年度每十万人死亡率，并非市级或实时安全测量。请在城市档案中核查日期、定义和 ThaiRSC 原始记录。",
               })}
             </p>
           </section>
@@ -429,37 +429,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
         {/* ─── TOP 5 PHOTO PODIUM ─── */}
         {top5.length >= 5 && (() => {
           const leader = top5[0];
-          const cityQuickStats: Record<string, Record<Locale, string[]>> = {
-            phuket: {
-              en: ["GPP ฿492K/capita", "PM2.5 18.2 μg/m³", "88% hospitality", "72% digital adoption"],
-              th: ["GPP ฿492K/คน", "PM2.5 18.2 μg/m³", "อัธยาศัย 88%", "การยอมรับดิจิทัล 72%"],
-              zh: ["人均GPP ฿492K", "PM2.5 18.2 μg/m³", "接待 88%", "数字化采用率 72%"],
-            },
-            samyan: {
-              en: ["GPP ฿628K/capita", "200+ startups", "82% digital score", "5G testbed live"],
-              th: ["GPP ฿628K/คน", "สตาร์ทอัพ 200+ ราย", "คะแนนดิจิทัล 82%", "สนามทดสอบ 5G ใช้งานจริง"],
-              zh: ["人均GPP ฿628K", "初创企业 200+", "数字得分 82%", "5G 试验床已上线"],
-            },
-            "chiang-mai-old-town": {
-              en: ["300+ temple sensors", "PM2.5 46.1 μg/m³", "92% hospitality", "50+ AQ stations"],
-              th: ["เซนเซอร์วัด 300+ จุด", "PM2.5 46.1 μg/m³", "อัธยาศัย 92%", "สถานีวัดอากาศ 50+ แห่ง"],
-              zh: ["寺庙传感器 300+", "PM2.5 46.1 μg/m³", "接待 92%", "空气质量站 50+"],
-            },
-            "khon-kaen": {
-              en: ["LRT under construction", "Smart bus running", "GPP ฿155K/capita", "6 hospital network"],
-              th: ["LRT กำลังก่อสร้าง", "รถบัสอัจฉริยะวิ่งแล้ว", "GPP ฿155K/คน", "เครือข่ายโรงพยาบาล 6 แห่ง"],
-              zh: ["轻轨建设中", "智慧巴士已运行", "人均GPP ฿155K", "6 家医院网络"],
-            },
-            "cmu-smart-city": {
-              en: ["30% energy reduction", "12 AI intersections", "500+ open datasets", "80% digital"],
-              th: ["ลดพลังงาน 30%", "ทางแยก AI 12 แห่ง", "ชุดข้อมูลเปิด 500+", "ดิจิทัล 80%"],
-              zh: ["节能 30%", "AI 路口 12 处", "开放数据集 500+", "数字化 80%"],
-            },
-          };
+          const leaderStats = (["livability", "economy", "safety"] as const)
+            .map(pillar => `${PILLAR_LABELS[locale][pillar]} ${leader.scores[pillar]}/100`);
           const leaderPhoto = getCityPhotoAsset(leader);
           return (
             <section ref={podiumRef} className={`reveal stagger-2 ${podiumVisible ? "visible" : ""}`}>
-              <p className="eyebrow">{t({ en: "Top five", th: "ห้าอันดับแรก", zh: "前五名" })}</p>
+              <p className="eyebrow">{t({ en: "Top five · curated scores", th: "ห้าอันดับแรก · คะแนนวิจัย", zh: "前五名 · 编辑研究评分" })}</p>
               <div className="podium-photo-layout">
                 <button type="button" className="podium-photo-leader" onClick={() => onNavigate(`/city/${leader.id}`)}>
                   <ResponsiveImage
@@ -482,7 +457,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                       </div>
                     </div>
                     <div className="podium-photo-stats">
-                      {(cityQuickStats[leader.id]?.[locale] ?? []).map((stat, i) => (
+                      {leaderStats.map((stat, i) => (
                         <span key={i} className="podium-photo-stat">{stat}</span>
                       ))}
                     </div>
@@ -492,6 +467,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 <div className="podium-photo-grid">
                   {top5.slice(1).map((city, i) => {
                     const photo = getCityPhotoAsset(city);
+                    const cityStats = (["livability", "economy"] as const)
+                      .map(pillar => `${PILLAR_LABELS[locale][pillar]} ${city.scores[pillar]}/100`);
                     return (
                       <button key={city.id} type="button" className="podium-photo-card" onClick={() => onNavigate(`/city/${city.id}`)}>
                         <ResponsiveImage
@@ -507,7 +484,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                           <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
                           <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
                           <div className="podium-photo-card-stats">
-                            {(cityQuickStats[city.id]?.[locale] ?? []).slice(0, 2).map((stat, j) => (
+                            {cityStats.map((stat, j) => (
                               <span key={j} className="podium-photo-stat">{stat}</span>
                             ))}
                           </div>

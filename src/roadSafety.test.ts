@@ -105,10 +105,8 @@ describe("road safety indicator", () => {
     }
   });
 
-  it("documents that no province yet meets the WHO 2030 target", () => {
-    // The scale maps ≤5 deaths per 100,000 to 100 points. If the best
-    // province in the country does not reach it, that is the finding — and
-    // it is worth stating plainly rather than implying the target is met.
+  it("documents the gap to the SCITI reference anchor without attributing it to WHO", () => {
+    // The scale maps ≤5 deaths per 100,000 to 100 points. This is an editorial scoring anchor, not the WHO global reduction goal.
     const deaths = PROVINCE_BASELINE_BY_ID["rtddi-road-deaths"];
     const pop = PROVINCE_BASELINE_BY_ID["nso-province-population"];
     const rates = Object.entries(deaths)
@@ -117,6 +115,7 @@ describe("road safety indicator", () => {
     const best = rates.reduce((a, b) => (b.rate < a.rate ? b : a));
     expect(best.rate).toBeGreaterThan(5);
     expect(best.province).toBe("Bangkok");
+    expect(INDICATORS.find(i => i.id === "road-safety")!.scale.note).toContain("SCITI editorial reference scale");
   });
 
   it("carries the road-death registry in the source registry", () => {
