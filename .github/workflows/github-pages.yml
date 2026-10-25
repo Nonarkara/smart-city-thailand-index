@@ -32,6 +32,14 @@ jobs:
       - run: npm run lint
       - run: npm run test:run
       - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/audit/record-density.mjs --serve
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: spatial-regression-evidence
+          path: .tmp/investor-density
+          retention-days: 7
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:

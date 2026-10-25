@@ -54,6 +54,16 @@ This changes the test runner location, not the assertions or timeouts.
 
 "Jony Ive meets Dieter Rams" — clarity, simplicity, elegance.
 
+**Spatial hallucination is frontend enemy number one.** Short comparison
+records should first be composed as name/value plus shared metadata, rather
+than four padded vertical fields. Preserve complete information, readable
+type and interaction targets. An overflow/font pass does not clear SH.
+`scripts/audit/record-density.mjs --serve` tests the compiled shortlist in all
+three languages at390/730/1024/1440/1980, including preserved fields, row and
+section budgets, gutters, keyboard navigation and an oversized-layout mutation.
+CDPT and GitHub Pages CI block release when this check fails. This is a scoped
+record-pattern gate, not a declaration that the rest of a page is SH-free.
+
 - **Mobile-first, non-negotiable.** SCITI is a Moneyball-style manual
   for investment in Thai cities, and the primary surface is a
   smartphone — people hand their phone across a table and say "look

@@ -89,6 +89,10 @@ done
 grep -q '"id":"phuket"' dist/api-static/cities/phuket.json || die "phuket API dossier is not JSON for phuket"
 ok "API mirror present (cities, dossiers, CSV)"
 
+bold "Preflight — rendered record density (compiled build)"
+node scripts/audit/record-density.mjs --serve >"$LOG_DIR/cdpt-density.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-density.log"; die "spatial regression: record density or preserved information failed"; }
+ok "15 locale/width states preserve all records and readable type; oversized-card mutation rejected"
+
 # ── C — commit ───────────────────────────────────────────────────────────────
 if [[ -n "$MSG" ]]; then
   git add -u

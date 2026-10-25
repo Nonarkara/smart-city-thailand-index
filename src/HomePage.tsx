@@ -704,26 +704,28 @@ export default function HomePage({ locale, onNavigate }: Props) {
           <h2>{t({ en: "Secondary cities to investigate", th: "เมืองรองที่ควรศึกษาต่อ", zh: "值得深入调查的二线城市" })}</h2>
           <p className="investor-lead">
             {t({
-              en: "This shortlist filters the curated baseline for Beta cities labelled operational with an economy score of at least 55. It does not establish current service operation, lower costs, cleaner air, or investment suitability. Open each dossier to check evidence and dates.",
-              th: "รายชื่อนี้คัดจากข้อมูลฐานที่เรียบเรียงไว้ โดยเลือกเมืองระดับ Beta ที่ระบุว่าเดินระบบแล้วและมีคะแนนเศรษฐกิจอย่างน้อย 55 ไม่ได้ยืนยันสถานะบริการปัจจุบัน ต้นทุนที่ต่ำกว่า อากาศที่ดีกว่า หรือความเหมาะสมในการลงทุน ควรเปิดแฟ้มเมืองเพื่อตรวจหลักฐานและวันที่",
-              zh: "此名单从编辑基线中筛选被标为运营中且经济评分至少为 55 的 Beta 城市，并不证明当前服务运转、成本更低、空气更好或适合投资。请打开城市档案核查证据与日期。",
+              en: "Selection: Beta cities, operational label, economy score ≥55. Curated data: verify services, costs, air quality and investment suitability in each dossier, including sources and dates.",
+              th: "เกณฑ์คัด: เมือง Beta ที่ระบุว่าเดินระบบและคะแนนเศรษฐกิจ ≥55 ข้อมูลนี้เรียบเรียงไว้ ควรตรวจบริการ ต้นทุน อากาศ ความเหมาะสมลงทุน แหล่งข้อมูลและวันที่ในแฟ้มเมือง",
+              zh: "筛选：标为运营中、经济评分 ≥55 的 Beta 城市。数据经编辑整理；请在档案中核查服务、成本、空气、投资适合程度、来源与日期。",
             })}
           </p>
           <div className="investor-grid">
             {cities.filter(c => c.tier === "beta" && c.reality === "operational" && c.scores.economy >= 55).slice(0, 6).map(city => (
-              <button key={city.id} className="investor-card" onClick={() => onNavigate(`/city/${city.id}`)}>
+              <button key={city.id} className="investor-card" data-city-id={city.id} onClick={() => onNavigate(`/city/${city.id}`)}>
                 <span className="investor-card-name">{getCityName(city, locale)}</span>
-                <span className="investor-card-score">{city.compositeScore.toFixed(1)}</span>
-                <span className="investor-card-province">{getProvinceName(city, locale)}</span>
-                <span className="investor-card-vibe">{getCityVibe(city, locale)}</span>
+                <span className="investor-card-score">{city.compositeScore.toFixed(1)}<span className="investor-score-unit">/100</span></span>
+                <span className="investor-card-meta">
+                  <span className="investor-card-province">{getProvinceName(city, locale)}</span>
+                  <span className="investor-card-vibe">{getCityVibe(city, locale)}</span>
+                </span>
               </button>
             ))}
           </div>
           <p className="investor-cta-text">
             {t({
-              en: "Compare actual land and lease prices, utility capacity, demand, and staffing before committing. BOI eligibility depends on the project’s activity and conditions; inclusion here or proximity to the EEC grants no automatic benefit.",
-              th: "เปรียบเทียบราคาที่ดินและค่าเช่าจริง กำลังสาธารณูปโภค อุปสงค์ และบุคลากรก่อนตัดสินใจ สิทธิ BOI ขึ้นกับประเภทกิจการและเงื่อนไขโครงการ การอยู่ในรายชื่อนี้หรือใกล้ EEC ไม่ทำให้ได้รับสิทธิโดยอัตโนมัติ",
-              zh: "决策前比较实际土地及租金、公用设施容量、需求和人员条件。BOI 资格取决于项目活动及条件；入选本名单或靠近 EEC 不会自动获得优惠。",
+              en: "Before committing, compare land and lease prices, utility capacity, demand and staffing. BOI eligibility depends on project activity and conditions; listing here or EEC proximity grants no automatic benefit.",
+              th: "ก่อนตัดสินใจ เทียบราคาที่ดิน ค่าเช่า กำลังสาธารณูปโภค อุปสงค์และบุคลากร สิทธิ BOI ขึ้นกับกิจการและเงื่อนไขโครงการ การอยู่ในรายชื่อนี้หรือใกล้ EEC ไม่ให้สิทธิอัตโนมัติ",
+              zh: "决策前比较土地及租金、公用设施容量、需求和人员。BOI 资格取决于项目活动及条件；入选名单或靠近 EEC 不会自动获得优惠。",
             })}
           </p>
           <a href="https://www.boi.go.th/index.php?page=eligible_activities&amp;language=en" target="_blank" rel="noreferrer">{t({ en: "Check BOI eligible activities and conditions ↗", th: "ตรวจประเภทกิจการและเงื่อนไข BOI ↗", zh: "核查 BOI 合格活动与条件 ↗" })}</a>
