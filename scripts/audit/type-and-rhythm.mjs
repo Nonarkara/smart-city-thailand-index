@@ -187,7 +187,7 @@ for (const route of ROUTES) {
       const tab = await page.evaluate(() => {
         const sizes = {}; const offenders = {}; const display = [];
         for (const el of document.querySelectorAll("body *")) {
-          if (el.closest("svg, .site-footer, .topbar, nav, footer, .site-header")) continue;
+          if (el.closest("svg, .leaflet-container, .site-footer, .topbar, nav, footer, .site-header")) continue;
           const own = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim().length > 0);
           if (!own) continue;
           const cs = getComputedStyle(el);

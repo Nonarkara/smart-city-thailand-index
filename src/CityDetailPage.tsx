@@ -1548,6 +1548,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             th: "เรื่องที่ต้องดูให้ชัด",
             zh: "哪些问题值得深究",
           })}</h2>
+          <p className="city-dossier-editorial-note">{translate(locale, { en: "Curated interpretation; operating status and recommendations need local verification.", th: "บทวิเคราะห์ที่คัดสรร สถานะการดำเนินงานและข้อเสนอต้องตรวจสอบในพื้นที่", zh: "编辑解读；运营状态与建议仍需本地核验。" })}</p>
           <div className="city-dossier-shell">
             <div className="city-dossier-main">
               <div className="city-dossier-lead">
@@ -1555,7 +1556,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                   <span className={`city-dossier-chip city-dossier-chip-${city.reality}`}>{getCityRealityLabel(city.reality, locale)}</span>
                   <span className="city-dossier-chip city-dossier-chip-tier">{tierSymbol} {TIER_LABELS[locale][city.tier]}</span>
                   <span className={`city-dossier-chip city-dossier-chip-confidence city-dossier-chip-confidence-${dossier.confidence}`}>
-                    {dossier.confidenceLabel}
+                    {translate(locale, { en: "Coverage", th: "ความครอบคลุม", zh: "覆盖度" })}: {dossier.confidenceLabel}
                   </span>
                 </div>
                 <p className="city-dossier-thesis">{dossier.operatingSummary}</p>

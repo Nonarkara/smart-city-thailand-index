@@ -86,7 +86,11 @@ ok "pushed $(git rev-parse --short HEAD)"
 
 # ── D — deploy (Cloudflare Pages: the step that actually updates prod) ────────
 bold "Deploy — wrangler pages deploy → $CF_PROJECT"
-npx wrangler pages deploy dist --project-name="$CF_PROJECT" --branch=main --commit-dirty=true 2>&1 | grep -E "Success|Deployment complete|peek" | sed 's/^/  /'
+if ! npx wrangler pages deploy dist --project-name="$CF_PROJECT" --branch=main --commit-dirty=true >"$LOG_DIR/cdpt-deploy.log" 2>&1; then
+  tail -20 "$LOG_DIR/cdpt-deploy.log"
+  die "Cloudflare deploy failed; diagnostics saved in .tmp/cdpt-deploy.log"
+fi
+grep -E "Success|Deployment complete|peek" "$LOG_DIR/cdpt-deploy.log" | sed 's/^/  /' || die "Cloudflare did not confirm deployment"
 
 # ── T — test on the web ──────────────────────────────────────────────────────
 bold "Test — waiting for $LOCAL_HASH + $LOCAL_VENDOR to go live on $DOMAIN"
