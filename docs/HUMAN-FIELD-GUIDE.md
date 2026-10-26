@@ -385,9 +385,47 @@ gates:
   not measured is not a pass. This one was added after a dead preview
   server produced a clean-looking run on half its routes.
 
+It also now measures **every live route** (22, taken from the routing
+table in `src/routing.ts`) instead of twelve, and it runs the compiled
+build itself under `--serve`, the way the record-density gate does. A
+detached server is a liability: it gets reaped mid-run and the run reads
+as a pass over half its routes.
+
+`scripts/cdpt.sh` runs the gate as a release step, so a second display
+statement on a page cannot reach production again.
+
+A second, cheaper gate lives in the test suite: `src/typeLaw.test.ts`
+reads the stylesheet and refuses any rule that hands the display token to
+a heading, plus the 3px ink slab the landmark replaced. It runs in
+seconds and needs no browser.
+
 Falsified against production before the fix: exit 1, naming every
 offending heading. Passing against the patched build: 12/12 routes
-measured, exit 0.
+measured, exit 0. Passing against production after the fix: **22/22
+routes, exit 0.**
+
+### One more trap, found by reading the whole DOM
+
+The showcase page keeps three collapsed panels in the DOM. The instrument
+skips zero-height elements — so a heading inside a collapsed panel is
+never measured. A scan that ignores layout and asks the DOM alone, over
+all twenty-two routes, found **0** latent display statements: every one
+of them is already the page title or a numeral.
+
+Two rules were still latent traps and were demoted at the source, so they
+cannot come back if the markup moves:
+
+| Rule | Why it was a trap |
+|---|---|
+| `.investment-explorer h2` | neutralised only by an ancestor rule (`main .invest-page > …`) |
+| `.showcase-leader-name` | neutralised only by a later duplicate rule |
+
+Both already rendered at 14px. Demoting them at the source is a measured
+no-op and removes the dependency on markup that nobody is watching.
+
+The same demotion was already made once by hand, earlier, for the same
+reason — the `.podium-photo-name` comment says it: *"Card labels sit at
+body weight; only outline levels get scale."*
 
 ## Acceptance for the third pass
 

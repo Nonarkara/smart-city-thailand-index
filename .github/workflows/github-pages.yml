@@ -34,6 +34,7 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: node scripts/audit/record-density.mjs --serve
+      - run: node scripts/audit/type-and-rhythm.mjs --serve
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

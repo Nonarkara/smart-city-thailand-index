@@ -16,22 +16,61 @@
 import { chromium } from "@playwright/test";
 import fs from "node:fs";
 
-const BASE = process.argv[2] || "http://localhost:5188";
-const OUT = process.argv[3] || "/tmp/sciti-audit";
+let BASE = process.argv[2] && !process.argv[2].startsWith("--")
+  ? process.argv[2]
+  : "http://localhost:5188";
+const OUT = process.argv[3] && !process.argv[3].startsWith("--") ? process.argv[3] : "/tmp/sciti-audit";
+const SERVE = process.argv.includes("--serve");
+let previewServer = null;
 // EVERY live route. A massacre that samples half the routes is a sample.
 // The list is the routing table in src/routing.ts, plus one city dossier
 // (the five tabs are measured as screens of their own below) and one
 // canvas, which is a separate surface with its own title.
-const ROUTES = [
+const ALL_ROUTES = [
   "/", "/about", "/creative-economy", "/rankings", "/methodology", "/story",
   "/why", "/showcase", "/partners", "/map", "/asus", "/audit", "/references",
   "/program", "/knowledge", "/discover", "/invest", "/compare", "/bingo",
   "/baseline", "/city/phuket", "/canvas/phuket",
 ];
+// SCITI_AUDIT_ROUTES lets a subset be measured without editing the list.
+// The default is every live route: a massacre that samples half the routes
+// is a sample.
+const ROUTES = process.env.SCITI_AUDIT_ROUTES
+  ? process.env.SCITI_AUDIT_ROUTES.split(",").map((r) => r.trim()).filter(Boolean)
+  : ALL_ROUTES;
 const CANON = new Set([32, 14, 11.5]);
 
 fs.mkdirSync(OUT, { recursive: true });
-const browser = await chromium.launch();
+
+// --serve starts the compiled build on an ephemeral port, the way the
+// record-density gate does. A detached server is a liability: it gets
+// reaped mid-run and the run reads as a pass over half its routes.
+if (SERVE) {
+  const { preview } = await import("vite");
+  previewServer = await preview({
+    preview: { host: "127.0.0.1", port: 0, strictPort: true },
+    logLevel: "error",
+  });
+  const address = previewServer.httpServer.address();
+  if (!address || typeof address !== "object") throw new Error("preview has no local port");
+  BASE = `http://127.0.0.1:${address.port}`;
+  console.log(`Serving dist on ${BASE}`);
+}
+
+let browser = await chromium.launch();
+/** ONE context for the whole run, a fresh PAGE per route. Twenty-two
+ *  browser contexts on a saturated shared host made Chromium fall over
+ *  part-way through ("target page, context or browser has been closed").
+ *  A page is the same isolation for the measurement and far lighter. */
+let ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+/** If the browser dies, say so and bring it back — a dead browser is a
+ *  machine condition, not a finding about the page. */
+async function ensureBrowser() {
+  if (browser.isConnected()) return;
+  try { await browser.close(); } catch { /* already gone */ }
+  browser = await chromium.launch();
+  ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+}
 let totalOff = 0;
 let totalStatements = 0;
 /** GATE — §11.7: "Display — page title only. One per page." A display-size
@@ -42,8 +81,8 @@ const gateFailures = [];
 /** Routes that could not be loaded are routes that were not measured. */
 const failedRoutes = [];
 
-for (const route of ROUTES) {
-  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+async function measureRoute(route, attempt = 1) {
+  await ensureBrowser();
   const page = await ctx.newPage();
   try {
     await page.goto(BASE + route, { waitUntil: "domcontentloaded", timeout: 60000 });
@@ -237,12 +276,25 @@ for (const route of ROUTES) {
     // A route that could not be loaded was NOT measured. Reporting that as
     // a pass is how a probe fault gets dressed up as a finding — the
     // instrument used to swallow it, and a dead server read as a clean run.
+    // A dead BROWSER is a machine condition, not a verdict on the page: it
+    // is brought back and the route is measured again, once.
+    if (!browser.isConnected() && attempt === 1) {
+      console.log(`   browser died — relaunching and measuring ${route} again`);
+      await ensureBrowser();
+      await measureRoute(route, attempt + 1);
+      return;
+    }
     failedRoutes.push(route);
     gateFailures.push(`${route}: could not be loaded, so it was not measured — ${String(e).slice(0, 90)}`);
   }
-  await ctx.close();
+  await page.close().catch(() => {});
+}
+
+for (const route of ROUTES) {
+  await measureRoute(route);
 }
 await browser.close();
+await previewServer?.close();
 console.log(`\nTOTAL off-scale text nodes: ${totalOff}`);
 console.log(`TOTAL display-size statements: ${totalStatements} (one per page is the law)`);
 console.log(`ROUTES MEASURED: ${ROUTES.length - failedRoutes.length}/${ROUTES.length}${failedRoutes.length ? " (not measured: " + failedRoutes.join(", ") + ")" : ""}`);

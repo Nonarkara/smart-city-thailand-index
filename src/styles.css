@@ -2344,7 +2344,8 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 
 /* Leadership tab — full-width banner photo, text below */
 .showcase-leader-intro { display: block; margin-bottom: 1.5rem; }
-.showcase-leader-name { font-size: var(--text-display); line-height: 1.15; margin: .4rem 0 .25rem; color: var(--ink); }
+
+.showcase-leader-name { font-size: var(--text-body); font-weight: 700; line-height: 1.3; margin: .4rem 0 .25rem; color: var(--ink); }
 .showcase-leader-title-sub { font: 400 var(--text-body)/1.5 var(--font); color: var(--3); margin-bottom: .75rem; }
 .showcase-pull-block { padding: 1.25rem 0; border-top: 2px solid var(--amber, #f59e0b); border-bottom: 1px solid var(--5); margin: 1.25rem 0; }
 .showcase-pull-quote { font: 600 var(--text-body)/1.7 var(--font); color: var(--ink); margin: 0 0 .5rem; padding: 0; border: none; font-style: italic; }

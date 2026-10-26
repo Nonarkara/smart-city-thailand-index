@@ -93,6 +93,10 @@ bold "Preflight — rendered record density (compiled build)"
 node scripts/audit/record-density.mjs --serve >"$LOG_DIR/cdpt-density.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-density.log"; die "spatial regression: record density or preserved information failed"; }
 ok "15 locale/width states preserve all records and readable type; oversized-card mutation rejected"
 
+bold "Preflight — the type law (§11.7: one display statement per page)"
+node scripts/audit/type-and-rhythm.mjs --serve >"$LOG_DIR/cdpt-type.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-type.log"; die "type regression: a page carries more than one display-size statement, or a route was not measured"; }
+ok "every route measured; every display-size statement is the page title"
+
 # ── C — commit ───────────────────────────────────────────────────────────────
 if [[ -n "$MSG" ]]; then
   git add -u
