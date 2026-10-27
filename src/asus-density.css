@@ -1,0 +1,26 @@
+/* ASEAN city comparison: city, programme focus and next action stay together. */
+.asus-intro { padding-top: 0; }
+.asus-city-row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) minmax(0, .9fr);
+  gap: 2px 8px;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--5);
+  align-items: center;
+  font-size: var(--text-micro);
+}
+.asus-city-row > * { min-width: 0; overflow-wrap: anywhere; }
+.asus-city-flag { grid-column: 1; grid-row: 1 / span 2; }
+.asus-city-name { grid-column: 2; grid-row: 1; font-size: var(--text-body); font-weight: 700; }
+.asus-city-focus { grid-column: 3; grid-row: 1 / span 2; font: 500 var(--text-micro)/1.4 var(--mono); color: var(--teal); }
+.asus-city-country, .asus-city-action { grid-column: 2; grid-row: 2; font: 500 var(--text-micro)/1.4 var(--mono); color: var(--3); }
+.asus-city-action { min-height: 32px; padding: 4px 0; color: var(--teal); background: none; border: 0; text-align: left; cursor: pointer; }
+.asus-city-action:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.asus-method-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--5); border-left: 1px solid var(--5); }
+.asus-method-step { min-width: 0; padding: 10px; border-right: 1px solid var(--5); border-bottom: 1px solid var(--5); overflow-wrap: anywhere; }
+@media (min-width: 720px) {
+  .asus-city-row { grid-template-columns: 24px minmax(0, 1fr) minmax(0, 1fr) minmax(100px, .6fr); gap: 8px; }
+  .asus-city-flag, .asus-city-name, .asus-city-focus, .asus-city-country, .asus-city-action { grid-row: 1; }
+  .asus-city-country, .asus-city-action { grid-column: 4; }
+  .asus-method-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

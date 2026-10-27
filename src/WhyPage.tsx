@@ -84,7 +84,7 @@ export default function WhyPage({ locale, onNavigate }: Props) {
 
   return (
     <div className="why-page">
-      <section className="page-hero section reveal visible" style={{ paddingTop: "7rem" }}>
+      <section className="page-hero section reveal visible">
         <p className="eyebrow">{translate(locale, { en: "Why this index", th: "ทำไมดัชนีนี้", zh: "为什么需要这个指数" })}</p>
         <h1 className="hero-title">
           {translate(locale, {

@@ -37,9 +37,10 @@ try {
           const rect = element.getBoundingClientRect();
           const fields = ['name', 'score', 'province', 'vibe'].map(key => {
             const el = element.querySelector(`.investor-card-${key}`);
+            if (!el) return null;
             const r = el.getBoundingClientRect();
             return { key, text: el.textContent, font: parseFloat(getComputedStyle(el).fontSize), clipped: el.scrollWidth > el.clientWidth + 1, inside: r.left >= rect.left - 1 && r.right <= rect.right + 1 && r.top >= rect.top - 1 && r.bottom <= rect.bottom + 1, painted: r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden' };
-          });
+          }).filter(Boolean);
           return { id: element.dataset.cityId, height: rect.height, fields };
         };
         const rows = [...section.querySelectorAll('.investor-card')].map(row);
@@ -58,10 +59,14 @@ try {
           assert.ok(field.font >= (field.key === 'province' ? 11.5 : 14), `${row.id}: smaller text used to force density`);
         }
         assert.equal(row.fields[1].text, `${city.compositeScore.toFixed(1)}/100`);
-        assert.ok(row.fields[3].text.includes(`${Math.max(...Object.values(city.scores))}/100`));
+        assert.ok(row.fields.find(field => field.key === 'vibe').text.includes(`${Math.max(...Object.values(city.scores))}/100`));
         if (locale !== 'zh') {
           assert.equal(row.fields[0].text, locale === 'th' ? city.nameTh : city.nameEn);
-          assert.equal(row.fields[2].text, locale === 'th' ? city.provinceTh : city.province);
+          const province = locale === 'th' ? city.provinceTh : city.province;
+          const name = locale === 'th' ? city.nameTh : city.nameEn;
+          const subtitle = row.fields.find(field => field.key === 'province');
+          if (name.toLowerCase().includes(province.toLowerCase())) assert.equal(subtitle, undefined, 'redundant province subtitle');
+          else assert.equal(subtitle?.text, province);
         }
       }
       assert.ok(geometry.height < (width < 720 ? 740 : 500), `${locale}/${width}: whole section still inflated`);

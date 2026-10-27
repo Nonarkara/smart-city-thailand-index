@@ -10,7 +10,7 @@ import { useMemo, useState } from "react";
 import { useCitySummaries } from "./cityApi";
 import {
   getCityName,
-  getProvinceName,
+  getDistinctProvinceName,
   translate,
 } from "./cityPresentation";
 import { getCityPhotoAsset } from "./cityMedia";
@@ -313,7 +313,7 @@ export default function ComparePage({ locale, onNavigate }: Props) {
                 >
                   <span className="compare-picker-name">{getCityName(c, locale)}</span>
                   <span className="compare-picker-meta">
-                    {getProvinceName(c, locale)} &middot; {REGION_LABELS[locale][c.region]}
+                    {[getDistinctProvinceName(c, locale), REGION_LABELS[locale][c.region]].filter(Boolean).join(" · ")}
                   </span>
                   {c.league && (
                     <span className="league-badge compare-picker-league">
@@ -376,7 +376,7 @@ export default function ComparePage({ locale, onNavigate }: Props) {
 
                 <header className="compare-col-header">
                   <h3 className="compare-col-name">{getCityName(city, locale)}</h3>
-                  <p className="compare-col-province">{getProvinceName(city, locale)}</p>
+                  {getDistinctProvinceName(city, locale) && <p className="compare-col-province">{getDistinctProvinceName(city, locale)}</p>}
                   <div className="compare-col-badges">
                     <span className={`compare-tier-badge tier-${city.tier}`}>
                       {TIER_LABELS[locale][city.tier]}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import snapshot from "./researchSnapshot.json";
 import { allCities } from "./cityData";
-import { getCityName, getProvinceName, translate } from "./cityPresentation";
+import { getCityName, getDistinctProvinceName, translate } from "./cityPresentation";
 import { resolveProvince } from "./dimensionScores";
 import { ABSORPTION_PROVINCES, ABSORPTION_YEARS } from "./absorptionData";
 import type { Locale, ScoringPillar } from "./types";
@@ -49,7 +49,7 @@ export default function InvestmentExplorer({ locale, onNavigate }: {
         <figcaption>{t(labels.livability)} / 100 → · {t({ en: "Vertical scale: 0 at bottom, 100 at top. Select a city above for exact values.", th: "แกนตั้ง: 0 ด้านล่าง 100 ด้านบน เลือกเมืองเพื่อดูค่าที่แน่นอน", zh: "纵轴底部为0，顶部为100。选择城市查看准确数值。" })}</figcaption>
       </figure>
       <div className="investment-explorer-detail" aria-live="polite">
-        <h3>{getCityName(selected, locale)}</h3><p>{getProvinceName(selected, locale)}</p>
+        <h3>{getCityName(selected, locale)}</h3>{getDistinctProvinceName(selected, locale) && <p>{getDistinctProvinceName(selected, locale)}</p>}
         <dl className="investment-explorer-scores"><div><dt>{t(labels.livability)}</dt><dd>{selected.scores.livability}/100</dd></div><div><dt>{t(labels.economy)}</dt><dd>{selected.scores.economy}/100</dd></div></dl>
         <p>{t({ en: "Highest curated pillar", th: "ด้านที่มีคะแนนสูงสุด", zh: "最高分维度" })}: {t(labels[ordered[0]])} {selected.scores[ordered[0]]}/100<br />{t({ en: "Lowest curated pillar", th: "ด้านที่มีคะแนนต่ำสุด", zh: "最低分维度" })}: {t(labels[ordered[ordered.length - 1]])} {selected.scores[ordered[ordered.length - 1]]}/100</p>
         <h4>{t({ en: "Provincial population context", th: "บริบทประชากรระดับจังหวัด", zh: "省级人口背景" })}</h4>

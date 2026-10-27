@@ -663,7 +663,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
 
   if (!city) {
     return (
-      <section className="page-hero section" style={{ paddingTop: "7rem" }}>
+      <section className="page-hero section" style={{ paddingTop: "1rem" }}>
         <h1>{translate(locale, { en: "City not found", th: "ไม่พบเมือง", zh: "未找到城市" })}</h1>
         <button
           className="cta-button"

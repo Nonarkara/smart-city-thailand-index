@@ -15,7 +15,7 @@ export default function AboutPage({ locale, onNavigate }: Props) {
 
   return (
     <div className="about-page">
-      <section className="page-hero section reveal visible" style={{ paddingTop: "7rem" }}>
+      <section className="page-hero section reveal visible">
         <p className="eyebrow">{translate(locale, { en: "Mission", th: "พันธกิจ", zh: "使命" })}</p>
         <h1 className="hero-title">
           {translate(locale, {

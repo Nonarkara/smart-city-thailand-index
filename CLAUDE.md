@@ -50,6 +50,20 @@ the completed successful workflow to match the exact current commit, then
 downloads that run's validated Pages artifact and performs the normal Cloudflare/live checks.
 This changes the test runner location, not the assertions or timeouts.
 
+## Redundant identity and MSH (27 October 2026)
+
+A compact city record must not repeat its province when the displayed localized
+name already identifies it. `getDistinctProvinceName` suppresses only that UI
+subtitle; distinct geography, provenance and exported province fields remain.
+A short single-line record should fit a 44px row; long names may wrap fully.
+Do not preserve an empty metadata track after removing duplication.
+`scripts/audit/identity-density.mjs --serve` checks the 14 editorial records in
+three languages at six widths, distinct geography, keyboard navigation and the
+shared correction disclosure. Both duplicate identity and inflated-row mutations
+must fail. CI and CDPT run it alongside the existing density/type checks.
+Shared MSH and installed design skills carry this rule. A route sweep and these
+bounded guards do not certify every possible state of all 118 dossiers.
+
 ## Design Philosophy
 
 "Jony Ive meets Dieter Rams" — clarity, simplicity, elegance.

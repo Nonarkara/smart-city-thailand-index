@@ -1,4 +1,5 @@
 import type { Locale } from "./types";
+import "./asus-density.css";
 
 interface Props { locale: Locale; onNavigate: (path: string) => void; }
 
@@ -73,7 +74,7 @@ function tri(locale: Locale, key: string, dict: Record<string, Tri>): string {
 export default function AsusPage({ locale, onNavigate }: Props) {
   return (
     <>
-      <section className="page-hero section" style={{ paddingTop: "4.5rem" }}>
+      <section className="page-hero section asus-intro">
         <p className="eyebrow">{t(locale, "UN-Habitat", "UN-Habitat", "联合国人居署")}</p>
         <h1 style={{ fontFamily: "var(--font-heading)", fontSize: "var(--text-display)", fontWeight: 800, letterSpacing: "-.03em", lineHeight: ".95", marginBottom: ".5rem" }}>
           {t(locale,
@@ -96,17 +97,17 @@ export default function AsusPage({ locale, onNavigate }: Props) {
         <h2>{t(locale, "15 cities, 8 countries, 8 focus areas", "15 เมือง 8 ประเทศ 8 ด้าน", "15座城市，8个国家，8个重点领域")}</h2>
         <div style={{ borderTop: "2px solid var(--ink, #111)" }}>
           {phase2Cities.map((c, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "2rem 1fr 10rem auto", gap: ".4rem", padding: ".4rem 0", borderBottom: "1px solid var(--5, #E5E5E5)", alignItems: "center", fontSize: "var(--text-micro)" }}>
-              <span>{c.flag}</span>
-              <span style={{ fontWeight: 700 }}>{tri(locale, c.city, CITY_LABELS)}</span>
-              <span style={{ font: "500 var(--text-micro) var(--mono, monospace)", color: "var(--teal, #2BBAA0)" }}>{tri(locale, c.focus, FOCUS_LABELS)}</span>
+            <div key={i} className="asus-city-row">
+              <span className="asus-city-flag">{c.flag}</span>
+              <span className="asus-city-name">{tri(locale, c.city, CITY_LABELS)}</span>
+              <span className="asus-city-focus">{tri(locale, c.focus, FOCUS_LABELS)}</span>
               {"linked" in c && c.linked ? (
-                <button style={{ font: "600 var(--text-micro) var(--mono, monospace)", color: "var(--teal, #2BBAA0)", background: "none", border: 0, cursor: "pointer" }}
+                <button className="asus-city-action"
                   onClick={() => onNavigate(`/city/${c.linked}`)}>
                   {t(locale, "View profile", "ดูโปรไฟล์", "查看档案")} →
                 </button>
               ) : (
-                <span style={{ font: "500 var(--text-micro) var(--mono, monospace)", color: "var(--4, #BBB)" }}>{tri(locale, c.country, COUNTRY_LABELS)}</span>
+                <span className="asus-city-country">{tri(locale, c.country, COUNTRY_LABELS)}</span>
               )}
             </div>
           ))}
@@ -116,14 +117,14 @@ export default function AsusPage({ locale, onNavigate }: Props) {
       <section className="section">
         <p className="eyebrow">{t(locale, "Methodology", "วิธีการ", "方法论")}</p>
         <h2>{t(locale, "Inception → Diagnostic → Co-Design → Technical Proposal", "เริ่มต้น → วินิจฉัย → ร่วมออกแบบ → ข้อเสนอทางเทคนิค", "启动 → 诊断 → 共同设计 → 技术方案")}</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 0, border: "1px solid var(--5, #E5E5E5)" }}>
+        <div className="asus-method-steps">
           {[
             { step: "01", title: { en: "Inception", th: "เริ่มต้น", zh: "启动" }, desc: { en: "Map policies, stakeholders, existing initiatives", th: "ทำแผนนโยบาย ผู้มีส่วนได้ส่วนเสีย และโครงการที่มีอยู่", zh: "梳理政策、利益相关者与既有倡议" } },
             { step: "02", title: { en: "Diagnostic", th: "วินิจฉัย", zh: "诊断" }, desc: { en: "Problem tree, SWOT, constraints mapping with communities", th: "แผนผังปัญหา SWOT และข้อจำกัดร่วมกับชุมชน", zh: "问题树、SWOT 与与社区共同梳理约束" } },
             { step: "03", title: { en: "Co-Design", th: "ร่วมออกแบบ", zh: "共同设计" }, desc: { en: "Visioning, scenario planning, solution development", th: "วางวิสัยทัศน์ สถานการณ์จำลอง และพัฒนาโซลูชัน", zh: "愿景构建、情景规划与方案开发" } },
             { step: "04", title: { en: "Proposal", th: "ข้อเสนอ", zh: "方案" }, desc: { en: "Theory of Change, MEL framework, financing plan", th: "ทฤษฎีการเปลี่ยนแปลง กรอบ MEL และแผนการเงิน", zh: "变革理论、MEL 框架与融资计划" } },
           ].map(s => (
-            <div key={s.step} style={{ padding: ".7rem .6rem", borderRight: "1px solid var(--5, #E5E5E5)" }}>
+            <div key={s.step} className="asus-method-step">
               <div style={{ font: "700 var(--text-body) var(--mono, monospace)", color: "var(--teal, #2BBAA0)", marginBottom: ".15rem" }}>{s.step}</div>
               <div style={{ fontWeight: 700, fontSize: "var(--text-body)", marginBottom: ".15rem" }}>{t(locale, s.title.en, s.title.th, s.title.zh)}</div>
               <div style={{ fontSize: "var(--text-body)", color: "var(--2, #444)", lineHeight: 1.4 }}>{t(locale, s.desc.en, s.desc.th, s.desc.zh)}</div>

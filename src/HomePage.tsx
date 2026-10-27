@@ -10,6 +10,7 @@ import { getCityPhotoAsset, HOME_HERO_ASSETS, type HeroAsset } from "./cityMedia
 import {
   getCityName,
   getProvinceName,
+  getDistinctProvinceName,
   translate,
 } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
@@ -358,7 +359,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                     <span className="regional-champion-region">{REGION_LABELS[locale][region]}</span>
                     <span className="regional-champion-city">{getCityName(city, locale)}</span>
                     <span className="regional-champion-meta">
-                      <span>{getProvinceName(city, locale)}</span>
+                      {getDistinctProvinceName(city, locale) && <span>{getDistinctProvinceName(city, locale)}</span>}
                       <span className="regional-champion-score">{city.compositeScore.toFixed(1)}</span>
                     </span>
                   </button>
@@ -525,10 +526,11 @@ export default function HomePage({ locale, onNavigate }: Props) {
                         <button
                           type="button"
                           className="home-collection-chip"
+                          data-city-id={city.id}
                           onClick={() => onNavigate(`/city/${city.id}`)}
                         >
                           <span className="home-collection-chip-name">{getCityName(city, locale)}</span>
-                          <span className="home-collection-chip-meta">{getProvinceName(city, locale)}</span>
+                          {getDistinctProvinceName(city, locale) && <span className="home-collection-chip-meta">{getDistinctProvinceName(city, locale)}</span>}
                           <span className="home-collection-chip-score">{city.compositeScore.toFixed(1)}</span>
                         </button>
                       </li>
@@ -715,7 +717,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 <span className="investor-card-name">{getCityName(city, locale)}</span>
                 <span className="investor-card-score">{city.compositeScore.toFixed(1)}<span className="investor-score-unit">/100</span></span>
                 <span className="investor-card-meta">
-                  <span className="investor-card-province">{getProvinceName(city, locale)}</span>
+                  {getDistinctProvinceName(city, locale) && <span className="investor-card-province">{getDistinctProvinceName(city, locale)}</span>}
                   <span className="investor-card-vibe">{getCityVibe(city, locale)}</span>
                 </span>
               </button>

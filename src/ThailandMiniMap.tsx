@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { MAP_BOUNDS, CITY_COORDS, NEIGHBOR_LABELS, projectTo, esriTileUrl, tierColor } from "./mapUtils";
-import { getCityName, getProvinceName } from "./cityPresentation";
+import { getCityName, getDistinctProvinceName } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
 
 interface Props {
@@ -113,7 +113,7 @@ export default function ThailandMiniMap({ cities, selectedCity, locale, onSelect
               y={selectedPos.y + 6}
               className="mini-map-label-province"
             >
-              {getProvinceName(selectedCity, locale)} · {selectedCity.compositeScore.toFixed(1)}
+              {[getDistinctProvinceName(selectedCity, locale), selectedCity.compositeScore.toFixed(1)].filter(Boolean).join(" · ")}
             </text>
           </g>
         )}

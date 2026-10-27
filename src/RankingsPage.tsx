@@ -14,7 +14,7 @@ import {
   getCityName,
   getCityRealityLabel,
   getCityStatusLabel,
-  getProvinceName,
+  getDistinctProvinceName,
   translate,
 } from "./cityPresentation";
 import { MONEYBALL_PICKS } from "./moneyballPicks";
@@ -411,6 +411,12 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
 
         <section className="section reveal visible">
           <p className="eyebrow">{t({ en: "Lenses", th: "เลนส์", zh: "镜头" })}</p>
+          <label className="lens-select-label">
+            {t({ en: "Choose a purpose", th: "เลือกวัตถุประสงค์", zh: "选择用途" })}
+            <select value={lensId} onChange={event => setLensId(event.target.value as typeof lensId)}>
+              {PRESET_LENSES.map(preset => <option key={preset.id} value={preset.id}>{translate(locale, preset.label)}</option>)}
+            </select>
+          </label>
           <div className="lens-chip-row" role="tablist" aria-label={t({ en: "Preset lenses", th: "เลนส์สำเร็จรูป", zh: "预设镜头" })}>
             {PRESET_LENSES.map(preset => (
               <button
@@ -509,7 +515,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             <div className="rankings-gallery">
               {sorted.map(({ city, lensScore }, idx) => {
                 const photo = getCityPhotoAsset(city);
-                const provinceName = getProvinceName(city, locale);
+                const provinceName = getDistinctProvinceName(city, locale);
                 const cityName = getCityName(city, locale);
                 const tierSym = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
                 return (
@@ -518,7 +524,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                     type="button"
                     className="gallery-card"
                     onClick={() => onNavigate(`/city/${city.id}`)}
-                    aria-label={`${cityName} — ${provinceName} — ${lensScore.toFixed(1)}`}
+                    aria-label={[cityName, provinceName, lensScore.toFixed(1)].filter(Boolean).join(" — ")}
                   >
                     <div className="gallery-card-photo-wrap">
                       <ResponsiveImage
@@ -549,7 +555,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                         <span className="gallery-card-score">{lensScore.toFixed(1)}</span>
                       </div>
                       <div className="gallery-card-meta">
-                        <span className="gallery-card-province">{provinceName}</span>
+                        {provinceName && <span className="gallery-card-province">{provinceName}</span>}
                         <span className={`gallery-card-tier gallery-card-tier-${city.tier}`}>{tierSym} {TIER_LABELS[locale][city.tier]}</span>
                       </div>
                     </div>
@@ -658,7 +664,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                             </span>
                           </div>
                           <div className="rank-row-caption">
-                            {getProvinceName(city, locale)} · {getCityStatusLabel(city.status, locale)} · {getCityRealityLabel(city.reality, locale)}
+                            {[getDistinctProvinceName(city, locale), getCityStatusLabel(city.status, locale), getCityRealityLabel(city.reality, locale)].filter(Boolean).join(" · ")}
                             {city.league ? (
                               <>
                                 {" "}· <span className="league-badge">{LEAGUE_LABELS[locale][city.league]}</span>

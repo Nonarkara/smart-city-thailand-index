@@ -7,6 +7,7 @@ import {
   getCityRealityLabel,
   getCityStatusLabel,
   getProvinceName,
+  getDistinctProvinceName,
   translate,
 } from "./cityPresentation";
 import { SCORING_PILLARS } from "./scoring";
@@ -108,7 +109,7 @@ function CityPickerColumn({
             >
               <span className="picker-city-copy">
                 <strong>{getCityName(city, locale)}</strong>
-                <span>{getProvinceName(city, locale)}</span>
+                {getDistinctProvinceName(city, locale) && <span>{getDistinctProvinceName(city, locale)}</span>}
               </span>
               <span className="picker-city-score">{city.compositeScore.toFixed(1)}</span>
             </button>

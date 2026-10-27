@@ -108,6 +108,15 @@ bold "Preflight — the type law (§11.7: one display statement per page)"
 node scripts/audit/type-and-rhythm.mjs --serve >"$LOG_DIR/cdpt-type.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-type.log"; die "type regression: a page carries more than one display-size statement, or a route was not measured"; }
 ok "every route measured; every display-size statement is the page title"
 
+bold "Preflight — identity and decision density"
+node scripts/audit/identity-density.mjs --serve >"$LOG_DIR/cdpt-identity.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-identity.log"; die "redundant identity or decision geometry failed"; }
+ok "identity semantics, readable rows, geography, keyboard and mutation checks passed"
+
+bold "Preflight — responsive ASUS and searchable atlas"
+node scripts/audit/asus-density.mjs --serve >"$LOG_DIR/cdpt-asus.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-asus.log"; die "ASUS decision geometry failed"; }
+node scripts/audit/atlas-density.mjs --serve >"$LOG_DIR/cdpt-atlas.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-atlas.log"; die "atlas navigation or decision geometry failed"; }
+ok "all ASUS records and all 118 searchable atlas cities preserved; original faults rejected"
+
 # ── C — commit ───────────────────────────────────────────────────────────────
 if [[ -n "$MSG" ]]; then
   git add -u

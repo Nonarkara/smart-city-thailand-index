@@ -452,7 +452,8 @@ ul, ol { list-style: none; }
 .topbar {
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: .5rem min(calc((100% - var(--w)) / 2), 1.25rem);
+  padding: .5rem var(--gutter);
+  gap: 8px;
   background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
   box-shadow: none;
@@ -464,6 +465,7 @@ ul, ol { list-style: none; }
 .brand-lockup {
   display: flex; align-items: center; gap: .6rem; transition: opacity .2s;
   position: relative;
+  min-width: 0;
 }
 .brand-lockup picture { display: block; }
 .brand-lockup:hover { opacity: .8; }
@@ -1821,11 +1823,11 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 }
 
 /* ─── MAP DASHBOARD (full page) ─── */
-.map-dashboard { padding-top: 3.5rem; }
-.map-dash-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: .75rem; padding: 1rem min(calc((100% - var(--w, 1060px)) / 2), 1.25rem); border-bottom: 2px solid var(--ink, #111); margin-bottom: 0; }
-.map-dash-controls { display: flex; gap: .5rem; }
+.map-dashboard { padding-top: 16px; }
+.map-dash-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: .75rem; padding: 16px var(--gutter); border-bottom: 2px solid var(--ink, #111); margin-bottom: 0; }
+.map-dash-controls { display: flex; flex-wrap: wrap; gap: .5rem; min-width: 0; }
 .map-dash-filter, .map-dash-layers { display: flex; border: 1px solid var(--5, #E5E5E5); }
-.map-dash-body { display: grid; grid-template-columns: 1fr 220px; }
+.map-dash-body { display: grid; grid-template-columns: minmax(0, 1fr) 220px; }
 .map-dash-map { border-right: 1px solid var(--5, #E5E5E5); }
 .map-dash-map svg { display: block; }
 .map-dash-sidebar { padding: 1rem .85rem; }
@@ -2319,7 +2321,7 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .dashboard-signal-note { font-size: var(--text-micro); color: var(--2, #444); line-height: 1.45; }
 
 /* Topbar actions */
-.topbar-actions { display: flex; align-items: center; gap: 0; }
+.topbar-actions { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
 .nav-toggle { display: none; }
 .nav-links-open { display: flex !important; }
 
@@ -8285,6 +8287,12 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   width: 100%;
 }
 
+/* Purpose selection stays beside results without a phone-sized wall of tabs. */
+.lens-select-label { display: grid; gap: 4px; font-size: var(--text-body); }
+.lens-select-label select { min-height: 44px; width: 100%; font: inherit; background: var(--bg); color: var(--ink); border: 1px solid var(--5); padding: 8px; }
+@media (max-width: 720px) { .rankings-page .lens-chip-row { display: none; } }
+@media (min-width: 721px) { .lens-select-label { display: none; } }
+
 /* --- Lens chip row --- */
 .lens-chip-row {
   display: flex;
@@ -8864,7 +8872,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .home-collections {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.85rem;
+  gap: 24px;
+  align-items: start;
 }
 @media (min-width: 760px) {
   .home-collections { grid-template-columns: repeat(2, 1fr); }
@@ -8876,7 +8885,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-  padding: 1rem 1.1rem 1.1rem;
+  padding: 0;
+  border: 0;
   min-width: 0;
 }
 .home-collection-kicker {
@@ -8905,18 +8915,18 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0;
 }
 .home-collection-chip {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
   column-gap: 0.75rem;
   align-items: baseline;
-  padding: 0.55rem 0.7rem;
-  background: var(--bg);
-  border: 1px solid var(--5);
+  padding: 7px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--5);
   color: var(--ink);
   text-align: left;
   cursor: pointer;
@@ -8927,7 +8937,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .home-collection-chip-name {
   grid-column: 1;
   grid-row: 1;
-  font-size: var(--text-micro);
+  font-size: var(--text-body);
   font-weight: 600;
   letter-spacing: -0.01em;
 }
@@ -8935,13 +8945,11 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   grid-column: 1;
   grid-row: 2;
   font: 500 var(--text-micro) var(--mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--3);
 }
 .home-collection-chip-score {
   grid-column: 2;
-  grid-row: 1 / span 2;
+  grid-row: 1;
   font: 700 var(--text-body) var(--mono);
   color: var(--ink);
 }
@@ -9849,34 +9857,33 @@ h2, h3, .home-section-title { font-family: var(--font); }
 /* ─── DATA FEEDBACK ─── */
 .data-feedback-section {
   background: var(--bg);
-  /* The band's own bottom padding PLUS the next section's margin PLUS its
-   * own padding was four separate spacing decisions that added up to a
-   * 187px hole above the "Latest" band on ten pages. The rhythm now owns
-   * that gap; the band keeps its own air and gives the rest to the step. */
-  padding: 3rem 0 2rem;
+  padding: 12px 0;
   border-top: 1px solid var(--5);
 }
 .feedback-box {
   max-width: 600px;
   background: var(--surface);
-  padding: 2.5rem;
-  border: 1px solid var(--4);
+  padding: 0;
+  border: 0;
 }
-.feedback-header h3 {
+.feedback-header {
   /* a card prompt, not the page title — display is reserved for the latter */
   font: 700 var(--text-body) var(--font-heading);
-  margin-bottom: 1rem;
+  margin: 0;
+  min-height: 44px;
+  padding-block: 12px;
+  cursor: pointer;
   letter-spacing: -.02em;
 }
 .feedback-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 12px;
 }
 .feedback-input {
   width: 100%;
-  min-height: 140px;
-  padding: 1.25rem;
+  min-height: 84px;
+  padding: 12px;
   font: 400 var(--text-body) var(--mono);
   background: var(--bg);
   border: 1px solid var(--4);
@@ -9923,7 +9930,7 @@ h2, h3, .home-section-title { font-family: var(--font); }
 }
 
 @media (max-width: 600px) {
-  .feedback-box { padding: 1.5rem; }
+  .feedback-box { padding: 0; }
   .feedback-footer { flex-direction: column; align-items: flex-start; }
 }
 

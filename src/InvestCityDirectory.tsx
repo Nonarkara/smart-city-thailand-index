@@ -2,10 +2,10 @@
 // Invest City Directory — data-driven investor value propositions for every city
 // ---------------------------------------------------------------------------
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { allCities } from "./cityData.ts";
 import { getInvestorPitchForLocale } from "./cityInvestorPitch.ts";
-import { translate } from "./cityPresentation";
+import { getCityName, getDistinctProvinceName, getProvinceName, translate } from "./cityPresentation";
 import { TIER_LABELS } from "./types.ts";
 import type { Locale, SmartCity } from "./types.ts";
 
@@ -23,7 +23,7 @@ const REGION_LABELS: Record<SmartCity["region"] | "all", Record<Locale, string>>
   north: { en: "North", th: "ภาคเหนือ", zh: "北部" },
   northeast: { en: "Northeast", th: "ภาคตะวันออกเฉียงเหนือ", zh: "东北部" },
   central: { en: "Central", th: "ภาคกลาง", zh: "中部" },
-  east: { en: "East / EEC", th: "ภาคตะวันออก / EEC", zh: "东部 / EEC" },
+  east: { en: "East", th: "ภาคตะวันออก", zh: "东部" },
   south: { en: "South", th: "ภาคใต้", zh: "南部" },
   bangkok: { en: "Bangkok", th: "กรุงเทพฯ", zh: "曼谷" },
 };
@@ -32,6 +32,7 @@ const TIER_FILTERS: FilterTier[] = ["all", "alpha", "beta", "gamma"];
 const REGION_FILTERS: FilterRegion[] = ["all", "bangkok", "central", "east", "north", "northeast", "south"];
 
 // ponytail: hardcoded — these are the cities with the richest curated context
+const PAGE_SIZE = 12;
 const SPOTLIGHT_IDS = ["nakhon-si-thammarat", "phuket", "samyan", "chiang-mai-old-town"];
 
 function tierColor(tier: SmartCity["tier"]): string {
@@ -46,6 +47,9 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
   const [tierFilter, setTierFilter] = useState<FilterTier>("all");
   const [regionFilter, setRegionFilter] = useState<FilterRegion>("all");
   const [sortBy, setSortBy] = useState<SortBy>("score");
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(0);
+  const resultsRef = useRef<HTMLHeadingElement>(null);
 
   const spotlight = useMemo(
     () => SPOTLIGHT_IDS.flatMap(id => allCities.filter(c => c.id === id)),
@@ -56,11 +60,13 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
     let list = allCities.filter(c => {
       if (tierFilter !== "all" && c.tier !== tierFilter) return false;
       if (regionFilter !== "all" && c.region !== regionFilter) return false;
-      return true;
+      const needle = query.normalize("NFKC").trim().toLowerCase();
+      return !needle || [c.id, c.nameEn, c.nameTh, ...(["en", "th", "zh"] as Locale[]).flatMap(language => [getCityName(c, language), getProvinceName(c, language)])]
+        .some(value => value.normalize("NFKC").toLowerCase().includes(needle));
     });
 
     list = [...list].sort((a, b) => {
-      if (sortBy === "name") return locale === "th" ? a.nameTh.localeCompare(b.nameTh) : a.nameEn.localeCompare(b.nameEn);
+      if (sortBy === "name") return getCityName(a, locale).localeCompare(getCityName(b, locale), locale);
       if (sortBy === "investability") {
         const pa = getInvestorPitchForLocale(a, locale);
         const pb = getInvestorPitchForLocale(b, locale);
@@ -70,7 +76,16 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
     });
 
     return list;
-  }, [tierFilter, regionFilter, sortBy, locale]);
+  }, [tierFilter, regionFilter, sortBy, locale, query]);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount - 1);
+  const shown = filtered.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
+  const changePage = (next: number) => {
+    setPage(next);
+    resultsRef.current?.scrollIntoView({ block: "start" });
+    resultsRef.current?.focus({ preventScroll: true });
+  };
 
   const controlsLabel = {
     en: "Filter & sort",
@@ -80,14 +95,14 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
 
   const sortOptions: Record<SortBy, Record<Locale, string>> = {
     score: { en: "SCITI score", th: "คะแนน SCITI", zh: "SCITI评分" },
-    investability: { en: "Investability", th: "ความน่าลงทุน", zh: "投资吸引力" },
+    investability: { en: "Research tag count", th: "จำนวนป้ายงานวิจัย", zh: "研究标签数量" },
     name: { en: "Name", th: "ชื่อ", zh: "名称" },
   };
 
   const countLabel = {
-    en: `${filtered.length} cities`,
-    th: `${filtered.length} เมือง`,
-    zh: `${filtered.length} 座城市`,
+    en: filtered.length ? `${currentPage * PAGE_SIZE + 1}–${Math.min((currentPage + 1) * PAGE_SIZE, filtered.length)} of ${filtered.length} cities` : "No cities match",
+    th: filtered.length ? `${currentPage * PAGE_SIZE + 1}–${Math.min((currentPage + 1) * PAGE_SIZE, filtered.length)} จาก ${filtered.length} เมือง` : "ไม่พบเมืองที่ตรงกัน",
+    zh: filtered.length ? `第 ${currentPage * PAGE_SIZE + 1}–${Math.min((currentPage + 1) * PAGE_SIZE, filtered.length)} 座，共 ${filtered.length} 座城市` : "没有匹配的城市",
   };
 
   return (
@@ -106,139 +121,77 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
         })}
       </p>
 
-      {/* Spotlight — curated cities with richest context */}
-      <div style={{ marginTop: "1.5rem", marginBottom: ".5rem" }}>
-        <span style={{
-          font: "600 var(--text-micro) var(--mono)",
-          color: "var(--3)",
-          textTransform: "uppercase",
-          letterSpacing: ".08em",
-        }}>
-          {translate(locale, { en: "Featured", th: "เมืองเด่น", zh: "精选城市" })}
-        </span>
+      {/* The directory task comes before optional long-form featured reading. */}
+      <div className="investment-atlas-controls" role="group" aria-label={translate(locale, controlsLabel)} style={{ display: "flex", flexWrap: "wrap", gap: ".5rem .75rem", alignItems: "end", marginBlock: "1rem" }}>
+        <label style={{ flexBasis: "100%", display: "grid", gap: ".25rem" }}>
+          {translate(locale, { en: "Search city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })}
+          <input type="search" value={query} onChange={event => { setQuery(event.target.value); setPage(0); }} style={{ minHeight: "44px", width: "100%", maxWidth: "32rem", padding: "0 .5rem", font: "400 var(--text-body) var(--font)", border: "1px solid var(--4)", background: "var(--paper)", color: "var(--ink)" }} />
+        </label>
+        <label style={{ display: "grid", gap: ".25rem" }}>
+          {translate(locale, { en: "Tier", th: "ระดับ", zh: "层级" })}
+          <select aria-label={translate(locale, { en: "Tier", th: "ระดับ", zh: "层级" })} value={tierFilter} onChange={event => { setTierFilter(event.target.value as FilterTier); setPage(0); }} style={{ minHeight: "44px", maxWidth: "100%", font: "400 var(--text-body) var(--font)", background: "var(--paper)", color: "var(--ink)", border: "1px solid var(--4)" }}>
+            {TIER_FILTERS.map(tier => <option key={tier} value={tier}>{tier === "all" ? translate(locale, { en: "All tiers", th: "ทุกระดับ", zh: "所有层级" }) : TIER_LABELS[locale][tier]}</option>)}
+          </select>
+        </label>
+        <label style={{ display: "grid", gap: ".25rem" }}>
+          {translate(locale, { en: "Region", th: "ภูมิภาค", zh: "地区" })}
+          <select aria-label={translate(locale, { en: "Region", th: "ภูมิภาค", zh: "地区" })} value={regionFilter} onChange={event => { setRegionFilter(event.target.value as FilterRegion); setPage(0); }} style={{ minHeight: "44px", maxWidth: "100%", font: "400 var(--text-body) var(--font)", background: "var(--paper)", color: "var(--ink)", border: "1px solid var(--4)" }}>
+            {REGION_FILTERS.map(region => <option key={region} value={region}>{translate(locale, REGION_LABELS[region])}</option>)}
+          </select>
+        </label>
+        <label style={{ display: "grid", gap: ".25rem" }}>
+          {translate(locale, { en: "Sort cities", th: "เรียงเมือง", zh: "城市排序" })}
+          <select aria-label={translate(locale, { en: "Sort cities", th: "เรียงเมือง", zh: "城市排序" })} value={sortBy} onChange={event => { setSortBy(event.target.value as SortBy); setPage(0); }} style={{ minHeight: "44px", maxWidth: "100%", font: "400 var(--text-body) var(--font)", background: "var(--paper)", color: "var(--ink)", border: "1px solid var(--4)" }}>
+            {(["score", "investability", "name"] as SortBy[]).map(sort => <option key={sort} value={sort}>{translate(locale, sortOptions[sort])}</option>)}
+          </select>
+        </label>
       </div>
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
-        gap: "1rem",
-        marginBottom: "2rem",
-        paddingBottom: "2rem",
-        borderBottom: "1px solid var(--5)",
-      }}>
-        {spotlight.map(city => (
-          <CityCard key={city.id} city={city} locale={locale} onNavigate={onNavigate} featured />
-        ))}
-      </div>
-
-      {/* Controls */}
-      <div style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: ".75rem",
-        alignItems: "center",
-        marginTop: "1.25rem",
-        marginBottom: "1.25rem",
-        padding: "1rem",
-        border: "1px solid var(--5)",
-        background: "var(--surface)",
-      }}>
-        <span style={{ font: "600 var(--text-micro) var(--mono)", color: "var(--3)", textTransform: "uppercase", letterSpacing: ".06em" }}>
-          {translate(locale, controlsLabel)}
-        </span>
-
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-          {TIER_FILTERS.map(t => (
-            <button
-              key={t}
-              onClick={() => setTierFilter(t)}
-              style={{
-                font: "500 var(--text-micro) var(--font)",
-                padding: "0 .65rem",
-                minHeight: "44px",
-                display: "inline-flex",
-                alignItems: "center",
-                border: `1px solid ${tierFilter === t ? "var(--ink)" : "var(--4)"}`,
-                background: tierFilter === t ? "var(--ink)" : "var(--paper)",
-                color: tierFilter === t ? "var(--paper)" : "var(--ink)",
-                cursor: "pointer",
-              }}
-            >
-              {t === "all" ? translate(locale, { en: "All tiers", th: "ทุกระดับ", zh: "所有层级" }) : TIER_LABELS[locale][t]}
-            </button>
-          ))}
-        </div>
-
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-          {REGION_FILTERS.map(r => (
-            <button
-              key={r}
-              onClick={() => setRegionFilter(r)}
-              style={{
-                font: "500 var(--text-micro) var(--font)",
-                padding: "0 .65rem",
-                minHeight: "44px",
-                display: "inline-flex",
-                alignItems: "center",
-                border: `1px solid ${regionFilter === r ? "var(--ink)" : "var(--4)"}`,
-                background: regionFilter === r ? "var(--ink)" : "var(--paper)",
-                color: regionFilter === r ? "var(--paper)" : "var(--ink)",
-                cursor: "pointer",
-              }}
-            >
-              {translate(locale, REGION_LABELS[r])}
-            </button>
-          ))}
-        </div>
-
-        <select
-          value={sortBy}
-          onChange={e => setSortBy(e.target.value as SortBy)}
-          style={{
-            font: "500 var(--text-micro) var(--font)",
-            padding: "0 .5rem",
-            minHeight: "44px",
-            border: "1px solid var(--4)",
-            background: "var(--paper)",
-            color: "var(--ink)",
-          }}
-        >
-          {(["score", "investability", "name"] as SortBy[]).map(s => (
-            <option key={s} value={s}>{translate(locale, sortOptions[s])}</option>
-          ))}
-        </select>
-
-        <span style={{ marginLeft: "auto", font: "500 var(--text-micro) var(--mono)", color: "var(--3)" }}>
-          {translate(locale, countLabel)}
-        </span>
-      </div>
+      <h3 ref={resultsRef} tabIndex={-1} className="investment-atlas-count" style={{ scrollMarginTop: "80px", marginBlock: ".75rem" }} aria-live="polite">{translate(locale, countLabel)}</h3>
 
       {/* Cards */}
-      <div style={{
+      <div className="investment-atlas-results" style={{
         display: "grid",
+        alignItems: "start",
         /* min() lets the 320px floor collapse when the column is narrower
            than 320px. Without it a 320px phone got a 320px track inside a
            296px column and the card ran 14px past the viewport. */
         gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
         gap: "1rem",
       }}>
-        {filtered.map(city => (
+        {shown.map(city => (
           <CityCard key={city.id} city={city} locale={locale} onNavigate={onNavigate} />
         ))}
       </div>
+      {filtered.length > PAGE_SIZE && <nav aria-label={translate(locale, { en: "Investment Atlas pages", th: "หน้าแอตลาสการลงทุน", zh: "投资图谱分页" })} style={{ display: "flex", gap: ".75rem", alignItems: "center", flexWrap: "wrap", marginBlock: "1rem" }}>
+        <button type="button" className="ghost-button" disabled={currentPage === 0} onClick={() => changePage(currentPage - 1)}>{translate(locale, { en: "Previous cities", th: "เมืองก่อนหน้า", zh: "上一页城市" })}</button>
+        <span>{translate(locale, { en: `Page ${currentPage + 1} of ${pageCount}`, th: `หน้า ${currentPage + 1} จาก ${pageCount}`, zh: `第 ${currentPage + 1} 页，共 ${pageCount} 页` })}</span>
+        <button type="button" className="ghost-button" disabled={currentPage >= pageCount - 1} onClick={() => changePage(currentPage + 1)}>{translate(locale, { en: "Next cities", th: "เมืองถัดไป", zh: "下一页城市" })}</button>
+      </nav>}
+      {!filtered.length && <button type="button" className="ghost-button" onClick={() => { setQuery(""); setTierFilter("all"); setRegionFilter("all"); setPage(0); }}>{translate(locale, { en: "Clear search and filters", th: "ล้างคำค้นและตัวกรอง", zh: "清除搜索和筛选" })}</button>}
+      <details className="investment-atlas-featured" style={{ marginTop: "1rem" }}>
+        <summary style={{ minHeight: "44px", cursor: "pointer", paddingBlock: ".5rem" }}>{translate(locale, { en: "Featured research stories (4)", th: "เรื่องวิจัยคัดสรร (4 เมือง)", zh: "精选研究故事（4 座城市）" })}</summary>
+        <div style={{ display: "grid", alignItems: "start", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "1rem" }}>
+          {spotlight.map(city => <CityCard key={city.id} city={city} locale={locale} onNavigate={onNavigate} featured />)}
+        </div>
+      </details>
     </section>
   );
 }
 
 function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; locale: Locale; onNavigate: (path: string) => void; featured?: boolean }) {
   const pitch = useMemo(() => getInvestorPitchForLocale(city, locale), [city, locale]);
+  const identityMeta = [getDistinctProvinceName(city, locale), city.compositeScore ? `SCITI ${city.compositeScore.toFixed(1)}` : null].filter(Boolean).join(" · ");
+  const repeatedNamePrefix = [getCityName(city, locale), city.nameEn, city.nameTh]
+    .flatMap(name => [" — ", " – ", ": ", "："].map(separator => `${name}${separator}`))
+    .find(prefix => pitch.headline.startsWith(prefix));
+  const headline = repeatedNamePrefix ? pitch.headline.slice(repeatedNamePrefix.length) : pitch.headline;
 
   // The full investment story is earned content and every word of it stays.
   // What changes is WHEN it is open. Open 118 times over, each card grew to
   // 966px and /invest ran to 54,618px — a wall of equal-weight blocks with
   // no reading order, which is the exact failure this section exists to
-  // fix: finding the city where the capital fits. The featured cities keep
-  // the story open, because they are the curated ones; the atlas below
-  // opens it on request.
+  // fix: finding the city where the capital fits. Optional featured reading
+  // and each directory story remain available in named disclosures.
   const story = (
     <>
       <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: 1.6, margin: 0 }}>
@@ -291,7 +244,7 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
   );
 
   return (
-    <div className="glass-card shadow-premium" style={{
+    <div data-atlas-city-id={city.id} className="glass-card shadow-premium" style={{
       padding: "1.25rem",
       display: "flex",
       flexDirection: "column",
@@ -336,17 +289,16 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
           ))}
         </div>
         <h3 style={{ font: "800 var(--text-body) var(--font-heading)", letterSpacing: "-.02em", lineHeight: 1.2, marginBottom: ".15rem" }}>
-          {locale === "th" ? city.nameTh : city.nameEn}
+          {getCityName(city, locale)}
         </h3>
-        <p style={{ font: "500 var(--text-micro) var(--font)", color: "var(--3)", margin: 0 }}>
-          {city.provinceTh && locale === "th" ? city.provinceTh : city.province}
-          {city.compositeScore ? ` · SCITI ${city.compositeScore.toFixed(1)}` : ""}
-        </p>
+        {identityMeta && <p style={{ font: "500 var(--text-micro) var(--font)", color: "var(--3)", margin: 0 }}>
+          {identityMeta}
+        </p>}
       </div>
 
       {/* Pitch */}
-      <p style={{ font: "600 var(--text-body) var(--font)", color: "var(--ink)", lineHeight: 1.5, margin: 0 }}>
-        {pitch.headline}
+      <p className="investment-atlas-headline" style={{ font: "600 var(--text-body) var(--font)", color: "var(--ink)", lineHeight: 1.5, margin: 0 }}>
+        {headline}
       </p>
       {featured ? story : (
         <details className="city-story">

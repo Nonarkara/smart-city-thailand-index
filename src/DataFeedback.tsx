@@ -53,10 +53,8 @@ export default function DataFeedback({ locale }: Props) {
   return (
     <section className="data-feedback-section">
       <div className="section">
-        <div className="feedback-box">
-          <div className="feedback-header">
-            <h3>{l.ask}</h3>
-          </div>
+        <details className="feedback-box">
+          <summary className="feedback-header">{l.ask}</summary>
           {sent ? (
             <p className="feedback-success">{l.success}</p>
           ) : (
@@ -66,6 +64,7 @@ export default function DataFeedback({ locale }: Props) {
                 onChange={(e) => setText(e.target.value)}
                 placeholder={l.placeholder}
                 className="feedback-input"
+                rows={3}
                 aria-label={l.ask}
               />
               <div className="feedback-footer">
@@ -81,7 +80,7 @@ export default function DataFeedback({ locale }: Props) {
               </div>
             </div>
           )}
-        </div>
+        </details>
       </div>
     </section>
   );

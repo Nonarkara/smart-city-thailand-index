@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useCitySummaries } from "./cityApi";
-import { getCityName, getProvinceName, translate } from "./cityPresentation";
+import { getCityName, getDistinctProvinceName, translate } from "./cityPresentation";
 import type { Locale, ScoringPillar } from "./types";
 import { PILLAR_LABELS, PILLAR_COLORS, TIER_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
@@ -113,7 +113,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
               <div className="discover-city-info">
                 <span className="discover-city-name">{getCityName(city, locale)}</span>
                 <span className="discover-city-meta">
-                  {getProvinceName(city, locale)} · {TIER_LABELS[locale][city.tier]} · {city.compositeScore.toFixed(1)}
+                  {[getDistinctProvinceName(city, locale), TIER_LABELS[locale][city.tier], city.compositeScore.toFixed(1)].filter(Boolean).join(" · ")}
                 </span>
               </div>
               <div className="discover-pillars">

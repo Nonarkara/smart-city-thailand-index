@@ -23,6 +23,25 @@ export function getProvinceName(city: SmartCity, locale: Locale): string {
   return city.province;
 }
 
+/** Compact identity metadata only; never use this to remove geographic scope from evidence. */
+export function getDistinctProvinceName(city: SmartCity, locale: Locale): string | null {
+  const province = getProvinceName(city, locale);
+  const normalize = (value: string) => value.normalize("NFKC").toLocaleLowerCase()
+    .replace(/[\p{P}\p{Z}\s]+/gu, " ").trim();
+  const name = normalize(getCityName(city, locale));
+  // จังหวัด and 府 label the administrative unit; their absence from a city
+  // title does not make the place name new information.
+  const normalizedProvince = normalize(province);
+  const place = locale === "th" ? normalizedProvince.replace(/^จังหวัด\s*/u, "")
+    : locale === "zh" ? normalizedProvince.replace(/府$/u, "") : normalizedProvince;
+  if (!place) return province;
+  const usesWordBoundaries = /^[\p{Script=Latin}\p{N} ]+$/u.test(place);
+  const alreadyNamed = usesWordBoundaries
+    ? ` ${name} `.includes(` ${place} `)
+    : name.includes(place);
+  return alreadyNamed ? null : province;
+}
+
 const REGISTERED_TAGLINE_EN = "Promotion zone — awaiting sufficient data for full assessment.";
 const REGISTERED_TAGLINE_ZH = "推广区域——等待充足数据进行全面评估。";
 

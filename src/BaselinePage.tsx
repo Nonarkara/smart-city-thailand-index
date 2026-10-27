@@ -10,7 +10,7 @@ import {
 } from "./dimensionScores";
 import { buildFacets, type FacetDef } from "./baselineFacets";
 import { BASELINE_COVERAGE, SOURCE_REGISTRY, RESIDUAL_GAPS } from "./baselineSources";
-import { getCityName, getProvinceName } from "./cityPresentation";
+import { getCityName, getDistinctProvinceName, getProvinceName } from "./cityPresentation";
 import { toAppPath } from "./routing";
 import type { Locale } from "./types";
 
@@ -386,7 +386,7 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
                   <li key={row.city.id} className="baseline-row is-unmeasured">
                     <span className="baseline-row-city">
                       {getCityName(row.city, locale)}
-                      <span className="baseline-row-province">{getProvinceName(row.city, locale)}</span>
+                      {getDistinctProvinceName(row.city, locale) && <span className="baseline-row-province">{getDistinctProvinceName(row.city, locale)}</span>}
                     </span>
                     <span className="baseline-row-nodata">
                       {t(locale, { en: "no data", th: "ไม่มีข้อมูล", zh: "无数据" })}
@@ -449,7 +449,7 @@ function BaselineRow({
         <span className="baseline-row-rank">{String(index).padStart(2, "0")}</span>
         <span className="baseline-row-city">
           {getCityName(city, locale)}
-          <span className="baseline-row-province">{getProvinceName(city, locale)}</span>
+          {getDistinctProvinceName(city, locale) && <span className="baseline-row-province">{getDistinctProvinceName(city, locale)}</span>}
         </span>
         <span className="baseline-row-dims">
           {DEPA_DIMENSION_ORDER.map(dim => {
