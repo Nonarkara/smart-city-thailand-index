@@ -64,6 +64,9 @@ if (!process.argv.includes('--assets-only')) {
       assertHeroCredits(overlap, id);
       if (id === 'wangchan-valley') {
         const oldOffset = await page.addStyleTag({ content: '.dossier-tabs { margin-top: -16px !important; }' });
+        // A newly inserted stylesheet can precede Chromium's style/layout update.
+        // Prove the fault is applied before asking the geometry guard to reject it.
+        await page.waitForFunction(() => getComputedStyle(document.querySelector('.dossier-tabs')).marginTop === '-16px');
         const oldOverlap = await context.evaluate(el => el.getBoundingClientRect().bottom - document.querySelector('.dossier-tab-list').getBoundingClientRect().top);
         assert.throws(() => assertHeroCredits(oldOverlap, id), /cover source credits/, 'original negative offset escaped guard');
         await oldOffset.evaluate(el => el.remove());
