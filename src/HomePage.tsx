@@ -506,11 +506,16 @@ export default function HomePage({ locale, onNavigate }: Props) {
           <p className="eyebrow">{t({ en: "The shortlists", th: "ชุดเมืองคัดสรร", zh: "精选榜单" })}</p>
           <h2 className="home-section-title">
             {t({
-              en: "Thailand, grouped by what each city is doing",
-              th: "เมืองไทย จัดกลุ่มตามสิ่งที่แต่ละเมืองลงมือทำ",
-              zh: "泰国城市，按其正在做的事分组",
+              en: "Explore cities by topic",
+              th: "สำรวจเมืองตามหัวข้อ",
+              zh: "按主题探索城市",
             })}
           </h2>
+          <p className="section-intro">{t({
+            en: "Editorial selections. All values are curated overall scores /100, not sector measurements.",
+            th: "รายชื่อคัดสรรโดยผู้จัดทำ ตัวเลขทั้งหมดเป็นคะแนนประเมินรวมเต็ม 100 ไม่ใช่ค่าที่ตรวจวัดเฉพาะด้าน",
+            zh: "编辑选单。所有数值均为编辑评估的综合分数，满分100，并非各领域的实测值。",
+          })}</p>
           <div className="home-collections">
             {HOME_COLLECTIONS.map(col => (
               <article key={col.id} className="home-collection-card glass-card">
