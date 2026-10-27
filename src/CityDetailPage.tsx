@@ -16,7 +16,8 @@ import { getCityContext } from "./cityContext";
 import { getCityExternalResearchLinks, getCityFactsCsv, getCitySummariesCsv } from "./cityCdp";
 import { downloadCsv } from "./csvDownload";
 import { useCityDetail } from "./cityApi";
-import { getCityPhotoSet } from "./cityMedia";
+import { getCityPhotoSet, hasExplicitCityPhotoAsset } from "./cityMedia";
+import { getCityHeritage } from "./cityHeritage";
 import { getCityResearchSources, getLocalizedList, getLocalizedText, resolveCityResearch } from "./cityResearch";
 import {
   getCityName,
@@ -691,7 +692,12 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
   const overallGrade = statGrade(city.compositeScore);
   const photoSet = getCityPhotoSet(city);
-  const cityPhoto = photoSet.hero;
+  // Replace documented stand-ins, not the authored city photography.
+  const standIn = ["phra-ram-4", "bang-saray", "phitsanulok-nu", "phitsanulok-ppao", "ubon-muni", "wangchan-valley", "mae-moh", "nikhom-phatthana", "phlapphla", "thep-paraj", "tai-yong", "khao-khun-song", "phuket-tinicon"].includes(city.id);
+  const culturalHero = standIn || !hasExplicitCityPhotoAsset(city.id)
+    ? getCityHeritage(city).find(record => record.verifiedAt && record.scope !== "regional")
+    : undefined;
+  const cityPhoto = culturalHero ? { src: culturalHero.image, objectPosition: "center center" } : photoSet.hero;
   const cityContext = getCityContext(city.id);
   const research = resolveCityResearch(city);
   const comparison = getGlobalComparison(city.id);
@@ -1206,7 +1212,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         <div className="city-hero-photo">
           <ResponsiveImage
             src={cityPhoto.src}
-            alt={cityName}
+            alt={culturalHero?.title[locale] ?? cityName}
             loading="eager"
             fetchPriority="high"
             sizes="100vw"
@@ -1270,9 +1276,9 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
         </div>
       )}
-
-
-
+      {culturalHero && <p className="city-hero-context section" data-hero-scope="province">
+        {translate(locale, { en: "Provincial visual context", th: "ภาพบริบทระดับจังหวัด", zh: "省级视觉背景" })}: {culturalHero.title[locale]} · {culturalHero.author} · <a href={culturalHero.licenseUrl} target="_blank" rel="noopener noreferrer">{culturalHero.license}</a> · <a href={culturalHero.sourceUrl} target="_blank" rel="noopener noreferrer">{translate(locale, { en: "Source", th: "แหล่งภาพ", zh: "来源" })} ↗</a>
+      </p>}
       <header className="city-print-identity">
         <p>{cityName}</p>
         <div>{translate(locale, {
@@ -1373,7 +1379,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             <span className="city-decision-note">{dossier?.leadStepLabel ?? leadAction}</span>
           </div>
           <div className="city-decision-item">
-            <span className="city-decision-label">{translate(locale, { en: "Readiness", th: "ความพร้อม", zh: "准备度" })}</span>
+            <span className="city-decision-label">{translate(locale, { en: "Finance heuristic", th: "คะแนนการเงินเชิงวิจัย", zh: "融资研究指标" })}</span>
             <strong className="city-decision-value">{city.financeProfile.readinessScore}/100</strong>
             <span className="city-decision-note">{deliveryReadinessLabel} · {dossier?.confidenceLabel ?? DATA_CONFIDENCE_LABELS[city.dataConfidence ?? "medium"][locale]}</span>
           </div>
@@ -1434,10 +1440,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                 <span className="city-qm-lab">{metric.label[locale]}</span>
               </div>
             ))}
-            <div className="city-qm">
-              <span className="city-qm-val">{city.financeSignal.readinessScore}</span>
-              <span className="city-qm-lab">{translate(locale, { en: "Readiness", th: "ความพร้อม", zh: "准备度" })}</span>
-            </div>
             <div className="city-qm">
               <span className={`city-qm-val city-qm-conf-${city.dataConfidence ?? "medium"}`}>{city.dataConfidence ?? "medium"}</span>
               <span className="city-qm-lab">{translate(locale, { en: "Data confidence", th: "ความเชื่อมั่นข้อมูล", zh: "数据置信度" })}</span>
@@ -2058,14 +2060,19 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
 
       <section className="section city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "Tailored finance", th: "การเงินเฉพาะเมือง", zh: "定制融资" })}</p>
-        <h2>{translate(locale, { en: "Which mechanism actually fits this city", th: "กลไกไหนที่เข้ากับเมืองนี้จริง", zh: "什么机制真的适合这座城市" })}</h2>
+        <h2>{translate(locale, { en: "Finance mechanisms to investigate", th: "กลไกการเงินสำหรับศึกษาต่อ", zh: "值得研究的融资机制" })}</h2>
+        <p className="section-intro">{translate(locale, {
+          en: "SCITI research proxies, not borrower accounts or lender decisions. This score cannot establish municipal revenue, debt-service capacity, investor interest or funding eligibility. Check project evidence and current programme terms.",
+          th: "ตัวแปรแทนเพื่อการวิจัยของ SCITI ไม่ใช่บัญชีผู้กู้หรือคำตัดสินผู้ให้กู้ คะแนนไม่ยืนยันรายได้เทศบาล ความสามารถชำระหนี้ ความสนใจนักลงทุน หรือสิทธิรับเงินทุน ต้องตรวจหลักฐานโครงการและเงื่อนไขปัจจุบัน",
+          zh: "SCITI研究代理指标，并非借款人账目或贷款机构决定。评分不能证明市政收入、偿债能力、投资者兴趣或融资资格。请核查项目证据及当前计划条款。",
+        })}</p>
         {(() => {
           const strengthFill: Record<"strong" | "moderate" | "thin", number> = { strong: 3, moderate: 2, thin: 1 };
           const strengthBars: Array<{ key: "revenueBase" | "institutionalCapacity" | "projectPipeline" | "privateInterest"; label: { en: string; th: string; zh: string } }> = [
-            { key: "revenueBase",           label: { en: "Revenue base",           th: "ฐานรายได้",     zh: "收入基础" } },
-            { key: "institutionalCapacity", label: { en: "Institutional capacity", th: "ศักยภาพสถาบัน", zh: "机构能力" } },
-            { key: "projectPipeline",       label: { en: "Project pipeline",       th: "ท่อโครงการ",     zh: "项目管线" } },
-            { key: "privateInterest",       label: { en: "Private interest",       th: "ความสนใจเอกชน", zh: "私营兴趣" } },
+            { key: "revenueBase",           label: { en: "Revenue proxy",           th: "ตัวแปรแทนรายได้",     zh: "收入代理指标" } },
+            { key: "institutionalCapacity", label: { en: "Capacity proxy", th: "ตัวแปรแทนศักยภาพ", zh: "能力代理指标" } },
+            { key: "projectPipeline",       label: { en: "Pipeline proxy",       th: "ตัวแปรแทนโครงการ",     zh: "项目代理指标" } },
+            { key: "privateInterest",       label: { en: "Interest proxy",       th: "ตัวแปรแทนความสนใจ", zh: "兴趣代理指标" } },
           ];
           const readinessClass = `readiness-${city.financeProfile.deliveryReadiness}`;
           const riskClass = `risk-${city.financeProfile.riskProfile}`;
@@ -2077,7 +2084,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                   <span className="finance-readiness-score-unit">/100</span>
                 </div>
                 <div className="finance-readiness-meta">
-                  <span className="finance-readiness-caption">{translate(locale, { en: "Overall finance readiness", th: "ความพร้อมทางการเงินโดยรวม", zh: "整体融资准备度" })}</span>
+                  <span className="finance-readiness-caption">{translate(locale, { en: "Research finance screen", th: "คะแนนคัดกรองการเงินเพื่อวิจัย", zh: "融资研究筛选分数" })}</span>
                   <div className="finance-readiness-pills">
                     <span className={`finance-readiness-pill ${readinessClass}`}>{FINANCE_READINESS_LABELS[city.financeProfile.deliveryReadiness][locale]}</span>
                     <span className={`finance-readiness-pill ${riskClass}`}>{translate(locale, { en: "Risk", th: "ความเสี่ยง", zh: "风险" })} · {FINANCE_RISK_LABELS[city.financeProfile.riskProfile][locale]}</span>
@@ -2213,8 +2220,8 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
       </section>
 
       <section className="section city-print-hide">
-        <p className="eyebrow">{translate(locale, { en: "Proof points", th: "ข้อพิสูจน์", zh: "要点证据" })}</p>
-        <h2>{locale === "th" ? "สิ่งที่ทำได้จริง" : locale === "zh" ? "真正运作的东西" : "What actually works"}</h2>
+        <p className="eyebrow">{translate(locale, { en: "Legacy research claims", th: "ข้อกล่าวอ้างจากงานวิจัยเดิม", zh: "既有研究陈述" })}</p>
+        <h2>{locale === "th" ? "ยังไม่ได้ตรวจสอบยืนยันอย่างอิสระ" : locale === "zh" ? "尚未经独立核验" : "Not independently verified"}</h2>
         <ul className="highlights-list">
           {city.highlights.length > 0
             ? city.highlights.map((highlight, index) => (

@@ -85,18 +85,19 @@ export default function CreativeEconomyPage({ locale, onNavigate }: Props) {
           </h2>
           <p style={{ marginBottom: "1.5rem" }}>
             {translate(locale, {
-              en: "SCITI directly supports the Creative Economy Agency's (CEA) Thailand Creative District Network (TCDN), which targets 30+ creative districts across 60 provinces. Our data infrastructure gives CEA the province-level evidence base it needs to deploy resources where they matter most.",
-              th: "SCITI สนับสนุนเครือข่ายย่านเศรษฐกิจสร้างสรรค์ประเทศไทย (TCDN) ของสำนักงานส่งเสริมเศรษฐกิจสร้างสรรค์ (CEA) โดยตรง ซึ่งมีเป้าหมายที่ย่านสร้างสรรค์กว่า 30 แห่งใน 60 จังหวัด โครงสร้างพื้นฐานด้านข้อมูลของเราช่วยให้ CEA มีฐานข้อมูลระดับจังหวัดที่จำเป็นต่อการจัดสรรทรัพยากรไปยังจุดที่สำคัญที่สุด",
-              zh: "SCITI直接支持创意经济局 (CEA) 的泰国创意街区网络 (TCDN)，该网络针对60个省份的30多个创意街区。我们的数据基础设施为CEA提供了将资源部署到最重要地方所需的省级证据基础。"
+              en: "SCITI assembles provincial context for researchers studying creative districts. Use CEA's own Thailand Creative District Network definitions, coverage and current project records for programme decisions.",
+              th: "SCITI รวบรวมบริบทระดับจังหวัดสำหรับผู้ศึกษาย่านสร้างสรรค์ การตัดสินใจเกี่ยวกับโครงการควรใช้คำนิยาม ขอบเขต และข้อมูลปัจจุบันของเครือข่ายย่านเศรษฐกิจสร้างสรรค์ประเทศไทยจาก CEA โดยตรง",
+              zh: "SCITI为研究创意街区的人士整理省级背景。计划决策应采用CEA泰国创意街区网络本身的定义、覆盖范围和当前项目记录。"
             })}
           </p>
           <p style={{ marginBottom: "1.5rem" }}>
             {translate(locale, {
-              en: "Thailand is home to 9 UNESCO Creative Cities -- among the most in Southeast Asia -- including Chiang Mai (Crafts & Folk Art), Phuket (Gastronomy), Suphan Buri (Music), Chiang Rai (Design), and Songkhla (Gastronomy). SCITI provides these cities with monitoring data for their quadrennial UNESCO reports while helping aspiring cities build the evidence case for their own applications.",
-              th: "ประเทศไทยเป็นบ้านของเครือข่ายเมืองสร้างสรรค์ของยูเนสโกถึง 9 เมือง ซึ่งเป็นหนึ่งในกลุ่มที่มากที่สุดในเอเชียตะวันออกเฉียงใต้ ได้แก่ เชียงใหม่ ภูเก็ต สุพรรณบุรี เชียงราย และสงขลา SCITI นำเสนอข้อมูลติดตามผลสำหรับรายงานยูเนสโกทุก 4 ปีของเมืองเหล่านี้ ในขณะเดียวกันก็ช่วยเมืองที่มุ่งหวังจะเข้าร่วมในการสร้างฐานข้อมูลหลักฐานสำหรับการสมัครของตนเอง",
-              zh: "泰国拥有9个联合国教科文组织创意城市——位居东南亚前列——包括清迈、普吉、素攀武里、清莱和宋卡。SCITI为这些城市提供每四年一次的教科文组织报告所需的监测数据，同时帮助有抱负的城市为自己的申请建立证据案例。"
+              en: "Thailand had nine UNESCO Creative Cities after Nan and Songkhla joined in 2025, according to TAT. Researchers should use each city's validated records and UNESCO's reporting requirements; SCITI's general baseline is not a complete monitoring report.",
+              th: "ประเทศไทยมีเมืองสร้างสรรค์ UNESCO เก้าเมืองหลังน่านและสงขลาเข้าร่วมในปี 2568 ตามข้อมูล ททท. ผู้วิจัยควรใช้ข้อมูลที่แต่ละเมืองยืนยันและข้อกำหนดรายงานของ UNESCO ข้อมูลตั้งต้นทั่วไปของ SCITI ไม่ใช่รายงานติดตามที่ครบถ้วน",
+              zh: "据泰国旅游局，楠府与宋卡于2025年加入后，泰国共有九座UNESCO创意城市。研究者应采用各城市核实的记录及UNESCO报告要求；SCITI的一般基线并非完整监测报告。"
             })}
           </p>
+          <p><a href="https://www.tatnews.org/2025/11/nan-and-songkhla-named-unesco-creative-cities-for-2025/" target="_blank" rel="noreferrer">TAT, 6 November 2025 ↗</a></p>
         </div>
       </section>
 

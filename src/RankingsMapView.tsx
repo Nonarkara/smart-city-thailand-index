@@ -403,6 +403,11 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
         </div>
       )}
 
+      <p className="map-coordinate-note">{t({
+        en: "Legacy city reference points; project sites and boundaries are unverified. Map positions are not evidence of local service capacity.",
+        th: "จุดอ้างอิงเมืองจากทะเบียนเดิม ตำแหน่งและขอบเขตโครงการยังไม่ยืนยัน ตำแหน่งบนแผนที่ไม่ใช่หลักฐานความจุบริการในพื้นที่",
+        zh: "沿用的城市参考点；项目位置及边界尚未核实。地图位置不能证明当地服务容量。",
+      })}</p>
       {/* Unused color reference suppression — keeps PILLAR_COLORS import live for future legend */}
       <span hidden aria-hidden="true" style={{ display: "none" }}>{PILLAR_COLORS.livability}</span>
     </div>

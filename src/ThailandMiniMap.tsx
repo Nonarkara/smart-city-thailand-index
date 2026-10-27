@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { MAP_BOUNDS, CITY_COORDS, NEIGHBOR_LABELS, projectTo, esriTileUrl, tierColor } from "./mapUtils";
-import { getCityName, getDistinctProvinceName } from "./cityPresentation";
+import { getCityName, getDistinctProvinceName, translate } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
 
 interface Props {
@@ -119,6 +119,11 @@ export default function ThailandMiniMap({ cities, selectedCity, locale, onSelect
         )}
       </svg>
 
+      <p className="map-coordinate-note">{translate(locale, {
+        en: "City reference points; project locations and boundaries are unverified.",
+        th: "จุดอ้างอิงเมือง ตำแหน่งและขอบเขตโครงการยังไม่ยืนยัน",
+        zh: "城市参考点；项目位置及边界尚未核实。",
+      })}</p>
       {/* Legend */}
       <div className="mini-map-legend">
         <span className="mini-map-legend-item"><span className="mini-map-legend-dot" style={{ background: "var(--alpha, #1A8A72)" }} /> Alpha</span>

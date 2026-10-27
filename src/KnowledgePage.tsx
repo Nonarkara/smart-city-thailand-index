@@ -10,6 +10,7 @@ interface Props {
 
 interface FAQ {
   category: string;
+  source?: { label: string; url: string };
   q: { en: string; th: string; zh: string };
   a: { en: string; th: string; zh: string };
 }
@@ -726,10 +727,11 @@ const FAQS: FAQ[] = [
       zh: "泰国的府究竟由谁管理——府尹还是市长？",
     },
     a: {
-      en: "Both, and this is the single most misread feature of Thai local government. Every province has a governor appointed by the Ministry of Interior, and separately a Provincial Administrative Organisation (PAO) mayor elected by residents. The elected PAO mayor holds the budget — decentralisation law put the money with elected officials. The appointed governor holds the process: a project generally needs the governor's signature, and the governor can hold it, send it back, or route it to a committee first. So a foreign partner who has convinced the mayor has secured the funding but not yet the approval, and a partner who has convinced only the governor has approval but no money. Bangkok is the exception to all of this: it is not one of the 76 provinces and its governor is elected, not appointed.",
-      th: "ทั้งคู่ และนี่คือจุดที่คนเข้าใจผิดมากที่สุดเกี่ยวกับการปกครองท้องถิ่นไทย ทุกจังหวัดมีผู้ว่าราชการจังหวัดที่แต่งตั้งโดยกระทรวงมหาดไทย และมีนายกองค์การบริหารส่วนจังหวัด (อบจ.) ที่มาจากการเลือกตั้งแยกอีกตำแหน่ง นายก อบจ. ที่มาจากการเลือกตั้งคือผู้ถืองบประมาณ ตามเจตนารมณ์ของกฎหมายกระจายอำนาจที่ให้เงินอยู่ในมือผู้ที่ประชาชนเลือก ส่วนผู้ว่าฯ ถือกระบวนการ โครงการโดยทั่วไปต้องผ่านลายเซ็นผู้ว่าฯ ซึ่งสามารถชะลอ ตีกลับ หรือส่งให้คณะกรรมการพิจารณาก่อนได้ ดังนั้นพันธมิตรต่างชาติที่คุยกับนายกฯ สำเร็จ ถือว่าได้งบแต่ยังไม่ได้อนุมัติ ส่วนผู้ที่คุยกับผู้ว่าฯ อย่างเดียว ได้อนุมัติแต่ไม่มีงบ กรุงเทพมหานครเป็นข้อยกเว้น เพราะไม่ได้เป็นหนึ่งใน 76 จังหวัด และผู้ว่าฯ กทม. มาจากการเลือกตั้ง",
-      zh: "两者都管，而这正是泰国地方治理中最常被误读的一点。每个府都有一位由内政部委任的府尹，另有一位由居民选举产生的府行政组织（PAO）主席。民选的 PAO 主席掌握预算——权力下放法将资金交到民选官员手中。委任的府尹掌握流程：项目通常需要府尹签字，而府尹可以搁置、退回或先转交委员会审议。因此，说服了市长的外国伙伴拿到了资金却尚未拿到批准；只说服了府尹的伙伴拿到了批准却没有资金。曼谷是例外：它不属于76个府，其府尹由选举产生而非委任。",
+      en: "Provincial administration and local government share responsibilities, but their powers and budgets differ. Outside Bangkok, governors are appointed; PAO chief executives and councils are elected. Municipalities and other agencies also have their own responsibilities. A meeting with any one office does not secure project funding or permission. Identify the actual budget holder, procuring authority, landowner and regulators. Bangkok has a separate metropolitan administration with an elected governor. Reference: OECD, Enhancing Governance in Thailand (2018), chapter on multi-level governance.",
+      th: "ราชการส่วนภูมิภาคและท้องถิ่นมีหน้าที่ร่วมกัน แต่อำนาจและงบประมาณต่างกัน นอกกรุงเทพฯ ผู้ว่าราชการจังหวัดมาจากการแต่งตั้ง นายกและสภา อบจ. มาจากการเลือกตั้ง เทศบาลและหน่วยงานอื่นมีหน้าที่ของตนเอง การพบหน่วยงานใดหน่วยงานหนึ่งไม่ใช่การได้รับงบหรือใบอนุญาต ต้องระบุเจ้าของงบ หน่วยจัดซื้อจัดจ้าง เจ้าของที่ดิน และหน่วยกำกับจริง กรุงเทพฯ มีรูปแบบบริหารมหานครแยกต่างหากและผู้ว่าฯ มาจากการเลือกตั้ง อ้างอิง: OECD, Enhancing Governance in Thailand (2018) บทการบริหารหลายระดับ",
+      zh: "府级行政和地方自治共同承担职责，但权限与预算各不相同。曼谷以外的府尹由任命产生，PAO行政首长及议会由选举产生；市政及其他机构也有各自职责。与任何一个机构会面都不等于取得项目资金或许可。请确认实际预算主管、采购机构、土地所有者和监管部门。曼谷实行单独的都市行政制度，府尹由选举产生。参考：OECD《Enhancing Governance in Thailand》（2018）多层级治理章节。",
     },
+    source: { label: "OECD (2018): Enhancing Governance in Thailand", url: "https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/05/enhancing-governance-in-thailand_b9685153/8ddfd4c6-en.pdf" },
   },
   {
     category: "How Thailand Works",
@@ -1096,7 +1098,7 @@ export default function KnowledgePage({ locale }: Props) {
                 <span className="kb-cat-badge">{localiseCategory(faq.category, locale)}</span>
                 {faq.q[locale]}
               </summary>
-              <p className="kb-answer">{faq.a[locale]}</p>
+              <p className="kb-answer">{faq.a[locale]}{faq.source && <> <a href={faq.source.url} target="_blank" rel="noreferrer">{faq.source.label} ↗</a></>}</p>
             </details>
           ))}
         </div>

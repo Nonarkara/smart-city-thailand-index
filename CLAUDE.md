@@ -163,8 +163,7 @@ record-pattern gate, not a declaration that the rest of a page is SH-free.
 - **Weekly digest ritual** (live now): edit
   `src/weeklyDigest.ts` every Monday. Update `weekOf`, the trending
   city note, one Google Trends phrase, one headline link. Commit,
-  push. GitHub Pages redeploys. The page's "Updated N days ago"
-  stamp is the illusion of real time.
+  push. GitHub Pages redeploys. The stamp dates the editorial selection; it must never imply a live feed or that every source was refreshed.
 
 ## Preview & Testing
 
@@ -190,3 +189,22 @@ See `/Users/nonarkara/Projects/CLAUDE.md` §11 (The Codex Incident — Anti-Regr
 - **Smartphone-perfect, every page** (workspace `CLAUDE.md` §11.8). Every page in this project — `/`, `/rankings`, `/city/:id`, `/methodology`, `/story`, `/program`, `/partners`, `/audit`, `/invest`, `/compare`, all of them — must be perfect on a phone. Phone-first base CSS, ≥44 × 44 px tap targets, single-column collapse, no fixed-pixel body widths, 3-size typography held, photo aspect collapses 21:9 → 4:3 on ≤ 720 px. Test on iOS simulator before pushing any layout change. Informational and marketing pages have a *higher* bar than data dashboards — phone-broken marketing reads as "not made by Thais" the way a looped Thai font does.
 
 If you are about to remove, replace, or "simplify" any item above: stop, show the diff, wait for explicit approval.
+
+## Verified visual context (28 October 2026)
+
+Every city dossier has an openly licensed or public-domain visual record with
+explicit province/local/regional scope, author, source and reuse terms.
+`public/heritage/source-register.json` is generated deterministically from the
+actual records at postbuild, into public and dist. Do not hand-edit it.
+`heritage-gallery.mjs --serve` checks all 118 mappings, real image bytes and
+representative multilingual interaction. `footer-density.mjs --serve` checks
+the complete closing path, preserved qualifications and original-fault mutations.
+Both gates run in CI and CDPT. A geometry pass is not a data-truth certificate.
+
+Use verified provincial context instead of an unrelated photograph chosen only
+for uniqueness. Preserve authored city photographs. Documented editorial
+stand-ins and absent-city-photo fallbacks in CityDetail use a verified cultural
+record with visible scope and credits; do not present it as a project-site view.
+Legacy project/finance/highlight claims must be labeled at their point of use,
+not rescued by a distant footer disclaimer. Unknown observation periods stay
+unknown. Framework references and programme logos do not establish certification.

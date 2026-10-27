@@ -31,7 +31,7 @@ interface ShowcaseSource {
 }
 
 const metrics: ShowcaseMetric[] = [
-  { value: "131,908", label: { en: "LINE OA friends (province-wide)", th: "เพื่อน LINE OA (ทั่วจังหวัด)", zh: "LINE OA 好友（全省范围）" } },
+  { value: "131,908", label: { en: "Reported LINE OA friends", th: "เพื่อน LINE OA ตามรายงาน", zh: "报告的LINE OA好友数" } },
   { value: "< 48h", label: { en: "Issue resolution target", th: "เป้าเวลาแก้ปัญหา", zh: "问题处理目标" } },
   { value: "38,000", label: { en: "Complaints resolved in 3 years", th: "เรื่องร้องเรียนที่แก้ใน 3 ปี", zh: "3 年内已处理投诉" } },
   { value: "37%", label: { en: "Call-center workload cut", th: "ปริมาณงานคอลเซ็นเตอร์ที่ลดลง", zh: "呼叫中心工作量下降" } },
@@ -66,7 +66,7 @@ const nstIdentity: TL[] = [
 
 const nstDidYouKnow: TL[] = [
   { en: "The name comes from the Pali-Sanskrit Nagara Sri Dhammaraja — 'City of the Sacred Dharma King.'", th: "ชื่อเมืองมาจากภาษาบาลี-สันสกฤต 'นครศรีธรรมราช' — 'เมืองแห่งพระราชาผู้ทรงธรรมอันศักดิ์สิทธิ์'", zh: "城名源自巴利—梵语 Nagara Sri Dhammaraja，意为'神圣法王之城'。" },
-  { en: "Wat Phra Mahathat's golden-spired chedi sits on Thailand's UNESCO World Heritage tentative list.", th: "พระบรมธาตุเจดีย์ยอดทองของวัดพระมหาธาตุ อยู่ในบัญชีรายชื่อเบื้องต้นมรดกโลก UNESCO ของไทย", zh: "帕玛哈塔寺的金顶佛塔已列入泰国的联合国教科文组织世界遗产预备名录。" },
+  { en: "Wat Phra Mahathat Woramahawihan was inscribed on the UNESCO World Heritage List in 2026 (property 1761).", th: "วัดพระมหาธาตุวรมหาวิหารได้รับการขึ้นทะเบียนมรดกโลก UNESCO ในปี 2569 (แหล่งมรดกหมายเลข 1761)", zh: "帕玛哈塔沃拉玛哈维汉寺于2026年列入联合国教科文组织《世界遗产名录》（遗产编号1761）。" },
   { en: "Nora, the southern dance-drama rooted here, joined UNESCO's Intangible Cultural Heritage list in 2021.", th: "โนรา การแสดงของภาคใต้ที่หยั่งรากที่นี่ ได้รับการขึ้นทะเบียนมรดกภูมิปัญญาทางวัฒนธรรมของ UNESCO ในปี 2564", zh: "扎根于此的南部歌舞剧'诺拉'于 2021 年入选联合国教科文组织非物质文化遗产名录。" },
   { en: "Just west rises Khao Luang — at 1,835 m, the highest peak in southern Thailand.", th: "ทางทิศตะวันตกคือเขาหลวง สูง 1,835 เมตร ยอดเขาที่สูงที่สุดในภาคใต้ของไทย", zh: "城西矗立着銮山——海拔 1,835 米，是泰国南部最高峰。" },
   { en: "It was the seat of Tambralinga and head of the south's twelve naksat (zodiac) cities.", th: "ที่นี่เคยเป็นศูนย์กลางของอาณาจักรตามพรลิงค์ และเป็นเมืองหลักของเมืองสิบสองนักษัตรแห่งภาคใต้", zh: "它曾是单马令古国的中心，也是南部'十二生肖城邦'之首。" },
@@ -483,7 +483,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           {/* ── 131,908 friends ── */}
           <section className="section">
             <p className="eyebrow">{translate(locale, { en: "Beyond city limits", th: "เกินขอบเขตเมือง", zh: "已超出城市边界" })}</p>
-            <h2>{translate(locale, { en: "131,908 friends. More than the city itself.", th: "131,908 เพื่อน — มากกว่าประชากรในเมือง", zh: "131,908 好友，超过城市本身" })}</h2>
+            <h2>{translate(locale, { en: "131,908 reported account friends", th: "เพื่อนบัญชีที่รายงาน 131,908 ราย", zh: "报告的账户好友数：131,908" })}</h2>
             <div className="showcase-data-callout">
               <div className="showcase-data-callout-cell">
                 <span className="showcase-data-callout-num">131,908</span>
@@ -499,14 +499,14 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               </div>
               <div className="showcase-data-callout-cell">
                 <span className="showcase-data-callout-num">48h</span>
-                <span className="showcase-data-callout-label">{translate(locale, { en: "Guaranteed response with photo proof", th: "รับประกันการตอบสนองพร้อมหลักฐานภาพ", zh: "承诺响应时限，附修复照片为证" })}</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Reported response target with photo proof", th: "เป้าหมายตอบสนองที่รายงานพร้อมหลักฐานภาพ", zh: "报告的响应目标，附修复照片" })}</span>
               </div>
             </div>
             <p>
               {translate(locale, {
-                en: "This number — verified June 2026 — is a scale few Thai municipalities have reached. In most Thai cities, government digital platforms reach 20% of residents at best. Nakhon Si Thammarat's @Nakhoncity LINE account now has 131,908 friends: more than the city's own population of 110,000. The account has outgrown the city. People from across Nakhon Si Thammarat province follow it as the most reliable government communication channel in the region — for real-time flood warnings, queue bookings, road repair reports, and live CCTV access.",
-                th: "ตัวเลขนี้ — ยืนยัน ณ มิถุนายน 2569 — เป็นระดับที่เทศบาลไทยมีเพียงไม่กี่แห่งที่ทำได้ ในเมืองส่วนใหญ่ของไทย แพลตฟอร์มดิจิทัลของรัฐเข้าถึงประชาชนได้ดีที่สุดเพียง 20% LINE OA @Nakhoncity ของนครศรีธรรมราชมีเพื่อนแล้ว 131,908 ราย — มากกว่าประชากรในเขตเทศบาลที่มีอยู่ 110,000 คน บัญชีนี้โตเกินเมืองไปแล้ว ประชาชนทั่วทั้งจังหวัดนครศรีธรรมราชต่างติดตามเพราะมันคือช่องทางสื่อสารของรัฐที่น่าเชื่อถือที่สุดในภูมิภาค — สำหรับแจ้งเตือนน้ำท่วมเรียลไทม์ จองคิว รายงานซ่อมถนน และดูกล้องวงจรปิดสด",
-                zh: "这个数字——于2026年6月确认——达到了泰国少有城市政府曾及的规模。泰国多数城市的政府数字平台顶多覆盖20%的居民。洛坤的@Nakhoncity LINE账户目前拥有131,908位好友：超过了这座城市自身11万人口的总量。账户的覆盖已经超出城市本身。来自洛坤全省的民众将其视为整个地区最可靠的政府沟通渠道——用于实时洪水预警、事务预约、道路修缮报告和实时监控画面。",
+                en: "The municipal material reproduced here reports 131,908 LINE OA friends in June 2026. This is an account-level count, not a count of unique municipal residents, active service users or people reached by an alert. It cannot be divided by the municipality population to establish resident adoption or compared with other cities without matching definitions and dates.",
+                th: "เอกสารเทศบาลที่นำมาแสดงระบุเพื่อน LINE OA 131,908 ราย ณ มิถุนายน 2569 นี่คือจำนวนระดับบัญชี ไม่ใช่จำนวนประชาชนในเขตเทศบาลที่ไม่ซ้ำกัน ผู้ใช้บริการจริง หรือผู้ได้รับแจ้งเตือน จึงไม่ควรหารด้วยประชากรเทศบาลเพื่อสรุปอัตราการใช้งานของประชาชน หรือเปรียบเทียบเมืองอื่นโดยไม่ตรวจนิยามและช่วงเวลาให้ตรงกัน",
+                zh: "此处展示的市政材料报告，截至2026年6月LINE OA好友数为131,908。这是账户层面的数量，并非去重后的市内居民、活跃服务用户或收到预警的人数。不能除以市政人口来推断居民采用率，也不能在定义与日期不一致时与其他城市比较。",
               })}
             </p>
             <p>
@@ -586,11 +586,12 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </div>
             <p>
               {translate(locale, {
-                en: "Other provinces had built custom apps for citizen reporting. Most of those apps sat unused. They required downloads, logins, and learning a new interface — friction that government enthusiasm generated but resident attention would not pay. Nakhon Si Thammarat chose the platform with 70 million Thai users already on it.",
-                th: "จังหวัดอื่นๆ ได้สร้างแอปเฉพาะสำหรับรายงานของประชาชน แอปส่วนใหญ่ไม่ถูกใช้งาน ต้องการการดาวน์โหลด การล็อกอิน และการเรียนรู้อินเทอร์เฟซใหม่ — ความยุ่งยากที่ความกระตือรือร้นของรัฐสร้างขึ้น แต่ความสนใจของประชาชนไม่ยอมจ่าย นครศรีธรรมราชเลือกแพลตฟอร์มที่คนไทยกว่า 70 ล้านคนอยู่บนนั้นแล้ว",
-                zh: "其他省份建了专属市民报告应用，大多数无人问津。它们需要下载、注册、学习新界面——政府的热情制造了摩擦，居民的注意力不会为此买单。洛坤选择了一个已有7000万泰国用户的平台。",
+                en: "A LINE-based service can reduce the need for residents already using LINE to install a separate municipal app. LY Corporation reported 54 million LINE users in Thailand as of December 2024. That dated national figure does not establish adoption or service quality in Nakhon Si Thammarat.",
+                th: "บริการผ่าน LINE อาจลดความจำเป็นที่ผู้ใช้ LINE เดิมต้องติดตั้งแอปเทศบาลเพิ่มเติม LY Corporation รายงานผู้ใช้ LINE ในไทย 54 ล้านคน ณ ธันวาคม 2567 ตัวเลขระดับชาติในช่วงเวลานั้นไม่ได้ยืนยันการใช้งานหรือคุณภาพบริการในนครศรีธรรมราช",
+                zh: "基于LINE的服务可减少现有LINE用户另装市政应用的需要。LY Corporation报告，截至2024年12月泰国有5,400万LINE用户。这个特定时期的全国数字不能证明洛坤当地的采用率或服务质量。",
               })}
             </p>
+            <p><a href="https://www.lycorp.co.jp/en/story/20250530/lineconference.html" target="_blank" rel="noreferrer">LY Corporation: LINE CONFERENCE THAILAND 2025 ↗</a></p>
             <p>
               {translate(locale, {
                 en: "The same logic extended to water pricing and veterinary services. The city's self-operated waterworks were already cheaper than the regional authority at ฿2.50 versus ฿11 per unit, but most residents did not know it. Field rounds for government vets dropped from 67 per cycle to 20 after the service moved online. The technology did not create the benefit. It made the existing benefit legible.",
@@ -1165,6 +1166,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
           <section className="section showcase-sources-section">
             <p className="eyebrow">{translate(locale, { en: "Source stack", th: "ชุดเอกสารอ้างอิง", zh: "来源堆栈" })}</p>
             <h2>{translate(locale, { en: "What this profile is built from", th: "โปรไฟล์นี้สร้างจากอะไร", zh: "这份画像建立在什么材料上" })}</h2>
+            <p><a href="https://whc.unesco.org/en/list/1761/" target="_blank" rel="noreferrer">UNESCO World Heritage property 1761 ↗</a></p>
             <div className="showcase-source-grid">
               {sourceFiles.map(source => (
                 <article key={source.title} className="showcase-source-card">

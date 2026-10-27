@@ -5,7 +5,9 @@
  * Reads: total count + top countries breakdown.
  *
  * Fire-and-forget — never blocks the UI. One track per session.
- * No PII stored beyond IP (which ipapi.co provides ephemerally).
+ * Configured requests can transmit personal data (including IP, location,
+ * browser and referrer) to third-party processors. Retention is not verified
+ * by this client; never describe this path as anonymous or ephemeral.
  */
 
 const TRACKING_URL = import.meta.env.VITE_SCITI_TRACKING_URL?.trim() ?? "";

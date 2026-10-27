@@ -46,7 +46,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
   const [collectionsRef, collectionsVisible] = useInView(0.1);
   const [digestRef, digestVisible] = useInView(0.1);
   const [feedbackRef, feedbackVisible] = useInView(0.1);
-  const [fineprintRef] = useInView(0.1);
 
   const [heroIndex, setHeroIndex] = useState(0);
 
@@ -595,7 +594,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
         <section ref={feedbackRef} className={`section reveal stagger-4 ${feedbackVisible ? "visible" : ""}`}>
           <div className="feedback-cta glass-card shadow-premium">
             <h2>{t({ en: "Is your city missing?", th: "เมืองของคุณยังไม่อยู่ในดัชนี?", zh: "您的城市不在名单上？" })}</h2>
-            <p>{t({ en: "We only rank cities with enough verifiable data.", th: "เราจัดอันดับเฉพาะเมืองที่มีข้อมูลซึ่งตรวจสอบได้เพียงพอ", zh: "我们仅对拥有足够可验证数据的城市进行排名。" })}</p>
+            <p>{t({ en: "Help improve a city dossier with a dated, checkable source.", th: "ช่วยปรับปรุงแฟ้มเมืองด้วยแหล่งข้อมูลที่ระบุวันที่และตรวจสอบได้", zh: "提供带日期、可核查的来源，帮助完善城市档案。" })}</p>
             <button className="cta-button" onClick={() => window.open("mailto:data@slic-index.org")}>{t({ en: "Submit Data", th: "ส่งข้อมูล", zh: "提交数据" })}</button>
           </div>
         </section>
@@ -610,9 +609,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
             </h2>
             <p className="open-data-body">
               {t({
-                en: `Every score, every metric, every source row — downloadable. No city lobbied for a higher rank. No investor paid for placement. SCITI publishes the research layer, the deterministic equation, and the provenance exports under CC BY 4.0. Take the data. Audit the method. Build on it.`,
-                th: "ทุกคะแนน ทุกตัวชี้วัด ทุกแถวของแหล่งข้อมูล — ดาวน์โหลดได้ทั้งหมด ไม่มีเมืองใดวิ่งเต้นขอขึ้นอันดับ ไม่มีนักลงทุนจ่ายเงินซื้อตำแหน่ง SCITI เผยแพร่ทั้งชั้นงานวิจัย สมการที่คำนวณตายตัว และไฟล์แสดงที่มาของข้อมูล ภายใต้สัญญาอนุญาต CC BY 4.0 นำข้อมูลไปใช้ ตรวจสอบระเบียบวิธี แล้วต่อยอดได้ทันที",
-                zh: "每个分数、每项指标、每一行来源记录都可下载。没有城市游说更高排名，也没有投资者付费买位置。SCITI 公开研究层、确定性公式和溯源导出文件，并采用 CC BY 4.0 许可。",
+                en: "Download the city scores, metrics and provenance exports. SCITI publishes its research layer and deterministic equation under CC BY 4.0. Upstream data and images keep their own terms. Audit the method and build on the research.",
+                th: "ดาวน์โหลดคะแนนเมือง ตัวชี้วัด และไฟล์แสดงที่มา SCITI เผยแพร่ชั้นงานวิจัยและสมการที่คำนวณตายตัวภายใต้ CC BY 4.0 ข้อมูลต้นทางและภาพมีเงื่อนไขของตนเอง ตรวจสอบวิธีประเมินและนำงานวิจัยไปต่อยอดได้",
+                zh: "下载城市评分、指标及溯源文件。SCITI以CC BY 4.0公开研究层及确定性公式；上游数据与图片保留各自条款。可核查方法并继续开展研究。",
               })}
             </p>
           </div>
@@ -742,12 +741,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
       {/* ─── NEWS + DATA DENSITY + LEGAL ─── */}
       <NewsStrip locale={locale} />
 
-      {/* ─── FINE PRINT ─── */}
-      <section ref={fineprintRef} className={`dashboard-fineprint reveal visible`}>
-        <div className="dashboard-fineprint-inner">
-          <p>© 2026 depa, MDES, Kingdom of Thailand · SLIC Methodology · CC BY 4.0 · No city lobbied for rank · No investor paid for placement · SCITI-2026-R1</p>
-        </div>
-      </section>
     </div>
   );
 }

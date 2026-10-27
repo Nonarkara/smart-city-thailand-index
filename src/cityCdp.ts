@@ -729,7 +729,7 @@ function metricMethod(metricKey: string): string {
     case "forestCoverage":
       return "Royal Forest Department provincial forest percentage; ground-truth environmental baseline.";
     case "fdiInflow":
-      return "BOI-promoted foreign direct investment (million baht); real money, not memoranda of understanding.";
+      return "Curated investment-context field (million baht). BOI promotion applications or approvals are not proof of disbursed FDI; verify the original measure and period.";
     case "industryComposition":
       return "NESDC sectoral breakdown; shows what the economy actually does, not what plans say it will do.";
     case "laborForce":
@@ -782,7 +782,7 @@ function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
           : null,
         metricValueText: typeof value === "string" ? value : formatted.text,
         unit: formatted.unit || null,
-        periodLabel: metricKey === "pm25Annual" ? "2025 annual average" : "2025 baseline",
+        periodLabel: "Curated seed; original observation period not independently verified",
         sourceId,
         sourceName: source.name,
         sourceUrl: source.url,

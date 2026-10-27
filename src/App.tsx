@@ -10,6 +10,7 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import { PAGE_HERO_ASSETS, type StaticHeroKind } from "./pageHeroAssets";
 
 import HomePage from "./HomePage";
+import { ResearchNotes } from "./NewsStrip";
 import RankingsPage from "./RankingsPage";
 
 // CityDetailPage carries the full 118-city dossier machinery (~250 kB of
@@ -498,7 +499,7 @@ export default function App() {
             )}
           </Suspense>
         </ErrorBoundary>
-        
+
         {!isCanvasRoute && <DataFeedback locale={locale} />}
       </main>
 
@@ -525,40 +526,32 @@ export default function App() {
           {/* No horizontal padding here — the .section inside carries the column
               gutter, and a wrapper gutter on top of it pushed this block 16px
               inboard of every other block on the page. */}
-          <section className="newsletter-section" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "3rem 0", textAlign: "center" }}>
+          <section className="newsletter-section" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "16px 0", textAlign: "left" }}>
             <div className="section" style={{ maxWidth: "600px", margin: "0 auto" }}>
               {/* §11.7 — this ran at --text-display (32px) in an <h3>, which put
                   a 32px heading BELOW the 27.2px <h2> sections on every page and
                   inverted the outline. It is a footer utility panel, not a
                   section headline, so it sits at body weight. */}
               <h3 style={{ fontSize: "var(--text-body)", fontWeight: 700, marginBottom: "0.5rem", color: "var(--ink)" }}>
-                {locale === "th" ? "สมัครรับข้อมูลข่าวสาร" : locale === "zh" ? "订阅简报" : "Subscribe to SCITI Data Insights"}
+                {locale === "th" ? "ข่าวงานวิจัย" : locale === "zh" ? "研究更新" : "Research updates"}
               </h3>
               <p style={{ marginBottom: "1.5rem", color: "var(--2)" }}>
-                {locale === "th" 
-                  ? "รับข้อมูลเชิงลึกเศรษฐกิจสร้างสรรค์ระดับจังหวัดรายเดือน ส่งตรงถึงอีเมลคุณ" 
-                  : locale === "zh" 
-                    ? "获取每月省级创意经济数据洞察，直接发送到您的收件箱。" 
-                    : "Get monthly provincial creative economy data insights straight to your inbox."}
+                {locale === "th"
+                  ? "สอบถามทีมบรรณาธิการเกี่ยวกับงานวิจัยฉบับถัดไป"
+                  : locale === "zh"
+                    ? "向编辑团队咨询下一期研究发布。"
+                    : "Ask the editorial team about upcoming research releases."}
               </p>
-              <form onSubmit={e => e.preventDefault()} style={{ display: "flex", gap: "0.5rem", justifyContent: "center", flexWrap: "wrap" }}>
-                <input 
-                  type="email" 
-                  placeholder={locale === "th" ? "อีเมลของคุณ" : locale === "zh" ? "您的电子邮件" : "Your email address"} 
-                  style={{ padding: "0.75rem 1rem", borderRadius: 0, border: "1px solid var(--border)", flex: "1", maxWidth: "300px", background: "var(--bg)", color: "var(--ink)" }}
-                  required
-                />
-                <button type="submit" className="cta-button" style={{ padding: "0.75rem 1.5rem", border: "none" }}>
-                  {locale === "th" ? "ติดตาม" : locale === "zh" ? "订阅" : "Subscribe"}
-                </button>
-              </form>
+              <a className="cta-button" href="mailto:non.ar@depa.or.th?subject=SCITI%20research%20updates">
+                {locale === "th" ? "ขอรับข่าวงานวิจัยทางอีเมล" : locale === "zh" ? "通过邮件申请研究更新" : "Request research updates by email"}
+              </a>
             </div>
           </section>
 
           {/* ─── NEW FOOTER ─── */}
           <footer className="site-footer">
-            <div className="section" style={{ paddingBottom: "2rem" }}>
-              <div className="footer-logos" style={{ marginBottom: "2rem" }}>
+            <div className="section footer-core">
+              <div className="footer-logos">
                 <div className="institutional-logo-container"><ResponsiveImage src={MDES_LOGO.src} alt="MDES" className="footer-logo" width={MDES_LOGO.width} height={MDES_LOGO.height} /></div>
                 <div className="institutional-logo-container"><ResponsiveImage src={DEPA_LOGO.src} alt="depa" className="footer-logo" width={DEPA_LOGO.width} height={DEPA_LOGO.height} /></div>
                 <div className="institutional-logo-container"><ResponsiveImage src={SMART_CITY_LOGO.src} alt="Smart City Thailand" className="footer-logo" width={SMART_CITY_LOGO.width} height={SMART_CITY_LOGO.height} /></div>
@@ -568,7 +561,7 @@ export default function App() {
               <nav
                 className="footer-nav"
                 aria-label={locale === "th" ? "ลิงก์ท้ายเว็บ" : locale === "zh" ? "页脚链接" : "Footer links"}
-                style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginBottom: "2rem" }}
+                style={{ display: "flex", gap: "8px 20px", flexWrap: "wrap" }}
               >
                 <button type="button" className="endpoint-link" onClick={() => navigate("/why")}>
                   {locale === "th" ? "ทำไมต้อง SCITI" : locale === "zh" ? "为什么是 SCITI" : "Why SCITI"}
@@ -578,7 +571,8 @@ export default function App() {
                 </button>
               </nav>
 
-              <div className="footer-fineprint">
+              <details className="footer-fineprint">
+                <summary>{locale === "th" ? "เกี่ยวกับโครงการ SCITI" : locale === "zh" ? "关于SCITI项目" : "About the SCITI project"}</summary>
                 <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: "0.5rem", fontSize: "var(--text-body)" }}>
                   {locale === "th" ? "SCITI (sciti.nonarkara.org) -- แพลตฟอร์มข้อมูลเศรษฐกิจสร้างสรรค์ระดับจังหวัดของไทย" : locale === "zh" ? "SCITI (sciti.nonarkara.org) —— 泰国省级创意经济数据平台" : "SCITI (sciti.nonarkara.org) -- Thailand's Provincial Creative Economy Data Platform"}
                 </p>
@@ -603,10 +597,10 @@ export default function App() {
                 <p style={{ marginBottom: "1rem", color: "var(--3)", lineHeight: "1.6" }}>
                   <strong style={{ color: "var(--3)" }}>{locale === "th" ? "กิตติกรรมประกาศ: " : locale === "zh" ? "致谢： " : "Acknowledgments: "}</strong>
                   {locale === "th"
-                    ? "SCITI พัฒนาขึ้นโดยสอดคล้องกับกรอบนโยบายเศรษฐกิจสร้างสรรค์แห่งชาติของไทย และแนวทางปฏิบัติที่ดีที่สุดระดับโลกในการกำกับดูแลข้อมูลวัฒนธรรม รวมถึง Amsterdam Cultural Infrastructure Mapping, Barcelona CityOS, Buenos Aires Data Cultura, Seoul Open Data Plaza และ Singapore Cultural Statistics"
+                    ? "หัวข้อสำหรับศึกษาเปรียบเทียบเพิ่มเติม ได้แก่ ข้อมูลวัฒนธรรมและโครงสร้างพื้นฐานของ Amsterdam, Barcelona, Buenos Aires, Seoul และ Singapore รายชื่อนี้ไม่ใช่การรับรองหรือความร่วมมืออย่างเป็นทางการ"
                     : locale === "zh"
-                      ? "SCITI 的开发符合泰国国家创意经济政策框架以及文化数据治理的全球最佳实践，包括阿姆斯特丹文化基础设施地图、巴塞罗那 CityOS、布宜诺斯艾利斯 Data Cultura、首尔开放数据广场和新加坡文化统计。"
-                      : "SCITI is developed in alignment with Thailand's national creative economy policy framework and global best practices in cultural data governance, including Amsterdam Cultural Infrastructure Mapping, Barcelona CityOS, Buenos Aires Data Cultura, Seoul Open Data Plaza, and Singapore Cultural Statistics."}
+                      ? "可进一步比较阿姆斯特丹、巴塞罗那、布宜诺斯艾利斯、首尔及新加坡的文化与基础设施数据工作。本清单不代表认可或正式合作。"
+                      : "Further comparative reading can explore cultural and infrastructure data in Amsterdam, Barcelona, Buenos Aires, Seoul and Singapore. This list does not imply endorsement or a formal partnership."}
                 </p>
                 <p style={{ marginBottom: "1rem", color: "var(--3)", lineHeight: "1.6" }}>
                   <strong style={{ color: "var(--3)" }}>{locale === "th" ? "ติดต่อ: " : locale === "zh" ? "联系方式： " : "Contact: "}</strong>
@@ -616,15 +610,10 @@ export default function App() {
                       ? "有关数据查询、合作提案或更正，请通过 sciti.nonarkara.org 联系 SCITI 团队。"
                       : "For data inquiries, partnership proposals, or corrections, contact the SCITI team via sciti.nonarkara.org"}
                 </p>
-                <p style={{ borderTop: "1px solid var(--5)", paddingTop: ".5rem", marginTop: "1rem", fontSize: "var(--text-micro)" }}>
-                  {locale === "th"
-                    ? "© 2026 สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa) · วิธีการ SLIC · ข้อมูลเปิดเผยภายใต้ CC BY 4.0"
-                    : locale === "zh"
-                      ? "© 2026 数字经济促进局（depa） · SLIC 方法论 · 数据依据 CC BY 4.0 许可公开"
-                      : "© 2026 Digital Economy Promotion Agency (depa) · SLIC methodology · Data published under CC BY 4.0"}
-                </p>
-              </div>
+
+              </details>
             </div>
+            <ResearchNotes locale={locale} />
           </footer>
         </>
       )}

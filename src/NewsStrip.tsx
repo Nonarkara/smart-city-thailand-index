@@ -16,7 +16,6 @@ export default function NewsStrip({ locale }: Props) {
   const provinceCount = new Set(cities.map(city => city.province)).size;
   const [newsRef, newsVisible] = useInView(0.05);
   const [metaRef, metaVisible] = useInView(0.05);
-  const [legalRef, legalVisible] = useInView(0.05);
 
   return (
     <>
@@ -31,10 +30,6 @@ export default function NewsStrip({ locale }: Props) {
               {translate(locale, { en: "Selected reading", th: "บทอ่านคัดสรร", zh: "精选阅读" })}
             </h2>
           </div>
-          <span className="news-live-badge">
-            <span className="news-live-dot" />
-            {translate(locale, { en: "Dated articles", th: "บทความระบุวันที่", zh: "文章附日期" })}
-          </span>
         </div>
 
         <div className="news-grid">
@@ -69,7 +64,7 @@ export default function NewsStrip({ locale }: Props) {
             <div className="density-stat">
               <span className="density-value">{cities.length}</span>
               <span className="density-label">
-                {translate(locale, { en: "Cities tracked", th: "เมืองที่ติดตาม", zh: "追踪城市" })}
+                {translate(locale, { en: "City records", th: "ระเบียนเมือง", zh: "城市记录" })}
               </span>
             </div>
             <div className="density-stat">
@@ -118,42 +113,48 @@ export default function NewsStrip({ locale }: Props) {
         </div>
       </section>
 
-      {/* ─── LEGAL / COMPLIANCE STRIP ─── */}
+      <ResearchNotes locale={locale} />
+    </>
+  );
+}
+
+export function ResearchNotes({ locale }: Props) {
+  const [legalRef, legalVisible] = useInView(0.05);
+  return (
       <section ref={legalRef} className={`legal-strip-section reveal ${legalVisible ? "visible" : ""}`}>
         <div className="section legal-strip-inner">
+            <div className="legal-research-note">
+              <p className="legal-text">
+                {translate(locale, {
+                  en: "Research estimates, not official government assessments. Check source dates, geographic scope and limitations in each city dossier.",
+                  th: "คะแนนวิจัย ไม่ใช่ผลประเมินอย่างเป็นทางการของรัฐบาล ตรวจสอบวันที่ ขอบเขตพื้นที่ และข้อจำกัดในแฟ้มแต่ละเมือง",
+                  zh: "研究估算，并非政府官方评估。请在各城市档案中核查来源日期、地理范围及局限。",
+                })}
+                {" "}<a href="/methodology">{translate(locale, { en: "Method", th: "วิธีประเมิน", zh: "评估方法" })} ↗</a>
+              </p>
+            </div>
+              <p className="legal-text">
+                {translate(locale, {
+                  en: "SCITI research exports: ",
+                  th: "ไฟล์ส่งออกงานวิจัย SCITI: ",
+                  zh: "SCITI研究导出文件：",
+                })}
+                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+                {translate(locale, { en: " Images and upstream datasets retain their own credits and reuse terms.", th: " ภาพและชุดข้อมูลต้นทางมีเครดิตและเงื่อนไขการใช้ของตนเอง", zh: "图片和上游数据集保留各自的署名及使用条款。" })}
+              </p>
           <div className="legal-strip-grid">
-            <div className="legal-block">
-              <span className="legal-badge">CC BY 4.0</span>
+            <details className="legal-block" data-note="privacy">
+              <summary>{translate(locale, { en: "Privacy · visit statistics", th: "ความเป็นส่วนตัว · สถิติการเข้าชม", zh: "隐私 · 访问统计" })}</summary>
               <p className="legal-text">
                 {translate(locale, {
-                  en: "Data freely reusable with attribution. Cite as: SCITI 2026, depa, Kingdom of Thailand.",
-                  th: "ข้อมูลใช้ซ้ำได้อิสระพร้อมการอ้างอิง อ้างอิงเป็น: SCITI 2026, depa, ราชอาณาจักรไทย",
-                  zh: "数据可免费使用，需注明来源。引用格式：SCITI 2026，depa，泰国王国。",
+                  en: "When configured, visit statistics use ipapi.co and Google Apps Script and can include IP address, approximate location, browser, referrer and page. This is not an anonymous-only data flow. Browser Do Not Track and Global Privacy Control opt-outs are respected. Language and session preferences use browser storage.",
+                  th: "เมื่อกำหนดค่าเปิดใช้งาน สถิติการเข้าชมใช้ ipapi.co และ Google Apps Script และอาจมีที่อยู่ IP ตำแหน่งโดยประมาณ เบราว์เซอร์ แหล่งที่มา และหน้าที่เข้าชม จึงไม่ใช่ข้อมูลนิรนามทั้งหมด ระบบเคารพ Do Not Track และ Global Privacy Control ส่วนภาษาและสถานะเซสชันใช้ที่เก็บข้อมูลของเบราว์เซอร์",
+                  zh: "配置启用后，访问统计使用ipapi.co和Google Apps Script，可能包含IP地址、大致位置、浏览器、来源页及访问页面，并非仅匿名数据。系统尊重Do Not Track及Global Privacy Control退出设置。语言和会话偏好使用浏览器存储。",
                 })}
               </p>
-            </div>
-            <div className="legal-block">
-              <span className="legal-badge legal-badge-pdpa">PDPA B.E. 2562</span>
-              <p className="legal-text">
-                {translate(locale, {
-                  en: "No cookies. No ad trackers. We log anonymous visit analytics — approximate location and page — to measure reach. Never sold, never shared.",
-                  th: "ไม่มีคุกกี้ ไม่มีตัวติดตามโฆษณา เราเก็บสถิติการเข้าชมแบบไม่ระบุตัวตน — ตำแหน่งโดยประมาณและหน้าที่เข้าชม — เพื่อวัดการเข้าถึง ไม่ขาย ไม่แบ่งปัน",
-                  zh: "无Cookie。无广告追踪器。我们仅记录匿名访问统计——大致位置与访问页面——以衡量触达。绝不出售，绝不共享。",
-                })}
-              </p>
-            </div>
-            <div className="legal-block">
-              <span className="legal-badge legal-badge-disclaimer">{translate(locale, { en: "Disclaimer", th: "ข้อจำกัดความรับผิดชอบ", zh: "免责声明" })}</span>
-              <p className="legal-text">
-                {translate(locale, {
-                  en: "Scores are research estimates based on public data — not official government assessments. No city paid for its ranking. No investor paid for placement.",
-                  th: "คะแนนเป็นการประเมินงานวิจัยจากข้อมูลสาธารณะ — ไม่ใช่การประเมินอย่างเป็นทางการของรัฐบาล ไม่มีเมืองใดจ่ายเพื่อการจัดอันดับ ไม่มีนักลงทุนใดจ่ายเพื่อการวางตำแหน่ง",
-                  zh: "分数是基于公开数据的研究估算——不是政府官方评估。没有城市为其排名付费。没有投资者为位置付费。",
-                })}
-              </p>
-            </div>
-            <div className="legal-block">
-              <span className="legal-badge legal-badge-standard">ISO 37122</span>
+            </details>
+            <details className="legal-block" data-note="frameworks">
+              <summary>{translate(locale, { en: "Framework references · no certification", th: "กรอบอ้างอิง · ไม่ใช่การรับรอง", zh: "参考框架 · 非认证" })}</summary>
               <p className="legal-text">
                 {translate(locale, {
                   en: "Framework references include ISO 37122:2019, UN-Habitat CPI, and the ASEAN Smart Cities Framework. This is not an ISO certification or a claim that every indicator is implemented.",
@@ -161,15 +162,14 @@ export default function NewsStrip({ locale }: Props) {
                   zh: "参考框架包括ISO 37122:2019、联合国人居署CPI及东盟智慧城市框架；这不是ISO认证，也不声称已实施全部指标。",
                 })}
               </p>
-            </div>
+            </details>
           </div>
 
           <p className="legal-footer-note">
-            SCITI-2026-R1 · Built by depa Smart City Promotion Department ·{" "}
+            © 2026 depa · MDES · SLIC · SCITI-2026-R1 ·{" "}
             <a href="mailto:non.ar@depa.or.th">non.ar@depa.or.th</a>
           </p>
         </div>
       </section>
-    </>
   );
 }

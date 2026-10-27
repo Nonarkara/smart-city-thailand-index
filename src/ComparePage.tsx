@@ -463,9 +463,9 @@ export default function ComparePage({ locale, onNavigate }: Props) {
                   <div className="compare-col-highlights">
                     <p className="compare-col-highlights-label">
                       {translate(locale, {
-                        en: "Signature initiatives",
-                        th: "โครงการเด่น",
-                        zh: "标志性项目",
+                        en: "Legacy claims · unverified",
+                        th: "ข้อกล่าวอ้างเดิม · ยังไม่ยืนยัน",
+                        zh: "既有陈述 · 未核验",
                       })}
                     </p>
                     <ul>

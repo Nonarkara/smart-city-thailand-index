@@ -1,6 +1,8 @@
 import { useMemo, useEffect } from "react";
 import { useCitySummaries } from "./cityApi";
-import { translate } from "./cityPresentation";
+import { getCityName, getDistinctProvinceName, translate } from "./cityPresentation";
+import { SCITI_DATA_CUTOFF_ISO } from "./methodologySpec";
+import snapshot from "./researchSnapshot.json";
 import { type Locale, type SmartCity } from "./types";
 
 interface Props {
@@ -20,21 +22,26 @@ function CityCanvasSheet({ city, locale }: { city: SmartCity; locale: Locale }) 
           <div className="canvas-tier">
             {translate(locale, { en: "TIER", th: "ระดับ", zh: "层级" })} / {tierLabel}
           </div>
-          <h1 className="canvas-title">{city.nameEn}</h1>
-          <div className="canvas-province">{city.nameTh} · {city.province}</div>
+          <h1 className="canvas-title">{getCityName(city, locale)}</h1>
+          {getDistinctProvinceName(city, locale) && <div className="canvas-province">{getDistinctProvinceName(city, locale)}</div>}
         </div>
         <div className="canvas-header-right">
           <div className="canvas-score">{city.compositeScore.toFixed(1)}</div>
-          <div className="canvas-score-label">{translate(locale, { en: "SCITI SCORE", th: "คะแนน SCITI", zh: "SCITI 综合评分" })}</div>
+          <div className="canvas-score-label">{translate(locale, { en: "CURATED SCORE /100", th: "คะแนนประเมินเต็ม 100", zh: "编辑评分／100" })}</div>
         </div>
       </header>
+      <p className="canvas-source-note">{translate(locale, {
+        en: `Research worksheet, not a financing or service-readiness assessment. Seed cutoff: ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}. Figures below are curated records; their original periods and local boundaries need checking in the dossier. Missing values are shown as —.`,
+        th: `แผ่นงานวิจัย ไม่ใช่การประเมินเงินทุนหรือความพร้อมบริการ ข้อมูลตั้งต้น ณ ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)} ตัวเลขเป็นข้อมูลที่เรียบเรียงไว้ ต้องตรวจช่วงเวลาต้นฉบับและขอบเขตพื้นที่ในแฟ้มเมือง ค่าที่ไม่มีข้อมูลแสดงเป็น —`,
+        zh: `研究工作表，并非融资或服务准备度评估。初始数据截止日：${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}。下列数值来自编辑记录；原始时期与当地边界须在档案中核查。缺失值以—表示。`,
+      })} <a href={`https://sciti.nonarkara.org/city/${city.id}`}>{translate(locale, { en: "City sources", th: "แหล่งข้อมูลเมือง", zh: "城市来源" })}</a>{" · "}<a href={`https://sciti.nonarkara.org${snapshot.path}`}>{translate(locale, { en: `Baseline snapshot ${snapshot.releaseDate}`, th: `ข้อมูลอ้างอิง ${snapshot.releaseDate}`, zh: `基线快照 ${snapshot.releaseDate}` })}</a></p>
 
       {/* The Grid */}
       <div className="canvas-grid">
         {/* Box 1: Strengths */}
         <div className="canvas-box">
           <h2 className="canvas-box-title">
-            {translate(locale, { en: "Strengths & Assets", th: "จุดแข็งและสินทรัพย์", zh: "优势与资产" })}
+            {translate(locale, { en: "Legacy research claims · not independently verified", th: "ข้อกล่าวอ้างวิจัยเดิม · ยังไม่ตรวจสอบอิสระ", zh: "既有研究陈述 · 未经独立核验" })}
           </h2>
           <ul className="canvas-list">
             {city.highlights.map((h, i) => (
@@ -46,31 +53,31 @@ function CityCanvasSheet({ city, locale }: { city: SmartCity; locale: Locale }) 
         {/* Box 2: Economics */}
         <div className="canvas-box">
           <h2 className="canvas-box-title">
-            {translate(locale, { en: "Economics & Scale", th: "เศรษฐกิจและขนาด", zh: "经济与规模" })}
+            {translate(locale, { en: "Unverified seed estimates", th: "ค่าประมาณตั้งต้น · ยังไม่ยืนยัน", zh: "未经核验的初始估算" })}
           </h2>
           <div className="canvas-metrics">
             <div className="canvas-metric">
-              <span className="cm-label">{translate(locale, { en: "GPP / Capita", th: "GPP ต่อหัว", zh: "人均 GPP" })}</span>
+              <span className="cm-label">{translate(locale, { en: "Provincial GPP / Capita", th: "GPP ต่อหัวระดับจังหวัด", zh: "省级人均GPP" })}</span>
               <span className="cm-value">
-                {city.metrics.gppPerCapita ? `฿${city.metrics.gppPerCapita.toLocaleString()}` : "—"}
+                {city.metrics.gppPerCapita != null ? `฿${city.metrics.gppPerCapita.toLocaleString(locale)}` : "—"}
               </span>
             </div>
             <div className="canvas-metric">
               <span className="cm-label">{translate(locale, { en: "Population", th: "ประชากร", zh: "人口" })}</span>
               <span className="cm-value">
-                {city.metrics.population ? (city.metrics.population * 1000).toLocaleString() : "—"}
+                {city.metrics.population != null && city.metrics.population > 0 ? (city.metrics.population * 1000).toLocaleString(locale) : "—"}
               </span>
             </div>
             <div className="canvas-metric">
               <span className="cm-label">{translate(locale, { en: "Land Price", th: "ราคาที่ดิน", zh: "土地价格" })}</span>
               <span className="cm-value">
-                {city.metrics.landPriceBaht ? `฿${city.metrics.landPriceBaht.toLocaleString()}/m²` : "—"}
+                {city.metrics.landPriceBaht != null ? `฿${city.metrics.landPriceBaht.toLocaleString(locale)}/m²` : "—"}
               </span>
             </div>
             <div className="canvas-metric">
-              <span className="cm-label">{translate(locale, { en: "FDI Inflow", th: "การลงทุน FDI", zh: "FDI 流入" })}</span>
+              <span className="cm-label">{translate(locale, { en: "FDI seed figure · measure unverified", th: "ตัวเลข FDI ตั้งต้น · ยังไม่ยืนยันนิยาม", zh: "FDI初始数值 · 口径未核验" })}</span>
               <span className="cm-value">
-                {city.metrics.fdiInflow ? `฿${city.metrics.fdiInflow.toLocaleString()}M` : "—"}
+                {city.metrics.fdiInflow != null ? `฿${city.metrics.fdiInflow.toLocaleString(locale)}M` : "—"}
               </span>
             </div>
           </div>

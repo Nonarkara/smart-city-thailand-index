@@ -99,6 +99,12 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
         </div>
       </div>
 
+      <p className="map-coordinate-note section">{translate(locale, {
+        en: "Legacy city reference points; project sites and boundaries have not been independently verified. Do not use these markers for site selection or navigation.",
+        th: "จุดอ้างอิงเมืองจากทะเบียนเดิม ยังไม่ได้ยืนยันตำแหน่งโครงการและขอบเขตอย่างอิสระ ไม่ควรใช้หมุดนี้เลือกที่ตั้งหรือนำทาง",
+        zh: "沿用的城市参考点；项目位置及边界尚未经独立核实。请勿将这些标记用于选址或导航。",
+      })}</p>
+
       <div className="map-dash-body">
         {/* ─── MAP ─── */}
         <div className="map-dash-map">

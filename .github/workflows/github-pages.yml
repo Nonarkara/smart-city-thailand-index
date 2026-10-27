@@ -37,6 +37,8 @@ jobs:
       - run: node scripts/audit/identity-density.mjs --serve
       - run: node scripts/audit/asus-density.mjs --serve
       - run: node scripts/audit/atlas-density.mjs --serve
+      - run: node scripts/audit/footer-density.mjs --serve
+      - run: node scripts/audit/heritage-gallery.mjs --serve
       - run: node scripts/audit/type-and-rhythm.mjs --serve
       # The Pages action uploads through the Pages store, which the
       # artifacts API does not list — CDPT could never download it, so the
@@ -56,6 +58,8 @@ jobs:
             .tmp/identity-density
             .tmp/identity-audit
             .tmp/atlas-density
+            .tmp/footer-audit
+            .tmp/heritage-audit
           retention-days: 7
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3

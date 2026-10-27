@@ -32,19 +32,19 @@ export default function DataFeedback({ locale }: Props) {
       ask: "Did we miss anything?",
       cta: "Send me the data",
       placeholder: "Tell us about a city or metric we missed...",
-      success: "Thank you. Your insight has been sent to the editorial team."
+      success: "Your browser submitted the request. Delivery cannot be confirmed here; email non.ar@depa.or.th if you need a reply."
     },
     th: {
       ask: "เราพลาดอะไรไปหรือเปล่า?",
       cta: "ส่งข้อมูลให้เรา",
       placeholder: "บอกเราเกี่ยวกับเมืองหรือข้อมูลที่เราอาจตกหล่นไป...",
-      success: "ขอบคุณ ข้อมูลของคุณถูกส่งไปยังทีมบรรณาธิการแล้ว"
+      success: "เบราว์เซอร์ส่งคำขอแล้ว แต่หน้านี้ยืนยันการรับไม่ได้ หากต้องการคำตอบ โปรดอีเมล non.ar@depa.or.th"
     },
     zh: {
       ask: "我们漏掉了什么吗？",
       cta: "提交数据",
       placeholder: "告诉我们关于城市或指标的遗漏...",
-      success: "谢谢。您的见解已发送至编辑团队。"
+      success: "浏览器已提交请求，但此处无法确认送达。如需回复，请发送邮件至non.ar@depa.or.th。"
     }
   };
 
@@ -76,7 +76,7 @@ export default function DataFeedback({ locale }: Props) {
                 >
                   {loading ? "..." : `${l.cta} →`}
                 </button>
-                <span className="feedback-meta">DIRECT TO non.ar@depa.or.th</span>
+                <a className="feedback-meta" href="mailto:non.ar@depa.or.th">non.ar@depa.or.th</a>
               </div>
             </div>
           )}

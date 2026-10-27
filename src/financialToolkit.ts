@@ -148,14 +148,15 @@ export const instruments: FinancialInstrument[] = [
     name: "BOI Digital Economy Incentives",
     nameTh: "สิทธิประโยชน์ BOI เศรษฐกิจดิจิทัล",
     category: "grant",
-    descEn: "Thailand Board of Investment tax incentives for smart city investments — corporate income tax exemptions (3-8 years), import duty exemptions, fast-track permits. Smart City is a priority sector.",
-    descTh: "สิทธิประโยชน์ทางภาษีของ BOI สำหรับการลงทุนเมืองอัจฉริยะ — ยกเว้นภาษีเงินได้ 3-8 ปี ยกเว้นอากรนำเข้า อนุมัติเร็ว เมืองอัจฉริยะเป็นภาคส่วนสำคัญ",
+    descEn: "BOI promotion may apply to approved smart-city activities. The 2025 guide lists activity-specific conditions; tax treatment, import duties and location-based additions require confirmation with BOI.",
+    descTh: "การส่งเสริม BOI อาจใช้กับกิจการเมืองอัจฉริยะที่ได้รับอนุมัติ คู่มือปี 2025 ระบุเงื่อนไขรายกิจการ ต้องยืนยันภาษี อากรนำเข้า และสิทธิเพิ่มตามพื้นที่กับ BOI",
     applicableTiers: ["alpha", "beta"],
     applicableStages: ["operational", "partial"],
     targetPillars: ["economy", "digital"],
     complexity: "low",
-    typicalSize: "Tax savings THB 10M – 500M+",
-    thaiRelevance: "Smart City is one of BOI's 12 targeted industries under the S-curve policy. EEC zone has additional incentives layered on top.",
+    typicalSize: "Project-specific; confirm with BOI",
+    thaiRelevance: "The BOI 2025 guide includes smart-city area and system development under activity 8.4. Approval and other conditions vary by activity; EEC location alone does not confer promotion.",
+    sourceUrl: "https://www.boi.go.th/upload/content/BOI_A_Guide_EN.pdf",
   },
   {
     id: "nat-gov-transfer",
@@ -223,7 +224,7 @@ export const instruments: FinancialInstrument[] = [
     name: "Smart City Special Economic Zone",
     nameTh: "เขตเศรษฐกิจพิเศษเมืองอัจฉริยะ",
     category: "equity",
-    descEn: "Designated zones with fast-tracked permits, tax holidays, and infrastructure guarantees. Attracts both domestic and foreign investment. Thailand's EEC is the prime example.",
+    descEn: "Designated development areas may offer specific promotion programmes. Permits, tax treatment, infrastructure availability and eligibility must be checked for the actual project; designation is not an infrastructure guarantee.",
     descTh: "เขตที่กำหนดพร้อมอนุมัติเร็ว ยกเว้นภาษี ค้ำประกันโครงสร้างพื้นฐาน ดึงดูดการลงทุนทั้งในและต่างประเทศ EEC ของไทยเป็นตัวอย่างหลัก",
     applicableTiers: ["alpha"],
     applicableStages: ["operational"],
@@ -365,7 +366,7 @@ export const ASUS_PROJECTS: ASUSCityProject[] = [
     priorityArea: "Safety & Security (M&E focus)",
     phase: "both", status: "M&E consultant being recruited Q4 2025",
     keyInterventions: [
-      "74 CCTV units installed (25 MDES-funded, 50 Selangor-funded)",
+      "CCTV installations reported in project material; the listed 25 and 50 funding components sum to 75, so the total requires reconciliation",
       "AI traffic lights deployed",
       "Power BI dashboards for Community Transformation Programme",
       "SDG 11 benchmarking and PDPA compliance training",
@@ -455,20 +456,9 @@ export function assessBankability(city: SmartCity): BankabilityAssessment {
     crime > 200 ? "elevated" : crime > 150 ? "moderate" : "low";
   score += riskProfile === "low" ? 10 : riskProfile === "moderate" ? 6 : 2;
 
-  // Generate recommendation
-  let recommendation = "";
-  let recommendationTh = "";
-
-  if (score >= 75) {
-    recommendation = `Strong bankability (${score}/100). This city can access commercial finance: PPP under the PPP Act B.E. 2562, municipal bonds, and green bonds. The revenue base supports debt service. Ready for THB 5B+ projects.`;
-    recommendationTh = `ความพร้อมทางการเงินสูง (${score}/100) เมืองนี้เข้าถึงการเงินเชิงพาณิชย์ได้: PPP ภายใต้ พ.ร.บ. PPP 2562, พันธบัตรเทศบาล, และพันธบัตรสีเขียว ฐานรายได้รองรับการชำระหนี้ได้ พร้อมสำหรับโครงการ 5 พันล้านบาท+`;
-  } else if (score >= 50) {
-    recommendation = `Moderate bankability (${score}/100). Blended finance recommended: combine concessional DFI lending (JICA/ADB) with BOI incentives and national government transfers. Build track record before approaching commercial markets.`;
-    recommendationTh = `ความพร้อมทางการเงินปานกลาง (${score}/100) แนะนำการเงินผสมผสาน: ผสม DFI lending ผ่อนปรน (JICA/ADB) กับสิทธิประโยชน์ BOI และเงินอุดหนุนจากรัฐบาลกลาง สร้างประวัติก่อนเข้าตลาดเชิงพาณิชย์`;
-  } else {
-    recommendation = `Early-stage bankability (${score}/100). Focus on grants and technical assistance first: depa Smart City Fund, USTDA, ASUS Project TA, Korea Smart City Cooperation Fund. Build institutional capacity before seeking repayable finance.`;
-    recommendationTh = `ความพร้อมทางการเงินระยะเริ่มต้น (${score}/100) เน้นเงินช่วยเหลือและ TA ก่อน: กองทุน depa, USTDA, ASUS Project TA, กองทุนความร่วมมือเมืองอัจฉริยะเกาหลี สร้างศักยภาพสถาบันก่อนการเงินที่ต้องชำระคืน`;
-  }
+  // These curated proxies contain no borrower accounts or lender decision.
+  const recommendation = `Research finance screen: ${score}/100, derived from curated city proxies. This is not a credit assessment, debt-service test, funding offer or eligibility decision. Verify project cash flows, authority, costs and current programme terms.`;
+  const recommendationTh = `คะแนนคัดกรองการเงินเพื่อวิจัย ${score}/100 จากตัวแปรแทนในข้อมูลเมือง ไม่ใช่การประเมินเครดิต การทดสอบความสามารถชำระหนี้ ข้อเสนอเงินทุน หรือการอนุมัติสิทธิ ต้องตรวจรายรับโครงการ อำนาจ ต้นทุน และเงื่อนไขปัจจุบัน`;
 
   return { revenueBase, institutionalCapacity, projectPipeline, privateInterest, riskProfile, readinessScore: score, recommendation, recommendationTh };
 }
@@ -517,8 +507,8 @@ export function recommendInstruments(city: SmartCity): FinancialRecommendation[]
 
     if (city.smartDimensions.includes("environment") && inst.id === "green-bond") {
       relevance += 15;
-      reason = reason || "Smart Environment focus aligns with green bond eligibility criteria.";
-      reasonTh = reasonTh || "เน้น Smart Environment ตรงกับเกณฑ์คุณสมบัติพันธบัตรสีเขียว";
+      reason = reason || "Environment programme scope is a research lead; green bond eligibility requires a qualifying project and framework.";
+      reasonTh = reasonTh || "ขอบเขตแผนสิ่งแวดล้อมเป็นแนวทางศึกษา สิทธิพันธบัตรสีเขียวต้องตรวจโครงการและกรอบที่เข้าเกณฑ์";
     }
 
     if (city.tier === "gamma" && (inst.id === "ta-grant" || inst.id === "nat-gov-transfer")) {
@@ -529,8 +519,8 @@ export function recommendInstruments(city: SmartCity): FinancialRecommendation[]
 
     if (isEecProvince(city.province) && inst.id === "sez") {
       relevance += 20;
-      reason = reason || "Located in Eastern region — eligible for EEC Special Economic Zone incentives.";
-      reasonTh = reasonTh || "ตั้งอยู่ในภาคตะวันออก — มีสิทธิ์รับสิทธิประโยชน์ EEC";
+      reason = reason || "Located in an EEC province; verify project activity, location and current promotion conditions with BOI.";
+      reasonTh = reasonTh || "อยู่ในจังหวัด EEC ต้องตรวจประเภทกิจการ ที่ตั้ง และเงื่อนไขส่งเสริมปัจจุบันกับ BOI";
     }
 
     if (relevance <= 0 && inst.complexity === "low") {

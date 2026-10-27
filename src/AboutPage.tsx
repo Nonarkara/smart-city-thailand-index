@@ -75,9 +75,9 @@ export default function AboutPage({ locale, onNavigate }: Props) {
         <div className="prose" style={{ maxWidth: "800px", margin: "0 auto", fontSize: "var(--text-body)", lineHeight: "1.7" }}>
           <p style={{ marginBottom: "1.5rem" }}>
             {translate(locale, {
-              en: "Our platform aggregates Gross Provincial Product, FDI flows, BOI incentive zones, infrastructure readiness, creative economy indicators, labor costs, and cultural asset data -- all in one place, all comparable, all actionable.",
-              th: "แพลตฟอร์มของเรารวบรวมผลิตภัณฑ์มวลรวมจังหวัด กระแส FDI เขตส่งเสริมของ BOI ความพร้อมด้านโครงสร้างพื้นฐาน ตัวชี้วัดเศรษฐกิจสร้างสรรค์ ต้นทุนแรงงาน และข้อมูลสินทรัพย์ทางวัฒนธรรม ไว้ในที่เดียว สามารถเปรียบเทียบได้ และนำไปใช้งานได้จริง",
-              zh: "我们的平台汇集了省级生产总值、FDI流量、BOI激励区、基础设施就绪度、创意经济指标、劳动力成本和文化资产数据——集中在一处，可比对，可操作。"
+              en: "SCITI combines a city registry, curated research scores, provincial statistical baselines and linked cultural context. Source dates and geographic coverage vary. FDI flows, site-level costs and infrastructure capacity are not complete comparable datasets here; verify them separately for a project.",
+              th: "SCITI รวมทะเบียนเมือง คะแนนวิจัยที่เรียบเรียงไว้ ข้อมูลสถิติระดับจังหวัด และบริบทวัฒนธรรมพร้อมลิงก์อ้างอิง ช่วงเวลาและขอบเขตข้อมูลต่างกัน ข้อมูลกระแส FDI ต้นทุนรายพื้นที่ และความจุโครงสร้างพื้นฐานยังไม่ใช่ชุดข้อมูลเปรียบเทียบที่ครบถ้วน ต้องตรวจสอบแยกสำหรับแต่ละโครงการ",
+              zh: "SCITI汇集城市名录、编辑研究评分、省级统计基线和附有链接的文化背景。来源时期与地理范围各异。这里尚无完整可比的FDI流量、具体地点成本或基础设施容量数据；项目须另行核实。"
             })}
           </p>
           <p style={{ marginBottom: "1.5rem" }}>

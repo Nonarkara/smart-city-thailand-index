@@ -117,6 +117,14 @@ node scripts/audit/asus-density.mjs --serve >"$LOG_DIR/cdpt-asus.log" 2>&1 || { 
 node scripts/audit/atlas-density.mjs --serve >"$LOG_DIR/cdpt-atlas.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-atlas.log"; die "atlas navigation or decision geometry failed"; }
 ok "all ASUS records and all 118 searchable atlas cities preserved; original faults rejected"
 
+bold "Preflight — complete closing-path geometry"
+node scripts/audit/footer-density.mjs --serve >"$LOG_DIR/cdpt-footer.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-footer.log"; die "footer qualification or spatial regression failed"; }
+ok "compact closing notes, full qualifications, keyboard access and original-fault mutations passed"
+
+bold "Preflight — heritage source coverage and gallery"
+node scripts/audit/heritage-gallery.mjs --serve >"$LOG_DIR/cdpt-heritage.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-heritage.log"; die "heritage image, source or gallery check failed"; }
+ok "all 118 city visual records, real image bytes, rights and gallery interaction passed"
+
 # ── C — commit ───────────────────────────────────────────────────────────────
 if [[ -n "$MSG" ]]; then
   git add -u

@@ -740,16 +740,16 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             </h3>
             <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.6 }}>
               {translate(locale, {
-                en: "A high GPP/Capita relative to minimum wage means strong productivity at low cost — the classic \"value play.\" A province with a domestic airport, 5G coverage above 85%, and a university population over 20,000 has the infrastructure to support creative and knowledge industries today, not someday. A UNESCO Creative City designation or CEA-backed creative district signals policy tailwinds and potential access to grants, training, and international networks.",
-                th: "GPP ต่อหัวที่สูงเมื่อเทียบกับค่าแรงขั้นต่ำหมายถึงผลิตภาพที่แข็งแกร่งในต้นทุนที่ต่ำ — นี่คือ \"value play\" แบบคลาสสิก จังหวัดที่มีสนามบินภายในประเทศ ความครอบคลุม 5G เกิน 85% และประชากรมหาวิทยาลัยกว่า 20,000 คน มีโครงสร้างพื้นฐานรองรับอุตสาหกรรมสร้างสรรค์และความรู้ได้ตั้งแต่วันนี้ ไม่ใช่วันหน้า การได้รับการรับรองจากยูเนสโกหรือเขตสร้างสรรค์ที่สนับสนุนโดย CEA เป็นสัญญาณบ่งบอกถึงนโยบายที่เอื้ออำนวยและโอกาสในการเข้าถึงเงินทุนสนับสนุน",
-                zh: "高人均GPP相对于最低工资意味着低成本下的高生产力——经典的“价值投资”。拥有国内机场、5G覆盖率超过85%、大学人口超过2万人的省份，今天（而不是未来某天）就具备支持创意和知识产业的基础设施。联合国教科文组织创意城市称号或CEA支持的创意街区标志着政策顺风，以及获得资助、培训和国际网络的潜力。",
+                en: "GPP per capita describes provincial output; minimum wage is a statutory floor, not total employment or operating cost. An airport, network coverage or university enrolment can be a research lead, but none establishes service quality, available skills or capacity at a proposed site. Check costs, access, demand and programme eligibility directly.",
+                th: "GPP ต่อหัวอธิบายผลผลิตระดับจังหวัด ส่วนค่าแรงขั้นต่ำเป็นเกณฑ์กฎหมาย ไม่ใช่ต้นทุนการจ้างงานหรือดำเนินงานทั้งหมด สนามบิน ความครอบคลุมเครือข่าย หรือจำนวนนักศึกษาเป็นจุดเริ่มต้นศึกษา ไม่ได้ยืนยันคุณภาพบริการ ทักษะแรงงาน หรือความจุ ณ พื้นที่โครงการ ต้องตรวจสอบต้นทุน การเข้าถึง อุปสงค์ และสิทธิของโครงการโดยตรง",
+                zh: "人均GPP描述省级产出；最低工资是法定底线，并非全部用工或运营成本。机场、网络覆盖或大学在校人数可作为研究线索，但不能证明拟选地点的服务质量、可用技能或容量。请直接核查成本、可达性、需求与项目资格。",
               })}
             </p>
             <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.6 }}>
               {translate(locale, {
-                en: "The provinces ranked highest on our Moneyball composite — a separate downloadable analysis (see the factsheets below), not a live SCITI metric — Lamphun, Khon Kaen, Chanthaburi, Nakhon Ratchasima, Chiang Rai — share a pattern: strong fundamentals, low entry cost, and creative assets that the market has not yet fully priced in.",
-                th: "จังหวัดที่ได้คะแนนสูงสุดในคะแนน Moneyball รวมของเรา — การวิเคราะห์แยกต่างหากที่ดาวน์โหลดได้ (ดู factsheet ด้านล่าง) ไม่ใช่ตัวชี้วัดสดของ SCITI — ลำพูน, ขอนแก่น, จันทบุรี, นครราชสีมา, เชียงราย — มีรูปแบบที่เหมือนกัน: พื้นฐานแข็งแกร่ง ต้นทุนเข้าถึงต่ำ และสินทรัพย์สร้างสรรค์ที่ตลาดยังประเมินมูลค่าไม่เต็มที่",
-                zh: "在我们的Moneyball综合指数（一项可下载的独立分析，见下方资料，并非SCITI实时指标）上排名最高的省份——南奔、孔敬、尖竹汶、呵叻、清莱——都有一个共同点：基本面强劲、进入成本低，以及市场尚未完全定价的创意资产。",
+                en: "The downloadable Moneyball factsheets are a separate editorial analysis, not a live SCITI metric. Their province selections are leads for further research. A score or creative asset does not establish low entry costs, market mispricing or an investment return.",
+                th: "ข้อมูลจังหวัด Moneyball ที่ดาวน์โหลดได้เป็นบทวิเคราะห์โดยผู้จัดทำแยกต่างหาก ไม่ใช่ตัวชี้วัดสดของ SCITI จังหวัดที่คัดเลือกเป็นแนวทางศึกษาต่อ คะแนนหรือสินทรัพย์สร้างสรรค์ไม่ได้ยืนยันต้นทุนเข้าถึงต่ำ การประเมินมูลค่าตลาดผิด หรือผลตอบแทนการลงทุน",
+                zh: "可下载的Moneyball省份资料是一项独立编辑分析，并非SCITI实时指标。所选省份是进一步研究的线索。评分或创意资产不能证明进入成本低、市场定价错误或投资回报。",
               })}
             </p>
             <p style={{ fontSize: "var(--text-body)", color: "var(--text)", fontWeight: 600, marginTop: "2rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem" }}>
@@ -784,25 +784,26 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             </h2>
             <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
-                en: "Every Thai province has two leaders, and confusing them is the most common and most expensive mistake a foreign investor makes here. The governor is a senior civil servant appointed by the Ministry of Interior. The Provincial Administrative Organisation (PAO) mayor is elected, and under decentralisation law the elected office is the one holding the budget. The governor holds the process instead: a project generally needs the governor's signature, and the governor can hold it, return it, or send it to a committee before it moves.",
-                th: "ทุกจังหวัดของไทยมีผู้นำสองคน และการสับสนระหว่างสองตำแหน่งนี้คือความผิดพลาดที่พบบ่อยและแพงที่สุดของนักลงทุนต่างชาติ ผู้ว่าราชการจังหวัดคือข้าราชการระดับสูงที่แต่งตั้งโดยกระทรวงมหาดไทย ส่วนนายกองค์การบริหารส่วนจังหวัด (อบจ.) มาจากการเลือกตั้ง และตามกฎหมายกระจายอำนาจ ตำแหน่งที่มาจากการเลือกตั้งคือผู้ถืองบประมาณ ขณะที่ผู้ว่าฯ ถือกระบวนการแทน โครงการโดยทั่วไปต้องผ่านลายเซ็นผู้ว่าฯ ซึ่งสามารถชะลอ ตีกลับ หรือส่งให้คณะกรรมการพิจารณาก่อนเดินหน้าต่อได้",
-                zh: "泰国每个府都有两位主官，混淆二者是外国投资者在此犯下的最常见、也最昂贵的错误。府尹是由内政部委任的高级公务员。府行政组织（PAO）主席则由选举产生，而依据权力下放法，民选职位才是掌握预算的一方。府尹掌握的是流程：项目通常需要府尹签字，府尹可以搁置、退回，或在放行前先交由委员会审议。",
+                en: "Provincial and local authorities have different responsibilities. Outside Bangkok, provincial governors are appointed, while PAO chief executives and councils are elected; municipalities and other bodies have their own powers and budgets. Identify the landowner, procuring authority, budget holder and relevant regulators for the specific project.",
+                th: "ราชการส่วนภูมิภาคกับองค์กรปกครองส่วนท้องถิ่นมีหน้าที่ต่างกัน นอกกรุงเทพฯ ผู้ว่าราชการจังหวัดมาจากการแต่งตั้ง ส่วนนายกและสภา อบจ. มาจากการเลือกตั้ง เทศบาลและหน่วยงานอื่นมีอำนาจและงบประมาณของตนเอง ต้องระบุเจ้าของที่ดิน หน่วยจัดซื้อจัดจ้าง เจ้าของงบ และหน่วยกำกับที่เกี่ยวข้องกับแต่ละโครงการ",
+                zh: "府级行政与地方自治机构职责不同。曼谷以外的府尹由任命产生，PAO行政首长及议会由选举产生；市政及其他机构另有自身职权与预算。请按具体项目确认土地所有者、采购机构、预算主管和有关监管部门。",
               })}
             </p>
             <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
-                en: "The practical consequence is simple. Win over the mayor and you have the money but not the permission. Win over the governor and you have the permission but not the money. Both conversations are required, and they are different conversations: the elected office answers to residents and responds to visible local benefit, while the appointed office answers to process and responds to a proposal that will survive scrutiny. Bangkok is the exception to all of it — it is not one of the 76 provinces and its governor is elected.",
-                th: "ผลในทางปฏิบัติเรียบง่าย ถ้าคุยกับนายก อบจ. สำเร็จ คุณได้เงินแต่ยังไม่ได้อนุญาต ถ้าคุยกับผู้ว่าฯ สำเร็จ คุณได้อนุญาตแต่ไม่มีเงิน ต้องคุยทั้งสองฝ่าย และเป็นการคุยคนละแบบ ตำแหน่งที่มาจากการเลือกตั้งตอบต่อประชาชนและตอบรับประโยชน์ที่เห็นได้ในพื้นที่ ส่วนตำแหน่งที่มาจากการแต่งตั้งตอบต่อกระบวนการ และตอบรับข้อเสนอที่ทนต่อการตรวจสอบได้ กรุงเทพมหานครเป็นข้อยกเว้นทั้งหมดนี้ เพราะไม่ได้เป็นหนึ่งใน 76 จังหวัด และผู้ว่าฯ กทม. มาจากการเลือกตั้ง",
-                zh: "实际后果很简单。说服了 PAO 主席，你拿到了钱却没有许可；说服了府尹，你拿到了许可却没有钱。两场对话都必须进行，而且是两种不同的对话：民选职位对居民负责，回应的是看得见的本地收益；委任职位对流程负责，回应的是经得起审查的提案。曼谷是这一切的例外——它不属于76个府，其府尹由选举产生。",
+                en: "A discussion with a governor, PAO or municipality does not secure funding or permission. The approval route depends on project type, ownership, procurement and the funding programme. Bangkok has a separate metropolitan administration and an elected governor. Use the responsible agencies to confirm the actual approval and budget process.",
+                th: "การหารือกับผู้ว่าฯ อบจ. หรือเทศบาลไม่ได้ทำให้ได้รับงบหรือใบอนุญาต ขั้นตอนอนุมัติขึ้นอยู่กับประเภทโครงการ กรรมสิทธิ์ การจัดซื้อจัดจ้าง และแหล่งเงิน กรุงเทพฯ มีรูปแบบบริหารมหานครแยกต่างหากและผู้ว่าฯ มาจากการเลือกตั้ง ควรยืนยันขั้นตอนอนุมัติและงบกับหน่วยงานที่รับผิดชอบจริง",
+                zh: "与府尹、PAO或市政府磋商并不等于取得资金或许可。审批路径取决于项目类型、产权、采购方式及资金计划。曼谷实行单独的都市行政制度，府尹由选举产生。应向负责机构确认实际审批与预算程序。",
               })}
             </p>
             <p style={{ fontSize: "var(--text-body)", color: "var(--text)", fontWeight: 600, marginTop: "1.5rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
-                en: "Then price the calendar. A request entering the central budget cycle is typically funded around two years later, and built in roughly two more. For a city that floods every year, that is four to five more flood seasons before the protection exists — and residents, manufacturers and investors all move during them. The unpriced line in every slow procurement is who left while it was pending.",
-                th: "จากนั้นให้ตีราคาปฏิทินด้วย คำของบที่เข้าสู่วงจรงบประมาณส่วนกลางมักได้รับจัดสรรราวสองปีให้หลัง และก่อสร้างอีกราวสองปี สำหรับเมืองที่น้ำท่วมทุกปี นั่นคือฤดูน้ำท่วมอีกสี่ถึงห้าครั้งก่อนที่การป้องกันจะมีอยู่จริง และในระหว่างนั้นทั้งประชาชน โรงงาน และนักลงทุนต่างย้ายออก ต้นทุนที่ไม่เคยถูกตีราคาในทุกการจัดซื้อที่ล่าช้า คือคนที่จากไปในระหว่างรอ",
-                zh: "然后，把日历也计入成本。进入中央预算周期的申请通常约两年后获批，再花约两年建成。对于年年被淹的城市，这意味着在防护到位之前还要再经历四到五个洪水季——而居民、制造商和投资者都会在这期间离开。每一次缓慢采购中未被计价的一项，是等待期间流失的人。",
+                en: "Build a project-specific timetable covering budget applications, procurement, permits, construction and operation. SCITI has no verified universal two-year funding or four-year delivery rule. Test delays against local hazard seasons and service needs before committing capital.",
+                th: "จัดทำกำหนดเวลาเฉพาะโครงการ ครอบคลุมการของบ จัดซื้อจัดจ้าง ใบอนุญาต ก่อสร้าง และเปิดใช้งาน SCITI ไม่มีหลักฐานยืนยันกฎทั่วไปว่าต้องรอเงินสองปีหรือส่งมอบในสี่ปี ควรประเมินความล่าช้าเทียบกับฤดูภัยพิบัติและความต้องการบริการก่อนลงทุน",
+                zh: "请制定项目专属时间表，涵盖预算申请、采购、许可、建设与运营。SCITI没有证据支持统一的两年拨款或四年交付规则。投入资金前，应结合当地灾害季节和服务需求评估延误。",
               })}
             </p>
+            <p><a href="https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/05/enhancing-governance-in-thailand_b9685153/8ddfd4c6-en.pdf" target="_blank" rel="noreferrer">OECD (2018): Enhancing Governance in Thailand ↗</a>{" · "}<a href="https://inter.nesdc.go.th/wp-content/uploads/2024/03/Budgeting-in-Thailand-Full-Report-2019.pdf" target="_blank" rel="noreferrer">Budgeting in Thailand (2019) ↗</a></p>
           </div>
         </div>
       </section>
