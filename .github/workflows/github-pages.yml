@@ -35,6 +35,15 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: node scripts/audit/record-density.mjs --serve
       - run: node scripts/audit/type-and-rhythm.mjs --serve
+      # The Pages action uploads through the Pages store, which the
+      # artifacts API does not list — CDPT could never download it, so the
+      # validated-build path was dead. This plain artifact is what the
+      # release step takes, and it is uploaded only after the gates pass.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: dist
+          retention-days: 7
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

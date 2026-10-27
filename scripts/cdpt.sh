@@ -49,14 +49,25 @@ fi
 if [[ -n "${CDPT_REMOTE_TEST_RUN:-}" ]]; then
   bold "Build — use the artifact produced by the validated workflow"
   ARTIFACT_DIR="$(mktemp -d "$LOG_DIR/cdpt-ci.XXXXXX")"
-  gh run download "$CDPT_REMOTE_TEST_RUN" --name github-pages --dir "$ARTIFACT_DIR" || die "cannot download validated build"
-  [[ -s "$ARTIFACT_DIR/artifact.tar" ]] || die "validated workflow has no Pages archive"
-  mkdir "$ARTIFACT_DIR/site"
-  tar -xf "$ARTIFACT_DIR/artifact.tar" -C "$ARTIFACT_DIR/site" || die "cannot extract validated build"
-  [[ -s "$ARTIFACT_DIR/site/index.html" ]] || die "validated build has no index.html"
-  shasum -a 256 "$ARTIFACT_DIR/artifact.tar" >"$LOG_DIR/cdpt-artifact.sha256"
+  # The Pages action (actions/upload-pages-artifact@v3) uploads through the
+  # Pages store, which the artifacts API does not list — `gh run download`
+  # could never fetch it, so this path was dead on arrival. The workflow now
+  # also uploads the built site as a plain artifact, and that is what is
+  # taken here.
+  gh run download "$CDPT_REMOTE_TEST_RUN" --name site-dist --dir "$ARTIFACT_DIR" || die "cannot download validated build"
+  if [[ -s "$ARTIFACT_DIR/artifact.tar" ]]; then
+    mkdir "$ARTIFACT_DIR/site"
+    tar -xf "$ARTIFACT_DIR/artifact.tar" -C "$ARTIFACT_DIR/site" || die "cannot extract validated build"
+    SITE_DIR="$ARTIFACT_DIR/site"
+  elif [[ -s "$ARTIFACT_DIR/index.html" ]]; then
+    SITE_DIR="$ARTIFACT_DIR"
+  else
+    SITE_DIR="$(dirname "$(find "$ARTIFACT_DIR" -maxdepth 3 -name index.html -print -quit)")"
+  fi
+  [[ -s "$SITE_DIR/index.html" ]] || die "validated build has no index.html"
+  find "$SITE_DIR" -type f -exec shasum -a 256 {} + | sort | shasum -a 256 >"$LOG_DIR/cdpt-artifact.sha256"
   [[ ! -e dist ]] || mv dist "$ARTIFACT_DIR/previous-dist"
-  mv "$ARTIFACT_DIR/site" dist
+  mv "$SITE_DIR" dist
   ok "reusing the exact build that passed full tests, lint, build and dependency audit"
 else
   bold "Preflight — lint"
