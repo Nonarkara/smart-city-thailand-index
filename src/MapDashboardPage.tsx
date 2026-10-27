@@ -5,6 +5,8 @@ import { THAILAND_BOUNDS, CITY_COORDS as coords, projectTo, esriTileUrl, tierCol
 import { REGIONS_ORDERED, REGION_LABELS } from "./regions";
 import type { Locale, SmartCity } from "./types";
 import { TIER_LABELS } from "./types";
+import { toAppPath } from "./routing";
+import "./LaemChabangPage.css";
 
 interface Props {
   locale: Locale;
@@ -67,6 +69,7 @@ export default function MapDashboardPage({ locale, onNavigate }: Props) {
 
   return (
     <div className="map-dashboard">
+      <p className="municipal-context-link"><a href={toAppPath("/city/laem-chabang")} onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) { event.preventDefault(); onNavigate("/city/laem-chabang"); } }}>{translate(locale, { en: "Laem Chabang city data · unranked municipal context →", th: "ข้อมูลเมืองแหลมฉบัง · ข้อมูลเทศบาลที่ยังไม่จัดอันดับ →", zh: "林查班城市数据 · 尚未排名的市政资料 →" })}</a></p>
       {/* ─── HEADER ─── */}
       <div className="map-dash-header">
         <div>

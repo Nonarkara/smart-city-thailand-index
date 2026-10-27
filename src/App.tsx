@@ -1,5 +1,5 @@
 import { useEffect, lazy, Suspense, useState } from "react";
-import { parseRoute, getRouteKey, type Route } from "./routing";
+import { parseRoute, getRouteKey, isMunicipalContextCity, type Route } from "./routing";
 import { syncDocumentMeta } from "./siteMeta";
 import { ResponsiveImage } from "./mediaAssets";
 import TopbarNav from "./TopbarNav";
@@ -21,7 +21,12 @@ import RankingsPage from "./RankingsPage";
 // click-throughs from Home/Rankings hit a warm cache.
 const cityDetailImport = () => import("./CityDetailPage");
 const CityDetailPage = lazy(cityDetailImport);
-if (window.location.pathname.startsWith("/city/")) {
+const municipalDetailImport = () => import("./LaemChabangPage");
+const LaemChabangPage = lazy(municipalDetailImport);
+const firstRoute = parseRoute(window.location.pathname);
+if (firstRoute.kind === "city" && isMunicipalContextCity(firstRoute.cityId)) {
+  municipalDetailImport();
+} else if (firstRoute.kind === "city") {
   cityDetailImport();
 } else if (typeof window.requestIdleCallback === "function") {
   window.requestIdleCallback(() => cityDetailImport(), { timeout: 4000 });
@@ -487,7 +492,7 @@ export default function App() {
             ) : route.kind === "baseline" ? (
               <BaselinePage locale={locale} onNavigate={navigate} />
             ) : route.kind === "city" ? (
-              <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
+              isMunicipalContextCity(route.cityId) ? <LaemChabangPage locale={locale} /> : <CityDetailPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
             ) : route.kind === "canvas" ? (
               <CityCanvasPage cityId={route.cityId} locale={locale} onNavigate={navigate} />
             ) : route.kind === "about" ? (

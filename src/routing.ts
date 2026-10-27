@@ -77,3 +77,6 @@ export function toAppPath(path: string): string {
   const prefix = base === "/" ? "" : base.replace(/\/$/, "");
   return path === "/" ? `${prefix}/` : `${prefix}${path}`;
 }
+
+/** Source context is outside the scored city registry. */
+export const isMunicipalContextCity = (cityId: string): boolean => cityId === "laem-chabang";

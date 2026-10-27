@@ -1,8 +1,10 @@
 import { getCitySummaryById } from "./cityCdp";
 import { getCityPhotoAsset } from "./cityMedia";
 import { CITY_NAME_ZH } from "./cityNamesZh";
-import { parseRoute, type Route } from "./routing";
+import { parseRoute, isMunicipalContextCity, type Route } from "./routing";
 import type { Locale } from "./types";
+
+import { laemChabangProfile } from "./laemChabangData";
 
 const SITE_NAME = "Smart City Thailand Index (SCITI)";
 const SHARE_IMAGE_PATH = "/smart_city_thailand_logo.jpg";
@@ -187,6 +189,9 @@ function buildMeta(route: Route, locale: Locale) {
     return { title, description, canonicalUrl, imageUrl };
   }
 
+  if (isMunicipalContextCity(route.cityId)) {
+    return { title: `${laemChabangProfile.title[locale]} | ${SITE_NAME}`, description: laemChabangProfile.introduction[locale] + " " + laemChabangProfile.certification.note[locale], canonicalUrl, imageUrl };
+  }
   const city = getCitySummaryById(route.cityId);
   if (!city) {
     return { title, description, canonicalUrl, imageUrl };

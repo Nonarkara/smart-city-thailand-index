@@ -3,7 +3,9 @@ import { mkdir, writeFile, access } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 
 // Export the same resolver used by the gallery, never a separately maintained city map.
-const server = await createServer({ server: { middlewareMode: true }, appType: 'custom', logLevel: 'error' });
+// This is an SSR-only export. Browser dependency discovery outlives this
+// short server and otherwise reports a false shutdown error after export.
+const server = await createServer({ server: { middlewareMode: true }, optimizeDeps: { noDiscovery: true, include: [] }, appType: 'custom', logLevel: 'error' });
 try {
   const { allCities } = await server.ssrLoadModule('/src/cityData.ts');
   const { getCityHeritage } = await server.ssrLoadModule('/src/cityHeritage.ts');

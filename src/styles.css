@@ -217,6 +217,7 @@
 [data-theme="dark"] .nav-link.active      { color: var(--depa-blue); background: rgba(0,0,0,.06); }
 [data-theme="dark"] .theme-toggle         { color: #3b5268; }
 [data-theme="dark"] .theme-toggle:hover   { color: var(--depa-blue); background: rgba(0,0,0,.04); }
+[data-theme="dark"] .nav-toggle span { background: var(--depa-blue); }
 [data-theme="dark"] .locale-toggle        { color: var(--depa-blue); background: rgba(0,0,0,.06); }
 [data-theme="dark"] img { opacity: 0.9; }
 [data-theme="dark"] .cinematic-hero-overlay { background: linear-gradient(transparent 0%, transparent 50%, rgba(11,21,35,.55) 75%, rgba(11,21,35,.88) 100%); }

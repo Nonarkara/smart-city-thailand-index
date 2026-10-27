@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "id": "laem-chabang",
+  "kind": "municipal-context",
+  "title": {
+    "en": "Laem Chabang Municipality",
+    "th": "เทศบาลนครแหลมฉบัง",
+    "zh": "林查班市"
+  },
+  "province": {
+    "en": "Chon Buri",
+    "th": "ชลบุรี",
+    "zh": "春武里府"
+  },
+  "checkedAt": "2026-10-28",
+  "assessment": null,
+  "certification": {
+    "status": "not-verified",
+    "note": {
+      "en": "This municipal context profile has no SCITI score or rank. The cited cooperation agreement does not establish smart-city certification.",
+      "th": "โปรไฟล์ข้อมูลเทศบาลนี้ยังไม่มีคะแนนหรืออันดับ SCITI บันทึกความร่วมมือที่อ้างอิงไม่ใช่หลักฐานการรับรองเมืองอัจฉริยะ",
+      "zh": "本市政资料尚无SCITI评分或排名。所引合作协议不构成智慧城市认证。"
+    }
+  },
+  "introduction": {
+    "en": "Dated municipal and port evidence, linked to TDV's 3D city context.",
+    "th": "ข้อมูลเทศบาลและท่าเรือพร้อมช่วงเวลา เชื่อมต่อบริบทเมือง 3 มิติใน TDV",
+    "zh": "注明统计期的市政与港口资料，并连接TDV三维城市环境。"
+  },
+  "facts": [
+    {
+      "id": "municipal-area",
+      "value": 109.65,
+      "unit": "km²",
+      "period": null,
+      "label": {
+        "en": "Published municipal extent",
+        "th": "พื้นที่เทศบาลตามเอกสาร",
+        "zh": "文献所列市域面积"
+      },
+      "scope": {
+        "en": "Not a measurement of the mapped boundary.",
+        "th": "ไม่ใช่พื้นที่คำนวณจากขอบเขตแผนที่",
+        "zh": "并非地图边界的测量值。"
+      },
+      "sourceIds": [
+        "sac-community"
+      ]
+    },
+    {
+      "id": "registered-population",
+      "value": 86790,
+      "unit": "people",
+      "period": "2024-12",
+      "label": {
+        "en": "Registered residents",
+        "th": "ประชากรตามทะเบียน",
+        "zh": "户籍人口"
+      },
+      "scope": {
+        "en": "Municipality; SAC cites DOPA. Not all people present.",
+        "th": "เขตเทศบาล ศมส. อ้างอิงกรมการปกครอง ไม่ใช่จำนวนคนที่อยู่จริงทั้งหมด",
+        "zh": "市域户籍人口；诗琳通人类学中心转引内政部，不等于实际在场人数。"
+      },
+      "sourceIds": [
+        "sac-community"
+      ]
+    },
+    {
+      "id": "port-containers-fy2023",
+      "value": 8670000,
+      "unit": "TEU",
+      "period": "FY2023",
+      "label": {
+        "en": "Port container throughput",
+        "th": "ตู้สินค้าผ่านท่าเรือ",
+        "zh": "港口集装箱吞吐量"
+      },
+      "scope": {
+        "en": "Whole Laem Chabang Port; historical annual flow.",
+        "th": "ท่าเรือแหลมฉบังทั้งท่า ข้อมูลปริมาณรายปีในอดีต",
+        "zh": "林查班港全港，历史年度流量。"
+      },
+      "sourceIds": [
+        "prd-port-2023"
+      ]
+    },
+    {
+      "id": "port-calls-fy2023",
+      "value": 11700,
+      "unit": "calls",
+      "period": "FY2023",
+      "label": {
+        "en": "Annual vessel calls",
+        "th": "เที่ยวเรือเข้าเทียบท่ารายปี",
+        "zh": "年度船舶靠港次数"
+      },
+      "scope": {
+        "en": "Port calls during the year; not vessels on the water now.",
+        "th": "เที่ยวเรือตลอดปี ไม่ใช่จำนวนเรือที่อยู่ในพื้นที่ขณะนี้",
+        "zh": "全年靠港次数，并非此刻水面上的船舶数量。"
+      },
+      "sourceIds": [
+        "prd-port-2023"
+      ]
+    },
+    {
+      "id": "lcit-containers-2025",
+      "value": 1936000,
+      "unit": "TEU",
+      "period": "2025",
+      "label": {
+        "en": "LCIT terminal throughput",
+        "th": "ตู้สินค้าผ่านท่าเทียบเรือ LCIT",
+        "zh": "LCIT码头吞吐量"
+      },
+      "scope": {
+        "en": "LCIT B5/C3 operator report; not whole-port throughput.",
+        "th": "รายงานผู้ประกอบการ LCIT ท่า B5/C3 ไม่ใช่ยอดรวมทั้งท่าเรือ",
+        "zh": "LCIT运营商所报B5/C3码头数据，并非全港总量。"
+      },
+      "sourceIds": [
+        "dpworld-lcit-2026"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "municipal-digital-cooperation",
+      "period": "2024-09-30",
+      "stage": "published-agreement",
+      "title": {
+        "en": "Municipal digital cooperation",
+        "th": "ความร่วมมือพัฒนาเมืองดิจิทัล",
+        "zh": "市政数字化合作"
+      },
+      "summary": {
+        "en": "depa and the municipality signed a smart-city cooperation agreement covering digital infrastructure, data and services. Delivery outcomes are not reported here.",
+        "th": "depa และเทศบาลลงนามความร่วมมือด้านเมืองอัจฉริยะ ครอบคลุมโครงสร้างพื้นฐานดิจิทัล ข้อมูล และบริการ หน้านี้ยังไม่ยืนยันผลการดำเนินงาน",
+        "zh": "depa与市政府签署合作协议，涉及数字基础设施、数据及服务；此处不将协议视为已交付成效。"
+      },
+      "sourceIds": [
+        "depa-mou-2024"
+      ]
+    },
+    {
+      "id": "terminal-d-automation",
+      "period": "2026-10-12",
+      "stage": "reported-terminal-operation",
+      "title": {
+        "en": "Automation at Terminal D",
+        "th": "ระบบอัตโนมัติที่ท่าเทียบเรือ D",
+        "zh": "D区码头自动化"
+      },
+      "summary": {
+        "en": "A government site visit reported remote cranes and autonomous trucks at Hutchison's Terminal D. This is a terminal-specific report, not municipal live telemetry.",
+        "th": "ข่าวการลงพื้นที่ของรัฐบาลระบุเครนควบคุมระยะไกลและรถหัวลากไร้คนขับที่ท่าเทียบเรือ D ของฮัทชิสัน เป็นข้อมูลเฉพาะท่า ไม่ใช่ข้อมูลสดของเทศบาล",
+        "zh": "政府考察报道提及和记D区码头的远程起重机及无人驾驶牵引车；范围仅限该码头，并非全市实时遥测。"
+      },
+      "sourceIds": [
+        "thaigov-automation-2026"
+      ]
+    },
+    {
+      "id": "community-and-coast",
+      "period": "2025-06-06",
+      "stage": "published-community-record",
+      "title": {
+        "en": "Coast and established communities",
+        "th": "ชายฝั่งและชุมชนดั้งเดิม",
+        "zh": "海岸与原有社区"
+      },
+      "summary": {
+        "en": "The community record describes coastal livelihoods and tropical monsoon seasons. Planning should consider residents and workers alongside port infrastructure.",
+        "th": "ข้อมูลชุมชนบันทึกวิถีชีวิตชายฝั่งและฤดูมรสุม การวางแผนควรคำนึงถึงผู้อยู่อาศัยและแรงงานควบคู่กับโครงสร้างพื้นฐานท่าเรือ",
+        "zh": "社区资料记录沿海生计与热带季风季节；规划需同时考虑居民、劳动者和港口基础设施。"
+      },
+      "sourceIds": [
+        "sac-community"
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "municipal-economy",
+      "label": {
+        "en": "Municipal economy",
+        "th": "เศรษฐกิจระดับเทศบาล",
+        "zh": "市级经济"
+      },
+      "note": {
+        "en": "No verified municipal GDP, household income or job total is supplied. Provincial or port output is not substituted.",
+        "th": "ยังไม่มีข้อมูลยืนยัน GDP รายได้ครัวเรือน หรือจำนวนงานระดับเทศบาล จึงไม่ใช้ข้อมูลจังหวัดหรือท่าเรือแทน",
+        "zh": "尚无经核实的市级GDP、家庭收入或就业总量，不以省级或港口产出代替。"
+      }
+    },
+    {
+      "id": "environment-services",
+      "label": {
+        "en": "Environment and services",
+        "th": "สิ่งแวดล้อมและบริการ",
+        "zh": "环境与公共服务"
+      },
+      "note": {
+        "en": "Citywide air, water, waste, energy and service-response series are not connected. The TDV engineering demonstrations are campus scenarios.",
+        "th": "ยังไม่เชื่อมชุดข้อมูลอากาศ น้ำ ขยะ พลังงาน และการตอบสนองบริการทั้งเมือง การสาธิตระบบวิศวกรรม TDV เป็นสถานการณ์จำลองของวิทยาเขต",
+        "zh": "尚未接入全市空气、水、垃圾、能源和服务响应序列。TDV工程演示属于园区情景模拟。"
+      }
+    },
+    {
+      "id": "spatial-coverage",
+      "label": {
+        "en": "Mapped coverage",
+        "th": "ขอบเขตข้อมูลแผนที่",
+        "zh": "地图覆盖范围"
+      },
+      "note": {
+        "en": "TDV discloses mapped boundary, building classification and height coverage separately. A mapped polygon does not certify the legal municipal extent.",
+        "th": "TDV แสดงแหล่งขอบเขตแผนที่ ประเภทอาคาร และความครอบคลุมความสูงแยกกัน รูปขอบเขตบนแผนที่ไม่ใช่การรับรองแนวเขตตามกฎหมาย",
+        "zh": "TDV分别披露地图边界、建筑用途和高度数据覆盖；地图多边形不构成法定市界认证。"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "sac-community",
+      "title": "Laem Chabang community record",
+      "organization": "Princess Maha Chakri Sirindhorn Anthropology Centre",
+      "url": "https://wikicommunity.sac.or.th/community/2642",
+      "publishedAt": "2025-06-06",
+      "checkedAt": "2026-10-28",
+      "note": "Government cultural record; population cites DOPA December 2024. Municipal extent observation date is not stated."
+    },
+    {
+      "id": "prd-port-2023",
+      "title": "Laem Chabang Port Phase 3 inspection report",
+      "organization": "Government Public Relations Department",
+      "url": "https://thailand.prd.go.th/en/content/category/detail/id/48/iid/229622",
+      "publishedAt": "2023-11-04",
+      "checkedAt": "2026-10-28",
+      "note": "FY2023 port traffic only. The historical construction schedule is not used as current completion evidence."
+    },
+    {
+      "id": "dpworld-lcit-2026",
+      "title": "LCIT concession and 2025 terminal throughput",
+      "organization": "DP World",
+      "url": "https://www.dpworld.com/en/news/dp-world-secures-laem-chabang-concession-extension-amid-rising-intra-asia-trade",
+      "publishedAt": "2026-05-07",
+      "checkedAt": "2026-10-28",
+      "note": "Operator report for LCIT terminals, not the whole port or municipality."
+    },
+    {
+      "id": "depa-mou-2024",
+      "title": "Laem Chabang municipal smart-city cooperation",
+      "organization": "depa",
+      "url": "https://www.depa.or.th/en/article-view/20240930_02",
+      "publishedAt": "2024-09-30",
+      "checkedAt": "2026-10-28",
+      "note": "Cooperation agreement, not a certification record or outcome evaluation."
+    },
+    {
+      "id": "thaigov-automation-2026",
+      "title": "Government visit to Terminal D",
+      "organization": "Secretariat of the Prime Minister",
+      "url": "https://www.thaigov.go.th/th/news/170094",
+      "publishedAt": "2026-10-12",
+      "checkedAt": "2026-10-28",
+      "note": "Reported terminal technologies; not a connected operational feed."
+    }
+  ],
+  "links": {
+    "profile": "https://sciti.nonarkara.org/city/laem-chabang/",
+    "data": "https://sciti.nonarkara.org/data/cities/laem-chabang.json",
+    "twin": "https://tdv.nonarkara.org/?city=laem-chabang",
+    "municipality": "https://www.lcb.go.th/",
+    "populationSource": "https://stat.bora.dopa.go.th/stat/statnew/statyear/"
+  }
+}
