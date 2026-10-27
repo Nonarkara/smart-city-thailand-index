@@ -8,6 +8,7 @@ import CityHeritageGallery from "./CityHeritageGallery";
 import OfficialRecognition from "./OfficialRecognition";
 import CityQuickRead from "./CityQuickRead";
 import DossierReadingNotes from "./DossierReadingNotes";
+import { NongPlubCard } from "./NongPlubCard";
 import { computeNeedsLadder } from "./needsLadderEngine";
 import { getCityById } from "./cityData";
 import { getDepaOfficial } from "./depaOfficialData";
@@ -1359,6 +1360,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         })}</summary><p>{cityTagline}</p></details>
         <p className="section-intro">{cityOrientation}</p>
         <CityHeritageGallery city={city} locale={locale} />
+        <NongPlubCard city={city} locale={locale} />
 
         {(() => {
           const rawCity = getCityById(cityId);

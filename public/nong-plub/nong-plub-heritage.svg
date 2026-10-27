@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="100%" height="100%" role="img" aria-label="Nong Plub in peach sleeveless top beside ancient heritage brick wall">
+  <defs>
+    <filter id="crayon-heritage" x="-10%" y="-10%" width="120%" height="120%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <radialGradient id="blush-grad-heritage" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f87171" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#f87171" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <g filter="url(#crayon-heritage)">
+    <!-- Soft warm paper background glow -->
+    <circle cx="160" cy="200" r="145" fill="#fffaf5" stroke="#fed7aa" stroke-width="2" stroke-dasharray="6,4" />
+
+    <!-- Ancient Brick Wall (on left & background) -->
+    <g opacity="0.85">
+      <!-- Brick row 1 -->
+      <rect x="35" y="110" width="48" height="22" rx="2" fill="#c2410c" stroke="#7c2d12" stroke-width="1.5" />
+      <rect x="87" y="110" width="52" height="22" rx="2" fill="#9a3412" stroke="#7c2d12" stroke-width="1.5" />
+      <!-- Brick row 2 -->
+      <rect x="25" y="136" width="56" height="22" rx="2" fill="#ea580c" stroke="#7c2d12" stroke-width="1.5" />
+      <rect x="85" y="136" width="46" height="22" rx="2" fill="#c2410c" stroke="#7c2d12" stroke-width="1.5" />
+      <!-- Brick row 3 -->
+      <rect x="30" y="162" width="44" height="22" rx="2" fill="#9a3412" stroke="#7c2d12" stroke-width="1.5" />
+      <rect x="78" y="162" width="54" height="22" rx="2" fill="#ea580c" stroke="#7c2d12" stroke-width="1.5" />
+      <!-- Brick row 4 -->
+      <rect x="22" y="188" width="58" height="22" rx="2" fill="#c2410c" stroke="#7c2d12" stroke-width="1.5" />
+      <rect x="84" y="188" width="48" height="22" rx="2" fill="#9a3412" stroke="#7c2d12" stroke-width="1.5" />
+      <!-- Weathered moss / foliage on bricks -->
+      <path d="M 38 108 Q 50 102 62 108 Q 72 104 84 108" stroke="#65a30d" stroke-width="3" stroke-linecap="round" />
+    </g>
+
+    <!-- Hair Back (Soft flowing shoulder length) -->
+    <path d="M 125 150 Q 112 210 118 265 Q 132 280 144 265 Q 135 210 140 160 Z" fill="#2d2b30" />
+    <path d="M 200 150 Q 215 210 208 265 Q 194 280 182 265 Q 192 210 186 160 Z" fill="#2d2b30" />
+
+    <!-- Torso / Peach Sleeveless Summer Top -->
+    <!-- Peach top body -->
+    <path d="M 136 210 Q 160 216 188 210 L 195 325 L 130 325 Z" fill="#fca5a5" stroke="#2d2b30" stroke-width="2.5" stroke-linejoin="round" />
+    <!-- Subtle soft folds -->
+    <path d="M 148 245 Q 155 270 146 300 M 174 245 Q 168 275 176 305" stroke="#f87171" stroke-width="1.8" />
+    <!-- Sleeveless neckline (round scoop) -->
+    <path d="M 145 206 Q 162 222 178 206" fill="none" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Bare Arms (Sleeveless style from reference photo) -->
+    <!-- Left Arm (viewer's left) -->
+    <path d="M 136 210 Q 120 235 118 280 Q 122 295 130 288 Q 134 250 144 220 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2.2" />
+    <ellipse cx="123" cy="296" rx="7" ry="9" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Right Arm (viewer's right, resting gently forward) -->
+    <path d="M 188 210 Q 206 235 208 280 Q 202 295 194 288 Q 190 250 180 220 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2.2" />
+    <ellipse cx="201" cy="296" rx="7" ry="9" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Neck -->
+    <path d="M 152 182 L 152 208 Q 162 212 172 208 L 172 182 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Head / Face -->
+    <path d="M 128 140 Q 122 182 162 192 Q 202 182 196 140 Q 192 105 162 105 Q 130 105 128 140 Z" fill="#fde6cf" stroke="#2d2b30" stroke-width="2.5" />
+
+    <!-- Hair Bangs / Gentle Side Part -->
+    <path d="M 126 128 Q 142 110 162 110 Q 188 110 198 128 Q 186 120 170 128 Q 155 120 138 132 Q 130 128 126 128 Z" fill="#2d2b30" />
+    <path d="M 128 135 Q 132 155 136 170" fill="none" stroke="#2d2b30" stroke-width="2" />
+    <path d="M 196 135 Q 192 155 188 170" fill="none" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Eyebrows (Gentle, warm) -->
+    <path d="M 140 140 Q 148 135 154 139" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <path d="M 170 139 Q 176 135 184 140" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Manga Eyes (Warm, smiling crescent eyes) -->
+    <path d="M 141 149 Q 148 143 155 149" fill="none" stroke="#2d2b30" stroke-width="2.8" stroke-linecap="round" />
+    <circle cx="148" cy="151" r="1.5" fill="#fcd7b6" />
+    <path d="M 171 149 Q 178 143 185 149" fill="none" stroke="#2d2b30" stroke-width="2.8" stroke-linecap="round" />
+    <circle cx="178" cy="151" r="1.5" fill="#fcd7b6" />
+
+    <!-- Sweet Pink Cheeks -->
+    <circle cx="138" cy="158" r="9" fill="url(#blush-grad-heritage)" />
+    <circle cx="186" cy="158" r="9" fill="url(#blush-grad-heritage)" />
+
+    <!-- Nose -->
+    <circle cx="162" cy="154" r="1.5" fill="#e09f67" />
+
+    <!-- Warm Gentle Smile -->
+    <path d="M 152 165 Q 162 174 172 165" fill="none" stroke="#2d2b30" stroke-width="2.2" stroke-linecap="round" />
+
+    <!-- Jasmine / Temple flower in hair (Cultural touch) -->
+    <circle cx="198" cy="125" r="5" fill="#fef08a" stroke="#ca8a04" stroke-width="1.2" />
+    <circle cx="198" cy="125" r="2" fill="#ea580c" />
+
+    <!-- Crayon Sparkles & ancient stupa silhouette in far distance -->
+    <path d="M 245 160 L 255 125 L 265 160 Z" fill="#fed7aa" stroke="#fb923c" stroke-width="1.5" opacity="0.6" />
+    <path d="M 255 125 L 255 110" stroke="#fb923c" stroke-width="1.5" />
+    <circle cx="265" cy="180" r="12" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" stroke-dasharray="3,3" />
+
+    <!-- Ground line -->
+    <path d="M 40 350 Q 160 355 280 350" stroke="#cbd5e1" stroke-width="2.5" stroke-dasharray="4,6" stroke-linecap="round" />
+  </g>
+</svg>

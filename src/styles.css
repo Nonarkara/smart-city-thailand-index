@@ -13149,3 +13149,213 @@ main .rankings-page .rankings-column > .section + .section { margin-top: 12px; }
   margin: 0;
 }
 
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * NONG PLUB CRAYON TRAVELOGUE — HUMAN CRAFT & LIVED EXPERIENCE
+ * ───────────────────────────────────────────────────────────────────────────── */
+.nong-plub-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--5);
+  margin-block: 1rem;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .nong-plub-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+.nong-plub-figure-col {
+  flex: 0 0 220px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .nong-plub-figure-col {
+    border-bottom: none;
+    border-right: 1px solid var(--5);
+  }
+}
+
+.nong-plub-art-frame {
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.nong-plub-illustration {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.nong-plub-outfit-badge {
+  position: absolute;
+  bottom: 0.25rem;
+  background: var(--ink);
+  color: var(--bg);
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+}
+
+.nong-plub-story-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.25rem;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.nong-plub-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nong-plub-eyebrow-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nong-plub-eyebrow {
+  font: 700 var(--text-micro) var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.nong-plub-stamp {
+  font: 700 var(--text-micro) var(--font);
+  color: var(--gold-ink);
+  background: var(--bg);
+  border: 1px dashed var(--4);
+  padding: 0.15rem 0.45rem;
+}
+
+.nong-plub-site-name {
+  font: 700 var(--text-body)/1.35 var(--font);
+  color: var(--ink);
+  margin: 0;
+}
+
+.nong-plub-activity {
+  font: 400 var(--text-micro)/1.45 var(--font);
+  color: var(--2);
+  margin: 0;
+}
+
+.nong-plub-quote-box {
+  background: var(--bg);
+  border: 1px solid var(--5);
+  border-left: 2px solid var(--gold-ink);
+  padding: 0.75rem 0.85rem;
+}
+
+.nong-plub-quote-body {
+  font: 400 var(--text-body)/1.6 var(--font);
+  color: var(--ink);
+  margin: 0;
+  font-style: italic;
+}
+
+.nong-plub-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nong-plub-tip-row {
+  font: 400 var(--text-micro)/1.5 var(--font);
+  color: var(--2);
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.nong-plub-tip-label {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.nong-plub-tip-text {
+  color: var(--2);
+}
+
+.nong-plub-flavor-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--bg);
+  border: 1px solid var(--5);
+  padding: 0.25rem 0.5rem;
+  align-self: flex-start;
+}
+
+.nong-plub-tag-icon {
+  color: var(--gold-ink);
+  font-size: var(--text-micro);
+}
+
+.nong-plub-tag-text {
+  font: 600 var(--text-micro) var(--mono);
+  color: var(--ink);
+  letter-spacing: 0.03em;
+}
+
+/* Compact preview badge */
+.nong-plub-mini-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg);
+  border: 1px dashed var(--4);
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  color: var(--ink);
+  text-align: left;
+  min-height: 44px;
+}
+
+.nong-plub-mini-badge:hover {
+  background: var(--surface);
+  border-color: var(--gold-ink);
+}
+
+.nong-plub-badge-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.nong-plub-badge-text {
+  font: 600 var(--text-micro) var(--font);
+  color: var(--2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}

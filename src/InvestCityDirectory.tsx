@@ -6,6 +6,7 @@ import { useMemo, useRef, useState } from "react";
 import { allCities } from "./cityData.ts";
 import { getInvestorPitchForLocale } from "./cityInvestorPitch.ts";
 import { getCityName, getDistinctProvinceName, getProvinceName, translate } from "./cityPresentation";
+import { NongPlubMiniBadge } from "./NongPlubCard";
 import { TIER_LABELS } from "./types.ts";
 import type { Locale, SmartCity } from "./types.ts";
 
@@ -294,6 +295,9 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
         {identityMeta && <p style={{ font: "500 var(--text-micro) var(--font)", color: "var(--3)", margin: 0 }}>
           {identityMeta}
         </p>}
+        <div style={{ marginTop: ".4rem" }}>
+          <NongPlubMiniBadge city={city} locale={locale} onOpen={() => onNavigate(`/city/${city.id}`)} />
+        </div>
       </div>
 
       {/* Pitch */}

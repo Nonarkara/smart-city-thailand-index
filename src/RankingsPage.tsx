@@ -5,6 +5,7 @@ import { lazy, Suspense, useMemo, useState } from "react";
 // out of the rankings page's initial load.
 const ComparisonGrid = lazy(() => import("./ComparisonGrid"));
 import CityFingerprint from "./CityFingerprint";
+import { NongPlubMiniBadge } from "./NongPlubCard";
 import RankingsMapView from "./RankingsMapView";
 import { getCityPhotoAsset } from "./cityMedia";
 import { ResponsiveImage } from "./mediaAssets";
@@ -558,6 +559,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                         {provinceName && <span className="gallery-card-province">{provinceName}</span>}
                         <span className={`gallery-card-tier gallery-card-tier-${city.tier}`}>{tierSym} {TIER_LABELS[locale][city.tier]}</span>
                       </div>
+                      <NongPlubMiniBadge city={city} locale={locale} asTag={true} />
                     </div>
                   </button>
                 );
