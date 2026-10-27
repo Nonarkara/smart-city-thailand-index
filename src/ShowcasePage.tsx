@@ -776,10 +776,10 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                       <ResponsiveImage src="/Nakhon Si Thammarat/busan-x-nst-meeting-2025.webp" alt="Busan Meeting 2025" sizes="(max-width: 640px) 100vw, 300px" />
                     </div>
                     <div className="timeline-arc-photo">
-                      <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2025:2.webp" alt="Goyang 2025" sizes="(max-width: 640px) 100vw, 300px" />
+                      <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2025-2.webp" alt="Goyang 2025" sizes="(max-width: 640px) 100vw, 300px" />
                     </div>
                     <div className="timeline-arc-photo">
-                      <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2025:3.webp" alt="Goyang 2025 Panel" sizes="(max-width: 640px) 100vw, 300px" />
+                      <ResponsiveImage src="/Nakhon Si Thammarat/world-smart-city-expo-goyang-2025-3.webp" alt="Goyang 2025 Panel" sizes="(max-width: 640px) 100vw, 300px" />
                     </div>
                     <div className="timeline-arc-photo">
                       <ResponsiveImage src="/Nakhon Si Thammarat/mayor-kanop-tomorrow-city-shanghai.webp" alt="Tomorrow.City Shanghai 2025" sizes="(max-width: 640px) 100vw, 300px" />
