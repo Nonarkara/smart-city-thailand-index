@@ -14,6 +14,9 @@ for (const city of cities) {
   assert.ok(ids?.length && ids.every(id => records.has(id)), `${city.id}: missing source record`);
   assert.ok(ids.some(id => records.get(id).verifiedAt && records.get(id).scope !== 'regional'), `${city.id}: regional object used as local evidence`);
 }
+function assertHeroCredits(overlap, id) {
+  assert.ok(overlap <= 0, `${id}: dossier tabs cover source credits by ${overlap}px`);
+}
 const assets = [...new Set(register.records.flatMap(record => [record.image, record.jpegImage].filter(Boolean)))];
 for (const asset of assets) {
   assert.match(asset, /^\/heritage\/[a-z0-9.-]+$/i, 'nonportable heritage path');
@@ -39,6 +42,7 @@ if (!process.argv.includes('--assets-only')) {
     let page = await browser.newPage({ reducedMotion: 'reduce' });
     // A research-park or registered dossier must not borrow an unrelated city hero.
     for (const id of ['wangchan-valley', 'reg-phrae']) {
+      await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(`${origin}/city/${id}/`);
       await page.evaluate(() => localStorage.setItem('smart-city-thailand-locale', 'en'));
       await page.reload();
@@ -51,6 +55,19 @@ if (!process.argv.includes('--assets-only')) {
       assert.ok((await context.innerText()).includes(hero.author));
       assert.equal(await context.locator(`a[href="${hero.sourceUrl}"]`).count(), 1);
       assert.equal(await context.locator(`a[href="${hero.licenseUrl}"]`).count(), 1);
+      await page.evaluate(() => { window.scrollTo(0, 0); return document.fonts.ready; });
+      const overlap = await context.evaluate(el => {
+        const bottom = el.getBoundingClientRect().bottom;
+        const top = document.querySelector('.dossier-tab-list').getBoundingClientRect().top;
+        return bottom - top;
+      });
+      assertHeroCredits(overlap, id);
+      if (id === 'wangchan-valley') {
+        const oldOffset = await page.addStyleTag({ content: '.dossier-tabs { margin-top: -16px !important; }' });
+        const oldOverlap = await context.evaluate(el => el.getBoundingClientRect().bottom - document.querySelector('.dossier-tab-list').getBoundingClientRect().top);
+        assert.throws(() => assertHeroCredits(oldOverlap, id), /cover source credits/, 'original negative offset escaped guard');
+        await oldOffset.evaluate(el => el.remove());
+      }
     }
     const ids = ['phuket', 'nakhon-si-thammarat', 'yala', 'reg-trat', 'reg-phrae'];
     const cases = ids.flatMap(id => ['en', 'th', 'zh'].map(locale => ({ id, locale, width: 390, height: 844 })))

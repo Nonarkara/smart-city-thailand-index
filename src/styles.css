@@ -5411,7 +5411,7 @@ details[open] .kb-question::before { content: "−"; }
 .gallery-card-tier-gamma { color: var(--gamma); }
 
 /* ─── DOSSIER TABS ─── */
-.dossier-tabs { margin-top: -1rem; }
+.dossier-tabs { margin-top: 0; }
 .dossier-tab-list {
   display: flex;
   gap: 0;
@@ -12986,5 +12986,5 @@ main .rankings-page .rankings-column > .section + .section { margin-top: 12px; }
 .heritage-technical-notes summary { min-height: 44px; padding-block: 12px; font-size: var(--text-body); cursor: pointer; }
 
 .map-coordinate-note { margin-block: 8px; font: 400 var(--text-body)/1.45 var(--font); max-width: 72ch; color: var(--2); }
-.map-coordinate-note.section { padding-block: 0; margin-inline: var(--gutter); }
+.map-coordinate-note.section { width: auto; padding: 0; margin-inline: var(--gutter); }
 .city-hero-context.section { margin-block: 8px; padding-block: 0; font: 400 var(--text-micro)/1.45 var(--font); overflow-wrap: anywhere; }
