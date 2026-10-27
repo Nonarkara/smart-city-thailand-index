@@ -9942,6 +9942,14 @@ body:has(.bingo-page) { overflow: hidden; }
   flex-shrink: 0;
   min-width: 3.2rem;
 }
+.bingo-clicks-mobile {
+  font: 600 var(--text-micro) var(--mono);
+  color: var(--3);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 
 /* ── Size tabs (shared mobile + desktop) ── */
 .bingo-size-tabs { display: flex; gap: 3px; }
@@ -10092,8 +10100,8 @@ body:has(.bingo-page) { overflow: hidden; }
 }
 .bingo-card-front {
   background: var(--surface);
-  gap: clamp(2px, 1.5vw, 6px);
-  padding: clamp(6px, 2vw, 12px) clamp(2px, 1.5vw, 4px) clamp(4px, 1.5vw, 6px);
+  gap: 3px;
+  padding: 2px 1px 1px;
   transform: rotateY(0deg);
 }
 .bingo-card-back  { background: #fff; transform: rotateY(180deg); flex-direction: column; gap: 0; }
@@ -10107,9 +10115,7 @@ body:has(.bingo-page) { overflow: hidden; }
 /* FREE cell — board-game centre stamp */
 .bingo-free-content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%; gap: 2px; }
 .bingo-free-stamp   { font: 800 clamp(1rem, 5vw, 1.6rem) var(--mono); color: var(--cell-color, var(--3)); line-height: 1; letter-spacing: .04em; }
-.bingo-free-label   { font: 700 clamp(0.7rem, 2.2vw, 0.85rem) var(--mono); letter-spacing: .12em; color: var(--ink); text-transform: uppercase; margin-top: 2px; }
-.bingo-click-count  { font: 800 clamp(1.1rem, 6vw, 2rem) var(--mono); color: var(--teal); line-height: 1; letter-spacing: -.02em; }
-.bingo-free-sub     { font: 600 clamp(0.6rem, 1.6vw, 0.72rem) var(--mono); letter-spacing: .14em; color: var(--3); text-transform: uppercase; }
+.bingo-free-label   { font: 700 var(--text-micro) var(--mono); letter-spacing: .12em; color: var(--ink); text-transform: uppercase; margin-top: 2px; }
 
 /* Cell front content — number stamp + emoji + label. Each scales with grid
    size below. Floors are set above the 11px project minimum so judges can
@@ -10124,11 +10130,10 @@ body:has(.bingo-page) { overflow: hidden; }
   line-height: 1;
   z-index: 2;
 }
-.bingo-cell-emoji { font-size: var(--text-display); line-height: 1; flex-shrink: 0; }
+.bingo-cell-emoji { font-size: var(--text-body); line-height: 1; flex-shrink: 0; }
 .bingo-cell-text  {
-  font: 600 clamp(0.7rem, 2.6vw, 0.8rem)/1.15 var(--font);
+  font: 600 var(--text-micro)/1.15 var(--font);
   text-align: center;
-  padding: 0 2px;
   /* break-word let the engine split anywhere ("Healthcar-e") before
      hyphenation got a chance; overflow-wrap only breaks as a last resort,
      after hyphens: auto has produced "Health-care". */
@@ -10144,14 +10149,14 @@ body:has(.bingo-page) { overflow: hidden; }
 
 /* Per-grid-size mobile overrides — denser grids get smaller text so all
    three layers (number, emoji, label) fit without overflow. */
-.bingo-grid-6x6 .bingo-cell-emoji { font-size: var(--text-display); }
+.bingo-grid-6x6 .bingo-cell-emoji { font-size: var(--text-micro); }
 .bingo-grid-6x6 .bingo-cell-text  { font-size: var(--text-micro); }
 .bingo-grid-6x6 .bingo-cell-num   { font-size: var(--text-micro); top: 5px; left: 5px; }
 
-.bingo-grid-7x7 .bingo-cell-emoji { font-size: var(--text-body); }
+.bingo-grid-7x7 .bingo-cell-emoji { font-size: var(--text-micro); }
 .bingo-grid-7x7 .bingo-cell-text  { font-size: var(--text-micro); }
 .bingo-grid-7x7 .bingo-cell-num   { font-size: var(--text-micro); top: 4px; left: 4px; }
-.bingo-grid-7x7 .bingo-card-front { gap: 2px; padding: 4px 2px 3px; }
+.bingo-grid-7x7 .bingo-card-front { gap: 2px; padding: 2px 1px 1px; }
 
 /* ── Mobile dim strip (row 4) ── */
 .bingo-mobile-dims {
@@ -10253,7 +10258,7 @@ body:has(.bingo-page) { overflow: hidden; }
   .bingo-grid-5x5,
   .bingo-grid-6x6,
   .bingo-grid-7x7 {
-    width: min(100%, clamp(320px, calc(100svh - 28rem), 640px));
+    width: min(100%, 640px);
     margin-inline: auto;
     gap: 6px;
   }
@@ -10265,23 +10270,21 @@ body:has(.bingo-page) { overflow: hidden; }
   .bingo-cell-num   { font-size: var(--text-body); top: 6px; left: 7px; }
   .bingo-cell-emoji { font-size: var(--text-display); }
   .bingo-cell-text  { font-size: var(--text-body); }
-  .bingo-card-front { gap: 6px; padding: 10px 6px 8px; }
+  .bingo-card-front { gap: 6px; padding: 8px 6px 6px; }
   .bingo-logo-img   { width: 64%; height: 64%; }
   .bingo-back-label { font-size: var(--text-body); }
-  /* 6×6 desktop: still readable, slightly tighter */
-  .bingo-grid-6x6 .bingo-card-front { overflow: hidden; gap: 4px; padding: 8px 4px 6px; }
-  .bingo-grid-6x6 .bingo-cell-emoji { font-size: var(--text-display); }
-  .bingo-grid-6x6 .bingo-cell-text  { font-size: var(--text-micro); }
+  /* 6×6 desktop: the name needs the room, so the icon steps down one */
+  .bingo-grid-6x6 .bingo-card-front { gap: 5px; padding: 7px 5px 5px; }
+  .bingo-grid-6x6 .bingo-cell-emoji { font-size: var(--text-body); }
+  .bingo-grid-6x6 .bingo-cell-text  { font-size: var(--text-body); }
   .bingo-grid-6x6 .bingo-cell-num   { font-size: var(--text-micro); top: 5px; left: 6px; }
-  /* 7×7 desktop: tightest density, still above 11px floor */
-  .bingo-grid-7x7 .bingo-card-front { gap: 3px; overflow: hidden; padding: 6px 3px 5px; }
-  .bingo-grid-7x7 .bingo-cell-emoji { font-size: var(--text-display); }
+  /* 7×7 desktop: tightest density, still above the 11px floor */
+  .bingo-grid-7x7 .bingo-card-front { gap: 4px; padding: 6px 4px 4px; }
+  .bingo-grid-7x7 .bingo-cell-emoji { font-size: var(--text-micro); }
   .bingo-grid-7x7 .bingo-cell-text  { font-size: var(--text-micro); }
   .bingo-grid-7x7 .bingo-cell-num   { font-size: var(--text-micro); top: 4px; left: 4px; }
   .bingo-free-stamp  { font-size: var(--text-display); }
   .bingo-free-label  { font-size: var(--text-body); }
-  .bingo-click-count { font-size: var(--text-display); }
-  .bingo-free-sub    { font-size: var(--text-micro); }
 
   /* Desktop sidebar */
   .bingo-sidebar {
@@ -10318,6 +10321,9 @@ body:has(.bingo-page) { overflow: hidden; }
     background: var(--surface); margin-top: .75rem;
   }
   .bingo-timer-stopped { border-color: var(--teal); background: rgba(0,131,143,.08); }
+.bingo-score { display: flex; gap: .5rem; margin-top: .75rem; }
+.bingo-score .bingo-timer { margin-top: 0; flex: 1 1 auto; }
+.bingo-clicks { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: .3rem .75rem; border: 1.5px solid var(--ink); background: var(--surface); }
   .bingo-timer-digits {
     font: 700 var(--text-body) var(--mono); color: var(--ink);
     letter-spacing: .02em; white-space: nowrap;

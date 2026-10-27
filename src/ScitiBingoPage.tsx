@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 import { translate } from "./cityPresentation";
 import { assetUrl } from "./assetUtils";
@@ -20,10 +20,15 @@ type GridSize = 5 | 6 | 7;
 type BingoTerm = { id: string; emoji: string; label: T3; hint: T3; dim: SmartDimension };
 type Feedback = { correct: boolean; cell: BingoTerm };
 
+/** A soft hyphen is a BREAK OPPORTUNITY, not a character. It belongs in the
+ *  rendered label — it is what lets "Manage-ment" break at the syllable
+ *  instead of mid-word — but it must never be announced. */
+const plain = (s: string) => s.replace(/­/g, "");
+
 const POOL: BingoTerm[] = [
   { id:"env1", dim:"environment", emoji:"🌬️", label:{ en:"Air Quality Monitor", th:"มอนิเตอร์อากาศ", zh:"空气质量监测" }, hint:{ en:"tracks what you breathe every day", th:"วัดอากาศที่คุณหายใจทุกวัน", zh:"监测你每天呼吸的空气" } },
   { id:"env2", dim:"environment", emoji:"🌊", label:{ en:"Flood Sensor", th:"เซนเซอร์น้ำท่วม", zh:"洪涝传感" }, hint:{ en:"warns before the water rises", th:"เตือนก่อนน้ำจะท่วม", zh:"水位上涨前提前预警" } },
-  { id:"env3", dim:"environment", emoji:"💧", label:{ en:"Water Management", th:"จัดการน้ำ", zh:"水资源管理" }, hint:{ en:"keeps clean water flowing to taps", th:"ทำให้น้ำสะอาดไหลออกก๊อก", zh:"保障清洁水流出水龙头" } },
+  { id:"env3", dim:"environment", emoji:"💧", label:{ en:"Water Manage­ment", th:"จัดการน้ำ", zh:"水资源管理" }, hint:{ en:"keeps clean water flowing to taps", th:"ทำให้น้ำสะอาดไหลออกก๊อก", zh:"保障清洁水流出水龙头" } },
   { id:"env4", dim:"environment", emoji:"🌡️", label:{ en:"Climate Watch", th:"เฝ้าระวังภูมิอากาศ", zh:"气候监测" }, hint:{ en:"predicts extreme weather before it hits", th:"คาดการณ์พายุก่อนถึง", zh:"极端天气来袭前提前预测" } },
   { id:"env5", dim:"environment", emoji:"♻️", label:{ en:"Waste IoT", th:"ติดตามขยะ IoT", zh:"废物物联" }, hint:{ en:"smart bins know when they're full", th:"ถังขยะรู้เองเมื่อเต็ม", zh:"智能垃圾桶知道自己满了" } },
   { id:"env6", dim:"environment", emoji:"🚨", label:{ en:"Disaster Alert", th:"แจ้งเตือนภัย", zh:"灾害预警" }, hint:{ en:"early warning saves lives", th:"เตือนภัยก่อนช่วยชีวิตได้", zh:"提前预警总能救命" } },
@@ -51,7 +56,7 @@ const POOL: BingoTerm[] = [
   { id:"enr4", dim:"environment", emoji:"🎯", label:{ en:"Net Zero Target", th:"เป้า Net Zero", zh:"净零目标" }, hint:{ en:"whatever you emit, you must absorb", th:"ปล่อยเท่าไหร่ต้องดูดซับเท่านั้น", zh:"排放多少就要吸收多少" } },
   { id:"enr5", dim:"energy", emoji:"🔋", label:{ en:"Energy Storage 30%", th:"เก็บพลังงาน ≥30%", zh:"储能≥30%" }, hint:{ en:"stores daytime solar for the night", th:"เก็บพลังงานกลางวันไว้ใช้ตอนกลางคืน", zh:"把白天太阳能存起来夜晚用" } },
   { id:"enr6", dim:"energy", emoji:"📊", label:{ en:"Smart Meter 100%", th:"มิเตอร์ 100%", zh:"智能电表100%" }, hint:{ en:"every home tracked in real-time", th:"ทุกบ้านถูกติดตามแบบเรียลไทม์", zh:"每家每户实时监测用电量" } },
-  { id:"enr7", dim:"energy", emoji:"🏘️", label:{ en:"Smart Home/Building", th:"Smart Home", zh:"智慧楼宇" }, hint:{ en:"buildings manage their own power use", th:"อาคารบริหารการใช้พลังงานตัวเอง", zh:"建筑自主管理自身能耗" } },
+  { id:"enr7", dim:"energy", emoji:"🏘️", label:{ en:"Smart Home/­Building", th:"Smart Home", zh:"智慧楼宇" }, hint:{ en:"buildings manage their own power use", th:"อาคารบริหารการใช้พลังงานตัวเอง", zh:"建筑自主管理自身能耗" } },
   { id:"enr8", dim:"energy", emoji:"🏝️", label:{ en:"Micro-grid 24hr", th:"ไมโครกริด 24 ชม.", zh:"微电网24小时" }, hint:{ en:"city runs off the national grid for a full day", th:"เมืองทำงานโดยไม่พึ่งสายส่งหลักได้ 24 ชม.", zh:"城市可独立运行整整一天" } },
   { id:"ppl1", dim:"people", emoji:"📱", label:{ en:"Digital Literacy", th:"การรู้ดิจิทัล", zh:"数字素养" }, hint:{ en:"everyone can use the internet safely", th:"ทุกคนใช้อินเทอร์เน็ตได้อย่างปลอดภัย", zh:"每个人都能安全使用互联网" } },
   { id:"ppl2", dim:"people", emoji:"📚", label:{ en:"Lifelong Learning", th:"เรียนรู้ตลอดชีวิต", zh:"终身学习" }, hint:{ en:"education doesn't stop after school", th:"การศึกษาไม่จบแค่ในโรงเรียน", zh:"学习不因毕业而停止" } },
@@ -72,11 +77,11 @@ const POOL: BingoTerm[] = [
   { id:"gov1", dim:"governance", emoji:"🗄️", label:{ en:"City Data Platform", th:"แพลตฟอร์มข้อมูลเมือง", zh:"城市数据平台" }, hint:{ en:"all city sensors talk to one single system", th:"เซนเซอร์ทุกตัวส่งข้อมูลมาที่เดียวกัน", zh:"所有城市传感器汇入同一系统" } },
   { id:"gov2", dim:"governance", emoji:"🔓", label:{ en:"Open Gov Data", th:"ข้อมูลรัฐเปิด", zh:"开放政府数据" }, hint:{ en:"the public can see what the city collects", th:"ประชาชนดูข้อมูลที่เมืองเก็บได้", zh:"公众可以查看城市收集的数据" } },
   { id:"gov3", dim:"governance", emoji:"📲", label:{ en:"Citizen App", th:"แอปประชาชน", zh:"市民应用" }, hint:{ en:"report a broken streetlight from your phone", th:"แจ้งไฟดับผ่านโทรศัพท์ทันที", zh:"用手机举报路灯故障" } },
-  { id:"gov4", dim:"governance", emoji:"🖥️", label:{ en:"e-Government", th:"รัฐบาลอิเล็กทรอนิกส์", zh:"电子政务" }, hint:{ en:"renew your ID without queuing at all", th:"ต่ออายุบัตรโดยไม่ต้องต่อคิว", zh:"无需排队即可续办证件" } },
+  { id:"gov4", dim:"governance", emoji:"🖥️", label:{ en:"e-Govern­ment", th:"รัฐบาลอิเล็กทรอนิกส์", zh:"电子政务" }, hint:{ en:"renew your ID without queuing at all", th:"ต่ออายุบัตรโดยไม่ต้องต่อคิว", zh:"无需排队即可续办证件" } },
   { id:"gov5", dim:"governance", emoji:"📊", label:{ en:"City Dashboard", th:"แดชบอร์ดเมือง", zh:"城市仪表板" }, hint:{ en:"city performance is visible to every citizen", th:"ผลการดำเนินงานเมืองเห็นได้ทุกคน", zh:"城市绩效对每位市民透明可见" } },
   { id:"gov6", dim:"governance", emoji:"🔗", label:{ en:"Public API", th:"API สาธารณะ", zh:"公共API" }, hint:{ en:"developers can build apps on city data", th:"นักพัฒนาต่อยอดข้อมูลเมืองได้", zh:"开发者可在城市数据上构建应用" } },
-  { id:"gov7", dim:"governance", emoji:"🗳️", label:{ en:"Participatory Budget", th:"งบฯ มีส่วนร่วม", zh:"参与式预算" }, hint:{ en:"citizens vote on how city money is spent", th:"ประชาชนโหวตกำหนดการใช้งบเมือง", zh:"市民投票决定城市资金用途" } },
-  { id:"gov8", dim:"governance", emoji:"🔍", label:{ en:"Transparency Audit", th:"ตรวจสอบโปร่งใส", zh:"透明度审计" }, hint:{ en:"outsiders verify what the city claims", th:"บุคคลภายนอกตรวจสอบคำกล่าวอ้างเมือง", zh:"外部机构核实城市的陈述" } },
+  { id:"gov7", dim:"governance", emoji:"🗳️", label:{ en:"Participa­tory Budget", th:"งบฯ มีส่วนร่วม", zh:"参与式预算" }, hint:{ en:"citizens vote on how city money is spent", th:"ประชาชนโหวตกำหนดการใช้งบเมือง", zh:"市民投票决定城市资金用途" } },
+  { id:"gov8", dim:"governance", emoji:"🔍", label:{ en:"Transpa­rency Audit", th:"ตรวจสอบโปร่งใส", zh:"透明度审计" }, hint:{ en:"outsiders verify what the city claims", th:"บุคคลภายนอกตรวจสอบคำกล่าวอ้างเมือง", zh:"外部机构核实城市的陈述" } },
 ];
 
 const DIM_COLORS: Record<SmartDimension,string> = { environment:"#2E7D32", economy:"#1565C0", mobility:"#6A1B9A", energy:"#E65100", people:"#00838F", living:"#C62828", governance:"#37474F" };
@@ -140,6 +145,22 @@ export default function ScitiBingoPage({ locale }: Props) {
   const [gridSize, setGridSize]=useState<GridSize>(5);
   const [seed,setSeed]=useState(()=>Math.floor(Math.random()*1_000_000));
   const [board,setBoard]=useState<BingoTerm[]>(()=>makeBoard(seed,5));
+  const gridRef=useRef<HTMLDivElement|null>(null);
+  const [boardPx,setBoardPx]=useState(0);
+  const [gapPx,setGapPx]=useState(5);
+  useEffect(()=>{
+    const el=gridRef.current;
+    if(!el) return;
+    const read=()=>{
+      setBoardPx(el.getBoundingClientRect().width);
+      const g=parseFloat(getComputedStyle(el).columnGap);
+      if(Number.isFinite(g)) setGapPx(g);
+    };
+    read();
+    const ro=new ResizeObserver(read);
+    ro.observe(el);
+    return ()=>ro.disconnect();
+  },[]);
   const [flippedIds,setFlippedIds]=useState<Set<string>>(()=>new Set(["FREE"]));
   const [clickCount,setClickCount]=useState(0);
   const [targetDim,setTargetDim]=useState<SmartDimension|null>(null);
@@ -175,6 +196,40 @@ export default function ScitiBingoPage({ locale }: Props) {
     setFeedback(f);
     fbTimerRef.current=setTimeout(()=>setFeedback(null),3200);
   },[]);
+
+  /* ── WHICH BOARD SIZES FIT THIS SCREEN ───────────────────────────────
+     A denser board means smaller cards, and a card can only hold its
+     name if the cell is big enough for it. Every card used to overflow
+     its cell: 36 of 36 on a 6×6 board, 48 of 48 on a 7×7, and 23 of 25
+     even on 5×5. A size is offered only when its cells can carry the
+     label, and the board is MEASURED rather than assumed.
+
+     The minimum is per grid size because the card's icon steps down as
+     the board gets denser: a 5×5 carries the display-size icon and needs
+     the most room, a 7×7 drops it to the micro size and needs the
+     least. These numbers were measured, not guessed. */
+  const MIN_CELL = useMemo<Record<GridSize, number>>(
+    () => (isMobile ? { 5: 66, 6: 68, 7: 68 } : { 5: 106, 6: 88, 7: 78 }),
+    [isMobile]
+  );
+  const availableSizes = useMemo<GridSize[]>(
+    () => ([5, 6, 7] as GridSize[]).filter(
+      n => boardPx > 0 && (boardPx - (n - 1) * gapPx) / n >= MIN_CELL[n]
+    ),
+    [boardPx, gapPx, MIN_CELL]
+  );
+
+  useEffect(()=>{
+    if(!availableSizes.length || availableSizes.includes(gridSize)) return;
+    const next=availableSizes[0];
+    setGridSize(next);
+    setBoard(makeBoard(seed,next));
+    setFlippedIds(new Set(next%2===1?["FREE"]:[]));
+    setClickCount(0); setCalledDims([]); setTargetDim(null);
+    setWon(false); setGameStarted(false); setElapsed(0);
+    startTimeRef.current=null;
+    setFeedback(null);
+  },[availableSizes,gridSize,seed]);
 
   const reset=useCallback((newSize?:GridSize)=>{
     const size=newSize??gridSize;
@@ -212,12 +267,12 @@ export default function ScitiBingoPage({ locale }: Props) {
   },[flippedIds,animatingId,targetDim,board,gridSize,won,showFeedback]);
 
   const seedLabel=`#${seed.toString(16).toUpperCase().padStart(5,"0")}`;
-  const sizeTabs=([5,6,7] as GridSize[]).map(n=>(
+  const sizeTabs=availableSizes.length>1 ? availableSizes.map(n=>(
     <button key={n} className={`bingo-size-tab${gridSize===n?" bingo-size-tab-active":""}`} onClick={()=>changeSize(n)}>{n}×{n}</button>
-  ));
+  )) : null;
 
   const grid=(
-    <div className={`bingo-grid bingo-grid-${gridSize}x${gridSize}`}>
+    <div ref={gridRef} className={`bingo-grid bingo-grid-${gridSize}x${gridSize}`}>
       {board.map((cell, index)=>{
         const isFlipped=flippedIds.has(cell.id);
         const isAnim=animatingId===cell.id;
@@ -230,14 +285,12 @@ export default function ScitiBingoPage({ locale }: Props) {
           <button key={cell.id}
             className={`bingo-cell${showBack?" bingo-cell-marked":""}${isFree?" bingo-cell-free":""}${isAnim?" bingo-cell-wrong":""}${!targetDim&&!isFree?" bingo-cell-waiting":""}`}
             style={{"--cell-color": color} as React.CSSProperties}
-            onClick={()=>handleClick(cell)} aria-pressed={showBack} aria-label={isFree ? t({en:"Free cell",th:"ช่องฟรี",zh:"免费格"}) : `${cardNumber} ${t(cell.label)}`} disabled={disabled}>
+            onClick={()=>handleClick(cell)} aria-pressed={showBack} aria-label={isFree ? t({en:"Free cell",th:"ช่องฟรี",zh:"免费格"}) : `${cardNumber} ${plain(t(cell.label))}`} disabled={disabled}>
             <div className="bingo-card-front">
               {isFree?(
                 <div className="bingo-free-content">
                   <span className="bingo-free-stamp">★</span>
                   <span className="bingo-free-label">{t({en:"FREE",th:"ฟรี",zh:"免费"})}</span>
-                  <span className="bingo-click-count">{clickCount}</span>
-                  <span className="bingo-free-sub">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
                 </div>
               ):(
                 <>
@@ -267,8 +320,46 @@ export default function ScitiBingoPage({ locale }: Props) {
         <span className={`bingo-timer-mobile${won?" bingo-timer-mobile-stopped":""}`}>
           {formatTimeShort(elapsed)}
         </span>
-        <div className="bingo-size-tabs">{sizeTabs}</div>
+        <span className="bingo-clicks-mobile">
+          {clickCount}&nbsp;{t({en:"CLICKS",th:"คลิก",zh:"点击"})}
+        </span>
+        {sizeTabs&&<div className="bingo-size-tabs">{sizeTabs}</div>}
         <button className="bingo-reset-pill" onClick={()=>reset()}>↻</button>
+      </div>
+
+      {/* ── DESKTOP HEADER + WIN BANNER (hidden on mobile) ──
+          It sits HERE in the document, not at the end: on a desktop the
+          bingo page is a block flow, so DOM order IS reading order. For
+          months the page's own <h1> sat below the board it introduced. */}
+      <div className="bingo-desktop-chrome">
+        <section className="section bingo-header">
+          <p className="eyebrow">SCITI 2026 · {t({en:"Workshop Game",th:"เกมเวิร์กช็อป",zh:"工作坊游戏"})}</p>
+          <h1 className="bingo-title">SCITI Bingo</h1>
+          <p className="bingo-sub">{t({en:"Use Stage Caller first. Correct cards stay open; wrong cards flip back.",th:"เริ่มจาก Stage Caller ก่อน การ์ดที่ถูกจะค้างไว้ การ์ดที่ผิดจะพลิกกลับ",zh:"先使用舞台主持。正确卡片保持打开，错误卡片会翻回。"})}</p>
+          <div className="bingo-header-actions">
+            <button className="cta-button" onClick={()=>reset()}>↻ {t({en:"New Card",th:"การ์ดใหม่",zh:"新棋盘"})}</button>
+            <span className="bingo-seed">{seedLabel}</span>
+            {sizeTabs&&<div className="bingo-size-tabs">{sizeTabs}</div>}
+          </div>
+        </section>
+        {won&&(
+          <div className="bingo-win-banner">
+            <span className="bingo-win-text">🎉 BINGO! 🎉</span>
+            <div className="bingo-win-score">
+              <div className="bingo-win-stat">
+                <span className="bingo-win-stat-n">{formatTimeFull(elapsed)}</span>
+                <span className="bingo-win-stat-l">{t({en:"TIME",th:"เวลา",zh:"用时"})}</span>
+              </div>
+              <div className="bingo-win-divider">·</div>
+              <div className="bingo-win-stat">
+                <span className="bingo-win-stat-n">{clickCount}</span>
+                <span className="bingo-win-stat-l">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
+              </div>
+            </div>
+            <p className="bingo-win-rule">{t({en:"Fewer clicks, faster time = better score.",th:"คลิกน้อยกว่า เวลาสั้นกว่า = คะแนนดีกว่า",zh:"点击次数越少、用时越短 = 分数越高"})}</p>
+            <button className="bingo-win-reset" onClick={()=>reset()}>{t({en:"Play again",th:"เล่นอีกครั้ง",zh:"再玩"})}</button>
+          </div>
+        )}
       </div>
 
       {/* ── MOBILE CALL BAR — the dimension they picked ── */}
@@ -341,9 +432,15 @@ export default function ScitiBingoPage({ locale }: Props) {
             <div className="bingo-progress-bar"><div className="bingo-progress-fill" style={{width:`${(calledDims.length/7)*100}%`}}/></div>
           </div>
           {(gameStarted||won)&&(
-            <div className={`bingo-timer${won?" bingo-timer-stopped":""}`}>
-              <span className="bingo-timer-digits">{won?formatTimeFull(elapsed):formatTimeShort(elapsed)}</span>
-              <span className="bingo-timer-label">{won?t({en:"FINAL TIME",th:"เวลาสุดท้าย",zh:"最终用时"}):t({en:"ELAPSED",th:"เวลา",zh:"用时"})}</span>
+            <div className="bingo-score">
+              <div className={`bingo-timer${won?" bingo-timer-stopped":""}`}>
+                <span className="bingo-timer-digits">{won?formatTimeFull(elapsed):formatTimeShort(elapsed)}</span>
+                <span className="bingo-timer-label">{won?t({en:"FINAL TIME",th:"เวลาสุดท้าย",zh:"最终用时"}):t({en:"ELAPSED",th:"เวลา",zh:"用时"})}</span>
+              </div>
+              <div className={`bingo-clicks${won?" bingo-timer-stopped":""}`}>
+                <span className="bingo-timer-digits">{clickCount}</span>
+                <span className="bingo-timer-label">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
+              </div>
             </div>
           )}
         </aside>
@@ -359,38 +456,6 @@ export default function ScitiBingoPage({ locale }: Props) {
             <span className="bingo-dim-strip-emoji">{DIM_EMOJIS[dim]}</span>
           </button>
         );})}
-      </div>
-
-      {/* ── DESKTOP HEADER + WIN BANNER (hidden on mobile) ── */}
-      <div className="bingo-desktop-chrome">
-        <section className="section bingo-header">
-          <p className="eyebrow">SCITI 2026 · {t({en:"Workshop Game",th:"เกมเวิร์กช็อป",zh:"工作坊游戏"})}</p>
-          <h1 className="bingo-title">SCITI Bingo</h1>
-          <p className="bingo-sub">{t({en:"Use Stage Caller first. Correct cards stay open; wrong cards flip back.",th:"เริ่มจาก Stage Caller ก่อน การ์ดที่ถูกจะค้างไว้ การ์ดที่ผิดจะพลิกกลับ",zh:"先使用舞台主持。正确卡片保持打开，错误卡片会翻回。"})}</p>
-          <div className="bingo-header-actions">
-            <button className="cta-button" onClick={()=>reset()}>↻ {t({en:"New Card",th:"การ์ดใหม่",zh:"新棋盘"})}</button>
-            <span className="bingo-seed">{seedLabel}</span>
-            <div className="bingo-size-tabs">{sizeTabs}</div>
-          </div>
-        </section>
-        {won&&(
-          <div className="bingo-win-banner">
-            <span className="bingo-win-text">🎉 BINGO! 🎉</span>
-            <div className="bingo-win-score">
-              <div className="bingo-win-stat">
-                <span className="bingo-win-stat-n">{formatTimeFull(elapsed)}</span>
-                <span className="bingo-win-stat-l">{t({en:"TIME",th:"เวลา",zh:"用时"})}</span>
-              </div>
-              <div className="bingo-win-divider">·</div>
-              <div className="bingo-win-stat">
-                <span className="bingo-win-stat-n">{clickCount}</span>
-                <span className="bingo-win-stat-l">{t({en:"CLICKS",th:"คลิก",zh:"点击"})}</span>
-              </div>
-            </div>
-            <p className="bingo-win-rule">{t({en:"Fewer clicks, faster time = better score.",th:"คลิกน้อยกว่า เวลาสั้นกว่า = คะแนนดีกว่า",zh:"点击次数越少、用时越短 = 分数越高"})}</p>
-            <button className="bingo-win-reset" onClick={()=>reset()}>{t({en:"Play again",th:"เล่นอีกครั้ง",zh:"再玩"})}</button>
-          </div>
-        )}
       </div>
 
     </div>
