@@ -31,6 +31,10 @@ LOG_DIR="$ROOT/.tmp"
 mkdir -p "$LOG_DIR"
 
 # ── PREFLIGHT GATES — never ship red ─────────────────────────────────────────
+bold "Preflight — validated artifact boundary"
+node scripts/audit/cdpt-artifact.mjs >"$LOG_DIR/cdpt-artifact-test.log" 2>&1 || { cat "$LOG_DIR/cdpt-artifact-test.log"; die "validated artifact staging failed"; }
+ok "validated artifact stays exact; original nested-backup fault rejected"
+
 bold "Preflight — tests"
 if [[ -n "${CDPT_REMOTE_TEST_RUN:-}" ]]; then
   [[ -z "$(git status --porcelain)" ]] || die "remote validation requires a clean checkout"
@@ -66,7 +70,10 @@ if [[ -n "${CDPT_REMOTE_TEST_RUN:-}" ]]; then
   fi
   [[ -s "$SITE_DIR/index.html" ]] || die "validated build has no index.html"
   find "$SITE_DIR" -type f -exec shasum -a 256 {} + | sort | shasum -a 256 >"$LOG_DIR/cdpt-artifact.sha256"
-  [[ ! -e dist ]] || mv dist "$ARTIFACT_DIR/previous-dist"
+  if [[ -e dist ]]; then
+    PREVIOUS_DIST_DIR="$(mktemp -d "$LOG_DIR/cdpt-previous.XXXXXX")"
+    mv dist "$PREVIOUS_DIST_DIR/site"
+  fi
   mv "$SITE_DIR" dist
   ok "reusing the exact build that passed full tests, lint, build and dependency audit"
 else
