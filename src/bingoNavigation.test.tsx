@@ -11,6 +11,11 @@ afterEach(() => {
 
 describe("Bingo route escape", () => {
   it("returns a shared-link visitor from the fullscreen game to the actual home route", async () => {
+    vi.stubGlobal("ResizeObserver", class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    });
     vi.stubGlobal("matchMedia", vi.fn(() => ({
       matches: true, media: "(max-width: 640px)", onchange: null,
       addEventListener: vi.fn(), removeEventListener: vi.fn(),

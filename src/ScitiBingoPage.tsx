@@ -148,19 +148,6 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
   const gridRef=useRef<HTMLDivElement|null>(null);
   const [boardPx,setBoardPx]=useState(0);
   const [gapPx,setGapPx]=useState(5);
-  useEffect(()=>{
-    const el=gridRef.current;
-    if(!el) return;
-    const read=()=>{
-      setBoardPx(el.getBoundingClientRect().width);
-      const g=parseFloat(getComputedStyle(el).columnGap);
-      if(Number.isFinite(g)) setGapPx(g);
-    };
-    read();
-    const ro=new ResizeObserver(read);
-    ro.observe(el);
-    return ()=>ro.disconnect();
-  },[]);
   const [flippedIds,setFlippedIds]=useState<Set<string>>(()=>new Set(["FREE"]));
   const [clickCount,setClickCount]=useState(0);
   const [targetDim,setTargetDim]=useState<SmartDimension|null>(null);
@@ -219,18 +206,6 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
     [boardPx, gapPx, MIN_CELL]
   );
 
-  useEffect(()=>{
-    if(!availableSizes.length || availableSizes.includes(gridSize)) return;
-    const next=availableSizes[0];
-    setGridSize(next);
-    setBoard(makeBoard(seed,next));
-    setFlippedIds(new Set(next%2===1?["FREE"]:[]));
-    setClickCount(0); setCalledDims([]); setTargetDim(null);
-    setWon(false); setGameStarted(false); setElapsed(0);
-    startTimeRef.current=null;
-    setFeedback(null);
-  },[availableSizes,gridSize,seed]);
-
   const reset=useCallback((newSize?:GridSize)=>{
     const size=newSize??gridSize;
     const ns=Math.floor(Math.random()*1_000_000);
@@ -242,6 +217,26 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
     setFeedback(null);
     if(fbTimerRef.current) clearTimeout(fbTimerRef.current);
   },[gridSize]);
+
+  // Board dimensions are external input: clamp in the measurement callback,
+  // not in a second effect triggered by state written by the first effect.
+  useEffect(()=>{
+    const el=gridRef.current;
+    if(!el) return;
+    const read=()=>{
+      const width=el.getBoundingClientRect().width;
+      const measuredGap=parseFloat(getComputedStyle(el).columnGap);
+      const gap=Number.isFinite(measuredGap)?measuredGap:5;
+      setBoardPx(width); setGapPx(gap);
+      const fits=([5,6,7] as GridSize[]).filter(n=>width>0&&(width-(n-1)*gap)/n>=MIN_CELL[n]);
+      if(fits.length&&!fits.includes(gridSize)) reset(fits[0]);
+    };
+    const frame=requestAnimationFrame(read);
+    const observer=new ResizeObserver(read);
+    observer.observe(el);
+    return ()=>{ cancelAnimationFrame(frame); observer.disconnect(); };
+  },[gridSize,MIN_CELL,reset]);
+
 
   const changeSize=useCallback((size:GridSize)=>{ if(size!==gridSize) reset(size); },[gridSize,reset]);
 
