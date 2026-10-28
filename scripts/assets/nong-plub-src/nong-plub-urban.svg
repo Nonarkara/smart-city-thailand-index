@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="100%" height="100%" role="img" aria-label="Nong Plub in purple cardigan and cap making a peace sign">
+  <defs>
+    <!-- Crayon & Paper Texture Filter -->
+    <filter id="crayon-urban" x="-10%" y="-10%" width="120%" height="120%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <radialGradient id="blush-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f87171" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#f87171" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <g filter="url(#crayon-urban)">
+    <!-- Soft warm paper glow -->
+    <circle cx="160" cy="200" r="145" fill="#fdfbf7" stroke="#eedcc5" stroke-width="2" stroke-dasharray="6,4" />
+
+    <!-- Long Hair Back -->
+    <path d="M 115 150 Q 100 220 110 270 Q 125 285 140 270 Q 130 210 135 160 Z" fill="#2d2b30" />
+    <path d="M 205 150 Q 220 220 210 270 Q 195 285 180 270 Q 190 210 185 160 Z" fill="#2d2b30" />
+
+    <!-- Legs: Dark Trousers -->
+
+    <!-- Legs: Dark Trousers -->
+    <path d="M 140 272 L 136 344 L 150 344 L 154 272 Z" fill="#334155" stroke="#334155" stroke-width="2" stroke-linejoin="round" />
+    <rect x="127" y="344" width="26" height="10" rx="3" fill="#0f172a" stroke="#020617" stroke-width="1.8" />
+    <path d="M 127 352 L 153 352" stroke="#ffffff" stroke-width="2" />
+
+    <path d="M 166 272 L 172 344 L 186 344 L 178 272 Z" fill="#334155" stroke="#334155" stroke-width="2" stroke-linejoin="round" />
+    <rect x="169" y="344" width="26" height="10" rx="3" fill="#0f172a" stroke="#020617" stroke-width="1.8" />
+    <path d="M 169 352 L 195 352" stroke="#ffffff" stroke-width="2" />
+
+    <!-- Body / Torso -->
+    <!-- White Inner Shirt -->
+    <path d="M 135 210 L 185 210 L 188 278 L 132 278 Z" fill="#f8fafc" stroke="#2d2b30" stroke-width="2.5" stroke-linejoin="round" />
+    <path d="M 150 210 Q 160 225 170 210" fill="none" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Purple Knit Cardigan (Left & Right panels) -->
+    <!-- Left panel (viewer's left) -->
+    <path d="M 118 210 Q 112 244 111 278 L 145 278 L 140 225 Q 128 215 118 210 Z" fill="#7e3af2" stroke="#2d2b30" stroke-width="2.5" stroke-linejoin="round" />
+    <!-- Knit texture lines on left cardigan -->
+    <path d="M 117 235 L 137 235 M 115 258 L 141 258 M 113 272 L 143 272" stroke="#6c2bd9" stroke-width="1.8" stroke-dasharray="3,3" />
+
+    <!-- Right panel (viewer's right) -->
+    <path d="M 202 210 Q 208 244 209 278 L 175 278 L 180 225 Q 192 215 202 210 Z" fill="#7e3af2" stroke="#2d2b30" stroke-width="2.5" stroke-linejoin="round" />
+    <!-- Knit texture lines on right cardigan -->
+    <path d="M 183 235 L 203 235 M 179 258 L 205 258 M 177 272 L 207 272" stroke="#6c2bd9" stroke-width="1.8" stroke-dasharray="3,3" />
+
+    <!-- Cardigan sleeves -->
+    <!-- Right arm (viewer's left) hanging relaxed -->
+    <path d="M 118 210 Q 95 240 92 290 Q 98 300 110 295 Q 115 255 125 220 Z" fill="#7e3af2" stroke="#2d2b30" stroke-width="2.5" />
+    <!-- Right hand (relaxed) -->
+    <ellipse cx="96" cy="302" rx="7" ry="9" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Left arm (viewer's right) raised making peace sign -->
+    <path d="M 202 210 Q 225 215 235 175 Q 225 168 212 185 Q 205 200 195 218 Z" fill="#7e3af2" stroke="#2d2b30" stroke-width="2.5" />
+    <!-- Forearm -->
+    <path d="M 230 178 L 245 135 Q 252 138 248 148 L 235 185 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+    <!-- Hand with Peace Sign ✌️ -->
+    <!-- Palm -->
+    <circle cx="248" cy="130" r="10" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+    <!-- Finger 1 (Index) -->
+    <path d="M 243 125 L 240 98 Q 244 95 247 98 L 247 122" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <!-- Finger 2 (Middle) -->
+    <path d="M 248 122 L 256 100 Q 260 102 258 106 L 253 126" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <!-- Folded fingers (Ring & Pinky & Thumb) -->
+    <path d="M 245 132 Q 252 136 248 140" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Diagonal Sling Bag Strap (across chest from left shoulder to right hip) -->
+    <path d="M 125 210 L 195 315 L 182 322 L 115 215 Z" fill="#1e2229" stroke="#0f1115" stroke-width="1.8" />
+    <!-- Crossbody bag peeking at hip -->
+    <rect x="180" y="300" width="35" height="26" rx="4" fill="#2d3748" stroke="#0f1115" stroke-width="2" transform="rotate(15 197 313)" />
+    <path d="M 183 310 L 213 318" stroke="#94a3b8" stroke-width="1.5" />
+
+    <!-- Neck -->
+    <path d="M 150 185 L 150 205 Q 160 210 170 205 L 170 185 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Head / Face -->
+    <path d="M 125 145 Q 120 185 160 195 Q 200 185 195 145 Q 192 110 160 110 Q 128 110 125 145 Z" fill="#fde6cf" stroke="#2d2b30" stroke-width="2.5" />
+
+    <!-- Cheerful Expression -->
+    <!-- Eyebrows -->
+    <path d="M 138 143 Q 146 138 152 143" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <path d="M 168 143 Q 174 138 182 143" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <!-- Manga Dot-Eyes with joyful curve -->
+    <ellipse cx="145" cy="151" rx="4.5" ry="5.5" fill="#2d2b30" />
+    <circle cx="143.5" cy="149" r="1.6" fill="#ffffff" />
+    <ellipse cx="175" cy="151" rx="4.5" ry="5.5" fill="#2d2b30" />
+    <circle cx="173.5" cy="149" r="1.6" fill="#ffffff" />
+
+    <!-- Sweet Blush -->
+    <circle cx="136" cy="160" r="9" fill="url(#blush-grad)" />
+    <circle cx="184" cy="160" r="9" fill="url(#blush-grad)" />
+
+    <!-- Cute Nose -->
+    <circle cx="160" cy="156" r="1.5" fill="#e09f67" />
+
+    <!-- Warm Beaming Smile -->
+    <path d="M 148 165 Q 160 178 172 165 Q 160 184 148 165 Z" fill="#e11d48" stroke="#2d2b30" stroke-width="2" stroke-linejoin="round" />
+    <path d="M 152 167 Q 160 170 168 167" fill="#ffffff" />
+
+    <!-- Hair Bangs / Front -->
+    <path d="M 125 130 Q 140 140 150 132 Q 165 142 175 130 Q 188 138 195 130 Q 190 118 160 118 Q 130 118 125 130 Z" fill="#2d2b30" />
+
+    <!-- Black Baseball Cap with Red Trim & NCREE logo -->
+    <!-- Cap Crown -->
+    <path d="M 120 128 Q 122 82 160 80 Q 198 82 200 128 Q 160 122 120 128 Z" fill="#1e2229" stroke="#0f1115" stroke-width="2.5" />
+    <!-- Cap Button on top -->
+    <circle cx="160" cy="80" r="4" fill="#e11d48" stroke="#0f1115" stroke-width="1.5" />
+    <!-- Cap Seam lines -->
+    <path d="M 160 84 Q 158 106 156 125" fill="none" stroke="#374151" stroke-width="1.5" />
+    <!-- White "NCREE" embroidered text on cap -->
+    <text x="160" y="112" font-family="system-ui, sans-serif" font-size="9" font-weight="900" fill="#f8fafc" text-anchor="middle" letter-spacing="1">NCREE</text>
+    <!-- Cap Visor / Brim -->
+    <path d="M 112 126 Q 160 118 208 126 Q 212 135 198 136 Q 160 128 116 136 Q 108 133 112 126 Z" fill="#1e2229" stroke="#0f1115" stroke-width="2" />
+    <!-- Red trim edge on visor -->
+    <path d="M 114 135 Q 160 127 200 135" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Crayon Sparkles / Manga Human Touch -->
+    <!-- Star 1 -->
+    <path d="M 270 120 L 273 128 L 281 130 L 274 135 L 276 143 L 269 138 L 262 142 L 265 134 L 259 129 L 267 128 Z" fill="#f59e0b" stroke="#d97706" stroke-width="1" />
+    <!-- Little hand-drawn heart -->
+    <path d="M 68 180 C 68 174 60 170 56 176 C 52 170 44 174 44 180 C 44 188 56 195 56 195 C 56 195 68 188 68 180 Z" fill="#fb7185" stroke="#e11d48" stroke-width="1.5" />
+    <!-- Crayon sketch ground line -->
+    <path d="M 50 350 Q 160 354 270 348" stroke="#cbd5e1" stroke-width="2.5" stroke-dasharray="4,6" stroke-linecap="round" />
+  </g>
+</svg>
