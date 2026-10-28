@@ -132,6 +132,10 @@ bold "Preflight — heritage source coverage and gallery"
 node scripts/audit/heritage-gallery.mjs --serve >"$LOG_DIR/cdpt-heritage.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-heritage.log"; die "heritage image, source or gallery check failed"; }
 ok "all 118 city visual records, real image bytes, rights and gallery interaction passed"
 
+bold "Preflight — sourced crayon companion geometry"
+node scripts/audit/plub-density.mjs --serve >"$LOG_DIR/cdpt-plub.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-plub.log"; die "companion art, source note or spatial regression failed"; }
+ok "raster art, source note, keyboard disclosure and old-panel mutation passed"
+
 # ── C — commit ───────────────────────────────────────────────────────────────
 if [[ -n "$MSG" ]]; then
   git add -u

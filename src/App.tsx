@@ -205,7 +205,7 @@ function PagePhotoHero({ route, locale }: { route: Route; locale: Locale }) {
       />
       <div className="route-photo-hero-overlay">
         <span className="route-photo-hero-place">{hero.place}</span>
-        {compact ? <details>
+        {route.kind === "bingo" ? null : compact ? <details>
           <summary className="route-photo-hero-title">{hero.title[locale]}</summary>
           <p className="route-photo-hero-desc">{hero.description[locale]}</p>
         </details> : <>
@@ -488,7 +488,7 @@ export default function App() {
             ) : route.kind === "compare" ? (
               <ComparePage locale={locale} onNavigate={navigate} />
             ) : route.kind === "bingo" ? (
-              <ScitiBingoPage locale={locale} />
+              <ScitiBingoPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "baseline" ? (
               <BaselinePage locale={locale} onNavigate={navigate} />
             ) : route.kind === "city" ? (

@@ -16,6 +16,7 @@
  */
 
 import type { Locale, SmartCity } from "./types";
+import { getCityHeritage } from "./cityHeritage";
 
 export type NongPlubOutfit = "urban" | "heritage" | "temple" | "cafe" | "nature";
 
@@ -23,6 +24,10 @@ export interface NongPlubCityRecord {
   cityId: string;
   outfit: NongPlubOutfit;
   assetPath: string;
+  sourceUrl: string | null;
+  sourceLabel: Record<Locale, string>;
+  illustrationDisclosure: Record<Locale, string>;
+  scope: "province" | "unverified";
   siteName: {
     en: string;
     th: string;
@@ -51,19 +56,21 @@ export interface NongPlubCityRecord {
 }
 
 export const NONG_PLUB_ASSETS: Record<NongPlubOutfit, string> = {
-  urban: "/nong-plub/nong-plub-urban.svg",
-  heritage: "/nong-plub/nong-plub-heritage.svg",
-  temple: "/nong-plub/nong-plub-temple.svg",
-  cafe: "/nong-plub/nong-plub-cafe.svg",
-  nature: "/nong-plub/nong-plub-nature.svg",
+  urban: "/nong-plub/nong-plub-urban-crayon.webp",
+  heritage: "/nong-plub/nong-plub-heritage-crayon.webp",
+  temple: "/nong-plub/nong-plub-temple-crayon.webp",
+  cafe: "/nong-plub/nong-plub-cafe-crayon.webp",
+  nature: "/nong-plub/nong-plub-nature-crayon.webp",
 };
 
-export const NONG_PLUB_AVATAR = "/nong-plub/nong-plub-avatar.svg";
+export const NONG_PLUB_AVATAR = "/nong-plub/nong-plub-avatar-crayon.webp";
 
 /**
- * Editorial, intimate travelogue entries for benchmark cities.
+ * @deprecated Unverified MiniMax drafts retained for audit only.
+ * Do not publish these invented visits, testimony or service claims.
  */
-const CURATED_NONG_PLUB_ENTRIES: Record<string, Omit<NongPlubCityRecord, "cityId" | "assetPath">> = {
+type UnverifiedDraft = Omit<NongPlubCityRecord, "cityId" | "assetPath" | "sourceUrl" | "sourceLabel" | "illustrationDisclosure" | "scope">;
+const CURATED_NONG_PLUB_ENTRIES: Record<string, UnverifiedDraft> = {
   "chiang-mai-old-town": {
     outfit: "heritage",
     siteName: {
@@ -446,7 +453,7 @@ const CURATED_NONG_PLUB_ENTRIES: Record<string, Omit<NongPlubCityRecord, "cityId
  * Region-based fallback generator ensuring 100% complete coverage
  * across all 118 cities in Thailand.
  */
-function generateRegionalRecord(city: SmartCity): Omit<NongPlubCityRecord, "cityId" | "assetPath"> {
+function generateRegionalRecord(city: SmartCity): UnverifiedDraft {
   const cityName = city.nameEn;
   const cityNameTh = city.nameTh;
 
@@ -605,17 +612,45 @@ function generateRegionalRecord(city: SmartCity): Omit<NongPlubCityRecord, "city
   }
 }
 
+/** @deprecated Audit-only MiniMax drafts; never use these as published city facts. */
+export function getUnverifiedNongPlubDraftForAudit(city: SmartCity): UnverifiedDraft {
+  return CURATED_NONG_PLUB_ENTRIES[city.id] ?? generateRegionalRecord(city);
+}
+
 /**
- * Returns Nong Plub's site exploration entry for any given city.
- * Guarantees 100% complete, non-null, rich trilingual coverage.
+ * The companion is an illustration, not a field report by the depicted person.
+ * Factual text comes from the same verified provincial record as the gallery.
+ * Never infer a visit, project boundary, service or attraction from a region.
  */
 export function getNongPlubRecord(city: SmartCity): NongPlubCityRecord {
-  const curated = CURATED_NONG_PLUB_ENTRIES[city.id];
-  const base = curated ?? generateRegionalRecord(city);
+  const heritage = getCityHeritage(city).find(record => record.verifiedAt && record.scope !== "regional");
+  const outfits: NongPlubOutfit[] = ["urban", "heritage", "temple", "cafe", "nature"];
+  // Stable wardrobe variety is purely editorial, independent of city scores or climate.
+  const outfit = outfits[[...city.id].reduce((sum, character) => sum + character.charCodeAt(0), 0) % outfits.length];
+  const sourceLabel = { en: "Provincial source record", th: "บันทึกแหล่งข้อมูลระดับจังหวัด", zh: "省级来源记录" };
+  const illustrationDisclosure = {
+    en: "AI-generated crayon portrait of Nong Plub, based on supplied photographs. An editorial companion, not evidence of a visit.",
+    th: "ภาพวาดสีเทียนน้องพลับสร้างด้วย AI จากภาพถ่ายอ้างอิง เป็นภาพประกอบเชิงบรรณาธิการ ไม่ใช่หลักฐานการเดินทาง",
+    zh: "依据所提供照片生成的小普蜡笔肖像。此为编辑插画，并非到访记录。",
+  };
+  const scopeNote = {
+    en: "Provincial context; the pictured place is not verified to lie inside this smart-city project boundary.",
+    th: "บริบทระดับจังหวัด ยังไม่ได้ยืนยันว่าสถานที่ในภาพอยู่ในขอบเขตโครงการเมืองอัจฉริยะนี้",
+    zh: "省级背景；尚未核实图中地点是否位于本智慧城市项目边界内。",
+  };
   return {
     cityId: city.id,
-    ...base,
-    assetPath: NONG_PLUB_ASSETS[base.outfit],
+    outfit,
+    assetPath: NONG_PLUB_ASSETS[outfit],
+    sourceUrl: heritage?.sourceUrl ?? null,
+    sourceLabel,
+    illustrationDisclosure,
+    scope: heritage ? "province" : "unverified",
+    siteName: heritage?.title ?? { en: "Provincial context awaiting verification", th: "รอตรวจสอบบริบทระดับจังหวัด", zh: "省级背景待核实" },
+    activity: sourceLabel,
+    quote: heritage?.caption ?? { en: "No verified provincial record is available for this dossier.", th: "ยังไม่มีบันทึกระดับจังหวัดที่ตรวจสอบแล้วสำหรับแฟ้มเมืองนี้", zh: "本档案暂无已核实的省级记录。" },
+    tip: heritage ? scopeNote : { en: "A missing source is an evidence gap, not a claim about this city.", th: "แหล่งข้อมูลที่ขาดหายคือช่องว่างของหลักฐาน ไม่ใช่ข้อสรุปเกี่ยวกับเมืองนี้", zh: "来源缺失属于证据空白，不代表对本城的判断。" },
+    flavorTag: { en: "Illustrated companion", th: "ภาพประกอบน้องพลับ", zh: "城市插画伴读" },
   };
 }
 

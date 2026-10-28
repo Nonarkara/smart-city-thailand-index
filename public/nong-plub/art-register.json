@@ -1,0 +1,44 @@
+{
+  "created": "2026-10-28",
+  "method": "Built-in image_gen, generated illustrations based on owner-supplied photographs; not documentary images of city visits.",
+  "styleReference": "Owner-supplied wax-crayon desk illustration, codex-clipboard-620aab55-feab-4ff7-b2e7-71546e104e48.png",
+  "prompt": "Create Nong Plub as a warm wax-crayon and coloured-pencil portrait. Preserve the photographed adult woman’s face, smile, hair and outfit. Visible broken wax strokes and paper tooth, fine irregular brown outlines. No vector clipart, huge anime eyes, logos, words or geographic setting. Transparent background; anatomically plausible hands.",
+  "variants": [
+    {
+      "id": "cafe",
+      "reference": "IMG_20260311_172448611.jpg",
+      "brief": "Dark sleeveless plaid dress, bracelets and smartwatch; seated sketching at a wooden table.",
+      "asset": "/nong-plub/nong-plub-cafe-crayon.webp"
+    },
+    {
+      "id": "heritage",
+      "reference": "IMG_20260207_172909169.jpg",
+      "brief": "Peach sleeveless blouse, open sketchbook.",
+      "asset": "/nong-plub/nong-plub-heritage-crayon.webp"
+    },
+    {
+      "id": "urban",
+      "reference": "IMG_20260323_194344165.jpg",
+      "brief": "Lavender cardigan, dark cap with red rim, sling bag, peace sign.",
+      "asset": "/nong-plub/nong-plub-urban-crayon.webp"
+    },
+    {
+      "id": "temple",
+      "reference": "IMG_20260412_150800334.jpg",
+      "brief": "White tee, pale cap, sunglasses, respectful wai.",
+      "asset": "/nong-plub/nong-plub-temple-crayon.webp"
+    },
+    {
+      "id": "nature",
+      "reference": "IMG_20260321_141904260.jpg",
+      "brief": "Cyan windbreaker, dark sling bag, holding a folded map.",
+      "asset": "/nong-plub/nong-plub-nature-crayon.webp"
+    },
+    {
+      "id": "avatar",
+      "reference": "IMG_20260311_172448611.jpg",
+      "brief": "Head-and-shoulders portrait, dark plaid dress.",
+      "asset": "/nong-plub/nong-plub-avatar-crayon.webp"
+    }
+  ]
+}

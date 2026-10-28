@@ -144,7 +144,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
         )}
         <div className="cinematic-hero-overlay">
           <p className="cinematic-hero-eyebrow">
-            SCITI 2026 · {t({ en: "DELIVERY EVIDENCE & RESIDENT OUTCOMES", th: "หลักฐานการส่งมอบและผลลัพธ์ผู้อยู่อาศัย", zh: "交付实证与居民成果" })}
+            SCITI 2026 — {t({ en: 'pronounced "City"', th: 'อ่านว่า "ซิตี้"', zh: '读作 "City"' })}
+            <span className="cinematic-hero-wordplay" aria-label="SmaSCITI equals Samastiti"> · <span className="cinematic-hero-wordplay-sma">Sma</span><span className="cinematic-hero-wordplay-sciti">SCITI</span> = Samastiti</span>
           </p>
           <h1 className="cinematic-hero-title">
             {locale === "th" ? (
@@ -157,9 +158,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </h1>
           <p className="cinematic-hero-why">
             {t({
-              en: "Recognition, installed technology and public visibility are not evidence of improved lives. SCITI grounds 118 Thai cities in operational delivery, accountable operators, and measurable resident outcomes.",
-              th: "การรับรอง เทคโนโลยีที่ติดตั้ง และการมองเห็น ไม่ใช่หลักฐานว่าชีวิตประชาชนดีขึ้น SCITI ประเมิน 118 เมืองไทยด้วยผลลัพธ์การส่งมอบจริง ผู้รับผิดชอบที่ตรวจสอบได้ และผลลัพธ์ที่วัดได้จริงของผู้อยู่อาศัย",
-              zh: "行政认证、已安装技术和曝光度并非居民生活改善的证据。SCITI 将泰国 118 座城市建立在实际交付、可问责运营方与可衡量的居民生活成果之上。",
+              en: "Compare 118 Thai city records, then check delivery evidence, accountable operators and resident outcomes. Recognition or installed technology alone does not establish that lives improved.",
+              th: "เปรียบเทียบข้อมูล 118 เมืองไทย แล้วตรวจหลักฐานการส่งมอบ ผู้รับผิดชอบ และผลลัพธ์ต่อผู้อยู่อาศัย การรับรองหรือการติดตั้งเทคโนโลยีเพียงอย่างเดียวไม่ยืนยันว่าชีวิตประชาชนดีขึ้น",
+              zh: "比较泰国118座城市的记录，再核查交付证据、责任运营方及居民成果。行政认证或安装技术本身不能证明生活已改善。",
             })}
           </p>
 
@@ -174,10 +175,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
             </div>
             <div className="hero-stat-cell">
               <span className="hero-stat-num" style={{ font: "700 var(--text-body)/1 var(--mono)", color: "var(--amber, #f59e0b)" }}>2</span>
-              <span className="hero-stat-label">{t({ en: "delivery priorities (CNX · NST)", th: "พื้นที่นำร่อง (เชียงใหม่ · นครฯ)", zh: "重点交付 (清迈 · 洛坤)" })}</span>
+              <span className="hero-stat-label">{t({ en: "illustrated proposals (CNX · NST)", th: "ตัวอย่างข้อเสนอ (เชียงใหม่ · นครฯ)", zh: "示例提案（清迈·洛坤）" })}</span>
             </div>
           </div>
-          <p className="hero-status-note">{t({ en: "Prioritise Chiang Mai and Nakhon Si Thammarat; Bangkok as conditional district partnership.", th: "ให้ความสำคัญกับเชียงใหม่และนครศรีธรรมราชเป็นลำดับแรก กรุงเทพฯ เป็นความร่วมมือเฉพาะระดับเขตหรือลุ่มน้ำ", zh: "优先推进清迈与洛坤；曼谷作为附条件的行政区或水系合作。" })}</p>
+          <p className="hero-status-note">{t({ en: "Curated research baseline; legacy estimates, operating status and local outcomes require verification.", th: "ข้อมูลฐานวิจัยที่เรียบเรียงไว้ ค่าประมาณเดิม สถานะการเดินระบบ และผลลัพธ์ในพื้นที่ยังต้องตรวจสอบ", zh: "编辑研究基线；既有估计、运营状态及当地成果仍须核实。" })}</p>
           <div className="cinematic-hero-actions">
             <button className="cta-button" onClick={() => onNavigate("/rankings")}>
               {t({ en: "Explore Rankings", th: "สำรวจอันดับ", zh: "探索排名" })}
@@ -304,16 +305,16 @@ export default function HomePage({ locale, onNavigate }: Props) {
           <p className="eyebrow">{t({ en: "Field Operations · 21 October 2026 Evidence", th: "การปฏิบัติการภาคสนาม · ข้อมูลเชิงประจักษ์ 21 ตุลาคม 2569", zh: "现场运营 · 2026年10月21日实证" })}</p>
           <h2 className="home-section-title">
             {t({
-              en: "Two Public Decision-Support Interfaces in Active Use",
-              th: "สองระบบสนับสนุนการตัดสินใจสาธารณะที่เปิดให้ตรวจสอบ",
-              zh: "两套公开运行中的决策支持系统",
+              en: "Two Dated Decision-Support Examples",
+              th: "ตัวอย่างหน้าจอสนับสนุนการตัดสินใจสองระบบ ณ วันที่บันทึก",
+              zh: "两套注明日期的决策支持界面示例",
             })}
           </h2>
           <p className="home-section-intro">
             {t({
-              en: "Thailand's smart city opportunity is connecting existing digital assets to accountable operators, accessible services and funded maintenance. These two interfaces display tangible decision support for provincial leadership.",
-              th: "โอกาสของเมืองอัจฉริยะไทยคือการเชื่อมสินทรัพย์ดิจิทัลที่มีอยู่เข้ากับผู้ปฏิบัติงานที่มีความรับผิดชอบ บริการที่เข้าถึงได้ และงบบำรุงรักษา ทั้งสองระบบนี้แสดงการสนับสนุนการตัดสินใจที่เป็นรูปธรรมสำหรับผู้บริหารจังหวัด",
-              zh: "泰国智慧城市的核心机遇在于将既有数字资产与可问责的运营方、易获取的服务及有保障的运维资金对接。这两套界面展示了面向省府领导的实质性决策支持功能。",
+              en: "Thailand's smart city opportunity is connecting existing digital assets to accountable operators, accessible services and funded maintenance. The screenshots dated 21 October 2026 illustrate proposed decision-support workflows; they do not establish current feed availability or official adoption.",
+              th: "โอกาสของเมืองอัจฉริยะไทยคือการเชื่อมสินทรัพย์ดิจิทัลที่มีอยู่เข้ากับผู้ปฏิบัติงานที่มีความรับผิดชอบ บริการที่เข้าถึงได้ และงบบำรุงรักษา ภาพหน้าจอวันที่ 21 ตุลาคม 2569 แสดงตัวอย่างขั้นตอนสนับสนุนการตัดสินใจ ไม่ยืนยันสถานะข้อมูลปัจจุบันหรือการรับรองใช้งานอย่างเป็นทางการ",
+              zh: "泰国智慧城市的核心机遇在于将既有数字资产与可问责的运营方、易获取的服务及有保障的运维资金对接。2026年10月21日的截图展示拟议决策支持流程，不能证明当前数据可用性或官方采纳。",
             })}
           </p>
 
@@ -334,17 +335,17 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <div className="home-field-op-body">
                 <div className="home-field-op-header">
                   <h3 className="home-field-op-title">{t({ en: "Chiang Mai Situation Summary (Governor Brief)", th: "สรุปสถานการณ์เชียงใหม่ (รายงานผู้ว่าฯ)", zh: "清迈态势摘要 (省长简报)" })}</h3>
-                  <span className="home-field-op-tag">{t({ en: "Priority 1", th: "ลำดับความสำคัญ 1", zh: "第一优先级" })}</span>
+                  <span className="home-field-op-tag">{t({ en: "Proposal 1", th: "ข้อเสนอ 1", zh: "拟议方案一" })}</span>
                 </div>
                 <p className="home-field-op-desc">
                   {t({
-                    en: "Live decision-support synthesizing air quality (PCD ground stations), wildfire hotspots (NASA FIRMS VIIRS), Nawarat Bridge water clearance (ThaiWater/RID P.1), and aviation arrivals into an actionable brief ready to forward on LINE or print.",
-                    th: "ระบบสนับสนุนการตัดสินใจสังเคราะห์ข้อมูลคุณภาพอากาศ (สถานี คพ.) จุดความร้อนไฟป่า (NASA FIRMS VIIRS) ระดับน้ำสะพานนวรัฐ (ThaiWater/ชลประทาน P.1) และเที่ยวบินขาเข้า สู่รายงานกระชับพร้อมส่งต่อทาง LINE หรือพิมพ์",
-                    zh: "实时决策支持系统：综合空气质量（环保厅地面站）、林火热点（NASA FIRMS VIIRS）、纳瓦拉桥水位净空（ThaiWater/水利局 P.1）及航班抵港信息，生成可直接转发 LINE 或打印的态势简报。",
+                    en: "The dated interface brings air-quality, wildfire-hotspot, water-station and aviation panels into a brief designed for sharing or printing. Values visible in the screenshot are historical interface readings, not current observations verified by SCITI.",
+                    th: "ตัวอย่างหน้าจอรวมแผงคุณภาพอากาศ จุดความร้อน สถานีระดับน้ำ และการบิน เป็นรายงานสำหรับส่งต่อหรือพิมพ์ ค่าที่เห็นเป็นค่าบนหน้าจอในอดีต ไม่ใช่ข้อมูลปัจจุบันที่ SCITI ตรวจยืนยันแล้ว",
+                    zh: "此注明日期的界面将空气质量、火点、水位站和航空面板汇入便于分享或打印的简报。截图数值属于历史界面读数，并非SCITI核实的当前观测。",
                   })}
                 </p>
                 <div className="home-field-op-target">
-                  <span className="home-field-op-target-label">{t({ en: "6-Month Acceptance Gate:", th: "เกณฑ์ตรวจรับ 6 เดือน:", zh: "6个月验收门槛：" })}</span>
+                  <span className="home-field-op-target-label">{t({ en: "Proposed 6-Month Target:", th: "เป้าหมายเสนอสำหรับ 6 เดือน:", zh: "拟议6个月目标：" })}</span>
                   <span>{t({
                     en: "Occupied-room PM2.5 at least 50% below outdoor levels with verified resident access and adequate ventilation.",
                     th: "PM2.5 ในห้องที่มีคนอยู่ลดลงอย่างน้อย 50% เทียบกับอากาศภายนอก พร้อมการเข้าถึงที่ตรวจสอบได้และการระบายอากาศที่เพียงพอ",
@@ -378,17 +379,17 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <div className="home-field-op-body">
                 <div className="home-field-op-header">
                   <h3 className="home-field-op-title">{t({ en: "Nakhon Si Thammarat Flood Operations", th: "ศูนย์เฝ้าระวังน้ำท่วมนครศรีธรรมราช", zh: "洛坤洪涝运营监控系统" })}</h3>
-                  <span className="home-field-op-tag">{t({ en: "Priority 2", th: "ลำดับความสำคัญ 2", zh: "第二优先级" })}</span>
+                  <span className="home-field-op-tag">{t({ en: "Proposal 2", th: "ข้อเสนอ 2", zh: "拟议方案二" })}</span>
                 </div>
                 <p className="home-field-op-desc">
                   {t({
-                    en: "Hydrological telemetry separating upstream Khao Luang mountain runoff, Tha Di/Tha Wang city canals, and Pak Nakhon coastal discharge, tracking remaining bridge clearance (PTTEP3: 0.36m / 36h lead time).",
-                    th: "โทรมาตรอุทกวิทยาแยกการไหลของน้ำป่าต้นน้ำเขาหลวง คลองในเมืองท่าดี-ท่าวัง และทางออกทะเลปากนคร พร้อมติดตามระยะถึงตลิ่งสะพานนางพระยา-บางหลวง (PTTEP3: 0.36 ม. / เตือนล่วงหน้า 36 ชม.)",
-                    zh: "水文遥测系统分段监控：考銮山东麓山区径流、城内塔迪与塔旺运河瓶颈、以及北洛坤入海口排水，实时追踪桥梁净空（PTTEP3 剩余 0.36 米，36 小时预警）。",
+                    en: "The dated flood interface groups upstream, city-canal and coastal monitoring. Its displayed station readings and forecast horizon are screenshot content, not a verified warning lead time, bridge clearance or street-level flood depth.",
+                    th: "ตัวอย่างหน้าจอน้ำท่วมแบ่งการติดตามต้นน้ำ คลองในเมือง และพื้นที่ชายฝั่ง ค่าสถานีและช่วงเวลาพยากรณ์ที่แสดงเป็นเนื้อหาภาพหน้าจอ ไม่ใช่ระยะเตือนภัยล่วงหน้า ระยะใต้สะพาน หรือความลึกน้ำบนถนนที่ตรวจยืนยันแล้ว",
+                    zh: "此注明日期的防汛界面分组展示上游、城内运河及沿海监测。测站读数和预测时段属于截图内容，并非已核实的预警提前量、桥梁净空或街面积水深度。",
                   })}
                 </p>
                 <div className="home-field-op-target">
-                  <span className="home-field-op-target-label">{t({ en: "12-Month Acceptance Gate:", th: "เกณฑ์ตรวจรับ 12 เดือน:", zh: "12个月验收门槛：" })}</span>
+                  <span className="home-field-op-target-label">{t({ en: "Proposed 12-Month Target:", th: "เป้าหมายเสนอสำหรับ 12 เดือน:", zh: "拟议12个月目标：" })}</span>
                   <span>{t({
                     en: "25% reduction in household disruption hours and market trading hours lost under comparable rainfall events.",
                     th: "ลดชั่วโมงความเสียหายต่อครัวเรือนและชั่วโมงหยุดทำการของตลาดลง 25% ภายใต้เหตุการณ์ฝนตกที่เทียบเคียงกัน",
@@ -415,37 +416,41 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 <span className="home-matrix-num">01 · FISCAL</span>
                 <h4>{t({ en: "Own-Source Revenue ~7.7%", th: "รายได้จัดเก็บเอง ~7.7%", zh: "地方自主收入 ~7.7%" })}</h4>
                 <p>{t({
-                  en: "Thai local authorities generate THB44.8B out of THB584.5B total revenue. While 5 surveyed cities held surpluses, only 3 of 26 concepts were ready for PPP proposals (World Bank 2024). Affordability and procurement must be funded, not assumed.",
-                  th: "อปท. จัดเก็บเองได้เพียง 44.8 พันล้านจาก 584.5 พันล้านบาท แม้ 5 เมืองมีเงินเกินดุล แต่มีเพียง 3 จาก 26 แนวคิดที่พร้อมเปิดรับข้อเสนอ PPP (ธนาคารโลก 2024) ความพร้อมการจัดซื้อต้องได้รับการสนับสนุน",
-                  zh: "泰国地方政府总收入 5845 亿泰铢中自主收入仅 448 亿。调查的 5 座城市虽有盈余，但 26 个概念中仅 3 个具备 PPP 招标条件（世行 2024）。支付能力与采购必须资金先行，不能想当然。",
+                  en: "In 2022, local authorities excluding Bangkok and Pattaya collected THB44.8B locally out of THB584.5B total revenue. A five-city assessment found three of 26 concepts nearly ready to solicit PPP proposals. These historical findings do not establish current financing eligibility.",
+                  th: "ปี 2565 อปท. ไม่รวมกรุงเทพฯ และพัทยา จัดเก็บเอง 44.8 พันล้านจากรายได้รวม 584.5 พันล้านบาท การประเมินห้าเมืองพบว่าสามจาก 26 แนวคิดเกือบพร้อมเปิดรับข้อเสนอ PPP ผลในอดีตนี้ไม่ยืนยันสิทธิหรือความพร้อมทางการเงินปัจจุบัน",
+                  zh: "2022年，不含曼谷及芭提雅的地方政府总收入5845亿泰铢，自筹448亿。五城评估中，26项构想仅三项接近征集PPP方案的准备阶段。这些历史发现不能证明当前融资资格。",
                 })}</p>
+                <a href="https://documents1.worldbank.org/curated/en/099062924133030977/pdf/P50100914f725005f1b9211803e7e17020a.pdf" target="_blank" rel="noopener noreferrer">World Bank · 2024 · pp. 41–44 ↗</a>
               </div>
               <div className="home-matrix-cell">
                 <span className="home-matrix-num">02 · HEALTH</span>
                 <h4>{t({ en: "Heat & Haze Mortality", th: "การเสียชีวิตจากความร้อนและหมอกควัน", zh: "极端高温与雾霾死亡" })}</h4>
                 <p>{t({
-                  en: "Bangkok localized modeling estimates an additional 1°C adds 827–1,158 heat-related deaths annually (World Bank & BMA 2025). Northern haze episodes correlate with significant COPD readmission increases (Sapbamrer 2024).",
-                  th: "แบบจำลองสภาพภูมิอากาศกรุงเทพฯ ชี้ว่าอุณหภูมิที่เพิ่ม 1°C จะเพิ่มผู้เสียชีวิต 827–1,158 คนต่อปี (ธนาคารโลก & กทม. 2025) หมอกควันภาคเหนือเชื่อมโยงกับการกลับเข้ารักษาซ้ำจากโรคปอดเรื้อรัง (2024)",
-                  zh: "曼谷局部建模预测气温每升 1°C 将导致每年增加 827–1,158 例热相关死亡（世行与 BMA 2025）。北部雾霾期与慢性阻塞性肺病再入院显著正相关（Sapbamrer 2024）。",
+                  en: "A Bangkok heat scenario estimates 827–1,158 additional annual deaths under a 1°C rise against a 2019 baseline (World Bank & BMA, 2025); this is modeled, not an observed death count. Northern haze episodes correlate with significant COPD readmission increases (Sapbamrer 2024).",
+                  th: "สถานการณ์จำลองกรุงเทพฯ ประเมินผู้เสียชีวิตเพิ่ม 827–1,158 คนต่อปีหากอุณหภูมิเพิ่ม 1°C เทียบฐานปี 2562 (ธนาคารโลกและ กทม., 2025) ไม่ใช่ยอดเสียชีวิตที่สังเกตจริง หมอกควันภาคเหนือเชื่อมโยงกับการกลับเข้ารักษาซ้ำจากโรคปอดเรื้อรัง (2024)",
+                  zh: "曼谷情景模型估计，相对2019年基线升温1°C，每年可能增加827–1,158例死亡（世行与BMA，2025）；这是模型结果，并非观测死亡人数。北部雾霾期与慢性阻塞性肺病再入院显著正相关（Sapbamrer 2024）。",
                 })}</p>
+                <a href="https://documents1.worldbank.org/curated/en/099032525024532810/pdf/P181082-9cc5dd2a-bc60-49ed-a145-c3a8621dc1f4.pdf" target="_blank" rel="noopener noreferrer">World Bank &amp; BMA · 2025 ↗</a>{" · "}<a href="https://doi.org/10.3390/toxics12050321" target="_blank" rel="noopener noreferrer">Sapbamrer et al. · 2024 ↗</a>
               </div>
               <div className="home-matrix-cell">
                 <span className="home-matrix-num">03 · HYDROLOGY</span>
                 <h4>{t({ en: "Compound Deltaic Risk", th: "ความเสี่ยงน้ำท่วมซ้ำซ้อนในดินดอนสามเหลี่ยม", zh: "三角洲复合洪涝风险" })}</h4>
                 <p>{t({
-                  en: "Bangkok flood risk combines compressible deltaic clay, localized groundwater withdrawal, and combined fluvial-tidal surges (Soonthornrangsan 2025). Dashboards cannot eliminate physical catchment engineering barriers.",
-                  th: "ความเสี่ยงน้ำท่วมกรุงเทพฯ ประกอบด้วยดินเหนียวอัดตัวได้ การสูบน้ำบาดาล และน้ำหนุนผสมน้ำหลาก (2025) แดชบอร์ดไม่สามารถข้ามข้อจำกัดวิศวกรรมลุ่มน้ำทางกายภาพได้",
-                  zh: "曼谷防汛难点交织着压缩性三角洲软黏土、局部地下水抽取及江河潮水顶托（Soonthornrangsan 2025）。单纯软件大屏无法取代跨部门水系流域工程。",
+                  en: "Bangkok modeling links groundwater withdrawal and clay-layer compaction to land subsidence (Soonthornrangsan et al., 2025). This study does not establish a current street-level flood depth or alert; dashboards cannot replace catchment engineering.",
+                  th: "แบบจำลองกรุงเทพฯ เชื่อมการสูบน้ำบาดาลและการอัดตัวของชั้นดินเหนียวกับแผ่นดินทรุด (Soonthornrangsan และคณะ, 2025) ไม่ได้ระบุความลึกน้ำท่วมถนนหรือคำเตือนปัจจุบัน แดชบอร์ดไม่แทนงานวิศวกรรมลุ่มน้ำ",
+                  zh: "曼谷模型将地下水抽取及黏土层压实与地面沉降相联系（Soonthornrangsan等，2025）。该研究并不提供当前街道洪水深度或警报；仪表盘不能替代流域工程。",
                 })}</p>
+                <a href="https://doi.org/10.1111/gwat.13443" target="_blank" rel="noopener noreferrer">Soonthornrangsan et al. · 2025 ↗</a>
               </div>
               <div className="home-matrix-cell">
                 <span className="home-matrix-num">04 · EQUITY</span>
                 <h4>{t({ en: "74.1% Foundational Skills Gap", th: "74.1% ขาดทักษะดิจิทัลพื้นฐาน", zh: "74.1% 缺乏基础数字技能" })}</h4>
                 <p>{t({
-                  en: "Internet use reached 89.7% among age 6+, but drops to 29.3% for age 80+. 74.1% of adults fall below foundational digital-skills thresholds (NSO / World Bank). Phone and in-person assistance must remain inside civic services.",
-                  th: "การใช้อินเทอร์เน็ตถึง 89.7% ในกลุ่มอายุ 6 ปีขึ้นไป แต่ลดเหลือ 29.3% ในกลุ่ม 80 ปีขึ้นไป ผู้ใหญ่ 74.1% ขาดทักษะดิจิทัลพื้นฐาน โทรศัพท์และการช่วยเหลือแบบพบหน้าต้องคงอยู่ในบริการเมือง",
-                  zh: "6岁以上互联网普及率达 89.7%，但 80岁以上降至 29.3%。74.1% 成年人低于基础数字技能门槛（NSO/世行）。热线电话与线下人工辅助必须内置于市政服务。",
+                  en: "NSO reports 89.7% internet use among people aged 6+ in 2024. A separate World Bank/EEF assessment found 74.1% of 15–64-year-olds below foundational digital-skills thresholds (2024 report). These different populations should not be treated as one measure; retain phone and in-person assistance.",
+                  th: "สสช. รายงานการใช้อินเทอร์เน็ต 89.7% ในคนอายุ 6 ปีขึ้นไปปี 2567 การประเมินอีกชุดของธนาคารโลกและ กสศ. พบว่า 74.1% ของคนอายุ 15–64 ปีมีทักษะดิจิทัลต่ำกว่าเกณฑ์ (รายงาน 2024) ประชากรสองชุดนี้ไม่ใช่มาตรวัดเดียวกัน ควรคงโทรศัพท์และบริการพบหน้า",
+                  zh: "NSO报告2024年6岁以上人群互联网使用率为89.7%。另一项世行与EEF评估发现，15–64岁人群中74.1%低于基础数字技能门槛（2024年报告）。不同人口范围不能混为一个指标；应保留电话及线下协助。",
                 })}</p>
+                <a href="https://www.nso.go.th/public/e-book/Statistical-Yearbook/SYB-2025/60/" target="_blank" rel="noopener noreferrer">NSO · 2025 ↗</a>{" · "}<a href="https://www.worldbank.org/en/country/thailand/publication/fostering-foundational-skills-in-thailand" target="_blank" rel="noopener noreferrer">World Bank &amp; EEF · 2024 ↗</a>
               </div>
             </div>
           </div>

@@ -14,7 +14,7 @@ const DIM_LOGOS: Record<SmartDimension, string> = {
   governance:  assetUrl(encodeURI("/icon 7 Smarts PNG/icon 7 Smarts Logo-07.png")),
 };
 
-interface Props { locale: Locale; }
+interface Props { locale: Locale; onNavigate?: (path: string) => void; }
 type T3 = { en: string; th: string; zh: string };
 type GridSize = 5 | 6 | 7;
 type BingoTerm = { id: string; emoji: string; label: T3; hint: T3; dim: SmartDimension };
@@ -130,7 +130,7 @@ function formatTimeShort(ms: number): string {
   return `${m}:${s.padStart(5,"0")}`;
 }
 
-export default function ScitiBingoPage({ locale }: Props) {
+export default function ScitiBingoPage({ locale, onNavigate }: Props) {
   const t=(copy:T3)=>translate(locale,copy);
 
   // Portal to body on mobile to bypass page-frame transform that breaks position:fixed
@@ -317,6 +317,15 @@ export default function ScitiBingoPage({ locale }: Props) {
 
       {/* ── MOBILE TOP BAR ── */}
       <div className="bingo-mobile-bar">
+        <button
+          type="button"
+          className="bingo-exit"
+          onClick={() => onNavigate ? onNavigate("/") : window.location.assign("/")}
+          aria-label={t({en:"Back to SCITI",th:"กลับไปที่ SCITI",zh:"返回 SCITI"})}
+          title={t({en:"Back to SCITI",th:"กลับไปที่ SCITI",zh:"返回 SCITI"})}
+        >
+          <span aria-hidden="true">←</span>
+        </button>
         <span className={`bingo-timer-mobile${won?" bingo-timer-mobile-stopped":""}`}>
           {formatTimeShort(elapsed)}
         </span>
