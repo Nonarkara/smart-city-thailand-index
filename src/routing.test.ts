@@ -6,6 +6,12 @@ describe("routing helpers", () => {
     expect(parseRoute("/rankings")).toEqual({ kind: "rankings", path: "/rankings" });
   });
 
+  it("takes retired submission links to platform destinations", () => {
+    expect(parseRoute("/creative-economy")).toEqual({ kind: "rankings", path: "/rankings" });
+    expect(parseRoute("/creative-economy/")).toEqual({ kind: "rankings", path: "/rankings" });
+    expect(parseRoute("/audit/")).toEqual({ kind: "references", path: "/references" });
+  });
+
   it("parses city detail routes with city ids", () => {
     expect(parseRoute("/city/phuket")).toEqual({
       kind: "city",

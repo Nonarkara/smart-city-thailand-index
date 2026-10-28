@@ -13261,3 +13261,67 @@ button.nong-plub-mini-badge:hover { color: var(--ink); text-decoration: underlin
   .nong-plub-print-source { display: block; max-width: 65ch; font: 400 var(--text-body)/1.45 var(--font); }
   .nong-plub-print-source p { margin: 6px 0; }
 }
+
+@font-face { font-family: 'Plub Sriracha'; src: url('/fonts/mascot/sriracha.woff2') format('woff2'); font-display: swap; font-weight: 400; }
+@font-face { font-family: 'Plub WenKai'; src: url('/fonts/mascot/wenkai.woff2') format('woff2'); font-display: swap; font-weight: 400; }
+.mascot-hand { font-family: 'Plub Sriracha', var(--font); font-size: var(--text-body); font-weight: 400; line-height: 1.6; }
+:lang(zh-Hans) .mascot-hand, .mascot-hand:lang(zh-Hans) { font-family: 'Plub WenKai', 'Plub Sriracha', var(--font); }
+.mascot-note-title { margin: 0 0 6px; font-weight: 400; }
+.page-mascot { display: grid; grid-template-columns: 112px minmax(0,1fr); gap: 16px; align-items: center; padding-block: 12px; }
+.page-mascot-art { width: 112px; height: 148px; object-fit: contain; }
+.page-mascot-note { max-width: 65ch; min-width: 0; }
+.page-mascot-note p { margin: 0 0 6px; }
+.page-mascot-note a { display: inline-block; padding-block: 5px; font: 500 var(--text-body)/1.4 var(--font); }
+.page-photo-reading { margin-block: 0 8px; }
+.page-photo-reading summary { width: fit-content; cursor: pointer; padding-block: 5px; font: 400 var(--text-micro)/1.4 var(--font); }
+.page-photo-reading .route-photo-hero { margin-top: 4px; }
+.page-mascot-embedded { padding: 0; width: 100%; }
+.cinematic-hero .page-mascot { color: inherit; margin-block: 8px; }
+.hero-reading-note summary { font: 400 var(--text-micro)/1.4 var(--font); cursor: pointer; width: fit-content; padding-block: 5px; }
+.nong-plub-infographic { max-width: none; grid-template-columns: 116px minmax(0,1fr); }
+.nong-plub-infographic .nong-plub-illustration { width: 116px; height: 220px; }
+.nong-plub-infographic .nong-plub-extremes { margin-bottom: 8px; font-size: var(--text-body); }
+.bingo-mascot-brief > summary { display: flex; align-items: center; gap: 6px; cursor: pointer; width: fit-content; min-height: 32px; font: 500 var(--text-micro)/1.4 var(--font); }
+.bingo-mascot-brief > summary img { width: 24px; height: 24px; object-fit: contain; }
+.bingo-mascot-brief[open] { background: var(--bg); }
+@media (min-width: 760px) {
+ .page-mascot { grid-template-columns: 180px minmax(0,65ch); gap: 24px; padding-block: 16px; }
+ .page-mascot-art { width: 180px; height: 204px; }
+ .nong-plub-infographic { grid-template-columns: 220px minmax(0,1fr); }
+ .nong-plub-infographic .nong-plub-illustration { width: 220px; height: 280px; }
+ .cinematic-hero .page-mascot { grid-template-columns: 140px minmax(0,1fr); gap: 16px; }
+ .cinematic-hero .page-mascot-art { width: 140px; height: 168px; }
+}
+@media (min-width: 1024px) {
+ .nong-plub-infographic { grid-template-columns: minmax(220px,.9fr) minmax(280px,1.15fr) minmax(230px,1fr); gap: 12px 20px; }
+ .nong-plub-intro-header { grid-column: 1 / -1; }
+ .nong-plub-infographic .nong-plub-illustration { width: 100%; height: 340px; }
+ .nong-plub-infographic .nong-plub-intro-notes { grid-column: 3; }
+ .nong-plub-infographic .nong-plub-story-col { align-self: center; }
+}
+@media (max-width: 640px) {
+ .bingo-mascot-brief { position: absolute; right: 8px; bottom: 4px; z-index: 125; }
+ .bingo-mascot-brief[open] { inset: 48px 8px auto; padding: 12px; border: 1px solid var(--4); }
+}
+@media print {
+ .page-mascot,.page-photo-reading,.bingo-mascot-brief { display: none; }
+ .nong-plub-infographic { grid-template-columns: 144px minmax(0,1fr); }
+ .nong-plub-infographic .nong-plub-illustration { width: 144px; height: 190px; }
+ .nong-plub-infographic .nong-plub-intro-notes { grid-column: 1 / -1; }
+}
+/* Bingo's minute guide belongs to its existing call bar; no floating obstruction. */
+.bingo-call-bar { position: relative; }
+.bingo-call-bar .bingo-mascot-brief { position: static; margin-left: auto; flex-shrink: 0; }
+.bingo-call-bar .bingo-mascot-brief[open] { position: absolute; inset: 0 0 auto; padding: 12px; border: 1px solid var(--4); z-index: 130; }
+
+/* Keep task controls in reach; the guide remains one keyboard action away. */
+.page-mascot-toggle { padding-block: 6px; }
+.page-mascot-toggle > summary { display: flex; align-items: center; gap: 8px; cursor: pointer; min-height: 44px; width: fit-content; }
+.page-mascot-toggle > summary::after { content: '+'; }
+.page-mascot-toggle[open] > summary::after { content: '−'; }
+.page-mascot-toggle .page-mascot { padding: 8px 0; }
+@media print { .page-mascot-toggle { display: none; } }
+@media (max-width: 759px) {
+ .nong-plub-infographic { row-gap: 6px; }
+ .nong-plub-infographic .nong-plub-illustration { height: 200px; }
+}

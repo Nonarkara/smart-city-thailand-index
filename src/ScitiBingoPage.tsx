@@ -1,3 +1,4 @@
+import PageMascot from "./PageMascot";
 import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 import { translate } from "./cityPresentation";
@@ -335,11 +336,13 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
           It sits HERE in the document, not at the end: on a desktop the
           bingo page is a block flow, so DOM order IS reading order. For
           months the page's own <h1> sat below the board it introduced. */}
+
       <div className="bingo-desktop-chrome">
         <section className="section bingo-header">
           <p className="eyebrow">SCITI 2026 · {t({en:"Workshop Game",th:"เกมเวิร์กช็อป",zh:"工作坊游戏"})}</p>
           <h1 className="bingo-title">SCITI Bingo</h1>
           <p className="bingo-sub">{t({en:"Use Stage Caller first. Correct cards stay open; wrong cards flip back.",th:"เริ่มจาก Stage Caller ก่อน การ์ดที่ถูกจะค้างไว้ การ์ดที่ผิดจะพลิกกลับ",zh:"先使用舞台主持。正确卡片保持打开，错误卡片会翻回。"})}</p>
+          <details className="bingo-mascot-brief"><summary>{t({en:"One minute with Nong Plub",th:"หนึ่งนาทีกับน้องพลับ",zh:"小普的一分钟导读"})}</summary><PageMascot kind="bingo" locale={locale} embedded /></details>
           <div className="bingo-header-actions">
             <button className="cta-button" onClick={()=>reset()}>↻ {t({en:"New Card",th:"การ์ดใหม่",zh:"新棋盘"})}</button>
             <span className="bingo-seed">{seedLabel}</span>
@@ -383,6 +386,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
         ):(
           <span className="bingo-call-bar-empty">{t({en:"↓ Pick a dimension below to start",th:"↓ เลือกมิติด้านล่างเพื่อเริ่ม",zh:"↓ 在下方选择维度开始"})}</span>
         )}
+      <details className="bingo-mascot-brief"><summary><img src="/nong-plub/nong-plub-avatar-crayon.webp" width={24} height={24} alt=""/>{t({en:"One minute",th:"หนึ่งนาที",zh:"一分钟"})}</summary><PageMascot kind="bingo" locale={locale} embedded /></details>
       </div>
 
       {/* ── BOARD AREA (mobile row 3 / desktop left column) ── */}

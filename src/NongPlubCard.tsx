@@ -26,11 +26,12 @@ export function NongPlubCard({ city, locale, className = "" }: NongPlubCardProps
 
   return (
     <aside
+      lang={locale === "zh" ? "zh-Hans" : locale}
       className={`nong-plub-card nong-plub-infographic ${className}`}
       aria-label={`${t("Nong Plub introduces this city", "น้องพลับชวนรู้จักเมือง", "小普带你认识城市")} — ${cityName}`}
     >
       <header className="nong-plub-intro-header">
-        <h3 className="nong-plub-site-name">{t("Nong Plub’s city guide", "น้องพลับชวนรู้จักเมือง", "小普的城市指南")}</h3>
+        <h3 className="nong-plub-site-name mascot-hand">{t("Nong Plub’s city guide", "น้องพลับชวนรู้จักเมือง", "小普的城市指南")}</h3>
         <p>{[city.league ? LEAGUE_LABELS[locale][city.league] : t("Project scope unverified", "ขอบเขตโครงการยังไม่ยืนยัน", "项目范围待核实"), province].filter(Boolean).join(" · ")}</p>
       </header>
       <img
@@ -51,13 +52,16 @@ export function NongPlubCard({ city, locale, className = "" }: NongPlubCardProps
           </li>)}
         </ol>
         {profile.assessed === 0 && <a className="nong-plub-culture-link" href={`#heritage-${city.id}`}>{t("Provincial window", "มองผ่านบริบทจังหวัด", "省级文化之窗")}: {record.siteName[locale]} →</a>}
-        {profile.highest.length && profile.lowest.length ? <p className="nong-plub-extremes">{t("Highest estimate", "ค่าประมาณสูงสุด", "最高估值")}: {profile.highest.map(pillar => PILLAR_LABELS[locale][pillar]).join(" / ")} · {t("Lowest estimate", "ค่าประมาณต่ำสุด", "最低估值")}: {profile.lowest.map(pillar => PILLAR_LABELS[locale][pillar]).join(" / ")}</p> : <p className="nong-plub-extremes">{profile.assessed === 0 ? t("Gaps are not zero scores.", "ช่องว่างไม่ใช่คะแนนศูนย์", "缺失不等于零分。") : t("No distinct high or low estimate.", "ค่าประมาณไม่มีจุดสูงต่ำที่แตกต่าง", "估值无明显高低差异。")}</p>}
+
       </div>
       <div className="nong-plub-intro-notes">
+        <p className="mascot-hand mascot-note-title">{t("One minute with Nong Plub", "หนึ่งนาทีกับน้องพลับ", "小普的一分钟导读")}</p>
+        {profile.highest.length && profile.lowest.length ? <p className="nong-plub-extremes mascot-hand">{t("Highest estimate", "ค่าประมาณสูงสุด", "最高估值")}: {profile.highest.map(pillar => PILLAR_LABELS[locale][pillar]).join(" / ")} · {t("Lowest estimate", "ค่าประมาณต่ำสุด", "最低估值")}: {profile.lowest.map(pillar => PILLAR_LABELS[locale][pillar]).join(" / ")}</p> : <p className="nong-plub-extremes">{profile.assessed === 0 ? t("Gaps are not zero scores.", "ช่องว่างไม่ใช่คะแนนศูนย์", "缺失不等于零分。") : t("No distinct high or low estimate.", "ค่าประมาณไม่มีจุดสูงต่ำที่แตกต่าง", "估值无明显高低差异。")}</p>}
         <p className="nong-plub-score-note">{t("Curated research estimates, not verified service coverage. Check source dates and provincial scope in Evidence.", "ค่าประมาณจากการวิจัย ไม่ใช่การยืนยันความครอบคลุมบริการ ตรวจวันที่และขอบเขตจังหวัดในหลักฐาน", "编辑研究估算，并非已核实的服务覆盖率。请在证据页核查来源日期与省级范围。")}</p>
-        <p className="nong-plub-disclosure">{t("Baseline cut-off", "วันตัดข้อมูลตั้งต้น", "基线截止日")}: {SCITI_DATA_CUTOFF_ISO.slice(0,10)} · {record.illustrationDisclosure[locale]}</p>
+        <p className="nong-plub-disclosure">{t("Baseline cut-off", "วันตัดข้อมูลตั้งต้น", "基线截止日")}: {SCITI_DATA_CUTOFF_ISO.slice(0,10)} · {t("Illustrated guide, not a visit record.", "ภาพประกอบ ไม่ใช่บันทึกการเดินทาง", "插画向导，并非到访记录。")}</p>
         <details className="nong-plub-reading">
           <summary>{t("Read the provincial note", "อ่านบันทึกบริบทจังหวัด", "阅读省级背景")}</summary>
+          <p>{record.illustrationDisclosure[locale]}</p>
           <p>{record.quote[locale]}</p>
           <p>{record.tip[locale]}</p>
           {record.sourceUrl && <a href={record.sourceUrl} target="_blank" rel="noopener noreferrer">

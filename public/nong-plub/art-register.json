@@ -39,6 +39,19 @@
       "reference": "IMG_20260311_172448611.jpg",
       "brief": "Head-and-shoulders portrait, dark plaid dress.",
       "asset": "/nong-plub/nong-plub-avatar-crayon.webp"
+    },
+    {
+      "id": "welcome",
+      "reference": "IMG_20260711_180019455.jpg",
+      "brief": "Pale blue shirt, welcoming open palms",
+      "asset": "/nong-plub/nong-plub-welcome-crayon.webp"
+    },
+    {
+      "id": "explain",
+      "reference": "Approved urban and cafe illustrations",
+      "brief": "Lavender cardigan, notebook and explaining gesture",
+      "asset": "/nong-plub/nong-plub-explain-crayon.webp"
     }
-  ]
+  ],
+  "consent": "Owner confirmed Nong Plub consented to public mascot likeness use promoting Thailand Smart City, 2026-10-28."
 }

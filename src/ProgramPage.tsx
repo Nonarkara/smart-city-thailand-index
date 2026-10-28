@@ -100,7 +100,7 @@ const CERT_STEPS = [
     }
   },
   {
-    en: "Award + follow up",
+    en: "Logo recognition + follow up",
     th: "มอบตรา + ติดตามผล",
     zh: "授标与跟踪",
     desc: {
@@ -433,7 +433,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
         <h2>{translate(locale, { en: "How a city gets the logo", th: "เมืองได้ตราสัญลักษณ์อย่างไร", zh: "城市如何获得标识" })}</h2>
         <p className="program-section-intro">
           {translate(locale, {
-            en: "The logo is not a design asset handed out at the start. It is the visible end of a public approval pathway: proposal, promotion-zone screening, committee review, national approval, award, and follow-up.",
+            en: "The logo is not a design asset handed out at the start. It is the visible end of a public approval pathway: proposal, promotion-zone screening, committee review, national approval, logo recognition, and follow-up.",
             th: "ตราสัญลักษณ์ไม่ใช่ไฟล์ออกแบบที่มอบให้ตั้งแต่ต้น แต่เป็นผลปลายทางที่มองเห็นได้ของกระบวนการอนุมัติสาธารณะ ตั้งแต่การยื่นข้อเสนอ การคัดกรองเขตส่งเสริม การพิจารณาของคณะกรรมการ การอนุมัติระดับชาติ การมอบตรา และการติดตามผล",
             zh: "标识不是一开始就发放的设计素材，而是公共审批路径的可见结果：提交提案、推广区筛选、委员会评审、国家批准、授予标识，以及后续跟踪。",
           })}

@@ -142,8 +142,8 @@ console.log(`✓ Generated ${count} city OG pages in dist/city/`);
 // ---------------------------------------------------------------------------
 const STATIC_ROUTES = [
   "/", "/about", "/rankings", "/methodology", "/story", "/why", "/showcase",
-  "/creative-economy", "/partners", "/map", "/program", "/knowledge", "/discover", "/invest",
-  "/compare", "/references", "/audit",
+  "/partners", "/map", "/program", "/knowledge", "/discover", "/invest",
+  "/compare", "/references",
 ];
 const lastmod = new Date().toISOString().slice(0, 10);
 const urls = [

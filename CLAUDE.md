@@ -1,6 +1,6 @@
 # SCITI 2026 — Smart City Thailand Index
 
-CEA Creative Excellence Awards 2026 submission (Category 1.3 — Creative City Policy Award). Built by depa Smart City Promotion Department.
+Public Thailand smart-city data platform: city dossiers, comparisons, source records and assessment gaps. Built by depa Smart City Promotion Department. Historical award material is retained as archive, not the platform’s current purpose.
 
 React 19 + Vite 6 + TypeScript 5.8 SPA. No React Router — custom routing in `src/routing.ts`.
 
@@ -22,7 +22,7 @@ npx vite build      # Always verify both before pushing
   The Vercel handlers in `/api` still run if this repo is deployed to Vercel;
   they do not run on Cloudflare. Never let `/api/*` fall through to the SPA
   shell — clients will parse `index.html` as JSON.
-- GitHub Actions also auto-deploys to GitHub Pages on push to `main` (`gh run list --limit 1` to verify), but DNS for `sciti.nonarkara.org` resolves to Cloudflare — the GitHub Pages copy is a live mirror, not what judges/users see.
+- GitHub Actions also auto-deploys to GitHub Pages on push to `main` (`gh run list --limit 1` to verify), but DNS for `sciti.nonarkara.org` resolves to Cloudflare — the GitHub Pages copy is a live mirror, not what users see.
 
 ### CDPT — the one-command ship sequence
 

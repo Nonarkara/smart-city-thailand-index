@@ -34,7 +34,7 @@ export function parseRoute(rawPathname: string): Route {
   // "<id>/" and the page shows "City not found". Root "/" is preserved.
   const pathname = afterBase !== "/" ? afterBase.replace(/\/+$/, "") : "/";
   if (pathname === "/about") return { kind: "about", path: "/about" };
-  if (pathname === "/creative-economy") return { kind: "creative-economy", path: "/creative-economy" };
+  if (pathname === "/creative-economy") return { kind: "rankings", path: "/rankings" };
   if (pathname === "/rankings") return { kind: "rankings", path: "/rankings" };
   if (pathname === "/methodology") return { kind: "methodology", path: "/methodology" };
   if (pathname === "/story") return { kind: "story", path: "/story" };
@@ -43,7 +43,7 @@ export function parseRoute(rawPathname: string): Route {
   if (pathname === "/partners") return { kind: "partners", path: "/partners" };
   if (pathname === "/map") return { kind: "map", path: "/map" };
   if (pathname === "/asus") return { kind: "asus", path: "/asus" };
-  if (pathname === "/audit") return { kind: "audit", path: "/audit" };
+  if (pathname === "/audit") return { kind: "references", path: "/references" };
   if (pathname === "/references") return { kind: "references", path: "/references" };
   if (pathname === "/program") return { kind: "program", path: "/program" };
   if (pathname === "/knowledge") return { kind: "knowledge", path: "/knowledge" };

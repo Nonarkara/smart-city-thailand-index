@@ -6,13 +6,13 @@ import type { Locale } from "./types";
 
 import { laemChabangProfile } from "./laemChabangData";
 
-const SITE_NAME = "Smart City Thailand Index (SCITI)";
+const SITE_NAME = "Thailand Smart City Data Platform (SCITI)";
 const SHARE_IMAGE_PATH = "/smart_city_thailand_logo.jpg";
 
 const defaultDescriptions: Record<Locale, string> = {
-  en: "Thailand's smart city index focused on real outcomes, not paper plans. Explore rankings, methodology, and detailed city profiles.",
-  th: "ดัชนีเมืองอัจฉริยะของไทยที่วัดจากผลลัพธ์จริง ไม่ใช่แผนบนกระดาษ สำรวจอันดับเมือง ระเบียบวิธี และโปรไฟล์รายเมืองอย่างละเอียด",
-  zh: "以真实结果而非纸上规划为核心的泰国智慧城市指数。查看排名、方法论与城市详情。",
+  en: "Explore Thailand’s smart-city records, maps, research estimates and source-linked city profiles. Check dates, geographic scope and evidence gaps before deciding.",
+  th: "สำรวจทะเบียนเมืองอัจฉริยะ แผนที่ ค่าประมาณวิจัย และแฟ้มเมืองพร้อมแหล่งอ้างอิง ตรวจช่วงเวลา ขอบเขตพื้นที่ และช่องว่างหลักฐานก่อนตัดสินใจ",
+  zh: "探索泰国智慧城市名录、地图、研究估算及附来源的城市档案。决策前请核查时间、地理范围与证据空白。",
 };
 
 const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
@@ -57,9 +57,9 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     zh: `${SITE_NAME} | 联合国人居署ASUS项目`,
   },
   audit: {
-    en: `${SITE_NAME} | Jury Evidence Walk-through`,
-    th: `${SITE_NAME} | เส้นทางหลักฐานสำหรับคณะกรรมการ`,
-    zh: `${SITE_NAME} | 评审证据导览`,
+    en: `${SITE_NAME} | Data & Sources`,
+    th: `${SITE_NAME} | ข้อมูลและแหล่งที่มา`,
+    zh: `${SITE_NAME} | 数据与来源`,
   },
   partners: {
     en: `${SITE_NAME} | International Partnerships`,
@@ -122,9 +122,9 @@ const routeTitles: Record<Route["kind"], Record<Locale, string>> = {
     zh: `${SITE_NAME} | 使命 — SCITI为何存在`,
   },
   "creative-economy": {
-    en: `${SITE_NAME} | Creative Economy, Provincial Scale`,
-    th: `${SITE_NAME} | เศรษฐกิจสร้างสรรค์ระดับจังหวัด`,
-    zh: `${SITE_NAME} | 省级规模的创意经济`,
+    en: `${SITE_NAME} | City Data`,
+    th: `${SITE_NAME} | ข้อมูลเมือง`,
+    zh: `${SITE_NAME} | 城市数据`,
   },
 };
 

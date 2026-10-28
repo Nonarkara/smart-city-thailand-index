@@ -37,3 +37,8 @@
 .municipal-plub-intro{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:start;margin-bottom:8px}
 .municipal-plub-intro img{width:64px;height:88px;object-fit:contain}
 .municipal-plub-intro h2{margin-bottom:4px}
+.municipal-plub-intro{grid-template-columns:116px minmax(0,1fr)}
+.municipal-plub-intro img{width:116px;height:156px}
+.municipal-plub-intro h2{font-family:'Plub Sriracha',var(--font);font-weight:400}
+:lang(zh-Hans) .municipal-plub-intro h2{font-family:'Plub WenKai',var(--font)}
+@media(min-width:760px){.municipal-plub-intro{grid-template-columns:180px minmax(0,65ch)}.municipal-plub-intro img{width:180px;height:220px}}

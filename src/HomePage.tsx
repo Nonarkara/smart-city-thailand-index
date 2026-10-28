@@ -1,3 +1,4 @@
+import PageMascot from "./PageMascot";
 import { useMemo, useState, useEffect } from "react";
 import { useInView } from "./useInView";
 import AnimatedScore from "./AnimatedScore";
@@ -149,14 +150,15 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </p>
           <h1 className="cinematic-hero-title">
             {locale === "th" ? (
-              <>หลักฐานการส่งมอบ<br />เมืองอัจฉริยะประเทศไทย</>
+              <>แพลตฟอร์มข้อมูล<br />เมืองอัจฉริยะไทย</>
             ) : locale === "zh" ? (
-              <>泰国智慧城市的<br />交付实证与运营基准</>
+              <>泰国智慧城市<br />数据平台</>
             ) : (
-              <>Delivery Evidence for<br />Thailand's Smart Cities</>
+              <>Thailand’s Smart City<br />Data Platform</>
             )}
           </h1>
-          <p className="cinematic-hero-why">
+          <PageMascot kind="home" locale={locale} embedded />
+          <details className="hero-reading-note"><summary>{t({en:"Research scope",th:"ขอบเขตงานวิจัย",zh:"研究范围"})}</summary><p className="cinematic-hero-why">
             {t({
               en: "Compare 118 Thai city records, then check delivery evidence, accountable operators and resident outcomes. Recognition or installed technology alone does not establish that lives improved.",
               th: "เปรียบเทียบข้อมูล 118 เมืองไทย แล้วตรวจหลักฐานการส่งมอบ ผู้รับผิดชอบ และผลลัพธ์ต่อผู้อยู่อาศัย การรับรองหรือการติดตั้งเทคโนโลยีเพียงอย่างเดียวไม่ยืนยันว่าชีวิตประชาชนดีขึ้น",
@@ -164,6 +166,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             })}
           </p>
 
+          </details>
           <div className="cinematic-hero-stats">
             <div className="hero-stat-cell">
               <AnimatedScore target={stats.total} from={0} decimals={0} duration={1600} className="hero-stat-num" />
@@ -190,8 +193,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
                 zh: "交付实证简报 →",
               })}
             </button>
-            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/audit")}>
-              {t({ en: "Jury: start here", th: "กรรมการ: เริ่มที่นี่", zh: "评审：从这里开始" })}
+            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/map")}>
+              {t({ en: "Explore the map", th: "สำรวจแผนที่", zh: "查看地图" })}
             </button>
           </div>
         </div>
@@ -291,9 +294,9 @@ export default function HomePage({ locale, onNavigate }: Props) {
           <button
             type="button"
             className="opening-argument-cta"
-            onClick={() => onNavigate("/audit")}
+            onClick={() => onNavigate("/references")}
           >
-            {t({ en: "Start the jury walk-through →", th: "เริ่มเส้นทางสำหรับคณะกรรมการ →", zh: "开始评审导览 →" })}
+            {t({ en: "Inspect the source records →", th: "ตรวจดูระเบียนแหล่งข้อมูล →", zh: "查阅来源记录 →" })}
           </button>
           </details>
         </div>

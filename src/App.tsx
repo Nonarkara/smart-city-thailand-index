@@ -55,6 +55,7 @@ const CityCanvasPage = lazy(() => import("./CityCanvasPage"));
 const AboutPage = lazy(() => import("./AboutPage"));
 const CreativeEconomyPage = lazy(() => import("./CreativeEconomyPage"));
 import DataFeedback from "./DataFeedback";
+import PageMascot from "./PageMascot";
 
 const LOCALE_STORAGE_KEY = "smart-city-thailand-locale";
 const THEME_STORAGE_KEY = "smart-city-thailand-theme";
@@ -122,14 +123,6 @@ const SLIC_LOGO = {
 };
 
 const newsItems = [
-  {
-    date: "2026-05-20",
-    titleEn: "SCITI 2026 submitted to CEA Creative Excellence Awards — open-data scorecard for 118 Thai cities",
-    titleTh: "SCITI 2026 ส่งเข้าประกวด CEA Creative Excellence Awards — ตารางคะแนนข้อมูลเปิดสำหรับ 118 เมือง",
-    titleZh: "SCITI 2026 提交 CEA 创意卓越奖——覆盖 118 座泰国城市的开放数据评分卡",
-    url: "https://sciti.nonarkara.org/",
-    source: "depa / SCITI",
-  },
   {
     date: "2026-03-18",
     titleEn: "SLIC Index V2 launched at Smart City Summit & Expo 2026 in Taipei",
@@ -281,7 +274,7 @@ export default function App() {
             "@context": "https://schema.org",
             "@type": "Dataset",
             "name": "SCITI - Smart City Thailand Index",
-            "description": "Thailand's Provincial Creative Economy Data Platform. Aggregates Gross Provincial Product, FDI flows, BOI incentive zones, infrastructure readiness, creative economy indicators, labor costs, and cultural asset data across Thailand's 77 provinces.",
+            "description": "Thailand smart-city data platform: city profiles, research estimates, source records, comparisons and provincial cultural context. Data scope, dates and limitations are disclosed.",
             "url": "https://sciti.nonarkara.org/",
             "creator": {
               "@type": "Organization",
@@ -289,7 +282,7 @@ export default function App() {
             },
             "license": "https://creativecommons.org/licenses/by/4.0/",
             "inLanguage": ["th", "en", "zh-Hans"],
-            "keywords": ["Thailand", "Smart City", "Creative Economy", "Provincial Data", "Investment"]
+            "keywords": ["Thailand", "Smart City", "City Data", "Research Evidence", "Provincial Context"]
           })}
         </script>
       )}
@@ -454,7 +447,9 @@ export default function App() {
 
       {/* ─── CONTENT ─── */}
       <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""} ${isCanvasRoute ? "page-frame-canvas" : ""}`} key={getRouteKey(route)}>
-        {!isCanvasRoute && <PagePhotoHero route={route} locale={locale} />}
+        {!["home","city","canvas","bingo"].includes(route.kind) && <PageMascot kind={route.kind} locale={locale} />}
+        {!["home","city","canvas","bingo"].includes(route.kind) && <details className="page-photo-reading section"><summary>{locale === "th" ? "ภาพบริบท" : locale === "zh" ? "背景照片" : "Photo context"}</summary><PagePhotoHero route={route} locale={locale} /></details>}
+        {isCanvasRoute && <PageMascot kind="canvas" locale={locale} />}
         <ErrorBoundary locale={locale}>
           <Suspense fallback={<PageSkeleton locale={locale} />}>
             {route.kind === "rankings" ? (
@@ -579,10 +574,10 @@ export default function App() {
               <details className="footer-fineprint">
                 <summary>{locale === "th" ? "เกี่ยวกับโครงการ SCITI" : locale === "zh" ? "关于SCITI项目" : "About the SCITI project"}</summary>
                 <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: "0.5rem", fontSize: "var(--text-body)" }}>
-                  {locale === "th" ? "SCITI (sciti.nonarkara.org) -- แพลตฟอร์มข้อมูลเศรษฐกิจสร้างสรรค์ระดับจังหวัดของไทย" : locale === "zh" ? "SCITI (sciti.nonarkara.org) —— 泰国省级创意经济数据平台" : "SCITI (sciti.nonarkara.org) -- Thailand's Provincial Creative Economy Data Platform"}
+                  {locale === "th" ? "SCITI (sciti.nonarkara.org) -- แพลตฟอร์มข้อมูลเมืองอัจฉริยะไทย" : locale === "zh" ? "SCITI (sciti.nonarkara.org) —— 泰国智慧城市数据平台" : "SCITI (sciti.nonarkara.org) -- Thailand's smart-city data platform"}
                 </p>
                 <p style={{ fontWeight: 600, color: "var(--teal)", marginBottom: "1rem", fontSize: "var(--text-body)", letterSpacing: "0.05em", textTransform: "uppercase" as const }}>
-                  {locale === "th" ? "การสมัคร CEA Creative Excellence Awards 2026 | รางวัลนโยบายเมืองสร้างสรรค์ (ประเภท 1.3)" : locale === "zh" ? "CEA 创意卓越奖 2026 申请 | 创意城市政策奖（1.3 类）" : "CEA Creative Excellence Awards 2026 Application | Creative City Policy Award (Category 1.3)"}
+                  {locale === "th" ? "ข้อมูลเมือง แหล่งอ้างอิง และเครื่องมือเปรียบเทียบ" : locale === "zh" ? "城市档案、来源与比较工具" : "City profiles, sources and comparison tools"}
                 </p>
                 <p style={{ marginBottom: "1rem", color: "var(--3)", lineHeight: "1.6" }}>
                   {locale === "th"

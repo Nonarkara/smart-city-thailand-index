@@ -35,7 +35,7 @@ const metrics: ShowcaseMetric[] = [
   { value: "< 48h", label: { en: "Issue resolution target", th: "เป้าเวลาแก้ปัญหา", zh: "问题处理目标" } },
   { value: "38,000", label: { en: "Complaints resolved in 3 years", th: "เรื่องร้องเรียนที่แก้ใน 3 ปี", zh: "3 年内已处理投诉" } },
   { value: "37%", label: { en: "Call-center workload cut", th: "ปริมาณงานคอลเซ็นเตอร์ที่ลดลง", zh: "呼叫中心工作量下降" } },
-  { value: "70%", label: { en: "Resident adoption in municipality", th: "สัดส่วนประชากรในเขตเทศบาลที่ใช้งาน", zh: "市区居民采用率" } },
+  { value: "—", label: { en: "Resident adoption not established", th: "ยังยืนยันสัดส่วนประชาชนที่ใช้งานไม่ได้", zh: "居民采用率尚未确定" } },
   { value: "฿2.3M", label: { en: "Reported annual savings", th: "มูลค่าประหยัดต่อปีที่รายงาน", zh: "报告中的年度节省" } },
   { value: "2.7d", label: { en: "Avg resolution, from 6.2 days", th: "เวลาแก้ปัญหาเฉลี่ย จาก 6.2 วัน", zh: "平均处理时间（原 6.2 天）" } },
   { value: "92%", label: { en: "Citizen satisfaction", th: "ความพึงพอใจประชาชน", zh: "市民满意度" } },
@@ -415,6 +415,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
 
           <section className="section showcase-metric-section">
             <p className="eyebrow">{translate(locale, { en: "The outcomes", th: "ผลลัพธ์", zh: "成效" })}</p>
+<p className="showcase-metric-label">{translate(locale, { en: "Historical figures reported in municipal case material; claim-level citations, measurement periods and denominators remain unverified. These are not independently audited outcomes or current service guarantees.", th: "ตัวเลขย้อนหลังตามเอกสารกรณีศึกษาของเทศบาล ยังไม่ยืนยันแหล่งอ้างอิงรายข้อ ช่วงเวลาวัด และฐานคำนวณ ไม่ใช่ผลที่ผ่านการตรวจสอบอิสระหรือการรับประกันบริการปัจจุบัน", zh: "市政案例材料报告的历史数据；逐项引文、测量时期和分母仍未核实。这些并非独立审计结果或当前服务保证。" })}</p>
             <div className="showcase-metric-grid">
               {metrics.map(metric => (
                 <div key={metric.value + metric.label.en} className="showcase-metric-card">
@@ -462,12 +463,12 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <div className="showcase-pull-block">
                   <p className="showcase-pull-quote">
                     {translate(locale, {
-                      en: "If you build something residents don't use, you haven't solved anything. The technology is not the product. The trust is the product.",
-                      th: "ถ้าคุณสร้างสิ่งที่ชาวบ้านไม่ใช้ คุณก็ยังไม่ได้แก้อะไร เทคโนโลยีไม่ใช่ผลิตภัณฑ์ ความไว้วางใจต่างหากที่คือผลิตภัณฑ์",
-                      zh: "如果你建了一个居民不用的东西，你什么都没解决。科技不是产品，信任才是。",
+                      en: "Service design should be assessed through resident use, access and trust, alongside the technology deployed.",
+                th: "ควรประเมินการออกแบบบริการจากการใช้งาน การเข้าถึง และความไว้วางใจของประชาชนควบคู่กับเทคโนโลยีที่นำมาใช้",
+                zh: "服务设计应结合居民使用、可及性和信任来评估，并考察所部署的技术。",
                     })}
                   </p>
-                  <p className="showcase-pull-source">WeCitizens Thailand, March 2025</p>
+                  <p className="showcase-pull-source">{translate(locale, { en: "Editorial summary; not a verified quotation", th: "บทสรุปโดยกองบรรณาธิการ ไม่ใช่คำพูดที่ตรวจสอบแล้ว", zh: "编辑概述；非经核实的引语" })}</p>
                 </div>
                 <p>
                   {translate(locale, {
@@ -482,7 +483,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
 
           {/* ── 131,908 friends ── */}
           <section className="section">
-            <p className="eyebrow">{translate(locale, { en: "Beyond city limits", th: "เกินขอบเขตเมือง", zh: "已超出城市边界" })}</p>
+            <p className="eyebrow">{translate(locale, { en: "Reported account figures", th: "ตัวเลขบัญชีตามรายงาน", zh: "报告的账户数据" })}</p>
             <h2>{translate(locale, { en: "131,908 reported account friends", th: "เพื่อนบัญชีที่รายงาน 131,908 ราย", zh: "报告的账户好友数：131,908" })}</h2>
             <div className="showcase-data-callout">
               <div className="showcase-data-callout-cell">
@@ -491,11 +492,11 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
               </div>
               <div className="showcase-data-callout-cell">
                 <span className="showcase-data-callout-num">110k</span>
-                <span className="showcase-data-callout-label">{translate(locale, { en: "Total city population", th: "ประชากรในเขตเทศบาล", zh: "城市人口总数" })}</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Population estimate; period unverified", th: "ประมาณการประชากร ยังไม่ยืนยันช่วงเวลา", zh: "人口估计；时期未核实" })}</span>
               </div>
               <div className="showcase-data-callout-cell">
                 <span className="showcase-data-callout-num">50,860</span>
-                <span className="showcase-data-callout-label">{translate(locale, { en: "LINE post followers", th: "ผู้ติดตาม LINE", zh: "LINE 帖子关注者" })}</span>
+                <span className="showcase-data-callout-label">{translate(locale, { en: "Reported followers; date unverified", th: "ผู้ติดตามตามรายงาน ยังไม่ยืนยันวันที่", zh: "报告的关注者数；日期未核实" })}</span>
               </div>
               <div className="showcase-data-callout-cell">
                 <span className="showcase-data-callout-num">48h</span>
@@ -511,21 +512,21 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             </p>
             <p>
               {translate(locale, {
-                en: "The gap between 80% and 20% is not explained by demographics, digital literacy, or city size. It is explained by one commitment the mayor made publicly and kept consistently: every complaint submitted through the system gets a response within 48 hours, with a photograph of the completed fix sent back to the resident. The service loop is visible and closed.",
-                th: "ช่องว่างระหว่าง 80% กับ 20% ไม่ได้อธิบายด้วยโครงสร้างประชากร ความรู้ด้านดิจิทัล หรือขนาดของเมือง แต่อธิบายด้วยพันธสัญญาหนึ่งที่นายกฯ ประกาศต่อสาธารณะและรักษาอย่างสม่ำเสมอ: ทุกปัญหาที่ส่งผ่านระบบจะได้รับการตอบสนองภายใน 48 ชั่วโมง พร้อมถ่ายรูปแก้ไขส่งกลับให้ประชาชน วงจรบริการมองเห็นได้และปิดครบ",
-                zh: "80%与20%的差距，不能用人口结构、数字素养或城市规模来解释。解释它的，是市长公开承诺并始终兑现的一件事：通过系统提交的每一条投诉，48小时内必有回复，并附上修复完成的照片发回给居民。服务闭环清晰可见，且真正闭合。",
+                en: "The material describes a 48-hour response target and photo updates. This page has no case-level logs establishing compliance, and no comparable adoption study supports an 80% versus 20% gap or a causal explanation for it.",
+                th: "เอกสารอธิบายเป้าหมายตอบสนองภายใน 48 ชั่วโมงและการส่งภาพความคืบหน้า หน้านี้ไม่มีบันทึกรายกรณีเพื่อยืนยันการทำได้ตามเป้า และไม่มีการศึกษาอัตราการใช้งานที่เทียบกันได้เพื่อรองรับช่องว่าง 80% กับ 20% หรืออธิบายสาเหตุ",
+                zh: "材料描述了48小时响应目标和照片反馈。本页没有逐案记录来验证达标情况，也没有可比的采用率研究支持80%与20%的差距或其因果解释。",
               })}
             </p>
             <div className="showcase-pull-block">
               <p className="showcase-pull-quote">
                 {translate(locale, {
-                  en: "We will resolve every complaint within 48 hours — with a photo of the fix sent back. That is not a slogan. That is a contract.",
-                  th: "เราจะแก้ข้อร้องเรียนทุกเรื่องภายใน 48 ชั่วโมง พร้อมถ่ายรูปส่งกลับ นั่นไม่ใช่สโลแกน นั่นคือสัญญา",
-                  zh: "我们将在48小时内解决每一条投诉——并附上修复照片回传。这不是口号，这是契约。",
+                  en: "A response target does not establish a resolution guarantee. Check case timestamps, closure criteria and unresolved cases before judging service reliability.",
+                th: "เป้าหมายตอบสนองไม่ใช่การรับประกันว่าแก้ไขเสร็จ ควรตรวจเวลารับเรื่อง เกณฑ์ปิดงาน และเรื่องที่ยังค้างก่อนประเมินความน่าเชื่อถือของบริการ",
+                zh: "响应目标不等于解决保证。评估服务可靠性前，应检查案件时间戳、结案标准和未解决案件。",
                 })}
               </p>
               <p className="showcase-pull-source">
-                {translate(locale, { en: "Dr. Kanop Ketchart · WeCitizens Thailand interview, 2025", th: "ดร.กณพ เกตุชาติ · สัมภาษณ์ WeCitizens Thailand, 2568", zh: "Kanop Ketchart 博士 · WeCitizens Thailand 专访，2025" })}
+                {translate(locale, { en: "Editorial verification checklist", th: "ข้อควรตรวจสอบโดยกองบรรณาธิการ", zh: "编辑核验清单" })}
               </p>
             </div>
           </section>
@@ -749,7 +750,9 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 <div className="timeline-arc-content">
                   <div className="timeline-arc-text">
                     <h3 className="timeline-arc-title">{translate(locale, { en: "Operational Command", th: "ศูนย์บัญชาการปฏิบัติการ", zh: "运营指挥" })}</h3>
-                    <p className="timeline-arc-desc">{translate(locale, { en: "With over 131,000 LINE OA friends — more than the municipal population — the IOC (Intelligent Operation Center) became the true brain of the city. Resolving over 38,000 complaints directly, the CCTV wall driven by live sensor data reduced resolution time by 56%.", th: "ด้วยเพื่อน LINE OA กว่า 131,000 ราย — มากกว่าประชากรในเขตเทศบาล — ศูนย์ IOC กลายเป็นสมองของเมืองอย่างแท้จริง การแก้ปัญหาไปแล้วกว่า 38,000 เรื่อง กำแพง CCTV ที่ขับเคลื่อนด้วยข้อมูลสดลดเวลาแก้ปัญหาลง 56%", zh: "随着LINE OA好友超过131,000人——超过市区人口——IOC（智能运营中心）成为了城市真正的大脑。通过实时传感器数据驱动的CCTV监控墙，直接解决了38,000多起投诉，将解决时间缩短了56%。" })}</p>
+                    <p className="timeline-arc-desc">{translate(locale, { en: "Municipal case material describes the IOC and reports over 38,000 complaints resolved. A separate June 2026 account count must not be treated as 2024 resident adoption. The reported change in resolution time does not establish that CCTV caused it; comparable case logs are needed.",
+                th: "เอกสารกรณีศึกษาของเทศบาลอธิบายศูนย์ IOC และรายงานการแก้ข้อร้องเรียนกว่า 38,000 เรื่อง จำนวนบัญชี ณ มิถุนายน 2569 ไม่ควรนำมาแทนอัตราการใช้งานของประชาชนในปี 2567 การเปลี่ยนแปลงเวลาแก้ปัญหาตามรายงานยังไม่ยืนยันว่าเกิดจาก CCTV ต้องตรวจบันทึกรายกรณีที่เทียบกันได้",
+                zh: "市政案例材料介绍了IOC，并报告已解决超过38,000起投诉。2026年6月的账户数量不能视为2024年的居民采用率。报告的处理时长变化不能证明由CCTV造成，仍需可比的案件记录。",
                   </div>
                   <div className="timeline-arc-gallery">
                     <div className="timeline-arc-photo">
@@ -938,21 +941,12 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                 </div>
                 <p style={{ margin: "0 0 1rem", color: "var(--2)", lineHeight: 1.6 }}>
                   {translate(locale, {
-                    en: "A pothole in NST no longer disappears into a phone queue. It gets photographed, geotagged, timestamped, and routed to the right maintenance crew via LINE — the messaging app 85% of Thais already use. The city rebuilt @NakhonCity twice in three years based on live usage data. Recurring complaint clusters became infrastructure budget signals: when the same street floods repeatedly in reports, it moves to the front of the pipe-replacement queue. Governance shifted from reactive to predictive.",
-                    th: "หลุมบ่อในนครศรีธรรมราชไม่ได้หายไปในคิวโทรศัพท์อีกต่อไป แต่ถูกถ่ายภาพ ระบุพิกัด ประทับเวลา และส่งถึงทีมช่างที่รับผิดชอบทาง LINE ซึ่งเป็นแอปที่คนไทย 85% ใช้อยู่แล้ว เทศบาลปรับปรุง @NakhonCity ถึงสองครั้งในสามปีจากข้อมูลการใช้งานจริง กลุ่มร้องเรียนซ้ำๆ กลายเป็นสัญญาณงบประมาณโครงสร้างพื้นฐาน: เมื่อถนนสายเดิมถูกรายงานน้ำท่วมซ้ำในรายงาน ก็จะถูกเลื่อนขึ้นมาอยู่ต้นแถวของโครงการเปลี่ยนท่อ การบริหารเมืองเปลี่ยนจากตั้งรับเป็นเชิงรุก",
-                    zh: "洛坤的一个路面坑洼，不会再消失于电话排队等待中。它会被拍照、标记地理位置和时间戳，然后通过 LINE——泰国 85% 人口已在使用的即时通讯软件——分配给对应的维修团队。市政府在三年内根据实时使用数据两次重建 @NakhonCity。反复出现的投诉热点成为基础设施预算的信号：当同一条街道在报告中反复出现积水，它便被提前列入换管计划。城市治理从被动应对转向主动预测。",
+                    en: "The municipal case narrative describes photographed, geotagged complaints routed through LINE to maintenance teams. It also describes using recurring reports to inform infrastructure priorities. These are reported workflows; this page does not establish national adoption, current coverage or a causal shift to predictive governance.",
+                th: "เรื่องเล่ากรณีศึกษาของเทศบาลอธิบายการส่งข้อร้องเรียนพร้อมภาพและพิกัดผ่าน LINE ถึงทีมซ่อมบำรุง รวมถึงการใช้เรื่องร้องเรียนซ้ำประกอบการจัดลำดับงานโครงสร้างพื้นฐาน นี่คือกระบวนการตามรายงาน หน้านี้ยังไม่ยืนยันอัตราการใช้ระดับประเทศ ความครอบคลุมปัจจุบัน หรือผลเชิงสาเหตุว่าการบริหารเปลี่ยนเป็นแบบคาดการณ์",
+                zh: "市政案例叙述了通过LINE将附照片和定位的投诉转交维修团队，并利用重复报告帮助确定基础设施优先事项。这些是材料所述流程；本页未证实全国采用率、当前覆盖范围或向预测治理转变的因果关系。",
                   })}
                 </p>
-                <div className="showcase-pull-block">
-                  <p className="showcase-pull-quote">
-                    {translate(locale, {
-                      en: "\"I don't think anyone ever asked us what we needed before.\"",
-                      th: "\"ผมคิดว่าไม่เคยมีใครถามเราเลยว่าเราต้องการอะไร\"",
-                      zh: "「我想从来没有人问过我们需要什么。」",
-                    })}
-                  </p>
-                  <p className="showcase-pull-source">{translate(locale, { en: "— Secondary school teacher, NST stakeholder dialogue 2023", th: "— ครูมัธยม, เวทีผู้มีส่วนได้ส่วนเสีย นครฯ ปี 2566", zh: "— 中学教师，洛坤利益相关方对话 2023" })}</p>
-                </div>
+<p className="showcase-metric-label">{translate(locale, { en: "Historical figures reported in municipal case material; claim-level citations, measurement periods and denominators remain unverified. These are not independently audited outcomes or current service guarantees.", th: "ตัวเลขย้อนหลังตามเอกสารกรณีศึกษาของเทศบาล ยังไม่ยืนยันแหล่งอ้างอิงรายข้อ ช่วงเวลาวัด และฐานคำนวณ ไม่ใช่ผลที่ผ่านการตรวจสอบอิสระหรือการรับประกันบริการปัจจุบัน", zh: "市政案例材料报告的历史数据；逐项引文、测量时期和分母仍未核实。这些并非独立审计结果或当前服务保证。" })}</p>
                 <div className="showcase-data-callout" style={{ margin: 0 }}>
                   <div className="showcase-data-callout-cell">
                     <span className="showcase-data-callout-num">31,000+</span>
@@ -996,16 +990,6 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                     zh: "对农村地区的老人和卧床患者而言，去医院意味着半天的路程。洛坤与当地医院共同设计了一辆移动诊疗车，将 AI 辅助胸部 X 光筛查直接带入偏远社区。图像由经过数千个病例训练的 AI 即时处理。医生负责复核，但 AI 通常更快。该项目受韩国考察之旅启发，根据洛坤的地理条件和预算重新设计，采用建设-拥有-经营 (BOO) 私人融资模式，使市政府按月付款而非前期一次性投入。",
                   })}
                 </p>
-                <div className="showcase-pull-block">
-                  <p className="showcase-pull-quote">
-                    {translate(locale, {
-                      en: "\"It's not about replacing the doctor. It's about reaching more people before it's too late.\"",
-                      th: "\"ไม่ใช่การแทนที่หมอ แต่คือการเข้าถึงคนให้มากขึ้นก่อนที่จะสายเกินไป\"",
-                      zh: "「这不是为了取代医生，而是在为时未晚之前接触到更多的人。」",
-                    })}
-                  </p>
-                  <p className="showcase-pull-source">{translate(locale, { en: "— Health worker, Hospital on Wheels programme", th: "— เจ้าหน้าที่สาธารณสุข โครงการโรงพยาบาลเคลื่อนที่", zh: "— 医务工作者，移动医院项目" })}</p>
-                </div>
                 <div className="showcase-data-callout" style={{ margin: 0 }}>
                   <div className="showcase-data-callout-cell">
                     <span className="showcase-data-callout-num">+30%</span>
@@ -1080,7 +1064,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
             <div className="showcase-proof-grid">
               <article className="showcase-proof-card shadow-premium glass-card">
                 <p className="showcase-card-kicker">{translate(locale, { en: "Recognition", th: "การยอมรับ", zh: "认可" })}</p>
-                <h2>{translate(locale, { en: "Awards and public validation", th: "รางวัลและการยืนยันสาธารณะ", zh: "奖项与公共验证" })}</h2>
+                <h2>{translate(locale, { en: "Historical recognition", th: "การยอมรับในอดีต", zh: "历史认可记录" })}</h2>
                 <div className="showcase-award-list">
                   {awards.map(award => (
                     <div key={award.year + award.title.en} className="showcase-award-row">

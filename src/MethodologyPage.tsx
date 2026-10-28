@@ -425,7 +425,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
       {/* ─── VERSION JOURNEY ─── */}
       <section className="section reveal visible">
         <p className="eyebrow">{t("Version history", "ประวัติเวอร์ชัน", "版本历史")}</p>
-        <h2>{t("From a public question to a CEA Award submission", "จากคำถามสาธารณะสู่การส่ง CEA Award", "从一个公开问题到 CEA 奖参赛作品")}</h2>
+        <h2>{t("From a public question to a city data platform", "จากคำถามสาธารณะสู่แพลตฟอร์มข้อมูลเมือง", "从一个公开问题到城市数据平台")}</h2>
         <p className="section-intro" style={{ marginBottom: "1.5rem" }}>
           {t(
             "This is version 2026.04 — the fourth major iteration. Each version asked a harder question than the last.",
@@ -466,9 +466,9 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
               ver: "2026.04", date: "2026-04",
               label: { en: "This version — SCITI 2026", th: "เวอร์ชันนี้ — SCITI 2026", zh: "当前版本——SCITI 2026" },
               desc: {
-                en: `118 certified, promotion-zone, and registered cities. 7 pillars. A confidence model. Official depa certification data integrated from source PDFs. A live React app, not a slide. Submitted for the CEA Creative Excellence Awards 2026.`,
-                th: `118 เมืองรับรอง เขตส่งเสริม และเมืองจดทะเบียน 7 เสาหลัก โมเดลความเชื่อมั่น รวมข้อมูลรับรองอย่างเป็นทางการจาก depa ผ่าน PDF ต้นฉบับ เป็น React app แบบสด ไม่ใช่สไลด์ ส่งเข้าประกวด CEA Creative Excellence Awards 2026`,
-                zh: `118 座认证、推广和注册城市，7 个支柱，置信模型，从官方 PDF 集成 depa 认证数据，是实时 React 应用而非幻灯片。已提交 2026 年 CEA 创意卓越奖。`,
+                en: `118 certified, promotion-zone and registered city records, seven research pillars and a confidence model. Certification entries draw on depa source documents. The platform supports comparison and source review; registration alone is not an assessment.`,
+                th: `แฟ้มเมืองรับรอง เขตส่งเสริม และเมืองที่ขึ้นทะเบียน 118 แห่ง เจ็ดเสาวิจัย และโมเดลความเชื่อมั่น ข้อมูลรับรองอ้างอิงเอกสารต้นทางของ depa แพลตฟอร์มช่วยเปรียบเทียบและตรวจแหล่งข้อมูล การขึ้นทะเบียนเพียงอย่างเดียวไม่ใช่การประเมิน`,
+                zh: `涵盖118个认证、推广及注册城市档案，采用七项研究维度与置信模型。认证资料依据depa原始文件。平台用于比较和来源核查；仅有注册并不等于完成评估。`,
               },
               current: true,
             },
@@ -885,8 +885,8 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
 
       {/* ─── CREATIVE ECONOMY METHODOLOGY ─── */}
       <section className="section reveal visible">
-        <p className="eyebrow">{t("Creative Economy", "เศรษฐกิจสร้างสรรค์", "创意经济")}</p>
-        <h2>{t("Creative Economy Indicators", "ตัวชี้วัดเศรษฐกิจสร้างสรรค์", "创意经济指标")}</h2>
+        <p className="eyebrow">{t("Cultural & economic context", "บริบทวัฒนธรรมและเศรษฐกิจ", "文化与经济背景")}</p>
+        <h2>{t("Culture, talent and economic indicators", "ตัวชี้วัดวัฒนธรรม บุคลากร และเศรษฐกิจ", "文化、人才与经济指标")}</h2>
         <p style={{ fontSize: "var(--text-body)", color: "var(--2)", lineHeight: 1.6, marginBottom: "2rem" }}>
           {translate(locale, {
             en: "SCITI's creative economy indicators are constructed from multiple validated sources and follow the UNESCO Culture|2030 Indicators framework across four thematic dimensions.",

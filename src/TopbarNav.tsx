@@ -49,8 +49,9 @@ const NAV_GROUPS: NavGroup[] = [
   },
   {
     id: "rankings",
-    label: { en: "Rankings", th: "อันดับ", zh: "排名" },
+    label: { en: "Cities", th: "เมือง", zh: "城市" },
     items: [
+      { kind: "map", path: "/map", label: { en: "City map", th: "แผนที่เมือง", zh: "城市地图" } },
       { kind: "rankings", path: "/rankings", label: { en: "Rankings", th: "อันดับเมือง", zh: "城市排名" } },
       { kind: "discover", path: "/discover", label: { en: "Your City", th: "เมืองคุณ", zh: "你的城市" } },
       { kind: "compare", path: "/compare", label: { en: "Compare", th: "เทียบเมือง", zh: "对比城市" } },
@@ -60,8 +61,8 @@ const NAV_GROUPS: NavGroup[] = [
     id: "method",
     label: { en: "Method", th: "วิธีการ", zh: "方法" },
     items: [
+      { kind: "references", path: "/references", label: { en: "Data & sources", th: "ข้อมูลและแหล่งที่มา", zh: "数据与来源" } },
       { kind: "methodology", path: "/methodology", label: { en: "Methodology", th: "ระเบียบวิธี", zh: "方法论" } },
-      { kind: "audit", path: "/audit", label: { en: "Jury walk-through", th: "เส้นทางกรรมการ", zh: "评审导览" } },
       { kind: "knowledge", path: "/knowledge", label: { en: "Knowledge base", th: "คลังความรู้", zh: "知识库" } },
       { kind: "bingo", path: "/bingo", label: { en: "Evidence bingo", th: "บิงโกหลักฐาน", zh: "证据宾果" } },
       { kind: "baseline", path: "/baseline", label: { en: "Baseline", th: "ข้อมูลพื้นฐาน", zh: "基线" } },
@@ -69,10 +70,9 @@ const NAV_GROUPS: NavGroup[] = [
   },
   {
     id: "stories",
-    label: { en: "Stories", th: "เรื่องราว", zh: "故事" },
+    label: { en: "Places & people", th: "เมืองและผู้คน", zh: "城市与人" },
     items: [
       { kind: "about", path: "/about", label: { en: "Mission", th: "พันธกิจ", zh: "使命" } },
-      { kind: "creative-economy", path: "/creative-economy", label: { en: "Creative Economy", th: "เศรษฐกิจสร้างสรรค์", zh: "创意经济" } },
       { kind: "story", path: "/story", label: { en: "Manifesto", th: "ปฏิญญา", zh: "宣言" } },
       { kind: "showcase", path: "/showcase", label: { en: "NST showcase", th: "นครศรีต้นแบบ", zh: "洛坤样板" } },
       { kind: "program", path: "/program", label: { en: "Program", th: "โครงการ", zh: "计划" } },

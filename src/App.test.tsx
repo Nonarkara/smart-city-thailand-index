@@ -58,10 +58,9 @@ describe("App", () => {
     const navLinks = container.querySelector(".nav-links");
     expect(navLinks).toHaveClass("nav-links-open");
 
-    // Click the Rankings group trigger to open the dropdown, then click the item
-    const rankingsItems = screen.getAllByRole("menuitem", { name: "Rankings" });
-    await user.click(rankingsItems[0]); // group trigger
-    await user.click(rankingsItems[1]); // dropdown item
+    // Open the city tools group, then follow its Rankings item.
+    await user.click(screen.getByRole("menuitem", { name: "Cities" }));
+    await user.click(screen.getByRole("menuitem", { name: "Rankings" }));
     await vi.dynamicImportSettled();
     await screen.findByRole("heading", { name: /the moneyball of thai city investment/i });
 

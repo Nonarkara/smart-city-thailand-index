@@ -7,6 +7,12 @@
 # scripts/generate-api-artifacts.mjs. /api/cities (with query filters) is
 # served by functions/api/cities.ts, which reads that same file.
 
+# Retired award-submission surfaces retain useful destinations for old links.
+/creative-economy/               /rankings                              301
+/creative-economy                /rankings                              301
+/audit/                          /references                            301
+/audit                           /references                            301
+
 /api/cities/:cityId/export.csv   /api-static/exports/cities/:cityId.csv   200
 /api/exports/cities-summary.csv  /api-static/exports/cities-summary.csv   200
 /api/exports/city-facts.csv      /api-static/exports/city-facts.csv       200
