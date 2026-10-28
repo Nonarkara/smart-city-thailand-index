@@ -35,6 +35,8 @@ type Pillar = (typeof PILLAR_ORDER)[number];
 
 interface Props {
   scores: CityScores;
+  /** Empty-data state: keep the chart axes, without plotting registry defaults as observations. */
+  assessmentLabel?: string;
   /** Rendered square size in pixels. Defaults to 88. */
   size?: number;
   /** Overall opacity of the shape fill. Defaults to 0.12. */
@@ -75,6 +77,7 @@ function buildPolygon(
 
 export default function CityFingerprint({
   scores,
+  assessmentLabel,
   size = 88,
   fillOpacity = 0.12,
   showDots = true,
@@ -120,9 +123,9 @@ export default function CityFingerprint({
       viewBox={`0 0 ${size} ${size}`}
       style={style}
       aria-label={
-        cityName
+        assessmentLabel ?? (cityName
           ? `${cityName} — 7-pillar profile visualization`
-          : "City pillar profile"
+          : "City pillar profile")
       }
       role="img"
     >
@@ -163,7 +166,7 @@ export default function CityFingerprint({
       )}
 
       {/* Score polygon fill */}
-      <polygon
+      {!assessmentLabel && <polygon
         points={shapePoly}
         fill="var(--ink)"
         fillOpacity={fillOpacity}
@@ -171,10 +174,10 @@ export default function CityFingerprint({
         strokeWidth={1}
         strokeOpacity={0.55}
         strokeLinejoin="round"
-      />
+      />}
 
       {/* Per-pillar coloured dots at arm tips */}
-      {showDots &&
+      {!assessmentLabel && showDots &&
         tipPoints.map((tip, i) => (
           <circle
             key={i}
@@ -185,6 +188,7 @@ export default function CityFingerprint({
             fillOpacity={0.9}
           />
         ))}
+      {assessmentLabel && <text x={cx} y={cy} textAnchor="middle" fill="#fff" fontSize="11">{assessmentLabel}</text>}
     </svg>
   );
 }

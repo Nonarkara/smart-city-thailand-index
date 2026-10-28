@@ -38,11 +38,11 @@ ok "validated artifact stays exact; original nested-backup fault rejected"
 bold "Preflight — tests"
 if [[ -n "${CDPT_REMOTE_TEST_RUN:-}" ]]; then
   [[ -z "$(git status --porcelain)" ]] || die "remote validation requires a clean checkout"
-  gh run view "$CDPT_REMOTE_TEST_RUN" --json workflowName,headSha,status,conclusion,url >"$LOG_DIR/cdpt-validation-run.json" || die "cannot read remote validation"
+  gh run view "$CDPT_REMOTE_TEST_RUN" --json workflowName,headSha,status,conclusion,url,jobs >"$LOG_DIR/cdpt-validation-run.json" || die "cannot read remote validation"
   node --input-type=module - "$(git rev-parse HEAD)" "$LOG_DIR/cdpt-validation-run.json" <<'JS' || die "remote validation does not cover this release"
 import fs from 'node:fs';
-import { checkValidationRun } from './scripts/lib/release-contract.mjs';
-checkValidationRun(JSON.parse(fs.readFileSync(process.argv[3], 'utf8')), process.argv[2]);
+import { checkRenderedValidationRun } from './scripts/lib/release-contract.mjs';
+checkRenderedValidationRun(JSON.parse(fs.readFileSync(process.argv[3], 'utf8')), process.argv[2]);
 JS
   ok "full tests, lint and build passed remotely for $(git rev-parse --short HEAD) (run $CDPT_REMOTE_TEST_RUN)"
 else
@@ -107,6 +107,10 @@ done
 grep -q '"id":"phuket"' dist/api-static/cities/phuket.json || die "phuket API dossier is not JSON for phuket"
 ok "API mirror present (cities, dossiers, CSV)"
 
+if [[ -n "${CDPT_REMOTE_TEST_RUN:-}" ]]; then
+  bold "Rendered gates — verified on the exact downloaded CI artifact"
+  ok "all required named browser, source, test, lint and build gates passed for this exact HEAD"
+else
 bold "Preflight — rendered record density (compiled build)"
 node scripts/audit/record-density.mjs --serve >"$LOG_DIR/cdpt-density.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-density.log"; die "spatial regression: record density or preserved information failed"; }
 ok "15 locale/width states preserve all records and readable type; oversized-card mutation rejected"
@@ -135,6 +139,8 @@ ok "all 118 city visual records, real image bytes, rights and gallery interactio
 bold "Preflight — sourced crayon companion geometry"
 node scripts/audit/plub-density.mjs --serve >"$LOG_DIR/cdpt-plub.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-plub.log"; die "companion art, source note or spatial regression failed"; }
 ok "raster art, source note, keyboard disclosure and old-panel mutation passed"
+
+fi
 
 # ── C — commit ───────────────────────────────────────────────────────────────
 if [[ -n "$MSG" ]]; then

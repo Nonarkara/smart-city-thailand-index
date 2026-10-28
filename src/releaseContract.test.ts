@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error Runtime audit helper is deliberately plain Node JavaScript.
-import { checkCityIndex, checkCityDetail, checkCityCsv, checkSnapshot, checkValidationRun } from '../scripts/lib/release-contract.mjs';
+import { checkCityIndex, checkCityDetail, checkCityCsv, checkSnapshot, checkValidationRun, checkRenderedValidationRun, RENDERED_RELEASE_GATES } from '../scripts/lib/release-contract.mjs';
 import { createHash } from 'node:crypto';
 describe('release proof rejects nearby successes', () => {
   const city={id:'phuket',scores:{economy:80},compositeScore:72.6};
@@ -26,4 +26,17 @@ describe('release proof rejects nearby successes', () => {
       expect(()=>checkValidationRun({...run,...mutation},head)).toThrow();
     }
   });
+  it('rejects omitted or skipped rendered gates even when the workflow is green', () => {
+    const head='a'.repeat(40);
+    const steps=RENDERED_RELEASE_GATES.map((name:string)=>({name:'Run '+name,conclusion:'success'}));
+    const run={workflowName:'Deploy to GitHub Pages',headSha:head,status:'completed',conclusion:'success',jobs:[{steps}]};
+    expect(()=>checkRenderedValidationRun(run,head)).not.toThrow();
+    expect(()=>checkRenderedValidationRun({...run,jobs:[]},head)).toThrow(/required gate/);
+    for(const command of RENDERED_RELEASE_GATES){
+      expect(()=>checkRenderedValidationRun({...run,jobs:[{steps:steps.filter((s:{name:string})=>s.name!=='Run '+command)}]},head)).toThrow(/required gate/);
+      expect(()=>checkRenderedValidationRun({...run,jobs:[{steps:steps.map((s:{name:string})=>s.name==='Run '+command?{...s,conclusion:'skipped'}:s)}]},head)).toThrow(/required gate/);
+    }
+    expect(()=>checkRenderedValidationRun(run,'b'.repeat(40))).toThrow(/another revision/);
+  });
+
 });

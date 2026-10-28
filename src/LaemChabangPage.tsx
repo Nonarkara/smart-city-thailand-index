@@ -3,6 +3,7 @@ import type { Locale } from "./types";
 import { toAppPath } from "./routing";
 import { laemChabangProfile as profile } from "./laemChabangData";
 import "./LaemChabangPage.css";
+import { NONG_PLUB_ASSETS } from "./nongPlubData";
 
 const SOURCE_LABELS: Record<string, string> = { "sac-community": "SAC", "prd-port-2023": "PRD", "dpworld-lcit-2026": "DP World", "depa-mou-2024": "depa", "thaigov-automation-2026": "Thai Government" };
 
@@ -24,7 +25,11 @@ export default function LaemChabangPage({ locale }: { locale: Locale }) {
       <p className="municipal-assessment">{profile.certification.note[locale]}</p>
     </header>
     <section className="municipal-evidence" aria-labelledby="municipal-facts-title">
-      <h2 id="municipal-facts-title">{t({ en: "Dated evidence, with its actual scope", th: "ข้อมูลพร้อมช่วงเวลาและขอบเขตจริง", zh: "按实际范围注明统计期的数据" })}</h2>
+      <div className="municipal-plub-intro">
+        <img src={NONG_PLUB_ASSETS.nature} width={64} height={88} alt={t({ en: "Nong Plub, illustrated guide", th: "น้องพลับ ผู้แนะนำเมืองในภาพประกอบ", zh: "插画向导小普" })} />
+        <div><h2 id="municipal-facts-title">{t({ en: "Nong Plub introduces the local evidence", th: "น้องพลับชวนอ่านข้อมูลพื้นที่", zh: "小普带你读本地证据" })}</h2>
+        <p className="municipal-meta">{t({ en: "Dates and geographic scopes belong to each figure. This profile is unranked; no city score is inferred. AI-generated portrait, not a visit record.", th: "แต่ละตัวเลขมีช่วงเวลาและขอบเขตของตนเอง แฟ้มนี้ไม่จัดอันดับและไม่อนุมานคะแนนเมือง ภาพบุคคลสร้างด้วย AI ไม่ใช่บันทึกการเดินทาง", zh: "每个数字均注明时间与地理范围。本档案不参与排名，不推算城市分数。肖像由AI生成，并非到访记录。" })}</p></div>
+      </div>
       <dl className="municipal-facts">{profile.facts.map(f => <div className="municipal-fact" key={f.id}>
         <dt>{f.label[locale]}</dt><dd><span className="municipal-value">{number.format(f.value)}<span className="municipal-unit">{unit(f.unit)}</span></span>
         <span className="municipal-meta">{f.period ?? t({ en: "Observation year not stated", th: "ไม่ระบุปีที่สำรวจ", zh: "观测年份未注明" })} · {f.scope[locale]} {f.sourceIds.map(id => <a key={id} href={source(id).url} target="_blank" rel="noopener noreferrer">{sourceLabel(id)} ↗</a>)}</span></dd>

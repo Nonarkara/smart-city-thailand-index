@@ -34,3 +34,6 @@
 
 .municipal-profile .municipal-meta a{display:inline-block;min-height:24px;line-height:24px}
 .municipal-profile .municipal-qualifications>a{display:inline-flex;align-items:center;min-height:44px}
+.municipal-plub-intro{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:start;margin-bottom:8px}
+.municipal-plub-intro img{width:64px;height:88px;object-fit:contain}
+.municipal-plub-intro h2{margin-bottom:4px}

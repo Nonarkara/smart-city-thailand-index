@@ -6,7 +6,6 @@ import CityFingerprint from "./CityFingerprint";
 import NeedsLadder from "./NeedsLadder";
 import CityHeritageGallery from "./CityHeritageGallery";
 import OfficialRecognition from "./OfficialRecognition";
-import CityQuickRead from "./CityQuickRead";
 import DossierReadingNotes from "./DossierReadingNotes";
 import { NongPlubCard } from "./NongPlubCard";
 import { computeNeedsLadder } from "./needsLadderEngine";
@@ -687,9 +686,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const cityName = getCityName(city, locale);
   const provinceName = getProvinceName(city, locale);
   const cityTagline = getCityTagline(city, locale);
-  const orderedPillars = [...SCORING_PILLARS].sort((a, b) => city.scores[b] - city.scores[a]);
-  const strongestPillar = orderedPillars[0];
-  const weakestPillar = orderedPillars[orderedPillars.length - 1];
   const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
   const overallGrade = statGrade(city.compositeScore);
   const photoSet = getCityPhotoSet(city);
@@ -1196,12 +1192,13 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             "@context": "https://schema.org/",
             "@type": "Place",
             "name": getCityName(city, "en"),
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": city.compositeScore.toString(),
-              "bestRating": "100",
-              "worstRating": "0",
-              "ratingCount": city.smartDimensions.length > 0 ? city.smartDimensions.length.toString() : "1"
+            "additionalProperty": city.status === "registered" ? undefined : {
+              "@type": "PropertyValue",
+              "name": "Curated SCITI composite (research estimate)",
+              "value": city.compositeScore.toString(),
+              "maxValue": 100,
+              "minValue": 0,
+              "description": "Research estimate, not a consumer rating or service certification."
             }
           })
         }}
@@ -1229,8 +1226,8 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             </div>
             <div className="city-hero-photo-score-card" aria-label={translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}>
               <span className="city-hero-photo-score-label">{translate(locale, { en: "Curated score", th: "คะแนนคัดสรร", zh: "编辑评估分" })}</span>
-              <span className="city-hero-photo-score">{city.compositeScore.toFixed(1)}</span>
-              <span className="city-hero-photo-score-note">{translate(locale, {
+              <span className="city-hero-photo-score">{city.status === "registered" ? "—" : city.compositeScore.toFixed(1)}</span>
+              <span className="city-hero-photo-score-note">{city.status === "registered" ? translate(locale, { en: "Assessment pending", th: "รอการประเมิน", zh: "待评估" }) : translate(locale, {
                 en: `RANK #${cityRank} OF ${cityRankTotal}`,
                 th: `อันดับ #${cityRank} จาก ${cityRankTotal}`,
                 zh: `排名 #${cityRank} / ${cityRankTotal}`,
@@ -1238,6 +1235,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             </div>
             {/* City fingerprint — unique 7-pillar visual DNA, positioned bottom-right */}
             <CityFingerprint
+              assessmentLabel={city.status === "registered" ? translate(locale, { en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" }) : undefined}
               scores={city.scores}
               size={120}
               fillOpacity={0.18}
@@ -1259,14 +1257,15 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             </div>
             <div className="city-hero-photo-score-card" aria-label={translate(locale, { en: "Composite score", th: "คะแนนรวม", zh: "综合得分" })}>
               <span className="city-hero-photo-score-label">{translate(locale, { en: "Composite", th: "คะแนนรวม", zh: "综合" })}</span>
-              <span className="city-hero-photo-score city-hero-gradient-score">{city.compositeScore.toFixed(1)}</span>
-              <span className="city-hero-photo-score-note">{translate(locale, {
+              <span className="city-hero-photo-score city-hero-gradient-score">{city.status === "registered" ? "—" : city.compositeScore.toFixed(1)}</span>
+              <span className="city-hero-photo-score-note">{city.status === "registered" ? translate(locale, { en: "Assessment pending", th: "รอการประเมิน", zh: "待评估" }) : translate(locale, {
                 en: `RANK #${cityRank} OF ${cityRankTotal}`,
                 th: `อันดับ #${cityRank} จาก ${cityRankTotal}`,
                 zh: `排名 #${cityRank} / ${cityRankTotal}`,
               })}</span>
             </div>
             <CityFingerprint
+              assessmentLabel={city.status === "registered" ? translate(locale, { en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" }) : undefined}
               scores={city.scores}
               size={120}
               fillOpacity={0.22}
@@ -1339,7 +1338,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
           <div className="city-detail-score-block">
             <div className={`tier-badge-large tier-${city.tier}`}>
-              {tierSymbol} {TIER_LABELS[locale][city.tier]}
+              {city.status === "registered" ? translate(locale, { en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" }) : <>{tierSymbol} {TIER_LABELS[locale][city.tier]}</>}
             </div>
             <div className={`reality-badge reality-${city.reality}`}>
               {getCityRealityLabel(city.reality, locale)}
@@ -1352,7 +1351,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
         </div>
 
-        <CityQuickRead city={city} locale={locale} highest={strongestPillar} lowest={weakestPillar} />
+        <NongPlubCard city={city} locale={locale} />
         <details className="city-background-note"><summary>{translate(locale, {
           en: "Curated background narrative — source review required",
           th: "เรื่องราวเมืองที่คัดสรร — ต้องตรวจสอบแหล่งอ้างอิง",
@@ -1360,7 +1359,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         })}</summary><p>{cityTagline}</p></details>
         <p className="section-intro">{cityOrientation}</p>
         <CityHeritageGallery city={city} locale={locale} />
-        <NongPlubCard city={city} locale={locale} />
 
         {(() => {
           const rawCity = getCityById(cityId);

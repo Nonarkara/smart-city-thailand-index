@@ -34,3 +34,19 @@ export function checkValidationRun(run, expectedHead) {
   assert.equal(run.status, 'completed', 'validation is still running');
   assert.equal(run.conclusion, 'success', 'validation did not succeed');
 }
+
+// Remote validation substitutes for a duplicate local runner, never for a gate.
+export const RENDERED_RELEASE_GATES = [
+  'npm audit --omit=dev --audit-level=high', 'node scripts/audit/cdpt-artifact.mjs',
+  'npm run lint', 'npm run test:run', 'npm run build',
+  ...['record', 'identity', 'asus', 'atlas', 'footer'].map(name => `node scripts/audit/${name}-density.mjs --serve`),
+  'node scripts/audit/heritage-gallery.mjs --serve', 'node scripts/audit/plub-density.mjs --serve',
+  'node scripts/audit/type-and-rhythm.mjs --serve',
+];
+export function checkRenderedValidationRun(run, expectedHead) {
+  checkValidationRun(run, expectedHead);
+  const steps = (run.jobs ?? []).flatMap(job => job.steps ?? []);
+  for (const command of RENDERED_RELEASE_GATES) {
+    assert.ok(steps.some(step => step.name === `Run ${command}` && step.conclusion === 'success'), `required gate did not succeed: ${command}`);
+  }
+}

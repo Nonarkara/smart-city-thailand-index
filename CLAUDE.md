@@ -208,3 +208,11 @@ record with visible scope and credits; do not present it as a project-site view.
 Legacy project/finance/highlight claims must be labeled at their point of use,
 not rescued by a distant footer disclaimer. Unknown observation periods stay
 unknown. Framework references and programme logos do not establish certification.
+
+### Exact-build remote browser validation
+`CDPT_REMOTE_TEST_RUN` now verifies every required named CI test/build/audit/browser
+step succeeded, in addition to the workflow name and exact HEAD. Missing or skipped
+gates fail closed. CDPT downloads that run's `site-dist` and reuses its completed
+rendered checks rather than repeating them on a contended shared Mac. Artifact
+staging, clean-tree checks, Cloudflare deployment and live publication checks still
+run locally. The ordinary local path continues to execute every gate locally.

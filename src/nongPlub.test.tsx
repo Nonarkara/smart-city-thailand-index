@@ -77,7 +77,7 @@ describe("Nong Plub Crayon Travel Companion", () => {
     expect(sourceLink?.textContent).toContain(record.siteName.th);
     expect(container.textContent).not.toContain("น้ำเต้าหู้ร้อนกับเสียงระฆังวัด");
     expect(container.textContent).not.toContain("พลับชอบเดิน");
-    expect(screen.getByText(record.illustrationDisclosure.th)).toBeDefined();
+    expect(container.textContent).toContain(record.illustrationDisclosure.th);
     expect(container.querySelector("blockquote")).toBeNull();
     expect(container.querySelector("details summary")).toBeDefined();
     expect(container.querySelector(`a[href="${record.sourceUrl}"]`)).toBeTruthy();

@@ -1,0 +1,13 @@
+# Nong Plub city introductions — 28 October 2026
+
+The owner's approved crayon set now guides the reader through each dossier near its opening. One infographic replaces the separate highest/lowest quick-read and the companion previously below the cultural gallery. Seven score labels, a shared0–100scale, tied extrema, scope, the research cutoff, AI/editorial qualification and source reading stay together. Source photographs, detailed charts and maps remain.
+
+The registered pool contains69default profiles (40in six pillars,30digital). They do not become measured city infographics. Their seven named pillars await assessment, with a link to verified provincial culture instead of seven empty tracks. Hero rank/default39.5 and Gamma classification become an explicit unassessed state; the existing fingerprint retains its axes and an empty-data label. Raw scores/exports remain intact. Structured metadata uses a qualified research PropertyValue for assessed profiles instead of a consumer AggregateRating with a fabricated review count; registered profiles omit the numeric assessment.
+
+Forty-nine scored profiles retain exact curated values; all tied highest/lowest values stay tied. Invalid or missing values stay null; real zero remains zero. No infrastructure coverage or current service capability is inferred. Laem Chabang's separate unranked municipal profile retains its dated facts, original units and source scopes, with Nong Plub introducing that existing evidence rather than manufacturing a score.
+
+Task geometry now covers seven research signals rather than the former portrait-only note. Budgets are500px phone/440px wider for the whole infographic, alongside readable14px labels, an independently sized portrait, a content-sized disclosure, zero overflow and source keyboard access. A restored stacked220px portrait panel must fail the same budget. Tests cover all118profiles in EN/TH/ZH; the browser gate captures27 assessed/registered/tied language-width cases. Independent review covered phone/tablet/desktop, Thai/Chinese, registry gaps, tied extrema and print.
+
+The infographic prints as text and vector marks with its full provincial source/caption and scope qualification; closed interactive instructions are not printed. The existing dossier print layout has unrelated later-content overflow, which this change does not certify away.
+
+The release runner now requires all13named CI gates to succeed for the exact HEAD before reusing their validated artifact. A green workflow with a missing/skipped browser gate is rejected by tests. Local artifact staging and production HTTP/data checks remain mandatory; ordinary local releases still run the entire suite locally.
