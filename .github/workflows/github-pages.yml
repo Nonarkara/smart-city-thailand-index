@@ -50,7 +50,7 @@ jobs:
         with:
           name: site-dist
           path: dist
-          retention-days: 7
+          retention-days: 1
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
