@@ -16,7 +16,7 @@ function check(g,width){
 }
 try{
  if(process.argv.includes('--serve')){const {preview}=await import('vite');server=await preview({preview:{host:'127.0.0.1',port:0,strictPort:true},logLevel:'error'});origin=`http://127.0.0.1:${server.httpServer.address().port}`;}
- for(const id of ['cmu-smart-city','reg-phrae','korat'])for(const locale of ['en','th','zh'])for(const width of [390,1024,1440,1980]){
+ for(const id of ['cmu-smart-city','reg-phrae','korat','phra-ram-4'])for(const locale of ['en','th','zh'])for(const width of [390,1024,1440,1980]){
   browser=await chromium.launch();const p=await browser.newPage({viewport:{width,height:width===390?844:900},reducedMotion:'reduce'});
   await p.goto(`${origin}/city/${id}/`);await p.evaluate(l=>localStorage.setItem('smart-city-thailand-locale',l),locale);await p.reload();
   const card=p.locator('.nong-plub-infographic');await card.waitFor();await card.scrollIntoViewIfNeeded();await p.evaluate(()=>document.fonts.ready);await p.waitForFunction(()=>{const i=document.querySelector('.nong-plub-illustration');return i?.complete&&i.naturalWidth>0});

@@ -13325,3 +13325,6 @@ button.nong-plub-mini-badge:hover { color: var(--ink); text-decoration: underlin
  .nong-plub-infographic { row-gap: 6px; }
  .nong-plub-infographic .nong-plub-illustration { height: 200px; }
 }
+/* The home guide inherits the hero's light reading colour, including its disclosure. */
+.cinematic-hero .page-mascot-note .mascot-hand,
+.cinematic-hero .hero-reading-note > summary { color: #e4edf2; }
