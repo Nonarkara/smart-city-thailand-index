@@ -1,122 +1,175 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="100%" height="100%" role="img" aria-label="Nong Plub in white NON cap with sunglasses and Adidas tee at Thai temple">
   <defs>
-    <filter id="crayon-temple" x="-10%" y="-10%" width="120%" height="120%" filterUnits="objectBoundingBox">
-      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+    <!-- COLOURED PENCIL. The shape is pushed about by a noise field so no
+         edge is straight, then a fibrous grain is multiplied into it, so
+         the fill reads as pencil laid down in strokes rather than as a
+         flat vector fill. This is the miaoshen hand. -->
+    <filter id="crayon-temple" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="3" seed="7" result="wobble" />
+      <feDisplacementMap in="SourceGraphic" in2="wobble" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="shaken" />
+      <feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" seed="19" result="fibre" />
+      <feColorMatrix in="fibre" type="matrix"
+        values="0 0 0 0 0.44  0 0 0 0 0.38  0 0 0 0 0.30  0 0 0 0.16 0" result="fibreTint" />
+      <feComposite in="fibreTint" in2="shaken" operator="in" result="fibreOnShape" />
+      <feBlend in="shaken" in2="fibreOnShape" mode="multiply" />
+    </filter>
+    <!-- The sheet the drawing is on. It is not white. -->
+    <filter id="paper-crayon-temple" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="23" result="noise" />
+      <feColorMatrix in="noise" type="matrix"
+        values="0 0 0 0 0.56  0 0 0 0 0.50  0 0 0 0 0.42  0 0 0 0.05 0" />
+      <feComposite operator="in" in2="SourceGraphic" />
     </filter>
     <radialGradient id="blush-grad-temple" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#f87171" stop-opacity="0.55" />
-      <stop offset="100%" stop-color="#f87171" stop-opacity="0" />
+      <stop offset="0%" stop-color="#e79a8c" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#e79a8c" stop-opacity="0" />
     </radialGradient>
   </defs>
+  <g filter="url(#crayon-temple)">
+  <!-- the paper -->
+    <rect width="320" height="400" fill="#f6f2e8" />
+    <rect width="320" height="400" fill="#f6f2e8" filter="url(#paper-crayon-temple)" />
 
   <g filter="url(#crayon-temple)">
     <!-- Soft golden paper background aura -->
-    <circle cx="160" cy="200" r="145" fill="#fefce8" stroke="#fef08a" stroke-width="2" stroke-dasharray="6,4" />
+    <!-- the place, loosely: a drawn vignette rather than a sticker rim -->
+    <circle cx="160" cy="200" r="143" fill="#f6f2e8" opacity="0.42" />
+    <circle cx="160" cy="200" r="143" fill="none" stroke="#6f5f4e" stroke-width="1.6" opacity="0.3" stroke-linecap="round" />
+
+    <!-- The coloured paper parasols, as in the photograph -->
+    <g opacity="0.9">
+
+      <!-- a coloured paper parasol -->
+      <path d="M 216 108 Q 250 68.9 284 108 Q 274.48 115.48 267 108 Q 258.84 115.48 250 108 Q 241.16 115.48 233 108 Q 225.52 115.48 216 108 Z" fill="#c9662f" stroke="#93422f" stroke-width="1.8" stroke-linejoin="round" />
+      <path d="M 233 108 Q 241.16 115.48 250 108 Q 258.84 115.48 267 108 Z" fill="#f0d6b4" />
+      <path d="M 250 108 L 250 300" stroke="#93422f" stroke-width="2.4" stroke-linecap="round" />
+
+      <!-- a coloured paper parasol -->
+      <path d="M 266 132 Q 292 102.1 318 132 Q 310.72 137.72 305 132 Q 298.76 137.72 292 132 Q 285.24 137.72 279 132 Q 273.28 137.72 266 132 Z" fill="#b4573f" stroke="#93422f" stroke-width="1.8" stroke-linejoin="round" />
+      <path d="M 279 132 Q 285.24 137.72 292 132 Q 298.76 137.72 305 132 Z" fill="#f6f2e8" />
+      <path d="M 292 132 L 292 300" stroke="#93422f" stroke-width="2.4" stroke-linecap="round" />
+
+      <!-- a coloured paper parasol -->
+      <path d="M 190 148 Q 212 122.7 234 148 Q 227.84 152.84 223 148 Q 217.72 152.84 212 148 Q 206.28 152.84 201 148 Q 196.16 152.84 190 148 Z" fill="#c89434" stroke="#93422f" stroke-width="1.8" stroke-linejoin="round" />
+      <path d="M 201 148 Q 206.28 152.84 212 148 Q 217.72 152.84 223 148 Z" fill="#f6f2e8" />
+      <path d="M 212 148 L 212 300" stroke="#93422f" stroke-width="2.4" stroke-linecap="round" />
+    </g>
 
     <!-- Traditional Thai Temple Tiered Parasol (Chattra) in background -->
     <g opacity="0.75">
       <!-- Tier 1 -->
-      <path d="M 50 115 Q 75 95 100 115 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.8" />
+      <path d="M 50 115 Q 75 95 100 115 Z" fill="#d9a441" stroke="#a5762a" stroke-width="1.8" />
       <!-- Tier 2 -->
-      <path d="M 58 95 Q 75 80 92 95 Z" fill="#fde047" stroke="#ca8a04" stroke-width="1.8" />
+      <path d="M 58 95 Q 75 80 92 95 Z" fill="#e6bd68" stroke="#a5762a" stroke-width="1.8" />
       <!-- Tier 3 -->
-      <path d="M 66 80 Q 75 70 84 80 Z" fill="#fef08a" stroke="#ca8a04" stroke-width="1.8" />
+      <path d="M 66 80 Q 75 70 84 80 Z" fill="#ecd489" stroke="#a5762a" stroke-width="1.8" />
       <!-- Pole -->
-      <path d="M 75 60 L 75 220" stroke="#a16207" stroke-width="2.5" />
+      <path d="M 75 60 L 75 220" stroke="#8f6524" stroke-width="2.5" />
       <!-- Golden finial -->
-      <polygon points="75,50 78,60 72,60" fill="#eab308" stroke="#a16207" stroke-width="1" />
+      <polygon points="75,50 78,60 72,60" fill="#c08a2e" stroke="#8f6524" stroke-width="1" />
     </g>
 
     <!-- Hair Back -->
-    <path d="M 115 150 Q 100 220 112 270 Q 126 285 140 270 Q 130 210 135 160 Z" fill="#2d2b30" />
-    <path d="M 205 150 Q 220 220 208 270 Q 194 285 180 270 Q 190 210 185 160 Z" fill="#2d2b30" />
+    <path d="M 115 150 Q 100 220 112 270 Q 126 285 140 270 Q 130 210 135 160 Z" fill="#5a4a3e" />
+    <path d="M 205 150 Q 220 220 208 270 Q 194 285 180 270 Q 190 210 185 160 Z" fill="#5a4a3e" />
+
+    <!-- Legs: Dark Trousers -->
+
+    <!-- Legs: Dark Trousers -->
+    <path d="M 140 270 L 136 344 L 150 344 L 154 270 Z" fill="#4d4a43" stroke="#4d4a43" stroke-width="2" stroke-linejoin="round" />
+    <rect x="127" y="344" width="26" height="10" rx="3" fill="#0f172a" stroke="#3f3a34" stroke-width="1.8" />
+    <path d="M 127 352 L 153 352" stroke="#fbf8f1" stroke-width="2" />
+
+    <path d="M 166 270 L 172 344 L 186 344 L 178 270 Z" fill="#4d4a43" stroke="#4d4a43" stroke-width="2" stroke-linejoin="round" />
+    <rect x="169" y="344" width="26" height="10" rx="3" fill="#0f172a" stroke="#3f3a34" stroke-width="1.8" />
+    <path d="M 169 352 L 195 352" stroke="#fbf8f1" stroke-width="2" />
 
     <!-- Torso: White Adidas Athletic Crew-Neck Tee -->
-    <path d="M 132 208 L 188 208 L 194 325 L 126 325 Z" fill="#ffffff" stroke="#2d2b30" stroke-width="2.5" stroke-linejoin="round" />
+    <path d="M 132 208 L 188 208 L 192 278 L 128 278 Z" fill="#fbf8f1" stroke="#5a4a3e" stroke-width="2.5" stroke-linejoin="round" />
     <!-- Crew neckline -->
-    <path d="M 148 208 Q 160 218 172 208" fill="none" stroke="#2d2b30" stroke-width="2" />
+    <path d="M 148 208 Q 160 218 172 208" fill="none" stroke="#5a4a3e" stroke-width="2" />
 
     <!-- Sleeves & Signature 3 Black Athletic Stripes -->
     <!-- Left Sleeve (viewer's left) -->
-    <path d="M 132 208 L 105 230 L 118 255 L 136 235 Z" fill="#ffffff" stroke="#2d2b30" stroke-width="2.2" />
+    <path d="M 132 208 L 105 230 L 118 255 L 136 235 Z" fill="#fbf8f1" stroke="#5a4a3e" stroke-width="2.2" />
     <!-- 3 Stripes on left shoulder -->
-    <path d="M 122 212 L 108 226" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
-    <path d="M 126 215 L 112 229" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
-    <path d="M 130 218 L 116 232" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <path d="M 122 212 L 108 226" stroke="#5a4a3e" stroke-width="2" stroke-linecap="round" />
+    <path d="M 126 215 L 112 229" stroke="#5a4a3e" stroke-width="2" stroke-linecap="round" />
+    <path d="M 130 218 L 116 232" stroke="#5a4a3e" stroke-width="2" stroke-linecap="round" />
 
     <!-- Right Sleeve (viewer's right) -->
-    <path d="M 188 208 L 215 230 L 202 255 L 184 235 Z" fill="#ffffff" stroke="#2d2b30" stroke-width="2.2" />
+    <path d="M 188 208 L 215 230 L 202 255 L 184 235 Z" fill="#fbf8f1" stroke="#5a4a3e" stroke-width="2.2" />
     <!-- 3 Stripes on right shoulder -->
-    <path d="M 198 212 L 212 226" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
-    <path d="M 194 215 L 208 229" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
-    <path d="M 190 218 L 204 232" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <path d="M 198 212 L 212 226" stroke="#5a4a3e" stroke-width="2" stroke-linecap="round" />
+    <path d="M 194 215 L 208 229" stroke="#5a4a3e" stroke-width="2" stroke-linecap="round" />
+    <path d="M 190 218 L 204 232" stroke="#5a4a3e" stroke-width="2" stroke-linecap="round" />
 
     <!-- Arms -->
     <!-- Left Arm -->
-    <path d="M 116 250 Q 110 280 114 300 Q 120 306 128 298 Q 128 275 132 245 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
-    <ellipse cx="118" cy="305" rx="7" ry="9" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+    <path d="M 116 250 Q 110 280 114 300 Q 120 306 128 298 Q 128 275 132 245 Z" fill="#f0c9a4" stroke="#5a4a3e" stroke-width="2" />
+    <ellipse cx="118" cy="305" rx="7" ry="9" fill="#f0c9a4" stroke="#5a4a3e" stroke-width="2" />
 
     <!-- Right Arm: holding a small golden lotus / incense offering -->
-    <path d="M 204 250 Q 212 275 220 285 Q 228 280 224 265 Q 215 255 192 240 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+    <path d="M 204 250 Q 212 275 220 285 Q 228 280 224 265 Q 215 255 192 240 Z" fill="#f0c9a4" stroke="#5a4a3e" stroke-width="2" />
     <!-- Right hand -->
-    <circle cx="225" cy="275" r="9" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+    <circle cx="225" cy="275" r="9" fill="#f0c9a4" stroke="#6f5f4e" stroke-width="2" />
     <!-- Lotus bud offering -->
-    <path d="M 225 265 Q 235 255 225 240 Q 215 255 225 265 Z" fill="#fda4af" stroke="#e11d48" stroke-width="1.8" />
-    <path d="M 225 265 L 225 272" stroke="#16a34a" stroke-width="2" />
+    <path d="M 225 265 Q 235 255 225 240 Q 215 255 225 265 Z" fill="#dfa79c" stroke="#b8413a" stroke-width="1.8" />
+    <path d="M 225 265 L 225 272" stroke="#7f9a6e" stroke-width="2" />
 
     <!-- Neck -->
-    <path d="M 150 185 L 150 208 Q 160 212 170 208 L 170 185 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+    <path d="M 150 185 L 150 208 Q 160 212 170 208 L 170 185 Z" fill="#f0c9a4" stroke="#5a4a3e" stroke-width="2" />
 
     <!-- Head / Face -->
-    <path d="M 125 145 Q 120 185 160 195 Q 200 185 195 145 Q 192 110 160 110 Q 128 110 125 145 Z" fill="#fde6cf" stroke="#2d2b30" stroke-width="2.5" />
+    <path d="M 125 145 Q 120 185 160 195 Q 200 185 195 145 Q 192 110 160 110 Q 128 110 125 145 Z" fill="#f5d7b8" stroke="#5a4a3e" stroke-width="2.5" />
 
     <!-- Cheerful Expression -->
     <!-- Eyebrows -->
-    <path d="M 138 143 Q 146 138 152 143" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
-    <path d="M 168 143 Q 174 138 182 143" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <path d="M 138 143 Q 146 138 152 143" fill="none" stroke="#5a4a3e" stroke-width="2" stroke-linecap="round" />
+    <path d="M 168 143 Q 174 138 182 143" fill="none" stroke="#5a4a3e" stroke-width="2" stroke-linecap="round" />
 
     <!-- Manga Eyes with joyful sparkle -->
-    <ellipse cx="145" cy="151" rx="4.5" ry="5.5" fill="#2d2b30" />
-    <circle cx="143.5" cy="149" r="1.6" fill="#ffffff" />
-    <ellipse cx="175" cy="151" rx="4.5" ry="5.5" fill="#2d2b30" />
-    <circle cx="173.5" cy="149" r="1.6" fill="#ffffff" />
+    <ellipse cx="145" cy="151" rx="4.5" ry="5.5" fill="#5a4a3e" />
+    <circle cx="143.5" cy="149" r="1.6" fill="#fbf8f1" />
+    <ellipse cx="175" cy="151" rx="4.5" ry="5.5" fill="#5a4a3e" />
+    <circle cx="173.5" cy="149" r="1.6" fill="#fbf8f1" />
 
     <!-- Blush -->
     <circle cx="136" cy="160" r="9" fill="url(#blush-grad-temple)" />
     <circle cx="184" cy="160" r="9" fill="url(#blush-grad-temple)" />
 
     <!-- Nose -->
-    <circle cx="160" cy="156" r="1.5" fill="#e09f67" />
+    <circle cx="160" cy="156" r="1.5" fill="#e0b287" />
 
     <!-- Radiant Open Smile -->
-    <path d="M 148 165 Q 160 178 172 165 Q 160 184 148 165 Z" fill="#e11d48" stroke="#2d2b30" stroke-width="2" stroke-linejoin="round" />
-    <path d="M 152 167 Q 160 170 168 167" fill="#ffffff" />
+    <path d="M 148 165 Q 160 178 172 165 Q 160 184 148 165 Z" fill="#b8413a" stroke="#5a4a3e" stroke-width="2" stroke-linejoin="round" />
+    <path d="M 152 167 Q 160 170 168 167" fill="#fbf8f1" />
 
     <!-- Bangs -->
-    <path d="M 125 130 Q 140 140 150 132 Q 165 142 175 130 Q 188 138 195 130 Q 190 118 160 118 Q 130 118 125 130 Z" fill="#2d2b30" />
+    <path d="M 125 130 Q 140 140 150 132 Q 165 142 175 130 Q 188 138 195 130 Q 190 118 160 118 Q 130 118 125 130 Z" fill="#5a4a3e" />
 
     <!-- White Baseball Cap with Red "NON" Embroidery -->
     <!-- Cap Crown -->
-    <path d="M 120 128 Q 122 82 160 80 Q 198 82 200 128 Q 160 122 120 128 Z" fill="#f8fafc" stroke="#2d2b30" stroke-width="2.5" />
+    <path d="M 120 128 Q 122 82 160 80 Q 198 82 200 128 Q 160 122 120 128 Z" fill="#f7f2e6" stroke="#5a4a3e" stroke-width="2.5" />
     <!-- Cap Button -->
-    <circle cx="160" cy="80" r="4" fill="#f8fafc" stroke="#2d2b30" stroke-width="1.5" />
+    <circle cx="160" cy="80" r="4" fill="#f7f2e6" stroke="#6f5f4e" stroke-width="1.5" />
     <!-- Bright Red Embroidered "NON" on front of cap -->
-    <text x="160" y="112" font-family="system-ui, sans-serif" font-size="11" font-weight="900" fill="#dc2626" text-anchor="middle" letter-spacing="1">NON</text>
+    <text x="160" y="112" font-family="system-ui, sans-serif" font-size="11" font-weight="900" fill="#a93a33" text-anchor="middle" letter-spacing="1">NON</text>
     <!-- Cap Visor -->
-    <path d="M 112 126 Q 160 118 208 126 Q 212 135 198 136 Q 160 128 116 136 Q 108 133 112 126 Z" fill="#f8fafc" stroke="#2d2b30" stroke-width="2" />
+    <path d="M 112 126 Q 160 118 208 126 Q 212 135 198 136 Q 160 128 116 136 Q 108 133 112 126 Z" fill="#f7f2e6" stroke="#5a4a3e" stroke-width="2" />
 
     <!-- Black Sunglasses Perched on top of the Cap Visor (Signature detail!) -->
     <!-- Sunglasses frame sitting right above brim -->
-    <rect x="130" y="118" width="26" height="11" rx="3" fill="#1e2229" stroke="#0f1115" stroke-width="1.5" />
-    <rect x="164" y="118" width="26" height="11" rx="3" fill="#1e2229" stroke="#0f1115" stroke-width="1.5" />
+    <rect x="130" y="118" width="26" height="11" rx="3" fill="#4a4038" stroke="#463a31" stroke-width="1.5" />
+    <rect x="164" y="118" width="26" height="11" rx="3" fill="#4a4038" stroke="#463a31" stroke-width="1.5" />
     <!-- Bridge connecting sunglasses -->
-    <path d="M 156 122 Q 160 120 164 122" fill="none" stroke="#0f1115" stroke-width="2" />
+    <path d="M 156 122 Q 160 120 164 122" fill="none" stroke="#463a31" stroke-width="2" />
     <!-- Sunglasses lens glint -->
-    <line x1="134" y1="121" x2="140" y2="127" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" />
-    <line x1="168" y1="121" x2="174" y2="127" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" />
+    <line x1="134" y1="121" x2="140" y2="127" stroke="#a8a29a" stroke-width="1.2" stroke-linecap="round" />
+    <line x1="168" y1="121" x2="174" y2="127" stroke="#a8a29a" stroke-width="1.2" stroke-linecap="round" />
 
     <!-- Ground line -->
-    <path d="M 45 350 Q 160 354 275 348" stroke="#cbd5e1" stroke-width="2.5" stroke-dasharray="4,6" stroke-linecap="round" />
+    <path d="M 45 350 Q 160 354 275 348" stroke="#d8d2c4" stroke-width="2.5" stroke-linecap="round" />
+  </g>
   </g>
 </svg>

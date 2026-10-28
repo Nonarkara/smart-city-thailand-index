@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="100%" height="100%" role="img" aria-label="Nong Plub in plaid dress with beaded bracelet at cafe deck with laptop">
+  <defs>
+    <filter id="crayon-cafe" x="-10%" y="-10%" width="120%" height="120%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <radialGradient id="blush-grad-cafe" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f87171" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#f87171" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="plaid-pattern" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#1e293b" />
+      <line x1="0" y1="8" x2="16" y2="8" stroke="#334155" stroke-width="2" />
+      <line x1="8" y1="0" x2="8" y2="16" stroke="#334155" stroke-width="2" />
+      <line x1="0" y1="4" x2="16" y2="4" stroke="#475569" stroke-width="0.8" stroke-dasharray="2,2" />
+      <line x1="4" y1="0" x2="4" y2="16" stroke="#475569" stroke-width="0.8" stroke-dasharray="2,2" />
+    </pattern>
+  </defs>
+
+  <g filter="url(#crayon-cafe)">
+    <!-- Soft warm matcha-cafe paper background aura -->
+    <circle cx="160" cy="200" r="145" fill="#fcfdfa" stroke="#dcfce7" stroke-width="2" stroke-dasharray="6,4" />
+
+    <!-- Outdoor Cafe Foliage / Monstera leaf in background -->
+    <g opacity="0.65">
+      <path d="M 40 140 Q 60 110 90 120 Q 95 145 75 165 Q 55 160 40 140 Z" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5" />
+      <line x1="45" y1="145" x2="85" y2="130" stroke="#16a34a" stroke-width="1.5" />
+    </g>
+
+    <!-- Wooden Cafe Deck Table (foreground) -->
+    <rect x="25" y="305" width="270" height="16" fill="#d79b63" stroke="#8a5327" stroke-width="2" />
+    <line x1="30" y1="312" x2="290" y2="312" stroke="#b0733d" stroke-width="1.2" stroke-dasharray="8,6" />
+    <!-- Table leg -->
+    <rect x="150" y="321" width="20" height="50" fill="#a4632e" stroke="#8a5327" stroke-width="2" />
+
+    <!-- Silver Laptop open on table -->
+    <g transform="translate(195, 255)">
+      <!-- Laptop Screen -->
+      <polygon points="10,0 60,0 55,48 5,48" fill="#e2e8f0" stroke="#475569" stroke-width="1.8" />
+      <polygon points="14,4 56,4 52,44 10,44" fill="#0f172a" />
+      <!-- Antigravity / Smart City code screen glint -->
+      <line x1="16" y1="12" x2="35" y2="12" stroke="#38bdf8" stroke-width="1.5" />
+      <line x1="16" y1="18" x2="45" y2="18" stroke="#a855f7" stroke-width="1.5" />
+      <line x1="16" y1="24" x2="30" y2="24" stroke="#4ade80" stroke-width="1.5" />
+      <!-- Laptop Keyboard Base -->
+      <polygon points="0,50 65,50 72,56 -5,56" fill="#cbd5e1" stroke="#475569" stroke-width="1.8" />
+    </g>
+
+    <!-- Glass of Iced Thai Tea on table -->
+    <g transform="translate(45, 260)">
+      <polygon points="5,15 25,15 22,48 8,48" fill="#fdba74" stroke="#ea580c" stroke-width="1.5" />
+      <line x1="7" y1="22" x2="23" y2="22" stroke="#ffffff" stroke-width="1" />
+      <!-- Straw -->
+      <line x1="15" y1="6" x2="22" y2="45" stroke="#ef4444" stroke-width="2" stroke-linecap="round" />
+      <!-- Ice cubes -->
+      <rect x="10" y="24" width="6" height="6" fill="#ffffff" opacity="0.6" />
+    </g>
+
+    <!-- Hair Back (Shoulder length dark hair) -->
+    <path d="M 115 145 Q 102 205 110 260 Q 124 275 138 260 Q 130 205 135 155 Z" fill="#2d2b30" />
+    <path d="M 205 145 Q 218 205 210 260 Q 196 275 182 260 Q 190 205 185 155 Z" fill="#2d2b30" />
+
+    <!-- Torso: Dark Plaid Sleeveless Summer Dress -->
+    <path d="M 134 205 Q 160 212 186 205 L 194 315 L 126 315 Z" fill="url(#plaid-pattern)" stroke="#2d2b30" stroke-width="2.5" stroke-linejoin="round" />
+    <!-- Sleeveless scoop neckline -->
+    <path d="M 144 202 Q 160 218 176 202" fill="none" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Left Arm & Hand with Peace Sign ✌️ (Viewer's left) -->
+    <!-- Arm raised -->
+    <path d="M 134 205 Q 110 210 100 170 Q 110 162 122 178 Q 128 195 138 212 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2.2" />
+    <path d="M 104 172 L 90 135 Q 98 132 108 142 L 120 180 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Colorful Beaded Bracelets on Left Wrist (Turquoise, Red, Yellow beads from photo!) -->
+    <g transform="translate(94, 148)">
+      <circle cx="0" cy="0" r="2.5" fill="#06b6d4" stroke="#0891b2" stroke-width="0.8" />
+      <circle cx="5" cy="1" r="2.5" fill="#f43f5e" stroke="#e11d48" stroke-width="0.8" />
+      <circle cx="10" cy="0" r="2.5" fill="#eab308" stroke="#ca8a04" stroke-width="0.8" />
+      <circle cx="15" cy="-2" r="2.5" fill="#10b981" stroke="#059669" stroke-width="0.8" />
+    </g>
+
+    <!-- Peace Sign Hand ✌️ -->
+    <circle cx="88" cy="128" r="9" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+    <!-- Index finger -->
+    <path d="M 85 122 L 78 98 Q 83 95 86 98 L 90 120" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <!-- Middle finger -->
+    <path d="M 90 120 L 96 100 Q 100 102 98 106 L 94 124" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Right Arm (resting near laptop, viewer's right) -->
+    <path d="M 186 205 Q 205 230 208 275 Q 198 285 188 280 Q 186 250 178 220 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2.2" />
+    <!-- Black Smartwatch on Right Wrist -->
+    <rect x="198" y="270" width="8" height="12" rx="2" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <circle cx="202" cy="285" r="7" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Neck -->
+    <path d="M 152 180 L 152 205 Q 160 210 168 205 L 168 180 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Head / Face -->
+    <path d="M 126 138 Q 120 180 160 190 Q 200 180 194 138 Q 190 102 160 102 Q 130 102 126 138 Z" fill="#fde6cf" stroke="#2d2b30" stroke-width="2.5" />
+
+    <!-- Hair Bangs / Gentle natural part -->
+    <path d="M 124 126 Q 140 108 160 108 Q 185 108 196 126 Q 184 118 170 126 Q 155 118 138 130 Q 128 126 124 126 Z" fill="#2d2b30" />
+    <path d="M 126 132 Q 130 152 134 168" fill="none" stroke="#2d2b30" stroke-width="2" />
+    <path d="M 194 132 Q 190 152 186 168" fill="none" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Eyebrows -->
+    <path d="M 138 138 Q 146 133 152 137" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <path d="M 168 137 Q 174 133 182 138" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Cheerful Manga Eyes with sparkle -->
+    <ellipse cx="145" cy="147" rx="4.5" ry="5.5" fill="#2d2b30" />
+    <circle cx="143.5" cy="145" r="1.6" fill="#ffffff" />
+    <ellipse cx="175" cy="147" rx="4.5" ry="5.5" fill="#2d2b30" />
+    <circle cx="173.5" cy="145" r="1.6" fill="#ffffff" />
+
+    <!-- Sweet Pink Cheeks -->
+    <circle cx="136" cy="156" r="9" fill="url(#blush-grad-cafe)" />
+    <circle cx="184" cy="156" r="9" fill="url(#blush-grad-cafe)" />
+
+    <!-- Nose -->
+    <circle cx="160" cy="152" r="1.5" fill="#e09f67" />
+
+    <!-- Happy Open Smile -->
+    <path d="M 148 162 Q 160 174 172 162 Q 160 180 148 162 Z" fill="#e11d48" stroke="#2d2b30" stroke-width="2" stroke-linejoin="round" />
+    <path d="M 152 164 Q 160 167 168 164" fill="#ffffff" />
+
+    <!-- Sparkle note -->
+    <path d="M 265 110 Q 272 105 278 112 Q 285 106 288 115" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" fill="none" />
+  </g>
+</svg>

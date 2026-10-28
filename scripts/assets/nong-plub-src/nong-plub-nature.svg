@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="100%" height="100%" role="img" aria-label="Nong Plub in cyan windbreaker holding snack bag walking by railway tracks">
+  <defs>
+    <filter id="crayon-nature" x="-10%" y="-10%" width="120%" height="120%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <radialGradient id="blush-grad-nature" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f87171" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#f87171" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <g filter="url(#crayon-nature)">
+    <!-- Soft misty mountain paper aura -->
+    <circle cx="160" cy="200" r="145" fill="#f0fdfa" stroke="#ccfbf1" stroke-width="2" stroke-dasharray="6,4" />
+
+    <!-- Distant Misty Mountain Ridge & Pine Trees -->
+    <g opacity="0.6">
+      <path d="M 30 145 Q 85 95 150 130 Q 210 100 290 140 L 290 200 L 30 200 Z" fill="#e0f2fe" />
+      <!-- Stylized pine trees -->
+      <polygon points="50,150 55,130 60,150" fill="#0284c7" />
+      <polygon points="65,155 72,132 79,155" fill="#0369a1" />
+      <polygon points="260,148 266,128 272,148" fill="#0284c7" />
+    </g>
+
+    <!-- Railway Tracks & Wooden Sleepers (from photo!) -->
+    <g opacity="0.85">
+      <!-- Rail Sleepers (ties) -->
+      <line x1="60" y1="365" x2="260" y2="365" stroke="#78350f" stroke-width="5" stroke-linecap="round" />
+      <line x1="75" y1="345" x2="245" y2="345" stroke="#78350f" stroke-width="4.5" stroke-linecap="round" />
+      <line x1="90" y1="328" x2="230" y2="328" stroke="#78350f" stroke-width="4" stroke-linecap="round" />
+      <!-- Steel Rails (converging perspective) -->
+      <line x1="85" y1="375" x2="135" y2="320" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+      <line x1="235" y1="375" x2="185" y2="320" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+    </g>
+
+    <!-- Legs: Grey Joggers & Black Sneakers (Walking posture) -->
+    <!-- Left Leg -->
+    <path d="M 142 295 L 135 348 L 148 348 L 152 295 Z" fill="#64748b" stroke="#334155" stroke-width="2" stroke-linejoin="round" />
+    <!-- Left Sneaker -->
+    <rect x="126" y="348" width="26" height="10" rx="3" fill="#0f172a" stroke="#020617" stroke-width="1.8" />
+    <path d="M 126 356 L 152 356" stroke="#ffffff" stroke-width="2" />
+
+    <!-- Right Leg (stepping forward) -->
+    <path d="M 168 295 L 175 345 L 188 345 L 178 295 Z" fill="#64748b" stroke="#334155" stroke-width="2" stroke-linejoin="round" />
+    <!-- Right Sneaker -->
+    <rect x="172" y="345" width="26" height="10" rx="3" fill="#0f172a" stroke="#020617" stroke-width="1.8" />
+    <path d="M 172 353 L 198 353" stroke="#ffffff" stroke-width="2" />
+
+    <!-- Hair Back -->
+    <path d="M 120 145 Q 106 195 116 240 Q 130 250 140 240 Q 132 195 135 150 Z" fill="#2d2b30" />
+    <path d="M 200 145 Q 214 195 204 240 Q 190 250 180 240 Q 188 195 185 150 Z" fill="#2d2b30" />
+
+    <!-- Torso: Vibrant Turquoise / Cyan Windbreaker Jacket -->
+    <!-- Jacket Body -->
+    <path d="M 130 195 L 190 195 L 196 300 L 124 300 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="2.5" stroke-linejoin="round" />
+    <!-- Center Zipper -->
+    <line x1="160" y1="195" x2="160" y2="300" stroke="#083344" stroke-width="2.5" />
+    <!-- Windbreaker Hood Collar -->
+    <path d="M 136 195 Q 160 206 184 195 Q 192 185 180 182 Q 160 188 140 182 Q 128 185 136 195 Z" fill="#0891b2" stroke="#0e7490" stroke-width="2" />
+
+    <!-- Diagonal Black Crossbody Sling Bag Strap -->
+    <path d="M 134 195 L 192 290 L 180 296 L 124 200 Z" fill="#1e293b" stroke="#0f172a" stroke-width="1.8" />
+
+    <!-- Arms & Hands -->
+    <!-- Left Arm: relaxed walking swing -->
+    <path d="M 130 195 Q 106 225 108 265 Q 116 272 124 265 Q 122 235 138 210 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="2.2" />
+    <circle cx="112" cy="275" r="7" fill="#fcd7b6" stroke="#2d2b30" stroke-width="1.8" />
+
+    <!-- Right Arm: holding Brown Paper Snack Bag (from photo!) -->
+    <path d="M 190 195 Q 212 225 210 260 Q 202 268 194 262 Q 194 235 182 210 Z" fill="#06b6d4" stroke="#0e7490" stroke-width="2.2" />
+    <!-- Right Hand -->
+    <circle cx="206" cy="265" r="7" fill="#fcd7b6" stroke="#2d2b30" stroke-width="1.8" />
+    <!-- Brown Paper Food/Snack Bag (local delicacies!) -->
+    <g transform="translate(196, 260)">
+      <polygon points="4,5 28,5 24,38 8,38" fill="#d97706" stroke="#92400e" stroke-width="1.8" />
+      <!-- Crinkled paper top fold -->
+      <polyline points="4,5 10,2 16,5 22,2 28,5" fill="#f59e0b" stroke="#92400e" stroke-width="1.5" />
+      <!-- Small snack icon / smiley on bag -->
+      <path d="M 12 20 Q 16 25 20 20" stroke="#78350f" stroke-width="1.5" fill="none" stroke-linecap="round" />
+    </g>
+
+    <!-- Neck -->
+    <path d="M 152 172 L 152 195 Q 160 198 168 195 L 168 172 Z" fill="#fcd7b6" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Head / Face -->
+    <path d="M 126 130 Q 120 172 160 182 Q 200 172 194 130 Q 190 95 160 95 Q 130 95 126 130 Z" fill="#fde6cf" stroke="#2d2b30" stroke-width="2.5" />
+
+    <!-- Hair Bangs / Gentle wind blowing -->
+    <path d="M 124 118 Q 140 100 160 100 Q 185 100 196 118 Q 184 110 170 118 Q 155 110 138 122 Q 128 118 124 118 Z" fill="#2d2b30" />
+    <path d="M 124 124 Q 128 144 134 160" fill="none" stroke="#2d2b30" stroke-width="2" />
+    <path d="M 196 124 Q 192 144 186 160" fill="none" stroke="#2d2b30" stroke-width="2" />
+
+    <!-- Eyebrows -->
+    <path d="M 138 130 Q 146 125 152 129" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+    <path d="M 168 129 Q 174 125 182 130" fill="none" stroke="#2d2b30" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Cheerful Manga Eyes with sparkle -->
+    <ellipse cx="145" cy="139" rx="4.5" ry="5.5" fill="#2d2b30" />
+    <circle cx="143.5" cy="137" r="1.6" fill="#ffffff" />
+    <ellipse cx="175" cy="139" rx="4.5" ry="5.5" fill="#2d2b30" />
+    <circle cx="173.5" cy="137" r="1.6" fill="#ffffff" />
+
+    <!-- Sweet Pink Cheeks -->
+    <circle cx="136" cy="148" r="9" fill="url(#blush-grad-nature)" />
+    <circle cx="184" cy="148" r="9" fill="url(#blush-grad-nature)" />
+
+    <!-- Nose -->
+    <circle cx="160" cy="144" r="1.5" fill="#e09f67" />
+
+    <!-- Big Happy Walking Smile -->
+    <path d="M 148 153 Q 160 166 172 153 Q 160 172 148 153 Z" fill="#e11d48" stroke="#2d2b30" stroke-width="2" stroke-linejoin="round" />
+    <path d="M 152 155 Q 160 158 168 155" fill="#ffffff" />
+
+    <!-- Wind swirls & nature leaves -->
+    <path d="M 260 180 Q 275 170 280 185" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" fill="none" stroke-dasharray="3,3" />
+    <path d="M 40 210 Q 55 200 60 215" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" fill="none" stroke-dasharray="3,3" />
+  </g>
+</svg>
