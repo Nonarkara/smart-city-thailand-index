@@ -6,8 +6,8 @@ const output='.tmp/plub-intro';await mkdir(output,{recursive:true});
 const {data:cities}=JSON.parse(await readFile('dist/api-static/cities.json','utf8'));
 const byId=new Map(cities.map(c=>[c.id,c]));const results=[];
 function check(g,width){
- assert.ok(g.height<=(width<760?500:440),`inflated infographic: ${g.height}px at ${width}`);
  if(width>=1024){assert.ok(g.cardWidth/g.parentWidth>=.94,'unused parent reading region');assert.ok(g.portraitWidth/g.cardWidth>=.20,'mascot reduced to a thumbnail');}
+ assert.ok(g.height<=(width<760?500:440),`inflated infographic: ${g.height}px at ${width}`);
  assert.equal(g.overflow,0,'page overflow');assert.equal(g.rows.length,7,'pillar lost');
  assert.ok(g.imageLoaded&&g.src.endsWith('-crayon.webp'),'approved crayon art missing');
  assert.ok(g.labelFonts.every(f=>f>=14)&&g.bodyFont>=14,'reading shrunk');
