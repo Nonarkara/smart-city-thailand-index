@@ -332,4 +332,3 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
     "pose": "welcome"
   }
 };
-

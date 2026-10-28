@@ -752,7 +752,7 @@ export default function ShowcasePage({ locale, onNavigate }: Props) {
                     <h3 className="timeline-arc-title">{translate(locale, { en: "Operational Command", th: "ศูนย์บัญชาการปฏิบัติการ", zh: "运营指挥" })}</h3>
                     <p className="timeline-arc-desc">{translate(locale, { en: "Municipal case material describes the IOC and reports over 38,000 complaints resolved. A separate June 2026 account count must not be treated as 2024 resident adoption. The reported change in resolution time does not establish that CCTV caused it; comparable case logs are needed.",
                 th: "เอกสารกรณีศึกษาของเทศบาลอธิบายศูนย์ IOC และรายงานการแก้ข้อร้องเรียนกว่า 38,000 เรื่อง จำนวนบัญชี ณ มิถุนายน 2569 ไม่ควรนำมาแทนอัตราการใช้งานของประชาชนในปี 2567 การเปลี่ยนแปลงเวลาแก้ปัญหาตามรายงานยังไม่ยืนยันว่าเกิดจาก CCTV ต้องตรวจบันทึกรายกรณีที่เทียบกันได้",
-                zh: "市政案例材料介绍了IOC，并报告已解决超过38,000起投诉。2026年6月的账户数量不能视为2024年的居民采用率。报告的处理时长变化不能证明由CCTV造成，仍需可比的案件记录。",
+                zh: "市政案例材料介绍了IOC，并报告已解决超过38,000起投诉。2026年6月的账户数量不能视为2024年的居民采用率。报告的处理时长变化不能证明由CCTV造成，仍需可比的案件记录。" })}</p>
                   </div>
                   <div className="timeline-arc-gallery">
                     <div className="timeline-arc-photo">
