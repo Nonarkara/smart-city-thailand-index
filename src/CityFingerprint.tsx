@@ -188,7 +188,7 @@ export default function CityFingerprint({
             fillOpacity={0.9}
           />
         ))}
-      {assessmentLabel && <text x={cx} y={cy} textAnchor="middle" fill="#fff" fontSize="11">{assessmentLabel}</text>}
+      {assessmentLabel && <text x={cx} y={cy} textAnchor="middle" fill="#fff" fontSize="var(--text-micro)">{assessmentLabel}</text>}
     </svg>
   );
 }
