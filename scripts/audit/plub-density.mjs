@@ -30,7 +30,11 @@ try{
   if(id==='cmu-smart-city'&&locale==='en'&&width===390){await p.emulateMedia({media:'print'});assert.ok(await card.locator('.nong-plub-print-source').isVisible(),'paper source missing');assert.equal(await summary.isVisible(),false,'interactive summary printed');await p.emulateMedia({media:'screen'});}
   await p.screenshot({path:`${output}/${id}-${locale}-${width}.png`});results.push({id,locale,width,...g});console.log(`Introduction ${id}/${locale}/${width}: ${g.height}px`);
   if(id==='cmu-smart-city'&&locale==='en'&&width===390){const style=await p.addStyleTag({content:'.nong-plub-infographic{display:block!important}.nong-plub-infographic .nong-plub-illustration{width:180px!important;height:220px!important;margin-bottom:16px!important}'});await p.waitForFunction(()=>getComputedStyle(document.querySelector('.nong-plub-infographic')).display==='block');const height=await card.evaluate(el=>el.getBoundingClientRect().height);assert.throws(()=>check({...g,height},width),/inflated infographic/,'stacked portrait panel escaped');await style.evaluate(el=>el.remove());}
-  if(width===1980){assert.throws(()=>check({...g,cardWidth:780,portraitWidth:144},width),/unused parent|thumbnail/,'old narrow composition escaped');}
+  if(width===1980){
+   const old=await p.addStyleTag({content:'.nong-plub-infographic{max-width:780px!important;grid-template-columns:144px minmax(0,1fr)!important}.nong-plub-infographic .nong-plub-illustration{width:144px!important;height:190px!important}.nong-plub-infographic .nong-plub-intro-notes{grid-column:1 / -1!important}'});
+   const regression=await card.evaluate(el=>({height:el.getBoundingClientRect().height,cardWidth:el.getBoundingClientRect().width,portraitWidth:el.querySelector('img').getBoundingClientRect().width}));
+   assert.throws(()=>check({...g,...regression},width),/unused parent|thumbnail/,'old narrow composition escaped');await old.evaluate(el=>el.remove());
+  }
   await browser.close();browser=null;
  }
  await writeFile(`${output}/geometry.json`,JSON.stringify(results,null,2));console.log(`City introductions verified: ${results.length} language/viewport states, seven exact signals or explicit registry gaps, source keyboard access and stacked-panel rejection.`);
