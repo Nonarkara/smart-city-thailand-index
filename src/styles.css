@@ -13262,10 +13262,11 @@ button.nong-plub-mini-badge:hover { color: var(--ink); text-decoration: underlin
   .nong-plub-print-source p { margin: 6px 0; }
 }
 
+@font-face { font-family: 'Non Architecture'; src: url('/fonts/mascot/non-architecture-regular.woff2') format('woff2'); font-display: swap; font-weight: 400; font-style: normal; }
 @font-face { font-family: 'Plub Sriracha'; src: url('/fonts/mascot/sriracha.woff2') format('woff2'); font-display: swap; font-weight: 400; }
 @font-face { font-family: 'Plub WenKai'; src: url('/fonts/mascot/wenkai.woff2') format('woff2'); font-display: swap; font-weight: 400; }
-.mascot-hand { font-family: 'Plub Sriracha', var(--font); font-size: var(--text-body); font-weight: 400; line-height: 1.6; }
-:lang(zh-Hans) .mascot-hand, .mascot-hand:lang(zh-Hans) { font-family: 'Plub WenKai', 'Plub Sriracha', var(--font); }
+.mascot-hand { font-family: 'Non Architecture', 'Plub Sriracha', var(--font); font-synthesis: none; font-size: var(--text-body); font-weight: 400; line-height: 1.6; }
+:lang(zh-Hans) .mascot-hand, .mascot-hand:lang(zh-Hans) { font-family: 'Non Architecture', 'Plub WenKai', 'Plub Sriracha', var(--font); }
 .mascot-note-title { margin: 0 0 6px; font-weight: 400; }
 .page-mascot { display: grid; grid-template-columns: 112px minmax(0,1fr); gap: 16px; align-items: center; padding-block: 12px; }
 .page-mascot-art { width: 112px; height: 148px; object-fit: contain; }

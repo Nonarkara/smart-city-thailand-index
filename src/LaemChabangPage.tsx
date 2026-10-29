@@ -27,7 +27,7 @@ export default function LaemChabangPage({ locale }: { locale: Locale }) {
     <section className="municipal-evidence" aria-labelledby="municipal-facts-title">
       <div className="municipal-plub-intro">
         <img src={NONG_PLUB_ASSETS.nature} width={64} height={88} alt={t({ en: "Nong Plub, illustrated guide", th: "น้องพลับ ผู้แนะนำเมืองในภาพประกอบ", zh: "插画向导小普" })} />
-        <div><h2 id="municipal-facts-title">{t({ en: "Nong Plub introduces the local evidence", th: "น้องพลับชวนอ่านข้อมูลพื้นที่", zh: "小普带你读本地证据" })}</h2>
+        <div><h2 id="municipal-facts-title" className="mascot-hand">{t({ en: "Nong Plub introduces the local evidence", th: "น้องพลับชวนอ่านข้อมูลพื้นที่", zh: "小普带你读本地证据" })}</h2>
         <p className="municipal-meta">{t({ en: "Dates and geographic scopes belong to each figure. This profile is unranked; no city score is inferred. AI-generated portrait, not a visit record.", th: "แต่ละตัวเลขมีช่วงเวลาและขอบเขตของตนเอง แฟ้มนี้ไม่จัดอันดับและไม่อนุมานคะแนนเมือง ภาพบุคคลสร้างด้วย AI ไม่ใช่บันทึกการเดินทาง", zh: "每个数字均注明时间与地理范围。本档案不参与排名，不推算城市分数。肖像由AI生成，并非到访记录。" })}</p></div>
       </div>
       <dl className="municipal-facts">{profile.facts.map(f => <div className="municipal-fact" key={f.id}>
