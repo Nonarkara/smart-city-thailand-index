@@ -9,9 +9,9 @@ export default function PageMascot({kind,locale,embedded=false}:{kind:Route['kin
  const brief=PAGE_MASCOT_BRIEFS[kind as PageMascotKind];
  if(kind==='home'&&embedded)return <section className="home-city-guide" lang={locale==='zh'?'zh-Hans':locale} aria-labelledby="home-guide-title">
   <div className="home-city-guide-message">
-   <h1 id="home-guide-title" className="cinematic-hero-title">{locale==='th'?'รู้จักเมืองอัจฉริยะไทย':locale==='zh'?'泰国智慧城市指南':'Thailand, city by city'}</h1>
-   <p className="mascot-hand home-city-guide-copy">{brief.copy[locale]}</p>
-   <p className="home-city-guide-byline">{locale==='th'?'น้องพลับ · ผู้นำทางข้อมูลเมือง':locale==='zh'?'小普 · 城市数据向导':'Nong Plub · Your city-data guide'}</p>
+   <h1 id="home-guide-title" className="cinematic-hero-title">{locale==='th'?'เลือกเมืองที่ใช่':locale==='zh'?'寻找适合你的城市':'Find your city'}</h1>
+   <div className="home-city-guide-reading"><p className="mascot-hand home-city-guide-copy">{brief.copy[locale]}</p>
+   <p className="home-city-guide-byline">{locale==='th'?'น้องพลับ · ผู้นำทางข้อมูลเมือง':locale==='zh'?'小普 · 城市数据向导':'Nong Plub · Your city-data guide'}</p></div>
   </div>
   <img className="home-city-guide-art" src={POSES.welcome} width={220} height={260} alt={locale==='th'?'น้องพลับชวนเปิดดูแฟ้มเมือง':locale==='zh'?'小普邀你浏览城市档案':'Nong Plub welcomes you into the city records'} fetchPriority="high"/>
   <nav className="home-city-guide-actions" aria-label={locale==='th'?'เริ่มสำรวจ':locale==='zh'?'开始探索':'Start exploring'}>

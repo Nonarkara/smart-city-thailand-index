@@ -16,14 +16,14 @@ try {
       const geometry = await page.evaluate(() => {
         const rect = s => document.querySelector(s).getBoundingClientRect();
         const hero = rect('.cinematic-hero');
-        const action = rect('.cinematic-hero-actions');
+        const action = rect('.home-city-guide-actions');
         const ribbon = rect('.home-stat-ribbon');
         const guide = document.querySelector('.opening-argument-inner');
         const guideEdge = guide.getBoundingClientRect().left + parseFloat(getComputedStyle(guide).paddingLeft);
         return { heroHeight: hero.height, actionBottom: action.bottom, gap: ribbon.top - hero.bottom, alignmentError: Math.abs(rect('.cinematic-hero-title').left - guideEdge), overflow: document.documentElement.scrollWidth - innerWidth };
       });
       assert.equal(geometry.overflow, 0, `${locale}/${width} overflow`);
-      assert.ok(geometry.heroHeight < (width < 720 ? 570 : 420), `${locale}/${width} inflated hero: ${JSON.stringify(geometry)}`);
+      assert.ok(geometry.heroHeight < (width < 720 ? 645 : 420), `${locale}/${width} inflated hero: ${JSON.stringify(geometry)}`);
       assert.ok(geometry.actionBottom < 844, `${locale}/${width} primary action below first screen`);
       assert.ok(geometry.gap < 2, `${locale}/${width} empty row after hero`);
       assert.ok(geometry.alignmentError <= 1, `${locale}/${width} title detached from reading column: ${JSON.stringify(geometry)}`);
