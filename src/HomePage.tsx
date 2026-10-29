@@ -148,15 +148,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
             SCITI 2026 — {t({ en: 'pronounced "City"', th: 'อ่านว่า "ซิตี้"', zh: '读作 "City"' })}
             <span className="cinematic-hero-wordplay" aria-label="SmaSCITI equals Samastiti"> · <span className="cinematic-hero-wordplay-sma">Sma</span><span className="cinematic-hero-wordplay-sciti">SCITI</span> = Samastiti</span>
           </p>
-          <h1 className="cinematic-hero-title">
-            {locale === "th" ? (
-              <>แพลตฟอร์มข้อมูล<br />เมืองอัจฉริยะไทย</>
-            ) : locale === "zh" ? (
-              <>泰国智慧城市<br />数据平台</>
-            ) : (
-              <>Thailand’s Smart City<br />Data Platform</>
-            )}
-          </h1>
           <PageMascot kind="home" locale={locale} embedded />
           <details className="hero-reading-note"><summary>{t({en:"Research scope",th:"ขอบเขตงานวิจัย",zh:"研究范围"})}</summary><p className="cinematic-hero-why">
             {t({
@@ -177,26 +168,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
               <span className="hero-stat-label">{t({ en: "depa-designated areas", th: "พื้นที่ประกาศ depa", zh: "depa 指定区域" })}</span>
             </div>
             <div className="hero-stat-cell">
-              <span className="hero-stat-num" style={{ font: "700 var(--text-body)/1 var(--mono)", color: "var(--amber, #f59e0b)" }}>2</span>
+              <span className="hero-stat-num" style={{ font: "700 var(--text-body)/1 var(--mono)", color: "var(--gold-ink)" }}>2</span>
               <span className="hero-stat-label">{t({ en: "illustrated proposals (CNX · NST)", th: "ตัวอย่างข้อเสนอ (เชียงใหม่ · นครฯ)", zh: "示例提案（清迈·洛坤）" })}</span>
             </div>
           </div>
           <p className="hero-status-note">{t({ en: "Curated research baseline; legacy estimates, operating status and local outcomes require verification.", th: "ข้อมูลฐานวิจัยที่เรียบเรียงไว้ ค่าประมาณเดิม สถานะการเดินระบบ และผลลัพธ์ในพื้นที่ยังต้องตรวจสอบ", zh: "编辑研究基线；既有估计、运营状态及当地成果仍须核实。" })}</p>
-          <div className="cinematic-hero-actions">
-            <button className="cta-button" onClick={() => onNavigate("/rankings")}>
-              {t({ en: "Explore Rankings", th: "สำรวจอันดับ", zh: "探索排名" })}
-            </button>
-            <button type="button" className="ghost-button cinematic-ghost" onClick={() => onNavigate("/references")}>
-              {t({
-                en: "Delivery Evidence Brief →",
-                th: "สรุปหลักฐานการส่งมอบ →",
-                zh: "交付实证简报 →",
-              })}
-            </button>
-            <button className="ghost-button cinematic-ghost" onClick={() => onNavigate("/map")}>
-              {t({ en: "Explore the map", th: "สำรวจแผนที่", zh: "查看地图" })}
-            </button>
-          </div>
+
         </div>
       </section>
 

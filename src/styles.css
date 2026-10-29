@@ -13328,3 +13328,36 @@ button.nong-plub-mini-badge:hover { color: var(--ink); text-decoration: underlin
 /* The home guide inherits the hero's light reading colour, including its disclosure. */
 .cinematic-hero .page-mascot-note .mascot-hand,
 .cinematic-hero .hero-reading-note > summary { color: #e4edf2; }
+
+/* Home: guide, message and action occupy one illustrated opening. */
+.dashboard-home .cinematic-hero-overlay { background: var(--bg); color: var(--ink); padding-bottom: 8px; }
+.dashboard-home .cinematic-hero-eyebrow { color: var(--gold-ink); }
+.dashboard-home .cinematic-hero-wordplay-sciti { color: var(--ink); }
+.dashboard-home .home-city-guide { display: grid; grid-template-columns: minmax(0,1fr) 144px; gap: 8px 12px; align-items: end; margin: 8px 0 12px; max-width: none; }
+.home-city-guide-message { min-width: 0; align-self: start; }
+.dashboard-home .home-city-guide .cinematic-hero-title { margin: 0 0 12px; color: var(--ink); max-width: none; text-wrap: balance; }
+.home-city-guide-copy { margin: 0 0 6px; color: var(--ink); }
+.home-city-guide-byline { margin: 0 0 10px; font: 400 var(--text-micro)/1.4 var(--font); color: var(--2); }
+.home-city-guide-art { width: 144px; height: auto; max-height: 280px; object-fit: contain; object-position: bottom; align-self: end; }
+.home-city-guide-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.home-city-guide-actions a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; width: fit-content; font: 500 var(--text-body)/1.4 var(--font); color: var(--ink); white-space: nowrap; }
+.home-city-guide-actions .home-city-guide-action { padding: 8px 12px; color: var(--bg); text-decoration: none; }
+.dashboard-home .hero-reading-note > summary,
+.dashboard-home .cinematic-hero-overlay .cinematic-hero-why,
+.dashboard-home .hero-stat-label,
+.dashboard-home .cinematic-hero-overlay .hero-status-note { color: var(--2); }
+.dashboard-home .hero-stat-num { color: var(--ink); }
+.dashboard-home .cinematic-hero-overlay .hero-status-note:last-child { margin-bottom: 0; }
+@media (min-width: 720px) {
+ .dashboard-home .home-city-guide { grid-template-columns: minmax(0,1fr) 160px; column-gap: 16px; }
+ .home-city-guide-art { width: 160px; max-height: 180px; grid-column: 2; grid-row: 1 / span 2; }
+ .home-city-guide-actions { grid-column: 1; grid-row: 2; }
+}
+@media (max-width: 359px) {
+ .dashboard-home .home-city-guide { grid-template-columns: minmax(0,1fr) 116px; }
+ .home-city-guide-message { display: contents; }
+ .home-city-guide .cinematic-hero-title { grid-column: 1 / -1; }
+ .home-city-guide-copy { grid-column: 1; grid-row: 2; }
+ .home-city-guide-byline { grid-column: 1; grid-row: 3; }
+ .home-city-guide-art { width: 116px; grid-column: 2; grid-row: 2 / span 2; }
+}

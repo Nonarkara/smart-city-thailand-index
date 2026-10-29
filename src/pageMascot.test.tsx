@@ -18,6 +18,16 @@ describe('page reading companion',()=>{
    expect(asset&&existsSync(`public${asset}`)).toBeTruthy();
   }
  });
+ it('integrates the home heading and its three destinations without forced title breaks',()=>{
+  for(const locale of ['en','th','zh'] as Locale[]){
+   const html=renderToStaticMarkup(<PageMascot kind="home" locale={locale} embedded/>);
+   expect(html).toContain('home-city-guide');
+   expect((html.match(/<h1/g)||[])).toHaveLength(1);
+   expect(html).not.toContain('<br');
+   for(const path of ['/rankings','/references','/map'])expect(html).toContain(`href="${path}"`);
+   expect(html).not.toContain('mascot-note-title');
+  }
+ });
  it('covers Chinese handwriting including labels derived from city data',()=>{
   const glyphs=JSON.parse(readFileSync('public/fonts/mascot/glyphs.json','utf8')).cjk as string;
   const html=[...allCities.map(city=>renderToStaticMarkup(<NongPlubCard city={city} locale="zh"/>)),...Object.keys(PAGE_MASCOT_BRIEFS).map(kind=>renderToStaticMarkup(<PageMascot kind={kind as keyof typeof PAGE_MASCOT_BRIEFS} locale="zh"/>))].join('');
