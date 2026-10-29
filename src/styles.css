@@ -13348,7 +13348,7 @@ button.nong-plub-mini-badge:hover { color: var(--ink); text-decoration: underlin
 .dashboard-home .cinematic-hero-overlay .hero-status-note { color: var(--2); }
 .dashboard-home .hero-stat-num { color: var(--ink); }
 .dashboard-home .cinematic-hero-overlay .hero-status-note:last-child { margin-bottom: 0; }
-@media (min-width: 720px) {
+@media (min-width: 960px) {
  .dashboard-home .home-city-guide { grid-template-columns: minmax(0,1fr) 160px; column-gap: 16px; }
  .home-city-guide-art { width: 160px; max-height: 180px; grid-column: 2; grid-row: 1 / span 2; }
  .home-city-guide-actions { grid-column: 1; grid-row: 2; }
