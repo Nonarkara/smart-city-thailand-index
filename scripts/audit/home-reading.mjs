@@ -36,10 +36,10 @@ try {
   await page.goto(origin);
   await page.getByRole('button', { name: 'Learn', exact: true }).click();
   await page.getByRole('button', { name: 'Compare cities with these priorities →' }).click();
-  await page.locator('.lens-chip[aria-selected="true"]').waitFor();
+  await page.locator('.lens-select-label select').waitFor();
   assert.equal(new URL(page.url()).pathname, '/rankings');
   assert.equal(new URL(page.url()).searchParams.get('lens'), 'learning');
-  assert.equal(await page.locator('.lens-chip[aria-selected="true"]').textContent(), 'Learning');
+  assert.equal(await page.locator('.lens-select-label select').inputValue(), 'learning');
   const search = await page.getByRole('searchbox', { name: 'Search', exact: true }).boundingBox();
   assert.ok(search && search.y + search.height <= 844, 'ranking search is below the first phone screen');
   await page.goto(origin);
