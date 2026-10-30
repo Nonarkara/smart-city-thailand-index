@@ -13645,3 +13645,19 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .home-strip-edition > span:last-child { display: block; }
 @media (max-width: 719px) { .dashboard-home .home-city-guide .home-city-guide-byline { display: block; margin: 2px 0 0; } }
 @media (min-width: 1200px) { .page-shell:has(.dashboard-home) nav.topbar { padding-inline: calc((100% - var(--w)) / 2 + var(--gutter)); } }
+
+/* Second audit pass (independent auditor, 30 Oct 2026): header on the hero's own gutter below 1200,
+   the photo credit shares the search box's right edge instead of floating, the crown clears the header,
+   and on a phone she is cropped by the screen edge as well as the search box (two frame edges, not one control). */
+@media (min-width: 720px) and (max-width: 1199px) { .page-shell:has(.dashboard-home) nav.topbar { padding-inline: max(var(--gutter), calc((100% - var(--w)) / 2 + var(--gutter))); } }
+@media (min-width: 720px) {
+  .dashboard-home .home-city-guide .home-city-guide-art { height: calc(100% + 4px); }
+  .dashboard-home .hero-slide-label { right: calc(100% - var(--col-edge) - 600px); }
+}
+@media (max-width: 719px) {
+  .dashboard-home .cinematic-hero-wordplay { display: none; }
+}
+@media (max-width: 399px) {
+  .dashboard-home .home-city-guide .home-city-guide-visual { margin-right: calc(-1 * var(--gutter)); min-height: 172px; }
+  .dashboard-home .home-city-guide .home-city-guide-art { width: 110%; }
+}

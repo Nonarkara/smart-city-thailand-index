@@ -176,13 +176,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </dl>
           <div className="home-strip-note">
             <p className="home-strip-reading">{t({
-              en: "Compare 118 Thai city records, then check delivery evidence, accountable operators and resident outcomes. Recognition or installed technology alone does not establish that lives improved.",
-              th: "เปรียบเทียบข้อมูล 118 เมืองไทย แล้วตรวจหลักฐานการส่งมอบ ผู้รับผิดชอบ และผลลัพธ์ต่อผู้อยู่อาศัย การรับรองหรือการติดตั้งเทคโนโลยีเพียงอย่างเดียวไม่ยืนยันว่าชีวิตประชาชนดีขึ้น",
-              zh: "比较泰国118座城市的记录，再核查交付证据、责任运营方及居民成果。行政认证或安装技术本身不能证明生活已改善。",
+              en: "Compare Thai city records, then check delivery evidence, accountable operators and resident outcomes. Recognition or installed technology alone does not establish that lives improved.",
+              th: "เปรียบเทียบข้อมูลเมืองไทย แล้วตรวจหลักฐานการส่งมอบ ผู้รับผิดชอบ และผลลัพธ์ต่อผู้อยู่อาศัย การรับรองหรือการติดตั้งเทคโนโลยีเพียงอย่างเดียวไม่ยืนยันว่าชีวิตประชาชนดีขึ้น",
+              zh: "比较泰国各城市的记录，再核查交付证据、责任运营方及居民成果。行政认证或安装技术本身不能证明生活已改善。",
             })}</p>
             <a href={toAppPath("/methodology")}>{t({ en: "Learn more", th: "ดูเพิ่มเติม", zh: "了解更多" })} →</a>
           </div>
-          <p className="home-strip-edition"><span className="hero-status-note">{t({ en: "Curated research baseline; legacy estimates, operating status and local outcomes require verification.", th: "ข้อมูลฐานวิจัยที่เรียบเรียงไว้ ค่าประมาณเดิม สถานะการเดินระบบ และผลลัพธ์ในพื้นที่ยังต้องตรวจสอบ", zh: "编辑研究基线；既有估计、运营状态及当地成果仍须核实。" })}</span><span>{`SCITI 2026 Edition · ${stats.total} ${t({ en: "cities", th: "เมือง", zh: "城市" })} · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源类别" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}</span><span>{t({ en: `Research by Dr. Non A · depa · ${SCITI_METHOD_CODE} · release cut-off ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, th: `งานวิจัยโดย ดร.ณณ · depa · ${SCITI_METHOD_CODE} · วันตัดข้อมูล ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, zh: `研究：Non A 博士 · depa · ${SCITI_METHOD_CODE} · 数据截点 ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}` })}</span></p>
+          <p className="home-strip-edition"><span className="hero-status-note">{t({ en: "Curated research baseline; legacy estimates, operating status and local outcomes require verification.", th: "ข้อมูลฐานวิจัยที่เรียบเรียงไว้ ค่าประมาณเดิม สถานะการเดินระบบ และผลลัพธ์ในพื้นที่ยังต้องตรวจสอบ", zh: "编辑研究基线；既有估计、运营状态及当地成果仍须核实。" })}</span><span>{`SCITI 2026 Edition · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源类别" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}</span><span>{t({ en: `Research by Dr. Non A · depa · ${SCITI_METHOD_CODE} · release cut-off ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, th: `งานวิจัยโดย ดร.ณณ · depa · ${SCITI_METHOD_CODE} · วันตัดข้อมูล ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, zh: `研究：Non A 博士 · depa · ${SCITI_METHOD_CODE} · 数据截点 ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}` })}</span></p>
         </div>
       </section>
 
