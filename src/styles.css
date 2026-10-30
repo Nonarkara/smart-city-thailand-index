@@ -13583,3 +13583,65 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
   .home-strip-note p { line-height: 1.4; }
 }
 @media (min-width: 960px) { .home-strip-inner { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } .home-strip-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; } }
+
+/* ───────────────────────── HOME FIRST SCREEN, RE-COMPOSED (30 Oct 2026, second pass) ─────────────────────────
+   Failures this replaces, all visible in the owner's screenshot:
+   1. No focal point: the 32px headline competed with four 32px stat numbers and a white button.
+      Now ONE display-size thing lives on the first screen (the title); the numbers are body-size
+      facts in the strip; the search box is the only primary action, links are plain text.
+   2. Nong Plub floated mid-photo like a sticker. The commissioned drawing is waist-up, so she
+      needs a frame edge to be cropped by: on desktop the hero's bottom edge, on phone the top edge
+      of the search box she leans on. No halo, no box, no floating.
+   3. The header ran edge to edge while everything below sat on the 1120 column (logo at x=26,
+      headline at x=192): loose edges. The bar's content now sits on the same column from 1200 up.
+   4. The photo credit was a navy chip; it is plain text on the eyebrow row. */
+.dashboard-home .cinematic-hero { --col-edge: max(var(--gutter), calc((100% - var(--w)) / 2 + var(--gutter))); }
+.dashboard-home .cinematic-hero-overlay { padding-bottom: 0; }
+.dashboard-home .cinematic-hero-eyebrow { margin: 0 0 8px; }
+.dashboard-home .home-city-guide { display: grid; grid-template-columns: minmax(0, 1fr) 128px; grid-template-rows: auto auto auto; gap: 0 12px; align-items: start; margin: 0; }
+.dashboard-home .home-city-guide .home-city-guide-message { display: block; grid-column: 1; grid-row: 1; padding-bottom: 12px; }
+.dashboard-home .home-city-guide .cinematic-hero-title { margin: 0 0 6px; line-height: 1.1; }
+.dashboard-home .home-city-guide .home-city-guide-reading { display: block; margin: 0; }
+.dashboard-home .home-city-guide .home-city-guide-copy { display: inline; margin: 0; color: rgba(255,255,255,.9); }
+.dashboard-home .home-city-guide .home-city-guide-byline { display: inline; margin: 0 0 0 8px; color: rgba(255,255,255,.72); white-space: nowrap; }
+.dashboard-home .home-city-guide .home-city-guide-visual { grid-column: 2; grid-row: 1; align-self: stretch; position: relative; contain: none; overflow: hidden; margin: 0; }
+.dashboard-home .home-city-guide .home-city-guide-art { position: absolute; top: auto; left: 0; bottom: -14%; width: 100%; height: auto; object-fit: initial; object-position: initial; }
+.dashboard-home .home-city-guide .home-hero-search { grid-column: 1 / -1; grid-row: 2; position: relative; z-index: 1; max-width: none; margin: 0; }
+.dashboard-home .home-city-guide .home-city-guide-actions { grid-column: 1 / -1; grid-row: 3; gap: 4px 20px; margin: 0 0 8px; }
+.dashboard-home .hero-slide-label { top: auto; bottom: 8px; right: var(--gutter); padding: 0; background: none; color: rgba(255,255,255,.8); text-shadow: 0 1px 2px rgba(0,0,0,.7); }
+@media (min-width: 720px) {
+  .dashboard-home .cinematic-hero-overlay { padding-top: 18px; }
+  .dashboard-home .home-city-guide { grid-template-columns: minmax(0, 600px); }
+  .dashboard-home .home-city-guide .home-city-guide-message { padding-bottom: 14px; }
+  .dashboard-home .home-city-guide .home-hero-search { margin-bottom: 6px; }
+  .dashboard-home .home-city-guide .home-city-guide-visual { position: absolute; inset: 0; margin: 0; width: auto; overflow: visible; pointer-events: none; grid-column: auto; grid-row: auto; }
+  .dashboard-home .home-city-guide .home-city-guide-art { left: auto; right: var(--col-edge); top: auto; bottom: -26px; width: auto; height: calc(100% + 18px); max-width: 300px; }
+  .dashboard-home .hero-slide-label { top: 20px; bottom: auto; right: calc(var(--col-edge) + 300px); }
+}
+@media (max-width: 719px) {
+  .dashboard-home .home-city-guide .home-city-guide-visual { min-height: 136px; }
+  .dashboard-home .cinematic-hero-overlay { padding-top: 14px; padding-bottom: 22px; }
+  .dashboard-home .hero-slide-label { left: var(--gutter); right: auto; bottom: 6px; }
+}
+
+/* The strip: facts at body size, one meaning sentence, one provenance paragraph. */
+.home-strip-inner { grid-template-columns: 1fr !important; gap: 8px; padding-block: 12px; }
+.home-strip-stats { display: flex !important; flex-wrap: wrap; gap: 2px 24px !important; }
+.home-strip-stats > div { display: flex; flex-direction: row; align-items: baseline; gap: 6px; }
+.home-strip-stats dd, .dashboard-home .home-strip-stats .hero-stat-num { font: 700 var(--text-body)/1.4 var(--mono); }
+.home-strip-stats dt { font: 400 var(--text-body)/1.4 var(--font); letter-spacing: 0; text-transform: none; color: #d1dce3; }
+.home-strip-note { display: block; max-width: 88ch; }
+.home-strip-note p { display: inline; }
+.home-strip-note a { display: inline; margin-left: 8px; white-space: nowrap; }
+.home-strip-edition { display: block; padding-top: 6px; }
+.home-strip-edition > span { display: inline; margin-right: 14px; }
+.home-strip-edition .hero-status-note { flex-basis: auto; display: block; margin-bottom: 2px; }
+
+/* The bar's content sits on the page column. */
+@media (min-width: 1200px) { .page-shell nav.topbar { padding-left: calc((100% - var(--w)) / 2 + var(--gutter)); padding-right: calc((100% - var(--w)) / 2 + var(--gutter)); } }
+
+/* Search is the one primary action: the three destinations are plain links, not a second button. */
+.dashboard-home .home-city-guide .home-city-guide-actions .home-city-guide-action { background: none; color: #fff; padding: 0; }
+.home-strip-edition > span:last-child { display: block; }
+@media (max-width: 719px) { .dashboard-home .home-city-guide .home-city-guide-byline { display: block; margin: 2px 0 0; } }
+@media (min-width: 1200px) { .page-shell:has(.dashboard-home) nav.topbar { padding-inline: calc((100% - var(--w)) / 2 + var(--gutter)); } }

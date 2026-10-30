@@ -23,7 +23,7 @@ const GUIDE:Record<MascotPose,{src:string;w:number}>={
  * (An earlier pass shrank her to a 40px thumbnail: that is an amateur use of
  * commissioned art, and it is recorded here so nobody repeats it.)
  */
-export default function PageMascot({kind,locale,embedded=false,photo}:{kind:Route['kind'];locale:Locale;embedded?:boolean;photo?:ReactNode}){
+export default function PageMascot({kind,locale,embedded=false,photo,search}:{kind:Route['kind'];locale:Locale;embedded?:boolean;photo?:ReactNode;search?:ReactNode}){
  const photoId=useId();
  const [photoOpen,setPhotoOpen]=useState(false);
  if(kind==='city'||kind==='creative-economy')return null;
@@ -35,6 +35,7 @@ export default function PageMascot({kind,locale,embedded=false,photo}:{kind:Rout
    <p className="home-city-guide-byline">{locale==='th'?'น้องพลับ · ผู้นำทางข้อมูลเมือง':locale==='zh'?'小普 · 城市数据向导':'Nong Plub · Your city-data guide'}</p></div>
   </div>
   <div className="home-city-guide-visual"><img className="home-city-guide-art" src={POSES.welcome} width={220} height={260} alt={locale==='th'?'น้องพลับชวนเปิดดูแฟ้มเมือง':locale==='zh'?'小普邀你浏览城市档案':'Nong Plub welcomes you into the city records'} fetchPriority="high"/></div>
+  {search}
   <nav className="home-city-guide-actions" aria-label={locale==='th'?'เริ่มสำรวจ':locale==='zh'?'开始探索':'Start exploring'}>
    <a className="cta-button home-city-guide-action" href={toAppPath('/rankings')}>{locale==='th'?'ดูแฟ้มเมือง':locale==='zh'?'浏览城市':'Explore cities'} →</a>
    <a href={toAppPath('/references')} aria-label={locale==='th'?'สรุปหลักฐานการส่งมอบ':locale==='zh'?'交付实证简报':'Delivery Evidence Brief'}>{locale==='th'?'หลักฐาน':locale==='zh'?'证据':'Evidence'} →</a>
