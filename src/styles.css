@@ -13491,3 +13491,35 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .news-card-meta { margin-top: 0; padding-top: 0; border-top: 0; justify-content: flex-start; gap: 12px; }
 @media (max-width: 719px) { .news-grid { grid-template-columns: 1fr; } }
 .invest-macro-withheld { margin: 8px 0 0; font: 400 var(--text-micro)/1.5 var(--font); color: var(--2); max-width: 90ch; }
+/* Invest essays: these three reuse the navy CCDR panel class on a light surface, so the pull-quote
+   was white on white (an empty blue rule) and the box padded a 590px column beside a void. On a light
+   essay the text is ink, the box is a hairline rule, and from 960px the title sits left of the prose. */
+.section > .invest-ccdr-panel.glass-card { border: 0 !important; border-top: 1px solid var(--5) !important; background: none !important; box-shadow: none; }
+.section > .invest-ccdr-panel.glass-card > .invest-ccdr-inner { padding-block: 12px 4px; padding-inline: 0; }
+.section > .invest-ccdr-panel.glass-card .invest-ccdr-thesis { color: var(--ink); }
+.section > .invest-ccdr-panel.glass-card .invest-ccdr-copy { color: var(--2); }
+@media (min-width: 960px) {
+  .section > .invest-ccdr-panel.glass-card > .invest-ccdr-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 32px; row-gap: 0; align-items: start; }
+  .section > .invest-ccdr-panel.glass-card > .invest-ccdr-inner > .invest-reading-title { grid-column: 1; grid-row: 1; margin: 0; }
+  .section > .invest-ccdr-panel.glass-card > .invest-ccdr-inner > :not(.invest-reading-title) { grid-column: 2; }
+}
+/* Rankings rows: the caption was uppercase tracked mono, so "Certified · Operational · Province" wrapped
+   to two lines on every phone row. Sentence-case body face keeps it to one. */
+.rank-row-caption { font-family: var(--font); text-transform: none; letter-spacing: 0; }
+.section > .invest-ccdr-panel.glass-card > .invest-ccdr-inner > .invest-reading-title { position: sticky; top: 64px; }
+@media (max-width: 719px) {
+  /* Phone row: the caption had a 179px column because the score block sat beside the whole text stack.
+     Flatten it into a grid so the caption and peak/trough run the full width under the name. */
+  .rank-row-link { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; column-gap: 8px; row-gap: 1px; align-items: center; }
+  .rank-row-body, .rank-row-head, .rank-row-meta { display: contents; }
+  .rank-row-num { grid-column: 1; grid-row: 1 / span 3; }
+  .rank-row-fingerprint { grid-column: 2; grid-row: 1 / span 3; }
+  .rank-row-name { grid-column: 3; grid-row: 1; }
+  .rank-row-score { grid-column: 4; grid-row: 1; justify-self: end; }
+  .rank-row-caption { grid-column: 3 / span 2; grid-row: 2; }
+  .rank-row-extremes { grid-column: 3; grid-row: 3; }
+  .rank-row-sub { grid-column: 4; grid-row: 3; justify-self: end; }
+}
+/* Header targets: painted boxes stay small, hit areas reach the 24px WCAG floor. */
+.locale-segmented-btn, .brand-lockup { position: relative; }
+.locale-segmented-btn::after, .brand-lockup::after { content: ""; position: absolute; inset: -6px 0; }
