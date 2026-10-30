@@ -124,7 +124,7 @@ try {
   const padded=await page.locator('.legal-strip-section').evaluate(el=>el.getBoundingClientRect().height);
   assert.throws(()=>assertClosedHeight(padded,390),/inflated closed research notes/,'old padded boxes escaped guard');
   await paddedStyle.evaluate(el=>el.remove());
-  await page.addStyleTag({content:'.data-density-section{padding:32px 0!important}.data-density-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:24px!important}.density-stat{flex-direction:column!important;align-items:flex-start!important}.density-value{font-size:32px!important}.density-stat-date .density-value{font-size:14px!important}'});
+  await page.addStyleTag({content:'.data-density-section{padding:32px 0!important}.data-density-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:24px!important}.density-stat{flex-direction:column!important;align-items:flex-start!important}.density-value{font-size:32px!important}.density-stat-date .density-value{font-size:14px!important}main section[class]+section[class]{margin-top:32px!important}.dashboard-home .home-column>.section{padding-block:20px!important}.legal-strip-section{padding-top:32px!important}'});
   const oldClosingPath = await page.locator('.data-density-section').evaluate(el=>document.querySelector('.legal-strip-section').getBoundingClientRect().bottom - el.getBoundingClientRect().top);
   assert.throws(()=>assertClosingPath(oldClosingPath,390),/inflated scope\+notes path/,'old scope display grid escaped path budget');
   await page.locator('.legal-footer-note').evaluate(el=>{const band=document.createElement('section');band.className='dashboard-fineprint';band.textContent=el.textContent;el.closest('section').after(band);});
