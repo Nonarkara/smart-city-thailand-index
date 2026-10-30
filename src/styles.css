@@ -13406,3 +13406,88 @@ button.nong-plub-mini-badge:hover { color: var(--ink); text-decoration: underlin
 .atlas-row .city-story-toggle { min-height: 28px; }
 @media (min-width: 1024px) { .atlas-row .city-story-body { max-width: 72ch; } }
 @media (min-width: 1024px) { .investment-atlas-results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; border-top: 0; } .atlas-row:nth-child(-n+2) { border-top: 1px solid var(--5); } }
+
+/* MSH sweep of the home page (30 Oct 2026). Same content, fewer pixels: the opening argument sits in
+   two columns instead of a 720px column beside a void; bands hug their words; section padding stops
+   stacking on top of the global 32px section margin; cards align to their content instead of
+   stretching to the tallest sibling. */
+.home-matrix-sources { display: flex; flex-wrap: wrap; column-gap: 14px; row-gap: 2px; }
+.home-matrix-cell { align-self: start; padding: 12px 14px; gap: 6px; }
+.home-delivery-matrix { margin-top: 16px; padding-top: 12px; }
+.home-matrix-title { margin-bottom: 10px; }
+.home-matrix-grid { gap: 12px; align-items: start; }
+.opening-argument-inner { padding-block: 16px 12px; }
+.opening-argument-eyebrow { margin-bottom: 6px; }
+.opening-argument-headline { margin-bottom: 0; }
+.home-evidence-guide { margin-top: 4px; }
+.edition-stamp { padding-block: 6px; column-gap: 24px; }
+.home-stat-ribbon-inner { padding-block: 10px; }
+.home-field-ops-section { padding-block: 16px; }
+.home-field-ops-grid { gap: 12px; margin-block: 12px; align-items: start; }
+.home-field-op-body { padding: 12px 14px 14px; gap: 8px; }
+.dashboard-home .home-column > .section { padding-block: 12px; }
+main section[class] + section[class] { margin-top: 16px; }
+@media (min-width: 960px) {
+  .opening-argument-inner { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: 32px; align-items: start; }
+  .opening-argument-inner > .opening-argument-eyebrow { grid-column: 1; grid-row: 1; }
+  .opening-argument-inner > .opening-argument-headline { grid-column: 1; grid-row: 2; }
+  .opening-argument-inner > .home-decision-guide { grid-column: 2; grid-row: 1 / span 2; }
+  .opening-argument-inner > .home-evidence-guide { grid-column: 1 / -1; grid-row: 3; }
+}
+@media (min-width: 960px) {
+  .opening-argument-inner { grid-template-rows: auto 1fr auto; }
+  .opening-argument-inner > .opening-argument-headline { align-self: start; }
+  .home-field-ops-section > .section { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: 32px; align-items: start; }
+  .home-field-ops-section > .section > .eyebrow { grid-column: 1; grid-row: 1; margin-bottom: 4px; }
+  .home-field-ops-section > .section > .home-section-title { grid-column: 1; grid-row: 2; margin: 0; }
+  .home-field-ops-section > .section > .home-section-intro { grid-column: 2; grid-row: 1 / span 2; margin: 0; max-width: 72ch; }
+  .home-field-ops-section > .section > .home-field-ops-grid, .home-field-ops-section > .section > .home-delivery-matrix { grid-column: 1 / -1; }
+}
+
+/* MSH audit repairs (30 Oct 2026, independent auditor). */
+/* Home: every band reads the one column. The two full-bleed bands padded to a 20px gutter, so their
+   text started at x=20 while the body sat at x=192; the news band was inset to a third edge. */
+.open-data-section, .transparency-section { padding: 24px max(var(--gutter), calc((100% - var(--w)) / 2 + var(--gutter))); }
+.news-section { width: min(var(--w), 100%); margin-inline: auto; padding-inline: var(--gutter); }
+/* A content-visibility estimate of 300px painted the 830px (2643px on phones) news band blank and
+   shifted the page when it arrived; the band is real content, not an off-screen widget. */
+.news-section, .site-footer { content-visibility: visible; }
+/* Invest: the eyebrow was ink on navy (1.5:1) because a later rule coloured every first <p>. */
+main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !important; font-weight: 600; }
+/* Methodology: label and value were glued ("Method codeSCITI-2026-METH"). */
+.hud-item { display: flex; flex-direction: column; gap: 2px; }
+/* Methodology diagrams are HTML so the type stays on the three-size scale and phones need no sideways scroll. */
+.methodology-flow-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; }
+.methodology-flow-steps li { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border-top: 2px solid; position: relative; }
+.methodology-flow-steps li:not(:last-child)::after { content: "→"; position: absolute; right: -4px; top: 6px; color: var(--3); }
+.methodology-flow-steps strong { font: 700 var(--text-micro) var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.methodology-flow-steps span { font: 400 var(--text-body)/1.4 var(--font); color: var(--2); }
+.methodology-flow-note { margin: 8px 0 0; font: 400 var(--text-micro)/1.5 var(--font); color: var(--3); }
+.methodology-formula-line { margin: 0 0 6px; font: 400 var(--text-body)/1.5 var(--mono); color: var(--2); }
+.methodology-formula-terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; }
+.methodology-formula-terms li { padding: 4px 8px; border: 1px solid; font: 400 var(--text-body)/1.3 var(--mono); color: var(--3); }
+.methodology-formula-terms li b { font-weight: 700; }
+@media (max-width: 719px) {
+  .methodology-flow-steps { grid-template-columns: 1fr; }
+  .methodology-flow-steps li { border-top: 0; border-left: 2px solid; padding: 4px 12px; }
+  .methodology-flow-steps li:not(:last-child)::after { content: "↓"; right: 8px; top: 4px; }
+}
+.meth-stack-grid { gap: 0; }
+.meth-stack-card { border-width: 0 0 1px; padding: 8px 0; background: none; }
+.methodology-hud { border-block: 1px solid var(--5); padding-block: 10px; }
+.hud-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.hud-header .hud-title { margin: 0; font: 700 var(--text-body)/1.3 var(--font); }
+.hud-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber, #f59e0b); }
+.hud-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px 16px; }
+.hud-label { font: 600 var(--text-micro)/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--3); }
+.hud-value { font: 600 var(--text-body)/1.3 var(--mono); color: var(--ink); }
+/* News: ruled rows, not cards. The title was 11px above a 14px summary (hierarchy inverted) inside
+   padded boxes; 12 cards cost 2643px on a phone. Title leads, summary is the smaller supporting line. */
+.news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; border: 0; }
+.news-card { padding: 8px 0; gap: 3px; background: none; border: 0; border-bottom: 1px solid var(--5); }
+.news-card:hover { border-bottom-color: var(--teal); }
+.news-card-title { font: 600 var(--text-body)/1.35 var(--font); }
+.news-card-summary { flex: none; font: 400 var(--text-micro)/1.5 var(--font); -webkit-line-clamp: 2; }
+.news-card-meta { margin-top: 0; padding-top: 0; border-top: 0; justify-content: flex-start; gap: 12px; }
+@media (max-width: 719px) { .news-grid { grid-template-columns: 1fr; } }
+.invest-macro-withheld { margin: 8px 0 0; font: 400 var(--text-micro)/1.5 var(--font); color: var(--2); max-width: 90ch; }

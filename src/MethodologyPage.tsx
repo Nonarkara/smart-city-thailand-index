@@ -311,25 +311,16 @@ function DataFlowDiagram({ locale }: { locale: Locale }) {
   ];
 
   return (
-    <div className="methodology-flow-scroll">
-    <svg viewBox="0 0 760 100" className="methodology-flow-svg" aria-label={t("Data flow diagram", "แผนภาพการไหลของข้อมูล", "数据流向图")}>
-      {boxes.map((box, i) => (
-        <g key={box.id}>
-          <rect x={box.x} y={10} width={155} height={72} fill="var(--surface)" stroke={box.color} strokeWidth="1.5" rx="0" />
-          <text x={box.x + 12} y={33} fontFamily="var(--mono)" fontSize="8" fontWeight="700" fill={box.color} letterSpacing="0.08em">{box.label.toUpperCase()}</text>
-          <text x={box.x + 12} y={52} fontFamily="var(--font)" fontSize="8" fill="var(--2)">{box.sub}</text>
-          {i < boxes.length - 1 && (
-            <>
-              <line x1={box.x + 157} y1={46} x2={box.x + 175} y2={46} stroke="var(--4)" strokeWidth="1" />
-              <polygon points={`${box.x + 175},41 ${box.x + 183},46 ${box.x + 175},51`} fill="var(--4)" />
-            </>
-          )}
-        </g>
-      ))}
-      <text x={20} y={97} fontFamily="var(--mono)" fontSize="8" fill="var(--3)" letterSpacing="0.05em">
-        {t("Research judgment is applied in the first step only. Everything after is deterministic mathematics.", "วิจารณญาณวิจัยใช้ในขั้นแรกเท่านั้น ที่เหลือเป็นคณิตศาสตร์กำหนดแน่นอน", "研究判断仅用于第一步，此后全为确定性数学。")}
-      </text>
-    </svg>
+    <div className="methodology-flow" role="group" aria-label={t("Data flow diagram", "แผนภาพการไหลของข้อมูล", "数据流向图")}>
+      <ol className="methodology-flow-steps">
+        {boxes.map(box => (
+          <li key={box.id} style={{ borderColor: box.color }}>
+            <strong style={{ color: box.color }}>{box.label}</strong>
+            <span>{box.sub}</span>
+          </li>
+        ))}
+      </ol>
+      <p className="methodology-flow-note">{t("Research judgment is applied in the first step only. Everything after is deterministic mathematics.", "วิจารณญาณวิจัยใช้ในขั้นแรกเท่านั้น ที่เหลือเป็นคณิตศาสตร์กำหนดแน่นอน", "研究判断仅用于第一步，此后全为确定性数学。")}</p>
     </div>
   );
 }
@@ -349,31 +340,15 @@ function CompositeDiagram({ locale }: { locale: Locale }) {
   }));
 
   return (
-    <div className="methodology-flow-scroll">
-    <svg viewBox="0 0 760 80" className="methodology-flow-svg" aria-label={t("Composite formula diagram", "แผนภาพสูตรคะแนนรวม", "综合分公式图")}>
-      <text x={10} y={18} fontFamily="var(--mono)" fontSize="8" fontWeight="700" fill="var(--3)" letterSpacing="0.1em">{t("COMPOSITE", "คะแนนรวม", "综合分")}</text>
-      <text x={100} y={18} fontFamily="var(--mono)" fontSize="8" fill="var(--3)"> = (</text>
-      {pillars.map((p, i) => {
-        const xBase = 122 + i * 89;
-        return (
-          <g key={p.name}>
-            <rect x={xBase} y={5} width={82} height={22} fill="var(--surface)" stroke={p.color} strokeWidth="1" rx="0" />
-            <text x={xBase + 8} y={20} fontFamily="var(--mono)" fontSize="9" fontWeight="700" fill={p.textColor}>{p.name}</text>
-            <text x={xBase + 34} y={20} fontFamily="var(--mono)" fontSize="9" fill="var(--3)">×{p.weight}%</text>
-            {i < pillars.length - 1 && (
-              <text x={xBase + 84} y={20} fontFamily="var(--mono)" fontSize="9" fill="var(--3)"> +</text>
-            )}
-          </g>
-        );
-      })}
-      <text x={746} y={18} fontFamily="var(--mono)" fontSize="8" fill="var(--3)">)</text>
-      <text x={10} y={48} fontFamily="var(--mono)" fontSize="8" fill="var(--2)">
-        {t("÷ 100 → round to 0.1 → assign tier (α≥65 / β≥45 / γ<45)", "÷ 100 → ปัดหนึ่งตำแหน่ง → จัดระดับ (α≥65 / β≥45 / γ<45)", "÷ 100 → 保留一位小数 → 分配层级 (α≥65 / β≥45 / γ<45)")}
-      </text>
-      <text x={10} y={68} fontFamily="var(--font)" fontSize="8" fill="var(--3)">
-        {t("Weights are fixed and public. The research team cannot adjust them per city.", "น้ำหนักคงที่และเปิดเผย ทีมวิจัยปรับไม่ได้ตามเมือง", "权重固定且公开，研究团队不能按城市调整。")}
-      </text>
-    </svg>
+    <div className="methodology-formula" role="group" aria-label={t("Composite formula diagram", "แผนภาพสูตรคะแนนรวม", "综合分公式图")}>
+      <p className="methodology-formula-line"><b>{t("COMPOSITE", "คะแนนรวม", "综合分")}</b> = Σ</p>
+      <ul className="methodology-formula-terms">
+        {pillars.map(p => (
+          <li key={p.name} style={{ borderColor: p.color }}><b style={{ color: p.textColor }}>{p.name}</b> ×{p.weight}%</li>
+        ))}
+      </ul>
+      <p className="methodology-formula-line">{t("÷ 100 → round to 0.1 → assign tier (α≥65 / β≥45 / γ<45)", "÷ 100 → ปัดหนึ่งตำแหน่ง → จัดระดับ (α≥65 / β≥45 / γ<45)", "÷ 100 → 保留一位小数 → 分配层级 (α≥65 / β≥45 / γ<45)")}</p>
+      <p className="methodology-flow-note">{t("Weights are fixed and public. The research team cannot adjust them per city.", "น้ำหนักคงที่และเปิดเผย ทีมวิจัยปรับไม่ได้ตามเมือง", "权重固定且公开，研究团队不能按城市调整。")}</p>
     </div>
   );
 }
@@ -494,7 +469,6 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
         <div className="meth-stack-grid">
           {[
             {
-              icon: "⚛",
               name: "React 19 + TypeScript",
               what: {
                 en: "The interface layer. Every city card, pillar bar, and ranking list you see is a React component — a reusable block of logic and display. TypeScript means the data shapes are enforced: if a city's score field contains text instead of a number, the build fails.",
@@ -503,7 +477,6 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
               },
             },
             {
-              icon: "📦",
               name: "Vite 6",
               what: {
                 en: "The build tool. It bundles all the code and data into the fast static files you download when you open this page. The entire index deploys to GitHub Pages in under 2 seconds.",
@@ -512,7 +485,6 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
               },
             },
             {
-              icon: "📊",
               name: t("Data as TypeScript constants", "ข้อมูลเป็น TypeScript constants", "数据作为 TypeScript 常量"),
               what: {
                 en: "No database. City scores live inside the code itself, in `src/cityData.ts`. This sounds weird until you realize it means the data is version-controlled, auditable by anyone with a browser, and impossible to update without a commit. A commit is a permanent public record.",
@@ -521,7 +493,6 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
               },
             },
             {
-              icon: "🚀",
               name: "GitHub Pages + GitHub Actions",
               what: {
                 en: "Every push to the main branch automatically deploys to the live URL. The CI pipeline builds the app, runs type checks, and publishes. No servers, no cloud bills, no DevOps team. Just a push.",
@@ -530,7 +501,6 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
               },
             },
             {
-              icon: "🎨",
               name: t("Zero CSS frameworks", "ไม่มี CSS framework", "零 CSS 框架"),
               what: {
                 en: "No Tailwind, no Bootstrap, no shadcn. Every rule in `src/styles.css` was written by hand. Design tokens enforce zero border-radius, zero drop shadows, and a three-size typography rule site-wide — rules that an AI can accidentally break without a committed policy.",
@@ -540,7 +510,6 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
             },
           ].map(item => (
             <div key={item.name} className="meth-stack-card">
-              <div className="meth-stack-icon">{item.icon}</div>
               <div className="meth-stack-name">{item.name}</div>
               <p className="meth-stack-what">{translate(locale, item.what)}</p>
             </div>

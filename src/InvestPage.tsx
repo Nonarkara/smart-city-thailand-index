@@ -878,8 +878,9 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             zh: "区分历史观测、政策目标及模型情景。待核对来源的数值暂不展示；国家背景不能单独证明城市投资可行。",
           })}
         </p>
+        {/* Withheld values are one line, not six tiles repeating the same warning. */}
         <div className="invest-macro-grid">
-          {macroStats.map((s, i) => (
+          {macroStats.filter(s => s.value !== "—").map((s, i) => (
             <div key={i} className="invest-macro-cell">
               <span className="invest-macro-label">{translate(locale, s.label)}</span>
               <span className="invest-macro-value">{s.value}</span>
@@ -887,6 +888,13 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             </div>
           ))}
         </div>
+        {macroStats.some(s => s.value === "—") && (
+          <p className="invest-macro-withheld">
+            <strong>{translate(locale, { en: "Withheld", th: "ยังไม่แสดง", zh: "暂不展示" })}</strong>{" — "}
+            {macroStats.filter(s => s.value === "—").map(s => translate(locale, s.label)).join(" · ")}
+            {" · "}{translate(locale, macroStats.find(s => s.value === "—")!.sub)}
+          </p>
+        )}
       </section>
 
       {/* ═══════════ 3. WHAT SCITI TELLS INVESTORS ═══════════ */}

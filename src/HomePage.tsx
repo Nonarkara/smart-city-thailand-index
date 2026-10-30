@@ -192,10 +192,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="home-stat-value">{SCORING_PILLARS.length}</span>
           </div>
           <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Edition", th: "ฉบับ", zh: "版本" })}</span>
-            <span className="home-stat-value">SCITI 2026</span>
-          </div>
-          <div className="home-stat-cell">
             <span className="home-stat-label">{t({ en: "Reading list", th: "เรื่องคัดอ่าน", zh: "编辑选读" })}</span>
             <span className="home-stat-value">{formatWeeklyStamp(WEEKLY_DIGEST.weekOf, locale)}</span>
           </div>
@@ -410,7 +406,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                   th: "สถานการณ์จำลองกรุงเทพฯ ประเมินผู้เสียชีวิตเพิ่ม 827–1,158 คนต่อปีหากอุณหภูมิเพิ่ม 1°C เทียบฐานปี 2562 (ธนาคารโลกและ กทม., 2025) ไม่ใช่ยอดเสียชีวิตที่สังเกตจริง หมอกควันภาคเหนือเชื่อมโยงกับการกลับเข้ารักษาซ้ำจากโรคปอดเรื้อรัง (2024)",
                   zh: "曼谷情景模型估计，相对2019年基线升温1°C，每年可能增加827–1,158例死亡（世行与BMA，2025）；这是模型结果，并非观测死亡人数。北部雾霾期与慢性阻塞性肺病再入院显著正相关（Sapbamrer 2024）。",
                 })}</p>
-                <a href="https://documents1.worldbank.org/curated/en/099032525024532810/pdf/P181082-9cc5dd2a-bc60-49ed-a145-c3a8621dc1f4.pdf" target="_blank" rel="noopener noreferrer">World Bank &amp; BMA · 2025 ↗</a>{" · "}<a href="https://doi.org/10.3390/toxics12050321" target="_blank" rel="noopener noreferrer">Sapbamrer et al. · 2024 ↗</a>
+                <span className="home-matrix-sources"><a href="https://documents1.worldbank.org/curated/en/099032525024532810/pdf/P181082-9cc5dd2a-bc60-49ed-a145-c3a8621dc1f4.pdf" target="_blank" rel="noopener noreferrer">World Bank &amp; BMA · 2025 ↗</a><a href="https://doi.org/10.3390/toxics12050321" target="_blank" rel="noopener noreferrer">Sapbamrer et al. · 2024 ↗</a></span>
               </div>
               <div className="home-matrix-cell">
                 <span className="home-matrix-num">03 · HYDROLOGY</span>
@@ -430,7 +426,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                   th: "สสช. รายงานการใช้อินเทอร์เน็ต 89.7% ในคนอายุ 6 ปีขึ้นไปปี 2567 การประเมินอีกชุดของธนาคารโลกและ กสศ. พบว่า 74.1% ของคนอายุ 15–64 ปีมีทักษะดิจิทัลต่ำกว่าเกณฑ์ (รายงาน 2024) ประชากรสองชุดนี้ไม่ใช่มาตรวัดเดียวกัน ควรคงโทรศัพท์และบริการพบหน้า",
                   zh: "NSO报告2024年6岁以上人群互联网使用率为89.7%。另一项世行与EEF评估发现，15–64岁人群中74.1%低于基础数字技能门槛（2024年报告）。不同人口范围不能混为一个指标；应保留电话及线下协助。",
                 })}</p>
-                <a href="https://www.nso.go.th/public/e-book/Statistical-Yearbook/SYB-2025/60/" target="_blank" rel="noopener noreferrer">NSO · 2025 ↗</a>{" · "}<a href="https://www.worldbank.org/en/country/thailand/publication/fostering-foundational-skills-in-thailand" target="_blank" rel="noopener noreferrer">World Bank &amp; EEF · 2024 ↗</a>
+                <span className="home-matrix-sources"><a href="https://www.nso.go.th/public/e-book/Statistical-Yearbook/SYB-2025/60/" target="_blank" rel="noopener noreferrer">NSO · 2025 ↗</a><a href="https://www.worldbank.org/en/country/thailand/publication/fostering-foundational-skills-in-thailand" target="_blank" rel="noopener noreferrer">World Bank &amp; EEF · 2024 ↗</a></span>
               </div>
             </div>
           </div>
