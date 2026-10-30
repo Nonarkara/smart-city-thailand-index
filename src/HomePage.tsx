@@ -19,6 +19,7 @@ import { PILLAR_COLORS, PILLAR_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
 import { getCitySummariesCsv, getCityFactsCsv } from "./cityCdp";
 import { ResponsiveImage } from "./mediaAssets";
+import { toAppPath } from "./routing";
 import { assetUrl } from "./assetUtils";
 import { PILLAR_WEIGHTS } from "./types";
 import { HOME_COLLECTIONS } from "./homeCollections";
@@ -149,62 +150,40 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <span className="cinematic-hero-wordplay" aria-label="SmaSCITI equals Samastiti"> · <span className="cinematic-hero-wordplay-sma">Sma</span><span className="cinematic-hero-wordplay-sciti">SCITI</span> = Samastiti</span>
           </p>
           <PageMascot kind="home" locale={locale} embedded />
-          <details className="hero-reading-note"><summary>{t({en:"Research scope",th:"ขอบเขตงานวิจัย",zh:"研究范围"})}</summary><p className="cinematic-hero-why">
-            {t({
+          <form className="home-hero-search" role="search" onSubmit={event => {
+            event.preventDefault();
+            const q = String(new FormData(event.currentTarget).get("q") ?? "").trim();
+            onNavigate(q ? `/rankings?q=${encodeURIComponent(q)}` : "/rankings");
+          }}>
+            <label className="visually-hidden" htmlFor="home-hero-q">{t({ en: "Search a city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })}</label>
+            <input id="home-hero-q" name="q" type="search" autoComplete="off" placeholder={t({ en: "Search a city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })} />
+            <button type="submit" aria-label={t({ en: "Search", th: "ค้นหา", zh: "搜索" })}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </form>
+
+
+        </div>
+      </section>
+
+      {/* ─── ONE STRIP: the numbers, what they mean, and how to read them ─── */}
+      <section className="home-stat-ribbon home-strip" aria-label={t({ en: "Thailand by the numbers", th: "ประเทศไทยด้วยตัวเลข", zh: "数字里的泰国" })}>
+        <div className="home-strip-inner">
+          <dl className="home-strip-stats">
+            <div><dd><AnimatedScore target={stats.total} from={0} decimals={0} duration={1600} className="hero-stat-num" /></dd><dt>{t({ en: "Cities indexed", th: "เมืองในดัชนี", zh: "收录城市" })}</dt></div>
+            <div><dd className="hero-stat-num">{provinceCount}</dd><dt>{t({ en: "Provinces covered", th: "จังหวัดครอบคลุม", zh: "覆盖省份" })}</dt></div>
+            <div><dd className="hero-stat-num">{SCORING_PILLARS.length}</dd><dt>{t({ en: "Pillars measured", th: "เสาหลักที่ประเมิน", zh: "衡量支柱" })}</dt></div>
+            <div><dd><AnimatedScore target={stats.certified} from={0} decimals={0} duration={1600} className="hero-stat-num" /></dd><dt>{t({ en: "depa-designated areas", th: "พื้นที่ประกาศ depa", zh: "depa 指定区域" })}</dt></div>
+          </dl>
+          <div className="home-strip-note">
+            <p className="home-strip-reading">{t({
               en: "Compare 118 Thai city records, then check delivery evidence, accountable operators and resident outcomes. Recognition or installed technology alone does not establish that lives improved.",
               th: "เปรียบเทียบข้อมูล 118 เมืองไทย แล้วตรวจหลักฐานการส่งมอบ ผู้รับผิดชอบ และผลลัพธ์ต่อผู้อยู่อาศัย การรับรองหรือการติดตั้งเทคโนโลยีเพียงอย่างเดียวไม่ยืนยันว่าชีวิตประชาชนดีขึ้น",
               zh: "比较泰国118座城市的记录，再核查交付证据、责任运营方及居民成果。行政认证或安装技术本身不能证明生活已改善。",
-            })}
-          </p>
-
-          </details>
-          <div className="cinematic-hero-stats">
-            <div className="hero-stat-cell">
-              <AnimatedScore target={stats.total} from={0} decimals={0} duration={1600} className="hero-stat-num" />
-              <span className="hero-stat-label">{t({ en: "cities indexed", th: "เมืองในดัชนี", zh: "收录城市" })}</span>
-            </div>
-            <div className="hero-stat-cell">
-              <AnimatedScore target={stats.certified} from={0} decimals={0} duration={1600} className="hero-stat-num" />
-              <span className="hero-stat-label">{t({ en: "depa-designated areas", th: "พื้นที่ประกาศ depa", zh: "depa 指定区域" })}</span>
-            </div>
-            <div className="hero-stat-cell">
-              <span className="hero-stat-num" style={{ font: "700 var(--text-body)/1 var(--mono)", color: "var(--gold-ink)" }}>2</span>
-              <span className="hero-stat-label">{t({ en: "illustrated proposals (CNX · NST)", th: "ตัวอย่างข้อเสนอ (เชียงใหม่ · นครฯ)", zh: "示例提案（清迈·洛坤）" })}</span>
-            </div>
+            })}</p>
+            <a href={toAppPath("/methodology")}>{t({ en: "Learn more", th: "ดูเพิ่มเติม", zh: "了解更多" })} →</a>
           </div>
-          <p className="hero-status-note">{t({ en: "Curated research baseline; legacy estimates, operating status and local outcomes require verification.", th: "ข้อมูลฐานวิจัยที่เรียบเรียงไว้ ค่าประมาณเดิม สถานะการเดินระบบ และผลลัพธ์ในพื้นที่ยังต้องตรวจสอบ", zh: "编辑研究基线；既有估计、运营状态及当地成果仍须核实。" })}</p>
-
+          <p className="home-strip-edition"><span className="hero-status-note">{t({ en: "Curated research baseline; legacy estimates, operating status and local outcomes require verification.", th: "ข้อมูลฐานวิจัยที่เรียบเรียงไว้ ค่าประมาณเดิม สถานะการเดินระบบ และผลลัพธ์ในพื้นที่ยังต้องตรวจสอบ", zh: "编辑研究基线；既有估计、运营状态及当地成果仍须核实。" })}</span><span>{`SCITI 2026 Edition · ${stats.total} ${t({ en: "cities", th: "เมือง", zh: "城市" })} · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源类别" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}</span><span>{t({ en: `Research by Dr. Non A · depa · ${SCITI_METHOD_CODE} · release cut-off ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, th: `งานวิจัยโดย ดร.ณณ · depa · ${SCITI_METHOD_CODE} · วันตัดข้อมูล ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, zh: `研究：Non A 博士 · depa · ${SCITI_METHOD_CODE} · 数据截点 ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}` })}</span></p>
         </div>
       </section>
-
-      {/* ─── THAILAND BY THE NUMBERS (Phase 13 bridge band) ─── */}
-      <section
-        className="home-stat-ribbon"
-        aria-label={t({ en: "Thailand by the numbers", th: "ประเทศไทยด้วยตัวเลข", zh: "数字里的泰国" })}
-      >
-        <div className="home-stat-ribbon-inner">
-          <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Provinces covered", th: "จังหวัดครอบคลุม", zh: "覆盖省份" })}</span>
-            <span className="home-stat-value">{provinceCount}</span>
-          </div>
-          <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Pillars measured", th: "เสาหลักที่ประเมิน", zh: "衡量支柱" })}</span>
-            <span className="home-stat-value">{SCORING_PILLARS.length}</span>
-          </div>
-          <div className="home-stat-cell">
-            <span className="home-stat-label">{t({ en: "Reading list", th: "เรื่องคัดอ่าน", zh: "编辑选读" })}</span>
-            <span className="home-stat-value">{formatWeeklyStamp(WEEKLY_DIGEST.weekOf, locale)}</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── EDITION STAMP ─── */}
-      <div className="edition-stamp">
-        <span>
-          {`SCITI 2026 Edition · ${stats.total} ${t({ en: "cities", th: "เมือง", zh: "城市" })} · ${EVIDENCE_SOURCE_FAMILY_COUNT} ${t({ en: "evidence source families", th: "ตระกูลแหล่งหลักฐาน", zh: "证据来源类别" })} · ${CDP_PLATFORM_COUNT} ${t({ en: "public endpoints", th: "ปลายทางสาธารณะ", zh: "公开端点" })}`}
-        </span>
-        <span>{t({ en: `Research by Dr. Non A · depa · ${SCITI_METHOD_CODE} · release cut-off ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, th: `งานวิจัยโดย ดร.ณณ · depa · ${SCITI_METHOD_CODE} · วันตัดข้อมูล ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}`, zh: `研究：Non A 博士 · depa · ${SCITI_METHOD_CODE} · 数据截点 ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}` })}</span>
-      </div>
 
       {/* ─── OPENING ARGUMENT ─── */}
       {/* The editorial heart of SCITI: why it exists, what makes it honest,

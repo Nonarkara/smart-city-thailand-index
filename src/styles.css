@@ -13523,3 +13523,55 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 /* Header targets: painted boxes stay small, hit areas reach the 24px WCAG floor. */
 .locale-segmented-btn, .brand-lockup { position: relative; }
 .locale-segmented-btn::after, .brand-lockup::after { content: ""; position: absolute; inset: -6px 0; }
+
+/* ───────────────────────── HOME FIRST SCREEN (30 Oct 2026) ─────────────────────────
+   Schematic: one full-bleed real photograph, white type on a dark overlay, search as the primary
+   action, and ONE navy strip beneath that holds the numbers, what they mean and the caveat. This
+   replaces the split white panel, the stat cells, the navy ribbon and the edition stamp (three bands
+   that said "118" five times). The Nong Plub guide block keeps its contract: title first, reading
+   and the three actions on one row. Gradients here are the permitted dark-over-photo legibility
+   overlay and nothing else. */
+.dashboard-home .cinematic-hero { position: relative; padding-top: 0; background: #0b1823; }
+.dashboard-home .hero-slide-wrapper { left: 0; right: 0; top: 0; bottom: 0; height: 100%; }
+.dashboard-home .cinematic-hero-overlay { position: relative; z-index: 2; width: 100%; background: linear-gradient(90deg, rgba(11,24,35,.9) 0%, rgba(11,24,35,.82) 55%, rgba(11,24,35,.35) 100%); color: #fff; padding: 20px max(var(--gutter), calc((100% - var(--w)) / 2 + var(--gutter))) 20px; }
+.dashboard-home .cinematic-hero-eyebrow { color: var(--amber, #f59e0b); }
+.dashboard-home .cinematic-hero-wordplay-sciti, .dashboard-home .home-city-guide .cinematic-hero-title, .home-city-guide-copy { color: #fff; }
+.home-city-guide-byline { color: rgba(255,255,255,.78); }
+.dashboard-home .hero-slide-label { z-index: 3; color: #fff; background: rgba(18,53,78,.92); }
+.home-city-guide-actions a { color: #fff; }
+.home-city-guide-actions .home-city-guide-action { background: #fff; color: #12354e; }
+.home-hero-search { display: flex; max-width: 560px; margin-top: 10px; background: #fff; }
+.home-hero-search input { flex: 1; min-width: 0; min-height: 44px; padding: 0 14px; border: 0; background: transparent; color: #12354e; font: 400 var(--text-body) var(--font); }
+.home-hero-search input::placeholder { color: #4d6275; }
+.home-hero-search button { display: grid; place-items: center; width: 48px; min-height: 44px; border: 0; background: none; color: #12354e; cursor: pointer; }
+.home-hero-search button:hover { background: var(--surface); }
+.home-hero-search:focus-within { outline: 2px solid var(--amber, #f59e0b); outline-offset: 2px; }
+@media (min-width: 720px) { .dashboard-home .hero-slide-wrapper { left: 0; height: 100%; } .dashboard-home .cinematic-hero-overlay { width: 100%; padding-right: max(var(--gutter), calc((100% - var(--w)) / 2 + var(--gutter))); } }
+
+.home-strip { background: #12354e; border-top: 2px solid var(--depa-yellow, #fff200); color: #fff; }
+[data-theme="dark"] .home-strip { background: #071428; }
+.home-strip-inner { width: min(var(--w), 100%); margin-inline: auto; padding: 12px var(--gutter); display: grid; grid-template-columns: 1fr; gap: 10px 32px; overflow: visible; scroll-snap-type: none; }
+.home-strip-inner::after { content: none; }
+.home-strip-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; margin: 0; }
+.home-strip-stats > div { display: flex; flex-direction: column-reverse; gap: 2px; min-width: 0; }
+.home-strip-stats dd { margin: 0; font: 700 var(--text-display)/1 var(--mono); color: #fff; }
+.home-strip-stats dd .hero-stat-num { font: inherit; color: inherit; }
+.home-strip-stats dt { font: 500 var(--text-micro)/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #d1dce3; }
+.home-strip-note { display: grid; gap: 4px; align-content: start; max-width: 72ch; }
+.home-strip-note p { margin: 0; font: 400 var(--text-body)/1.5 var(--font); color: #e0e8ed; }
+.home-strip-note .hero-status-note { color: #d1dce3; font-size: var(--text-micro); }
+.home-strip-note a { color: #fff; font: 600 var(--text-body)/1.4 var(--font); width: fit-content; }
+.home-strip-edition { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 2px 24px; margin: 0; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.14); font: 500 var(--text-micro)/1.4 var(--mono); color: rgba(255,255,255,.72); }
+@media (min-width: 960px) {
+  .home-strip-inner { grid-template-columns: auto minmax(0, 1fr); align-items: start; }
+  .home-strip-stats { grid-template-columns: repeat(4, auto); gap: 0 32px; }
+}
+.home-strip-stats > div { flex-direction: column; }
+.dashboard-home .home-strip-stats .hero-stat-num, .home-strip-stats dd { font: 700 var(--text-display)/1 var(--mono); color: #fff; }
+.home-strip-edition .hero-status-note { color: #d1dce3; flex-basis: 100%; }
+.home-strip-edition { color: rgba(255,255,255,.72); }
+@media (max-width: 719px) {
+  .dashboard-home .hero-slide-label { top: auto; bottom: 6px; right: 8px; }
+  .dashboard-home .cinematic-hero-overlay { padding-bottom: 34px; }
+}
+@media (min-width: 960px) { .home-strip-inner { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } .home-strip-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; } }

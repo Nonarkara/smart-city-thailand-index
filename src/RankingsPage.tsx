@@ -244,7 +244,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get("q") ?? "");
   const [compareMode, setCompareMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   // Progressive disclosure. The directory renders all 118 cities by default,
