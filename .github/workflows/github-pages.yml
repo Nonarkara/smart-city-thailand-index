@@ -35,6 +35,7 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: node scripts/audit/record-density.mjs --serve
+      - run: node scripts/audit/page-budget.mjs --serve
       - run: node scripts/audit/identity-density.mjs --serve
       - run: node scripts/audit/asus-density.mjs --serve
       - run: node scripts/audit/atlas-density.mjs --serve

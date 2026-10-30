@@ -93,16 +93,19 @@ const PILLAR_SHORT_LABELS: Record<Locale, Record<ScoringPillar, string>> = {
 };
 
 // ---------------------------------------------------------------------------
-// CityPillarBars — all seven pillar scores, always visible for fair comparison
+// PillarExtremes — where a city peaks and where it is weak.
+// Seven 100-scale bars per row were tried here: among the top ten the gaps are
+// two to six points, which no eye can resolve, so the bars cost a line of height
+// per row and told the reader nothing. The decision-relevant fact is the
+// extremes. All seven values stay on the row's hover/screen-reader text and on
+// the dossier, where one city is read against its own seven axes.
 // ---------------------------------------------------------------------------
-function CityPillarBars({
-  city,
-  locale,
-}: {
-  city: SmartCity;
-  locale: Locale;
-}) {
-  const ariaSummary = PILLAR_ORDER.map(pillar => {
+function PillarExtremes({ city, locale }: { city: SmartCity; locale: Locale }) {
+  if (city.status === "registered") return null;
+  const ranked = [...PILLAR_ORDER].sort((x, y) => city.scores[y] - city.scores[x]);
+  const best = ranked[0];
+  const worst = ranked[ranked.length - 1];
+  const all = PILLAR_ORDER.map(pillar => {
     const label = PILLAR_LABELS[locale][pillar];
     const value = city.scores[pillar];
     const weight = PILLAR_WEIGHTS[pillar];
@@ -110,39 +113,16 @@ function CityPillarBars({
     if (locale === "zh") return `${label} ${value}，权重 ${weight}%`;
     return `${label} ${value}, ${weight}% weight`;
   }).join("; ");
-
+  const summary = translate(locale, {
+    en: `Strongest pillar ${PILLAR_LABELS.en[best]} ${city.scores[best]}; weakest ${PILLAR_LABELS.en[worst]} ${city.scores[worst]}. All pillars: ${all}`,
+    th: `เสาหลักเด่นสุด ${PILLAR_LABELS.th[best]} ${city.scores[best]} อ่อนสุด ${PILLAR_LABELS.th[worst]} ${city.scores[worst]} ทุกเสาหลัก: ${all}`,
+    zh: `最强支柱 ${PILLAR_LABELS.zh[best]} ${city.scores[best]}；最弱 ${PILLAR_LABELS.zh[worst]} ${city.scores[worst]}。全部支柱：${all}`,
+  });
   return (
-    <div
-      className="rank-pillar-bars"
-      role="img"
-      aria-label={translate(locale, {
-        en: `Seven-pillar score breakdown: ${ariaSummary}`,
-        th: `รายละเอียดคะแนนทั้งเจ็ดเสาหลัก: ${ariaSummary}`,
-        zh: `七项支柱得分明细：${ariaSummary}`,
-      })}
-    >
-      {PILLAR_ORDER.map(pillar => {
-        const value = city.scores[pillar];
-        return (
-          <div
-            key={pillar}
-            className="rank-pillar-bar"
-            title={`${PILLAR_LABELS[locale][pillar]}: ${value} / 100 (${PILLAR_WEIGHTS[pillar]}%)`}
-          >
-            <span className="rank-pillar-bar-head">
-              <span className="rank-pillar-bar-label">{PILLAR_SHORT_LABELS[locale][pillar]}</span>
-              <span className="rank-pillar-bar-value">{value}</span>
-            </span>
-            <div className="rank-pillar-bar-track" aria-hidden="true">
-              <div
-                className="rank-pillar-bar-fill"
-                style={{ width: `${value}%`, background: PILLAR_COLORS[pillar] }}
-              />
-            </div>
-          </div>
-        );
-      })}
-    </div>
+    <span className="rank-row-extremes" role="img" aria-label={summary} title={summary}>
+      <span className="rank-extreme"><span aria-hidden="true">▲</span> {PILLAR_SHORT_LABELS[locale][best]} <b>{city.scores[best]}</b></span>
+      <span className="rank-extreme rank-extreme-low"><span aria-hidden="true">▼</span> {PILLAR_SHORT_LABELS[locale][worst]} <b>{city.scores[worst]}</b></span>
+    </span>
   );
 }
 
@@ -356,39 +336,13 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
     <div className="rankings-page">
       <div className="rankings-column">
         <section className="page-hero section reveal visible">
-          <p className="eyebrow">{t({ en: "Directory", th: "สารบบ", zh: "名录" })}</p>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "1rem", marginBottom: "1rem" }}>
-            <h1 className="hero-title" style={{ margin: 0 }}>
-              {t({
-                en: "The Moneyball of Thai city investment",
-                th: "มันนี่บอลของการลงทุนในเมืองไทย",
-                zh: "泰国城市投资的点球成金",
-              })}
-            </h1>
-            <button
-              className="btn"
-              onClick={() => onNavigate(`/canvas/top10`)}
-              style={{
-                fontSize: "var(--text-body)",
-                padding: "0.4rem 0.8rem",
-                borderRadius: "var(--radius-sm)",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                minHeight: "44px",
-                background: "var(--surface)",
-                border: "1px solid var(--5)",
-                color: "var(--ink)"
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              {t({ en: "Download Top 10 Canvas", th: "ดาวน์โหลดแคนวาส 10 อันดับ", zh: "下载前十名画布" })}
-            </button>
-          </div>
+          <h1 className="hero-title">
+            {t({
+              en: "The Moneyball of Thai city investment",
+              th: "มันนี่บอลของการลงทุนในเมืองไทย",
+              zh: "泰国城市投资的点球成金",
+            })}
+          </h1>
           <p className="hero-strapline">
             {t({
               en: "Choose a purpose to reweight the seven research scores. The diagram shows the weights; there are no hidden city bonuses. These are screening priorities, not forecasts of returns or personal suitability.",
@@ -405,15 +359,27 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
               placeholder={t({ en: "Search city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })}
               aria-label={t({ en: "Search", th: "ค้นหา", zh: "搜索" })}
             />
+            <button
+              type="button"
+              className="icon-action"
+              onClick={() => onNavigate(`/canvas/top10`)}
+              aria-label={t({ en: "Download Top 10 Canvas", th: "ดาวน์โหลดแคนวาส 10 อันดับ", zh: "下载前十名画布" })}
+              title={t({ en: "Download Top 10 Canvas", th: "ดาวน์โหลดแคนวาส 10 อันดับ", zh: "下载前十名画布" })}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+            </button>
           </div>
         </section>
 
 
 
         <section className="section reveal visible">
-          <p className="eyebrow">{t({ en: "Lenses", th: "เลนส์", zh: "镜头" })}</p>
           <label className="lens-select-label">
-            {t({ en: "Choose a purpose", th: "เลือกวัตถุประสงค์", zh: "选择用途" })}
+            <span className="visually-hidden">{t({ en: "Choose a purpose", th: "เลือกวัตถุประสงค์", zh: "选择用途" })}</span>
             <select value={lensId} onChange={event => setLensId(event.target.value as typeof lensId)}>
               {PRESET_LENSES.map(preset => <option key={preset.id} value={preset.id}>{translate(locale, preset.label)}</option>)}
             </select>
@@ -433,9 +399,8 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             ))}
           </div>
 
-          <p className="lens-screening-note">{translate(locale, lens.tagline)}</p>
           <details className="lens-method-details">
-            <summary>{t({ en: "Weights, limits, and leading cities", th: "น้ำหนัก ข้อจำกัด และเมืองที่ได้คะแนนสูง", zh: "权重、局限与领先城市" })}</summary>
+            <summary><span className="lens-screening-note">{translate(locale, lens.tagline)}</span><span className="lens-method-toggle"><span className="lens-method-label">{t({ en: "Weights and limits", th: "น้ำหนักและข้อจำกัด", zh: "权重与局限" })}</span></span></summary>
           <div className="lens-panel glass-card">
             <div className="lens-panel-copy">
               <p className="lens-panel-label">{translate(locale, lens.label)}</p>
@@ -576,8 +541,10 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                   type="button"
                   className={`filter-chip ${tierFilter === key ? "active" : ""}`}
                   onClick={() => setTierFilter(key)}
+                  aria-label={key === "all" ? undefined : TIER_LABELS[locale][key]}
+                  title={key === "all" ? undefined : TIER_LABELS[locale][key]}
                 >
-                  {key === "all" ? t({ en: "All", th: "ทั้งหมด", zh: "全部" }) : TIER_LABELS[locale][key]}
+                  {key === "all" ? t({ en: "All", th: "ทั้งหมด", zh: "全部" }) : <span aria-hidden="true">{tierSymbol(key)}</span>}
                 </button>
               ))}
             </div>
@@ -590,7 +557,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                   className={`filter-chip ${statusFilter === key ? "active" : ""}`}
                   onClick={() => setStatusFilter(key)}
                 >
-                  {key === "all" ? t({ en: "Any status", th: "ทุกสถานะ", zh: "任意状态" }) : getCityStatusLabel(key, locale)}
+                  {key === "all" ? t({ en: "All", th: "ทั้งหมด", zh: "全部" }) : getCityStatusLabel(key, locale)}
                 </button>
               ))}
             </div>
@@ -616,10 +583,10 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                 if (compareMode) setSelectedIds([]);
               }}
               aria-pressed={compareMode}
+              aria-label={compareMode ? t({ en: "Exit compare mode", th: "ออกจากโหมดเปรียบเทียบ", zh: "退出对比模式" }) : t({ en: "Compare mode", th: "โหมดเปรียบเทียบ", zh: "对比模式" })}
+              title={compareMode ? t({ en: "Exit compare mode", th: "ออกจากโหมดเปรียบเทียบ", zh: "退出对比模式" }) : t({ en: "Compare mode", th: "โหมดเปรียบเทียบ", zh: "对比模式" })}
             >
-              {compareMode
-                ? t({ en: "Exit compare", th: "ออกจากโหมดเทียบ", zh: "退出对比" })
-                : t({ en: "Compare mode", th: "โหมดเปรียบเทียบ", zh: "对比模式" })}
+              <span aria-hidden="true">⇄</span>
             </button>
           </div>
 
@@ -664,22 +631,24 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                                 {" "}· {tierSymbol(city.tier)}
                               </span>
                             </span>
+                            <span className="rank-row-caption">
+                              {[getDistinctProvinceName(city, locale), getCityStatusLabel(city.status, locale), getCityRealityLabel(city.reality, locale)].filter(Boolean).join(" · ")}
+                              {city.league ? (
+                                <>
+                                  {" "}· <span className="league-badge">{LEAGUE_LABELS[locale][city.league]}</span>
+                                </>
+                              ) : null}
+                            </span>
+                            <PillarExtremes city={city} locale={locale} />
                           </div>
-                          <div className="rank-row-caption">
-                            {[getDistinctProvinceName(city, locale), getCityStatusLabel(city.status, locale), getCityRealityLabel(city.reality, locale)].filter(Boolean).join(" · ")}
-                            {city.league ? (
-                              <>
-                                {" "}· <span className="league-badge">{LEAGUE_LABELS[locale][city.league]}</span>
-                              </>
-                            ) : null}
-                          </div>
-                          <CityPillarBars city={city} locale={locale} />
                         </div>
                         <span className="rank-row-meta">
                           <span className="rank-row-score">{lensScore.toFixed(1)}</span>
-                          <span className="rank-row-pct">p{pct}</span>
-                          <span className={`rank-row-edges ${edgeCount >= 3 ? "is-strong" : ""}`}>
-                            {edgeCount} {t({ en: "edges", th: "จุดเด่น", zh: "优势" })}
+                          <span className="rank-row-sub">
+                            <span className="rank-row-pct">p{pct}</span>
+                            <span className={`rank-row-edges ${edgeCount >= 3 ? "is-strong" : ""}`}>
+                              {edgeCount} {t({ en: "edges", th: "จุดเด่น", zh: "优势" })}
+                            </span>
                           </span>
                         </span>
                       </a>

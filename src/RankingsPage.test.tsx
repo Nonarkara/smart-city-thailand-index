@@ -17,17 +17,20 @@ describe("RankingsPage", () => {
     expect(firstRowAfter?.textContent).not.toBe(initialText);
   });
 
-  it("shows the seven pillar bars directly in each ranking row", () => {
+  it("states where each ranked city peaks and where it is weak, not seven near-identical bars", () => {
     const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
 
     const firstRow = container.querySelector(".rank-row-link");
     expect(firstRow).not.toBeNull();
-    expect(firstRow?.querySelector(".sparkline-composite")).not.toBeInTheDocument();
-    expect(firstRow?.querySelectorAll(".rank-pillar-bar")).toHaveLength(7);
-    expect(firstRow?.querySelector(".rank-pillar-bars")).toHaveAttribute(
-      "aria-label",
-      expect.stringContaining("Seven-pillar score breakdown"),
-    );
+    // Among the top ten the pillar gaps are 2-6 points: bars cannot be told apart and cost a line per row.
+    expect(firstRow?.querySelector(".rank-pillar-bar, .rank-pillar-bars")).not.toBeInTheDocument();
+    const extremes = firstRow?.querySelector(".rank-row-extremes");
+    expect(extremes?.querySelectorAll(".rank-extreme")).toHaveLength(2);
+    // The seven values are not lost: they remain on hover and for screen readers.
+    const label = extremes?.getAttribute("aria-label") ?? "";
+    expect(label).toMatch(/Strongest pillar .+ \d+; weakest .+ \d+/);
+    for (const pillar of ["Livability", "Economy", "Safety", "Wellbeing", "Environment", "Hospitality", "Digital"]) expect(label).toContain(pillar);
+    expect(extremes?.getAttribute("title")).toBe(label);
   });
 
   it("enters compare view after selecting cities in compare mode", async () => {

@@ -14,7 +14,7 @@ describe('page reading companion',()=>{
    expect(brief.copy[locale].length).toBeGreaterThan(25);
    expect(html).toContain('mascot-hand');
    expect(html).toContain(brief.action.path);
-   const asset=html.match(/src="([^"]+-crayon.webp)"/)?.[1];
+   const asset=html.match(/src="([^"]+\.webp)"/)?.[1];
    expect(asset&&existsSync(`public${asset}`)).toBeTruthy();
   }
  });
@@ -34,11 +34,26 @@ describe('page reading companion',()=>{
   const text=[...html.matchAll(/<(?:p|h3)[^>]*class="[^"]*mascot-hand[^"]*"[^>]*>([\s\S]*?)<\/(?:p|h3)>/g)].map(m=>m[1]).join('');
   for(const char of new Set(text.match(/[\u4e00-\u9fff]/g)||[]))expect(glyphs,`missing handwritten glyph ${char}`).toContain(char);
  });
- it('keeps a tool guide available without placing the expanded reading band above its controls',()=>{
-  for(const kind of ['rankings','map','compare','invest','references','canvas'] as const){
-   const html=renderToStaticMarkup(<PageMascot kind={kind} locale="en"/>);
-   expect(html).toContain('<details class="page-mascot-toggle section">');
-   expect(html).not.toContain('<details open');
+ it('is one presenter band on every page: the commissioned pose at reading size, one note, one next step',()=>{
+  for(const kind of Object.keys(PAGE_MASCOT_BRIEFS).filter(k=>k!=='home') as (keyof typeof PAGE_MASCOT_BRIEFS)[])for(const locale of ['en','th','zh'] as Locale[]){
+   const html=renderToStaticMarkup(<PageMascot kind={kind} locale={locale}/>);
+   expect(html,kind).toContain('class="page-guide section"');
+   expect(html,kind).not.toContain('<details');
+   expect(html,kind).toContain('class="page-guide-figure"');
+   expect(html,kind).not.toContain('page-mascot-art');
+   expect(html,kind).not.toContain('page-guide-avatar');
+   expect(html,kind).not.toContain('mascot-note-title');
+   expect((html.match(/<img/g)||[]).length,`${kind}: exactly one image, the pose figure`).toBe(1);
+   expect((html.match(/<a /g)||[]).length,`${kind}: exactly one next step`).toBe(1);
+   expect((html.match(/mascot-hand/g)||[]).length,`${kind}: the note is stated once`).toBe(1);
   }
+ });
+ it('offers the route photo behind a symbol-only toggle instead of a text row',()=>{
+  const html=renderToStaticMarkup(<PageMascot kind="rankings" locale="en" photo={<i/>}/>);
+  expect(html).toContain('class="page-guide-photo"');
+  expect(html).toContain('aria-expanded="false"');
+  expect(html).toContain('aria-label="Photo context"');
+  expect(html).not.toMatch(/>\s*Photo context\s*</);
+  expect(html).not.toContain('<i/>');
  });
 });

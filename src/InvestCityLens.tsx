@@ -114,15 +114,15 @@ export default function InvestCityLens({ locale, onNavigate }: Props) {
               return (
                 <tr key={p.cityId ?? p.provinceEn} onClick={() => city && onNavigate(`/city/${city.id}/`)}>
                   <td className="cell-city">{subjectLabel}</td>
-                  <td>{locale === "th" ? p.provinceTh : p.provinceEn}</td>
-                  <td>
+                  <td className="cell-prov">{locale === "th" ? p.provinceTh : p.provinceEn}</td>
+                  <td className="cell-boi">
                     {p.eecZone
                       ? <span className="tag-eec">EEC</span>
                       : <span className="tag-noneec">non-EEC</span>}
                   </td>
-                  <td className="cell-ascn">{p.ascnMember ? "✓" : "—"}</td>
-                  <td className="cell-tool">{toolName(locale, p.primaryTool)}</td>
-                  <td className="cell-risk">{t(locale, p.keyRisk)}</td>
+                  <td className="cell-ascn" data-label="ASCN">{p.ascnMember ? "✓" : "—"}</td>
+                  <td className="cell-tool" data-label={t(locale, { en: "Best vehicle", th: "เครื่องมือที่ดีที่สุด", zh: "最佳工具" })}>{toolName(locale, p.primaryTool)}</td>
+                  <td className="cell-risk" data-label={t(locale, { en: "Key risk", th: "ความเสี่ยงหลัก", zh: "主要风险" })}>{t(locale, p.keyRisk)}</td>
                 </tr>
               );
             })}
@@ -143,15 +143,17 @@ export default function InvestCityLens({ locale, onNavigate }: Props) {
               ? (locale === "th" ? city.nameTh : city.nameEn)
               : p.provinceEn;
           return (
-            <article key={p.cityId ?? p.provinceEn} className="city-lens-card">
-              <header className="city-lens-card-h">
+            <details key={p.cityId ?? p.provinceEn} className="city-lens-card">
+              <summary className="city-lens-card-h">
                 <h4>{subjectLabel}</h4>
-                <div className="city-lens-card-tags">
+                <span className="city-lens-card-tags">
                   {p.eecZone && <span className="tag-eec">EEC</span>}
                   {p.ascnMember && <span className="tag-ascn">ASCN</span>}
-                </div>
-              </header>
-              <p className="city-lens-one-liner">{t(locale, p.oneLiner)}</p>
+                </span>
+                <span className="city-lens-one-liner">{t(locale, p.oneLiner)}</span>
+                <span className="city-lens-caret" aria-hidden="true" />
+              </summary>
+              <div className="city-lens-body">
               <div className="city-lens-tools">
                 <span className="city-lens-tool primary">
                   <span className="city-lens-tool-l">{t(locale, { en: "PRIMARY", th: "หลัก", zh: "主" })}</span>
@@ -200,7 +202,8 @@ export default function InvestCityLens({ locale, onNavigate }: Props) {
                   {t(locale, { en: "Open city dossier →", th: "เปิดแฟ้มเมือง →", zh: "打开城市档案 →" })}
                 </a>
               )}
-            </article>
+              </div>
+            </details>
           );
         })}
       </div>

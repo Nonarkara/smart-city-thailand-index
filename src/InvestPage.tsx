@@ -669,63 +669,63 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       zh: "SCITI 能给您什么" })}
             </h3>
             
-            <div className="invest-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
-              <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+            <div className="fact-grid">
+              <div className="fact">
+                <h4 className="fact-k">{translate(locale, {
       en: "GPP & GPP/Capita",
       th: "GPP และ GPP ต่อหัว",
       zh: "GPP与人均GPP" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+                <p className="fact-b">{translate(locale, {
       en: "Provincial productivity and economic scale (NESDC).",
       th: "ผลิตภาพและขนาดเศรษฐกิจระดับจังหวัด (สภาพัฒน์)",
       zh: "省级生产力和经济规模 (NESDC)。" })}</p>
               </div>
-              <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+              <div className="fact">
+                <h4 className="fact-k">{translate(locale, {
       en: "BOI Incentive Zones",
       th: "เขตส่งเสริมการลงทุน BOI",
       zh: "BOI投资优惠区" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+                <p className="fact-b">{translate(locale, {
       en: "Tax holidays and special privileges (BOI).",
       th: "การยกเว้นภาษีและสิทธิพิเศษ (BOI)",
       zh: "免税期和特殊待遇 (BOI)。" })}</p>
               </div>
-              <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+              <div className="fact">
+                <h4 className="fact-k">{translate(locale, {
       en: "Minimum Wage Tiers",
       th: "ระดับค่าแรงขั้นต่ำ",
       zh: "最低工资层级" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+                <p className="fact-b">{translate(locale, {
       en: "Labor cost benchmarking (Min. of Labour).",
       th: "การเปรียบเทียบต้นทุนแรงงาน (กระทรวงแรงงาน)",
       zh: "劳动力成本基准 (劳工部)。" })}</p>
               </div>
-              <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+              <div className="fact">
+                <h4 className="fact-k">{translate(locale, {
       en: "Infrastructure Scorecard",
       th: "ตารางคะแนนโครงสร้างพื้นฐาน",
       zh: "基础设施记分卡" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+                <p className="fact-b">{translate(locale, {
       en: "Airport, rail, port, 5G, and broadband.",
       th: "สนามบิน รถไฟ ท่าเรือ 5G และบรอดแบนด์",
       zh: "机场、铁路、港口、5G和宽带。" })}</p>
               </div>
-              <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+              <div className="fact">
+                <h4 className="fact-k">{translate(locale, {
       en: "Creative Economy Heatmap",
       th: "แผนที่ความเข้มเศรษฐกิจสร้างสรรค์",
       zh: "创意经济热力图" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+                <p className="fact-b">{translate(locale, {
       en: "15 creative industries by province.",
       th: "15 อุตสาหกรรมสร้างสรรค์แยกตามจังหวัด",
       zh: "按省份划分的15个创意产业。" })}</p>
               </div>
-              <div className="glass-card" style={{ padding: "1.5rem" }}>
-                <h4 style={{ color: "var(--teal)", marginBottom: "0.5rem" }}>{translate(locale, {
+              <div className="fact">
+                <h4 className="fact-k">{translate(locale, {
       en: "Moneyball Score",
       th: "คะแนน Moneyball",
       zh: "Moneyball评分" })}</h4>
-                <p style={{ fontSize: "var(--text-body)", color: "var(--3)" }}>{translate(locale, {
+                <p className="fact-b">{translate(locale, {
       en: "Composite: growth + cost + infra + creative.",
       th: "คะแนนรวม: การเติบโต + ต้นทุน + โครงสร้างพื้นฐาน + สร้างสรรค์",
       zh: "综合：增长 + 成本 + 基础设施 + 创意。" })}</p>
@@ -907,20 +907,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             zh: "该指数不是学术工具，而是决策工具。以下是如何将评分解读为投资信号。",
           })}
         </p>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "1rem",
-          marginTop: "1.5rem",
-        }}>
+        <div className="fact-grid">
           {insightCards.map((c, i) => (
-            <div key={i} className="glass-card shadow-premium" style={{
-              padding: "1.5rem 1.25rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: ".75rem",
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+            <div key={i} className="fact">
+              <div className="fact-tier">
                 <span style={{
                   font: "700 var(--text-micro) var(--mono)",
                   color: c.tierColor,
@@ -932,12 +922,8 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                   {c.tier}
                 </span>
               </div>
-              <h3 style={{ font: "700 var(--text-body) var(--font-heading)", letterSpacing: "-.02em", color: "var(--ink)" }}>
-                {translate(locale, c.headline)}
-              </h3>
-              <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
-                {translate(locale, c.body)}
-              </p>
+              <h3 className="fact-h">{translate(locale, c.headline)}</h3>
+              <p className="fact-b">{translate(locale, c.body)}</p>
             </div>
           ))}
         </div>
@@ -1023,21 +1009,10 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             zh: "不加粉饰。这些是每位泰国智慧城市投资者必须纳入定价的结构性风险。",
           })}
         </p>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "1rem",
-          marginTop: "1.5rem",
-        }}>
+        <div className="fact-grid">
           {risks.map((r, i) => (
-            <div key={i} className="glass-card" style={{
-              padding: "1.25rem 1rem",
-              borderLeft: `3px solid ${severityColor(r.severity)}`,
-              display: "flex",
-              flexDirection: "column",
-              gap: ".5rem",
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
+            <div key={i} className="fact fact-risk" style={{ borderLeftColor: severityColor(r.severity) }}>
+              <div className="fact-tier">
                 <span style={{
                   font: "700 var(--text-micro) var(--mono)",
                   color: severityColor(r.severity),
@@ -1057,12 +1032,8 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                   {severityLabel(r.severity)}
                 </span>
               </div>
-              <h3 style={{ font: "700 var(--text-body) var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em" }}>
-                {translate(locale, r.title)}
-              </h3>
-              <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
-                {translate(locale, r.body)}
-              </p>
+              <h3 className="fact-h">{translate(locale, r.title)}</h3>
+              <p className="fact-b">{translate(locale, r.body)}</p>
             </div>
           ))}
         </div>

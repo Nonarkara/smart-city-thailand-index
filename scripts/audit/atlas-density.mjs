@@ -87,7 +87,7 @@ try {
   assert.equal(await page.locator('.investment-atlas-results .city-story').getAttribute('open'), '');
   assert.ok(await page.locator('.investment-atlas-results .city-story-body').innerText(), 'full city story not readable');
   await page.screenshot({ path: `${output}/story-expanded.png` });
-  await page.locator('.investment-atlas-results button').filter({ hasText: 'Open city dossier' }).click();
+  await page.locator('.investment-atlas-results button[aria-label="Open city dossier →"]').click();
   await page.waitForURL(url => url.pathname.replace(/\/$/, '') === `/city/${lastCity.id}`);
   await page.locator('.dossier-tab-list').waitFor();
   await page.goto(`${origin}/invest`);

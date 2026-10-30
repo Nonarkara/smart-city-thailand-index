@@ -6,7 +6,6 @@ import { useMemo, useRef, useState } from "react";
 import { allCities } from "./cityData.ts";
 import { getInvestorPitchForLocale } from "./cityInvestorPitch.ts";
 import { getCityName, getDistinctProvinceName, getProvinceName, translate } from "./cityPresentation";
-import { NongPlubMiniBadge } from "./NongPlubCard";
 import { TIER_LABELS } from "./types.ts";
 import type { Locale, SmartCity } from "./types.ts";
 
@@ -35,14 +34,6 @@ const REGION_FILTERS: FilterRegion[] = ["all", "bangkok", "central", "east", "no
 // ponytail: hardcoded — these are the cities with the richest curated context
 const PAGE_SIZE = 12;
 const SPOTLIGHT_IDS = ["nakhon-si-thammarat", "phuket", "samyan", "chiang-mai-old-town"];
-
-function tierColor(tier: SmartCity["tier"]): string {
-  return tier === "alpha" ? "var(--teal)" : tier === "beta" ? "var(--beta-text)" : "var(--3)";
-}
-
-function tierBg(tier: SmartCity["tier"]): string {
-  return tier === "alpha" ? "var(--teal-glow)" : tier === "beta" ? "rgba(217, 119, 6, .1)" : "rgba(113, 113, 122, .1)";
-}
 
 export default function InvestCityDirectory({ locale, onNavigate }: Props) {
   const [tierFilter, setTierFilter] = useState<FilterTier>("all");
@@ -150,15 +141,7 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
       <h3 ref={resultsRef} tabIndex={-1} className="investment-atlas-count" style={{ scrollMarginTop: "80px", marginBlock: ".75rem" }} aria-live="polite">{translate(locale, countLabel)}</h3>
 
       {/* Cards */}
-      <div className="investment-atlas-results" style={{
-        display: "grid",
-        alignItems: "start",
-        /* min() lets the 320px floor collapse when the column is narrower
-           than 320px. Without it a 320px phone got a 320px track inside a
-           296px column and the card ran 14px past the viewport. */
-        gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
-        gap: "1rem",
-      }}>
+      <div className="investment-atlas-results">
         {shown.map(city => (
           <CityCard key={city.id} city={city} locale={locale} onNavigate={onNavigate} />
         ))}
@@ -244,67 +227,27 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
     </>
   );
 
-  return (
-    <div data-atlas-city-id={city.id} className="glass-card shadow-premium" style={{
-      padding: "1.25rem",
-      display: "flex",
-      flexDirection: "column",
-      gap: ".65rem",
-      ...(featured ? { borderTop: "2px solid var(--teal)" } : {}),
-    }}>
-      {/* Header */}
-      <div>
-        <div style={{ display: "flex", alignItems: "center", gap: ".5rem", marginBottom: ".35rem", flexWrap: "wrap", minWidth: 0 }}>
-          {/* minWidth 0: a wrapping flex row still reports a single-line
-              min-content (the sum of its chips), and that minimum was
-              pushing the whole card 24px past its grid track on a 320px
-              phone. With it removed the chips wrap instead. */}
-          <span style={{
-            font: "700 var(--text-micro) var(--mono)",
-            color: tierColor(city.tier),
-            padding: ".12rem .4rem",
-            background: tierBg(city.tier),
-            letterSpacing: ".08em",
-            textTransform: "uppercase",
-          }}>
-            {TIER_LABELS[locale][city.tier]}
-          </span>
-          <span style={{
-            font: "700 var(--text-micro) var(--mono)",
-            color: "var(--teal)",
-            padding: ".12rem .4rem",
-            background: "var(--teal-glow)",
-            letterSpacing: ".06em",
-          }}>
-            {pitch.investabilityLabel}
-          </span>
-          {pitch.tags.slice(0, 2).map(tag => (
-            <span key={tag} style={{
-              font: "500 var(--text-micro) var(--mono)",
-              color: "var(--3)",
-              padding: ".12rem .35rem",
-              border: "1px solid var(--4)",
-            }}>
-              {tag}
-            </span>
-          ))}
-        </div>
-        <h3 style={{ font: "800 var(--text-body) var(--font-heading)", letterSpacing: "-.02em", lineHeight: 1.2, marginBottom: ".15rem" }}>
-          {getCityName(city, locale)}
-        </h3>
-        {identityMeta && <p style={{ font: "500 var(--text-micro) var(--font)", color: "var(--3)", margin: 0 }}>
-          {identityMeta}
-        </p>}
-        <div style={{ marginTop: ".4rem" }}>
-          <NongPlubMiniBadge city={city} locale={locale} onOpen={() => onNavigate(`/city/${city.id}`)} />
-        </div>
-      </div>
+  const meta = [
+    TIER_LABELS[locale][city.tier],
+    identityMeta,
+    pitch.investabilityLabel,
+    ...pitch.tags.slice(0, 2),
+  ].filter(Boolean).join(" · ");
 
-      {/* Pitch */}
-      <p className="investment-atlas-headline" style={{ font: "600 var(--text-body) var(--font)", color: "var(--ink)", lineHeight: 1.5, margin: 0 }}>
-        {headline}
-      </p>
-      {featured ? story : (
+  return (
+    <article data-atlas-city-id={city.id} className={featured ? "atlas-row atlas-row-featured" : "atlas-row"}>
+      <h3 className="atlas-row-name">{getCityName(city, locale)}</h3>
+      <button
+        type="button"
+        className="atlas-row-open"
+        aria-label={translate(locale, { en: "Open city dossier →", th: "เปิดแฟ้มเมือง →", zh: "打开城市档案 →" })}
+        onClick={() => onNavigate(`/city/${city.id}`)}
+      >
+        {translate(locale, { en: "Dossier", th: "แฟ้ม", zh: "档案" })} →
+      </button>
+      <p className="atlas-row-meta">{meta}</p>
+      <p className="investment-atlas-headline">{headline}</p>
+      {featured ? <div className="city-story-body">{story}</div> : (
         <details className="city-story">
           <summary className="city-story-toggle">
             {translate(locale, { en: "Read the full story", th: "อ่านเรื่องราวฉบับเต็ม", zh: "阅读完整故事" })}
@@ -312,14 +255,6 @@ function CityCard({ city, locale, onNavigate, featured }: { city: SmartCity; loc
           <div className="city-story-body">{story}</div>
         </details>
       )}
-
-      <button
-        className="ghost-button"
-        onClick={() => onNavigate(`/city/${city.id}`)}
-        style={{ alignSelf: "flex-start", marginTop: ".5rem" }}
-      >
-        {translate(locale, { en: "Open city dossier →", th: "เปิดแฟ้มเมือง →", zh: "打开城市档案 →" })}
-      </button>
-    </div>
+    </article>
   );
 }

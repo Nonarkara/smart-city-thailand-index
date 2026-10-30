@@ -216,3 +216,19 @@ gates fail closed. CDPT downloads that run's `site-dist` and reuses its complete
 rendered checks rather than repeating them on a contended shared Mac. Artifact
 staging, clean-tree checks, Cloudflare deployment and live publication checks still
 run locally. The ordinary local path continues to execute every gate locally.
+
+## Page budget and the presenter band (30 October 2026)
+
+Law: workspace `CLAUDE.md` §11.12.1. Every page opens with one presenter band
+(`PageMascot.tsx`): the page's commissioned Nong Plub pose from
+`public/nong-plub/guide/` (built by `scripts/build-guide-figures.py`) stands on a
+hairline beside one handwritten note and one link, 104 px on phones and 128 px on
+desktop. Never shrink her to an avatar and never enlarge her into a sticker; the
+photo context is a symbol-only camera toggle, not a text row. Ranking rows state
+a peak and trough (▲▼) instead of seven pillar bars; the full bars live on the
+city dossier. Compact lists are ruled rows, not padded cards (`.atlas-row`,
+`.fact-grid`). `scripts/audit/page-budget.mjs --serve` gates per-route page height
+in screens at 390 and 1440, H1 position and the band; ceilings only go down. It
+runs in CI and CDPT. Remaining giants to compact: `/invest` finance, checklist and
+explorer sections, `/baseline`, `/methodology`, `/program`.
+

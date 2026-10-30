@@ -447,8 +447,7 @@ export default function App() {
 
       {/* ─── CONTENT ─── */}
       <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""} ${isCanvasRoute ? "page-frame-canvas" : ""}`} key={getRouteKey(route)}>
-        {!["home","city","canvas","bingo"].includes(route.kind) && <PageMascot kind={route.kind} locale={locale} />}
-        {!["home","city","canvas","bingo"].includes(route.kind) && <details className="page-photo-reading section"><summary>{locale === "th" ? "ภาพบริบท" : locale === "zh" ? "背景照片" : "Photo context"}</summary><PagePhotoHero route={route} locale={locale} /></details>}
+        {!["home","city","canvas","bingo"].includes(route.kind) && <PageMascot kind={route.kind} locale={locale} photo={PAGE_HERO_ASSETS[route.kind as StaticHeroKind] ? <PagePhotoHero route={route} locale={locale} /> : undefined} />}
         {isCanvasRoute && <PageMascot kind="canvas" locale={locale} />}
         <ErrorBoundary locale={locale}>
           <Suspense fallback={<PageSkeleton locale={locale} />}>
