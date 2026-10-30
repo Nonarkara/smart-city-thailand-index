@@ -6,7 +6,9 @@
 
 main .dashboard-home .home-column > section.section {
   padding-block: 0;
-  margin-block: 24px 0;
+  /* The rows already carry a closing rule, so the step between sections
+     is the close rhythm (12px), not a second 24px gap. */
+  margin-block: 12px 0;
 }
 
 .dashboard-home .home-column .eyebrow { margin-bottom: 4px; }
