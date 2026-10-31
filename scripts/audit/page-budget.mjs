@@ -9,9 +9,9 @@ const report = process.argv.includes('--report');
 const check = (ok, msg) => { if (!ok && !report) assert.fail(msg); };
 // [route, max screens @390x844, max screens @1440x900, max H1 top @390 (px)]
 const BUDGET = [
-  ['/', 15, 7.5, 520],
-  ['/rankings', 8, 5, 420], ['/methodology', 18.5, 10.5, 420], ['/partners', 13, 6.5, 420], ['/program', 15, 8.5, 420],
-  ['/invest', 24, 13.5, 420], ['/baseline', 22.5, 11.5, 420], ['/audit', 11.5, 6, 420], ['/references', 11.5, 6, 420], ['/knowledge', 8.5, 5.5, 420],
+  ['/', 14.4, 7.2, 520],
+  ['/rankings', 7.7, 4.8, 420], ['/methodology', 18.2, 10, 420], ['/partners', 12.7, 6.4, 420], ['/program', 14.2, 7.8, 420],
+  ['/invest', 23, 13, 420], ['/baseline', 22, 11.1, 420], ['/audit', 11.5, 5.7, 420], ['/references', 11.5, 5.7, 420], ['/knowledge', 7.6, 5.4, 420],
 ];
 let server, browser;
 try {

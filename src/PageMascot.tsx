@@ -4,7 +4,7 @@ import type {Locale} from './types';
 import {PAGE_MASCOT_BRIEFS,type PageMascotKind,type MascotPose} from './pageMascotBriefs';
 import {NONG_PLUB_ASSETS} from './nongPlubData';
 import {toAppPath} from './routing';
-const POSES:Record<MascotPose,string>={...NONG_PLUB_ASSETS,welcome:'/nong-plub/nong-plub-welcome-crayon.webp',explain:'/nong-plub/nong-plub-explain-crayon.webp'};
+const POSES:Record<MascotPose,string>={...NONG_PLUB_ASSETS,welcome:'/nong-plub/nong-plub-welcome-crayon.webp',explain:'/nong-plub/nong-plub-explain-crayon.webp',glance:'/nong-plub/nong-plub-glance-crayon.webp',peace:'/nong-plub/nong-plub-peace-crayon.webp',colour:'/nong-plub/nong-plub-colour-crayon.webp',turn:'/nong-plub/nong-plub-turn-crayon.webp',walk:'/nong-plub/nong-plub-walk-crayon.webp',ledger:'/nong-plub/nong-plub-ledger-crayon.webp',portrait:'/nong-plub/nong-plub-portrait-crayon.webp',point:'/nong-plub/nong-plub-point-crayon.webp',seat:'/nong-plub/nong-plub-seat-crayon.webp',plain:'/nong-plub/nong-plub-plain-crayon.webp'};
 const L=(locale:Locale,en:string,th:string,zh:string)=>locale==='th'?th:locale==='zh'?zh:en;
 /* Right-sized derivatives of the commissioned poses (scripts/build-guide-figures.py). */
 const GUIDE:Record<MascotPose,{src:string;w:number}>={
@@ -12,6 +12,7 @@ const GUIDE:Record<MascotPose,{src:string;w:number}>={
  temple:{src:'/nong-plub/guide/nong-plub-temple.webp',w:188},cafe:{src:'/nong-plub/guide/nong-plub-cafe.webp',w:253},
  nature:{src:'/nong-plub/guide/nong-plub-nature.webp',w:221},welcome:{src:'/nong-plub/guide/nong-plub-welcome.webp',w:253},
  explain:{src:'/nong-plub/guide/nong-plub-explain.webp',w:203},
+ glance:{src:'/nong-plub/guide/nong-plub-glance.webp',w:232},peace:{src:'/nong-plub/guide/nong-plub-peace.webp',w:245},colour:{src:'/nong-plub/guide/nong-plub-colour.webp',w:187},turn:{src:'/nong-plub/guide/nong-plub-turn.webp',w:165},walk:{src:'/nong-plub/guide/nong-plub-walk.webp',w:198},ledger:{src:'/nong-plub/guide/nong-plub-ledger.webp',w:240},portrait:{src:'/nong-plub/guide/nong-plub-portrait.webp',w:282},point:{src:'/nong-plub/guide/nong-plub-point.webp',w:227},seat:{src:'/nong-plub/guide/nong-plub-seat.webp',w:197},plain:{src:'/nong-plub/guide/nong-plub-plain.webp',w:227},
 };
 
 /*

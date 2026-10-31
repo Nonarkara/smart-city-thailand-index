@@ -13687,3 +13687,71 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
  .nong-plub-card.nong-plub-infographic .nong-plub-story-col{max-width:none}
  .nong-plub-card.nong-plub-infographic .nong-plub-intro-notes{grid-column:3;grid-row:2;align-self:stretch;padding-block:5px 0;border-bottom:1px solid var(--5)}
 }
+
+/* MSH sweep, 31 Oct 2026. Each repair removes the invented space rather than padding around it.
+   Opening argument: the headline sits on the chips' row and the evidence reads in the same two
+   columns underneath, so nothing is left as a 340px void beside a five-line paragraph. */
+@media (min-width: 960px) {
+  .opening-argument-inner > .opening-argument-headline { grid-column: 1; grid-row: 1; align-self: center; margin: 0; }
+  .opening-argument-inner > .home-decision-guide { display: contents; }
+  .opening-argument-inner .home-purpose-controls { grid-column: 2; grid-row: 1; margin: 0; }
+  .opening-argument-inner .home-purpose-evidence { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: subgrid; align-items: start; row-gap: 4px; margin: 8px 0 0; }
+  .opening-argument-inner .home-purpose-evidence > p { margin: 0; }
+  .opening-argument-inner .home-purpose-evidence > p:first-child { grid-column: 1; grid-row: 1 / span 2; }
+  .opening-argument-inner .home-purpose-evidence > .home-purpose-check { grid-column: 2; grid-row: 1; }
+  .opening-argument-inner .home-purpose-evidence > .text-button { grid-column: 2; grid-row: 2; justify-self: start; }
+}
+/* Two-five-seven: three stretched cards (one 1011px tall to fit seven items) become three ruled rows
+   on one grid: numeral, title, content. */
+.program-257-grid { grid-template-columns: minmax(0, 1fr); gap: 0; border-top: 1px solid var(--5); }
+.program-257-card { display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 12px; align-items: start; padding: 12px 0; background: none; border-bottom: 1px solid var(--5); }
+.program-257-num { grid-column: 1; grid-row: 1 / span 3; margin: 0; }
+.program-257-card > :not(.program-257-num) { grid-column: 2; margin-block: 0; }
+.program-257-card > h3 { margin-bottom: 4px; }
+.program-257-card .program-dims-grid { grid-template-columns: minmax(0, 1fr); gap: 6px 0; margin-top: 4px; }
+.program-257-card .program-dim-card { padding: 0; background: none; }
+.program-257-card .program-dim-icon { display: none; }
+.program-257-card .program-dim-name { display: inline; margin: 0 6px 0 0; }
+.program-257-card .program-dim-desc { display: inline; }
+@media (min-width: 1024px) {
+  .program-257-card { grid-template-columns: 48px 240px minmax(0, 1fr); column-gap: 32px; }
+  .program-257-num { grid-row: 1 / span 6; }
+  .program-257-card > h3 { grid-column: 2; grid-row: 1 / span 6; margin: 0; }
+  .program-257-card > :not(.program-257-num):not(h3) { grid-column: 3; }
+  .program-257-card .program-dims-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 32px; margin: 0; }
+}
+/* Feedback: a one-line strip, text left and the action on the same edge as the page column. */
+.section .feedback-cta { max-width: none; margin: 0; padding: 12px 0; text-align: left; background: none; border-top: 1px solid var(--5); display: grid; gap: 4px; }
+.section .feedback-cta h2, .section .feedback-cta p { margin: 0; }
+.section .feedback-cta .cta-button { justify-self: start; margin-top: 8px; }
+@media (min-width: 640px) {
+  .section .feedback-cta { grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: center; }
+  .section .feedback-cta h2, .section .feedback-cta p { grid-column: 1; }
+  .section .feedback-cta .cta-button { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+}
+/* Showcase pillar profile: score on the left, bars in two columns, instead of a 520px card beside half a page of nothing. */
+@media (min-width: 760px) {
+  .showcase-pillar-profile { max-width: none; display: grid; grid-template-columns: 168px minmax(0, 1fr); column-gap: 32px; align-items: start; }
+  .showcase-pillar-header { flex-direction: column; gap: 0; margin: 0; padding: 0 16px 0 0; border-bottom: 0; border-right: 1px solid var(--5); align-self: stretch; }
+  .showcase-pillar-tier-label { margin-left: 0; }
+}
+@media (min-width: 1024px) {
+  .showcase-pillar-bars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 32px; }
+}
+/* References weights: the row had no layout at all ("Livability25%" glued on one line, 157px of nothing beside it). */
+.weight-audit-grid { display: grid; gap: 4px 32px; }
+.weight-audit-row { display: grid; grid-template-columns: 8px 112px 40px minmax(0, 1fr); column-gap: 10px; align-items: center; min-height: 24px; font: 400 var(--text-body)/1.4 var(--font); }
+.weight-audit-row .p-dot { width: 8px; height: 8px; }
+.weight-audit-row .p-weight { font-family: var(--mono); text-align: right; }
+.weight-audit-row .p-bar-track { height: 6px; background: var(--5); }
+.weight-audit-row .p-bar-fill { height: 100%; }
+@media (min-width: 1024px) { .weight-audit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Baseline sources: a 44px link inside 22px of padding made every two-line source an 86px row. */
+.baseline-source { padding-block: 4px; }
+.baseline-source-name { min-height: 32px; }
+/* Invest explorer: the detail column stretched to the chart's height and left a 224px void under it. */
+.investment-explorer-detail { align-self: start; }
+.program-257-card .program-dim-name { font-size: var(--text-body); }
+/* Program stats: four figures on a three-column grid orphaned the fourth on its own row. */
+.program-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 760px) { .program-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

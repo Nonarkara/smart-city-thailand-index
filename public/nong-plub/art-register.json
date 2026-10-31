@@ -51,7 +51,68 @@
       "reference": "Approved urban and cafe illustrations",
       "brief": "Lavender cardigan, notebook and explaining gesture",
       "asset": "/nong-plub/nong-plub-explain-crayon.webp"
+    },
+    {
+      "id": "glance",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "White tee, sunglasses on head, glancing aside.",
+      "asset": "/nong-plub/nong-plub-glance-crayon.webp"
+    },
+    {
+      "id": "peace",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "Blue patterned tunic, sunglasses at collar, peace sign.",
+      "asset": "/nong-plub/nong-plub-peace-crayon.webp"
+    },
+    {
+      "id": "colour",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "Pink floral blouse, hands clasped.",
+      "asset": "/nong-plub/nong-plub-colour-crayon.webp"
+    },
+    {
+      "id": "turn",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "White ribbed polo, turning to the camera.",
+      "asset": "/nong-plub/nong-plub-turn-crayon.webp"
+    },
+    {
+      "id": "walk",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "Rust top, navy shoulder bag, hands together.",
+      "asset": "/nong-plub/nong-plub-walk-crayon.webp"
+    },
+    {
+      "id": "ledger",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "Blue, green and red patchwork top.",
+      "asset": "/nong-plub/nong-plub-ledger-crayon.webp"
+    },
+    {
+      "id": "portrait",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "Grey band-collar shirt, head and shoulders.",
+      "asset": "/nong-plub/nong-plub-portrait-crayon.webp"
+    },
+    {
+      "id": "point",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "Seated in a floral dress, pointing out of frame.",
+      "asset": "/nong-plub/nong-plub-point-crayon.webp"
+    },
+    {
+      "id": "seat",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "Seated in a navy tee, bag on lap.",
+      "asset": "/nong-plub/nong-plub-seat-crayon.webp"
+    },
+    {
+      "id": "plain",
+      "reference": "owner-supplied photograph set, 2026-10-31",
+      "brief": "Pale pink sweater, relaxed.",
+      "asset": "/nong-plub/nong-plub-plain-crayon.webp"
     }
   ],
-  "consent": "Owner confirmed Nong Plub consented to public mascot likeness use promoting Thailand Smart City, 2026-10-28."
+  "consent": "Owner confirmed Nong Plub consented to public mascot likeness use promoting Thailand Smart City, 2026-10-28.",
+  "generation2": "2026-10-31: crayon portraits rendered locally from the owner's photographs (Qwen-Image-Edit-2509 via mflux), cut out with Apple Vision foreground masks; each render checked for stray text. Owner confirmed Nong Plub consented to public mascot likeness use promoting Thailand Smart City, 2026-10-28."
 }

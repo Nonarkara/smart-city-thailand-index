@@ -2,7 +2,7 @@ import type { Locale } from "./types";
 import type { Route } from "./routing";
 
 export type PageMascotKind = Exclude<Route["kind"], "city" | "creative-economy">;
-export type MascotPose = "urban" | "heritage" | "temple" | "cafe" | "nature" | "welcome" | "explain";
+export type MascotPose = "urban" | "heritage" | "temple" | "cafe" | "nature" | "welcome" | "explain" | "glance" | "peace" | "colour" | "turn" | "walk" | "ledger" | "portrait" | "point" | "seat" | "plain";
 export interface PageMascotBrief {
   copy: Record<Locale, string>;
   action: { path: string; label: Record<Locale, string> };
@@ -57,7 +57,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "追溯数据来源"
       }
     },
-    "pose": "explain"
+    "pose": "point"
   },
   "story": {
     "copy": {
@@ -105,11 +105,11 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "打开城市档案"
       }
     },
-    "pose": "heritage"
+    "pose": "colour"
   },
   "partners": {
     "copy": {
-      "en": "Cities need people and institutions that can work together. Explore cooperation routes and responsibilities; a mention here does not establish an endorsement or a funded project.",
+      "en": "Cities need people and institutions that work together. See who does what; a mention here is not an endorsement or a funded project.",
       "th": "เมืองต้องอาศัยคนและหน่วยงานที่ทำงานร่วมกันได้ ลองดูช่องทางความร่วมมือและบทบาท การมีชื่อที่นี่ไม่ได้ยืนยันการรับรองหรือเงินทุนโครงการ",
       "zh": "城市需要能够协作的人与机构。这里介绍合作渠道和职责；页面提及不等于背书，也不代表项目已获资金。"
     },
@@ -121,7 +121,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "了解计划背景"
       }
     },
-    "pose": "welcome"
+    "pose": "portrait"
   },
   "map": {
     "copy": {
@@ -169,7 +169,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "查看来源登记"
       }
     },
-    "pose": "explain"
+    "pose": "ledger"
   },
   "references": {
     "copy": {
@@ -201,7 +201,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "从城市档案开始"
       }
     },
-    "pose": "explain"
+    "pose": "walk"
   },
   "knowledge": {
     "copy": {
@@ -217,7 +217,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "对照原始来源"
       }
     },
-    "pose": "cafe"
+    "pose": "seat"
   },
   "discover": {
     "copy": {
@@ -233,7 +233,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "比较你的候选城市"
       }
     },
-    "pose": "urban"
+    "pose": "glance"
   },
   "invest": {
     "copy": {
@@ -265,7 +265,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "选择更多城市"
       }
     },
-    "pose": "explain"
+    "pose": "turn"
   },
   "bingo": {
     "copy": {
@@ -281,7 +281,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "查阅术语解释"
       }
     },
-    "pose": "welcome"
+    "pose": "peace"
   },
   "baseline": {
     "copy": {
@@ -297,7 +297,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "核对来源范围"
       }
     },
-    "pose": "explain"
+    "pose": "plain"
   },
   "canvas": {
     "copy": {

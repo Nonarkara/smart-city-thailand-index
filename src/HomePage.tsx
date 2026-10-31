@@ -192,9 +192,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
           large monospaced numbers anchoring three hard claims. */}
       <section className="opening-argument" aria-label={t({ en: "Opening argument", th: "ประเด็นตั้งต้น", zh: "开篇论点" })}>
         <div className="opening-argument-inner">
-          <p className="opening-argument-eyebrow">
-            {t({ en: "Opening argument", th: "ประเด็นตั้งต้น", zh: "开篇论点" })}
-          </p>
           <h2 className="opening-argument-headline">
             {t({ en: "What are you choosing a city for?", th: "คุณกำลังเลือกเมืองเพื่ออะไร", zh: "您选择城市的目的是什么？" })}
           </h2>
