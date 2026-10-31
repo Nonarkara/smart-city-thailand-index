@@ -13755,3 +13755,9 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 /* Program stats: four figures on a three-column grid orphaned the fourth on its own row. */
 .program-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 760px) { .program-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* Invest city lens: one tag column width on every row (Hat Yai and Krabi had no badge, so their text jumped left), and the zone chip stays one line. */
+.tag-eec, .tag-noneec, .tag-ascn { white-space: nowrap; }
+.city-lens-card-h { grid-template-columns: minmax(0, 12rem) 3.5rem minmax(0, 1fr) 1rem; }
+@media (max-width: 720px) { .city-lens-card-h { grid-template-columns: minmax(0, 1fr) auto 1rem; } }
+/* Atlas controls: search shares the row with the three selects on desktop; on a phone it takes its own row so the selects line up beneath it. */
+@media (max-width: 720px) { .investment-atlas-controls > label:first-child { flex: 1 1 100% !important; } }

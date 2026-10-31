@@ -115,9 +115,9 @@ export default function InvestCityDirectory({ locale, onNavigate }: Props) {
 
       {/* The directory task comes before optional long-form featured reading. */}
       <div className="investment-atlas-controls" role="group" aria-label={translate(locale, controlsLabel)} style={{ display: "flex", flexWrap: "wrap", gap: ".5rem .75rem", alignItems: "end", marginBlock: "1rem" }}>
-        <label style={{ flexBasis: "100%", display: "grid", gap: ".25rem" }}>
+        <label style={{ flex: "1 1 16rem", display: "grid", gap: ".25rem" }}>
           {translate(locale, { en: "Search city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })}
-          <input type="search" value={query} onChange={event => { setQuery(event.target.value); setPage(0); }} style={{ minHeight: "44px", width: "100%", maxWidth: "32rem", padding: "0 .5rem", font: "400 var(--text-body) var(--font)", border: "1px solid var(--4)", background: "var(--paper)", color: "var(--ink)" }} />
+          <input type="search" value={query} onChange={event => { setQuery(event.target.value); setPage(0); }} style={{ minHeight: "44px", width: "100%", padding: "0 .5rem", font: "400 var(--text-body) var(--font)", border: "1px solid var(--4)", background: "var(--paper)", color: "var(--ink)" }} />
         </label>
         <label style={{ display: "grid", gap: ".25rem" }}>
           {translate(locale, { en: "Tier", th: "ระดับ", zh: "层级" })}
