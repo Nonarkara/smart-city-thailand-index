@@ -13661,3 +13661,29 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
   .dashboard-home .home-city-guide .home-city-guide-visual { margin-right: calc(-1 * var(--gutter)); min-height: 172px; }
   .dashboard-home .home-city-guide .home-city-guide-art { width: 110%; }
 }
+
+/* ── NONG PLUB CITY INTRO, ON ONE GRID (MSH + planar alignment) ────────────────
+ * One module, --plub-pitch: the label row and each of the seven pillar rows are that
+ * height. The portrait is stretched to the list's own height (contain:size takes its
+ * natural size out of the sizing) and cropped by the footing hairline, so the three
+ * columns share one top edge and one foot. Header is a single line. No portrait
+ * floating centred in a void, no notes at a different height. */
+.nong-plub-card.nong-plub-infographic{--plub-pitch:24px;grid-template-columns:116px minmax(0,1fr);gap:6px 16px;align-items:start;max-width:none;padding-block:10px 0;margin-block:12px}
+.nong-plub-card.nong-plub-infographic .nong-plub-intro-header{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 12px;grid-column:1/-1}
+.nong-plub-card.nong-plub-infographic .nong-plub-site-name{margin:0}
+.nong-plub-card.nong-plub-infographic .nong-plub-illustration{grid-column:1;grid-row:2;width:100%;height:auto;contain:size;object-fit:cover;object-position:50% 0;align-self:stretch;border-bottom:1px solid var(--5)}
+.nong-plub-card.nong-plub-infographic .nong-plub-story-col{grid-column:2;grid-row:2;align-self:stretch;max-width:none;border-bottom:1px solid var(--5)}
+.nong-plub-card.nong-plub-infographic .nong-plub-profile-label{display:flex;align-items:center;height:var(--plub-pitch);margin:0}
+.nong-plub-card.nong-plub-infographic .nong-plub-signals li{min-height:var(--plub-pitch);height:var(--plub-pitch)}
+.nong-plub-card.nong-plub-infographic .nong-plub-intro-notes{grid-column:1/-1;grid-row:3;padding-block:8px 10px}
+.nong-plub-card.nong-plub-infographic .nong-plub-extremes{margin:0 0 6px}
+.nong-plub-card.nong-plub-infographic .nong-plub-score-note{margin:0 0 6px}
+@media (min-width:760px){
+ .nong-plub-card.nong-plub-infographic{--plub-pitch:28px;grid-template-columns:168px minmax(0,1fr);column-gap:32px}
+ .nong-plub-card.nong-plub-infographic .nong-plub-story-col{max-width:480px}
+}
+@media (min-width:1024px){
+ .nong-plub-card.nong-plub-infographic{grid-template-columns:168px minmax(300px,440px) minmax(0,1fr)}
+ .nong-plub-card.nong-plub-infographic .nong-plub-story-col{max-width:none}
+ .nong-plub-card.nong-plub-infographic .nong-plub-intro-notes{grid-column:3;grid-row:2;align-self:stretch;padding-block:5px 0;border-bottom:1px solid var(--5)}
+}

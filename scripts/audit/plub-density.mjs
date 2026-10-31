@@ -6,7 +6,11 @@ const output='.tmp/plub-intro';await mkdir(output,{recursive:true});
 const {data:cities}=JSON.parse(await readFile('dist/api-static/cities.json','utf8'));
 const byId=new Map(cities.map(c=>[c.id,c]));const results=[];
 function check(g,width){
- if(width>=1024){assert.ok(g.cardWidth/g.parentWidth>=.94,'unused parent reading region');assert.ok(g.portraitWidth/g.cardWidth>=.20,'mascot reduced to a thumbnail');}
+ if(width>=1024){assert.ok(g.cardWidth/g.parentWidth>=.94,'unused parent reading region');assert.ok(g.portraitWidth>=160,'mascot reduced to a thumbnail');
+  const {art,story,notes}=g.edges;assert.ok(Math.abs(art.top-story.top)<=1&&Math.abs(notes.top-story.top)<=1,'columns do not share a top edge');
+  assert.ok(Math.abs(art.bottom-story.bottom)<=2&&Math.abs(notes.bottom-story.bottom)<=2,'columns do not share a footing');
+  assert.ok(g.edges.header.bottom<=story.top,'header overlaps the columns');}
+ if(width>=760){const {art,story}=g.edges;assert.ok(Math.abs(art.top-story.top)<=1,'portrait and signals do not share a top edge');assert.ok(Math.abs(art.left-g.edges.header.left)<=1,'portrait off the header edge');}
  assert.ok(g.height<=(width<760?500:440),`inflated infographic: ${g.height}px at ${width}`);
  assert.equal(g.overflow,0,'page overflow');assert.equal(g.rows.length,7,'pillar lost');
  assert.ok(g.imageLoaded&&g.src.endsWith('-crayon.webp'),'approved crayon art missing');
@@ -20,7 +24,7 @@ try{
   browser=await chromium.launch();const p=await browser.newPage({viewport:{width,height:width===390?844:900},reducedMotion:'reduce'});
   await p.goto(`${origin}/city/${id}/`);await p.evaluate(l=>localStorage.setItem('smart-city-thailand-locale',l),locale);await p.reload();
   const card=p.locator('.nong-plub-infographic');await card.waitFor();await card.scrollIntoViewIfNeeded();await p.evaluate(()=>document.fonts.ready);await p.waitForFunction(()=>{const i=document.querySelector('.nong-plub-illustration');return i?.complete&&i.naturalWidth>0});
-  const g=await card.evaluate(el=>{const i=el.querySelector('img'),s=el.querySelector('summary'),range=document.createRange();range.selectNodeContents(s);return{height:el.getBoundingClientRect().height,overflow:document.documentElement.scrollWidth-innerWidth,src:i.getAttribute('src'),imageLoaded:i.complete&&i.naturalWidth>0,portraitHeight:i.getBoundingClientRect().height,portraitWidth:i.getBoundingClientRect().width,cardWidth:el.getBoundingClientRect().width,parentWidth:el.parentElement.getBoundingClientRect().width-parseFloat(getComputedStyle(el.parentElement).paddingLeft)-parseFloat(getComputedStyle(el.parentElement).paddingRight),labelFonts:[...el.querySelectorAll('.nong-plub-pillar')].map(n=>parseFloat(getComputedStyle(n).fontSize)),bodyFont:parseFloat(getComputedStyle(s).fontSize),summaryHeight:s.getBoundingClientRect().height,summaryWidth:s.getBoundingClientRect().width,summaryTextWidth:range.getBoundingClientRect().width,rows:[...el.querySelectorAll('[data-pillar]')].map(n=>({pillar:n.dataset.pillar,value:n.dataset.score,extreme:n.dataset.extreme??null,plotted:!!n.querySelector('svg')}))};});check(g,width);
+  const g=await card.evaluate(el=>{const i=el.querySelector('img'),s=el.querySelector('summary'),range=document.createRange();range.selectNodeContents(s);const bx=q=>{const n=el.querySelector(q);if(!n)return null;const b=n.getBoundingClientRect();return{top:b.top,bottom:b.bottom,left:b.left}};return{edges:{art:bx('.nong-plub-illustration'),story:bx('.nong-plub-story-col'),notes:bx('.nong-plub-intro-notes'),list:bx('.nong-plub-signals'),header:bx('.nong-plub-intro-header')},height:el.getBoundingClientRect().height,overflow:document.documentElement.scrollWidth-innerWidth,src:i.getAttribute('src'),imageLoaded:i.complete&&i.naturalWidth>0,portraitHeight:i.getBoundingClientRect().height,portraitWidth:i.getBoundingClientRect().width,cardWidth:el.getBoundingClientRect().width,parentWidth:el.parentElement.getBoundingClientRect().width-parseFloat(getComputedStyle(el.parentElement).paddingLeft)-parseFloat(getComputedStyle(el.parentElement).paddingRight),labelFonts:[...el.querySelectorAll('.nong-plub-pillar')].map(n=>parseFloat(getComputedStyle(n).fontSize)),bodyFont:parseFloat(getComputedStyle(s).fontSize),summaryHeight:s.getBoundingClientRect().height,summaryWidth:s.getBoundingClientRect().width,summaryTextWidth:range.getBoundingClientRect().width,rows:[...el.querySelectorAll('[data-pillar]')].map(n=>({pillar:n.dataset.pillar,value:n.dataset.score,extreme:n.dataset.extreme??null,plotted:!!n.querySelector('svg')}))};});check(g,width);
   const city=byId.get(id);for(const row of g.rows){assert.equal(row.value,city.status==='registered'?'unassessed':String(city.scores[row.pillar]));assert.equal(row.plotted,city.status!=='registered');}
   assert.equal(await p.locator('.city-profile-read').count(),0,'old quick-read repeated');
   assert.ok(await card.evaluate(el=>Boolean(el.compareDocumentPosition(document.querySelector('.city-heritage'))&Node.DOCUMENT_POSITION_FOLLOWING)),'introduction buried after gallery');
@@ -33,7 +37,7 @@ try{
   if(width===1980){
    const old=await p.addStyleTag({content:'.nong-plub-infographic{max-width:780px!important;grid-template-columns:144px minmax(0,1fr)!important}.nong-plub-infographic .nong-plub-illustration{width:144px!important;height:190px!important}.nong-plub-infographic .nong-plub-intro-notes{grid-column:1 / -1!important}'});
    const regression=await card.evaluate(el=>({height:el.getBoundingClientRect().height,cardWidth:el.getBoundingClientRect().width,portraitWidth:el.querySelector('img').getBoundingClientRect().width}));
-   assert.throws(()=>check({...g,...regression},width),/unused parent|thumbnail/,'old narrow composition escaped');await old.evaluate(el=>el.remove());
+   assert.throws(()=>check({...g,...regression},width),/unused parent|thumbnail|share a (top|footing)|columns do not/,'old narrow composition escaped');await old.evaluate(el=>el.remove());
   }
   await browser.close();browser=null;
  }
