@@ -209,7 +209,7 @@ function MoneyballPicksStrip({
           <a
             key={pick.cityId}
             href={toAppPath(cityPath)}
-            className="pick-card glass-card"
+            className="pick-card"
             onClick={event => {
               event.preventDefault();
               onNavigate(cityPath);
@@ -401,7 +401,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
 
           <details className="lens-method-details">
             <summary><span className="lens-screening-note">{translate(locale, lens.tagline)}</span><span className="lens-method-toggle"><span className="lens-method-label">{t({ en: "Weights and limits", th: "น้ำหนักและข้อจำกัด", zh: "权重与局限" })}</span></span></summary>
-          <div className="lens-panel glass-card">
+          <div className="lens-panel">
             <div className="lens-panel-copy">
               <p className="lens-panel-label">{translate(locale, lens.label)}</p>
               <p className="lens-panel-tagline">{translate(locale, lens.tagline)}</p>

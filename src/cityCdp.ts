@@ -807,7 +807,7 @@ function buildMetricBlocks(city: SmartCity, observations: CityMetricObservation[
       summary: localized(
         "What scale of capital this city can plausibly absorb without making up demand.",
         "เมืองนี้รับเงินลงทุนระดับไหนได้จริงโดยไม่ต้องแต่งดีมานด์",
-        "This block shows how much capital the city can plausibly absorb without inventing demand.",
+        "这座城市在不编造需求的前提下，能合理吸纳多大规模的资本？",
       ),
       observations: economic,
     },
@@ -817,7 +817,7 @@ function buildMetricBlocks(city: SmartCity, observations: CityMetricObservation[
       summary: localized(
         "The constraint stack that should shape finance structure, contract terms, and sequencing.",
         "ชุดข้อจำกัดที่ต้องกำหนดโครงสร้างการเงิน เงื่อนไขสัญญา และลำดับงาน",
-        "These constraints should shape financing structure, contract terms, and sequencing.",
+        "应塑造融资结构、合同条款与执行顺序的约束体系。",
       ),
       observations: risk,
     },
@@ -827,7 +827,7 @@ function buildMetricBlocks(city: SmartCity, observations: CityMetricObservation[
       summary: localized(
         "Signals for whether the city can operate systems after ribbon-cutting day.",
         "สัญญาณว่าเมืองจะเดินระบบต่อหลังวันตัดริบบิ้นได้หรือไม่",
-        "Signals of whether the city can run systems after ribbon-cutting day.",
+        "剪彩后，城市能否持续运营系统的信号。",
       ),
       observations: service,
     },

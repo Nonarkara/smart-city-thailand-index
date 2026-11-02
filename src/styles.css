@@ -397,14 +397,17 @@ ul, ol { list-style: none; }
 .stagger-4 { transition-delay: 0.4s; }
 .stagger-5 { transition-delay: 0.5s; }
 
-/* ─── GLASS UTILITIES ─── */
+/* ─── FLAT CARD UTILITIES ─── */
+/* MSH massacre: glass (backdrop-filter blur + translucent tint) is banned
+   decoration — law 7 "no decorative gradient/glass". Cards are flat, hairline
+   boxes that hug their content. Tokens are already zero (--radius 0,
+   --shadow-premium/heavy none), so glass's only real effect was the blur tint.
+   Keep a hairline border so cards still separate from their ground. */
 .glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-premium);
-  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--5);
+  box-shadow: none;
+  border-radius: 0;
 }
 .shadow-premium { box-shadow: var(--shadow-premium); }
 .shadow-heavy { box-shadow: var(--shadow-heavy); }
@@ -5276,10 +5279,11 @@ details[open] .kb-question::before { content: "−"; }
   text-align: left;
   display: flex;
   flex-direction: column;
-  transition: transform 0.18s var(--ease);
   overflow: hidden;
 }
-.gallery-card:hover { transform: translateY(-2px); z-index: 1; }
+/* MSH massacre: decorative hover motion (translateY/scale) removed — motion
+   is feedback, not decoration. The focus-visible ring is the only interaction
+   cue, kept for keyboard accessibility. */
 .gallery-card:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
 
 .gallery-card-photo-wrap {
@@ -5292,9 +5296,8 @@ details[open] .kb-question::before { content: "−"; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s var(--ease);
 }
-.gallery-card:hover .gallery-card-photo { transform: scale(1.03); }
+/* decorative photo scale-on-hover removed (MSH motion law) */
 
 .gallery-card-overlay {
   position: absolute;
@@ -7880,7 +7883,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   border-left: 3px solid var(--teal);
   color: var(--ink);
   text-decoration: none;
-  transition: background 0.2s var(--ease, ease), transform 0.2s var(--ease, ease);
+  transition: background 0.2s var(--ease, ease-out), transform 0.2s var(--ease, ease-out);
 }
 .pick-card:hover {
   background: var(--surface-hover);
@@ -8292,18 +8295,10 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   letter-spacing: 0.05em;
   fill: var(--3);
 }
-@keyframes radar-in {
-  from { opacity: 0; transform: scale(0.82); transform-origin: 80px 80px; }
-  to   { opacity: 1; transform: scale(1);    transform-origin: 80px 80px; }
-}
-.lens-radar { animation: radar-in 300ms cubic-bezier(0.34, 1.2, 0.64, 1); }
-/* The compare radar is a wider box with its own centre, so it gets its
-   own origin. Same motion, same timing, no shared origin to misplace. */
-@keyframes compare-radar-in {
-  from { opacity: 0; transform: scale(0.82); transform-origin: 142px 65px; }
-  to   { opacity: 1; transform: scale(1);    transform-origin: 142px 65px; }
-}
-.compare-radar { animation: compare-radar-in 300ms cubic-bezier(0.34, 1.2, 0.64, 1); }
+/* MSH massacre: motion is feedback, not decoration (workspace CLAUDE.md §14.1).
+   radar-in / compare-radar-in were decorative ease-in bounce entry animations
+   (cubic-bezier 0.34, 1.2, 0.64, 1 overshoots). Removed — the radar paints
+   static so the lens-weight data reads immediately. */
 
 .lens-panel-top { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
 .lens-panel-top-label {
