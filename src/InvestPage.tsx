@@ -970,7 +970,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         }}>
           {mechanisms.map((m, i) => (
             <div key={i} style={{
-              padding: "1.25rem 1rem",
+              padding: "0.75rem 1rem",
               borderBottom: i < mechanisms.length - 1 ? "1px solid var(--5)" : "none",
               display: "flex",
               flexDirection: "column",
@@ -1074,7 +1074,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
               display: "grid",
               gridTemplateColumns: "48px 1fr",
               gap: "1rem",
-              padding: "1.25rem 0",
+              padding: "0.7rem 0",
               borderBottom: "1px solid var(--5)",
               alignItems: "start",
             }}>
