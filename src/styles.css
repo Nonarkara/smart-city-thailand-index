@@ -1158,6 +1158,56 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .reality-planned { background: var(--gamma-bg); color: var(--gamma); }
 .city-detail-tagline { font-size: var(--text-body); line-height: 1.7; color: var(--2); margin-top: .75rem; max-width: 520px; }
 
+/* ─── INVESTMENT FIT — focal point ─── */
+/* MSH-compliant: flat hairline card, no glass, no animation, compact.
+   The positioning sentence is the focal point — largest type on the page,
+   in the owner's handwriting, so the eye lands there first. */
+.investment-fit {
+  border: 1px solid var(--5);
+  padding: 1rem 1rem 1.25rem;
+  background: var(--surface);
+}
+.investment-fit-speak {
+  margin-bottom: .6rem;
+}
+.investment-fit-quote {
+  font: 700 var(--text-body) var(--font-heading);
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0;
+  max-width: 100%;
+}
+:lang(zh-Hans) .investment-fit-quote {
+  font-family: "Non Architecture", "Plub WenKai", "Plub Sriracha", var(--font-heading);
+}
+.investment-fit-body {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+.investment-fit-category {
+  font: 800 var(--text-body) var(--mono);
+  color: var(--teal);
+  margin: 0;
+  letter-spacing: -.02em;
+}
+.investment-fit-reason {
+  font: 400 var(--text-body) var(--font);
+  line-height: 1.6;
+  color: var(--2);
+  margin: 0;
+}
+.investment-fit-metric {
+  font: 400 var(--text-micro) var(--mono);
+  color: var(--3);
+  margin: 0;
+  letter-spacing: .02em;
+}
+@media (max-width: 640px) {
+  .investment-fit-quote { font-size: var(--text-body); }
+  .investment-fit-title { font-size: var(--text-body); }
+}
+
 /* ─── DOSSIER TABS ─── */
 /* Full column width — the gutter is carried by the .section blocks inside each
  * tab panel, so the old calc(100% - 1.5rem) outside-gutter put the whole city

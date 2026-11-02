@@ -34,6 +34,7 @@ import { computeDevelopability, getGlobalComparison, getMoneyballProfile, getTai
 import { allCities } from "./cityData";
 import { getCityFacts } from "./cityFacts";
 import DossierTabs from "./DossierTabs";
+import InvestmentFit from "./InvestmentFit";
 
 interface Props {
   cityId: string;
@@ -1350,6 +1351,8 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             ) : null}
           </div>
         </div>
+
+        <InvestmentFit city={city} locale={locale} />
 
         <NongPlubCard city={city} locale={locale} />
         <details className="city-background-note"><summary>{translate(locale, {

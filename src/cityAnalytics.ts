@@ -6,7 +6,7 @@ import { isEecProvince } from "./eecGeography";
 // Computed from actual scores, metrics, and city characteristics.
 // ---------------------------------------------------------------------------
 
-import type { SmartCity, ScoringPillar } from "./types";
+import type { Locale, SmartCity, ScoringPillar } from "./types";
 import { SCORING_PILLARS } from "./scoring";
 import { PROVINCIAL_LAND_PRICE_SCORE } from "./provincialLandPriceData.ts";
 import { getCityById } from "./cityData.ts";
@@ -600,4 +600,177 @@ export function getMoneyballProfile(city: SmartCity): MoneyballProfile {
   const headlineZh = `有 ${edgeCount} 项研究信号可深入调查；视作优势前，请核查来源日期、地理范围及本地状况。`;
 
   return { edges, headline, headlineTh, headlineZh };
+}
+
+// ---------------------------------------------------------------------------
+// Investment fit — what this city is good for, derived from data only.
+// No category is claimed without a metric behind it; unassessed cities return null.
+// ---------------------------------------------------------------------------
+
+export type InvestmentCategory =
+  | "industrial-estate"
+  | "clean-industrial-estate"
+  | "sustainable-industrial-estate"
+  | "smart-industrial-estate"
+  | "agriculture"
+  | "high-value-economy"
+  | "tourism-hospitality";
+
+export interface InvestmentFit {
+  category: InvestmentCategory;
+  label: Record<Locale, string>;
+  reason: Record<Locale, string>;
+  metric: string;
+}
+
+const INVESTMENT_LABELS: Record<InvestmentCategory, Record<Locale, string>> = {
+  "industrial-estate": {
+    en: "Industrial estate",
+    th: "นิคมอุตสาหกรรม",
+    zh: "工业园区",
+  },
+  "clean-industrial-estate": {
+    en: "Clean industrial estate",
+    th: "นิคมอุตสาหกรรมสะอาด",
+    zh: "清洁工业园区",
+  },
+  "sustainable-industrial-estate": {
+    en: "Sustainable industrial estate",
+    th: "นิคมอุตสาหกรรมยั่งยืน",
+    zh: "可持续工业园区",
+  },
+  "smart-industrial-estate": {
+    en: "Smart industrial estate",
+    th: "นิคมอุตสาหกรรมอัจฉริยะ",
+    zh: "智慧工业园区",
+  },
+  agriculture: {
+    en: "Agriculture",
+    th: "เกษตรกรรม",
+    zh: "农业",
+  },
+  "high-value-economy": {
+    en: "High-value economy",
+    th: "เศรษฐกิจมูลค่าสูง",
+    zh: "高价值经济",
+  },
+  "tourism-hospitality": {
+    en: "Tourism & hospitality",
+    th: "ท่องเที่ยวและอัธยาศัย",
+    zh: "旅游与款待",
+  },
+};
+
+export const INVESTMENT_POSITIONING: Record<Locale, string> = {
+  en: "This is a city you should be looking at if you are considering investing in it.",
+  th: "นี่คือเมืองที่คุณควรพิจารณาหากคุณกำลังลงทุน",
+  zh: "如果你在考虑投资，这座城市值得你关注。",
+};
+
+function gppLabel(gpp: number): string {
+  return `฿${(gpp / 1000).toFixed(0)}K`;
+}
+
+function fdiLabel(fdi: number): string {
+  return `฿${(fdi / 1000000).toFixed(0)}M`;
+}
+
+export function getInvestmentFit(city: SmartCity): InvestmentFit | null {
+  if (city.status === "registered") return null;
+  const eco = city.scores.economy;
+  const dig = city.scores.digital;
+  const env = city.scores.environment;
+  const hos = city.scores.hospitality;
+  const gpp = city.metrics.gppPerCapita ?? 0;
+  const fdi = city.metrics.fdiInflow ?? 0;
+  const isEEC = isEecProvince(city.province);
+  const industry = (city.metrics.industryComposition ?? "").toLowerCase();
+
+  const categoryLabel = (category: InvestmentCategory): Record<Locale, string> =>
+    INVESTMENT_LABELS[category];
+
+  // 1. High-value economy — strong per-capita output and/or economy score
+  if (gpp >= 300000 || eco >= 75) {
+    return {
+      category: "high-value-economy",
+      label: categoryLabel("high-value-economy"),
+      reason: {
+        en: `Per-capita GPP ${gppLabel(gpp)} and economy score ${eco}/100 indicate a high-value economic base, supporting knowledge- and capital-intensive investment.`,
+        th: `รายได้ต่อหัว GPP ${gppLabel(gpp)} และคะแนนเศรษฐกิจ ${eco}/100 ชี้ให้เห็นฐานเศรษฐกิจมูลค่าสูง สนับสนุนการลงทุนที่ใช้ความรู้และทุนสูง`,
+        zh: `人均GPP ${gppLabel(gpp)} 和经济得分 ${eco}/100 指向高价值经济基础，支持知识和资本密集型投资。`,
+      },
+      metric: `economy ${eco}/100 · GPP ${gppLabel(gpp)}`,
+    };
+  }
+
+  // 2. Industrial estate family — EEC province, economy strength, or FDI presence
+  if (isEEC || eco >= 60 || fdi > 0) {
+    let category: InvestmentCategory = "industrial-estate";
+    let reason: Record<Locale, string>;
+    if (env >= 60) {
+      category = "sustainable-industrial-estate";
+      reason = {
+        en: `Economy score ${eco}/100 and environment score ${env}/100 support a sustainable industrial estate.`,
+        th: `คะแนนเศรษฐกิจ ${eco}/100 และคะแนนสิ่งแวดล้อม ${env}/100 สนับสนุนนิคมอุตสาหกรรมยั่งยืน`,
+        zh: `经济得分 ${eco}/100 和环境得分 ${env}/100 支持可持续工业园区。`,
+      };
+    } else if (dig >= 70) {
+      category = "smart-industrial-estate";
+      reason = {
+        en: `Economy score ${eco}/100 and digital score ${dig}/100 support a smart industrial estate.`,
+        th: `คะแนนเศรษฐกิจ ${eco}/100 และคะแนนดิจิทัล ${dig}/100 สนับสนุนนิคมอุตสาหกรรมอัจฉริยะ`,
+        zh: `经济得分 ${eco}/100 和数字得分 ${dig}/100 支持智慧工业园区。`,
+      };
+    } else if (env >= 45) {
+      category = "clean-industrial-estate";
+      reason = {
+        en: `Economy score ${eco}/100 and environment score ${env}/100 support a clean industrial estate.`,
+        th: `คะแนนเศรษฐกิจ ${eco}/100 และคะแนนสิ่งแวดล้อม ${env}/100 สนับสนุนนิคมอุตสาหกรรมสะอาด`,
+        zh: `经济得分 ${eco}/100 和环境得分 ${env}/100 支持清洁工业园区。`,
+      };
+    } else {
+      category = "industrial-estate";
+      reason = {
+        en: `Economy score ${eco}/100${fdi > 0 ? ` and FDI ${fdiLabel(fdi)}` : ""} indicate industrial capacity.`,
+        th: `คะแนนเศรษฐกิจ ${eco}/100${fdi > 0 ? ` และการลงทุนจากต่างประเทศ ${fdiLabel(fdi)}` : ""} ชี้ให้เห็นศักยภาพอุตสาหกรรม`,
+        zh: `经济得分 ${eco}/100${fdi > 0 ? ` 和外商直接投资 ${fdiLabel(fdi)}` : ""} 指向工业能力。`,
+      };
+    }
+    return {
+      category,
+      label: categoryLabel(category),
+      reason,
+      metric: `economy ${eco}/100 · FDI ${fdiLabel(fdi)}`,
+    };
+  }
+
+  // 3. Agriculture — industry mix explicitly includes agriculture
+  if (industry.includes("agriculture")) {
+    return {
+      category: "agriculture",
+      label: categoryLabel("agriculture"),
+      reason: {
+        en: "The industry mix includes agriculture, indicating agricultural investment fit.",
+        th: "โครงสร้างอุตสาหกรรมรวมเกษตรกรรม ชี้ให้เห็นความเหมาะสมด้านการเกษตร",
+        zh: "产业结构包含农业，指向农业投资适配度。",
+      },
+      metric: `industry mix: agriculture · economy ${eco}/100`,
+    };
+  }
+
+  // 4. Tourism & hospitality — hospitality score, reinforced in the south
+  if (hos >= 70 || (city.region === "south" && hos >= 60)) {
+    return {
+      category: "tourism-hospitality",
+      label: categoryLabel("tourism-hospitality"),
+      reason: {
+        en: `Hospitality score ${hos}/100 indicates tourism and service-sector investment fit — hotels, resorts, food services, catering, mobility and online services.`,
+        th: "คะแนนอัธยาศัยที่แข็งแกร่งชี้ให้เห็นความเหมาะสมด้านการท่องเที่ยวและบริการ — โรงแรม รีสอร์ท บริการอาหาร การจัดเลี้ยง การเดินทาง และบริการออนไลน์",
+        zh: "较高的款待得分指向旅游与服务业投资适配度——酒店、度假村、餐饮、餐饮服务、移动性服务和在线服务。",
+      },
+      metric: `hospitality ${hos}/100`,
+    };
+  }
+
+  return null;
 }
