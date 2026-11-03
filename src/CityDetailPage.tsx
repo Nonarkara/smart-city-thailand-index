@@ -1352,8 +1352,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
         </div>
 
-        <InvestmentFit city={city} locale={locale} />
-
         <NongPlubCard city={city} locale={locale} />
         <details className="city-background-note"><summary>{translate(locale, {
           en: "Curated background narrative — source review required",
@@ -1361,6 +1359,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           zh: "编辑背景叙述——仍需核查来源",
         })}</summary><p>{cityTagline}</p></details>
         <p className="section-intro">{cityOrientation}</p>
+        <InvestmentFit city={city} locale={locale} />
         <CityHeritageGallery city={city} locale={locale} />
 
         {(() => {
