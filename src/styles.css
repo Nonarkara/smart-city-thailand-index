@@ -13759,11 +13759,14 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 @media (max-width: 720px) { .investment-atlas-controls > label:first-child { flex: 1 1 100% !important; } }
 /* Investment incentives: ruled rows, label beside text, the note in Nong Plub's hand. No box, no extra type size. */
 .investment-fit { border-top: 1px solid var(--5); padding-block: 12px 0; }
-.investment-fit-note { margin: 0 0 8px; font-size: var(--text-body); line-height: 1.4; color: var(--ink); }
+.investment-fit-band { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 0; }
+.investment-fit-band img { height: 104px; width: auto; flex: none; display: block; }
+.investment-fit-note { margin: 0 0 10px; flex: 1 1 0; min-width: 0; font-size: var(--text-body); line-height: 1.4; color: var(--ink); }
 .investment-fit-rows { margin: 0; }
 .investment-fit-rows > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); column-gap: 14px; padding: 6px 0; border-top: 1px solid var(--5); }
 .investment-fit-rows dt { font: 700 var(--text-micro)/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--3); }
 .investment-fit-rows dd { margin: 0; font: 400 var(--text-body)/1.5 var(--font); color: var(--ink); max-width: 75ch; }
 .investment-fit-caveat { max-width: 120ch; margin: 6px 0 0; padding-top: 6px; border-top: 1px solid var(--5); font: 400 var(--text-micro)/1.6 var(--font); color: var(--3); }
 .investment-fit-caveat a { color: inherit; text-decoration: underline; }
+@media (min-width: 721px) { .investment-fit-band img { height: 128px; } }
 @media (max-width: 520px) { .investment-fit-rows > div { display: block; } .investment-fit-rows dt, .investment-fit-rows dd { display: inline; } .investment-fit-rows dt { margin-right: 8px; } }

@@ -111,6 +111,12 @@
       "reference": "owner-supplied photograph set, 2026-10-31",
       "brief": "Pale pink sweater, relaxed.",
       "asset": "/nong-plub/nong-plub-plain-crayon.webp"
+    },
+    {
+      "id": "invest",
+      "reference": "owner-supplied crayon portrait, 4 Nov 2026 (black background removed by edge flood-fill)",
+      "brief": "Black short-sleeved dress, pearl necklace, wristwatch, canvas tote bag held at the hip; standing, smiling.",
+      "asset": "/nong-plub/nong-plub-invest-crayon.webp"
     }
   ],
   "consent": "Owner confirmed Nong Plub consented to public mascot likeness use promoting Thailand Smart City, 2026-10-28.",

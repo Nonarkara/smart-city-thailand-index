@@ -1,79 +1,49 @@
-// What the law attaches to this place for an investor: the EEC legal area and BOI incentives.
-// Facts and sources come from the Thailand Digital Valley investor research (checked 19 and 24 Oct 2026).
-// No category, score or recommendation is derived here; only legal geography decides which rows show.
+// What the law attaches to this place for an investor: BOI Guide 2026 rules (src/boiGuide.ts) and the EEC Act.
+// EEC Act facts come from the Thailand Digital Valley investor research (checked 19 and 24 Oct 2026).
+// No category, score or recommendation is derived here; legal geography and the city's recorded sector pick the rows.
 import type { Locale, SmartCity } from "./types";
 import { isEecProvince } from "./eecGeography";
+import { boiFacts, type L3, type Row } from "./boiGuide";
 
-type L3 = Record<Locale, string>;
-interface Row { label: L3; text: L3 }
+const EEC_ACT: Row = { key: "eec-act", label: { en: "EEC Act", th: "กฎหมาย EEC", zh: "EEC 法" }, text: {
+  en: "Corporate income tax exemption of 1 to 15 years from first revenue, set case by case by the EEC Negotiation Committee; 50% reduction for 1 to 10 years where no exemption is granted.",
+  th: "ยกเว้นภาษีเงินได้นิติบุคคล 1–15 ปีนับจากวันมีรายได้ครั้งแรก กำหนดเป็นรายกรณีโดยคณะกรรมการเจรจา EEC ลดภาษี 50% นาน 1–10 ปี สำหรับผู้ที่ไม่ได้รับการยกเว้น",
+  zh: "企业所得税免征 1 至 15 年，自首笔收入起算，由 EEC 谈判委员会逐案确定；未获免征者可减征 50%，为期 1 至 10 年。" } };
 
-const BOI: L3 = { en: "BOI", th: "BOI", zh: "BOI" };
-
-const EEC_ROWS: Row[] = [
-  { label: { en: "EEC Act", th: "กฎหมาย EEC", zh: "EEC 法" }, text: {
-    en: "Corporate income tax exemption of 1 to 15 years from first revenue, set case by case by the EEC Negotiation Committee; 50% reduction for 1 to 10 years where no exemption is granted.",
-    th: "ยกเว้นภาษีเงินได้นิติบุคคล 1–15 ปีนับจากวันมีรายได้ครั้งแรก กำหนดเป็นรายกรณีโดยคณะกรรมการเจรจา EEC ลดภาษี 50% นาน 1–10 ปี สำหรับผู้ที่ไม่ได้รับการยกเว้น",
-    zh: "企业所得税免征 1 至 15 年，自首笔收入起算，由 EEC 谈判委员会逐案确定；未获免征者可减征 50%，为期 1 至 10 年。" } },
-  { label: { en: "Staff", th: "บุคลากร", zh: "人员" }, text: {
-    en: "Eligible foreign specialists and executives of approved operators work under an EEC Work Permit; fees and procedure need confirming with EECO.",
-    th: "ผู้เชี่ยวชาญและผู้บริหารต่างชาติของผู้ประกอบการที่ได้รับอนุมัติ ซึ่งมีคุณสมบัติตามเกณฑ์ ทำงานภายใต้ใบอนุญาตทำงาน EEC ค่าธรรมเนียมและขั้นตอนต้องยืนยันกับ EECO",
-    zh: "获批运营商的合资格外籍专家和高管持 EEC 工作许可证工作；费用和程序需向 EECO 确认。" } },
-  { label: { en: "Data centres", th: "ศูนย์ข้อมูล", zh: "数据中心" }, text: {
-    en: "BOI base exemption of 5 years at PUE ≤ 1.3 and 3 years above it (8 and 5 years outside the EEC).",
-    th: "BOI ยกเว้นภาษีพื้นฐาน 5 ปี เมื่อ PUE ≤ 1.3 และ 3 ปี เมื่อสูงกว่า (นอกเขต EEC คือ 8 และ 5 ปี)",
-    zh: "BOI 基础免税期：PUE ≤ 1.3 为 5 年，高于则为 3 年（EEC 之外分别为 8 年和 5 年）。" } },
-];
-
-const OTHER_ROWS: Row[] = [
-  { label: BOI, text: {
-    en: "Corporate income tax exemption or reduction, machinery import duty exemption, and up to 100% foreign ownership outside restricted activities.",
-    th: "ยกเว้นหรือลดภาษีเงินได้นิติบุคคล ยกเว้นอากรนำเข้าเครื่องจักร และถือหุ้นต่างชาติได้สูงสุด 100% ยกเว้นกิจการที่จำกัด",
-    zh: "企业所得税免征或减征、机器进口关税免征，以及除受限活动外最高 100% 外资持股。" } },
-  { label: { en: "EEC Act", th: "กฎหมาย EEC", zh: "EEC 法" }, text: {
-    en: "Does not apply here: its legal extent is Chachoengsao, Chon Buri and Rayong only (2018 Act, section 6).",
-    th: "ไม่ใช้ที่นี่ ขอบเขตกฎหมายครอบคลุมเฉพาะฉะเชิงเทรา ชลบุรี และระยอง (พ.ร.บ. 2561 มาตรา 6)",
-    zh: "此处不适用：其法定范围仅限北柳府、春武里府和罗勇府（2018 年法案第 6 条）。" } },
-  { label: { en: "Data centres", th: "ศูนย์ข้อมูล", zh: "数据中心" }, text: {
-    en: "BOI base exemption of 8 years at PUE ≤ 1.3 and 5 years above it, longer than the 5 and 3 years inside the EEC.",
-    th: "BOI ยกเว้นภาษีพื้นฐาน 8 ปี เมื่อ PUE ≤ 1.3 และ 5 ปี เมื่อสูงกว่า ยาวกว่าในเขต EEC ซึ่งเป็น 5 และ 3 ปี",
-    zh: "BOI 基础免税期：PUE ≤ 1.3 为 8 年，高于则为 5 年，长于 EEC 内的 5 年和 3 年。" } },
-];
-
-const NOTE: Record<"eec" | "other", L3> = {
-  eec: {
-    en: "Investing here? This province sits inside the Eastern Economic Corridor, so two incentive routes can apply.",
-    th: "สนใจลงทุนที่นี่? จังหวัดนี้อยู่ในเขตเศรษฐกิจพิเศษภาคตะวันออก จึงมีสิทธิประโยชน์ได้สองทาง",
-    zh: "想在这里投资？本府位于东部经济走廊（EEC）内，可能适用两条激励路径。",
-  },
-  other: {
-    en: "Investing here? BOI incentives follow your approved activity, not the province.",
-    th: "สนใจลงทุนที่นี่? สิทธิประโยชน์ BOI ผูกกับกิจกรรมที่ได้รับอนุมัติ ไม่ใช่จังหวัด",
-    zh: "想在这里投资？BOI 优惠取决于获批的活动，而非所在府。",
-  },
+const NOTE: Record<ReturnType<typeof boiFacts>["note"], L3> = {
+  eec: { en: "Investing here? Inside the Eastern Economic Corridor, BOI and the EEC Act both apply.", th: "สนใจลงทุนที่นี่? ในเขตเศรษฐกิจพิเศษภาคตะวันออก ทั้ง BOI และกฎหมาย EEC ใช้ได้", zh: "想在这里投资？东部经济走廊内，BOI 和 EEC 法均可适用。" },
+  low: { en: "Investing here? This is one of the 20 lowest-income provinces, and BOI adds to its tax holiday.", th: "สนใจลงทุนที่นี่? จังหวัดนี้เป็นหนึ่งใน 20 จังหวัดรายได้ต่ำสุด BOI จึงเพิ่มสิทธิภาษีให้", zh: "想在这里投资？本府是收入最低的 20 个府之一，BOI 会增加其免税期。" },
+  corridor: { en: "Investing here? This province sits in an Economic Corridor with its own targeted industries.", th: "สนใจลงทุนที่นี่? จังหวัดนี้อยู่ในเขตเศรษฐกิจพิเศษที่มีอุตสาหกรรมเป้าหมายของตัวเอง", zh: "想在这里投资？本府位于经济走廊内，有各自的目标产业。" },
+  south: { en: "Investing here? A special Southern Border measure sets lighter entry conditions.", th: "สนใจลงทุนที่นี่? มีมาตรการพิเศษชายแดนภาคใต้ที่ผ่อนปรนเงื่อนไขการลงทุน", zh: "想在这里投资？南部边境专项措施放宽了投资门槛。" },
+  sez: { en: "Investing here? Part of this province is a Border Economic Zone; check the sub-district.", th: "สนใจลงทุนที่นี่? บางส่วนของจังหวัดเป็นเขตเศรษฐกิจพิเศษชายแดน ตรวจสอบตำบลก่อน", zh: "想在这里投资？本府部分地区属边境经济特区，请先核对所在乡。" },
+  plain: { en: "Investing here? The tax holiday follows your activity group; the area and industrial estate can add more.", th: "สนใจลงทุนที่นี่? ระยะภาษีขึ้นกับกลุ่มกิจกรรม พื้นที่และนิคมอุตสาหกรรมเพิ่มให้ได้อีก", zh: "想在这里投资？免税期取决于活动组别，所在区域和工业区可再增加。" },
 };
 
 const CAVEAT: L3 = {
-  en: "Granted case by case by BOI, EECO and the Revenue Department. Figures are ceilings or published rules, not promises; benefits attach to the company and its approved activity. Sources checked 19–24 October 2026.",
-  th: "BOI สำนักงาน EEC และกรมสรรพากรพิจารณาเป็นรายกรณี ตัวเลขเป็นเพดานหรือกฎที่ประกาศ ไม่ใช่คำมั่น สิทธิผูกกับบริษัทและกิจกรรมที่ได้รับอนุมัติ ตรวจแหล่งอ้างอิงเมื่อ 19–24 ต.ค. 2569",
-  zh: "由 BOI、EEC 办公室和税务厅逐案批准。数字为上限或已公布规则，并非承诺；优惠归属于公司及其获批活动。来源核查于 2026 年 10 月 19–24 日。",
+  en: "Case by case by BOI, EECO and the Revenue Department: published ceilings, not promises. Guide read 4 Nov 2026; EEC sources 19–24 Oct 2026.",
+  th: "BOI สำนักงาน EEC และกรมสรรพากรพิจารณาเป็นรายกรณี เป็นเพดานที่ประกาศ ไม่ใช่คำมั่น อ่านคู่มือ 4 พ.ย. 2569 แหล่งอ้างอิง EEC 19–24 ต.ค. 2569",
+  zh: "由 BOI、EEC 办公室和税务厅逐案批准：为已公布的上限，非承诺。指南阅于 2026 年 11 月 4 日；EEC 来源 2026 年 10 月 19–24 日。",
 };
 
 const SOURCES: { name: string; href: string }[] = [
+  { name: "BOI Guide 2026", href: "https://www.boi.go.th/upload/content/BOI_A_Guide_EN.pdf" },
   { name: "EECO", href: "https://www.eeco.or.th/en/incentives-under-the-eec-act-b-e-2561-2018/" },
-  { name: "BOI 4 Aug 2026", href: "https://www.boi.go.th/upload/content/20260804%20BOI%20EN.pdf" },
   { name: "EEC Act 2018", href: "https://www.eeco.or.th/wp-content/uploads/2025/11/EEC-ACT-2561-English-version.pdf" },
 ];
 
 export default function InvestmentFit({ city, locale }: { city: SmartCity; locale: Locale }) {
   if (!city.province) return null;
-  const eec = isEecProvince(city.province);
-  const rows = eec ? EEC_ROWS : OTHER_ROWS;
+  const { rows: base, note } = boiFacts(city.province, city.metrics.industryComposition);
+  const rows = isEecProvince(city.province) ? [base[0], EEC_ACT, ...base.slice(1)] : base;
   return (
     <section className="section investment-fit" lang={locale === "zh" ? "zh-Hans" : locale}>
-      <p className="investment-fit-note mascot-hand">{NOTE[eec ? "eec" : "other"][locale]}</p>
+      <div className="investment-fit-band">
+        <img src="/nong-plub/guide/nong-plub-invest.webp" width={179} height={300} alt="" loading="lazy" />
+        <p className="investment-fit-note mascot-hand">{NOTE[note][locale]}</p>
+      </div>
       <dl className="investment-fit-rows">
         {rows.map(r => (
-          <div key={r.label.en}><dt>{r.label[locale]}</dt><dd>{r.text[locale]}</dd></div>
+          <div key={r.key}><dt>{r.label[locale]}</dt><dd>{r.text[locale]}</dd></div>
         ))}
       </dl>
       <p className="investment-fit-caveat">{CAVEAT[locale]} {SOURCES.map((s, i) => <span key={s.name}>{i ? " · " : ""}<a href={s.href} target="_blank" rel="noopener noreferrer">{s.name}</a></span>)}</p>

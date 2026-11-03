@@ -11,7 +11,7 @@ import os
 SRC = "public/nong-plub"
 OUT = "public/nong-plub/guide"
 POSES = ["urban", "heritage", "temple", "cafe", "nature", "welcome", "explain",
-         "glance", "peace", "colour", "turn", "walk", "ledger", "portrait", "point", "seat", "plain"]
+         "glance", "peace", "colour", "turn", "walk", "ledger", "portrait", "point", "seat", "plain", "invest"]
 HEIGHT = 300
 os.makedirs(OUT, exist_ok=True)
 for pose in POSES:
