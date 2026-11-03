@@ -6,7 +6,9 @@ import { chromium } from '@playwright/test';
 import assert from 'node:assert/strict';
 let origin = process.env.AUDIT_ORIGIN || 'http://127.0.0.1:5188';
 const report = process.argv.includes('--report');
-const check = (ok, msg) => { if (!ok && !report) assert.fail(msg); };
+const failures = [];
+// In CI every route is measured and printed before the run fails, so one red build shows the whole table.
+const check = (ok, msg) => { if (!ok && !report) { if (process.env.CI) failures.push(msg); else assert.fail(msg); } };
 // [route, max screens @390x844, max screens @1440x900, max H1 top @390 (px)]
 const BUDGET = [
   ['/', 14.4, 7.2, 520],
@@ -42,7 +44,7 @@ try {
         };
       });
       const screens = m.height / h;
-      if (report) console.log(`${route} ${w}: ${screens.toFixed(1)} screens, h1 y=${m.h1Top}, band=${m.band}, figure=${m.fig}`);
+      if (report || process.env.CI) console.log(`${route} ${w}: ${screens.toFixed(1)} screens, h1 y=${m.h1Top}, band=${m.band}, figure=${m.fig}`);
       check(m.overflow === 0, `${route}@${w}: horizontal overflow`);
       check(screens <= max, `${route}@${w}: ${screens.toFixed(1)} screens exceeds budget ${max}. Compact it; do not raise the ceiling.`);
       check(!m.avatar && !m.bars, `${route}@${w}: avatar-sized mascot or decorative pillar bars are back`);
@@ -53,5 +55,6 @@ try {
       if (w === 390 && route !== '/knowledge') check(m.h1Top <= maxH1, `${route}: H1 starts ${m.h1Top}px down; the page leads with chrome`);
     }
   }
+  if (failures.length) assert.fail(failures.join('\n'));
   console.log('page budget ok');
 } finally { await browser?.close(); await server?.close(); }
