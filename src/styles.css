@@ -10510,10 +10510,11 @@ body:has(.bingo-page) { overflow: hidden; }
     display: grid;
     grid-template-columns: 1rem minmax(0, 1fr);
     align-items: start;
-    gap: .2rem .55rem;
-    /* Seventy ruled questions. .7rem of padding on each one pushed the
-       phone page past its scroll budget. */
-    padding: .4rem .15rem;
+    gap: 0 .55rem;
+    /* Seventy ruled questions. The chip stays on its own line so a long
+       category cannot squeeze the question into a narrow column; the row
+       gap and padding are what the phone budget can spare. */
+    padding: 4px .15rem;
     min-height: 44px;
     font-size: var(--text-micro);
     line-height: 1.35;
@@ -13806,3 +13807,44 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 @media (max-width: 720px) { .city-lens-card-h { grid-template-columns: minmax(0, 1fr) auto 1rem; } }
 /* Atlas controls: search shares the row with the three selects on desktop; on a phone it takes its own row so the selects line up beneath it. */
 @media (max-width: 720px) { .investment-atlas-controls > label:first-child { flex: 1 1 100% !important; } }
+
+/* Phone homepage budget (Nov 2026). The 390px page measured 14.6 screens against a 14.4 ceiling.
+   Same words, less spare air: runner photos sit two-up, as the 375px pass already specified,
+   and a reading row keeps its tag on the source line so the title leads. Section steps on the
+   phone hug the rules they separate. Ceilings stay where they are. */
+.news-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: baseline;
+}
+.news-card-title { grid-column: 1 / -1; grid-row: 1; }
+.news-card-summary { grid-column: 1 / -1; grid-row: 2; }
+.news-card-tag { grid-column: 1; grid-row: 3; align-self: center; }
+.news-card-meta { grid-column: 2; grid-row: 3; justify-content: flex-start; min-width: 0; flex-wrap: wrap; column-gap: 10px; }
+@media (max-width: 719px) {
+  .podium-photo-layout { margin-block: 8px; }
+  .podium-photo-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .podium-photo-card,
+  .podium-photo-card-overlay { min-height: 120px; }
+  .dashboard-home .news-section { padding-block: 8px 4px; }
+  .dashboard-home .news-section-head { margin-bottom: 6px; }
+  main .dashboard-home > section[class] + section[class],
+  .dashboard-home .home-column > section.section + section.section { margin-top: 8px; }
+  .home-collections { gap: 12px; }
+  .dashboard-home .open-data-section,
+  .dashboard-home .transparency-section,
+  .dashboard-home .investor-section { padding-block: 12px; }
+  .home-matrix-grid { gap: 8px; }
+  .home-matrix-cell { padding: 8px 10px; }
+  /* The same gate measures these routes after home. Repeated rows were carrying
+     more padding than a 44px target needs, which put them a fraction over. */
+  .source-card { padding: 6px 0; }
+  .methodology-pillar-card { padding-block: 8px; }
+  .meth-baseline-row { padding-block: 8px; }
+  .methodology-page section[class] + section[class] { margin-top: 8px; }
+}
+.invest-page section[class] + section[class] { margin-top: 8px; }
+.atlas-row { padding-block: 6px; min-height: 44px; }
+.city-lens-card-h { padding-block: 6px; min-height: 44px; }
