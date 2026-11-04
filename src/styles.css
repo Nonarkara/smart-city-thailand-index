@@ -566,6 +566,88 @@ ul, ol { list-style: none; }
   padding-left: calc(0.9rem - 2px);
 }
 
+/* --- CityPicker — alphabetical city directory drawer ------------------- */
+/* Directory rows like a transit legend: tier glyph · name · mono score.  */
+.city-picker { position: relative; }
+.city-picker-trigger { display: inline-flex; align-items: center; gap: 0.3rem; }
+.city-picker-panel {
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  width: min(340px, calc(100vw - 2rem));
+  max-height: min(65vh, 560px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface, #fff);
+  border: 1px solid var(--ink);
+  z-index: 200;
+}
+.city-picker-search {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 0.55rem 0.9rem;
+  background: var(--surface, #fff);
+  border: 0;
+  border-bottom: 1px solid var(--5);
+  color: var(--ink);
+  font: 400 var(--text-body) var(--font);
+}
+.city-picker-search:focus-visible { outline: 2px solid var(--amber, #f59e0b); outline-offset: -2px; }
+.city-picker-empty {
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  color: var(--3);
+  font: 400 var(--text-body) var(--font);
+}
+.city-picker-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 36px;
+  padding: 0.3rem 0.9rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--5);
+  color: var(--ink);
+  font: 400 var(--text-body) var(--font);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.city-picker-item:last-child { border-bottom: 0; }
+.city-picker-item:hover { background: var(--5); }
+.city-picker-item.active {
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.08);
+  box-shadow: inset 2px 0 0 var(--amber, #f59e0b);
+}
+.city-picker-tier { font: 700 var(--text-micro) var(--mono); min-width: 1.1em; }
+.city-picker-tier-alpha { color: var(--alpha); }
+.city-picker-tier-beta { color: var(--beta-text); }
+.city-picker-tier-gamma { color: var(--gamma); }
+.city-picker-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.city-picker-score { font: 500 var(--text-micro) var(--mono); color: var(--3); white-space: nowrap; }
+@media (max-width: 768px) {
+  .city-picker { width: 100%; border-bottom: 1px solid var(--5); }
+  .city-picker-trigger { width: 100%; justify-content: space-between; }
+  .city-picker-panel {
+    position: static;
+    width: 100%;
+    max-height: 50vh;
+    border: 0;
+    border-top: 1px solid var(--5);
+  }
+}
+
 /* Mobile: full-screen menu — collapse dropdowns into a stacked list */
 @media (max-width: 768px) {
   .nav-groups {

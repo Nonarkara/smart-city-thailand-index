@@ -370,6 +370,7 @@ export default function App() {
             <TopbarNav
               locale={locale}
               currentKind={route.kind}
+              currentCityId={route.kind === "city" ? route.cityId : undefined}
               onNavigate={navigate}
               mobileOpen={mobileMenuOpen}
               onClose={() => setMobileMenuOpen(false)}

@@ -17,6 +17,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Locale } from "./types";
 import type { Route } from "./routing";
+import CityPicker from "./CityPicker";
 
 type RouteKind = Route["kind"];
 
@@ -91,6 +92,8 @@ const NAV_GROUPS: NavGroup[] = [
 interface Props {
   locale: Locale;
   currentKind: RouteKind;
+  /** City id when the current route is a dossier (for the finder's active row). */
+  currentCityId?: string;
   onNavigate: (path: string) => void;
   /** True when the parent has expanded the mobile menu (≤ 768 px). */
   mobileOpen: boolean;
@@ -109,7 +112,7 @@ function findActiveGroup(currentKind: RouteKind): string | null {
   return null;
 }
 
-export default function TopbarNav({ locale, currentKind, onNavigate, mobileOpen, onClose }: Props) {
+export default function TopbarNav({ locale, currentKind, currentCityId, onNavigate, mobileOpen, onClose }: Props) {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const activeGroup = findActiveGroup(currentKind);
@@ -218,6 +221,7 @@ export default function TopbarNav({ locale, currentKind, onNavigate, mobileOpen,
           </div>
         );
       })}
+      <CityPicker locale={locale} currentCityId={currentCityId} onNavigate={onNavigate} onClose={onClose} />
     </div>
   );
 }
