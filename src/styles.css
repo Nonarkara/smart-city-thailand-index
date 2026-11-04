@@ -12678,7 +12678,7 @@ body:has(.city-evidence-summary) .chat-fab,
   .research-indicator { break-inside: avoid; }
   .research-indicator a::after { content: " (" attr(href) ")"; overflow-wrap: anywhere; }
   .dossier-panel-slot { display: block !important; break-before: page; }
-  .dossier-panel-slot .reveal { opacity: 1 !important; transform: none !important; }
+  body:has(.city-evidence-summary) .reveal { opacity: 1 !important; transform: none !important; }
   .dossier-panel-heading { display: block; }
 }
 @media print {
@@ -12697,7 +12697,7 @@ body:has(.city-evidence-summary) .chat-fab,
 }
 @media print {
   .dossier-panel-slot .city-print-hide { display: block !important; }
-  .dossier-panel-slot .reveal { visibility: visible !important; }
+  body:has(.city-evidence-summary) .reveal { visibility: visible !important; }
 }
 
 /* Investment atlas: the comparison is dominant; its interpretation stays beside it. */

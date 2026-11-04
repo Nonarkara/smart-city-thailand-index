@@ -22,7 +22,8 @@ Grid: existing column layout; search → city profile → evidence and next acti
 - Regrouped the investment portrait, narration and ruled evidence rows; the portrait no longer imposes an empty desktop narration band.
 - Removed generic services → digital-industry inference; narrowed activity examples to accurately cited BOI pages.
 - Corrected EEC 'up to 50%' wording, A2–A4 caps, Songkhla district scope/Chinese names, Southern Border conditions and duplicate measure keys.
-- Added a release gate covering 27 language/breakpoint states and mutations that restore both original visual defects. Added the previously omitted page-budget gate to exact-build remote validation.
+- Restored the print research/source footer: its scroll reveal had left the final PDF page blank. Printed content must not depend on scrolling first.
+- Added a release gate covering 27 language/breakpoint states and mutations that restore the finder, investment spacing and invisible print-footer defects. Added the previously omitted page-budget gate to exact-build remote validation.
 
 ## Verification boundaries
 

@@ -69,7 +69,15 @@ try {
       }
     }
   }
-  console.log('Demo journey: 27 multilingual breakpoint states; both original-fault mutations rejected.');
+  // Printing without scrolling must paint the research/source footer too.
+  await page.goto(`${origin}/city/phuket`, { waitUntil: 'domcontentloaded' });
+  await page.locator('.city-evidence-summary').waitFor();
+  await page.emulateMedia({ media: 'print' });
+  const printed = () => page.locator('.legal-strip-section').evaluate(el => Number(getComputedStyle(el).opacity));
+  assert.equal(await printed(), 1, 'print reference footer remained in its untriggered scroll reveal');
+  await page.addStyleTag({ content: '@media print {.legal-strip-section.reveal {opacity:0!important}}' });
+  assert.equal(await printed(), 0, 'old invisible print-footer mutation must fail');
+  console.log('Demo journey: 27 multilingual breakpoint states; finder, investment and print-footer mutations rejected.');
 } finally {
   fs.writeFileSync(`${dir}/results.json`, JSON.stringify(results, null, 2));
   await browser?.close(); await server?.close();
