@@ -71,7 +71,7 @@ try {
   }
   // Printing without scrolling must paint the research/source footer too.
   await page.goto(`${origin}/city/phuket`, { waitUntil: 'domcontentloaded' });
-  await page.locator('.city-evidence-summary').waitFor();
+  await page.locator('.city-evidence-summary').waitFor({ state: 'attached' });
   await page.emulateMedia({ media: 'print' });
   const printed = () => page.locator('.legal-strip-section').evaluate(el => Number(getComputedStyle(el).opacity));
   assert.equal(await printed(), 1, 'print reference footer remained in its untriggered scroll reveal');
