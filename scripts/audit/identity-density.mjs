@@ -76,7 +76,10 @@ try {
   await page.reload();
   await page.locator('.map-dash-controls').waitFor();
   await page.evaluate(() => document.fonts.ready);
-  await page.addStyleTag({content:'.map-dash-controls {flex-wrap:nowrap !important;}'});
+  // Restore the whole former non-wrapping control chain. The repaired inner
+  // groups can now contain an unwrapped outer row, so changing that row alone
+  // no longer recreates the original overflow.
+  await page.addStyleTag({content:'.map-dash-controls,.map-dash-filter,.map-dash-layers {flex-wrap:nowrap!important;max-width:none!important}.map-dash-controls button{white-space:nowrap!important;max-width:none!important}'});
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), 'original unwrapped map controls escaped overflow guard');
   await page.goto(origin);
   await page.locator('[data-city-id="phuket"].home-collection-chip').focus();
