@@ -39,6 +39,23 @@ try {
     await page.screenshot({ path: `${dir}/finder-${locale}-${width}.png` });
     assert.ok(m.visible, `finder results clipped at ${locale}/${width}`);
     assert.ok(m.height >= 44, 'directory row target shrunk');
+    if (locale === 'en' && width === 390) {
+      await page.locator('.city-picker-search').fill('Amnat Charoen');
+      const enlarged = await page.addStyleTag({ content: '.city-picker-item{font-size:28px!important}.city-picker-score,.city-picker-tier{font-size:23px!important}' });
+      const wholeWord = () => page.locator('.city-picker-name').first().evaluate(el => {
+        const text = el.firstChild;
+        const start = text.textContent.indexOf('Municipality');
+        if (start < 0) return false;
+        const range = document.createRange();
+        range.setStart(text, start); range.setEnd(text, start + 'Municipality'.length);
+        return range.getClientRects().length === 1;
+      });
+      assert.ok(await wholeWord(), 'enlarged city name breaks midword beside its assessment');
+      const nowrap = await page.addStyleTag({ content: '.city-picker-item{flex-wrap:nowrap!important}.city-picker-name{flex:1 1 0!important}' });
+      assert.equal(await wholeWord(), false, 'old single-line status track must reproduce enlarged midword wrapping');
+      await nowrap.evaluate(el => el.remove()); await enlarged.evaluate(el => el.remove());
+      await page.locator('.city-picker-search').fill('');
+    }
     if (locale === 'en' && width === 1024) {
       await page.addStyleTag({ content: '.nav-links {overflow:auto!important;}' });
       const bad = await painted();

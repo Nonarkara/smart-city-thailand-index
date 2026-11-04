@@ -605,6 +605,7 @@ ul, ol { list-style: none; }
 }
 .city-picker-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem;
   width: 100%;
@@ -631,11 +632,11 @@ ul, ol { list-style: none; }
 .city-picker-tier-beta { color: var(--beta-text); }
 .city-picker-tier-gamma { color: var(--gamma); }
 .city-picker-name {
-  flex: 1;
+  flex: 1 1 12ch;
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.city-picker-score { font: 500 var(--text-micro) var(--mono); color: var(--3); white-space: nowrap; }
+.city-picker-score { margin-left: auto; font: 500 var(--text-micro) var(--mono); color: var(--3); white-space: nowrap; }
 @media (max-width: 768px) {
   .city-picker { width: 100%; border-bottom: 1px solid var(--5); }
   .city-picker-trigger { width: 100%; justify-content: space-between; }
