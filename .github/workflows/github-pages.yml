@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -10,12 +11,56 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
+  # Pull requests cannot use the github-pages environment: its deployment
+  # branch policy allows main only. The verify job runs the same gates
+  # without publishing. Production deploys stay on the push-to-main job.
+  verify:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pages-verify-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
+      - run: node scripts/audit/cdpt-artifact.mjs
+      - run: npm run lint
+      - run: npm run test:run
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/audit/record-density.mjs --serve
+      - run: node scripts/audit/page-budget.mjs --serve
+      - run: node scripts/audit/identity-density.mjs --serve
+      - run: node scripts/audit/asus-density.mjs --serve
+      - run: node scripts/audit/atlas-density.mjs --serve
+      - run: node scripts/audit/footer-density.mjs --serve
+      - run: node scripts/audit/heritage-gallery.mjs --serve
+      - run: node scripts/audit/plub-density.mjs --serve
+      - run: node scripts/audit/type-and-rhythm.mjs --serve
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: spatial-regression-evidence
+          path: |
+            .tmp/investor-density
+            .tmp/identity-density
+            .tmp/identity-audit
+            .tmp/atlas-density
+            .tmp/footer-audit
+            .tmp/heritage-audit
+            .tmp/plub-intro
+          retention-days: 7
+
   deploy:
+    if: github.event_name != 'pull_request'
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

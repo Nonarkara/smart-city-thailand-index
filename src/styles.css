@@ -569,6 +569,7 @@ ul, ol { list-style: none; }
 /* --- CityPicker — alphabetical city directory drawer ------------------- */
 /* Directory rows like a transit legend: tier glyph · name · mono score.  */
 .city-picker { position: relative; }
+.city-picker-open .nav-group-caret { transform: rotate(-90deg); color: var(--ink); }
 .city-picker-trigger { display: inline-flex; align-items: center; gap: 0.3rem; }
 .city-picker-panel {
   position: absolute;
@@ -593,6 +594,7 @@ ul, ol { list-style: none; }
   border-bottom: 1px solid var(--5);
   color: var(--ink);
   font: 400 var(--text-body) var(--font);
+  min-height: 44px;
 }
 .city-picker-search:focus-visible { outline: 2px solid var(--amber, #f59e0b); outline-offset: -2px; }
 .city-picker-empty {
@@ -606,7 +608,7 @@ ul, ol { list-style: none; }
   align-items: baseline;
   gap: 0.5rem;
   width: 100%;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0.3rem 0.9rem;
   background: transparent;
   border: 0;
