@@ -75,7 +75,7 @@ try {
   await page.emulateMedia({ media: 'print' });
   const printed = () => page.locator('.legal-strip-section').evaluate(el => Number(getComputedStyle(el).opacity));
   assert.equal(await printed(), 1, 'print reference footer remained in its untriggered scroll reveal');
-  await page.addStyleTag({ content: '@media print {.legal-strip-section.reveal {opacity:0!important}}' });
+  await page.addStyleTag({ content: '@media print {body:has(.city-evidence-summary) .legal-strip-section.reveal {opacity:0!important}}' });
   assert.equal(await printed(), 0, 'old invisible print-footer mutation must fail');
   console.log('Demo journey: 27 multilingual breakpoint states; finder, investment and print-footer mutations rejected.');
 } finally {
