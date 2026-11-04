@@ -36,16 +36,16 @@ const SOUTH = set("Narathiwat", "Pattani", "Yala", "Satun");
 const SCI_PARK = set("Pathum Thani", "Chiang Mai", "Khon Kaen", "Songkhla"); // p.32
 
 const TAX: Row = { key: "tax", label: { en: "Tax period", th: "ระยะภาษี", zh: "免税期" }, text: cite({
-  en: "Years of corporate income tax exemption by activity group: A1+ 10–13 · A1 8 · A2 8 (capped at the investment) · A3 5 · A4 3 · B none.",
-  th: "ปีที่ยกเว้นภาษีเงินได้นิติบุคคลตามกลุ่มกิจกรรม: A1+ 10–13 · A1 8 · A2 8 (ไม่เกินเงินลงทุน) · A3 5 · A4 3 · B ไม่ได้รับ",
-  zh: "企业所得税免征年数（按活动组别）：A1+ 10–13 · A1 8 · A2 8（以投资额为上限）· A3 5 · A4 3 · B 无。" }, 14) };
+  en: "Years of corporate income tax exemption by activity group: A1+ 10–13 · A1 8 · A2 8 · A3 5 · A4 3 · B none. A2–A4 exemptions are capped at eligible investment.",
+  th: "ปีที่ยกเว้นภาษีเงินได้นิติบุคคลตามกลุ่มกิจกรรม: A1+ 10–13 · A1 8 · A2 8 · A3 5 · A4 3 · B ไม่ได้รับ กลุ่ม A2–A4 จำกัดวงเงินตามเงินลงทุนที่เข้าเงื่อนไข",
+  zh: "企业所得税免征年数（按活动组别）：A1+ 10–13 · A1 8 · A2 8 · A3 5 · A4 3 · B 无。A2–A4 免税额以合资格投资额为上限。" }, 14) };
 
 const ESTATE: Row = { key: "estate", label: { en: "Estate", th: "นิคม", zh: "工业区" }, text: cite({
   en: "Inside a BOI-promoted industrial estate or zone: +1 year, unless the activity must be in one.",
   th: "ตั้งในนิคมหรือเขตอุตสาหกรรมที่ BOI ส่งเสริม: เพิ่ม 1 ปี เว้นกิจกรรมที่ต้องตั้งในนิคมอยู่แล้ว",
   zh: "位于 BOI 促进的工业区内：增加 1 年，本就须设在工业区的活动除外。" }, 28) };
 
-const AREA = (label: L3, text: L3, ...n: number[]): Row => ({ key: label.en, label, text: cite(text, ...n) });
+const AREA = (label: L3, text: L3, ...n: number[]): Row => ({ key: `${label.en}-${n.join("-")}`, label, text: cite(text, ...n) });
 const AREA_LABEL: L3 = { en: "Area", th: "พื้นที่", zh: "区域" };
 const PARK_LABEL: L3 = { en: "Park", th: "อุทยาน", zh: "园区" };
 
@@ -57,30 +57,18 @@ const EEC_ZONES: Row = AREA(AREA_LABEL, {
 export interface BoiFacts { rows: Row[]; note: "eec" | "low" | "corridor" | "south" | "sez" | "plain" }
 
 const SECTORS: { test: RegExp; field: L3; acts: { name: L3; group: string }[]; page: number }[] = [
-  { test: /petrochem/i, page: 156, field: { en: "Chemicals and petrochemicals", th: "เคมีและปิโตรเคมี", zh: "化工与石化" }, acts: [
+  { test: /petrochem/i, page: 155, field: { en: "Chemicals and petrochemicals", th: "เคมีและปิโตรเคมี", zh: "化工与石化" }, acts: [
     { name: { en: "petrochemicals with carbon capture", th: "ปิโตรเคมีที่ใช้การดักจับคาร์บอน", zh: "采用碳捕集的石化产品" }, group: "A2" },
     { name: { en: "petrochemicals, general technology", th: "ปิโตรเคมีด้วยเทคโนโลยีทั่วไป", zh: "常规技术石化产品" }, group: "A3" },
     { name: { en: "specialty polymers or chemicals", th: "พอลิเมอร์หรือเคมีภัณฑ์พิเศษ", zh: "特种聚合物或化学品" }, group: "A2" } ] },
-  { test: /manufactur/i, page: 105, field: { en: "Machinery, vehicles, electronics", th: "เครื่องจักร ยานยนต์ และอิเล็กทรอนิกส์", zh: "机械、车辆与电子" }, acts: [
-    { name: { en: "automation machinery", th: "เครื่องจักรอัตโนมัติ", zh: "自动化机械" }, group: "A1" },
-    { name: { en: "high-precision machinery", th: "เครื่องจักรความแม่นยำสูง", zh: "高精度机械" }, group: "A2" },
-    { name: { en: "EV traction motors", th: "มอเตอร์ขับเคลื่อนรถยนต์ไฟฟ้า", zh: "电动车牵引电机" }, group: "A2" },
-    { name: { en: "large-scale semiconductors and ICs", th: "เซมิคอนดักเตอร์และไอซี (ลงทุนขนาดใหญ่)", zh: "大规模半导体与集成电路" }, group: "A2" } ] },
-  { test: /agri/i, page: 87, field: { en: "Agriculture, food, biotechnology", th: "เกษตร อาหาร และเทคโนโลยีชีวภาพ", zh: "农业、食品与生物技术" }, acts: [
-    { name: { en: "food made with modern technology", th: "อาหารด้วยเทคโนโลยีสมัยใหม่", zh: "现代技术食品加工" }, group: "A3" },
-    { name: { en: "organic food", th: "อาหารอินทรีย์", zh: "有机食品" }, group: "A2" },
-    { name: { en: "modern agricultural machinery", th: "เครื่องจักรเกษตรสมัยใหม่", zh: "现代农业机械" }, group: "A1" },
-    { name: { en: "cold storage, natural refrigerants", th: "ห้องเย็นสารทำความเย็นธรรมชาติ", zh: "天然制冷剂冷库" }, group: "A4" } ] },
+  { test: /manufactur/i, page: 105, field: { en: "Machinery manufacturing", th: "การผลิตเครื่องจักร", zh: "机械制造" }, acts: [
+    { name: { en: "high-precision machinery", th: "เครื่องจักรความแม่นยำสูง", zh: "高精度机械" }, group: "A2" } ] },
+  { test: /agri/i, page: 87, field: { en: "Agriculture and food", th: "เกษตรและอาหาร", zh: "农业与食品" }, acts: [
+    { name: { en: "organic food", th: "อาหารอินทรีย์", zh: "有机食品" }, group: "A2" } ] },
   { test: /tourism/i, page: 193, field: { en: "Tourism services", th: "บริการส่งเสริมการท่องเที่ยว", zh: "旅游促进服务" }, acts: [
-    { name: { en: "Thai cultural or craft centres", th: "ศูนย์วัฒนธรรมหรือศิลปหัตถกรรมไทย", zh: "泰国文化或工艺中心" }, group: "A2/A3" },
-    { name: { en: "museums", th: "พิพิธภัณฑ์", zh: "博物馆" }, group: "A2/A3" },
-    { name: { en: "convention halls", th: "ศูนย์ประชุม", zh: "会议中心" }, group: "A2/A3" },
-    { name: { en: "international exhibition centres", th: "ศูนย์แสดงสินค้านานาชาติ", zh: "国际展览中心" }, group: "A2/A3" } ] },
-  { test: /services/i, page: 175, field: { en: "Digital services", th: "บริการดิจิทัล", zh: "数字服务" }, acts: [
-    { name: { en: "software, platforms and content", th: "ซอฟต์แวร์ แพลตฟอร์ม และคอนเทนต์", zh: "软件、平台与内容" }, group: "A2" },
-    { name: { en: "cloud services", th: "บริการคลาวด์", zh: "云服务" }, group: "A2" },
-    { name: { en: "smart city area development", th: "การพัฒนาพื้นที่เมืองอัจฉริยะ", zh: "智慧城市区域开发" }, group: "A2" },
-    { name: { en: "smart city systems", th: "ระบบเมืองอัจฉริยะ", zh: "智慧城市系统" }, group: "A2" } ] },
+    { name: { en: "museums (location and capital conditions apply)", th: "พิพิธภัณฑ์ (มีเงื่อนไขที่ตั้งและเงินลงทุน)", zh: "博物馆（须符合地点及资本条件）" }, group: "A2/A3" } ] },
+  { test: /digital|software|cloud/i, page: 174, field: { en: "Digital services", th: "บริการดิจิทัล", zh: "数字服务" }, acts: [
+    { name: { en: "software, platforms and content", th: "ซอฟต์แวร์ แพลตฟอร์ม และคอนเทนต์", zh: "软件、平台与内容" }, group: "A2" } ] },
 ];
 
 // The largest named share in a free-text composition such as "services 52%, manufacturing 30%".
@@ -96,9 +84,9 @@ const industryRow = (comp?: string): Row | null => {
   const list = (l: Locale) => s.acts.map(a => `${a.name[l]} (${a.group})`).join(l === "en" ? ", " : "、");
   const t = (l: Locale, lead: string) => `${lead} ${list(l)}.`;
   return { key: "industry", label: { en: "Industry", th: "อุตสาหกรรม", zh: "行业" }, text: cite({
-    en: t("en", `Closest BOI field to this city's largest recorded sector, ${s.field.en}: `),
-    th: t("th", `สาขา BOI ใกล้ภาคที่ใหญ่ที่สุดในบันทึกของเมืองนี้ คือ ${s.field.th}:`),
-    zh: t("zh", `最接近该市记录中最大行业的 BOI 领域，${s.field.zh}：`) }, s.page) };
+    en: t("en", `BOI activity example related to the recorded sector; eligibility requires the full activity conditions. ${s.field.en}: `),
+    th: t("th", `ตัวอย่างกิจกรรม BOI ที่เกี่ยวข้องกับภาคที่บันทึกไว้ ต้องตรวจเงื่อนไขกิจกรรมฉบับเต็ม: ${s.field.th}:`),
+    zh: t("zh", `与记录行业相关的 BOI 活动示例，资格须符合完整活动条件：${s.field.zh}：`) }, s.page) };
 };
 
 export function boiFacts(province: string, comp?: string): BoiFacts {
@@ -133,10 +121,10 @@ export function boiFacts(province: string, comp?: string): BoiFacts {
     rows.push(AREA(AREA_LABEL, p === "songkhla" ? {
       en: "Southern Border measure: only Chana, Na Thawi, Saba Yoi and Thepha districts. Relaxed conditions; minimum capital ฿500,000 (excluding land and working capital).",
       th: "มาตรการชายแดนภาคใต้: เฉพาะอำเภอจะนะ นาทวี สะบ้าย้อย และเทพา ผ่อนปรนเงื่อนไข เงินลงทุนขั้นต่ำ 500,000 บาท (ไม่รวมที่ดินและทุนหมุนเวียน)",
-      zh: "南部边境措施：仅限那拉提瓦、那他威、沙眉育、特帕四县。条件放宽；最低资本 50 万泰铢（不含土地和营运资金）。" } : {
-      en: "Southern Border measure: relaxed conditions; minimum capital ฿500,000 (excluding land and working capital); used domestic machinery up to ฿10 million; apply by the end of 2027.",
-      th: "มาตรการชายแดนภาคใต้: ผ่อนปรนเงื่อนไข เงินลงทุนขั้นต่ำ 500,000 บาท (ไม่รวมที่ดินและทุนหมุนเวียน) เครื่องจักรมือสองในประเทศไม่เกิน 10 ล้านบาท ยื่นภายในสิ้นปี 2570",
-      zh: "南部边境措施：条件放宽；最低资本 50 万泰铢（不含土地和营运资金）；国内二手机械不超过 1000 万泰铢；2027 年底前申请。" }, 46, 48));
+      zh: "南部边境措施：仅限 Chana、Na Thawi、Saba Yoi、Thepha 四县。条件放宽；最低资本 50 万泰铢（不含土地和营运资金）。" } : {
+      en: "Southern Border measure: relaxed conditions; minimum capital ฿500,000 (excluding land and working capital); check the full measure for machinery and project-specific conditions.",
+      th: "มาตรการชายแดนภาคใต้: ผ่อนปรนเงื่อนไข เงินลงทุนขั้นต่ำ 500,000 บาท (ไม่รวมที่ดินและทุนหมุนเวียน) ตรวจเงื่อนไขเครื่องจักรและประเภทโครงการจากมาตรการฉบับเต็ม",
+      zh: "南部边境措施：条件放宽；最低资本 50 万泰铢（不含土地和营运资金）；机械及具体项目条件请查阅完整措施。" }, 46, 47));
   }
   if (SCI_PARK.has(p)) {
     rows.push(AREA(PARK_LABEL, {

@@ -114,6 +114,7 @@ else
 bold "Preflight — rendered record density (compiled build)"
 node scripts/audit/record-density.mjs --serve >"$LOG_DIR/cdpt-density.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-density.log"; die "spatial regression: record density or preserved information failed"; }
 node scripts/audit/page-budget.mjs --serve >"$LOG_DIR/cdpt-budget.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-budget.log"; die "page budget: a page grew past its scroll budget or the commissioned art was shrunk"; }
+node scripts/audit/demo-journey.mjs --serve >"$LOG_DIR/cdpt-demo.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-demo.log"; die "demo journey: clipped city finder or separated investment evidence"; }
 ok "15 locale/width states preserve all records and readable type; oversized-card mutation rejected"
 
 bold "Preflight — the type law (§11.7: one display statement per page)"

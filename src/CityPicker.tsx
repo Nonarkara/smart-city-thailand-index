@@ -122,7 +122,6 @@ export default function CityPicker({ locale, currentCityId, onNavigate, onClose 
         type="button"
         className="nav-link city-picker-trigger"
         aria-expanded={open}
-        aria-haspopup="listbox"
         aria-controls={open ? listId : undefined}
         onClick={() => (open ? dismiss() : setOpen(true))}
       >
@@ -144,22 +143,22 @@ export default function CityPicker({ locale, currentCityId, onNavigate, onClose 
           {cities.length === 0 ? (
             <p className="city-picker-empty" role="status">{empty}</p>
           ) : (
-            <div id={listId} role="listbox" aria-label={label}>
+            <div id={listId} role="group" aria-label={label}>
               {cities.map(city => {
                 const name = getCityName(city, locale);
-                const score = city.compositeScore.toFixed(1);
+                const assessed = city.status !== "registered";
+                const score = assessed ? city.compositeScore.toFixed(1) : translate(locale, { en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" });
                 const active = city.id === currentCityId;
                 return (
                   <button
                     key={city.id}
                     type="button"
-                    role="option"
-                    aria-selected={active}
+                    aria-current={active ? "page" : undefined}
                     className={`city-picker-item${active ? " active" : ""}`}
                     onClick={() => choose(city.id)}
                   >
                     <span className={`city-picker-tier city-picker-tier-${city.tier}`} aria-hidden="true">
-                      {TIER_GLYPH[city.tier]}
+                      {assessed ? TIER_GLYPH[city.tier] : "—"}
                     </span>
                     <span className="city-picker-name">{name}</span>
                     <span className="city-picker-score">{score}</span>

@@ -58,7 +58,7 @@ function rows(): HTMLElement[] {
 }
 
 describe("topbar city finder", () => {
-  it.each(["en", "th", "zh"] as const)("lists every city alphabetically in %s with its tier glyph and score", (locale) => {
+  it.each(["en", "th", "zh"] as const)("lists every city alphabetically in %s with assessed scores and honest pending labels", (locale) => {
     open(locale);
     const expected = ordered(locale);
     const rendered = rows();
@@ -66,9 +66,9 @@ describe("topbar city finder", () => {
     rendered.forEach((row, index) => {
       const city = expected[index];
       expect(row.querySelector(".city-picker-name")?.textContent).toBe(getCityName(city, locale));
-      expect(row.querySelector(".city-picker-tier")?.textContent).toBe(GLYPH[city.tier]);
+      expect(row.querySelector(".city-picker-tier")?.textContent).toBe(city.status === "registered" ? "—" : GLYPH[city.tier]);
       expect(row.querySelector(".city-picker-tier")?.classList.contains(`city-picker-tier-${city.tier}`)).toBe(true);
-      expect(row.querySelector(".city-picker-score")?.textContent).toBe(city.compositeScore.toFixed(1));
+      expect(row.querySelector(".city-picker-score")?.textContent).toBe(city.status === "registered" ? ({ en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" }[locale]) : city.compositeScore.toFixed(1));
     });
   });
 
@@ -92,7 +92,7 @@ describe("topbar city finder", () => {
     const { onNavigate, onClose } = open("en", city.id);
     const row = rows().find(entry => entry.querySelector(".city-picker-name")?.textContent === city.nameEn)!;
     expect(row.classList.contains("active")).toBe(true);
-    expect(row.getAttribute("aria-selected")).toBe("true");
+    expect(row.getAttribute("aria-current")).toBe("page");
     fireEvent.click(row);
     expect(onNavigate).toHaveBeenCalledWith(`/city/${city.id}`);
     expect(onClose).toHaveBeenCalledOnce();
