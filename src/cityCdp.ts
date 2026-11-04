@@ -4,7 +4,7 @@ import { cityContexts, type CityContext } from "./cityContext.ts";
 import { allCities } from "./cityData.ts";
 import { CITY_NAME_ZH } from "./cityNamesZh.ts";
 import { dataSources, getEvidenceForCity, type DataSource, type EvidenceItem } from "./evidenceData.ts";
-import { SCITI_DATA_CUTOFF_ISO, classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
+import { SCITI_DATA_CUTOFF_ISO, applyEvidenceConfidenceCap, classifyDataConfidence, computeDataConfidenceScore } from "./methodologySpec.ts";
 import { SCORING_PILLARS } from "./scoring.ts";
 import { polishThaiText } from "./thaiText.ts";
 import { DIMENSION_LABELS, PILLAR_LABELS } from "./types.ts";
@@ -48,6 +48,11 @@ export interface CityKeyMetric {
   unit?: string;
   confidence: DataConfidence;
   sourceId: string;
+  sourceUrl?: string;
+  sourceName?: string;
+  /** Scope and observation-period limits accompany quick values, not just the full dossier. */
+  provenance?: LocalizedText;
+  referenceLabel?: LocalizedText;
 }
 
 export interface CityMetricObservation {
@@ -520,9 +525,6 @@ function formatMetricValue(metricKey: string, value: number | string | undefined
   }
 
   if (metricKey === "population") {
-    if (value <= 0) {
-      return { text: "Pending public baseline", unit: "people" };
-    }
     return { text: `${value.toLocaleString()}K`, unit: "people" };
   }
   if (metricKey === "gppPerCapita" || metricKey === "avgMonthlyIncome" || metricKey === "fdiInflow" || metricKey === "landPriceBaht") {
@@ -741,9 +743,17 @@ function metricMethod(metricKey: string): string {
   }
 }
 
+function metricProvenance(methodNote: string): LocalizedText {
+  const provincial = /\bprovincial\b/i.test(methodNote);
+  const proxy = /\bproxy\b/i.test(methodNote);
+  if (provincial && proxy) return localized("Provincial proxy", "ข้อมูลตัวแทนระดับจังหวัด", "府级代理数据");
+  if (provincial) return localized("Provincial", "ระดับจังหวัด", "府级数据");
+  if (proxy) return localized("Proxy", "ข้อมูลตัวแทน", "代理数据");
+  return localized("Scope unverified", "ยังไม่ยืนยันขอบเขตพื้นที่", "地理范围未核实");
+}
+
 function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
   const metrics = city.metrics;
-  const keepZeroMetrics = new Set(["population", "gppPerCapita", "avgMonthlyIncome", "landPriceBaht"]);
   const entries: Array<[string, number | string | undefined]> = [
     ["population", metrics.population],
     ["gppPerCapita", metrics.gppPerCapita],
@@ -764,20 +774,19 @@ function buildMetricObservations(city: SmartCity): CityMetricObservation[] {
   ];
 
   return entries
-    .filter(([metricKey, value]) => value !== undefined && value !== null && (value !== 0 || keepZeroMetrics.has(metricKey)))
+    .filter(([, value]) => typeof value === "number" ? Number.isFinite(value) : typeof value === "string" && value.trim() !== "")
     .map(([metricKey, value]) => {
       const sourceId = METRIC_SOURCE_LOOKUP[metricKey] ?? "field";
       const source = getSource(sourceId);
       const formatted = formatMetricValue(metricKey, value);
       const observedAt = metricKey === "pm25Annual" ? "2026-03-01T00:00:00.000Z" : DEFAULT_OBSERVED_AT;
-      const isPendingPopulation = metricKey === "population" && typeof value === "number" && value <= 0;
 
       return {
         cityId: city.id,
         provenance: BASELINE_PROVENANCE,
         metricKey,
         label: metricLabel(metricKey),
-        metricValueNum: typeof value === "number" && !isPendingPopulation
+        metricValueNum: typeof value === "number"
           ? value * (metricKey === "population" || metricKey === "laborForce" ? 1000 : 1)
           : null,
         metricValueText: typeof value === "string" ? value : formatted.text,
@@ -908,7 +917,7 @@ function privateInterestScore(city: SmartCity, context?: CityContext): number {
 }
 
 function riskProfile(city: SmartCity): "low" | "medium" | "high" | "acute" {
-  if (city.reality === "planned" && city.metrics.population === 0) return "acute";
+  if (city.status !== "registered" && city.reality === "planned" && (city.metrics.population == null || city.metrics.population === 0)) return "acute";
   if ((city.metrics.crimeRatePer100k ?? 0) >= 220 || (city.metrics.pm25Annual ?? 0) >= 45) return "high";
   if ((city.metrics.crimeRatePer100k ?? 0) >= 150 || (city.metrics.pm25Annual ?? 0) >= 30) return "medium";
   return "low";
@@ -1469,6 +1478,10 @@ function buildKeyMetrics(city: SmartCity, observations: CityMetricObservation[])
       unit: item.unit ?? undefined,
       confidence: item.confidence >= 0.85 ? "high" : item.confidence >= 0.7 ? "medium" : "low",
       sourceId: item.sourceId,
+      sourceName: item.sourceName,
+      sourceUrl: item.sourceUrl,
+      provenance: metricProvenance(item.methodNote),
+      referenceLabel: localized("Reference seed · period unverified", "ข้อมูลตั้งต้นอ้างอิง · ยังไม่ยืนยันช่วงเวลา", "参考种子数据 · 观测期未核实"),
     }));
 }
 
@@ -1620,6 +1633,7 @@ function buildCitySummary(
   financeProfile: CityFinanceProfile,
   recommendations: CityFinanceRecommendation[],
   exportRows: CityResearchExportRow[],
+  evidenceCount: number,
   context?: CityContext,
 ): CitySummaryDTO {
   const latestObservedAt = latestDate([
@@ -1637,7 +1651,7 @@ function buildCitySummary(
     ...city,
     provenance: BASELINE_PROVENANCE,
     rawMetricUnits: { population: "thousand people", laborForce: "thousand people", fdiInflow: "million THB" },
-    dataConfidence: classifyDataConfidence(dataConfidenceScore),
+    dataConfidence: applyEvidenceConfidenceCap(classifyDataConfidence(dataConfidenceScore), evidenceCount, city.status),
     keyMetrics: buildKeyMetrics(city, observations),
     shortTailoredNote: buildShortTailoredNote(city, context),
     financeSignal: buildFinanceSignal(city, financeProfile, recommendations),
@@ -1665,6 +1679,7 @@ function buildCityDetail(city: SmartCity): CityDetailBuild {
     financeProfile,
     recommendations,
     exportRows,
+    evidence.length,
     context,
   );
 

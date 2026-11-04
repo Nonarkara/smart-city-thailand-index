@@ -75,13 +75,14 @@ export function assignTier(composite: number): CityTier {
 }
 
 /**
- * Converts a provincial road fatality rate (deaths per 100,000 population)
- * into a 0–100 safety sub-score using a linear scale anchored to:
- *   ≤ 5  → 100  (WHO Decade of Action target)
- *   20   →  57  (Thai national average, thairsc 2023–24)
- *   ≥ 40 →   0  (extreme danger zone)
+ * Converts a stored road fatality rate (deaths per 100,000 population)
+ * into a 0–100 safety sub-score using SCITI's editorial linear scale:
+ *   ≤ 5  → 100
+ *   20   →  57
+ *   ≥ 40 →   0
  *
- * Source: thairsc.com provincial annual data + PMC/Nature academic validation
+ * These are scoring anchors, not a WHO target or a measured national average.
+ * The curated input rates need their original source period checked separately.
  * Weight in safety pillar: 30% (road safety) of the full safety score.
  * Remaining 70% reflects crime exposure (40%) and disaster resilience (30%).
  *
@@ -94,13 +95,14 @@ export function computeRoadSafetyScore(ratePerHundredK: number): number {
 
 /**
  * Blends the existing manual safety score (crime + resilience, 70 %) with
- * the data-driven road safety sub-score from thairsc (30 %).
+ * the stored-rate road safety sub-score (30 %).
  *
  * @param existingScore Current manually-assessed safety score (crime + resilience)
- * @param roadFatalityRate Annual road deaths per 100,000 population
+ * @param roadFatalityRate Annual road deaths per 100,000 population. Missing or invalid rates leave the existing score unchanged.
  * @returns Blended safety score 0–100
  */
-export function blendSafetyScore(existingScore: number, roadFatalityRate: number): number {
+export function blendSafetyScore(existingScore: number, roadFatalityRate: number | null | undefined): number {
+  if (roadFatalityRate == null || !Number.isFinite(roadFatalityRate) || roadFatalityRate < 0) return existingScore;
   return Math.round(0.7 * existingScore + 0.3 * computeRoadSafetyScore(roadFatalityRate));
 }
 
@@ -120,8 +122,8 @@ export function blendSafetyScore(existingScore: number, roadFatalityRate: number
  *                           If undefined, returns existingLivability unchanged.
  * @returns Blended livability score 0–100
  */
-export function blendLivabilityScore(existingLivability: number, floodScore: number | undefined): number {
-  if (floodScore == null) return existingLivability;
+export function blendLivabilityScore(existingLivability: number, floodScore: number | null | undefined): number {
+  if (floodScore == null || !Number.isFinite(floodScore) || floodScore < 0 || floodScore > 100) return existingLivability;
   return Math.round(0.75 * existingLivability + 0.25 * floodScore);
 }
 

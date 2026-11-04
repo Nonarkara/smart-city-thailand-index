@@ -43,6 +43,8 @@ export const RENDERED_RELEASE_GATES = [
   'node scripts/audit/heritage-gallery.mjs --serve', 'node scripts/audit/plub-density.mjs --serve',
   'node scripts/audit/type-and-rhythm.mjs --serve',
   'node scripts/audit/page-budget.mjs --serve', 'node scripts/audit/demo-journey.mjs --serve',
+  'node scripts/audit/map-journey.mjs --serve',
+  'node scripts/audit/quick-metric-geometry.mjs --serve',
 ];
 export function checkRenderedValidationRun(run, expectedHead) {
   checkValidationRun(run, expectedHead);

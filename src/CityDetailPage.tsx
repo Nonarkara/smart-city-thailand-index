@@ -1438,12 +1438,21 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           <div className="city-quick-metrics">
             {city.keyMetrics.map(metric => (
               <div key={metric.key} className="city-qm">
-                <span className="city-qm-val">{metric.value}</span>
+                <div className="city-qm-heading">
                 <span className="city-qm-lab">{metric.label[locale]}</span>
+                <span className="city-qm-val">{metric.value}</span>
+                </div>
+                <div className="city-qm-meta">
+                <span className="city-qm-lab">
+                  {metric.sourceUrl && /^https?:\/\//i.test(metric.sourceUrl) ? <a href={metric.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label={translate(locale, { en: `Source family: ${metric.sourceName ?? metric.sourceId}`, th: `กลุ่มแหล่งข้อมูล: ${metric.sourceName ?? metric.sourceId}`, zh: `来源类别：${metric.sourceName ?? metric.sourceId}` })}>{metric.sourceId.toUpperCase()}</a> : metric.sourceId.toUpperCase()}
+                  {" · "}{metric.provenance?.[locale] ?? translate(locale, { en: "Scope unverified", th: "ยังไม่ยืนยันขอบเขตพื้นที่", zh: "地理范围未核实" })}
+                </span>
+                <span className="city-qm-lab">{metric.referenceLabel?.[locale] ?? translate(locale, { en: "Reference seed · period unverified", th: "ข้อมูลตั้งต้นอ้างอิง · ยังไม่ยืนยันช่วงเวลา", zh: "参考种子数据 · 观测期未核实" })}</span>
+                </div>
               </div>
             ))}
-            <div className="city-qm">
-              <span className={`city-qm-val city-qm-conf-${city.dataConfidence ?? "medium"}`}>{city.dataConfidence ?? "medium"}</span>
+            <div className="city-qm city-qm-confidence">
+              <span className={`city-qm-val city-qm-conf-${city.dataConfidence ?? "medium"}`}>{translate(locale, { en: city.dataConfidence ?? "medium", th: { high: "สูง", medium: "ปานกลาง", low: "ต่ำ" }[city.dataConfidence ?? "medium"], zh: { high: "高", medium: "中", low: "低" }[city.dataConfidence ?? "medium"] })}</span>
               <span className="city-qm-lab">{translate(locale, { en: "Data confidence", th: "ความเชื่อมั่นข้อมูล", zh: "数据置信度" })}</span>
             </div>
           </div>
