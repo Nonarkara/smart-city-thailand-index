@@ -69,7 +69,7 @@ try {
           else assert.equal(subtitle?.text, province);
         }
       }
-      assert.ok(geometry.height < (width < 720 ? 740 : 500), `${locale}/${width}: whole section still inflated`);
+      assert.ok(geometry.height < (width < 720 ? 740 : 500), `${locale}/${width}: whole section still inflated (${geometry.height}px vs ${width < 720 ? 740 : 500}px budget)`);
       await page.locator('.investor-section').screenshot({ path: `${output}/${locale}-${width}.png` });
       const covered = await page.locator('.investor-card').evaluateAll(elements => elements.filter(el => {
         const r = el.getBoundingClientRect();
