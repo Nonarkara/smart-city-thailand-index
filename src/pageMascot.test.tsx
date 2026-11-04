@@ -1,6 +1,7 @@
 import {describe,it,expect} from 'vitest';
 import {renderToStaticMarkup} from 'react-dom/server';
 import PageMascot from './PageMascot';
+import InvestmentFit from './InvestmentFit';
 import {PAGE_MASCOT_BRIEFS} from './pageMascotBriefs';
 import type {Locale} from './types';
 import {existsSync,readFileSync} from 'node:fs';
@@ -30,7 +31,7 @@ describe('page reading companion',()=>{
  });
  it('covers Chinese handwriting including labels derived from city data',()=>{
   const glyphs=JSON.parse(readFileSync('public/fonts/mascot/glyphs.json','utf8')).cjk as string;
-  const html=[...allCities.map(city=>renderToStaticMarkup(<NongPlubCard city={city} locale="zh"/>)),...Object.keys(PAGE_MASCOT_BRIEFS).map(kind=>renderToStaticMarkup(<PageMascot kind={kind as keyof typeof PAGE_MASCOT_BRIEFS} locale="zh"/>))].join('');
+  const html=[...allCities.map(city=>renderToStaticMarkup(<NongPlubCard city={city} locale="zh"/>)),...allCities.map(city=>renderToStaticMarkup(<InvestmentFit city={city} locale="zh"/>)),...Object.keys(PAGE_MASCOT_BRIEFS).map(kind=>renderToStaticMarkup(<PageMascot kind={kind as keyof typeof PAGE_MASCOT_BRIEFS} locale="zh"/>))].join('');
   const text=[...html.matchAll(/<(?:p|h3)[^>]*class="[^"]*mascot-hand[^"]*"[^>]*>([\s\S]*?)<\/(?:p|h3)>/g)].map(m=>m[1]).join('');
   for(const char of new Set(text.match(/[\u4e00-\u9fff]/g)||[]))expect(glyphs,`missing handwritten glyph ${char}`).toContain(char);
  });
