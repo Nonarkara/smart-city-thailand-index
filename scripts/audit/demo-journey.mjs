@@ -51,9 +51,15 @@ try {
         return range.getClientRects().length === 1;
       });
       assert.ok(await wholeWord(), 'enlarged city name breaks midword beside its assessment');
+      // At390 the Linux fallback face can fit the word even in the old row.
+      // Use a real narrow-phone viewport for the negative case, not an assumed
+      // font width; the repaired row must still pass at exactly the same width.
+      await page.setViewportSize({ width: 320, height: 900 });
+      assert.ok(await wholeWord(), 'repaired enlarged city name breaks on a narrow phone');
       const nowrap = await page.addStyleTag({ content: '.city-picker-item{flex-wrap:nowrap!important}.city-picker-name{flex:1 1 0!important}' });
       assert.equal(await wholeWord(), false, 'old single-line status track must reproduce enlarged midword wrapping');
       await nowrap.evaluate(el => el.remove()); await enlarged.evaluate(el => el.remove());
+      await page.setViewportSize({ width, height: 900 });
       await page.locator('.city-picker-search').fill('');
     }
     if (locale === 'en' && width === 1024) {
