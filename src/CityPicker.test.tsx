@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import CityPicker from "./CityPicker";
+import TopbarNav from "./TopbarNav";
 import { allCities } from "./cityData";
 import { getCityName, getProvinceName } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
@@ -58,6 +59,14 @@ function rows(): HTMLElement[] {
 }
 
 describe("topbar city finder", () => {
+  // Preserve the useful integration intent of the original, untracked lowercase
+  // cityPicker.test.tsx without restoring its obsolete menuitem/seed-score claims.
+  it.each(["en", "th", "zh"] as const)("wires the active dossier through the topbar in %s", locale => {
+    render(<TopbarNav locale={locale} currentKind="city" currentCityId="phuket" onNavigate={vi.fn()} mobileOpen onClose={vi.fn()} />);
+    fireEvent.click(screen.getByRole("button", { name: { en: "Find a city", th: "ค้นหาเมือง", zh: "查找城市" }[locale] }));
+    const active = document.querySelector('.city-picker-item[aria-current="page"]');
+    expect(active).toHaveTextContent(getCityName(allCities.find(city => city.id === "phuket")!, locale));
+  });
   it.each(["en", "th", "zh"] as const)("lists every city alphabetically in %s with assessed scores and honest pending labels", (locale) => {
     open(locale);
     const expected = ordered(locale);

@@ -36,6 +36,8 @@ jobs:
       - run: node scripts/audit/record-density.mjs --serve
       - run: node scripts/audit/page-budget.mjs --serve
       - run: node scripts/audit/demo-journey.mjs --serve
+      - run: node scripts/audit/map-journey.mjs --serve
+      - run: node scripts/audit/quick-metric-geometry.mjs --serve
       - run: node scripts/audit/identity-density.mjs --serve
       - run: node scripts/audit/asus-density.mjs --serve
       - run: node scripts/audit/atlas-density.mjs --serve
@@ -56,6 +58,8 @@ jobs:
             .tmp/heritage-audit
             .tmp/plub-intro
             .tmp/demo-journey
+            .tmp/map-journey
+            .tmp/quick-metric-geometry
           retention-days: 7
 
   deploy:
@@ -84,6 +88,8 @@ jobs:
       - run: node scripts/audit/record-density.mjs --serve
       - run: node scripts/audit/page-budget.mjs --serve
       - run: node scripts/audit/demo-journey.mjs --serve
+      - run: node scripts/audit/map-journey.mjs --serve
+      - run: node scripts/audit/quick-metric-geometry.mjs --serve
       - run: node scripts/audit/identity-density.mjs --serve
       - run: node scripts/audit/asus-density.mjs --serve
       - run: node scripts/audit/atlas-density.mjs --serve
@@ -113,6 +119,8 @@ jobs:
             .tmp/heritage-audit
             .tmp/plub-intro
             .tmp/demo-journey
+            .tmp/map-journey
+            .tmp/quick-metric-geometry
           retention-days: 7
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3

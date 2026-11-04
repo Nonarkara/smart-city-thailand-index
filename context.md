@@ -1,6 +1,11 @@
 # SCITI — Smart City Thailand Index
 ## Project Context
 
+## Map task geometry · 4 November 2026
+Design read: locate a legacy city reference point, open its dossier, and see the limits beside that decision. Reference: Vignelli Unigrid map-and-index alignment. Named grid: column, with the map dominant, filters at its edge and regional readouts beside it on desktop. Nong Plub's commissioned guide and photograph disclosure remain after the operating surface; the former repeated introduction/context/title bands must not precede it. Existing palette and intentional typography remain protected (no project STYLE.md is present).
+
+The map's viewport is independent of the regional sidebar's length. A visible count distinguishes mapped reference points from all filtered dossiers. Legacy coordinates are unchanged and explicitly unverified for project sites, boundaries, navigation or site selection. SVG reference links support focus, Enter and Space. Basemap loading/failure/reference status must remain visible; registry-only entries are not assigned assessed tiers in the regional breakdown. No new coordinates, source dates, or geographic evidence are inferred by this repair.
+
 **Live URL:** https://sciti.nonarkara.org  
 **Repo:** github.com/Nonarkara/smart-city-thailand-index  
 **Deploy:** Cloudflare Pages (wrangler CLI — GitHub Actions token expired, deploy manually)  

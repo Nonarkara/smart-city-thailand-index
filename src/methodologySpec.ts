@@ -1,6 +1,6 @@
 import { cdpSources } from "./cdpData.ts";
 import { dataSources } from "./evidenceData.ts";
-import { PILLAR_WEIGHTS, type CityMetrics, type CityScores, type DataConfidence, type ScoringPillar } from "./types.ts";
+import { PILLAR_WEIGHTS, type CityMetrics, type CityScores, type CityStatus, type DataConfidence, type ScoringPillar } from "./types.ts";
 
 export const SCITI_METHOD_CODE = "SCITI-2026-METH";
 export const SCITI_METHOD_VERSION = "2026.04";
@@ -51,7 +51,7 @@ function filledMetricCount(metrics: CityMetrics, keys: readonly MetricKey[]): nu
   return keys.reduce((count, key) => {
     const value = metrics[key];
     if (value == null) return count;
-    if (typeof value === "number") return value === 0 ? count : count + 1;
+    if (typeof value === "number") return Number.isFinite(value) ? count + 1 : count;
     return String(value).trim() ? count + 1 : count;
   }, 0);
 }
@@ -154,4 +154,15 @@ export function classifyDataConfidence(score: number): DataConfidence {
   if (score >= 70) return "high";
   if (score >= 40) return "medium";
   return "low";
+}
+
+/** Input completeness cannot establish local verification. This is a ceiling, never a promotion. */
+export function applyEvidenceConfidenceCap(
+  classified: DataConfidence,
+  evidenceCount: number,
+  status?: CityStatus,
+): DataConfidence {
+  if (status === "registered") return "low";
+  if ((!Number.isFinite(evidenceCount) || evidenceCount <= 0) && classified === "high") return "medium";
+  return classified;
 }
