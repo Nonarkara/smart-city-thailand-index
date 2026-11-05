@@ -121,6 +121,12 @@ const FIXTURES = {
       ${CARD_BLOCK("hidden")}
     </div>
   `),
+  "/fixture-invisible": page(`
+    <div class="stage">
+      <h1>Invisible</h1>
+      <p class="plain" style="color:#fff">WHITE TEXT ON A WHITE PAGE</p>
+    </div>
+  `),
   "/fixture-escape": page(`
     <div class="stage">
       <h1>Escape</h1>
@@ -225,7 +231,17 @@ try {
     assert.ok(escape.outside.length > 0, "the outside-box rule did not fire on a label that left its tile");
   });
 
-  // 6. The GATE's exit code, not just the core's verdict.
+  // 6. INVISIBLE TEXT
+  console.log(`\n6. TEXT THAT CANNOT BE READ`);
+  const invisible = await measure("/fixture-invisible");
+  check("white text on a white page is caught", () => {
+    assert.ok(invisible.lowContrast.length > 0, "the contrast rule did not fire on white text on white");
+  });
+  check("the clean page passes the contrast rule", () => {
+    assert.equal(clean.lowContrast.length, 0, `found ${clean.lowContrast.length}: ${JSON.stringify(clean.lowContrast.slice(0, 2))}`);
+  });
+
+  // 7. The GATE's exit code, not just the core's verdict.
   console.log(`\n6. THE GATE'S EXIT CODE`);
   const gateClean = await runGate("/fixture-clean");
   check("the gate passes the clean build (exit 0)", () => {
@@ -235,6 +251,7 @@ try {
     ["overlapping text", "/fixture-overlap"],
     ["a visible card face", "/fixture-backface-shown"],
     ["a label outside its box", "/fixture-escape"],
+    ["white text on a white page", "/fixture-invisible"],
   ]) {
     const g = await runGate(path);
     check(`the gate fails on ${name} (exit 1)`, () => {

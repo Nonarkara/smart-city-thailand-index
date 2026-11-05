@@ -34,7 +34,7 @@ const ROUTES = process.env.SCITI_AUDIT_ROUTES
 const VIEWPORTS = [390, 1440];
 
 const browser = await chromium.launch();
-let collisions = 0, dupes = 0, thaiTrack = 0, overlaps = 0, outside = 0;
+let collisions = 0, dupes = 0, thaiTrack = 0, overlaps = 0, outside = 0, lowContrast = 0;
 const unmeasured = [];
 
 for (const route of ROUTES) {
@@ -88,6 +88,11 @@ for (const route of ROUTES) {
         console.log(`\n[${tag}] TEXT OUTSIDE ITS BOX — ${r.outside.length}`);
         for (const o of r.outside.slice(0, 10)) console.log(`   ${o.over}px ${o.side}  ${o.el}  (box: ${o.box})`);
       }
+      if (r.lowContrast.length) {
+        lowContrast += r.lowContrast.length;
+        console.log(`\n[${tag}] TEXT NOT LEGIBLE ON ITS GROUND — ${r.lowContrast.length}`);
+        for (const c of r.lowContrast.slice(0, 8)) console.log(`   ${c.ratio}:1 (needs ${c.floor}) ${c.color} on ${c.ground}  ${c.el}`);
+      }
       if (r.refused.length) {
         unmeasured.push(`${tag}: ${r.refused.length} element(s) refused a font measurement`);
         console.log(`\n[${tag}] MEASUREMENT REFUSED — ${r.refused.length}`);
@@ -109,11 +114,12 @@ console.log(`duplicate display text      : ${dupes}`);
 console.log(`Thai in a tracked run        : ${thaiTrack}`);
 console.log(`text painted over text       : ${overlaps}`);
 console.log(`text outside its box         : ${outside}`);
+console.log(`text not legible on its ground: ${lowContrast}`);
 if (unmeasured.length) {
   console.log(`\n!! measurements NOT taken — ${unmeasured.length}`);
   for (const u of unmeasured) console.log(`   ${u}`);
 }
-const findings = collisions + dupes + thaiTrack + overlaps + outside;
+const findings = collisions + dupes + thaiTrack + overlaps + outside + lowContrast;
 if (findings || unmeasured.length) {
   console.log(`\nVERDICT: FAIL (${findings} finding(s), ${unmeasured.length} unmeasured)`);
   process.exit(1);

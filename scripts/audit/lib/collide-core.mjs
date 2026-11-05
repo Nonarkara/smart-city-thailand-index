@@ -30,7 +30,7 @@
  *     whatever sits beside that box.
  */
 export function collideCore() {
-  const out = { fabCollisions: [], dupDisplay: [], thaiTracked: [], overlaps: [], outside: [], refused: [] };
+  const out = { fabCollisions: [], dupDisplay: [], thaiTracked: [], overlaps: [], outside: [], refused: [], lowContrast: [] };
   const THAI = /[\u0E00-\u0E7F]/;
   const TEXTISH = new Set(["P", "SPAN", "H1", "H2", "H3", "H4", "H5", "H6", "LI", "TD", "TH", "A", "BUTTON", "STRONG", "EM", "SMALL", "LABEL", "FIGCAPTION", "DT", "DD", "BLOCKQUOTE", "SUMMARY", "CODE", "TIME", "DIV"]);
 
@@ -132,6 +132,31 @@ export function collideCore() {
     : null;
 
   /**
+   * A CANVAS-VALID FONT SHORTHAND.
+   *
+   * canvas accepts the CSS2 font shorthand only: font-variant may be
+   * `normal` or `small-caps` and nothing else. But Chrome's computed
+   * `font-variant` now carries font-variant-NUMERIC — an element with
+   * `font-variant-numeric: tabular-nums` reports `font-variant:
+   * tabular-nums`, which canvas does not understand. The whole shorthand
+   * is then rejected, silently, and measureText keeps the PREVIOUS font.
+   *
+   * That is not a hypothetical: on the homepage the three `.density-value`
+   * numerals were measured against a leftover 11.52px font while their
+   * real size is 14px. The read-back check caught it and refused the
+   * measurement, which is the check earning its place — but the fix is to
+   * ask canvas for something it can parse.
+   */
+  function canvasFont(cs) {
+    const style = /^(normal|italic|oblique)$/.test(cs.fontStyle) ? cs.fontStyle : "normal";
+    const variant = cs.fontVariant === "small-caps" ? "small-caps" : "normal";
+    const weight = /^\d+$/.test(cs.fontWeight)
+      ? cs.fontWeight
+      : (cs.fontWeight === "bold" ? "700" : "400");
+    return `${style} ${variant} ${weight} ${cs.fontSize} ${cs.fontFamily}`;
+  }
+
+  /**
    * READ THE FONT BACK.
    *
    * canvas measureText silently keeps the PREVIOUS font when the
@@ -149,7 +174,7 @@ export function collideCore() {
     const key = `${cs.fontStyle}|${cs.fontVariant}|${cs.fontWeight}|${cs.fontSize}|${cs.fontFamily}|${text}`;
     let m = inkCache.get(key);
     if (!m) {
-      mctx.font = `${cs.fontStyle} ${cs.fontVariant} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      mctx.font = canvasFont(cs);
       const readback = mctx.font || "";
       const got = /(\d+(?:\.\d+)?)px/.exec(readback);
       if (!got || Math.abs(parseFloat(got[1]) - size) > 0.2) {
@@ -539,6 +564,86 @@ export function collideCore() {
         box: box.tag,
         over: Math.round(over * 10) / 10,
         side,
+      });
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // 6. INK ON ITS GROUND — can this text be read at all?
+  //
+  //    /invest shipped 310px of white text on a white page for a
+  //    fortnight. The navy CCDR panel sets color:#fff on its #12354e
+  //    ground; the essay sections reuse that class with a hairline rule
+  //    instead of the navy, and the rule that swapped the BACKGROUND out
+  //    did not swap the COLOUR with it, so anything that inherited its
+  //    colour inherited white.
+  //
+  //    Nothing in the audit chain looked at contrast, so the text was
+  //    measured, measured for overlap, measured for rhythm — and found
+  //    to be perfectly legible, because legibility was never asked about.
+  //
+  //    Text over a PHOTOGRAPH is exempt: the luminance of a photograph
+  //    cannot be known from the DOM, and the photographic scrims are the
+  //    contract that carries those surfaces. What this rule checks is
+  //    text over a KNOWN ground — a flat colour — which is exactly where
+  //    a token mismatch hides.
+  // ------------------------------------------------------------------
+  function srgb(v) {
+    const c = v / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  }
+  function luminance(c) {
+    return 0.2126 * srgb(c[0]) + 0.7152 * srgb(c[1]) + 0.0722 * srgb(c[2]);
+  }
+  function contrast(fg, bg) {
+    const a = luminance(fg);
+    const b = luminance(bg);
+    const hi = Math.max(a, b);
+    const lo = Math.min(a, b);
+    return (hi + 0.05) / (lo + 0.05);
+  }
+  function parseColor(value) {
+    const m = /rgba?\(([^)]+)\)/.exec(value || "");
+    if (!m) return null;
+    const p = m[1].split(",").map(s => parseFloat(s.trim()));
+    if (p.length < 3 || p.slice(0, 3).some(n => !Number.isFinite(n))) return null;
+    return { rgb: [p[0], p[1], p[2]], alpha: p.length > 3 ? (Number.isFinite(p[3]) ? p[3] : 1) : 1 };
+  }
+  /** The flat colour this text is painted on, or null when it is unknowable. */
+  function groundBehind(el) {
+    let node = el;
+    while (node && node !== document.documentElement) {
+      const cs = getComputedStyle(node);
+      // A photograph or gradient: the luminance is not in the DOM.
+      if (cs.backgroundImage && cs.backgroundImage !== "none") return null;
+      const c = parseColor(cs.backgroundColor);
+      if (c && c.alpha >= 0.95) return c.rgb;
+      node = node.parentElement;
+    }
+    return [255, 255, 255];
+  }
+  for (const item of inkRects) {
+    const cs = getComputedStyle(item.el);
+    const fg = parseColor(cs.color);
+    if (!fg || fg.alpha === 0) continue;
+    const bg = groundBehind(item.el);
+    if (!bg) continue; // over a photograph: the scrim carries it
+    const composited = fg.alpha >= 1
+      ? fg.rgb
+      : [0, 1, 2].map(i => fg.rgb[i] * fg.alpha + bg[i] * (1 - fg.alpha));
+    const ratio = contrast(composited, bg);
+    const size = parseFloat(cs.fontSize) || 16;
+    const weight = parseInt(cs.fontWeight, 10) || 400;
+    const large = size >= 24 || (size >= 18.66 && weight >= 700);
+    const floor = large ? 3 : 4.5;
+    if (ratio < floor) {
+      out.lowContrast.push({
+        el: item.el.tagName + "." + String(item.el.className || "").slice(0, 28) + ` "${(item.el.textContent || "").trim().slice(0, 26)}"`,
+        ratio: Math.round(ratio * 100) / 100,
+        floor,
+        color: cs.color,
+        ground: `rgb(${bg.map(n => Math.round(n)).join(",")})`,
+        size,
       });
     }
   }
