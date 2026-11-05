@@ -13,7 +13,7 @@ const check = (ok, msg) => { if (!ok && !report) { if (process.env.CI) failures.
 const BUDGET = [
   ['/', 14.4, 7.2, 520],
   ['/rankings', 7.7, 4.8, 420], ['/methodology', 18.2, 10, 420], ['/partners', 12.7, 6.4, 420], ['/program', 14.2, 7.8, 420],
-  ['/invest', 23, 13, 420], ['/baseline', 22, 11.1, 420], ['/audit', 11.5, 5.7, 420], ['/references', 11.5, 5.7, 420], ['/knowledge', 7.6, 5.4, 420],
+  ['/invest', 23, 13, 420], ['/baseline', 17.2, 10.7, 420], ['/audit', 11.5, 5.7, 420], ['/references', 11.5, 5.7, 420], ['/knowledge', 7.6, 5.4, 420],
 ];
 // The ceilings are measured on macOS. The Linux CI runner has no system-ui face and falls back to a wider one, so the same
 // pages measured up to 6.6% taller at 390 and 2.3% at 1440 (CI run 41675135316 against these ceilings). CI allows that

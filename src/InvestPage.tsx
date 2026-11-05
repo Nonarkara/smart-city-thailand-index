@@ -955,10 +955,15 @@ export default function InvestPage({ locale, onNavigate }: Props) {
           zh: "如何为智慧城市投资融资",
         })}</h2>
         <p className="section-intro">
+          {/* No count in the prose. The list grew from six to nine when the
+              climate-finance mechanisms were added, and the sentence kept
+              saying six — a number the reader can check against the list
+              and find wrong. A stale count is a claim the page cannot
+              keep. */}
           {translate(locale, {
-            en: "Six proven mechanisms. From tax holidays to green bonds to multilateral de-risking.",
-            th: "หกกลไกที่พิสูจน์แล้ว ตั้งแต่การลดหย่อนภาษีไปจนถึงพันธบัตรเขียวและการลดความเสี่ยงพหุภาคี",
-            zh: "六种经过验证的机制。从税收假期到绿色债券，再到多边风险缓释。",
+            en: "Proven mechanisms. From tax holidays to green bonds to multilateral de-risking.",
+            th: "กลไกที่พิสูจน์แล้ว ตั้งแต่การลดหย่อนภาษีไปจนถึงพันธบัตรเขียวและการลดความเสี่ยงพหุภาคี",
+            zh: "经过验证的机制。从税收假期到绿色债券，再到多边风险缓释。",
           })}
         </p>
         <div style={{
