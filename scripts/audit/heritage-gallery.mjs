@@ -47,7 +47,7 @@ if (!process.argv.includes('--assets-only')) {
       await page.evaluate(() => localStorage.setItem('smart-city-thailand-locale', 'en'));
       await page.reload();
       const hero = records.get(register.byCity[id].find(key => records.get(key).scope !== 'regional'));
-      const image = page.locator('.city-hero-photo img');
+      const image = page.locator('.city-hero-photo img:not(.nong-plub-hero-figure)');
       await image.waitFor();
       assert.equal(await image.getAttribute('alt'), hero.title.en);
       assert.ok((await image.getAttribute('src')).endsWith(hero.image));
