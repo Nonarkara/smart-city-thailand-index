@@ -7,7 +7,7 @@ import {toAppPath} from './routing';
 const POSES:Record<MascotPose,string>={...NONG_PLUB_ASSETS,welcome:'/nong-plub/nong-plub-welcome-crayon.webp',explain:'/nong-plub/nong-plub-explain-crayon.webp',glance:'/nong-plub/nong-plub-glance-crayon.webp',peace:'/nong-plub/nong-plub-peace-crayon.webp',colour:'/nong-plub/nong-plub-colour-crayon.webp',turn:'/nong-plub/nong-plub-turn-crayon.webp',walk:'/nong-plub/nong-plub-walk-crayon.webp',ledger:'/nong-plub/nong-plub-ledger-crayon.webp',portrait:'/nong-plub/nong-plub-portrait-crayon.webp',point:'/nong-plub/nong-plub-point-crayon.webp',seat:'/nong-plub/nong-plub-seat-crayon.webp',plain:'/nong-plub/nong-plub-plain-crayon.webp'};
 const L=(locale:Locale,en:string,th:string,zh:string)=>locale==='th'?th:locale==='zh'?zh:en;
 /* Right-sized derivatives of the commissioned poses (scripts/build-guide-figures.py). */
-const GUIDE:Record<MascotPose,{src:string;w:number}>={
+export const GUIDE:Record<MascotPose,{src:string;w:number}>={
  urban:{src:'/nong-plub/guide/nong-plub-urban.webp',w:202},heritage:{src:'/nong-plub/guide/nong-plub-heritage.webp',w:222},
  temple:{src:'/nong-plub/guide/nong-plub-temple.webp',w:188},cafe:{src:'/nong-plub/guide/nong-plub-cafe.webp',w:253},
  nature:{src:'/nong-plub/guide/nong-plub-nature.webp',w:221},welcome:{src:'/nong-plub/guide/nong-plub-welcome.webp',w:253},

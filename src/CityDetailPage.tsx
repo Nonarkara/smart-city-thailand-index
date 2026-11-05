@@ -8,6 +8,8 @@ import CityHeritageGallery from "./CityHeritageGallery";
 import OfficialRecognition from "./OfficialRecognition";
 import DossierReadingNotes from "./DossierReadingNotes";
 import { NongPlubCard } from "./NongPlubCard";
+import { NongPlubHero } from "./NongPlubHero";
+import { getNongPlubRecord } from "./nongPlubData";
 import { computeNeedsLadder } from "./needsLadderEngine";
 import { getCityById } from "./cityData";
 import { getDepaOfficial } from "./depaOfficialData";
@@ -696,6 +698,10 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     ? getCityHeritage(city).find(record => record.verifiedAt && record.scope !== "regional")
     : undefined;
   const cityPhoto = culturalHero ? { src: culturalHero.image, objectPosition: "center center" } : photoSet.hero;
+  /* She stands in this city's photograph in the clothes this city's record
+   * gives her, so the guide in the picture and the guide in the dossier
+   * below it are the same person. */
+  const plubOutfit = getNongPlubRecord(city).outfit;
   const cityContext = getCityContext(city.id);
   const research = resolveCityResearch(city);
   const comparison = getGlobalComparison(city.id);
@@ -1217,6 +1223,10 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             sizes="100vw"
             style={{ objectPosition: cityPhoto.objectPosition }}
           />
+          {/* She stands IN this city's photograph, in the clothes this city's
+           * record gives her, cropped by the frame the way a camera crops a
+           * person standing close to it. */}
+          <NongPlubHero outfit={plubOutfit} locale={locale} />
           <div className="city-hero-photo-overlay">
             <div className="city-hero-photo-copy">
               <span className="city-hero-photo-kicker">
@@ -1248,6 +1258,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         </div>
       ) : (
         <div className={`city-hero-gradient city-hero-gradient-${city.tier}`}>
+          <NongPlubHero outfit={plubOutfit} locale={locale} />
           <div className="city-hero-photo-overlay city-hero-gradient-overlay">
             <div className="city-hero-photo-copy">
               <span className="city-hero-photo-kicker">
