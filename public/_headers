@@ -53,3 +53,11 @@
 # the index.html shell; caching that as immutable would poison the URL for a
 # year and break the lazy chunk. Letting assets fall to Cloudflare's default
 # (revalidated) means any such miss self-heals on the next request.
+
+# Research paper viewer: the PDF is framed by its own page, so this path alone
+# may be embedded by the same origin. Everything else keeps DENY / 'none'.
+/research/smart-city-gaps/*
+  ! X-Frame-Options
+  ! Content-Security-Policy
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'self'; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'none'
