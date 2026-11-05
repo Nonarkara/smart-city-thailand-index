@@ -14002,11 +14002,15 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 @media (max-width: 720px) { .investment-atlas-controls > label:first-child { flex: 1 1 100% !important; } }
 /* Investment incentives: ruled rows, label beside text, the note in Nong Plub's hand. No box, no extra type size. */
 .investment-fit { border-top: 1px solid var(--5); padding-block: 12px 0; }
-.investment-fit-band { display: flex; align-items: center; gap: 14px; margin-bottom: 0; }
+.investment-fit-band { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 0; border-bottom: 1px solid var(--5); }
 .investment-fit-band img { height: 104px; width: auto; flex: none; display: block; }
 .investment-fit-note { margin: 0; max-width: 65ch; flex: 1 1 0; min-width: 0; font-size: var(--text-body); line-height: 1.4; color: var(--ink); }
 .investment-fit-rows { margin: 0; }
 .investment-fit-rows > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); column-gap: 14px; padding: 6px 0; border-top: 1px solid var(--5); }
+.investment-fit-band + .investment-fit-rows > div:first-child { border-top: 0; }
+@media (min-width: 721px) {
+  .investment-fit-band + .investment-fit-rows > div:first-child { border-top: 1px solid var(--5); }
+}
 .investment-fit-rows dt { font: 700 var(--text-micro)/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--3); }
 .investment-fit-rows dd { margin: 0; font: 400 var(--text-body)/1.5 var(--font); color: var(--ink); max-width: 75ch; }
 .investment-fit-caveat { max-width: 120ch; margin: 6px 0 0; padding-top: 6px; border-top: 1px solid var(--5); font: 400 var(--text-micro)/1.6 var(--font); color: var(--3); }
@@ -14014,9 +14018,9 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 @media (min-width: 721px) {
   .investment-fit { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 0 14px; }
   .investment-fit-band { display: contents; }
-  .investment-fit-band img { grid-column: 1; grid-row: 1 / span 2; height: 128px; align-self: start; }
+  .investment-fit-band img { grid-column: 1; grid-row: 1 / span 2; height: 128px; align-self: end; }
   .investment-fit-note { grid-column: 2; grid-row: 1; margin-bottom: 8px; }
   .investment-fit-rows { grid-column: 2; grid-row: 2; }
-  .investment-fit-caveat { grid-column: 2; grid-row: 3; }
+  .investment-fit-caveat { grid-column: 1 / -1; grid-row: 3; margin-top: 0; padding-left: 96px; }
 }
 @media (max-width: 520px) { .investment-fit-rows > div { display: block; } .investment-fit-rows dt, .investment-fit-rows dd { display: inline; } .investment-fit-rows dt { margin-right: 8px; } }
