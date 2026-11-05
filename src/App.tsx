@@ -448,7 +448,7 @@ export default function App() {
 
       {/* ─── CONTENT ─── */}
       <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""} ${isCanvasRoute ? "page-frame-canvas" : ""}`} key={getRouteKey(route)}>
-        {!["home","city","canvas","bingo"].includes(route.kind) && <PageMascot kind={route.kind} locale={locale} photo={PAGE_HERO_ASSETS[route.kind as StaticHeroKind] ? <PagePhotoHero route={route} locale={locale} /> : undefined} />}
+        {!["home","city","canvas","bingo","map"].includes(route.kind) && <PageMascot kind={route.kind} locale={locale} photo={PAGE_HERO_ASSETS[route.kind as StaticHeroKind] ? <PagePhotoHero route={route} locale={locale} /> : undefined} />}
         {isCanvasRoute && <PageMascot kind="canvas" locale={locale} />}
         <ErrorBoundary locale={locale}>
           <Suspense fallback={<PageSkeleton locale={locale} />}>
@@ -465,7 +465,7 @@ export default function App() {
             ) : route.kind === "partners" ? (
               <PartnershipsPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "map" ? (
-              <MapDashboardPage locale={locale} onNavigate={navigate} />
+              <MapDashboardPage locale={locale} onNavigate={navigate} guide={<PageMascot kind="map" locale={locale} photo={<PagePhotoHero route={route} locale={locale} />} />} />
             ) : route.kind === "asus" ? (
               <AsusPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "audit" ? (

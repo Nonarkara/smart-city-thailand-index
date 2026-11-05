@@ -424,62 +424,51 @@ function StatBar({ pillar, value, locale }: { pillar: ScoringPillar; value: numb
   );
 }
 
-function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
-  if (cityId === "phuket") {
-    return (
-      <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--teal)', marginTop: '2rem' }}>
-        <p className="eyebrow" style={{ color: 'var(--teal)' }}>{translate(locale, { en: "Institutional Spotlight", th: "จุดเด่นเชิงสถาบัน", zh: "机构亮点" })}</p>
-        <h3 style={{ fontSize: 'var(--text-body)', marginBottom: '.5rem' }}>{translate(locale, { en: "Japan / Fujitsu Smart JAMP Case", th: "กรณีศึกษา Fujitsu Smart JAMP (ญี่ปุ่น)", zh: "日本 / 富士通 Smart JAMP 案例" })}</h3>
-        <p style={{ fontSize: 'var(--text-body)', lineHeight: 1.6, color: 'var(--2)' }}>
-          {translate(locale, {
-            en: "Phuket isn't just installing cameras; it's proving the 'AI vs Asphalt' philosophy. By using Fujitsu's traffic AI, the city reduced congestion at major roundabouts by 15% without widening a single road. This is the definition of a high-maturity digital outcome.",
-            th: "ภูเก็ตไม่ได้แค่ติดกล้อง แต่กำลังพิสูจน์ปรัชญา 'AI vs ยางมะตอย' ด้วยการใช้ AI จาก Fujitsu บริหารจราจร เมืองสามารถลดความหนาแน่นที่วงเวียนหลักได้ 15% โดยไม่ต้องขยายถนนแม้แต่นิ้วเดียว นี่คือคำนิยามของผลลัพธ์ดิจิทัลระดับสูง",
-            zh: "普吉不仅是在安装摄像头；它正在证明“AI 对抗沥青”的哲学。通过使用富士通的交通 AI，该市在没有拓宽任何道路的情况下，将主要环岛的拥堵减少了 15%。这就是高成熟度数字成果的定义。"
-          })}
-        </p>
-        <div style={{ marginTop: '1rem', font: '700 var(--text-micro) var(--mono)', color: 'var(--teal)' }}>
-          PER FUJITSU PROJECT REPORT: -15% CONGESTION | 0km NEW ASPHALT
-        </div>
+export function CitySpotlight({ cityId, locale }: { cityId: string; locale: Locale }) {
+  const records: Record<string, { color: string; title: Record<Locale, string>; text: Record<Locale, string>; note: Record<Locale, string> }> = {
+    phuket: {
+      color: "var(--teal)",
+      title: { en: "AI traffic analysis", th: "การวิเคราะห์จราจรด้วย AI", zh: "AI 交通分析" },
+      text: {
+        en: "Japan's transport ministry reported an AI analysis demonstration using Phuket CCTV footage in July 2021. That record does not establish a measured reduction in congestion. Check dated before-and-after traffic counts and study conditions before treating a demonstration as an operating outcome.",
+        th: "กระทรวงคมนาคมญี่ปุ่นรายงานการสาธิตวิเคราะห์ภาพ CCTV ของภูเก็ตด้วย AI ในเดือนกรกฎาคม 2564 บันทึกนี้ไม่ได้ยืนยันผลลดการจราจรติดขัด ต้องตรวจปริมาณจราจรก่อนและหลัง วันที่ และเงื่อนไขการศึกษาก่อนสรุปผลการใช้งานจริง",
+        zh: "日本国土交通省于 2021 年 7 月报告了利用普吉 CCTV 影像进行 AI 分析的示范。该记录并未证实拥堵减少。应核对有日期的前后交通量及研究条件，再判断实际运行成效。"
+      },
+      note: { en: "MLIT · 30 July 2021 · demonstration report", th: "MLIT · 30 กรกฎาคม 2564 · รายงานการสาธิต", zh: "MLIT · 2021年7月30日 · 示范报告" }
+    },
+    "khon-kaen": {
+      color: "var(--alpha)",
+      title: { en: "Local transport ownership", th: "การเป็นเจ้าของระบบขนส่งท้องถิ่น", zh: "地方交通所有权" },
+      text: {
+        en: "For Khon Kaen's transport proposals, ask who owns the assets, funds construction and covers operating losses. Current company filings, municipal budgets and service records are needed to verify those roles. Local sponsorship alone does not establish financial independence or community resilience.",
+        th: "สำหรับข้อเสนอขนส่งของขอนแก่น ควรถามว่าใครเป็นเจ้าของทรัพย์สิน ใครออกค่าก่อสร้าง และใครรับภาระขาดทุน ต้องตรวจเอกสารบริษัท งบเทศบาล และบันทึกบริการฉบับปัจจุบัน การสนับสนุนจากท้องถิ่นเพียงอย่างเดียวไม่ยืนยันความเป็นอิสระทางการเงินหรือความยืดหยุ่นของชุมชน",
+        zh: "研究孔敬交通方案时，应核查资产所有者、建设出资方和运营亏损承担者。需要现行公司文件、市政预算及服务记录来验证这些角色。地方支持本身不能证明财政独立或社区韧性。"
+      },
+      note: { en: "Ownership and funding split require current source records.", th: "สัดส่วนเจ้าของและแหล่งทุนต้องมีเอกสารปัจจุบันยืนยัน", zh: "所有权及资金比例须有现行来源记录验证。" }
+    },
+    "wangchan-valley": {
+      color: "var(--gamma)",
+      title: { en: "Population and operating evidence", th: "หลักฐานประชากรและการดำเนินงาน", zh: "人口与运营证据" },
+      text: {
+        en: "Wangchan Valley's resident population is unknown in this research record. Missing population data does not mean nobody lives there. Verify occupied housing, service use and operating facilities separately; the research score and tier cannot establish those conditions.",
+        th: "บันทึกวิจัยนี้ยังไม่ทราบจำนวนผู้อยู่อาศัยของวังจันทร์วัลเลย์ ข้อมูลประชากรที่ขาดไม่ได้แปลว่าไม่มีใครอยู่ ต้องตรวจที่อยู่อาศัยที่มีผู้ใช้ การใช้บริการ และสถานที่ที่เปิดดำเนินงานแยกกัน คะแนนและระดับวิจัยไม่ยืนยันสภาพเหล่านี้",
+        zh: "本研究记录尚不知道旺湛谷的居住人口。人口数据缺失不等于无人居住。应分别核实入住住房、服务使用和运营设施；研究评分和等级不能证明这些实际状况。"
+      },
+      note: { en: "Population unknown · no zero-resident inference", th: "ยังไม่ทราบประชากร · ไม่อนุมานว่าไม่มีผู้อยู่อาศัย", zh: "人口未知 · 不推断为零居民" }
+    }
+  };
+  const record = records[cityId];
+  if (!record) return null;
+  return (
+    <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: "4px solid " + record.color, marginTop: "2rem" }}>
+      <p className="eyebrow" style={{ color: record.color }}>{translate(locale, { en: "Evidence note", th: "บันทึกหลักฐาน", zh: "证据说明" })}</p>
+      <h3 style={{ fontSize: "var(--text-body)", marginBottom: ".5rem" }}>{record.title[locale]}</h3>
+      <p style={{ fontSize: "var(--text-body)", lineHeight: 1.6, color: "var(--2)" }}>{record.text[locale]}</p>
+      <div style={{ marginTop: "1rem", font: "700 var(--text-micro) var(--mono)", color: record.color }}>
+        {cityId === "phuket" ? <a href="https://www.mlit.go.jp/report/press/sogo07_hh_000591.html" target="_blank" rel="noopener noreferrer">{record.note[locale]} ↗</a> : record.note[locale]}
       </div>
-    );
-  }
-  if (cityId === "khon-kaen") {
-    return (
-      <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--alpha)', marginTop: '2rem' }}>
-        <p className="eyebrow" style={{ color: 'var(--alpha)' }}>{translate(locale, { en: "Community Grit", th: "ใจสู้คนท้องถิ่น", zh: "社区韧性" })}</p>
-        <h3 style={{ fontSize: 'var(--text-body)', marginBottom: '.5rem' }}>{translate(locale, { en: "KKTS: The Local Consortium", th: "KKTS: คอนซอร์เทียมท้องถิ่น", zh: "KKTS：地方财团" })}</h3>
-        <p style={{ fontSize: 'var(--text-body)', lineHeight: 1.6, color: 'var(--2)' }}>
-          {translate(locale, {
-            en: "Khon Kaen's success isn't about central budget—it's about local grit. Through KKTS (Khon Kaen Transit System), the city's private sectors and 5 municipalities funded their own Smart Bus and are pushing for LRT. This bottom-up ownership makes Khon Kaen one of the most community-resilient cities in the index — an Alpha-tier city built largely without central funding.",
-            th: "ความสำเร็จของขอนแก่นไม่ใช่เรื่องงบส่วนกลาง แต่คือความใจสู้ของท้องถิ่น ผ่าน KKTS (บริษัท ขอนแก่น ทรานซิท ซิสเต็ม) ภาคเอกชนและ 5 เทศบาลร่วมกันลงขันสร้าง Smart Bus และผลักดัน LRT การเป็นเจ้าของจากฐานรากทำให้ขอนแก่นเป็นหนึ่งในเมืองที่ยืดหยุ่นที่สุดในดัชนี — เมืองระดับ Alpha ที่สร้างโดยแทบไม่พึ่งงบส่วนกลาง",
-            zh: "孔敬的成功不在于中央预算，而在于地方韧性。通过 KKTS，该市的私营部门和 5 个市政当局资助了自己的智慧巴士，并正在推动轻轨建设。这种自下而上的所有权使孔敬成为指数中最具社区韧性的城市之一——一座几乎不依赖中央资金的 Alpha 级城市。"
-          })}
-        </p>
-        <div style={{ marginTop: '1rem', font: '700 var(--text-micro) var(--mono)', color: 'var(--alpha)' }}>
-          MODEL: PPP 2.0 | OWNERSHIP: 100% LOCAL
-        </div>
-      </div>
-    );
-  }
-  if (cityId === "wangchan-valley") {
-    return (
-      <div className="city-spotlight-box glass-card shadow-premium" style={{ borderLeft: '4px solid var(--gamma)', marginTop: '2rem' }}>
-        <p className="eyebrow" style={{ color: 'var(--gamma)' }}>{translate(locale, { en: "Reality Audit", th: "ตรวจสอบความจริง", zh: "现实审计" })}</p>
-        <h3 style={{ fontSize: 'var(--text-body)', marginBottom: '.5rem' }}>{translate(locale, { en: "The Laboratory Gap", th: "ช่องว่างห้องทดลอง", zh: "实验室差距" })}</h3>
-        <p style={{ fontSize: 'var(--text-body)', lineHeight: 1.6, color: 'var(--2)' }}>
-          {translate(locale, {
-            en: "Wangchan Valley's masterplan promises advanced digital infrastructure — its Digital pillar scores 55 despite the city still being pre-operational. However, our index ranks it Gamma. Why? Because a smart city without residents is a lab, not a city. Until the 'Live' component matches the 'Digital' hardware, it remains a brilliant prototype.",
-            th: "แผนแม่บทของวังจันทร์วัลเลย์สัญญาโครงสร้างพื้นฐานดิจิทัลขั้นสูง — เสาดิจิทัลได้คะแนน 55 ทั้งที่เมืองยังอยู่ในช่วงก่อนเริ่มปฏิบัติการ แต่ดัชนีของเราจัดให้อยู่ Gamma ทำไม? เพราะเมืองอัจฉริยะที่ไม่มีคนอยู่คือห้องทดลอง ไม่ใช่เมือง จนกว่าส่วนประกอบ 'Live' จะโตทันฮาร์ดแวร์ 'Digital' ที่นี่ก็ยังเป็นเพียงต้นแบบที่ยอดเยี่ยม",
-            zh: "旺湛谷的总体规划承诺了先进的数字基础设施——尽管城市尚未投入运营，其数字支柱仍获得55分。然而，我们的指数将其评为 Gamma。为什么？因为没有居民的智慧城市只是实验室，而不是城市。在“生活”维度赶上“数字”硬件之前，它仍然只是一个出色的原型。"
-          })}
-        </p>
-        <div style={{ marginTop: '1rem', font: '700 var(--text-micro) var(--mono)', color: 'var(--gamma)' }}>
-          STATUS: PLANNED GAMMA | GAP: 0 RESIDENTS
-        </div>
-      </div>
-    );
-  }
-  return null;
+    </div>
+  );
 }
 
 function ScoreBreakdown({
@@ -1449,12 +1438,21 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           <div className="city-quick-metrics">
             {city.keyMetrics.map(metric => (
               <div key={metric.key} className="city-qm">
-                <span className="city-qm-val">{metric.value}</span>
+                <div className="city-qm-heading">
                 <span className="city-qm-lab">{metric.label[locale]}</span>
+                <span className="city-qm-val">{metric.value}</span>
+                </div>
+                <div className="city-qm-meta">
+                <span className="city-qm-lab">
+                  {metric.sourceUrl && /^https?:\/\//i.test(metric.sourceUrl) ? <a href={metric.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label={translate(locale, { en: `Source family: ${metric.sourceName ?? metric.sourceId}`, th: `กลุ่มแหล่งข้อมูล: ${metric.sourceName ?? metric.sourceId}`, zh: `来源类别：${metric.sourceName ?? metric.sourceId}` })}>{metric.sourceId.toUpperCase()}</a> : metric.sourceId.toUpperCase()}
+                  {" · "}{metric.provenance?.[locale] ?? translate(locale, { en: "Scope unverified", th: "ยังไม่ยืนยันขอบเขตพื้นที่", zh: "地理范围未核实" })}
+                </span>
+                <span className="city-qm-lab">{metric.referenceLabel?.[locale] ?? translate(locale, { en: "Reference seed · period unverified", th: "ข้อมูลตั้งต้นอ้างอิง · ยังไม่ยืนยันช่วงเวลา", zh: "参考种子数据 · 观测期未核实" })}</span>
+                </div>
               </div>
             ))}
-            <div className="city-qm">
-              <span className={`city-qm-val city-qm-conf-${city.dataConfidence ?? "medium"}`}>{city.dataConfidence ?? "medium"}</span>
+            <div className="city-qm city-qm-confidence">
+              <span className={`city-qm-val city-qm-conf-${city.dataConfidence ?? "medium"}`}>{translate(locale, { en: city.dataConfidence ?? "medium", th: { high: "สูง", medium: "ปานกลาง", low: "ต่ำ" }[city.dataConfidence ?? "medium"], zh: { high: "高", medium: "中", low: "低" }[city.dataConfidence ?? "medium"] })}</span>
               <span className="city-qm-lab">{translate(locale, { en: "Data confidence", th: "ความเชื่อมั่นข้อมูล", zh: "数据置信度" })}</span>
             </div>
           </div>

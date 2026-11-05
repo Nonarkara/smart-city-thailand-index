@@ -569,6 +569,7 @@ ul, ol { list-style: none; }
 /* --- CityPicker — alphabetical city directory drawer ------------------- */
 /* Directory rows like a transit legend: tier glyph · name · mono score.  */
 .city-picker { position: relative; }
+.city-picker-open .nav-group-caret { transform: rotate(-90deg); color: var(--ink); }
 .city-picker-trigger { display: inline-flex; align-items: center; gap: 0.3rem; }
 .city-picker-panel {
   position: absolute;
@@ -593,6 +594,7 @@ ul, ol { list-style: none; }
   border-bottom: 1px solid var(--5);
   color: var(--ink);
   font: 400 var(--text-body) var(--font);
+  min-height: 44px;
 }
 .city-picker-search:focus-visible { outline: 2px solid var(--amber, #f59e0b); outline-offset: -2px; }
 .city-picker-empty {
@@ -603,10 +605,11 @@ ul, ol { list-style: none; }
 }
 .city-picker-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem;
   width: 100%;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0.3rem 0.9rem;
   background: transparent;
   border: 0;
@@ -629,13 +632,11 @@ ul, ol { list-style: none; }
 .city-picker-tier-beta { color: var(--beta-text); }
 .city-picker-tier-gamma { color: var(--gamma); }
 .city-picker-name {
-  flex: 1;
+  flex: 1 1 12ch;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
-.city-picker-score { font: 500 var(--text-micro) var(--mono); color: var(--3); white-space: nowrap; }
+.city-picker-score { margin-left: auto; font: 500 var(--text-micro) var(--mono); color: var(--3); white-space: nowrap; }
 @media (max-width: 768px) {
   .city-picker { width: 100%; border-bottom: 1px solid var(--5); }
   .city-picker-trigger { width: 100%; justify-content: space-between; }
@@ -1916,13 +1917,20 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 }
 
 /* ─── MAP DASHBOARD (full page) ─── */
-.map-dashboard { padding-top: 16px; }
-.map-dash-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: .75rem; padding: 16px var(--gutter); border-bottom: 2px solid var(--ink, #111); margin-bottom: 0; }
+.map-dashboard { padding: 0 var(--gutter); }
+.map-dash-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding: 12px 0 8px; border-bottom: 2px solid var(--ink, #111); margin-bottom: 0; }
+.map-dash-header h1 { margin: 0; font-size: var(--text-display); line-height: 1.2; }
+.map-dash-controls button { min-height: 44px; }
 .map-dash-controls { display: flex; flex-wrap: wrap; gap: .5rem; min-width: 0; }
-.map-dash-filter, .map-dash-layers { display: flex; border: 1px solid var(--5, #E5E5E5); }
-.map-dash-body { display: grid; grid-template-columns: minmax(0, 1fr) 220px; }
-.map-dash-map { border-right: 1px solid var(--5, #E5E5E5); }
-.map-dash-map svg { display: block; }
+.map-dash-filter, .map-dash-layers { display: flex; flex-wrap: wrap; max-width: 100%; border: 1px solid var(--5, #E5E5E5); }
+.map-dash-controls button { max-width: 100%; white-space: normal; }
+.map-dash-body { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; }
+.map-dash-map { min-width: 0; }
+.map-dash-map > svg { display: block; width: 100%; height: clamp(430px, 65svh, 640px); }
+.map-city-marker:focus-visible { outline: none; stroke: var(--ink); stroke-width: 3; }
+.map-basemap-status { margin: 4px 0 8px; font-size: var(--text-micro); color: var(--3); max-width: 72ch; }
+.map-guide-context { border-top: 1px solid var(--5); }
+.map-guide-context .section { padding-inline: 0; }
 .map-dash-sidebar { padding: 1rem .85rem; }
 .map-dash-sidebar-title { font: 700 var(--text-micro) var(--mono, monospace); text-transform: uppercase; letter-spacing: .1em; color: var(--3, #888); margin-bottom: .6rem; }
 .map-dash-region { margin-bottom: .6rem; }
@@ -1934,7 +1942,7 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .map-dash-region-detail { display: flex; gap: .4rem; font: 600 var(--text-micro) var(--mono, monospace); }
 .map-dash-legend { margin-top: 1rem; padding-top: .5rem; border-top: 1px solid var(--5, #E5E5E5); }
 .map-dash-legend-item { display: flex; align-items: center; gap: .25rem; font-size: var(--text-micro); color: var(--2, #444); margin-bottom: .2rem; }
-@media (max-width: 768px) { .map-dash-body { grid-template-columns: 1fr; } .map-dash-map { border-right: 0; } }
+@media (min-width: 769px) { .map-dash-body { grid-template-columns: minmax(0, 1fr) 260px; gap: 16px; } .map-dash-map { border-right: 1px solid var(--5); padding-right: 16px; } }
 
 /* ─── TREND INTELLIGENCE PANEL ─── */
 .trend-panel {
@@ -6362,7 +6370,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 /* C1: Nav overflow — raise breakpoint to 1100px */
 @media (max-width: 1100px) and (min-width: 901px) {
   .nav-link { padding: .3rem .4rem; font-size: var(--text-micro); }
-  .nav-links { gap: 0; overflow-x: auto; scrollbar-width: none; }
+  .nav-links { gap: 0; overflow: visible; }
   .nav-links::-webkit-scrollbar { display: none; }
 }
 
@@ -12701,7 +12709,7 @@ body:has(.city-evidence-summary) .chat-fab,
   .research-indicator { break-inside: avoid; }
   .research-indicator a::after { content: " (" attr(href) ")"; overflow-wrap: anywhere; }
   .dossier-panel-slot { display: block !important; break-before: page; }
-  .dossier-panel-slot .reveal { opacity: 1 !important; transform: none !important; }
+  body:has(.city-evidence-summary) .reveal { opacity: 1 !important; transform: none !important; }
   .dossier-panel-heading { display: block; }
 }
 @media print {
@@ -12720,7 +12728,7 @@ body:has(.city-evidence-summary) .chat-fab,
 }
 @media print {
   .dossier-panel-slot .city-print-hide { display: block !important; }
-  .dossier-panel-slot .reveal { visibility: visible !important; }
+  body:has(.city-evidence-summary) .reveal { visibility: visible !important; }
 }
 
 /* Investment atlas: the comparison is dominant; its interpretation stays beside it. */
@@ -13023,6 +13031,14 @@ main .city-factbook-label { letter-spacing: 0; text-transform: none; }
 main .city-qm { flex-direction: row; align-items: baseline; gap: .35rem; padding: .25rem 0; background: none; min-width: 0; }
 main .city-qm-lab { letter-spacing: 0; text-transform: none; font-family: var(--font); }
 main .city-quick-metrics { column-gap: 1rem; row-gap: .1rem; margin-bottom: .25rem; }
+main .city-quick-metrics { display: grid; grid-template-columns: minmax(0, 1fr); }
+main .city-qm { display: block; padding: 8px 0; border: 0; border-bottom: 1px solid var(--4); background: none; }
+.city-qm-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.city-qm-meta { display: flex; flex-wrap: wrap; gap: 2px 12px; margin-top: 3px; overflow-wrap: anywhere; }
+.city-qm-meta .city-qm-lab { line-height: 1.45; }
+.city-qm-meta a { text-decoration: underline; text-underline-offset: 2px; }
+main .city-qm-confidence { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; border-bottom: 0; grid-column: 1 / -1; }
+@media (min-width: 730px) { main .city-quick-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 20px; } }
 @media (max-width: 719px) {
   main .city-factbook-row { grid-template-columns: minmax(5rem, .8fr) minmax(0, 1.6fr); }
   main .city-decision-item { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .15rem .5rem; padding: .5rem .65rem; align-items: baseline; }
@@ -13217,7 +13233,7 @@ main .rankings-page .rankings-column > .section + .section { margin-top: 16px; }
 .heritage-technical-notes summary { min-height: 44px; padding-block: 12px; font-size: var(--text-body); cursor: pointer; }
 
 .map-coordinate-note { margin-block: 8px; font: 400 var(--text-body)/1.45 var(--font); max-width: 72ch; color: var(--2); }
-.map-coordinate-note.section { width: auto; padding: 0; margin-inline: var(--gutter); }
+.map-dashboard .map-coordinate-note.section { width: auto; padding: 0; margin: 8px 0; font-size: var(--text-micro); }
 .city-hero-context.section { margin-block: 8px; padding-block: 0; font: 400 var(--text-micro)/1.45 var(--font); overflow-wrap: anywhere; }
 
 /* ─── Field Operations & Delivery Evidence (Homepage) ─── */
@@ -13986,14 +14002,21 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 @media (max-width: 720px) { .investment-atlas-controls > label:first-child { flex: 1 1 100% !important; } }
 /* Investment incentives: ruled rows, label beside text, the note in Nong Plub's hand. No box, no extra type size. */
 .investment-fit { border-top: 1px solid var(--5); padding-block: 12px 0; }
-.investment-fit-band { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 0; }
+.investment-fit-band { display: flex; align-items: center; gap: 14px; margin-bottom: 0; }
 .investment-fit-band img { height: 104px; width: auto; flex: none; display: block; }
-.investment-fit-note { margin: 0 0 10px; flex: 1 1 0; min-width: 0; font-size: var(--text-body); line-height: 1.4; color: var(--ink); }
+.investment-fit-note { margin: 0; max-width: 65ch; flex: 1 1 0; min-width: 0; font-size: var(--text-body); line-height: 1.4; color: var(--ink); }
 .investment-fit-rows { margin: 0; }
 .investment-fit-rows > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); column-gap: 14px; padding: 6px 0; border-top: 1px solid var(--5); }
 .investment-fit-rows dt { font: 700 var(--text-micro)/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--3); }
 .investment-fit-rows dd { margin: 0; font: 400 var(--text-body)/1.5 var(--font); color: var(--ink); max-width: 75ch; }
 .investment-fit-caveat { max-width: 120ch; margin: 6px 0 0; padding-top: 6px; border-top: 1px solid var(--5); font: 400 var(--text-micro)/1.6 var(--font); color: var(--3); }
 .investment-fit-caveat a { color: inherit; text-decoration: underline; }
-@media (min-width: 721px) { .investment-fit-band img { height: 128px; } }
+@media (min-width: 721px) {
+  .investment-fit { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 0 14px; }
+  .investment-fit-band { display: contents; }
+  .investment-fit-band img { grid-column: 1; grid-row: 1 / span 2; height: 128px; align-self: start; }
+  .investment-fit-note { grid-column: 2; grid-row: 1; margin-bottom: 8px; }
+  .investment-fit-rows { grid-column: 2; grid-row: 2; }
+  .investment-fit-caveat { grid-column: 2; grid-row: 3; }
+}
 @media (max-width: 520px) { .investment-fit-rows > div { display: block; } .investment-fit-rows dt, .investment-fit-rows dd { display: inline; } .investment-fit-rows dt { margin-right: 8px; } }

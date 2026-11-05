@@ -46,15 +46,28 @@ describe("Investment incentives block", () => {
   it("adds an industry row only when the city records a sector BOI lists, never inventing one", () => {
     let withRow = 0;
     for (const c of allCities) {
-      const known = /agri|manufactur|petrochem|tourism|services/i.test(topSector(c.metrics.industryComposition) ?? "");
+      const known = /agri|manufactur|petrochem|tourism|digital|software|cloud/i.test(topSector(c.metrics.industryComposition) ?? "");
       expect(rowsOf(c).includes("industry"), c.id).toBe(known);
       withRow += known ? 1 : 0;
     }
     expect(withRow).toBeGreaterThan(20);
     const field = (re: RegExp, f: string) => { const cs = allCities.filter(c => re.test(topSector(c.metrics.industryComposition) ?? "")); expect(cs.length, f).toBeGreaterThan(0); for (const c of cs) expect(text(c, "en"), c.id).toContain(f); };
-    field(/petrochem/i, "Chemicals and petrochemicals"); field(/agri/i, "Agriculture, food, biotechnology"); field(/tourism/i, "Tourism services");
+    field(/petrochem/i, "Chemicals and petrochemicals"); field(/agri/i, "Agriculture and food"); field(/tourism/i, "Tourism services");
     expect(topSector("services 52%, agriculture 18%, manufacturing 30%")).toBe("services");
     expect(topSector(undefined)).toBeNull();
+    expect(boiFacts("Bangkok", "services 72%, manufacturing 28%").rows.some(r => r.key === "industry")).toBe(false);
+  });
+
+  it("keeps measure identities distinct and does not imply Hat Yai qualifies by province", () => {
+    for (const city of allCities) {
+      const keys = rowsOf(city);
+      expect(new Set(keys).size, city.id).toBe(keys.length);
+    }
+    for (const city of byProvince(["Songkhla"])) {
+      expect(text(city, "en")).toContain("check the project district and activity");
+      expect(text(city, "zh")).toContain("Chana、Na Thawi、Saba Yoi、Thepha");
+    }
+    expect(text(allCities.find(c => isEecProvince(c.province))!, "en")).toContain("up to 50%");
   });
 
   it("makes no recommendation or ranking claim in any language and always carries its caveat and sources", () => {
