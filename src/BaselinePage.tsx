@@ -340,12 +340,26 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
                     <option key={th.id} value={th.id}>{th.label[locale]}</option>
                   ))}
                 </select>
-                <span className="baseline-facet-source">
-                  {t(locale, { en: `${facet.source[locale]} · ${facet.vintage}`, th: `${facet.source[locale]} · ${facet.vintage}`, zh: `${facet.source[locale]} · ${facet.vintage}` })}
-                </span>
+                {/* A filter set to "Any" makes no claim, so it needs no
+                    citation. The source and vintage appear the moment a
+                    threshold is chosen — which is the moment the reader is
+                    being asked to believe a number. */}
+                {picks[facet.id] && (
+                  <span className="baseline-facet-source">
+                    {t(locale, { en: `${facet.source[locale]} · ${facet.vintage}`, th: `${facet.source[locale]} · ${facet.vintage}`, zh: `${facet.source[locale]} · ${facet.vintage}` })}
+                  </span>
+                )}
               </div>
             ))}
           </div>
+
+          <p className="baseline-facet-note">
+            {t(locale, {
+              en: "Each indicator's source and vintage appear when you set a threshold. Every source is listed at the foot of this page.",
+              th: "แหล่งข้อมูลและปีของตัวชี้วัดจะปรากฏเมื่อคุณเลือกเกณฑ์ ทุกแหล่งข้อมูลอยู่ท้ายหน้านี้",
+              zh: "设置阈值后，每个指标的来源与年份会显示在此。所有来源列于本页末尾。",
+            })}
+          </p>
 
           <p className="baseline-count">
             {t(locale, {
