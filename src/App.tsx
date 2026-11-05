@@ -573,7 +573,7 @@ export default function App() {
 
               <details className="footer-fineprint">
                 <summary>{locale === "th" ? "เกี่ยวกับโครงการ SCITI" : locale === "zh" ? "关于SCITI项目" : "About the SCITI project"}</summary>
-                <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: "0.5rem", fontSize: "var(--text-body)" }}>
+                <p style={{ fontWeight: 600, color: "var(--ink)", marginBottom: "0.5rem", fontSize: "var(--text-body)" }}>
                   {locale === "th" ? "SCITI (sciti.nonarkara.org) -- แพลตฟอร์มข้อมูลเมืองอัจฉริยะไทย" : locale === "zh" ? "SCITI (sciti.nonarkara.org) —— 泰国智慧城市数据平台" : "SCITI (sciti.nonarkara.org) -- Thailand's smart-city data platform"}
                 </p>
                 <p style={{ fontWeight: 600, color: "var(--teal)", marginBottom: "1rem", fontSize: "var(--text-body)", letterSpacing: "0.05em", textTransform: "uppercase" as const }}>

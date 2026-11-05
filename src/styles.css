@@ -13720,7 +13720,7 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 /* Invest essays: these three reuse the navy CCDR panel class on a light surface, so the pull-quote
    was white on white (an empty blue rule) and the box padded a 590px column beside a void. On a light
    essay the text is ink, the box is a hairline rule, and from 960px the title sits left of the prose. */
-.section > .invest-ccdr-panel.glass-card { border: 0 !important; border-top: 1px solid var(--5) !important; background: none !important; box-shadow: none; }
+.section > .invest-ccdr-panel.glass-card { border: 0 !important; border-top: 1px solid var(--5) !important; background: none !important; box-shadow: none; color: var(--ink); }
 .section > .invest-ccdr-panel.glass-card > .invest-ccdr-inner { padding-block: 12px 4px; padding-inline: 0; }
 .section > .invest-ccdr-panel.glass-card .invest-ccdr-thesis { color: var(--ink); }
 .section > .invest-ccdr-panel.glass-card .invest-ccdr-copy { color: var(--2); }

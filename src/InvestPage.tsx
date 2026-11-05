@@ -752,7 +752,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                 zh: "可下载的Moneyball省份资料是一项独立编辑分析，并非SCITI实时指标。所选省份是进一步研究的线索。评分或创意资产不能证明进入成本低、市场定价错误或投资回报。",
               })}
             </p>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--text)", fontWeight: 600, marginTop: "2rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem" }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--ink)", fontWeight: 600, marginTop: "2rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem" }}>
               {translate(locale, {
                 en: "SCITI does not give investment advice. It gives you the data to make your own call — with the same rigor you would apply to any other asset class.",
                 th: "SCITI ไม่ได้ให้คำแนะนำการลงทุน แต่ให้ข้อมูลเพื่อให้คุณตัดสินใจด้วยตัวเอง — ด้วยความรัดกุมเช่นเดียวกับที่คุณใช้กับสินทรัพย์ประเภทอื่น",
@@ -782,21 +782,21 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       th: "ใครเป็นคนเซ็น",
       zh: "谁来签字" })}
             </h2>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
                 en: "Provincial and local authorities have different responsibilities. Outside Bangkok, provincial governors are appointed, while PAO chief executives and councils are elected; municipalities and other bodies have their own powers and budgets. Identify the landowner, procuring authority, budget holder and relevant regulators for the specific project.",
                 th: "ราชการส่วนภูมิภาคกับองค์กรปกครองส่วนท้องถิ่นมีหน้าที่ต่างกัน นอกกรุงเทพฯ ผู้ว่าราชการจังหวัดมาจากการแต่งตั้ง ส่วนนายกและสภา อบจ. มาจากการเลือกตั้ง เทศบาลและหน่วยงานอื่นมีอำนาจและงบประมาณของตนเอง ต้องระบุเจ้าของที่ดิน หน่วยจัดซื้อจัดจ้าง เจ้าของงบ และหน่วยกำกับที่เกี่ยวข้องกับแต่ละโครงการ",
                 zh: "府级行政与地方自治机构职责不同。曼谷以外的府尹由任命产生，PAO行政首长及议会由选举产生；市政及其他机构另有自身职权与预算。请按具体项目确认土地所有者、采购机构、预算主管和有关监管部门。",
               })}
             </p>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--4)", marginBottom: "1rem", lineHeight: 1.7 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--3)", marginBottom: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
                 en: "A discussion with a governor, PAO or municipality does not secure funding or permission. The approval route depends on project type, ownership, procurement and the funding programme. Bangkok has a separate metropolitan administration and an elected governor. Use the responsible agencies to confirm the actual approval and budget process.",
                 th: "การหารือกับผู้ว่าฯ อบจ. หรือเทศบาลไม่ได้ทำให้ได้รับงบหรือใบอนุญาต ขั้นตอนอนุมัติขึ้นอยู่กับประเภทโครงการ กรรมสิทธิ์ การจัดซื้อจัดจ้าง และแหล่งเงิน กรุงเทพฯ มีรูปแบบบริหารมหานครแยกต่างหากและผู้ว่าฯ มาจากการเลือกตั้ง ควรยืนยันขั้นตอนอนุมัติและงบกับหน่วยงานที่รับผิดชอบจริง",
                 zh: "与府尹、PAO或市政府磋商并不等于取得资金或许可。审批路径取决于项目类型、产权、采购方式及资金计划。曼谷实行单独的都市行政制度，府尹由选举产生。应向负责机构确认实际审批与预算程序。",
               })}
             </p>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--text)", fontWeight: 600, marginTop: "1.5rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem", lineHeight: 1.7 }}>
+            <p style={{ fontSize: "var(--text-body)", color: "var(--ink)", fontWeight: 600, marginTop: "1.5rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
                 en: "Build a project-specific timetable covering budget applications, procurement, permits, construction and operation. SCITI has no verified universal two-year funding or four-year delivery rule. Test delays against local hazard seasons and service needs before committing capital.",
                 th: "จัดทำกำหนดเวลาเฉพาะโครงการ ครอบคลุมการของบ จัดซื้อจัดจ้าง ใบอนุญาต ก่อสร้าง และเปิดใช้งาน SCITI ไม่มีหลักฐานยืนยันกฎทั่วไปว่าต้องรอเงินสองปีหรือส่งมอบในสี่ปี ควรประเมินความล่าช้าเทียบกับฤดูภัยพิบัติและความต้องการบริการก่อนลงทุน",
