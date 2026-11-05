@@ -15,4 +15,13 @@ describe("research downloads",()=>{
     const response=await onRequest({request:new Request(path),env:{ASSETS:{fetch}}});expect(await response.text()).toBe(body);expect(response.headers.get("cache-control")).toContain("immutable");
     const head=await onRequest({request:new Request(path,{method:"HEAD"}),env:{ASSETS:{fetch}}});expect(head.status).toBe(200);expect(await head.text()).toBe("");
   });
+  it("serves the paper viewer and PDF, but never the application shell in their place",async()=>{
+    const pdf="https://sciti.nonarkara.org/research/smart-city-gaps/SCITI_2026-11-05_DOC_smart-city-gaps-synthesis.pdf";
+    const ok=vi.fn(async()=>new Response("%PDF-1.7",{headers:{"Content-Type":"application/pdf"}}));
+    expect((await onRequest({request:new Request(pdf),env:{ASSETS:{fetch:ok}}})).status).toBe(200);
+    const shell=vi.fn(async()=>new Response("<html>application</html>",{headers:{"Content-Type":"text/html"}}));
+    expect((await onRequest({request:new Request(pdf),env:{ASSETS:{fetch:shell}}})).status).toBe(404);
+    const other=await onRequest({request:new Request("https://sciti.nonarkara.org/research/smart-city-gaps/other.pdf"),env:{ASSETS:{fetch:ok}}});
+    expect(other.status).toBe(404);
+  });
 });
