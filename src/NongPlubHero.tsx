@@ -1,5 +1,5 @@
 import type { Locale } from "./types";
-import { GUIDE } from "./PageMascot";
+import { GUIDE } from "./nongPlubGuide";
 import type { NongPlubOutfit } from "./nongPlubData";
 
 /**
