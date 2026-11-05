@@ -1,0 +1,78 @@
+province,certified_city,pm25_2024,flood_score,open_datasets,pop_thousand
+Amnat Charoen,0,24,,323,262.1
+Ang Thong,0,,,292,231.3
+Bangkok,1,21.3,55,1390,8572.5
+Bueng Kan,0,21,,405,332.4
+Buriram,0,18,,251,1109.7
+Chachoengsao,1,22,50,328,839
+Chai Nat,0,,,252,272.1
+Chaiyaphum,0,22,,279,857.1
+Chanthaburi,0,15,65,294,531.3
+Chiang Mai,1,29,60,483,1694.3
+Chiang Rai,1,29.5,65,319,1072.3
+Chonburi,1,18,75,286,1845
+Chumphon,0,,,274,461.1
+Kalasin,0,31,,341,729.7
+Kamphaeng Phet,0,24,,264,737.1
+Kanchanaburi,0,33,,420,783
+Khon Kaen,1,26,60,389,1593.3
+Krabi,1,,70,298,397
+Lampang,1,27.3,70,356,653.1
+Lamphun,0,29,70,307,366.6
+Loei,0,26,,242,499.6
+Lopburi,0,27,,690,730.2
+Mae Hong Son,0,27,,339,229.3
+Maha Sarakham,0,,,581,715.5
+Mukdahan,0,30,,166,399.7
+Nakhon Nayok,0,19,,182,246
+Nakhon Pathom,0,23,,339,1197.2
+Nakhon Phanom,0,30,,223,506
+Nakhon Ratchasima,1,27,55,601,2328.9
+Nakhon Sawan,1,25,30,488,851.5
+Nakhon Si Thammarat,1,13,40,205,1401.5
+Nan,1,38,75,185,412.4
+Narathiwat,1,14,40,332,677.7
+Nong Bua Lamphu,0,,,444,438.3
+Nong Khai,0,27,,297,424
+Nonthaburi,0,22.5,50,283,1771.8
+Pathum Thani,0,25,,318,1774
+Pattani,1,,50,244,597.4
+Phang Nga,1,,72,166,228.3
+Phatthalung,0,,,227,451.7
+Phayao,0,30,,304,340.1
+Phetchabun,0,25,,239,849.9
+Phetchaburi,0,,,276,472.8
+Phichit,0,25,35,1142,474.8
+Phitsanulok,1,25,45,616,844.1
+Phra Nakhon Si Ayutthaya,0,23,,228,869.3
+Phrae,0,27,,237,345.6
+Phuket,1,17,80,164,563.3
+Prachinburi,0,25,,201,613.2
+Prachuap Khiri Khan,0,19,,318,455
+Ranong,0,,,258,266
+Ratchaburi,0,26,,258,761.8
+Rayong,1,18.2,78,152,1016.2
+Roi Et,0,,,567,972.3
+Sa Kaeo,0,17,,297,621.1
+Sakon Nakhon,0,19,,407,847.8
+Samut Prakan,1,23,55,214,2241.6
+Samut Sakhon,0,27,,229,1050.8
+Samut Songkhram,0,23,,425,165.7
+Saraburi,0,27.5,,394,724.2
+Satun,1,15,70,247,275
+Sing Buri,0,27,,240,174.2
+Sisaket,0,20,,650,866.4
+Songkhla,1,14,50,204,1558.9
+Sukhothai,0,29,,370,572
+Suphan Buri,0,22,,396,796.5
+Surat Thani,1,14,55,347,1074.5
+Surin,0,20,,583,968.5
+Tak,0,27,78,530,506.3
+Trang,1,12,60,241,582.2
+Trat,0,21,,301,259
+Ubon Ratchathani,1,28,35,309,1612.9
+Udon Thani,0,23,,230,1163.6
+Uthai Thani,0,30,,268,256
+Uttaradit,0,28,,369,378
+Yala,1,13.5,60,226,442.6
+Yasothon,0,27,,332,416.4

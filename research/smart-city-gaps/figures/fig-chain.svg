@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="245.52pt" height="226.8pt" viewBox="0 0 245.52 226.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-05T13:48:07.609317</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 226.8 
+L 245.52 226.8 
+L 245.52 0 
+L 0 0 
+L 0 226.8 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 4.9104 67.1328 
+L 240.6096 67.1328 
+L 240.6096 29.0304 
+L 4.9104 29.0304 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #ffffff; stroke: #007190; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 4.9104 129.7296 
+L 240.6096 129.7296 
+L 240.6096 91.6272 
+L 4.9104 91.6272 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #ffffff; stroke: #12354e; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 4.9104 192.3264 
+L 240.6096 192.3264 
+L 240.6096 154.224 
+L 4.9104 154.224 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #ffffff; stroke: #d98218; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 4.9104 67.1328 
+L 8.34768 67.1328 
+L 8.34768 29.0304 
+L 4.9104 29.0304 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #007190"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #007190; font: 700 8.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="41.129428" transform="rotate(-0 15.9588 41.129428)">SENSE</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #1b2733; font: 700 7.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="236.9268" y="40.8996" transform="rotate(-0 236.9268 40.8996)">19 of 76 projects</text>
+   </g>
+   <g id="text_3">
+    <text style="fill: #1b2733; font: 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="51.773105" transform="rotate(-0 15.9588 51.773105)">monitor · telemetry · sensors · CCTV</text>
+   </g>
+   <g id="text_4">
+    <text style="fill: #007190; font: 700 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="62.43615" transform="rotate(-0 15.9588 62.43615)">15 of the 20 hazard projects reach this link</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 6.62904 68.04 
+Q 6.62904 79.1532 6.62904 89.148366 
+" style="fill: none; stroke: #7d8891; stroke-linecap: round"/>
+    <path d="M 8.10904 86.188366 
+L 6.62904 89.148366 
+L 5.14904 86.188366 
+z
+" style="fill: #7d8891; stroke: #7d8891; stroke-linecap: round"/>
+   </g>
+   <g id="text_5">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 75.093788)">one province: 65.9% of rain records and</text>
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 82.346288)">58.8% of river records had no reading in two hours</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 4.9104 129.7296 
+L 8.34768 129.7296 
+L 8.34768 91.6272 
+L 4.9104 91.6272 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #12354e"/>
+   </g>
+   <g id="text_6">
+    <text style="fill: #12354e; font: 700 8.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="103.726228" transform="rotate(-0 15.9588 103.726228)">DECIDE</text>
+   </g>
+   <g id="text_7">
+    <text style="fill: #1b2733; font: 700 7.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="236.9268" y="103.4964" transform="rotate(-0 236.9268 103.4964)">5 of 76 projects</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #1b2733; font: 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="114.31035" transform="rotate(-0 15.9588 114.31035)">operations centre · data hub · digital twin</text>
+   </g>
+   <g id="text_9">
+    <text style="fill: #12354e; font: 700 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="125.007848" transform="rotate(-0 15.9588 125.007848)">no hazard project reaches this link</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 6.62904 130.6368 
+Q 6.62904 141.75 6.62904 151.745166 
+" style="fill: none; stroke: #7d8891; stroke-linecap: round"/>
+    <path d="M 8.10904 148.785166 
+L 6.62904 151.745166 
+L 5.14904 148.785166 
+z
+" style="fill: #7d8891; stroke: #7d8891; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 137.690587)">one province: 0 of 311 open datasets describe a</text>
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 145.010025)">procurement, and 0 of 177 shelter rows carry a coordinate</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 4.9104 192.3264 
+L 8.34768 192.3264 
+L 8.34768 154.224 
+L 4.9104 154.224 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #d98218"/>
+   </g>
+   <g id="text_11">
+    <text style="fill: #d98218; font: 700 8.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="166.323028" transform="rotate(-0 15.9588 166.323028)">PUSH</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #1b2733; font: 700 7.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="236.9268" y="166.0932" transform="rotate(-0 236.9268 166.0932)">2 of 76 projects</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #1b2733; font: 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="176.90715" transform="rotate(-0 15.9588 176.90715)">early warning · alert · dispatch</text>
+   </g>
+   <g id="text_14">
+    <text style="fill: #d98218; font: 700 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="187.62975" transform="rotate(-0 15.9588 187.62975)">2 of 21 endorsed cities name an alert project</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 200.287387)">prototypes: 7 s hand-off to test chats, 8.2 h median lead,</text>
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 207.534638)">84% of overflow station-days (coherence test), 29 subscribers</text>
+   </g>
+  </g>
+  <g id="text_16">
+   <text style="fill: #1b2733; font: 700 8.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="4.9104" y="9.400125" transform="rotate(-0 4.9104 9.400125)">The monitoring-to-push chain</text>
+  </g>
+  <g id="text_17">
+   <text style="fill: #7d8891; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="4.9104" y="17.404194" transform="rotate(-0 4.9104 17.404194)">76 headline projects from 21 endorsed cities, coded from one-line titles</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p52f0ea7d69">
+   <rect x="0" y="0" width="245.52" height="226.8"/>
+  </clipPath>
+ </defs>
+</svg>

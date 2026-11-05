@@ -1,0 +1,604 @@
+{
+ "cities": 118,
+ "provinces": 77,
+ "status": {
+  "certified": 37,
+  "promotion": 12,
+  "registered": 69
+ },
+ "reality": {
+  "operational": 39,
+  "partial": 7,
+  "planned": 72
+ },
+ "status_x_reality": {
+  "certified|operational": 30,
+  "promotion|operational": 9,
+  "promotion|partial": 3,
+  "certified|partial": 4,
+  "registered|planned": 69,
+  "certified|planned": 3
+ },
+ "certified": 37,
+ "certified_operational": {
+  "k": 30,
+  "n": 37,
+  "p": 0.8108108108108109,
+  "lo": 0.6579530293509931,
+  "hi": 0.9052002132118778
+ },
+ "certified_planned": {
+  "k": 3,
+  "n": 37,
+  "p": 0.08108108108108109,
+  "lo": 0.02796057388250915,
+  "hi": 0.21300679483709983
+ },
+ "proposals_total": 227,
+ "proposals_to_certified": {
+  "k": 37,
+  "n": 227,
+  "p": 0.16299559471365638,
+  "lo": 0.12062700564451553,
+  "hi": 0.21658044079310143
+ },
+ "target_2024_27": 105,
+ "certified_vs_target": {
+  "k": 37,
+  "n": 105,
+  "p": 0.3523809523809524,
+  "lo": 0.2676935471316251,
+  "hi": 0.44748851383460075
+ },
+ "metrics_cities": {
+  "k": 49,
+  "n": 118,
+  "p": 0.4152542372881356,
+  "lo": 0.3303887540840012,
+  "hi": 0.5054635068489135
+ },
+ "metrics_certified": {
+  "k": 37,
+  "n": 37,
+  "p": 1.0,
+  "lo": 0.9059421728185313,
+  "hi": 1.0
+ },
+ "conf": {
+  "high": 10,
+  "medium": 39,
+  "low": 69
+ },
+ "endorsed_records": 21,
+ "endorsed_batches": {
+  "1": 9,
+  "2": 12
+ },
+ "certified_with_endorsed_record": {
+  "k": 21,
+  "n": 37,
+  "p": 0.5675675675675675,
+  "lo": 0.4091418097222649,
+  "hi": 0.7132828082261852
+ },
+ "flagship_projects": 76,
+ "flagship_stage": {
+  "decide": 5,
+  "none": 49,
+  "sense": 19,
+  "push": 2,
+  "ambiguous": 1
+ },
+ "hazard_projects": {
+  "k": 20,
+  "n": 76,
+  "p": 0.2631578947368421,
+  "lo": 0.17729398905256336,
+  "hi": 0.3718124463205318
+ },
+ "hazard_stage": {
+  "sense": 15,
+  "push": 2,
+  "none": 2,
+  "ambiguous": 1
+ },
+ "hazard_stage_push": {
+  "k": 2,
+  "n": 20,
+  "p": 0.1,
+  "lo": 0.02786648096169142,
+  "hi": 0.3010336471864123
+ },
+ "hazard_stage_decide": {
+  "k": 0,
+  "n": 20,
+  "p": 0.0,
+  "lo": 0.0,
+  "hi": 0.16112516018512965
+ },
+ "hazard_stage_sense": {
+  "k": 15,
+  "n": 20,
+  "p": 0.75,
+  "lo": 0.5312991206074114,
+  "hi": 0.8881382993000237
+ },
+ "hazard_stage_none": {
+  "k": 2,
+  "n": 20,
+  "p": 0.1,
+  "lo": 0.02786648096169142,
+  "hi": 0.3010336471864123
+ },
+ "hazard_stage_ambiguous": {
+  "k": 1,
+  "n": 20,
+  "p": 0.05,
+  "lo": 0.008881448702335523,
+  "hi": 0.23613119546428119
+ },
+ "hazard_push_strict": {
+  "k": 2,
+  "n": 20,
+  "p": 0.1,
+  "lo": 0.02786648096169142,
+  "hi": 0.3010336471864123
+ },
+ "hazard_push_lenient": {
+  "k": 3,
+  "n": 20,
+  "p": 0.15,
+  "lo": 0.05236874548672649,
+  "hi": 0.36041886664286427
+ },
+ "hazard_reaches_decide_or_push": {
+  "k": 2,
+  "n": 20,
+  "p": 0.1,
+  "lo": 0.02786648096169142,
+  "hi": 0.3010336471864123
+ },
+ "hazard_sense_only": {
+  "k": 15,
+  "n": 20,
+  "p": 0.75,
+  "lo": 0.5312991206074114,
+  "hi": 0.8881382993000237
+ },
+ "cities_with_hazard_push": [
+  "hat-yai",
+  "khon-kaen"
+ ],
+ "endorsed_cities_with_any_push": {
+  "k": 2,
+  "n": 21,
+  "p": 0.09523809523809523,
+  "lo": 0.026518767198269788,
+  "hi": 0.2891413926484656
+ },
+ "endorsed_cities_with_hazard_push": {
+  "k": 2,
+  "n": 21,
+  "p": 0.09523809523809523,
+  "lo": 0.026518767198269788,
+  "hi": 0.2891413926484656
+ },
+ "flagship_decide_projects": 5,
+ "flagship_decide_in_hazard_domain": 0,
+ "endorsed_cities_with_sense": {
+  "k": 16,
+  "n": 21,
+  "p": 0.7619047619047619,
+  "lo": 0.5490882614178733,
+  "hi": 0.8937198704460038
+ },
+ "endorsed_with_named_partners": {
+  "k": 8,
+  "n": 21,
+  "p": 0.38095238095238093,
+  "lo": 0.20751011264009112,
+  "hi": 0.5912134637854193
+ },
+ "batch1_with_named_partners": {
+  "k": 8,
+  "n": 9,
+  "p": 0.8888888888888888,
+  "lo": 0.565000291629209,
+  "hi": 0.9801091125830901
+ },
+ "batch2_with_named_partners": {
+  "k": 0,
+  "n": 12,
+  "p": 0.0,
+  "lo": 0.0,
+  "hi": 0.2424940095530979
+ },
+ "partners_public_agencies_named": null,
+ "provinces_with_certified_city": 25,
+ "provinces_with_any_record": 77,
+ "unmatched_province_keys": [],
+ "flood_provinces": 30,
+ "pm_provinces": 65,
+ "flood_provinces_designated": 25,
+ "flood_testable": false,
+ "pm_provinces_designated": 22,
+ "provinces_without_pm_station": [
+  "angthong",
+  "chainat",
+  "chumphon",
+  "krabi",
+  "mahasarakham",
+  "nongbualamphu",
+  "pattani",
+  "phangnga",
+  "phatthalung",
+  "phetchaburi",
+  "ranong",
+  "roiet"
+ ],
+ "certified_provinces_without_pm_station": [
+  "krabi",
+  "pattani",
+  "phangnga"
+ ],
+ "targeting_tests": [
+  {
+   "name": "PM2.5 2024 annual mean (ug/m3)",
+   "n_designated": 22,
+   "n_other": 43,
+   "note": "65 provinces with a PCD station",
+   "median_designated": 21.65,
+   "median_other": 25.0,
+   "median_diff": -3.3500000000000014,
+   "median_diff_ci": [
+    -10.0,
+    1.5
+   ],
+   "cliff_delta": -0.3192389006342495,
+   "cliff_ci": [
+    -0.61419133192389,
+    0.009540169133192005
+   ],
+   "mannwhitney_p": 0.0365004889904351,
+   "higher_is": "worse",
+   "holm_p": 0.1095014669713053
+  },
+  {
+   "name": "Open datasets published by province (count)",
+   "n_designated": 25,
+   "n_other": 52,
+   "note": "",
+   "median_designated": 298.0,
+   "median_other": 299.0,
+   "median_diff": -1.0,
+   "median_diff_ci": [
+    -79.5,
+    49.51249999999982
+   ],
+   "cliff_delta": -0.11846153846153847,
+   "cliff_ci": [
+    -0.39692307692307693,
+    0.18386538461538435
+   ],
+   "mannwhitney_p": 0.4052717359696899,
+   "higher_is": "more",
+   "holm_p": 0.4052717359696899
+  },
+  {
+   "name": "Open datasets per 100 000 residents",
+   "n_designated": 25,
+   "n_other": 52,
+   "note": "",
+   "median_designated": 32.2940902745463,
+   "median_other": 59.809649144315735,
+   "median_diff": -27.515558869769436,
+   "median_diff_ci": [
+    -45.908935259654925,
+    -9.982127234923738
+   ],
+   "cliff_delta": -0.5230769230769231,
+   "cliff_ci": [
+    -0.7276923076923076,
+    -0.2923076923076923
+   ],
+   "mannwhitney_p": 0.0002213860367344074,
+   "higher_is": "more",
+   "holm_p": 0.0008855441469376296
+  },
+  {
+   "name": "Share of open data offered as a table (%)",
+   "n_designated": 25,
+   "n_other": 52,
+   "note": "",
+   "median_designated": 88.8,
+   "median_other": 91.25,
+   "median_diff": -2.450000000000003,
+   "median_diff_ci": [
+    -8.299999999999997,
+    1.8000000000000114
+   ],
+   "cliff_delta": -0.21307692307692308,
+   "cliff_ci": [
+    -0.5053846153846154,
+    0.07694230769230742
+   ],
+   "mannwhitney_p": 0.13324448473911435,
+   "higher_is": "better",
+   "holm_p": 0.2664889694782287
+  }
+ ],
+ "pm_pop_spearman": -0.19860306740565967,
+ "designated_pop_median": 851.5,
+ "other_pop_median": 506.15,
+ "pop_cliff_designated_vs_other": 0.42615384615384616,
+ "pop_mannwhitney_p": 0.002630393760696395,
+ "pm_top10": [
+  {
+   "province": "nan",
+   "pm25": 38,
+   "certified_city": true
+  },
+  {
+   "province": "kanchanaburi",
+   "pm25": 33,
+   "certified_city": false
+  },
+  {
+   "province": "kalasin",
+   "pm25": 31,
+   "certified_city": false
+  },
+  {
+   "province": "phayao",
+   "pm25": 30,
+   "certified_city": false
+  },
+  {
+   "province": "uthaithani",
+   "pm25": 30,
+   "certified_city": false
+  },
+  {
+   "province": "nakhonphanom",
+   "pm25": 30,
+   "certified_city": false
+  },
+  {
+   "province": "mukdahan",
+   "pm25": 30,
+   "certified_city": false
+  },
+  {
+   "province": "chiangrai",
+   "pm25": 29.5,
+   "certified_city": true
+  },
+  {
+   "province": "chiangmai",
+   "pm25": 29,
+   "certified_city": true
+  },
+  {
+   "province": "lamphun",
+   "pm25": 29,
+   "certified_city": false
+  }
+ ],
+ "flood_worst10": [
+  {
+   "province": "nakhonsawan",
+   "score": 30,
+   "certified_city": true
+  },
+  {
+   "province": "phichit",
+   "score": 35,
+   "certified_city": false
+  },
+  {
+   "province": "ubonratchathani",
+   "score": 35,
+   "certified_city": true
+  },
+  {
+   "province": "nakhonsithammarat",
+   "score": 40,
+   "certified_city": true
+  },
+  {
+   "province": "narathiwat",
+   "score": 40,
+   "certified_city": true
+  },
+  {
+   "province": "phitsanulok",
+   "score": 45,
+   "certified_city": true
+  },
+  {
+   "province": "nonthaburi",
+   "score": 50,
+   "certified_city": false
+  },
+  {
+   "province": "chachoengsao",
+   "score": 50,
+   "certified_city": true
+  },
+  {
+   "province": "songkhla",
+   "score": 50,
+   "certified_city": true
+  },
+  {
+   "province": "pattani",
+   "score": 50,
+   "certified_city": true
+  }
+ ],
+ "indicators_n": 20,
+ "indicator_years": {
+  "2010": 6,
+  "2019": 1,
+  "2026": 3,
+  "2025": 3,
+  "2022": 2,
+  "2023": 3,
+  "2021": 1,
+  "2024": 1
+ },
+ "indicators_complete77": 13,
+ "indicators_pre2020": 7,
+ "companion": {
+  "gs_unreadable_resources": {
+   "k": 1182,
+   "n": 2869,
+   "p": 0.41199024050191707,
+   "lo": 0.3941093838585023,
+   "hi": 0.43010646403007197,
+   "label": "Open-data resources that could not be parsed into a table",
+   "paper": "GS",
+   "gap": "H2"
+  },
+  "gs_datasets_older_than_1y": {
+   "k": 180,
+   "n": 311,
+   "p": 0.5787781350482315,
+   "lo": 0.5232686608409792,
+   "hi": 0.6323652260496108,
+   "label": "Datasets not updated within a year (311 - 131)",
+   "paper": "GS",
+   "gap": "H3"
+  },
+  "gs_datasets_with_location": {
+   "k": 6,
+   "n": 311,
+   "p": 0.01929260450160772,
+   "lo": 0.008871232154408167,
+   "hi": 0.041444437635664404,
+   "label": "Datasets that carry a location",
+   "paper": "GS",
+   "gap": "H1"
+  },
+  "gs_datasets_no_licence": {
+   "k": 52,
+   "n": 311,
+   "p": 0.16720257234726688,
+   "lo": 0.12984498627250549,
+   "hi": 0.2126812466590832,
+   "label": "Datasets stating no licence",
+   "paper": "GS",
+   "gap": "H2"
+  },
+  "gs_procurement_datasets": {
+   "k": 0,
+   "n": 311,
+   "p": 0.0,
+   "lo": 0.0,
+   "hi": 0.012201248510744377,
+   "label": "Datasets about procurement or contracts",
+   "paper": "GS",
+   "gap": "H2"
+  },
+  "gs_shelters_with_coordinates": {
+   "k": 0,
+   "n": 177,
+   "p": 0.0,
+   "lo": 0.0,
+   "hi": 0.02124213609567,
+   "label": "Official shelter rows carrying a coordinate",
+   "paper": "GS",
+   "gap": "H4"
+  },
+  "gs_shelters_over_toilet_reference": {
+   "k": 73,
+   "n": 146,
+   "p": 0.5,
+   "lo": 0.4199424855514092,
+   "hi": 0.5800575144485908,
+   "label": "Shelters reporting toilets that exceed 20 people per toilet",
+   "paper": "GS",
+   "gap": "H4"
+  },
+  "nst_metadata_older_than_1y": {
+   "k": 95,
+   "n": 216,
+   "p": 0.4398148148148148,
+   "lo": 0.37524442427469384,
+   "hi": 0.5064885294079018,
+   "label": "Catalog records last updated over a year earlier",
+   "paper": "NST",
+   "gap": "H3"
+  },
+  "nst_updated_on_24th": {
+   "k": 130,
+   "n": 139,
+   "p": 0.935251798561151,
+   "lo": 0.8815280156954122,
+   "hi": 0.9655649848077072,
+   "label": "Provincial-office records stamped on the 24th of a month",
+   "paper": "NST",
+   "gap": "H3"
+  },
+  "nst_registry_stale": {
+   "k": 2230,
+   "n": 10412,
+   "p": 0.21417595082597005,
+   "lo": 0.206402062522387,
+   "hi": 0.22216066824720473,
+   "label": "Gauge-registry records flagged stale",
+   "paper": "NST",
+   "gap": "H3"
+  },
+  "nst_water_not_fresh_2h": {
+   "k": 30,
+   "n": 51,
+   "p": 0.5882352941176471,
+   "lo": 0.4516533710143533,
+   "hi": 0.7124560488222058,
+   "label": "Water-level records without an observation in the last two hours",
+   "paper": "NST",
+   "gap": "H3"
+  },
+  "nst_rain_not_fresh_2h": {
+   "k": 114,
+   "n": 173,
+   "p": 0.6589595375722543,
+   "lo": 0.5855516277605519,
+   "hi": 0.7254614137961708,
+   "label": "Rain-station records without an observation in the last two hours",
+   "paper": "NST",
+   "gap": "H3"
+  },
+  "rp_gauges_impossible_bank": {
+   "k": 36,
+   "n": 1479,
+   "p": 0.02434077079107505,
+   "lo": 0.017633185065010194,
+   "hi": 0.0335128484013816,
+   "label": "Water-level gauges carrying bank levels that cannot be right",
+   "paper": "RP",
+   "gap": "H1"
+  },
+  "nh_stations_in_bangkok": {
+   "k": 79,
+   "n": 175,
+   "p": 0.4514285714285714,
+   "lo": 0.3795312362308034,
+   "hi": 0.5254125049669042,
+   "label": "National PM2.5 stations located in Bangkok",
+   "paper": "NH",
+   "gap": "H1"
+  },
+  "nh_forecast_warnings_missed": {
+   "k": 10,
+   "n": 13,
+   "p": 0.7692307692307693,
+   "lo": 0.49743623839480355,
+   "hi": 0.918204713457304,
+   "label": "Forecast haze warnings that never reached the Thai 24-hour standard at any station",
+   "paper": "NH",
+   "gap": "H3"
+  }
+ }
+}

@@ -1,0 +1,77 @@
+city,batch,project,env_safety_domain,stage
+phuket,1,Intelligent Operation Center (IOC) — citywide data integration hub,0,decide
+phuket,1,Smart Bus network connecting the international airport to every major district,0,none
+phuket,1,AI-powered CCTV with face and license-plate recognition for public safety,1,sense
+phuket,1,Andaman Tourism Digital Twin — distributing sustainable tourism beyond the island,0,decide
+phuket,1,Mobility-as-a-Service (MaaS) platform serving residents and visitors,0,none
+phuket,1,LoraWAN and NB-IoT city-wide IoT network + City Data Platform (CDP),0,decide
+khon-kaen,1,Khon Kaen Living Lab — healthcare innovation for elderly and chronic conditions,0,none
+khon-kaen,1,Smart Ambulance — digital dispatch and en-route patient data integration,1,push
+khon-kaen,1,Khon Kaen Mass Transit (BRT + planned LRT) with Transit-Oriented Development,0,none
+khon-kaen,1,IoT-sensor waste management — real-time analytics for collection route optimisation,0,sense
+khon-kaen,1,SME and startup ecosystem for IoT/digital industry,0,none
+cmu-smart-city,1,CMU Smart City–Clean Energy Masterplan — 7-dimension roadmap for the Suthep campus area,0,none
+cmu-smart-city,1,"Green innovation leadership: renewable energy adoption, IoT resource management",0,sense
+cmu-smart-city,1,"Smart campus mobility: EV shuttles, cycling infrastructure, pedestrian connectivity",0,none
+cmu-smart-city,1,Lifelong learning ecosystem (CMU Transformation — 'New CMU'),0,none
+cmu-smart-city,1,Community integration: 10 surrounding neighbourhoods from Pai Lom to Nimman,0,none
+yala,1,Yala Green Corridor — smart environment and landscape restoration project,1,none
+yala,1,Smart safety and CCTV network to counter the security perception gap,1,sense
+yala,1,Smart Governance platform for citizen participation and transparent public services,0,none
+yala,1,Smart Economy hub — positioning Yala as the deep-south investment gateway,0,none
+makkasan,1,Transit-Oriented Development (TOD) on 140 rai next to Makkasan ARL station,0,none
+makkasan,1,"Phase 1 (2021–2023): 7 projects in Smart Environment, Smart People, Smart Living",0,none
+makkasan,1,Phase 2 (2024–2029): 53 additional projects across all 7 dimensions,0,none
+makkasan,1,"Mixed-use development: residential, commercial, office, hotel + innovation campus",0,none
+makkasan,1,"Capacity for 10,000 residents and 240,000 daily users",0,none
+phra-ram-4,1,10 sq km Rama IV corridor smart district (Klong Phadung to Ratchada),0,none
+phra-ram-4,1,"Creative economy innovation zone linking Samyan, Siam, and the CBD",0,none
+phra-ram-4,1,"Smart mobility: improving pedestrian and transit connectivity in a 200,000-person daytime district",0,none
+phra-ram-4,1,"Environmental tech: green building standards, energy efficiency across office towers",0,none
+saensuk,1,Smart health services targeted at the elderly (17% of population aged 60+),0,none
+saensuk,1,Smart environment: coastal ecosystem monitoring for Bang Saen beach and aquaculture zones,1,sense
+saensuk,1,Smart safety: crime and incident surveillance for tourism safety,1,sense
+saensuk,1,IoT infrastructure for the Burapha University–city corridor,0,sense
+wangchan-valley,1,"PTT-developed 5G and IoT testbed campus in EEC, Rayong Province",0,sense
+wangchan-valley,1,Smart energy: renewable and clean energy integration for the entire valley,0,none
+wangchan-valley,1,Digital twin of the campus for real-time operational management,0,decide
+wangchan-valley,1,Smart mobility: autonomous vehicle testing and electric fleet for on-campus transit,0,none
+sritrang,1,Smart governance: digital public services for Trang municipality,0,none
+sritrang,1,Smart environment: monitoring the Trang River corridor and coastal mangroves,1,sense
+sritrang,1,Smart mobility: improving connectivity on the southern rail line,0,none
+rayong,2,EEC-aligned smart manufacturing and digital industry district,0,none
+rayong,2,Smart environment: air and water quality monitoring around Map Ta Phut industrial estate,1,sense
+rayong,2,Smart mobility: logistics and public transit for the EEC eastern corridor,0,none
+chiang-rai,2,"Smart tourism management for heritage attractions (Doi Tung, White Temple corridor)",0,none
+chiang-rai,2,Smart border: digital facilitation for the Myanmar and Laos border crossings,0,none
+chiang-rai,2,Smart environment: Kok river and highland forest monitoring,1,sense
+nan,2,Smart forest and watershed telemetry for Nan's protected highlands,1,sense
+nan,2,Heritage digital archive: Wat Phumin murals and Tai Lue cultural documentation,0,none
+nan,2,Smart governance: e-service platform for the provincial administrative office,0,none
+korat,2,Smart mobility: improving Mittraphap corridor logistics and public transit,0,none
+korat,2,Khao Yai–Korat green belt: environmental monitoring and ecotourism data,1,sense
+korat,2,Smart economy: university–industry corridor around Suranaree University of Technology,0,none
+ubon,2,Smart tourism: digitising the Ubon Candle Festival and heritage sites,0,none
+ubon,2,Smart river management: Mun River flood monitoring and agricultural support,1,sense
+ubon,2,Smart economy: cross-border trade facilitation with Laos via Chong Mek,0,none
+krabi,2,Marine and karst ecosystem telemetry for Phang Nga Bay and Ao Nang,1,sense
+krabi,2,"Smart tourism: managing visitor flow to Railay, Four Islands, and Tiger Cave temple",0,none
+krabi,2,Carbon-neutral tourism infrastructure: EV ferries and solar-powered island facilities,0,none
+phangnga,2,Phang Nga Bay maritime monitoring: water quality and vessel traffic management,1,sense
+phangnga,2,Andaman Tourism Digital Twin (joint initiative with Phuket),0,decide
+phangnga,2,Smart heritage: Takua Pa old town and Khao Lak disaster-resilience programme,1,ambiguous
+satun,2,Geopark digital platform: geolocation tours and geological heritage documentation,0,none
+satun,2,Smart border: Malaysia border crossing facilitation (Wang Kelian),0,none
+satun,2,Marine and mangrove ecosystem monitoring for Tarutao National Park,1,sense
+samui,2,Island water and waste management: smart utilities for a no-grid island,1,none
+samui,2,Smart tourism: passenger flow management at Samui Airport and the ferry terminals,0,none
+samui,2,Coastal resilience: sea-level and coral reef monitoring around Koh Samui and Koh Tao,1,sense
+hat-yai,2,Smart flood early-warning system — Hat Yai has flooded severely multiple times,1,push
+hat-yai,2,Digital trade facilitation for the Malaysia–Thailand border commerce corridor,0,none
+hat-yai,2,"Smart mobility: city bus and songtheaw network optimisation for 500,000+ residents",0,none
+pattani,2,Smart governance: transparent digital public services and citizen feedback platforms,0,none
+pattani,2,Smart economy: halal food cluster digitalisation and Gulf of Thailand fisheries data,0,none
+pattani,2,Cultural preservation: Krue Se mosque and Pattani historic district digital heritage archive,0,none
+narathiwat,2,River and coastal monitoring: Sungai Kolok and Marang River estuary,1,sense
+narathiwat,2,Smart governance: e-service platform for border community administration,0,none
+narathiwat,2,Creative economy hub: hand-woven Kho-Yo fabric and local craft digitalisation,0,none

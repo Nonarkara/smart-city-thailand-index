@@ -1,0 +1,1801 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Four Gaps and One Chain: Where Thailand's Smart-City and Digital-Government Promotion Stops Short of Action</title>
+<meta name="author" content="Poon Thiengburanathum; Non Arkaraprasertkul">
+<style>
+@font-face{font-family:"Source Serif 4";font-weight:400;font-style:normal;src:url(fonts/source-serif-4-latin-400-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:400;font-style:italic;src:url(fonts/source-serif-4-latin-400-italic.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:600;font-style:normal;src:url(fonts/source-serif-4-latin-600-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:400;font-style:normal;src:url(fonts/source-sans-3-latin-400-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:400;font-style:italic;src:url(fonts/source-sans-3-latin-400-italic.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:600;font-style:normal;src:url(fonts/source-sans-3-latin-600-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:700;font-style:normal;src:url(fonts/source-sans-3-latin-700-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:400;src:url(fonts/jetbrains-mono-latin-400-normal.woff2)}
+@font-face{font-family:"IBM Plex Sans Thai";font-weight:400;src:url(fonts/ibm-plex-sans-thai-thai-400-normal.woff2);unicode-range:U+0E01-0E5B,U+200B-200D,U+25CC}
+@font-face{font-family:"IBM Plex Sans Thai";font-weight:600;src:url(fonts/ibm-plex-sans-thai-thai-600-normal.woff2);unicode-range:U+0E01-0E5B,U+200B-200D,U+25CC}
+
+@font-face{font-family:"Source Serif 4";font-weight:400;font-style:normal;src:url(fonts/source-serif-4-greek-400-normal.woff2);unicode-range:U+0370-03FF}
+@font-face{font-family:"Source Serif 4";font-weight:400;font-style:italic;src:url(fonts/source-serif-4-greek-400-italic.woff2);unicode-range:U+0370-03FF}
+@font-face{font-family:"Source Serif 4";font-weight:600;font-style:normal;src:url(fonts/source-serif-4-greek-600-normal.woff2);unicode-range:U+0370-03FF}
+@font-face{font-family:"Source Sans 3";font-weight:400;font-style:normal;src:url(fonts/source-sans-3-greek-400-normal.woff2);unicode-range:U+0370-03FF}
+@font-face{font-family:"Source Sans 3";font-weight:600;font-style:normal;src:url(fonts/source-sans-3-greek-600-normal.woff2);unicode-range:U+0370-03FF}
+@font-face{font-family:"Source Sans 3";font-weight:700;font-style:normal;src:url(fonts/source-sans-3-greek-700-normal.woff2);unicode-range:U+0370-03FF}
+:root{--ink:#1b2733;--blue:#12354e;--teal:#007190;--amber:#d98218;--grey:#5d6a74;--rule:#cfd6db;--tint:#eef1f3;
+      --display:20pt;--body:8.9pt;--micro:7.2pt}
+@page{size:A4;margin:15mm 15mm 17mm 15mm}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font:400 var(--body)/1.4 "Source Serif 4","IBM Plex Sans Thai",serif;color:var(--ink);hyphens:auto;-webkit-hyphens:auto;text-align:left;orphans:3;widows:3}
+.sans{font-family:"Source Sans 3","IBM Plex Sans Thai",sans-serif}
+th:lang(th),.th{font-family:"IBM Plex Sans Thai","Source Sans 3",sans-serif}
+.meta,figcaption,table,.refs,.aff,.kw,.decl{font-family:"Source Sans 3","IBM Plex Sans Thai",sans-serif;font-size:var(--micro);line-height:1.38}
+
+/* title block */
+.banner{display:flex;justify-content:space-between;font:600 var(--micro)/1 "Source Sans 3",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);padding-bottom:2.2mm;border-bottom:.8pt solid var(--ink)}
+.banner b{color:var(--amber);font-weight:700}
+h1{font:700 var(--display)/1.12 "Source Sans 3",sans-serif;letter-spacing:-.01em;margin:4.5mm 0 3mm;color:var(--blue);text-wrap:balance}
+.authors{font:600 var(--body)/1.3 "Source Sans 3","IBM Plex Sans Thai",sans-serif;margin-bottom:1.6mm}
+.authors sup,.aff sup{font-size:.7em;vertical-align:.35em;font-weight:600}
+.authors .th{font-weight:400;color:var(--grey);margin-left:.4em}
+.aff{color:var(--grey);display:grid;grid-template-columns:1fr 1fr;column-gap:7mm;row-gap:.8mm}
+.aff div{break-inside:avoid}
+.rq{margin:3.2mm 0 0;padding:2.2mm 0 0;border-top:.4pt solid var(--rule);font-family:"Source Sans 3",sans-serif;font-size:var(--body);line-height:1.38}
+.rq b{font-weight:700;color:var(--blue)}
+.abs{margin:3mm 0 4mm;padding:2.6mm 0;border-top:.4pt solid var(--rule);border-bottom:.8pt solid var(--ink)}
+.abs h2{margin:0 0 1mm}.absbody{column-count:2;column-gap:7mm}
+.abs p{text-align:justify}
+.kw{margin-top:1.4mm;color:var(--grey)}
+.kw b{color:var(--ink);font-weight:600}
+
+/* body */
+.cols{column-count:2;column-gap:7mm;column-rule:none}
+h2{font:700 var(--body)/1.2 "Source Sans 3",sans-serif;color:var(--blue);margin:3.4mm 0 1.2mm;break-after:avoid;text-wrap:balance}
+h2 .n{color:var(--amber);margin-right:.4em}
+h3{font:600 var(--body)/1.25 "Source Sans 3",sans-serif;color:var(--ink);margin:2.2mm 0 .6mm;break-after:avoid}
+p{margin:0 0 1.5mm;text-align:justify;text-justify:inter-word}
+p+p{text-indent:0}
+em{font-style:italic}
+.hp{font-family:"Source Sans 3",sans-serif;font-weight:700;color:var(--blue)}
+.num{font-family:"JetBrains Mono",monospace;font-size:.88em}
+ul.tight{margin:0 0 1.5mm 3.4mm}ul.tight li{margin:0 0 .6mm;text-align:left}
+
+/* figures & tables */
+figure{margin:2mm 0 2.4mm;break-inside:avoid}
+figure.wide{column-span:all;margin:3mm 0}
+figure svg{display:block;width:100%;height:auto}
+figcaption{margin-top:1mm;color:var(--ink)}
+figcaption b{font-weight:700;color:var(--blue)}
+table{width:100%;border-collapse:collapse;margin:0}
+caption{caption-side:top;text-align:left;font-family:"Source Sans 3",sans-serif;font-size:var(--micro);margin-bottom:1mm}
+caption b{font-weight:700;color:var(--blue)}
+th{font-weight:600;text-align:left;vertical-align:bottom;border-top:.8pt solid var(--ink);border-bottom:.4pt solid var(--ink);padding:.9mm 1.2mm .9mm 0}
+td{vertical-align:top;border-bottom:.3pt solid var(--rule);padding:.9mm 1.2mm .9mm 0}
+tbody tr:last-child td{border-bottom:.8pt solid var(--ink)}
+td.r,th.r{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+.tbl{break-inside:avoid;margin:2mm 0 2.6mm}
+.tbl.wide{column-span:all;margin:3mm 0}
+.v{font-weight:700}
+.v.ok{color:var(--blue)}.v.no{color:var(--amber)}
+.note{color:var(--grey)}
+
+/* references */
+.refs{column-count:2;column-gap:7mm;column-rule:none}
+.refs h2{column-span:all;margin-top:3mm}
+.refs p{padding-left:3.2mm;text-indent:-3.2mm;margin:0 0 .9mm;text-align:left;hyphens:manual;word-break:break-word}
+.decl{column-count:2;column-gap:7mm;column-rule:none}
+.decl h2{column-span:all}
+.decl p{text-align:left}
+a{color:inherit;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="banner"><span>Preprint · not peer reviewed · v1.0 · 5 November 2026</span><span><b>SCITI</b> research series · Thailand Smart City Index</span></div>
+
+<h1>Four Gaps and One Chain: Where Thailand’s Smart-City and Digital-Government Promotion Stops Short of Action</h1>
+<div class="authors">Poon Thiengburanathum<sup>1,2</sup><span class="th">ปุ่น เที่ยงบูรณธรรม</span> &nbsp;and&nbsp; Non Arkaraprasertkul<sup>3,*</sup><span class="th">นน อัครประเสริฐกุล</span></div>
+<div class="aff">
+  <div><sup>1</sup> Faculty of Engineering, Chiang Mai University, Chiang Mai, Thailand <span class="th">(คณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่)</span></div>
+  <div><sup>3</sup> Digital Economy Promotion Agency of Thailand (depa), Bangkok, Thailand <span class="th">(สำนักงานส่งเสริมเศรษฐกิจดิจิทัล)</span></div>
+  <div><sup>2</sup> Research and Innovation Acceleration Agency for Competitiveness and Area Development (RCAD) <span class="th">(สำนักงานเร่งรัดการวิจัยและนวัตกรรมเพื่อเพิ่มความสามารถการแข่งขันและการพัฒนาพื้นที่ (องค์การมหาชน))</span>, Thailand</div>
+  <div><sup>*</sup> Correspondence: non.ar@depa.or.th · Data and code: <span class="num">sciti.nonarkara.org/research</span></div>
+</div>
+<div class="rq"><b>Research question.</b> Is the stalling of smart-city promotion and digital government in Thailand over the years consistent with (H1) a lack of inter-agency coordination, (H2) a lack of robust technology procurement, (H3) a lack of data-driven responsiveness, and (H4) the lack of an end-to-end monitoring-to-push system, such as rain to drainage or haze to shelter?</div>
+
+<section class="abs"><h2>Abstract</h2><div class="absbody"><p>Thailand has promoted smart cities and digital government for a decade, and its international e-government rank has improved, yet the chain that matters, a measurement that becomes a message that moves a person, is still open. We treat four common explanations as hypotheses and ask what national evidence can and cannot say about each. We combine (i) the 118-city SCITI registry across 77 provinces and depa’s funnel from 227 proposals to 37 declared smart cities, (ii) a single-coder hand coding of the 76 headline projects named in 21 endorsed city records, by the link of the monitoring-to-push chain their titles state, (iii) a province-level test of whether designation follows annual haze exposure, and (iv) counts reported by four open early-warning prototypes that we built and self-audited across flood, haze and shelter data.</p><p>Of 20 environment and safety headline projects, 15 stop at sensing (including 3 security-surveillance projects), 2 name an alert or dispatch function, and none names a decision hub. Provinces with a certified city were not detectably more haze-exposed (median PM2.5 21.7 against 25.0 µg/m³; Cliff’s δ = −0.32, 95% CI −0.61 to +0.01; Holm p = 0.11) and published no more open data (median 298 against 299 datasets). In searches of one province, Chiang Mai, 41% of 2,869 resources could not be parsed, 6 of 311 datasets carried a location, none of 177 shelter rows (174 distinct shelters) had a coordinate, and no procurement dataset was found among 311 datasets and 682 catalogue resources.</p><p>The evidence is consistent with H3, weakly consistent with H1 and H4, and cannot test H2, because procurement itself is not observed. It is descriptive: it shows that gaps are present and measurable, not that they cause the stalled programmes, and it contains no outcome series. Four prototype systems built from public data show what could be bypassed (integration, speed, freshness labels) and what could not (authority, asset registers, the person at two in the morning). As an option worth testing, each certified smart city could publish one tested path from sensor to shelter, with a named duty officer.</p><p class="kw"><b>Keywords</b> smart city · digital government · Thailand · early warning · inter-agency coordination · public procurement · open data · monitoring-to-push chain</p></div></section>
+
+<div class="cols">
+
+<h2><span class="n">1</span>Introduction</h2>
+<p>On 19 August 2026 the river in Nan province reached its banks about four hours after the rain began. The first reported disaster-agency cell broadcast followed about four hours after that; two people died and more than 16,000 were affected (Thiengburanathum &amp; Arkaraprasertkul, 2026c). Every number needed to see the flood coming was already public. Thailand is not short of sensors, statutes or ranks: the United Nations places it 52nd of 193 in e-government in 2024, up from 55th in 2022, while its e-participation rank fell from 18th to 42nd over the same two years (United Nations Department of Economic and Social Affairs [UN DESA], 2024). Smart-city and digital-government promotion has run since 2017 under the Digital Development for Economy and Society Act, the Digital Government Act and, for purchasing, the Procurement Act (Kingdom of Thailand, 2017a, 2017b, 2019). The label has spread. The chain from measurement to action has not closed.</p>
+<p>Practitioners offer four explanations, and our research question states them as hypotheses to be checked, not conclusions. We treat each as a hypothesis with a stated observable implication and a stated falsifier (Table 1), and we report a verdict that is never stronger than the evidence. This paper is a synthesis. It adds three analyses of national records to the counts reported by four earlier prototype systems and self-audits that we built with the same four hypotheses in mind (Thiengburanathum &amp; Arkaraprasertkul, 2026a–d). Two limits are stated here because they govern everything after. First, there is no outcome series: we cannot measure that promotion “failed”, only describe where the chain is open. Second, the second author works for the agency whose programme is studied, and both authors built the systems audited (Declarations).</p>
+
+<h2><span class="n">2</span>Background and hypotheses</h2>
+<p>Critics describe the smart city as an idea that sells faster than it ships: corporate storytelling (Söderström et al., 2014), the gap between rhetoric and the “actually existing” city (Shelton et al., 2015), and the question of which city is real (Hollands, 2008). A recurring finding is that technology is one of several dimensions, alongside people and institutions, and that governance is central (Nam &amp; Pardo, 2011; Meijer &amp; Rodríguez Bolívar, 2016). Thai case studies find a national pilot with no province-level implementation plan (Naprathansuk, 2017) and, in one province, progress in only some dimensions (Jumnong &amp; Lowatcharin, 2022). A study of 36 cities identifies the core data sets that smart-city governance needs (Ruangwicha &amp; Tuamsuk, 2026).</p>
+<p><span class="hp">H1 Coordination.</span> A hazard crosses agency boundaries that a budget does not. Joined-up government is easy to want and hard to build (Pollitt, 2003; Bardach, 1998), and collaboration needs stated conditions (Ansell &amp; Gash, 2008); implementation decays with each agency whose consent it needs (Pressman &amp; Wildavsky, 1973). <span class="hp">H2 Procurement.</span> Public IT projects often fail (Goldfinch, 2007; Heeks, 2006, for health information systems); demand-side procurement can drive innovation (Edler &amp; Georghiou, 2007); and service-team models offer another way to buy (Mergel, 2019; Pahlka, 2023). <span class="hp">H3 Responsiveness.</span> A dashboard promises real-time governance (Kitchin, 2014; Kitchin et al., 2015), but open data has barriers and myths (Janssen et al., 2012), and, in our reading, a number becomes governance only when someone is obliged to act on it (cf. Mattern, 2015, on the urban dashboard). <span class="hp">H4 End-to-end.</span> Early warning is a chain of risk knowledge, detection and forecasting, communication, and response capability, and it is only as strong as its weakest link (Basher, 2006; World Meteorological Organization [WMO], 2018). The Sendai Framework and the Common Alerting Protocol make it a target and a format (United Nations General Assembly, 2015; OASIS, 2010). Thailand’s 2011 floods cost THB 1.43 trillion and affected more than 13 million people, and the World Bank recommended early warning built on real-time data (World Bank, 2012).</p>
+<p>We combine the four into one model (Figure 1). Each hypothesis breaks a different part of a chain that runs sense, forecast, decide, push, shelter, verify. If the chain is the unit of analysis, a smart city is a set of working paths, and each path can be tested end to end.</p>
+
+</div><!-- /cols -->
+
+<figure class="wide" id="fig1">
+
+
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="245.52pt" height="226.8pt" viewBox="0 0 245.52 226.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-05T13:48:07.609317</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 226.8 
+L 245.52 226.8 
+L 245.52 0 
+L 0 0 
+L 0 226.8 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 4.9104 67.1328 
+L 240.6096 67.1328 
+L 240.6096 29.0304 
+L 4.9104 29.0304 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #ffffff; stroke: #007190; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 4.9104 129.7296 
+L 240.6096 129.7296 
+L 240.6096 91.6272 
+L 4.9104 91.6272 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #ffffff; stroke: #12354e; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 4.9104 192.3264 
+L 240.6096 192.3264 
+L 240.6096 154.224 
+L 4.9104 154.224 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #ffffff; stroke: #d98218; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 4.9104 67.1328 
+L 8.34768 67.1328 
+L 8.34768 29.0304 
+L 4.9104 29.0304 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #007190"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #007190; font: 700 8.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="41.129428" transform="rotate(-0 15.9588 41.129428)">SENSE</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #1b2733; font: 700 7.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="236.9268" y="40.8996" transform="rotate(-0 236.9268 40.8996)">19 of 76 projects</text>
+   </g>
+   <g id="text_3">
+    <text style="fill: #1b2733; font: 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="51.773105" transform="rotate(-0 15.9588 51.773105)">monitor · telemetry · sensors · CCTV</text>
+   </g>
+   <g id="text_4">
+    <text style="fill: #007190; font: 700 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="62.43615" transform="rotate(-0 15.9588 62.43615)">15 of the 20 hazard projects reach this link</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 6.62904 68.04 
+Q 6.62904 79.1532 6.62904 89.148366 
+" style="fill: none; stroke: #7d8891; stroke-linecap: round"/>
+    <path d="M 8.10904 86.188366 
+L 6.62904 89.148366 
+L 5.14904 86.188366 
+z
+" style="fill: #7d8891; stroke: #7d8891; stroke-linecap: round"/>
+   </g>
+   <g id="text_5">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 75.093788)">one province: 65.9% of rain records and</text>
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 82.346288)">58.8% of river records had no reading in two hours</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 4.9104 129.7296 
+L 8.34768 129.7296 
+L 8.34768 91.6272 
+L 4.9104 91.6272 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #12354e"/>
+   </g>
+   <g id="text_6">
+    <text style="fill: #12354e; font: 700 8.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="103.726228" transform="rotate(-0 15.9588 103.726228)">DECIDE</text>
+   </g>
+   <g id="text_7">
+    <text style="fill: #1b2733; font: 700 7.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="236.9268" y="103.4964" transform="rotate(-0 236.9268 103.4964)">5 of 76 projects</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #1b2733; font: 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="114.31035" transform="rotate(-0 15.9588 114.31035)">operations centre · data hub · digital twin</text>
+   </g>
+   <g id="text_9">
+    <text style="fill: #12354e; font: 700 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="125.007848" transform="rotate(-0 15.9588 125.007848)">no hazard project reaches this link</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 6.62904 130.6368 
+Q 6.62904 141.75 6.62904 151.745166 
+" style="fill: none; stroke: #7d8891; stroke-linecap: round"/>
+    <path d="M 8.10904 148.785166 
+L 6.62904 151.745166 
+L 5.14904 148.785166 
+z
+" style="fill: #7d8891; stroke: #7d8891; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 137.690587)">one province: 0 of 311 open datasets describe a</text>
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 145.010025)">procurement, and 0 of 177 shelter rows carry a coordinate</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 4.9104 192.3264 
+L 8.34768 192.3264 
+L 8.34768 154.224 
+L 4.9104 154.224 
+z
+" clip-path="url(#p52f0ea7d69)" style="fill: #d98218"/>
+   </g>
+   <g id="text_11">
+    <text style="fill: #d98218; font: 700 8.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="166.323028" transform="rotate(-0 15.9588 166.323028)">PUSH</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #1b2733; font: 700 7.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="236.9268" y="166.0932" transform="rotate(-0 236.9268 166.0932)">2 of 76 projects</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #1b2733; font: 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="176.90715" transform="rotate(-0 15.9588 176.90715)">early warning · alert · dispatch</text>
+   </g>
+   <g id="text_14">
+    <text style="fill: #d98218; font: 700 6.3px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="15.9588" y="187.62975" transform="rotate(-0 15.9588 187.62975)">2 of 21 endorsed cities name an alert project</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 200.287387)">prototypes: 7 s hand-off to test chats, 8.2 h median lead,</text>
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(13.5036 207.534638)">84% of overflow station-days (coherence test), 29 subscribers</text>
+   </g>
+  </g>
+  <g id="text_16">
+   <text style="fill: #1b2733; font: 700 8.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="4.9104" y="9.400125" transform="rotate(-0 4.9104 9.400125)">The monitoring-to-push chain</text>
+  </g>
+  <g id="text_17">
+   <text style="fill: #7d8891; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="4.9104" y="17.404194" transform="rotate(-0 4.9104 17.404194)">76 headline projects from 21 endorsed cities, coded from one-line titles</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p52f0ea7d69">
+   <rect x="0" y="0" width="245.52" height="226.8"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption><b>Figure 1.</b> The monitoring-to-push chain and where each hypothesis acts. H1 concerns whether records from different agencies join; H3 whether data drives a decision and a message; H2 whether the services that run the chain are bought as running services or as files; H4 whether the whole chain is closed. The last three links need authority and asset registers that software cannot supply.</figcaption>
+</figure>
+
+<div class="cols">
+
+<h2><span class="n">3</span>Data and methods</h2>
+<h3>3.1 Evidence streams</h3>
+<p><span class="hp">E1, the national registry.</span> The SCITI snapshot of 5 November 2026 (Arkaraprasertkul, 2026) holds 118 city records in 77 provinces, each with a status (certified, promotion zone, registered), an editorial reality class (operational, partial, planned, assigned by the SCITI team), and, for 49 cities, public-source metrics. depa’s registry lists 227 proposals as of January 2026 (220 existing-city and 7 new-city): 37 declared smart cities (data as of August 2025) and 190 promotion zones under review. SCITI holds 12 promotion-zone records, a subset of the 190. The government target is at least 105 smart cities for 2024–2027 (depa, 2024). <span class="hp">E2, endorsed flagship records.</span> For 21 of the 37 certified cities, depa’s pages publish an endorsed record with 3 to 6 key projects, one line each (about ten words): 76 headline projects in all (9 cities endorsed in 2021, 12 in 2022). Records of the same cities elsewhere list 28 to 60 projects, so the 76 are a census of the headline projects only, and how a project became a headline is unobserved. <span class="hp">E3, province indicators.</span> 20 open province indicators for up to 77 provinces (National Statistical Office, Pollution Control Department [PCD], Royal Forest Department, road-death integration system, Ministry of Energy, and the open-data portal), harvested 21 October 2026 (Arkaraprasertkul, 2026). <span class="hp">E4, four prototype systems.</span> Counts as reported by the four earlier preprints (Table 3): a national flood feed system, a national haze system, a Chiang Mai operations room with a shelter audit, and a Nakhon Si Thammarat control tower. We did not re-derive these counts; they are not independent of us, and several come from one-province searches (Chiang Mai, Nakhon Si Thammarat), which cannot show a national absence.</p>
+<h3>3.2 Coding and statistics</h3>
+<p>The second author coded each of the 76 headline projects from its one-line title on two fields (the coding table lives in the analysis script, which was drafted with AI assistance, so the codes are the second author’s judgements recorded in code): whether the stated domain is environmental monitoring, a natural hazard or public safety, and the highest link of the chain the text states (none, sense, decide, push; “programme only” if it names a programme rather than a function). Service platforms such as e-service, MaaS and tourism platforms are coded none, because they serve transactions, not the chain. A title is an endorsed vision, not evidence of delivery, and cannot name a path in detail; the H3 and H4 falsifiers therefore could hardly fail on this data type. Coding was by one coder, so the rules are published with the data, and Section 4.2 reports how sensitive the headline counts are to defensible re-coding. Proportions carry Wilson intervals (Wilson, 1927); they describe coding and counting uncertainty over a census of headline projects (or of one search), not sampling from a population.</p>
+<p>For the province analysis a province is <em>designated</em> if it hosts at least one certified city (25 of 77). We compare designated and other provinces with the Mann–Whitney test (Mann &amp; Whitney, 1947), report Cliff’s δ as the effect size (Cliff, 1993) with a percentile bootstrap interval (5,000 resamples, seed 20261105; Efron, 1979), and adjust four tests with Holm’s method (Holm, 1979). The four are not independent (the count and the per-100,000 rate share a variable), and provinces are treated as independent units although haze and designation both cluster by region. These tests are exploratory, and with 22 against 43 provinces only large differences are detectable. Population is the 2022 National Statistical Office ICT-survey base (65.6 million in total), used only to scale. A flood-frequency score exists for 30 provinces, but it is SCITI’s own 0-100 editorial rating, informed by GISTDA flood polygons (higher means less flood-prone), built for the livability pillar, and 25 of the 30 scored provinces host a certified city. Selection into the score follows certification, so there is no valid comparison group and we ran no flood comparison.</p>
+
+<div class="tbl wide">
+<table>
+<caption><b>Table 1.</b> Hypotheses, what we would see if each held, what would count against it, and the evidence streams used.</caption>
+<thead><tr><th style="width:14%">Hypothesis</th><th style="width:30%">Observable implication</th><th style="width:34%">Falsifier</th><th style="width:22%">Evidence</th></tr></thead>
+<tbody>
+<tr><td><b>H1</b> Coordination</td><td>Records from different agencies do not join on place, time or value.</td><td>Most hazard-relevant records carry shared keys and agree where they overlap (our audits cover one province’s portal search and two national feeds).</td><td>E4 (catalogue audits, gauge comparisons); E2 partner field</td></tr>
+<tr><td><b>H2</b> Procurement</td><td>What is bought is delivered as files and projects, without interface, licence or maintenance terms.</td><td>Procurement records are public and require a machine interface, a licence and a freshness duty.</td><td>E4 (indirect indicators only); procurement itself is unobserved</td></tr>
+<tr><td><b>H3</b> Responsiveness</td><td>Published data is old, unvalidated or silent, and states no response rule.</td><td>Most hazard data are fresh against a declared limit, with a documented response.</td><td>E4 (ages, stale shares); E3 (indicator vintage); E2</td></tr>
+<tr><td><b>H4</b> End-to-end</td><td>Programmes stop at sensing; no named path reaches a person or a shelter.</td><td>Endorsed programme records name an operating sensor-to-shelter path.</td><td>E2 (chain coding); E4 (link-by-link audits)</td></tr>
+</tbody></table>
+</div>
+
+<h2><span class="n">4</span>Results</h2>
+<h3>4.1 The programme funnel narrows at every step</h3>
+<p>Of 227 proposals on depa’s registry, 37 are declared (certified) (16.3%, 95% CI 12.1 to 21.7%), which is 35% of the target of 105 in a plan period that runs to 2027 (Figure 2); the funnel is not evidence of failure by itself, because many of the 190 proposals under review were submitted recently. The label tracks delivery imperfectly on the SCITI team’s own reality class: of the 37 certified cities, 30 are operational, 4 partial and 3 planned (8.1%, CI 2.8 to 21.3%). All 69 registered cities are planned. Of the 37 certified cities, 21 (57%) have a published flagship record; 16 of those 21 name at least one environment or safety headline project that senses or goes further (14 of 21 if the three security-surveillance projects are set aside); two name an alert or dispatch function.</p>
+
+<figure id="fig2">
+
+
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="245.52pt" height="147.6pt" viewBox="0 0 245.52 147.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-05T13:48:07.955822</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 147.6 
+L 245.52 147.6 
+L 245.52 0 
+L 0 0 
+L 0 147.6 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 127.6704 146.124 
+L 243.0648 146.124 
+L 243.0648 1.476 
+L 127.6704 1.476 
+L 127.6704 146.124 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="124.1704" y="20.808185" transform="rotate(-0 124.1704 20.808185)">Proposals on depa's registry</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="124.1704" y="48.625108" transform="rotate(-0 124.1704 48.625108)">Certified smart cities</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="124.1704" y="76.471516" transform="rotate(-0 124.1704 76.471516)">…with a published flagship record</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(-8.639944 100.876345)">…with a sensing (or higher) environment</text>
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(70.582838 108.835045)">or safety project</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_5"/>
+     <g id="text_5">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(37.147556 128.704831)">…with an alert or dispatch</text>
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(101.277806 136.503737)">project</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 127.6704 25.954892 
+L 230.701114 25.954892 
+L 230.701114 10.377415 
+L 127.6704 10.377415 
+z
+" clip-path="url(#pd101bf6fd7)" style="fill: #12354e"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 127.6704 53.771815 
+L 144.463953 53.771815 
+L 144.463953 38.194338 
+L 127.6704 38.194338 
+z
+" clip-path="url(#pd101bf6fd7)" style="fill: #12354e"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 127.6704 81.588738 
+L 137.201876 81.588738 
+L 137.201876 66.011262 
+L 127.6704 66.011262 
+z
+" clip-path="url(#pd101bf6fd7)" style="fill: #12354e"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 127.6704 109.405662 
+L 134.932477 109.405662 
+L 134.932477 93.828185 
+L 127.6704 93.828185 
+z
+" clip-path="url(#pd101bf6fd7)" style="fill: #12354e"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 127.6704 137.222585 
+L 128.57816 137.222585 
+L 128.57816 121.645108 
+L 127.6704 121.645108 
+z
+" clip-path="url(#pd101bf6fd7)" style="fill: #7d8891"/>
+   </g>
+   <g id="text_6">
+    <text style="fill: #1b2733; font: 700 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="231.937483" y="20.079169" transform="rotate(-0 231.937483 20.079169)">227</text>
+   </g>
+   <g id="text_7">
+    <text style="fill: #1b2733; font: 700 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="145.700321" y="47.896093" transform="rotate(-0 145.700321 47.896093)">37</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #1b2733; font: 700 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="138.438244" y="75.713016" transform="rotate(-0 138.438244 75.713016)">21</text>
+   </g>
+   <g id="text_9">
+    <text style="fill: #1b2733; font: 700 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="136.168845" y="103.529939" transform="rotate(-0 136.168845 103.529939)">16</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #1b2733; font: 700 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="129.814528" y="131.346862" transform="rotate(-0 129.814528 131.346862)">2</text>
+   </g>
+   <g id="text_11">
+    <text style="fill: #7d8891; font: 6.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="243.0648" y="47.637577" transform="rotate(-0 243.0648 47.637577)">16% of line above</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #7d8891; font: 6.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="243.0648" y="75.4545" transform="rotate(-0 243.0648 75.4545)">57% of line above</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #7d8891; font: 6.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="243.0648" y="103.271423" transform="rotate(-0 243.0648 103.271423)">76% of line above</text>
+   </g>
+   <g id="text_14">
+    <text style="fill: #7d8891; font: 6.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="243.0648" y="131.088346" transform="rotate(-0 243.0648 131.088346)">12% of line above</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd101bf6fd7">
+   <rect x="127.6704" y="1.476" width="115.3944" height="144.648"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption><b>Figure 2.</b> Attrition from proposal to a named alert function. Counts are cities; percentages are of the line above. Sources: depa registry (proposals as of January 2026, declared cities as of August 2025) and endorsed city records (accessed 5 November 2026).</figcaption>
+</figure>
+
+<h3>4.2 Headline projects sense; they rarely decide or push</h3>
+<p>Of 76 headline projects, 20 (26%) sit in the environment, hazard or safety domain (Figure 3). Fifteen of the 20 stop at sensing (75%, CI 53 to 89%): river, watershed and coastal telemetry, air and water quality monitoring, and three security-surveillance projects (CCTV and crime monitoring in Phuket, Yala and Saensuk), which are not links in a hazard-warning chain. Two name a push function: a flood early-warning system in Hat Yai and digital ambulance dispatch in Khon Kaen. One names a “disaster-resilience programme” without a function, and two name none. The strict estimate of push is 2 of 20 (10%, CI 3 to 30%); counting the programme it is 3 of 20 (15%). Five projects across the whole set describe a decision hub (Phuket’s operation centre and data platform, the Andaman tourism twin in two records, a campus twin in Rayong), and none is described, in its title, as receiving environmental or safety data; this is silence in a ten-word title, not evidence of absence. Partner names appear for 8 of 9 records endorsed in 2021 and for none of 12 endorsed in 2022; this probably reflects what depa’s pages publish and supports no inference about coordination.</p>
+<p><b>Sensitivity.</b> The headline integers depend on judgement calls. Setting aside the three security-surveillance projects leaves 12 of 17 hazard-domain projects at sensing (71%) and 14 of 21 cities with a sensing project. Dropping two projects whose domain is arguable under our rule (a landscape-restoration corridor in Yala and island utilities in Samui) leaves 15 of 18 (83%). Doing both leaves 12 of 15 (80%). Counting Khon Kaen’s ambulance dispatch as decision support rather than a push leaves one push. In every variant sensing remains the majority, push is one or two, and no hazard-domain project reaches a decision hub.</p>
+
+<figure id="fig3">
+
+
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="245.52pt" height="111.6pt" viewBox="0 0 245.52 111.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-05T13:48:08.175785</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 111.6 
+L 245.52 111.6 
+L 245.52 0 
+L 0 0 
+L 0 111.6 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 76.1112 92.628 
+L 243.0648 92.628 
+L 243.0648 17.856 
+L 76.1112 17.856 
+L 76.1112 92.628 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="mef7a4a4b6c" d="M 0 0 
+L 0 2.5 
+" style="stroke: #1b2733; stroke-width: 0.5"/>
+      </defs>
+      <g>
+       <use xlink:href="#mef7a4a4b6c" x="76.1112" y="92.628" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="76.1112" y="103.340812" transform="rotate(-0 76.1112 103.340812)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#mef7a4a4b6c" x="113.377629" y="92.628" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="113.377629" y="103.340812" transform="rotate(-0 113.377629 103.340812)">25</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#mef7a4a4b6c" x="150.644057" y="92.628" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="150.644057" y="103.340812" transform="rotate(-0 150.644057 103.340812)">50</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mef7a4a4b6c" x="187.910486" y="92.628" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="187.910486" y="103.340812" transform="rotate(-0 187.910486 103.340812)">75</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#mef7a4a4b6c" x="225.176914" y="92.628" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="225.176914" y="103.340812" transform="rotate(-0 225.176914 103.340812)">100%</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_6"/>
+     <g id="text_6">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(2.698544 42.0215)">Environment, hazard,</text>
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(24.092637 49.891169)">safety projects</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_7"/>
+     <g id="text_7">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="72.6112" y="78.654031" transform="rotate(-0 72.6112 78.654031)">All other projects</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 76.1112 51.088 
+L 91.017771 51.088 
+L 91.017771 34.472 
+L 76.1112 34.472 
+z
+" clip-path="url(#p89d882b665)" style="fill: #dfe4e8; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 91.017771 51.088 
+L 202.817057 51.088 
+L 202.817057 34.472 
+L 91.017771 34.472 
+z
+" clip-path="url(#p89d882b665)" style="fill: #007190; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 202.817057 51.088 
+L 210.270343 51.088 
+L 210.270343 34.472 
+L 202.817057 34.472 
+z
+" clip-path="url(#p89d882b665)" style="fill: #f0c98f; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 210.270343 51.088 
+L 225.176914 51.088 
+L 225.176914 34.472 
+L 210.270343 34.472 
+z
+" clip-path="url(#p89d882b665)" style="fill: #d98218; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 76.1112 84.32 
+L 201.219924 84.32 
+L 201.219924 67.704 
+L 76.1112 67.704 
+z
+" clip-path="url(#p89d882b665)" style="fill: #dfe4e8; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 201.219924 84.32 
+L 211.867476 84.32 
+L 211.867476 67.704 
+L 201.219924 67.704 
+z
+" clip-path="url(#p89d882b665)" style="fill: #007190; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 211.867476 84.32 
+L 225.176914 84.32 
+L 225.176914 67.704 
+L 211.867476 67.704 
+z
+" clip-path="url(#p89d882b665)" style="fill: #12354e; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 76.1112 92.628 
+L 243.0648 92.628 
+" style="fill: none; stroke: #7d8891; stroke-width: 0.5; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_8">
+    <text style="fill: #1b2733; font: 700 7px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="83.564486" y="44.589609" transform="rotate(-0 83.564486 44.589609)">2</text>
+   </g>
+   <g id="text_9">
+    <text style="fill: #ffffff; font: 700 7px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="146.917414" y="44.589609" transform="rotate(-0 146.917414 44.589609)">15</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #1b2733; font: 6.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="206.5437" y="30.22012" transform="rotate(-0 206.5437 30.22012)">1</text>
+   </g>
+   <g id="text_11">
+    <text style="fill: #ffffff; font: 700 7px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="217.723629" y="44.589609" transform="rotate(-0 217.723629 44.589609)">2</text>
+   </g>
+   <g id="text_12">
+    <text style="fill: #7d8891; font: 6.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="226.667571" y="44.4345" transform="rotate(-0 226.667571 44.4345)">n = 20</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #1b2733; font: 700 7px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="138.665562" y="77.821609" transform="rotate(-0 138.665562 77.821609)">47</text>
+   </g>
+   <g id="text_14">
+    <text style="fill: #ffffff; font: 700 7px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="206.5437" y="77.821609" transform="rotate(-0 206.5437 77.821609)">4</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: #ffffff; font: 700 7px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="218.522195" y="77.821609" transform="rotate(-0 218.522195 77.821609)">5</text>
+   </g>
+   <g id="text_16">
+    <text style="fill: #7d8891; font: 6.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="226.667571" y="77.6665" transform="rotate(-0 226.667571 77.6665)">n = 56</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_11">
+     <path d="M 48.058587 15.12304 
+L 53.638587 15.12304 
+L 53.638587 9.97704 
+L 48.058587 9.97704 
+z
+" style="fill: #dfe4e8; stroke: #dfe4e8; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_17">
+     <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="56.118587" y="14.68904" transform="rotate(-0 56.118587 14.68904)">no chain link stated</text>
+    </g>
+    <g id="patch_12">
+     <path d="M 48.058587 24.156634 
+L 53.638587 24.156634 
+L 53.638587 19.010634 
+L 48.058587 19.010634 
+z
+" style="fill: #007190; stroke: #007190; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_18">
+     <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="56.118587" y="23.722634" transform="rotate(-0 56.118587 23.722634)">sense</text>
+    </g>
+    <g id="patch_13">
+     <path d="M 115.563993 15.12304 
+L 121.143993 15.12304 
+L 121.143993 9.97704 
+L 115.563993 9.97704 
+z
+" style="fill: #12354e; stroke: #12354e; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_19">
+     <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="123.623993" y="14.68904" transform="rotate(-0 123.623993 14.68904)">decide (hub, twin)</text>
+    </g>
+    <g id="patch_14">
+     <path d="M 115.563993 24.156634 
+L 121.143993 24.156634 
+L 121.143993 19.010634 
+L 115.563993 19.010634 
+z
+" style="fill: #f0c98f; stroke: #f0c98f; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_20">
+     <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="123.623993" y="23.722634" transform="rotate(-0 123.623993 23.722634)">programme only</text>
+    </g>
+    <g id="patch_15">
+     <path d="M 178.350618 15.12304 
+L 183.930618 15.12304 
+L 183.930618 9.97704 
+L 178.350618 9.97704 
+z
+" style="fill: #d98218; stroke: #d98218; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_21">
+     <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="186.410618" y="14.68904" transform="rotate(-0 186.410618 14.68904)">push (alert, dispatch)</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p89d882b665">
+   <rect x="76.1112" y="17.856" width="166.9536" height="74.772"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption><b>Figure 3.</b> Highest chain link stated by 76 headline projects, by domain (single coder; one-line titles of endorsed visions, not delivery). Numbers are projects.</figcaption>
+</figure>
+
+<h3>4.3 Designation and haze exposure: no evidence of targeting</h3>
+<p>If promotion were steered by need, provinces with a certified city might show more exposure, and, as places expected to hold a data mandate, might publish more open data. We looked at annual haze only. Neither appears (Figure 4, Table 2). Provinces with a certified city had a median annual PM2.5 of 21.7 µg/m³ against 25.0 elsewhere; the direction is negative but the interval touches zero and the difference does not survive adjustment for four tests (δ = −0.32, CI −0.61 to +0.01; unadjusted p = 0.037, Holm p = 0.11), so this is no evidence of a difference rather than evidence of an opposite one. Region is a built-in confound: 11 of the 25 designated provinces are in the South (44%, against 14 of 77, 18%, of all provinces), where annual PM2.5 is low. Provincial values are means of station annual means, and stations are unevenly spread (Bangkok has many, most provinces one). Twelve provinces are absent from the PCD 2024 annual table, three of them certified (Krabi, Pattani, Phang Nga); PCD’s live network of 175 stations leaves only Phetchaburi, Phang Nga and Ranong uncovered (Thiengburanathum &amp; Arkaraprasertkul, 2026b), so Phang Nga is the one certified province with no station. The median number of open datasets is the same, 298 against 299 (δ = −0.12, Holm p = 0.41). Per 100,000 residents designated provinces publish fewer (32 against 60; δ = −0.52, Holm p &lt; 0.01), but this is a population effect, since count and rate share a variable: designated provinces are larger (median 852 against 506 thousand; δ = +0.43, unadjusted p = 0.003, a post hoc test) while their dataset counts are the same. What designation tracks in these data is size, not annual haze exposure.</p>
+
+<figure class="wide" id="fig4">
+
+
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="510.48pt" height="140.4pt" viewBox="0 0 510.48 140.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-05T13:48:08.548538</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 140.4 
+L 510.48 140.4 
+L 510.48 0 
+L 0 0 
+L 0 140.4 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 58.7052 112.32 
+L 249.589815 112.32 
+L 249.589815 16.848 
+L 58.7052 16.848 
+L 58.7052 112.32 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 87.404635 112.32 
+L 87.404635 16.848 
+" clip-path="url(#p3e5db5f82d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="me4d24a7013" d="M 0 0 
+L 0 2.5 
+" style="stroke: #1b2733; stroke-width: 0.5"/>
+      </defs>
+      <g>
+       <use xlink:href="#me4d24a7013" x="87.404635" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="87.404635" y="123.032813" transform="rotate(-0 87.404635 123.032813)">15</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 120.776071 112.32 
+L 120.776071 16.848 
+" clip-path="url(#p3e5db5f82d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#me4d24a7013" x="120.776071" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="120.776071" y="123.032813" transform="rotate(-0 120.776071 123.032813)">20</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 154.147508 112.32 
+L 154.147508 16.848 
+" clip-path="url(#p3e5db5f82d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#me4d24a7013" x="154.147508" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="154.147508" y="123.032813" transform="rotate(-0 154.147508 123.032813)">25</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 187.518944 112.32 
+L 187.518944 16.848 
+" clip-path="url(#p3e5db5f82d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#me4d24a7013" x="187.518944" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="187.518944" y="123.032813" transform="rotate(-0 187.518944 123.032813)">30</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 220.89038 112.32 
+L 220.89038 16.848 
+" clip-path="url(#p3e5db5f82d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#me4d24a7013" x="220.89038" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="220.89038" y="123.032813" transform="rotate(-0 220.89038 123.032813)">35</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="154.147508" y="133.742156" transform="rotate(-0 154.147508 133.742156)">Annual mean PM2.5, 2024 (µg/m³)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_11"/>
+     <g id="text_7">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(4.637763 47.221674)">Province with a</text>
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(14.919137 55.091343)">certified city</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_12"/>
+     <g id="text_8">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(36.698262 88.760724)">Other</text>
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(23.129669 96.55963)">provinces</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 58.7052 112.32 
+L 249.589815 112.32 
+" style="fill: none; stroke: #7d8891; stroke-width: 0.5; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="maef56f404c" d="M 0 1.5 
+C 0.397805 1.5 0.77937 1.341951 1.06066 1.06066 
+C 1.341951 0.77937 1.5 0.397805 1.5 0 
+C 1.5 -0.397805 1.341951 -0.77937 1.06066 -1.06066 
+C 0.77937 -1.341951 0.397805 -1.5 0 -1.5 
+C -0.397805 -1.5 -0.77937 -1.341951 -1.06066 -1.06066 
+C -1.341951 -0.77937 -1.5 -0.397805 -1.5 0 
+C -1.5 0.397805 -1.341951 0.77937 -1.06066 1.06066 
+C -0.77937 1.341951 -0.397805 1.5 0 1.5 
+z
+"/>
+    </defs>
+    <g clip-path="url(#p3e5db5f82d)">
+     <use xlink:href="#maef56f404c" x="129.452645" y="44.496325" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="134.124646" y="41.871273" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="180.844657" y="42.134424" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="184.1818" y="47.426972" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="107.427497" y="46.661583" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="160.821795" y="52.199187" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="169.498368" y="53.917595" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="167.496082" y="51.565241" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="154.147508" y="44.836378" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="74.056061" y="43.287408" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="240.913242" y="49.158328" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="80.730348" y="43.313207" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="154.147508" y="47.683274" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="100.75321" y="46.725516" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="108.762354" y="49.797034" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="140.798933" y="50.151627" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="87.404635" y="49.538925" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="80.730348" y="51.23541" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="80.730348" y="46.267097" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="67.381773" y="43.670635" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="174.170369" y="43.160069" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="77.393204" y="43.267077" style="fill: #12354e; fill-opacity: 0.75"/>
+    </g>
+   </g>
+   <g id="text_9">
+    <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="131.788645" y="31.815137" transform="rotate(-0 131.788645 31.815137)">median 22</text>
+   </g>
+   <g id="PathCollection_2">
+    <defs>
+     <path id="m9d73b03907" d="M 0 1.5 
+C 0.397805 1.5 0.77937 1.341951 1.06066 1.06066 
+C 1.341951 0.77937 1.5 0.397805 1.5 0 
+C 1.5 -0.397805 1.341951 -0.77937 1.06066 -1.06066 
+C 0.77937 -1.341951 0.397805 -1.5 0 -1.5 
+C -0.397805 -1.5 -0.77937 -1.341951 -1.06066 -1.06066 
+C -1.341951 -0.77937 -1.5 -0.397805 -1.5 0 
+C -1.5 0.397805 -1.341951 0.77937 -1.06066 1.06066 
+C -0.77937 1.341951 -0.397805 1.5 0 1.5 
+z
+"/>
+    </defs>
+    <g clip-path="url(#p3e5db5f82d)">
+     <use xlink:href="#m9d73b03907" x="147.47322" y="95.831971" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="127.450359" y="89.661369" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="107.427497" y="86.80787" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="134.124646" y="95.981257" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="87.404635" y="84.058021" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="194.193231" y="94.670367" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="147.47322" y="90.869196" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="207.541806" y="92.293388" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="180.844657" y="94.370841" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="160.821795" y="86.493159" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="167.496082" y="90.182277" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="167.496082" y="90.576449" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="187.518944" y="93.428179" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="114.101784" y="84.596168" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="140.798933" y="90.6454" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="187.518944" y="91.205762" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="167.496082" y="87.527824" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="137.46179" y="83.356859" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="154.147508" y="93.371655" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="187.518944" y="93.433323" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="154.147508" y="85.408904" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="154.147508" y="84.746858" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="140.798933" y="94.925901" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="167.496082" y="85.91687" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="154.147508" y="83.183537" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="114.101784" y="87.991051" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="160.821795" y="95.085056" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="100.75321" y="88.203668" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="114.101784" y="86.015306" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="167.496082" y="89.492987" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="140.798933" y="93.23298" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="170.833226" y="95.508632" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="167.496082" y="87.778109" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="120.776071" y="91.535421" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="180.844657" y="91.69155" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="134.124646" y="83.354221" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="120.776071" y="90.309614" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="167.496082" y="91.744061" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="127.450359" y="93.351663" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="140.798933" y="85.244754" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="187.518944" y="88.618479" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="174.170369" y="91.552644" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="167.496082" y="88.98459" style="fill: #7d8891; fill-opacity: 0.75"/>
+    </g>
+   </g>
+   <g id="text_10">
+    <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="154.147508" y="73.324702" transform="rotate(-0 154.147508 73.324702)">median 25</text>
+   </g>
+   <g id="text_11">
+    <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="58.7052" y="13.848" transform="rotate(-0 58.7052 13.848)">Cliff's δ = −0.32 (95% CI −0.61 to +0.01); Holm p = 0.11</text>
+   </g>
+   <g id="line2d_13">
+    <path d="M 131.788645 60.433043 
+L 131.788645 35.527304 
+" clip-path="url(#p3e5db5f82d)" style="fill: none; stroke: #d98218; stroke-width: 1.6"/>
+   </g>
+   <g id="line2d_14">
+    <path d="M 154.147508 101.942609 
+L 154.147508 77.03687 
+" clip-path="url(#p3e5db5f82d)" style="fill: none; stroke: #d98218; stroke-width: 1.6"/>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_4">
+    <path d="M 314.490585 112.32 
+L 505.3752 112.32 
+L 505.3752 16.848 
+L 314.490585 16.848 
+L 314.490585 112.32 
+z
+" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_6">
+     <g id="line2d_15">
+      <path d="M 329.895357 112.32 
+L 329.895357 16.848 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#me4d24a7013" x="329.895357" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="329.895357" y="123.032813" transform="rotate(-0 329.895357 123.032813)">200</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_17">
+      <path d="M 357.92952 112.32 
+L 357.92952 16.848 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#me4d24a7013" x="357.92952" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="357.92952" y="123.032813" transform="rotate(-0 357.92952 123.032813)">400</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_19">
+      <path d="M 385.963683 112.32 
+L 385.963683 16.848 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#me4d24a7013" x="385.963683" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="385.963683" y="123.032813" transform="rotate(-0 385.963683 123.032813)">600</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_21">
+      <path d="M 413.997846 112.32 
+L 413.997846 16.848 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#me4d24a7013" x="413.997846" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="413.997846" y="123.032813" transform="rotate(-0 413.997846 123.032813)">800</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_23">
+      <path d="M 442.032009 112.32 
+L 442.032009 16.848 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#me4d24a7013" x="442.032009" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="442.032009" y="123.032813" transform="rotate(-0 442.032009 123.032813)">1000</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_25">
+      <path d="M 470.066172 112.32 
+L 470.066172 16.848 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#me4d24a7013" x="470.066172" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="470.066172" y="123.032813" transform="rotate(-0 470.066172 123.032813)">1200</text>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_27">
+      <path d="M 498.100335 112.32 
+L 498.100335 16.848 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#me4d24a7013" x="498.100335" y="112.32" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_18">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="498.100335" y="123.032813" transform="rotate(-0 498.100335 123.032813)">1400</text>
+     </g>
+    </g>
+    <g id="text_19">
+     <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="409.932892" y="133.742156" transform="rotate(-0 409.932892 133.742156)">Open datasets published by the province</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_3">
+     <g id="line2d_29"/>
+     <g id="text_20">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(260.423147 47.221674)">Province with a</text>
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(270.704522 55.091343)">certified city</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_30"/>
+     <g id="text_21">
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(292.483647 88.760724)">Other</text>
+      <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(278.915053 96.55963)">provinces</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_5">
+    <path d="M 314.490585 112.32 
+L 505.3752 112.32 
+" style="fill: none; stroke: #7d8891; stroke-width: 0.5; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="PathCollection_3">
+    <g clip-path="url(#p407fdbac3d)">
+     <use xlink:href="#maef56f404c" x="496.698627" y="51.504241" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="347.837221" y="54.559714" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="369.563698" y="42.946297" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="346.575684" y="54.510501" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="341.950047" y="50.416114" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="356.387641" y="51.518588" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="343.632097" y="48.249935" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="351.762004" y="45.840724" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="386.103854" y="48.678354" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="370.264552" y="51.993936" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="330.596211" y="44.212827" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="327.792795" y="49.900465" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="348.397905" y="45.295681" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="336.062873" y="43.207277" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="325.129549" y="48.123245" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="388.206416" y="46.600933" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="324.849208" y="52.521945" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="323.167158" y="43.464587" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="331.857749" y="45.080633" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="336.483385" y="52.88794" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="330.45604" y="42.112297" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="350.500467" y="53.269832" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="335.642361" y="46.192404" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="345.173976" y="42.723874" style="fill: #12354e; fill-opacity: 0.75"/>
+     <use xlink:href="#maef56f404c" x="333.539798" y="49.780453" style="fill: #12354e; fill-opacity: 0.75"/>
+    </g>
+   </g>
+   <g id="text_22">
+    <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="343.632097" y="31.815137" transform="rotate(-0 343.632097 31.815137)">median 298</text>
+   </g>
+   <g id="PathCollection_4">
+    <g clip-path="url(#p407fdbac3d)">
+     <use xlink:href="#m9d73b03907" x="347.136367" y="88.891505" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="342.791072" y="96.072184" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="358.630374" y="82.889622" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="337.044069" y="91.503711" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="337.18424" y="86.069004" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="340.968852" y="83.394583" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="343.071414" y="83.649618" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="340.267997" y="85.699383" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="349.659442" y="84.290593" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="338.866289" y="95.89758" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="360.732936" y="89.959313" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="344.893634" y="89.51895" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="335.782531" y="89.374979" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="398.579056" y="89.052517" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="349.3791" y="84.623433" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="383.300438" y="94.8354" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="325.129549" y="83.42713" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="327.372282" y="87.336574" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="349.3791" y="86.994998" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="333.119286" y="92.98858" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="364.097036" y="84.53869" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="343.491926" y="94.034419" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="341.529535" y="94.629274" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="346.435513" y="85.725351" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="333.679969" y="93.540976" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="344.473122" y="94.281668" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="335.362019" y="88.753825" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="340.548339" y="83.14288" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="461.936265" y="83.988182" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="333.82014" y="83.970953" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="335.081677" y="86.537128" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="330.035528" y="92.552945" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="346.435513" y="86.835756" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="338.025264" y="86.517749" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="338.025264" y="94.129784" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="381.338046" y="95.21397" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="343.491926" y="93.533634" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="358.910716" y="83.51938" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="333.960311" y="92.783655" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="361.43379" y="90.12836" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="357.088495" y="88.35154" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="335.50219" y="94.427235" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="392.972224" y="89.665544" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="353.724396" y="84.543651" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="357.368837" y="84.142973" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="383.580779" y="83.767879" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="376.151726" y="84.392377" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="344.052609" y="84.072424" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="334.100482" y="87.656433" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="339.426973" y="86.861897" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="353.584225" y="92.148435" style="fill: #7d8891; fill-opacity: 0.75"/>
+     <use xlink:href="#m9d73b03907" x="348.397905" y="85.785017" style="fill: #7d8891; fill-opacity: 0.75"/>
+    </g>
+   </g>
+   <g id="text_23">
+    <text style="fill: #1b2733; font: 6.2px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="343.772268" y="73.324702" transform="rotate(-0 343.772268 73.324702)">median 299</text>
+   </g>
+   <g id="text_24">
+    <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="314.490585" y="13.848" transform="rotate(-0 314.490585 13.848)">Cliff's δ = −0.12 (95% CI −0.40 to +0.18); Holm p = 0.41</text>
+   </g>
+   <g id="line2d_31">
+    <path d="M 343.632097 60.433043 
+L 343.632097 35.527304 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #d98218; stroke-width: 1.6"/>
+   </g>
+   <g id="line2d_32">
+    <path d="M 343.772268 101.942609 
+L 343.772268 77.03687 
+" clip-path="url(#p407fdbac3d)" style="fill: none; stroke: #d98218; stroke-width: 1.6"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p3e5db5f82d">
+   <rect x="58.7052" y="16.848" width="190.884615" height="95.472"/>
+  </clipPath>
+  <clipPath id="p407fdbac3d">
+   <rect x="314.490585" y="16.848" width="190.884615" height="95.472"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption><b>Figure 4.</b> Provinces with and without a certified city. Left: PM2.5, annual mean 2024 (65 provinces in the PCD annual table). Right: open datasets on the national portal, 2026 (77 provinces). Each point is a province; the bar is the median. Cliff’s δ is positive when designated provinces have higher values.</figcaption>
+</figure>
+
+<div class="tbl">
+<table>
+<caption><b>Table 2.</b> Designated (D) against other (O) provinces. δ is Cliff’s δ with bootstrap 95% CI.</caption>
+<thead><tr><th style="width:30%">Indicator</th><th class="r" style="width:10%">n D/O</th><th class="r" style="width:17%">Median D/O</th><th class="r" style="width:30%">δ [CI]</th><th class="r" style="width:13%;white-space:nowrap">Holm p</th></tr></thead>
+<tbody>
+<tr><td>PM2.5 2024, µg/m³</td><td class="r">22/43</td><td class="r">21.7/25.0</td><td class="r">−0.32 [−0.61, 0.01]</td><td class="r">0.11</td></tr>
+<tr><td>Open datasets, count</td><td class="r">25/52</td><td class="r">298/299</td><td class="r">−0.12 [−0.40, 0.18]</td><td class="r">0.41</td></tr>
+<tr><td>Open datasets per 100,000</td><td class="r">25/52</td><td class="r">32/60</td><td class="r">−0.52 [−0.73, −0.29]</td><td class="r">&lt;0.01</td></tr>
+<tr><td>Open data as a table, %</td><td class="r">25/52</td><td class="r">88.8/91.3</td><td class="r">−0.21 [−0.51, 0.08]</td><td class="r">0.27</td></tr>
+</tbody></table>
+</div>
+
+<figure id="fig5">
+
+
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="245.52pt" height="216pt" viewBox="0 0 245.52 216" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-05T13:48:09.405760</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 216 
+L 245.52 216 
+L 245.52 0 
+L 0 0 
+L 0 216 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 147.312 190.08 
+L 208.692 190.08 
+L 208.692 1.08 
+L 147.312 1.08 
+L 147.312 190.08 
+z
+" style="fill: none"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 147.312 50.985968 
+L 208.692 50.985968 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 147.312 86.398876 
+L 208.692 86.398876 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 147.312 161.159459 
+L 208.692 161.159459 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_4">
+      <path d="M 147.312 190.08 
+L 147.312 1.08 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_5">
+      <defs>
+       <path id="m7cf4f71852" d="M 0 0 
+L 0 2.5 
+" style="stroke: #1b2733; stroke-width: 0.5"/>
+      </defs>
+      <g>
+       <use xlink:href="#m7cf4f71852" x="147.312" y="190.08" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="147.312" y="200.792812" transform="rotate(-0 147.312 200.792812)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_6">
+      <path d="M 162.657 190.08 
+L 162.657 1.08 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#m7cf4f71852" x="162.657" y="190.08" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="162.657" y="200.792812" transform="rotate(-0 162.657 200.792812)">25</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_8">
+      <path d="M 178.002 190.08 
+L 178.002 1.08 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#m7cf4f71852" x="178.002" y="190.08" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="178.002" y="200.792812" transform="rotate(-0 178.002 200.792812)">50</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_10">
+      <path d="M 193.347 190.08 
+L 193.347 1.08 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#m7cf4f71852" x="193.347" y="190.08" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="193.347" y="200.792812" transform="rotate(-0 193.347 200.792812)">75</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_12">
+      <path d="M 208.692 190.08 
+L 208.692 1.08 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #dfe4e8; stroke-width: 0.5; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_13">
+      <g>
+       <use xlink:href="#m7cf4f71852" x="208.692" y="190.08" style="fill: #1b2733; stroke: #1b2733; stroke-width: 0.5"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="208.692" y="200.792812" transform="rotate(-0 208.692 200.792812)">100%</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="fill: #1b2733; font: 7.4px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="178.002" y="211.502156" transform="rotate(-0 178.002 211.502156)">Share showing the gap, 95% interval</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_14"/>
+     <g id="text_7">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="12.027315" transform="rotate(-0 143.812 12.027315)">H1  Datasets with no location</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_15"/>
+     <g id="text_8">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="25.143207" transform="rotate(-0 143.812 25.143207)">H1  PM2.5 stations inside Bangkok</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_16"/>
+     <g id="text_9">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="38.314786" transform="rotate(-0 143.812 38.314786)">H1  Gauges with impossible bank level</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_17"/>
+     <g id="text_10">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="60.556115" transform="rotate(-0 143.812 60.556115)">H2  Files that cannot be parsed</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_18"/>
+     <g id="text_11">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="73.672007" transform="rotate(-0 143.812 73.672007)">H2  Datasets stating no licence</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_19"/>
+     <g id="text_12">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="95.969022" transform="rotate(-0 143.812 95.969022)">H3  Rain records with no reading in 2 h</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_20"/>
+     <g id="text_13">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="109.084914" transform="rotate(-0 143.812 109.084914)">H3  River records with no reading in 2 h</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_21"/>
+     <g id="text_14">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="122.200806" transform="rotate(-0 143.812 122.200806)">H3  Datasets older than a year</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_22"/>
+     <g id="text_15">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="135.372385" transform="rotate(-0 143.812 135.372385)">H3  Catalog records older than a year</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_23"/>
+     <g id="text_16">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="148.488277" transform="rotate(-0 143.812 148.488277)">H3  Gauge records flagged stale</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_24"/>
+     <g id="text_17">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="170.729605" transform="rotate(-0 143.812 170.729605)">H4  Shelter rows with no coordinate</text>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_25"/>
+     <g id="text_18">
+      <text style="fill: #1b2733; font: 6.6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="143.812" y="183.901185" transform="rotate(-0 143.812 183.901185)">H4  Shelters beyond 20 per toilet (stated capacity)</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_26">
+    <path d="M 206.14814 9.670909 
+L 208.147484 9.670909 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #12354e; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_27">
+    <path d="M 170.607627 22.786801 
+L 179.56182 22.786801 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #12354e; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_28">
+    <path d="M 148.394325 35.902693 
+L 149.369019 35.902693 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #12354e; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_29">
+    <path d="M 171.502434 58.199709 
+L 173.711935 58.199709 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #12354e; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_30">
+    <path d="M 155.281885 71.3156 
+L 160.366375 71.3156 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #12354e; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_31">
+    <path d="M 183.253159 93.612616 
+L 191.840822 93.612616 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #d98218; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_32">
+    <path d="M 175.034484 106.728508 
+L 191.042552 106.728508 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #d98218; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_33">
+    <path d="M 179.43023 119.8444 
+L 186.126578 119.8444 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #12354e; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_34">
+    <path d="M 170.344503 132.960291 
+L 178.400266 132.960291 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #d98218; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_35">
+    <path d="M 159.980959 146.076183 
+L 160.948222 146.076183 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #d98218; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_36">
+    <path d="M 207.388158 168.373199 
+L 208.692 168.373199 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #12354e; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_37">
+    <path d="M 173.08807 181.489091 
+L 182.91593 181.489091 
+" clip-path="url(#p2c911d460a)" style="fill: none; stroke: #12354e; stroke-width: 1.1"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 147.312 190.08 
+L 208.692 190.08 
+" style="fill: none; stroke: #7d8891; stroke-width: 0.5; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="m61c09934ee" d="M 0 2 
+C 0.530406 2 1.03916 1.789267 1.414214 1.414214 
+C 1.789267 1.03916 2 0.530406 2 0 
+C 2 -0.530406 1.789267 -1.03916 1.414214 -1.414214 
+C 1.03916 -1.789267 0.530406 -2 0 -2 
+C -0.530406 -2 -1.03916 -1.789267 -1.414214 -1.414214 
+C -1.789267 -1.03916 -2 -0.530406 -2 0 
+C -2 0.530406 -1.789267 1.03916 -1.414214 1.414214 
+C -1.03916 1.789267 -0.530406 2 0 2 
+z
+"/>
+    </defs>
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m61c09934ee" x="207.50782" y="9.670909" style="fill: #12354e"/>
+    </g>
+   </g>
+   <g id="text_19">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="11.222003" transform="rotate(-0 209.6127 11.222003)">305/311</text>
+   </g>
+   <g id="PathCollection_2">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m61c09934ee" x="175.020686" y="22.786801" style="fill: #12354e"/>
+    </g>
+   </g>
+   <g id="text_20">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="24.337895" transform="rotate(-0 209.6127 24.337895)">79/175</text>
+   </g>
+   <g id="PathCollection_3">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m61c09934ee" x="148.806037" y="35.902693" style="fill: #12354e"/>
+    </g>
+   </g>
+   <g id="text_21">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="37.453786" transform="rotate(-0 209.6127 37.453786)">36/1,479</text>
+   </g>
+   <g id="PathCollection_4">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m61c09934ee" x="172.599961" y="58.199709" style="fill: #12354e"/>
+    </g>
+   </g>
+   <g id="text_22">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="59.750802" transform="rotate(-0 209.6127 59.750802)">1,182/2,869</text>
+   </g>
+   <g id="PathCollection_5">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m61c09934ee" x="157.574894" y="71.3156" style="fill: #12354e"/>
+    </g>
+   </g>
+   <g id="text_23">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="72.866694" transform="rotate(-0 209.6127 72.866694)">52/311</text>
+   </g>
+   <g id="PathCollection_6">
+    <defs>
+     <path id="m55b886c15b" d="M 0 2 
+C 0.530406 2 1.03916 1.789267 1.414214 1.414214 
+C 1.789267 1.03916 2 0.530406 2 0 
+C 2 -0.530406 1.789267 -1.03916 1.414214 -1.414214 
+C 1.03916 -1.789267 0.530406 -2 0 -2 
+C -0.530406 -2 -1.03916 -1.789267 -1.414214 -1.414214 
+C -1.789267 -1.03916 -2 -0.530406 -2 0 
+C -2 0.530406 -1.789267 1.03916 -1.414214 1.414214 
+C -1.03916 1.789267 -0.530406 2 0 2 
+z
+"/>
+    </defs>
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m55b886c15b" x="187.758936" y="93.612616" style="fill: #d98218"/>
+    </g>
+   </g>
+   <g id="text_24">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="95.16371" transform="rotate(-0 209.6127 95.16371)">114/173</text>
+   </g>
+   <g id="PathCollection_7">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m55b886c15b" x="183.417882" y="106.728508" style="fill: #d98218"/>
+    </g>
+   </g>
+   <g id="text_25">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="108.279602" transform="rotate(-0 209.6127 108.279602)">30/51</text>
+   </g>
+   <g id="PathCollection_8">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m61c09934ee" x="182.837402" y="119.8444" style="fill: #12354e"/>
+    </g>
+   </g>
+   <g id="text_26">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="121.395493" transform="rotate(-0 209.6127 121.395493)">180/311</text>
+   </g>
+   <g id="PathCollection_9">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m55b886c15b" x="174.307833" y="132.960291" style="fill: #d98218"/>
+    </g>
+   </g>
+   <g id="text_27">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="134.511385" transform="rotate(-0 209.6127 134.511385)">95/216</text>
+   </g>
+   <g id="PathCollection_10">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m55b886c15b" x="160.45812" y="146.076183" style="fill: #d98218"/>
+    </g>
+   </g>
+   <g id="text_28">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="147.627277" transform="rotate(-0 209.6127 147.627277)">2,230/10,412</text>
+   </g>
+   <g id="PathCollection_11">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m61c09934ee" x="208.692" y="168.373199" style="fill: #12354e"/>
+    </g>
+   </g>
+   <g id="text_29">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="169.924293" transform="rotate(-0 209.6127 169.924293)">177/177</text>
+   </g>
+   <g id="PathCollection_12">
+    <g clip-path="url(#p2c911d460a)">
+     <use xlink:href="#m61c09934ee" x="178.002" y="181.489091" style="fill: #12354e"/>
+    </g>
+   </g>
+   <g id="text_30">
+    <text style="fill: #7d8891; font: 6px 'Source Sans 3', 'Helvetica Neue', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="209.6127" y="183.040185" transform="rotate(-0 209.6127 183.040185)">73/146</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p2c911d460a">
+   <rect x="147.312" y="1.08" width="61.38" height="189"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption><b>Figure 5.</b> Twelve gap-shaped counts reported by four open audits, by hypothesis (blue: Chiang Mai, national flood and haze audits; amber: Nakhon Si Thammarat). Points are the share showing the gap, bars are Wilson 95% intervals, labels are counts. Selection rule: counts the companions report as a share of records, excluding the day-of-month pattern (which the companion says does not establish freshness), the haze forecast over-calls (the authors’ own system), and 0 of 311 procurement datasets (a search result). Windows differ by source, between 3 July and 4 November 2026.</figcaption>
+</figure>
+<h3>4.4 Gap counts in the audited open data</h3>
+<p>The four earlier audits give counts across the four hypotheses (Figure 5). The Chiang Mai figures come from one province-keyed search, whose 311 datasets are what that search returned, not a census of hazard data, and a one-province absence cannot show a national one. On H1, only 6 of 311 Chiang Mai datasets (1.9%) carry a location; 79 of 175 national PM2.5 stations (45%) stand in Bangkok and three provinces have none; two official sources put a province in different air-quality bands on 23% of province-days, though 88% of those disagreements are between the two cleanest bands and an offset between sources largely explains them; and two agencies’ rain gauges within 2 km of each other correlated at r = 0.67 across 40 closest pairs and 738 hours, partly because a convective cell is real (Thiengburanathum &amp; Arkaraprasertkul, 2026a–c). On H2, no procurement dataset appears among 311 datasets or 682 catalogue resources, 41% of 2,869 resources could not be parsed and 17% of datasets state no licence; this is an indirect indicator only. On H3, the median Chiang Mai dataset was 1.1 years old (the Nakhon Si Thammarat catalogue median is 236 days); 2,230 of 10,412 registry gauge records (21.4%, including non-Thai and global series, not a census of Thai gauges) were flagged stale; and 114 of 173 rain and 30 of 51 river records in one province had no observation in the previous two hours, a dated coverage measurement, not a verdict of outage. On H4, none of 177 official shelter rows (174 distinct) carries a coordinate (Wilson CI 0 to 2.1%), 73 of the 146 reporting toilets exceed 20 people per toilet at stated capacity (hypothetical full occupancy), and no drainage network, evacuation route or clean-air room dataset was found. Fresh counts exist too: 24 of 25 Chiang Mai feeds with a declared limit were inside it, 95.3% of PCD pulls were under two hours old, and 97.2% of flood-feed runs succeeded, so the picture is a partial, not a general, staleness. Sensor-layer faults also appear (only about half of 1,479 river gauges reported in the last three hours; 36 carry impossible bank levels), which cuts against placing the whole gap downstream of the sensors.</p>
+
+
+<h3>4.5 Four prototype systems: what could be bypassed</h3>
+<p>We built four prototype systems from public data without any inter-agency agreement (Table 3); none issues a sanctioned public alert. Integration, speed and freshness were bypassable: one system joined 44 flood feeds and raised alerts a median 6.7 minutes after a gauge reading (over 162 alerts that could be matched to a reading, excluding delivery to a phone); another read 16 haze feeds with 98.7% of 58,298 pulls logged as successful and handed an alert to Telegram test chats a median 7 seconds after it was raised, a hand-off and not arrival on a device; a third assembled gauges, fires, forecast and shelters within seven calendar weeks, adapting an earlier system. Reach, authority and assets were not. The flood system’s watchlist reached level 5 on 302 of 358 station-days that later did so, at a median lead of 8.2 hours and 12.5% precision, scored against the same gauge network the system reads (a coherence test, not accuracy, over 40 days), and it had 29 subscribers; the haze system’s forecast over-called on 10 of 13 checkable province-days; the Chiang Mai manual still lists its owner, operator and duty officer as to be assigned; and in Nakhon Si Thammarat two audit checks 145 minutes apart recorded a threshold exceedance with declaration status zero and then one declared watch, which establishes neither issuance nor delivery time.</p>
+
+<div class="tbl wide">
+<table>
+<caption><b>Table 3.</b> The four prototype systems: what was built, what it showed about the chain, and what it could not do. Counts as reported in the cited preprints; evaluated for feasibility only.</caption>
+<thead><tr><th style="width:13%">System</th><th style="width:15%">Scope, window</th><th style="width:30%">Bypassed without agreement</th><th style="width:42%">Not bypassable</th></tr></thead>
+<tbody>
+<tr><td><b>Rain to Phone</b><br>(2026c)</td><td>National flood, 44 feeds; 3 Jul–4 Nov 2026</td><td>13,766 alerts; median 6.7 min after gauge reading (162 matched alerts, excluding delivery); down 47 of 1,090 h; watchlist reached level 5 on 302 of 358 station-days (40 days, same gauge network: a coherence test), median lead 8.2 h</td><td>12.5% precision; 29 subscribers; 36 of 1,479 gauges carry impossible bank levels; only 52% reported the previous day</td></tr>
+<tr><td><b>Nobody Owns the Haze</b><br>(2026b)</td><td>National haze, 16 feeds; 110 days</td><td>58,298 pulls, 98.7% logged successful; PM2.5 median 28 min after the hour; alert to Telegram test chats median 7 s (hand-off, not delivery)</td><td>45% of stations in Bangkok; sources disagree on 23% of province-days (mostly between the cleanest bands); forecast over-called on 10 of 13 checkable province-days</td></tr>
+<tr><td><b>From Gauge to Shelter</b><br>(2026a)</td><td>Chiang Mai; 7 weeks</td><td>29 providers joined; 24 of 25 feeds with a declared limit inside it; official warnings first; 271 commits over seven weeks, main links live by day 26, adapted from an earlier system</td><td>0 of 177 shelter rows (174 distinct) with a coordinate; no drainage, route or clean-air data; 26 of 32 entities unvalidated; owner and duty officer unassigned</td></tr>
+<tr><td><b>The Last Mile Is Institutional</b><br>(2026d)</td><td>Nakhon Si Thammarat; catalogue crawl 18 Sep, build 22 Jun–4 Nov 2026</td><td>47 adapters in one feed format; seven agency codes in one rain feed; stale-while-refreshing with honest ages</td><td>Median catalogue age 236 days; 21 of 51 river records fresh; no sanctioned push; receipt and action unestablished</td></tr>
+</tbody></table>
+</div>
+
+<div class="tbl wide">
+<table>
+<caption><b>Table 4.</b> Verdicts. “Consistent” means an observable implication was met and no falsifier was; “weakly” marks evidence that is indirect or could hardly have failed. It never means shown to cause the stalled programmes.</caption>
+<thead><tr><th style="width:16%">Hypothesis</th><th style="width:11%">Verdict</th><th style="width:73%">Basis, and what would change it</th></tr></thead>
+<tbody>
+<tr><td><b>H1</b> Coordination</td><td class="v ok">Weakly consistent</td><td>In one province’s portal search 1.9% of datasets carry a location; sources of different agencies disagree on part of the record, though much of the air-band disagreement is an offset; 45% of PM2.5 stations are in Bangkok. These bear on joining indirectly, and the Nakhon Si Thammarat feed arrived already aggregated across seven agency codes. Would change if a joined cross-agency record set were shown to be in routine use. Not measured: how agencies actually interact (no interviews).</td></tr>
+<tr><td><b>H2</b> Procurement</td><td class="v no">Not testable</td><td>Procurement is not observed: no contracts, terms or prices. Indirect indicators (41% unreadable files, 17% no licence, 0 procurement datasets) fit the hypothesis but fit others. One city reports procurement lead time falling from 14 to 6.5 months (unaudited, secondary). Needs procurement records and interviews.</td></tr>
+<tr><td><b>H3</b> Responsiveness</td><td class="v ok">Consistent</td><td>Median Chiang Mai dataset 1.1 years old; 21–66% of records flagged stale or without an observation in two hours (health-check flags and the authors’ own two-hour test, not agencies’ declared limits); 75% of environment and safety headline projects stop at sensing; no response rule appears in a one-line title. Several feeds are fresh and meet declared limits (24 of 25 in one province), so staleness is partial.</td></tr>
+<tr><td><b>H4</b> End-to-end</td><td class="v ok">Weakly consistent</td><td>2 of 21 endorsed records name an alert or dispatch function and none an operating sensor-to-shelter path (a one-line title could hardly name one); no shelter coordinate in Chiang Mai; no drainage or route data found there. Would change if an operating path were verified in an endorsed city (Hat Yai’s early-warning system is named; its operation is unobserved).</td></tr>
+</tbody></table>
+</div>
+
+<h2><span class="n">5</span>Discussion</h2>
+<p>The four gaps may look less like four failures than one. Each agency does its job and publishes the record of it, a table or a PDF, because that is what a project closes with; the open-data estate we sampled is the sum of those closings (Thiengburanathum &amp; Arkaraprasertkul, 2026a). A record that ends a project does not move a person; a service that never ends might. One reading is that procurement of the first kind produces data of the first kind, and that coordination is hard because little live exists to coordinate around; but H2 is unobserved here, so this is a hypothesis, not a result. The registry shows the same shape in programme form: certification is a one-time event, and the endorsed titles describe sensors far more often than the people who answer at two in the morning. The reading is consistent with our data and with the literature on public IT (Goldfinch, 2007; Pahlka, 2023), not shown by it. It also fits “isomorphic mimicry”, forms without the capability behind them (Pritchett et al., 2013); our evidence cannot distinguish the two. Nor is the sensor layer blameless: only about half of the river gauges in one audit had reported in the previous three hours, and some carried impossible bank levels.</p>
+<p>The province analysis adds a caution against assuming that promotion is steered by annual haze exposure: designation tracks larger provinces, we found no evidence that it tracks more exposed ones, and one certified province (Phang Nga) has no PM2.5 station. A label awarded for the quality of a proposal might follow the capacity to write proposals; whether that is why is untested here, and region, not size, may be doing the work.</p>
+<p>Four acts follow from the gaps, offered as options to test, not as findings; none is costed, and only the first has been tried, by us, on a small scale. (1) Publish the three records a chain needs and the audited estate lacks: shelter coordinates, drainage geometry, and warning-tower locations with audible range. (2) Consider requiring, in each technology purchase, a documented machine interface, a licence and a freshness limit, so silence is visible; the literature supports demand-side procurement and service teams in general, not this specific rule (Edler &amp; Georghiou, 2007; Mergel, 2019). (3) Carry every official warning in the Common Alerting Protocol (OASIS, 2010). (4) Ask each certified city to demonstrate one path from sensor to shelter, with a named duty officer and a scored warning log; none of our four prototypes has yet shown one end to end. The test is simple: could a stranger be moved by it?</p>
+
+<h2><span class="n">6</span>Limitations and threats to validity</h2>
+<ul class="tight">
+<li><b>Interests.</b> The second author is a depa official and a builder of the SCITI index, of the SCITI reality classes, and of the four systems. The first author’s institution sponsors the case study. We report gaps in the second author’s own sector for that reason. A reader should weigh the SCITI classes and the flagship coding accordingly; no one outside the authors coded them.</li>
+<li><b>Design.</b> Cross-sectional 2026 data, no counterfactual, no outcome series, and four self-built systems whose audits we ran ourselves. The audits describe what a provincial or national user can reach; absence from a title-and-tag search of one province is not absence elsewhere. The 12 plotted counts follow a stated rule but were taken from the companions, which also report matching fresh counts.</li>
+<li><b>Coding.</b> One coder, who is conflicted, working from one-line titles of 3 to 6 headline projects per city that may understate or overstate delivery; a title cannot name a response rule or a path, so the H3 and H4 falsifiers could hardly fail. Only 21 of 37 certified cities have a published record; the other 16 are unobserved. A second independent coder and an agreement statistic are needed.</li>
+<li><b>Provinces.</b> Cities are nested in 77 provinces and values for cities are shared within a province, so we analysed provinces. Power is low (22 against 43), the PM2.5 value is a mean of station annual means that is missing in 12 provinces, provinces are not independent (haze and designation cluster by region), and 12 counts in Figure 5 were taken from the companion papers rather than recomputed. No flood comparison was possible.</li>
+<li><b>Procurement.</b> H2 is not observed, and rival explanations (funding, skills, central–local authority) are not excluded.</li>
+</ul>
+
+<h2><span class="n">7</span>Conclusion</h2>
+<p>In the national records and the four prototype systems we examined, the chain is open mostly where one agency’s record has to become another’s decision and a stranger’s message: in the searches we ran, records rarely join, much data is old or silent, and few headline projects name a path that reaches a shelter. The sensor layer has faults of its own. Procurement may belong on the list, but nobody has yet looked at it with data that can answer. We have shown that the gaps are present, measurable, and in part bridgeable by open means; that the bridge stops at authority and asset registers; and that we found no evidence that designation tracks annual haze exposure. Whether the gaps explain the stalled programmes remains to be tested with procurement records, interviews and outcome series. We offer the frozen data, the coding and a single script so that someone outside our offices can try.</p>
+
+</div><!-- /cols -->
+
+<div class="decl">
+<h2><span class="n"></span>Declarations</h2>
+<p><b>Competing interests.</b> N.A. is employed by the Digital Economy Promotion Agency (depa), which certifies and promotes the smart cities discussed, and designed and built SCITI, its reality classes and certification-status labels, and the systems audited. P.T. is affiliated with RCAD, which sponsors the case study, and with the Faculty of Engineering, Chiang Mai University. The views are the authors’ own and not those of any organisation. <b>Funding.</b> No funding statement has been supplied; the authors will state any funding before submission. <b>Author contributions.</b> To be confirmed by the authors (CRediT) before submission; the author order was set by the authors.</p>
+<p><b>AI assistance.</b> Analysis code, figures and drafting were assisted by Claude models (Anthropic; Sonnet 5.5). The authors are responsible for the content. Reference records were checked against Crossref by an automated process; that check is not independent human review. A second Claude agent, given the paper and the companion preprints and told to look for errors, produced a written review (research/smart-city-gaps/data/independent-review.md) whose confirmed findings are fixed in this version; it is also not human review, and an independent human review of numbers, coding and citations is recommended before any submission. <b>Data and code availability.</b> Frozen inputs, the coding table, <span class="num">analysis.py</span> (seed 20261105) and this paper’s source are in <span class="num">research/smart-city-gaps</span> of github.com/Nonarkara/smart-city-thailand-index and at sciti.nonarkara.org/research. Province and portal data were harvested on the dates stated and may have changed. <b>Ethics.</b> No personal data were used.</p>
+</div>
+
+<section class="refs">
+<h2><span class="n"></span>References</h2>
+<p>Ansell, C., &amp; Gash, A. (2008). Collaborative governance in theory and practice. <i>Journal of Public Administration Research and Theory, 18</i>(4), 543–571. https://doi.org/10.1093/jopart/mum032</p>
+<p>Arkaraprasertkul, N. (2026). <i>SCITI 2026: Smart City Thailand Index</i> [Data set: 118 city records, 21 endorsed flagship records, and a 77-province baseline of 20 open indicators harvested 21 October 2026 from the National Statistical Office, Pollution Control Department, Royal Forest Department, road-death integration system, Ministry of Energy and the national open-data portal; snapshot of 5 November 2026]. https://sciti.nonarkara.org/research</p>
+<p>Bardach, E. (1998). <i>Getting agencies to work together: The practice and theory of managerial craftsmanship.</i> Brookings Institution Press.</p>
+<p>Basher, R. (2006). Global early warning systems for natural hazards: Systematic and people-centred. <i>Philosophical Transactions of the Royal Society A, 364</i>(1845), 2167–2182. https://doi.org/10.1098/rsta.2006.1819</p>
+<p>Cliff, N. (1993). Dominance statistics: Ordinal analyses to answer ordinal questions. <i>Psychological Bulletin, 114</i>(3), 494–509. https://doi.org/10.1037/0033-2909.114.3.494</p>
+<p>Digital Economy Promotion Agency [depa]. (2024, 1 July). [Ministry of Digital Economy and Society and depa launch the Sikhio Smart Living project; title translated by the authors; in Thai]. https://www.depa.or.th/en/article-view/20240701_02</p>
+<p>Digital Economy Promotion Agency [depa]. (2026). [Smart city development plan proposals; in Thai]. Proposals as of January 2026, declared cities as of August 2025; accessed 5 November 2026. https://www.depa.or.th/th/smart-city-plan/existing-smart-city</p>
+<p>Edler, J., &amp; Georghiou, L. (2007). Public procurement and innovation: Resurrecting the demand side. <i>Research Policy, 36</i>(7), 949–963. https://doi.org/10.1016/j.respol.2007.03.003</p>
+<p>Efron, B. (1979). Bootstrap methods: Another look at the jackknife. <i>The Annals of Statistics, 7</i>(1), 1–26. https://doi.org/10.1214/aos/1176344552</p>
+<p>Goldfinch, S. (2007). Pessimism, computer failure, and information systems development in the public sector. <i>Public Administration Review, 67</i>(5), 917–929. https://doi.org/10.1111/j.1540-6210.2007.00778.x</p>
+<p>Heeks, R. (2006). Health information systems: Failure, success and improvisation. <i>International Journal of Medical Informatics, 75</i>(2), 125–137. https://doi.org/10.1016/j.ijmedinf.2005.07.024</p>
+<p>Hollands, R. G. (2008). Will the real smart city please stand up? <i>City, 12</i>(3), 303–320. https://doi.org/10.1080/13604810802479126</p>
+<p>Holm, S. (1979). A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics, 6</i>(2), 65–70.</p>
+<p>Janssen, M., Charalabidis, Y., &amp; Zuiderwijk, A. (2012). Benefits, adoption barriers and myths of open data and open government. <i>Information Systems Management, 29</i>(4), 258–268. https://doi.org/10.1080/10580530.2012.716740</p>
+<p>Jumnong, P., &amp; Lowatcharin, G. (2022). [The implementation of the smart city policy of Phuket Province; in Thai]. <i>Political Science and Public Administration Journal, 13</i>(2), 215–242. https://so05.tci-thaijo.org/index.php/polscicmujournal/article/view/256069</p>
+<p>Kingdom of Thailand. (2017a). <i>Development of Digitality for Economy and Society Act, B.E. 2560 (2017)</i> [Digital Development for Economy and Society Act]. Royal Gazette, Vol. 134, Part 10a, 24 January 2017. https://data.opendevelopmentcambodia.net/laws_record/development-of-digitality-for-economy-and-society-act-b-e-2560-2017</p>
+<p>Kingdom of Thailand. (2017b). <i>Public Procurement and Supplies Administration Act, B.E. 2560 (2017)</i> [Unofficial English translation]. https://corporate.airportthai.co.th/storage/2021/03/Public-Procurement-and-Supplies-Administration-Act-B.E.-2560-2017.pdf</p>
+<p>Kingdom of Thailand. (2019). <i>Digitalization of Public Administration and Services Delivery Act, B.E. 2562 (2019)</i> [Unofficial translation]. Royal Gazette, Vol. 136, Part 67 Kor, 22 May 2019. https://dga.or.th/wp-content/uploads/2024/10/Digitalization-of-Public-Administration-and-Services-Delivery.-Act-B.E.-2562-2019.pdf</p>
+<p>Kitchin, R. (2014). The real-time city? Big data and smart urbanism. <i>GeoJournal, 79</i>(1), 1–14. https://doi.org/10.1007/s10708-013-9516-8</p>
+<p>Kitchin, R., Lauriault, T. P., &amp; McArdle, G. (2015). Knowing and governing cities through urban indicators, city benchmarking and real-time dashboards. <i>Regional Studies, Regional Science, 2</i>(1), 6–28. https://doi.org/10.1080/21681376.2014.983149</p>
+<p>Mann, H. B., &amp; Whitney, D. R. (1947). On a test of whether one of two random variables is stochastically larger than the other. <i>The Annals of Mathematical Statistics, 18</i>(1), 50–60. https://doi.org/10.1214/aoms/1177730491</p>
+<p>Mattern, S. (2015, March). Mission control: A history of the urban dashboard. <i>Places Journal.</i> https://placesjournal.org/article/mission-control-a-history-of-the-urban-dashboard/</p>
+<p>Meijer, A., &amp; Rodríguez Bolívar, M. P. (2016). Governing the smart city: A review of the literature on smart urban governance. <i>International Review of Administrative Sciences, 82</i>(2), 392–408. https://doi.org/10.1177/0020852314564308</p>
+<p>Mergel, I. (2019). Digital service teams in government. <i>Government Information Quarterly, 36</i>(4), 101389. https://doi.org/10.1016/j.giq.2019.07.001</p>
+<p>Nam, T., &amp; Pardo, T. A. (2011). Conceptualizing smart city with dimensions of technology, people, and institutions. In <i>Proceedings of the 12th Annual International Digital Government Research Conference</i> (pp. 282–291). ACM. https://doi.org/10.1145/2037556.2037602</p>
+<p>Naprathansuk, N. (2017). A national pilot project on smart city policy in Thailand: A case study on Phuket, Khon Kaen, Chiangmai province. <i>European Journal of Multidisciplinary Studies, 6</i>(1), 337–346. https://doi.org/10.26417/ejms.v6i1.p337-346</p>
+<p>OASIS. (2010). <i>Common Alerting Protocol Version 1.2</i> (OASIS Standard, 1 July 2010). http://docs.oasis-open.org/emergency/cap/v1.2/CAP-v1.2-os.html</p>
+<p>Pahlka, J. (2023). <i>Recoding America: Why government is failing in the digital age and how we can do better.</i> Metropolitan Books.</p>
+<p>Pollitt, C. (2003). Joined-up government: A survey. <i>Political Studies Review, 1</i>(1), 34–49. https://doi.org/10.1111/1478-9299.00004</p>
+<p>Pressman, J. L., &amp; Wildavsky, A. (1973). <i>Implementation.</i> University of California Press.</p>
+<p>Pritchett, L., Woolcock, M., &amp; Andrews, M. (2013). Looking like a state: Techniques of persistent failure in state capability for implementation. <i>Journal of Development Studies, 49</i>(1), 1–18. https://doi.org/10.1080/00220388.2012.709614</p>
+<p>Ruangwicha, P., &amp; Tuamsuk, K. (2026). Prioritizing core data sets for smart city governance: Evidence from thirty-six cities in Thailand. <i>Smart Cities, 9</i>(1), 15. https://doi.org/10.3390/smartcities9010015</p>
+<p>Shelton, T., Zook, M., &amp; Wiig, A. (2015). The “actually existing smart city”. <i>Cambridge Journal of Regions, Economy and Society, 8</i>(1), 13–25. https://doi.org/10.1093/cjres/rsu026</p>
+<p>Söderström, O., Paasche, T., &amp; Klauser, F. (2014). Smart cities as corporate storytelling. <i>City, 18</i>(3), 307–320. https://doi.org/10.1080/13604813.2014.906716</p>
+<p>Thiengburanathum, P., &amp; Arkaraprasertkul, N. (2026a). <i>From gauge to shelter: Why Thai smart-city programmes stall between measurement and action</i> (Preprint v1.0, 4 November 2026; not peer reviewed). https://cnx.nonarkara.org/cnx/research</p>
+<p>Thiengburanathum, P., &amp; Arkaraprasertkul, N. (2026b). <i>Nobody owns the haze: An open, end-to-end warning system for Thailand, and its first 110 days</i> (Preprint v1, 4 November 2026; not peer reviewed). https://air.nonarkara.org</p>
+<p>Thiengburanathum, P., &amp; Arkaraprasertkul, N. (2026c). <i>Rain to phone: What an open, end-to-end flood monitoring system shows about Thailand’s coordination gap</i> (Preprint v1, 4 November 2026; not peer reviewed). https://flood.nonarkara.org</p>
+<p>Thiengburanathum, P., &amp; Arkaraprasertkul, N. (2026d). <i>The last mile is institutional: Why Thailand’s smart cities stall between monitoring and action, and what one city built to cross it</i> (NST Control Tower Research Series No. 1; preprint v1, 4 November 2026; not peer reviewed). https://nst.nonarkara.org</p>
+<p>United Nations Department of Economic and Social Affairs [UN DESA]. (2024). <i>E-Government Survey 2024: Thailand country data (E-Government Development Index)</i>. United Nations. https://publicadministration.un.org/egovkb/en-us/Data/Country-Information/id/169-Thailand/dataYear/2024</p>
+<p>United Nations General Assembly. (2015). <i>Sendai Framework for Disaster Risk Reduction 2015–2030</i> (A/RES/69/283, Annex II). https://documents.un.org/api/symbol/access?s=A/RES/69/283&amp;l=en&amp;t=pdf</p>
+<p>Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. <i>Journal of the American Statistical Association, 22</i>(158), 209–212. https://doi.org/10.1080/01621459.1927.10502953</p>
+<p>World Bank. (2012). <i>Thai Flood 2011: Rapid assessment for resilient recovery and reconstruction planning (Overview)</i>. https://documents.worldbank.org/en/publication/documents-reports/documentdetail/677991468335408959</p>
+<p>World Meteorological Organization [WMO]. (2018). <i>Multi-hazard early warning systems: A checklist</i>. https://globalplatform.undrr.org/2022/sites/default/files/2022-02/Multi-hazard%20Early%20Warning%20Systems-%20A%20Checklist.pdf</p>
+</section>
+
+
+</body>
+</html>
