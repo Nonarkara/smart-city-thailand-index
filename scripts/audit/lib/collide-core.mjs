@@ -76,15 +76,39 @@ export function collideCore() {
     if (cs.display === "none" || cs.visibility === "hidden") continue;
     const r = el.getBoundingClientRect();
     if (r.width <= 0 || r.height <= 0) continue;
-    disp.push({ key: own.toLowerCase(), tag: el.tagName.toLowerCase(), cls: String(el.className || "").slice(0, 34), text: own.slice(0, 40), top: Math.round(r.top + scrollY), fs });
+    disp.push({
+      key: own.toLowerCase(), tag: el.tagName.toLowerCase(),
+      cls: String(el.className || "").slice(0, 34), text: own.slice(0, 40),
+      top: Math.round(r.top + scrollY), fs,
+      left: r.left, right: r.right, bottom: r.bottom,
+    });
   }
   const seen = new Map();
   for (const d of disp) seen.set(d.key, [...(seen.get(d.key) || []), d]);
   for (const [, v] of seen) {
     if (v.length < 2) continue;
-    const gaps = [];
-    for (let i = 1; i < v.length; i++) gaps.push(Math.abs(v[i].top - v[i - 1].top));
-    out.dupDisplay.push({ v, nearest: Math.min(...gaps) });
+    // The separation is TWO-DIMENSIONAL. The first version compared only the
+    // vertical offset, so seven grade letters in a three-column grid — each
+    // in its own cell, 99px apart across the row — were called duplicates
+    // of one another, and two matching emoji on a bingo board (where
+    // matching tiles are the entire point of the game) were called a
+    // duplicate display.
+    //
+    // Two identical display strings are a defect when they sit within two
+    // display lines of each other: that is when a reader reads them as the
+    // same label stamped twice, rather than as two separate records that
+    // happen to carry the same value.
+    let nearest = Infinity;
+    for (let i = 0; i < v.length; i++) {
+      for (let j = i + 1; j < v.length; j++) {
+        const a = v[i], b = v[j];
+        const dx = Math.max(0, Math.max(a.left, b.left) - Math.min(a.right, b.right));
+        const dy = Math.max(0, Math.max(a.top, b.top) - Math.min(a.bottom, b.bottom));
+        nearest = Math.min(nearest, Math.max(dx, dy));
+      }
+    }
+    const limit = Math.max(...v.map(x => x.fs)) * 2;
+    out.dupDisplay.push({ v, nearest, limit, coVisible: nearest < limit });
   }
 
   // ------------------------------------------------------------------
@@ -556,6 +580,12 @@ export function collideCore() {
     let node = el;
     while (node && node !== document.body && node !== document.documentElement) {
       const cs = getComputedStyle(node);
+      // display:contents GENERATES NO BOX. The element's children are laid
+      // out as if it were not there, so its rect is a zero rect at the
+      // origin of the page. Using it as the box a label must stay inside
+      // reported a city dossier's investment note as 1051px to the right of
+      // its own band — a phantom measured against nothing.
+      if (cs.display === "contents") { node = node.parentElement; continue; }
       const bg = cs.backgroundColor;
       const hasGround = bg && bg !== "transparent" && !/^rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\s*\)$/.test(bg);
       const bw = ["borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth"]

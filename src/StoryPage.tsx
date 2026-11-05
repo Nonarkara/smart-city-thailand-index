@@ -351,14 +351,14 @@ export default function StoryPage({ locale, onNavigate }: Props) {
             the formal certification indicators above are demanding, while the
             working benchmarks below are deliberately plain. Both are real. */}
         <div className="story-indicator-note" style={{ borderTop: "1px solid var(--5)", paddingTop: "1rem", marginTop: "1.25rem" }}>
-          <p style={{ font: "400 var(--text-body)/1.7 var(--font)", color: "var(--4)", maxWidth: "680px", marginBottom: ".75rem" }}>
+          <p style={{ font: "400 var(--text-body)/1.7 var(--font)", color: "var(--3)", maxWidth: "680px", marginBottom: ".75rem" }}>
             {translate(locale, {
               en: "Read alongside these a second, plainer set. The certification indicators above are the formal bar. In day-to-day assessment the programme also uses working benchmarks chosen so a mayor can verify them without hiring a consultant: average local income above roughly 20,000 baht a month, a measurable annual cut in emissions on the order of one percent within the designated area, residents getting home meaningfully faster — around an hour is the working figure — and fewer road accidents.",
               th: "ควรอ่านคู่กับชุดที่สอง ที่เรียบง่ายกว่า ตัวชี้วัดการรับรองด้านบนคือเกณฑ์ทางการ แต่ในการประเมินประจำวัน โครงการยังใช้เกณฑ์ใช้งานจริงที่เลือกให้นายกเทศมนตรีตรวจสอบเองได้โดยไม่ต้องจ้างที่ปรึกษา ได้แก่ รายได้เฉลี่ยในพื้นที่สูงกว่าราว 20,000 บาทต่อเดือน การลดการปล่อยมลพิษที่วัดได้ราวร้อยละหนึ่งต่อปีในพื้นที่ที่กำหนด ประชาชนกลับถึงบ้านเร็วขึ้นอย่างมีนัยสำคัญ โดยราวหนึ่งชั่วโมงคือตัวเลขที่ใช้จริง และอุบัติเหตุบนถนนที่ลดลง",
               zh: "请与第二套更朴素的标准并读。上方的认证指标是正式门槛。而在日常评估中，项目还使用一组便于操作的基准，其选取标准是让市长无需聘请顾问也能自行核验：本地平均收入高于约每月20,000泰铢；指定区域内每年可测量的减排约百分之一；居民回家时间显著缩短——约一小时是实际使用的数字；以及道路事故减少。",
             })}
           </p>
-          <p style={{ font: "400 var(--text-body)/1.7 var(--font)", color: "var(--4)", maxWidth: "680px", marginBottom: ".75rem" }}>
+          <p style={{ font: "400 var(--text-body)/1.7 var(--font)", color: "var(--3)", maxWidth: "680px", marginBottom: ".75rem" }}>
             {translate(locale, {
               en: "The gap between the two registers is deliberate, and it has a history. The first criteria were drafted to a high engineering standard and proved unreachable for the municipalities they were aimed at — about two years in, the bar was filtering out participation rather than filtering for quality. The plainer benchmarks were written to fix that. A target nobody can measure is not a target.",
               th: "ช่องว่างระหว่างสองชุดนี้เป็นความตั้งใจ และมีที่มา เกณฑ์ชุดแรกถูกร่างตามมาตรฐานวิศวกรรมระดับสูง และพิสูจน์แล้วว่าเกินเอื้อมสำหรับเทศบาลที่เป็นกลุ่มเป้าหมาย ผ่านไปราวสองปีก็พบว่าเกณฑ์นั้นคัดคนออกจากการเข้าร่วม มากกว่าจะคัดกรองคุณภาพ เกณฑ์ที่เรียบง่ายกว่าจึงถูกเขียนขึ้นเพื่อแก้ปัญหานั้น เป้าหมายที่ไม่มีใครวัดได้ ไม่ถือเป็นเป้าหมาย",

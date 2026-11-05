@@ -304,10 +304,14 @@ function DataFlowDiagram({ locale }: { locale: Locale }) {
     locale === "th" ? th : locale === "zh" ? zh : en;
 
   const boxes = [
-    { id: "sources", label: t(`${EVIDENCE_SOURCE_FAMILY_COUNT} Sources`, `${EVIDENCE_SOURCE_FAMILY_COUNT} แหล่งข้อมูล`, `${EVIDENCE_SOURCE_FAMILY_COUNT} 个数据源`), sub: t("NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…"), x: 20, color: "#0D9488" },
-    { id: "research", label: t("Research Layer", "ชั้นวิจัย", "研究层"), sub: t("7 pillars · field verification", "7 เสาหลัก · ยืนยันภาคสนาม", "7 支柱 · 实地核验"), x: 200, color: "#D97706" },
-    { id: "math", label: t("Math Layer", "ชั้นคณิตศาสตร์", "数学层"), sub: t("Weighted sum · deterministic", "ผลรวมถ่วงน้ำหนัก · กำหนดแน่นอน", "加权求和 · 确定性"), x: 380, color: "#1A6FB5" },
-    { id: "output", label: t("Score + Tier", "คะแนน + ระดับ", "得分 + 层级"), sub: t("0–100 · α β γ", "0–100 · α β γ", "0–100 · α β γ"), x: 560, color: "#6366F1" },
+    // color paints the BOX; textColor carries the WORDS. Three of the four
+    // bright hues were under the 4.5:1 floor on the surface the labels sit
+    // on (3.52:1, 2.99:1 and 4.2:1), so each is stepped down for type —
+    // the same move the pillar tokens make.
+    { id: "sources", label: t(`${EVIDENCE_SOURCE_FAMILY_COUNT} Sources`, `${EVIDENCE_SOURCE_FAMILY_COUNT} แหล่งข้อมูล`, `${EVIDENCE_SOURCE_FAMILY_COUNT} 个数据源`), sub: t("NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…", "NSO · NESDC · PCD · GISTDA…"), x: 20, color: "#0D9488", textColor: "#0F766E" },
+    { id: "research", label: t("Research Layer", "ชั้นวิจัย", "研究层"), sub: t("7 pillars · field verification", "7 เสาหลัก · ยืนยันภาคสนาม", "7 支柱 · 实地核验"), x: 200, color: "#D97706", textColor: "#9A5D0A" },
+    { id: "math", label: t("Math Layer", "ชั้นคณิตศาสตร์", "数学层"), sub: t("Weighted sum · deterministic", "ผลรวมถ่วงน้ำหนัก · กำหนดแน่นอน", "加权求和 · 确定性"), x: 380, color: "#1A6FB5", textColor: "#1A6FB5" },
+    { id: "output", label: t("Score + Tier", "คะแนน + ระดับ", "得分 + 层级"), sub: t("0–100 · α β γ", "0–100 · α β γ", "0–100 · α β γ"), x: 560, color: "#6366F1", textColor: "#4F46C4" },
   ];
 
   return (
@@ -315,7 +319,7 @@ function DataFlowDiagram({ locale }: { locale: Locale }) {
       <ol className="methodology-flow-steps">
         {boxes.map(box => (
           <li key={box.id} style={{ borderColor: box.color }}>
-            <strong style={{ color: box.color }}>{box.label}</strong>
+            <strong style={{ color: box.textColor }}>{box.label}</strong>
             <span>{box.sub}</span>
           </li>
         ))}

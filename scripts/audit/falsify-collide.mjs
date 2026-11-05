@@ -182,6 +182,47 @@ const FIXTURES = {
     <div style="position:fixed;left:100px;top:100px;width:460px;margin:0;font:500 18px system-ui,sans-serif">SHORT</div>
     <div class="chat-fab" style="position:fixed;left:500px;top:100px;width:44px;height:44px;background:#007190"></div>
   `),
+  /*
+   * display:contents GENERATES NO BOX. The element's children are laid out
+   * as if it were not there, so its rect is a zero rect at the origin of the
+   * page. A rule that used it as the box a label must stay inside reported
+   * a city dossier's investment note as 1051px to the right of its own band.
+   */
+  "/fixture-display-contents": page(`
+    <div class="stage">
+      <h1>Contents</h1>
+      <div style="display:contents;border-bottom:1px solid #12354e">
+        <p class="plain" style="margin:0 0 0 200px">A NOTE FAR TO THE RIGHT</p>
+      </div>
+    </div>
+  `),
+  /*
+   * Two identical display strings are a duplicate when they are within two
+   * display lines of each other — when a reader reads them as the same
+   * label stamped twice. The same two strings a third of a screen apart are
+   * two separate records that happen to carry the same value, and the
+   * separation is measured in BOTH axes: seven grade letters in a
+   * three-column grid are 99px apart across the row, not on top of each
+   * other.
+   */
+  "/fixture-duplicate-adjacent": page(`
+    <div class="stage">
+      <h1>Duplicate</h1>
+      <div style="display:flex;gap:10px">
+        <span style="font:700 32px system-ui,sans-serif">4.2</span>
+        <span style="font:700 32px system-ui,sans-serif">4.2</span>
+      </div>
+    </div>
+  `),
+  "/fixture-duplicate-separate": page(`
+    <div class="stage">
+      <h1>Separate</h1>
+      <div style="display:flex;gap:220px">
+        <span style="font:700 32px system-ui,sans-serif">4.2</span>
+        <span style="font:700 32px system-ui,sans-serif">4.2</span>
+      </div>
+    </div>
+  `),
 };
 
 /* ------------------------------------------------------------------ */
@@ -316,7 +357,25 @@ try {
     assert.equal(fabBeside.fabCollisions.length, 0, `the rule measured a box instead of ink: ${JSON.stringify(fabBeside.fabCollisions.slice(0, 2))}`);
   });
 
-  // 9. The GATE's exit code, not just the core's verdict.
+  // 9. display:contents GENERATES NO BOX.
+  console.log(`\n9. A WRAPPER THAT GENERATES NO BOX`);
+  const contents = await measure("/fixture-display-contents");
+  check("a note inside a display:contents wrapper is not reported as escaped", () => {
+    assert.equal(contents.outside.length, 0, `found ${contents.outside.length}: ${JSON.stringify(contents.outside.slice(0, 2))}`);
+  });
+
+  // 10. Two identical display strings: adjacent is a duplicate, apart is not.
+  console.log(`\n10. THE SAME NUMBER TWICE`);
+  const dupAdjacent = await measure("/fixture-duplicate-adjacent");
+  check("the same number printed twice in a row is caught", () => {
+    assert.ok(dupAdjacent.dupDisplay.some(d => d.coVisible), `the duplicate rule did not fire on two identical numbers 10px apart: ${JSON.stringify(dupAdjacent.dupDisplay.slice(0, 2))}`);
+  });
+  const dupSeparate = await measure("/fixture-duplicate-separate");
+  check("the same number on two separate records stays quiet", () => {
+    assert.ok(dupSeparate.dupDisplay.every(d => !d.coVisible), `the rule compared vertical offsets only: ${JSON.stringify(dupSeparate.dupDisplay.slice(0, 2))}`);
+  });
+
+  // 11. The GATE's exit code, not just the core's verdict.
   console.log(`\n6. THE GATE'S EXIT CODE`);
   const gateClean = await runGate("/fixture-clean");
   check("the gate passes the clean build (exit 0)", () => {
@@ -330,6 +389,7 @@ try {
     ["a caption on a pale scrim", "/fixture-scrim-pale"],
     ["a caption on a weak dark scrim", "/fixture-scrim-weak"],
     ["a floating control over a word", "/fixture-fab-over-word"],
+    ["the same number printed twice in a row", "/fixture-duplicate-adjacent"],
   ]) {
     const g = await runGate(path);
     check(`the gate fails on ${name} (exit 1)`, () => {

@@ -65,6 +65,9 @@
   --wada-black: #111314;     /* Black — Plate 255 / 344 reading ink */
   --wada-white: #f7f5ef;     /* Exhibition White */
   --wada-antwarp: #007190;   /* Antwarp Blue — Plate 140 / 163 */
+  --wada-green-text: #007a52; /* Wada green stepped down for TYPE: 5.38:1 on white.
+                                 The fill green (#009465) is 3.87:1 and cannot
+                                 carry a heading. */
 
   /* Neutral Surface Scale (Light Theme) */
   --ink: #111314;            /* Wada Black — architectural clarity, no harsh #000 */
@@ -6505,7 +6508,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 .export-btn-text { display: flex; flex-direction: column; gap: .1rem; }
 .export-btn-text strong { font-size: var(--text-body); font-weight: 700; }
 .export-btn-text span { font-size: var(--text-body); color: rgba(255,255,255,.82); }
-.export-btn-primary .export-btn-text span { color: rgba(12,47,83,.72); }
+.export-btn-primary .export-btn-text span { color: rgba(12,47,83,.88); }
 
 .export-docs { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; }
 .export-doc-link {
@@ -11958,6 +11961,16 @@ body.canvas-print-mode {
 }
 
 /* 8 city cards — 2-column grid on desktop, 1-column on mobile */
+/* ─── THE CITY LENS: ONE VIEW OF EIGHT CITIES, NOT TWO ───────────────
+   The comparison table and the city cards below it are the same eight
+   cities. On a phone the table is a six-column grid that has to be scrolled
+   sideways, beside a list that already holds every city — so below 720px the
+   table is not rendered and the province rides on the card instead. */
+@media screen and (max-width: 719px) {
+  .city-lens-table-wrap { display: none; }
+  .city-lens-cards-h { margin-top: 1rem; }
+}
+
 .city-lens-cards-h {
   font: 700 var(--text-body) var(--font-heading);
   letter-spacing: -.01em;
@@ -11982,6 +11995,20 @@ body.canvas-print-mode {
   cursor: pointer;
   list-style: none;
 }
+/* The card's title cell: the place, and — only when the place's name
+   does not already identify it — the province it sits in. */
+.city-lens-card-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.city-lens-card-prov {
+  font: 500 var(--text-micro) var(--mono);
+  color: var(--3);
+  letter-spacing: 0;
+}
+
 .city-lens-card h4 {
   font: 700 var(--text-micro) var(--font-heading);
   letter-spacing: -.02em;

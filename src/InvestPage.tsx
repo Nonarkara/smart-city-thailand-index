@@ -562,7 +562,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
   const [ctaRef, ctaVisible] = useInView(0.1);
 
   const severityColor = (s: string) =>
-    s === "high" ? "var(--gamma, #E53E3E)" : s === "medium" ? "var(--gold)" : "var(--3)";
+    s === "high" ? "var(--gamma, #E53E3E)" : s === "medium" ? "var(--gold-ink)" : "var(--3)";
 
   const severityLabel = (s: string) =>
     translate(locale, s === "high"
@@ -975,11 +975,13 @@ export default function InvestPage({ locale, onNavigate }: Props) {
         }}>
           {mechanisms.map((m, i) => (
             <div key={i} style={{
-              padding: "1.25rem 1rem",
+              /* Ruled, not padded: nine mechanisms × 1.25rem was 360px of
+                 nothing between them. */
+              padding: ".85rem .9rem",
               borderBottom: i < mechanisms.length - 1 ? "1px solid var(--5)" : "none",
               display: "flex",
               flexDirection: "column",
-              gap: ".4rem",
+              gap: ".3rem",
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
                 <span style={{
@@ -1077,24 +1079,29 @@ export default function InvestPage({ locale, onNavigate }: Props) {
           {checklist.map((item, i) => (
             <div key={i} style={{
               display: "grid",
-              gridTemplateColumns: "48px 1fr",
-              gap: "1rem",
-              padding: "1.25rem 0",
+              gridTemplateColumns: "2.25rem 1fr",
+              gap: ".75rem",
+              /* The rows are ruled, not padded. Ten items × 1.25rem of top and
+                 bottom padding was 400px of nothing between ten instructions
+                 the reader has to scroll past. */
+              padding: ".7rem 0",
               borderBottom: "1px solid var(--5)",
               alignItems: "start",
             }}>
+              {/* The ordinal is a label, not a headline. At the display size
+                  it shouted louder than the instruction it numbers. */}
               <span style={{
-                font: "800 var(--text-display) var(--font-heading)",
+                font: "700 var(--text-micro) var(--mono)",
                 color: "var(--3)",
-                lineHeight: 1,
+                lineHeight: 1.7,
               }}>
                 {item.num}
               </span>
               <div>
-                <h3 style={{ font: "700 var(--text-body) var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em", marginBottom: ".3rem" }}>
+                <h3 style={{ font: "700 var(--text-body) var(--font-heading)", color: "var(--ink)", letterSpacing: "-.01em", marginBottom: ".2rem" }}>
                   {translate(locale, item.title)}
                 </h3>
-                <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: "1.6" }}>
+                <p style={{ font: "400 var(--text-body) var(--font)", color: "var(--2)", lineHeight: "1.5" }}>
                   {translate(locale, item.desc)}
                 </p>
               </div>

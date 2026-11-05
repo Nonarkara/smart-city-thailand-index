@@ -65,12 +65,17 @@ for (const route of ROUTES) {
         for (const c of r.fabCollisions) console.log(`   ${c.float} over ${c.over} (${c.px}px) "${c.text}"`);
       }
       if (r.dupDisplay.length) {
-        dupes += r.dupDisplay.length;
-        console.log(`\n[${tag}] DUPLICATE DISPLAY TEXT — ${r.dupDisplay.length}`);
-        for (const d of r.dupDisplay) {
-          const coVisible = d.nearest < 1200;
-          console.log(`   "${d.v[0].text}" x${d.v.length}  gap=${d.nearest}px ${coVisible ? "*** CO-VISIBLE — DEFECT" : "(far apart — summary→detail)"}`);
-          console.log(`      ${d.v.map(x => `${x.tag}.${x.cls}@${x.top}`).join(" | ")}`);
+        // Only a duplicate the reader can see at the same time is a finding.
+        // The same number in a summary and again in the detail, or two
+        // records that happen to carry the same value, is not a defect.
+        const coVisibleDuplicates = r.dupDisplay.filter(d => d.coVisible);
+        dupes += coVisibleDuplicates.length;
+        if (coVisibleDuplicates.length) {
+          console.log(`\n[${tag}] DUPLICATE DISPLAY TEXT — ${coVisibleDuplicates.length}`);
+          for (const d of coVisibleDuplicates) {
+            console.log(`   "${d.v[0].text}" x${d.v.length}  gap=${d.nearest}px (limit ${d.limit}px) *** CO-VISIBLE — DEFECT`);
+            console.log(`      ${d.v.map(x => `${x.tag}.${x.cls}@${x.top}`).join(" | ")}`);
+          }
         }
       }
       if (r.thaiTracked.length) {

@@ -14,7 +14,7 @@
 
 import { CITY_INVESTMENT_PROFILES, TOOL_LABELS, type InvestmentTool } from "./cityInvestmentProfiles";
 import { getCityById } from "./cityData";
-import { translate } from "./cityPresentation";
+import { getDistinctProvinceName, translate } from "./cityPresentation";
 import type { Locale } from "./types";
 
 interface Props {
@@ -142,10 +142,22 @@ export default function InvestCityLens({ locale, onNavigate }: Props) {
             : city
               ? (locale === "th" ? city.nameTh : city.nameEn)
               : p.provinceEn;
+          /* On a phone the comparison table is not rendered — it is a
+             six-column table of eight cities, and the eight city cards below
+             carry the same eight cities with more per city. So the province
+             has to live on the card, or it is lost on the phone. It is shown
+             only when the city's name does not already identify it, which is
+             the same rule the rest of the platform follows. */
+          const provinceLabel = city && p.subjectKind !== "metropolitan"
+            ? getDistinctProvinceName(city, locale)
+            : null;
           return (
             <details key={p.cityId ?? p.provinceEn} className="city-lens-card">
               <summary className="city-lens-card-h">
-                <h4>{subjectLabel}</h4>
+                <span className="city-lens-card-title">
+                  <h4>{subjectLabel}</h4>
+                  {provinceLabel && <span className="city-lens-card-prov">{provinceLabel}</span>}
+                </span>
                 <span className="city-lens-card-tags">
                   {p.eecZone && <span className="tag-eec">EEC</span>}
                   {p.ascnMember && <span className="tag-ascn">ASCN</span>}
