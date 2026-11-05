@@ -228,12 +228,19 @@ export const NEWS_ITEMS: NewsItem[] = [
   },
 ];
 
+/**
+ * Tag grounds carry a WHITE label, so every ground here has to clear
+ * WCAG AA 4.5:1 against white. The bright hues did not: --gold is 2.13:1,
+ * --amber 2.15:1, the sky 2.77:1, the indigo 4.47:1. These are the same
+ * hues stepped down — the same move as the --pillar-*-text tokens, in the
+ * same direction — so a white label reads on all five.
+ */
 export const TAG_COLORS: Record<NewsTag, string> = {
-  thailand: "var(--teal)",
-  international: "var(--gold)",
-  tech: "var(--sky, #0EA5E9)",
-  policy: "var(--indigo, #6366F1)",
-  feature: "var(--amber, #f59e0b)",
+  thailand: "var(--teal)",        // #007190 — 5.58:1 on white
+  international: "var(--gold-ink)", // #9a5d0a — 5.32:1 on white
+  tech: "#0a6e9e",                 // sky stepped down — 5.62:1 on white
+  policy: "#4f46c4",               // indigo stepped down — 6.99:1 on white
+  feature: "var(--gold-ink)",      // #9a5d0a — 5.32:1 on white
 };
 
 export const TAG_LABELS: Record<NewsTag, { en: string; th: string; zh: string }> = {

@@ -85,7 +85,15 @@ const POOL: BingoTerm[] = [
   { id:"gov8", dim:"governance", emoji:"🔍", label:{ en:"Transpa­rency Audit", th:"ตรวจสอบโปร่งใส", zh:"透明度审计" }, hint:{ en:"outsiders verify what the city claims", th:"บุคคลภายนอกตรวจสอบคำกล่าวอ้างเมือง", zh:"外部机构核实城市的陈述" } },
 ];
 
-const DIM_COLORS: Record<SmartDimension,string> = { environment:"#2E7D32", economy:"#1565C0", mobility:"#6A1B9A", energy:"#E65100", people:"#00838F", living:"#C62828", governance:"#37474F" };
+/**
+ * Bingo cell colours are graphic-first AND type-bearing: the number stamp
+ * sits in --cell-color on the cell face, and the back of a flipped card
+ * carries a white label on the same colour. Two of the seven could not do
+ * both — #E65100 was 3.56:1 for the stamp and 3.79:1 for the white label,
+ * #00838F was 4.25:1 for the stamp. Both are stepped down here so the same
+ * colour works as a ground for white and as type on the cell face.
+ */
+const DIM_COLORS: Record<SmartDimension,string> = { environment:"#2E7D32", economy:"#1565C0", mobility:"#6A1B9A", energy:"#A63E00", people:"#00707A", living:"#C62828", governance:"#37474F" };
 const DIM_LABELS: Record<SmartDimension,T3> = { environment:{en:"Environment",th:"สิ่งแวดล้อม",zh:"环境"}, economy:{en:"Economy",th:"เศรษฐกิจ",zh:"经济"}, mobility:{en:"Mobility",th:"การเดินทาง",zh:"出行"}, energy:{en:"Energy",th:"พลังงาน",zh:"能源"}, people:{en:"People",th:"พลเมือง",zh:"市民"}, living:{en:"Living",th:"การดำรงชีวิต",zh:"生活"}, governance:{en:"Governance",th:"การบริหาร",zh:"治理"} };
 const DIM_EMOJIS: Record<SmartDimension,string> = { environment:"🌿", economy:"📈", mobility:"🚌", energy:"⚡", people:"👥", living:"🏠", governance:"🏛️" };
 const DIMS: SmartDimension[] = ["environment","economy","mobility","energy","people","living","governance"];

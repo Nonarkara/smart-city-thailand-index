@@ -346,7 +346,12 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
                 </span>
               </div>
 
-              <p className="partner-visual-vibe" style={{ color: p.accent }}>{t(locale, p.vibe)}</p>
+              {/* The accent is the card's identity colour and stays a GRAPHIC —
+                  the 3px rule along the card's top edge. The sentence is type,
+                  and one partner's accent (#C45C1A) sat at 4.03:1 on the card
+                  surface, under the 4.5:1 floor. The rule's own colour (var(--2),
+                  8.2:1) carries the words instead. */}
+              <p className="partner-visual-vibe">{t(locale, p.vibe)}</p>
 
               <div className="partner-visual-facts">
                 <div className="partner-visual-fact">

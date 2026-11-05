@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useCitySummaries } from "./cityApi";
 import { getCityName, getDistinctProvinceName, translate } from "./cityPresentation";
 import type { Locale, ScoringPillar } from "./types";
-import { PILLAR_LABELS, PILLAR_COLORS, TIER_LABELS } from "./types";
+import { PILLAR_LABELS, PILLAR_COLORS, PILLAR_TEXT_COLORS, TIER_LABELS } from "./types";
 import { SCORING_PILLARS } from "./scoring";
 import { useInView } from "./useInView";
 import { computePreferenceScore } from "./preferenceScore";
@@ -124,7 +124,7 @@ export default function DiscoverPage({ locale, onNavigate }: Props) {
                       key={p}
                       className={`discover-pill ${meets ? "discover-pill-pass" : "discover-pill-miss"}`}
                       title={`${PILLAR_LABELS[locale][p]}: ${city.scores[p]}`}
-                      style={{ background: meets ? PILLAR_COLORS[p] : "var(--surface)" }}
+                      style={{ background: meets ? PILLAR_TEXT_COLORS[p] : "var(--surface)" }}
                     >
                       {city.scores[p]}
                     </span>

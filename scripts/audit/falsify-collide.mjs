@@ -133,6 +133,55 @@ const FIXTURES = {
       <div class="tile"><span style="left:-26px;justify-content:flex-start">ESCAPING LABEL</span></div>
     </div>
   `),
+  /*
+   * The scrim cases. A caption painted on a translucent DARK ground is not
+   * painted on the page behind it — the scrim IS the ground. The first
+   * version of the contrast rule skipped translucent grounds and kept
+   * walking, so it measured these against the white page and reported a
+   * perfectly legible caption as white-on-white.
+   *
+   * Three cases, so the fix cannot be a blanket exemption:
+   *   · a strong dark scrim  → legible  → must stay QUIET;
+   *   · a pale scrim          → illegible → must be CAUGHT;
+   *   · a weak dark scrim     → illegible → must be CAUGHT.
+   */
+  "/fixture-scrim-strong": page(`
+    <div class="stage">
+      <h1>Strong scrim</h1>
+      <p style="margin:0;padding:.5rem .75rem;background:rgba(12,47,83,.82);color:#fff;font:400 14px system-ui,sans-serif">CAPTION ON A DARK SCRIM</p>
+    </div>
+  `),
+  "/fixture-scrim-pale": page(`
+    <div class="stage">
+      <h1>Pale scrim</h1>
+      <p style="margin:0;padding:.5rem .75rem;background:rgba(255,255,255,.4);color:#fff;font:400 14px system-ui,sans-serif">CAPTION ON A PALE SCRIM</p>
+    </div>
+  `),
+  "/fixture-scrim-weak": page(`
+    <div class="stage">
+      <h1>Weak scrim</h1>
+      <p style="margin:0;padding:.5rem .75rem;background:rgba(12,47,83,.3);color:#fff;font:400 14px system-ui,sans-serif">CAPTION ON A WEAK SCRIM</p>
+    </div>
+  `),
+  /*
+   * The floating-control cases. A floating button is judged against the INK
+   * it covers, not against the box of the row it happens to sit beside.
+   *
+   *   · OVER A WORD    → the words are unreadable under the button → CAUGHT;
+   *   · BESIDE A WORD  → the button sits over the blank right-hand end of a
+   *     460px-wide row whose words are 48px wide at the left → the reader
+   *     sees nothing covered → QUIET.
+   *
+   * The second case is the /map legend row, exactly.
+   */
+  "/fixture-fab-over-word": page(`
+    <p style="position:fixed;left:100px;top:100px;margin:0;font:500 18px system-ui,sans-serif">COVERED WORDS HERE</p>
+    <div class="chat-fab" style="position:fixed;left:140px;top:100px;width:44px;height:44px;background:#007190"></div>
+  `),
+  "/fixture-fab-beside-word": page(`
+    <div style="position:fixed;left:100px;top:100px;width:460px;margin:0;font:500 18px system-ui,sans-serif">SHORT</div>
+    <div class="chat-fab" style="position:fixed;left:500px;top:100px;width:44px;height:44px;background:#007190"></div>
+  `),
 };
 
 /* ------------------------------------------------------------------ */
@@ -241,7 +290,33 @@ try {
     assert.equal(clean.lowContrast.length, 0, `found ${clean.lowContrast.length}: ${JSON.stringify(clean.lowContrast.slice(0, 2))}`);
   });
 
-  // 7. The GATE's exit code, not just the core's verdict.
+  // 7. THE SCRIM — a translucent ground is the ground, not the page behind it.
+  console.log(`\n7. A TRANSLUCENT GROUND`);
+  const scrimStrong = await measure("/fixture-scrim-strong");
+  check("a caption on a strong dark scrim stays quiet", () => {
+    assert.equal(scrimStrong.lowContrast.length, 0, `a legible caption was reported: ${JSON.stringify(scrimStrong.lowContrast.slice(0, 2))}`);
+  });
+  const scrimPale = await measure("/fixture-scrim-pale");
+  check("a caption on a pale scrim is caught", () => {
+    assert.ok(scrimPale.lowContrast.length > 0, "the contrast rule did not fire on white text over a pale scrim");
+  });
+  const scrimWeak = await measure("/fixture-scrim-weak");
+  check("a caption on a weak dark scrim is caught", () => {
+    assert.ok(scrimWeak.lowContrast.length > 0, "the contrast rule did not fire on white text over a weak scrim");
+  });
+
+  // 8. THE FLOATING CONTROL — judged against ink, not against the box.
+  console.log(`\n8. A FLOATING CONTROL OVER TEXT`);
+  const fabOver = await measure("/fixture-fab-over-word");
+  check("a floating control over a word is caught", () => {
+    assert.ok(fabOver.fabCollisions.length > 0, "the floating-control rule did not fire on a button sitting on a word");
+  });
+  const fabBeside = await measure("/fixture-fab-beside-word");
+  check("a floating control over the blank end of a row stays quiet", () => {
+    assert.equal(fabBeside.fabCollisions.length, 0, `the rule measured a box instead of ink: ${JSON.stringify(fabBeside.fabCollisions.slice(0, 2))}`);
+  });
+
+  // 9. The GATE's exit code, not just the core's verdict.
   console.log(`\n6. THE GATE'S EXIT CODE`);
   const gateClean = await runGate("/fixture-clean");
   check("the gate passes the clean build (exit 0)", () => {
@@ -252,6 +327,9 @@ try {
     ["a visible card face", "/fixture-backface-shown"],
     ["a label outside its box", "/fixture-escape"],
     ["white text on a white page", "/fixture-invisible"],
+    ["a caption on a pale scrim", "/fixture-scrim-pale"],
+    ["a caption on a weak dark scrim", "/fixture-scrim-weak"],
+    ["a floating control over a word", "/fixture-fab-over-word"],
   ]) {
     const g = await runGate(path);
     check(`the gate fails on ${name} (exit 1)`, () => {

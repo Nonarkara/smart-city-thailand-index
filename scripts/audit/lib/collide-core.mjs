@@ -51,25 +51,12 @@ export function collideCore() {
     if (cs.display === "none" || cs.visibility === "hidden" || parseFloat(cs.opacity) === 0) return false;
     return el.getBoundingClientRect().height > 4;
   });
-  for (const f of floats) {
-    const fr = f.getBoundingClientRect();
-    for (const t of textNodes) {
-      const tr = t.getBoundingClientRect();
-      if (tr.bottom < 0 || tr.top > innerHeight) continue;
-      const ox = Math.min(fr.right, tr.right) - Math.max(fr.left, tr.left);
-      const oy = Math.min(fr.bottom, tr.bottom) - Math.max(fr.top, tr.top);
-      if (ox > 2 && oy > 2) {
-        out.fabCollisions.push({
-          float: String(f.className).slice(0, 30),
-          over: t.tagName + "." + String(t.className || "").slice(0, 28),
-          text: (t.textContent || "").trim().slice(0, 40),
-          area: Math.round(ox * oy),
-          px: `${Math.round(ox)}×${Math.round(oy)}`,
-        });
-        break;
-      }
-    }
-  }
+  // The floating-control check itself happens LATER, once the ink has been
+  // measured. A floating button is judged against the INK it covers, not
+  // against the box of the row it happens to sit beside: on /map the chat
+  // button overlapped the empty right-hand end of a 232px-wide legend row
+  // whose words are 30px wide at the left, and the reader sees nothing
+  // covered at all. The check is therefore made where the ink lives.
 
   // ------------------------------------------------------------------
   // 2. Duplicate display-size text.
@@ -81,7 +68,14 @@ export function collideCore() {
     if (!own) continue;
     const fs = Math.round(parseFloat(getComputedStyle(el).fontSize) * 10) / 10;
     if (fs < 30) continue;
+    // A numeral inside a panel the reader has not opened is NOT on the
+    // screen. Both "4"s on /showcase live in closed tab panels: their
+    // rectangles are zero, but their text is still in the DOM, and the rule
+    // was reporting two hidden numerals as a visible duplicate.
+    const cs = getComputedStyle(el);
+    if (cs.display === "none" || cs.visibility === "hidden") continue;
     const r = el.getBoundingClientRect();
+    if (r.width <= 0 || r.height <= 0) continue;
     disp.push({ key: own.toLowerCase(), tag: el.tagName.toLowerCase(), cls: String(el.className || "").slice(0, 34), text: own.slice(0, 40), top: Math.round(r.top + scrollY), fs });
   }
   const seen = new Map();
@@ -479,6 +473,40 @@ export function collideCore() {
   }
 
   // ------------------------------------------------------------------
+  // 1. Floating control painted over text.
+  //
+  // Judged against the INK, not the box. A floating button covers the
+  // words it sits on; it does not cover the empty space at the end of a
+  // row. On /map the chat button overlapped the blank right-hand end of a
+  // 232px-wide legend row whose words are about 30px wide at the left, and
+  // the reader sees nothing covered — but the box said otherwise.
+  // ------------------------------------------------------------------
+  for (const f of floats) {
+    const fr = f.getBoundingClientRect();
+    for (const item of inkRects) {
+      if (item.el.closest(".chat-fab, .chat-panel, .site-footer, .topbar, svg")) continue;
+      let hit = null;
+      for (const r of item.rects) {
+        const ox = Math.min(fr.right, r.right) - Math.max(fr.left, r.left);
+        const oy = Math.min(fr.bottom, r.bottom) - Math.max(fr.top, r.top);
+        if (ox > 2 && oy > 2) {
+          const area = ox * oy;
+          if (!hit || area > hit.area) hit = { area, ox, oy, r };
+        }
+      }
+      if (!hit) continue;
+      out.fabCollisions.push({
+        float: String(f.className).slice(0, 30),
+        over: item.el.tagName + "." + String(item.el.className || "").slice(0, 28),
+        text: (item.el.textContent || "").trim().slice(0, 40),
+        area: Math.round(hit.area),
+        px: `${Math.round(hit.ox)}×${Math.round(hit.oy)}`,
+      });
+      break;
+    }
+  }
+
+  // ------------------------------------------------------------------
   // 4. Text painted over text.
   // ------------------------------------------------------------------
   const flowInk = inkRects.filter(x => !x.overlay);
@@ -609,18 +637,48 @@ export function collideCore() {
     if (p.length < 3 || p.slice(0, 3).some(n => !Number.isFinite(n))) return null;
     return { rgb: [p[0], p[1], p[2]], alpha: p.length > 3 ? (Number.isFinite(p[3]) ? p[3] : 1) : 1 };
   }
-  /** The flat colour this text is painted on, or null when it is unknowable. */
+  /**
+   * The flat colour this text is painted on, or null when it is unknowable.
+   *
+   * A TRANSLUCENT GROUND IS A LAYER, NOT AN ANSWER. The first version of this
+   * function skipped any background-colour under 95% alpha and kept walking,
+   * so a caption painted on a dark scrim (rgba(12,47,83,0.82)) was measured
+   * against the white page BEHIND the scrim and came back as white-on-white:
+   * an "invisible caption" that is in fact perfectly legible. The scrim is the
+   * ground; the page is only what lies behind the scrim.
+   *
+   * So the layers are collected from the text outward and composited back
+   * down over the first opaque ground found. Where no opaque ground exists,
+   * white is used — the lightest ground there can be, which is the
+   * conservative choice for a dark scrim over a photograph.
+   */
   function groundBehind(el) {
+    const layers = [];
     let node = el;
     while (node && node !== document.documentElement) {
       const cs = getComputedStyle(node);
       // A photograph or gradient: the luminance is not in the DOM.
       if (cs.backgroundImage && cs.backgroundImage !== "none") return null;
       const c = parseColor(cs.backgroundColor);
-      if (c && c.alpha >= 0.95) return c.rgb;
+      if (c) {
+        if (c.alpha >= 0.95) {
+          let ground = c.rgb;
+          for (let i = layers.length - 1; i >= 0; i--) {
+            const l = layers[i];
+            ground = [0, 1, 2].map(k => l.rgb[k] * l.alpha + ground[k] * (1 - l.alpha));
+          }
+          return ground;
+        }
+        if (c.alpha > 0) layers.push(c);
+      }
       node = node.parentElement;
     }
-    return [255, 255, 255];
+    let ground = [255, 255, 255];
+    for (let i = layers.length - 1; i >= 0; i--) {
+      const l = layers[i];
+      ground = [0, 1, 2].map(k => l.rgb[k] * l.alpha + ground[k] * (1 - l.alpha));
+    }
+    return ground;
   }
   for (const item of inkRects) {
     const cs = getComputedStyle(item.el);

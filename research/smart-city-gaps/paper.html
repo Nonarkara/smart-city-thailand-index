@@ -84,6 +84,12 @@ td.r,th.r{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
 .refs{column-count:2;column-gap:7mm;column-rule:none}
 .refs h2{column-span:all;margin-top:3mm}
 .refs p{padding-left:3.2mm;text-indent:-3.2mm;margin:0 0 .9mm;text-align:left;hyphens:manual;word-break:break-word}
+.appx{column-count:2;column-gap:7mm;column-rule:none}
+.appx h2{column-span:all;margin-top:3mm}
+.appx p{font-family:"Source Sans 3","IBM Plex Sans Thai",sans-serif;font-size:var(--micro);line-height:1.38;text-align:justify}
+.appx .dim{color:var(--grey);font-size:.92em}
+.appx td{vertical-align:top}
+.appx td:first-child{hyphens:none}
 .decl{column-count:2;column-gap:7mm;column-rule:none}
 .decl h2{column-span:all}
 .decl p{text-align:left}
@@ -104,7 +110,8 @@ a{color:inherit;text-decoration:none}
 </div>
 <div class="rq"><b>Research question.</b> Is the stalling of smart-city promotion and digital government in Thailand over the years consistent with (H1) a lack of inter-agency coordination, (H2) a lack of robust technology procurement, (H3) a lack of data-driven responsiveness, and (H4) the lack of an end-to-end monitoring-to-push system, such as rain to drainage or haze to shelter?</div>
 
-<section class="abs"><h2>Abstract</h2><div class="absbody"><p>Thailand has promoted smart cities and digital government for a decade, and its international e-government rank has improved, yet the chain that matters, a measurement that becomes a message that moves a person, is still open. We treat four common explanations as hypotheses and ask what national evidence can and cannot say about each. We combine (i) the 118-city SCITI registry across 77 provinces and depa’s funnel from 227 proposals to 37 declared smart cities, (ii) a single-coder hand coding of the 76 headline projects named in 21 endorsed city records, by the link of the monitoring-to-push chain their titles state, (iii) a province-level test of whether designation follows annual haze exposure, and (iv) counts reported by four open early-warning prototypes that we built and self-audited across flood, haze and shelter data.</p><p>Of 20 environment and safety headline projects, 15 stop at sensing (including 3 security-surveillance projects), 2 name an alert or dispatch function, and none names a decision hub. Provinces with a certified city were not detectably more haze-exposed (median PM2.5 21.7 against 25.0 µg/m³; Cliff’s δ = −0.32, 95% CI −0.61 to +0.01; Holm p = 0.11) and published no more open data (median 298 against 299 datasets). In searches of one province, Chiang Mai, 41% of 2,869 resources could not be parsed, 6 of 311 datasets carried a location, none of 177 shelter rows (174 distinct shelters) had a coordinate, and no procurement dataset was found among 311 datasets and 682 catalogue resources.</p><p>The evidence is consistent with H3, weakly consistent with H1 and H4, and cannot test H2, because procurement itself is not observed. It is descriptive: it shows that gaps are present and measurable, not that they cause the stalled programmes, and it contains no outcome series. Four prototype systems built from public data show what could be bypassed (integration, speed, freshness labels) and what could not (authority, asset registers, the person at two in the morning). As an option worth testing, each certified smart city could publish one tested path from sensor to shelter, with a named duty officer.</p><p class="kw"><b>Keywords</b> smart city · digital government · Thailand · early warning · inter-agency coordination · public procurement · open data · monitoring-to-push chain</p></div></section>
+<section class="abs">
+<h2>Abstract</h2><div class="absbody"><p>Thailand has promoted smart cities and digital government for a decade, and its international e-government rank has improved, yet the chain that matters, a measurement that becomes a message that moves a person, is still open. We treat four common explanations as hypotheses and ask what national evidence can and cannot say about each. We combine (i) the 118-city SCITI registry across 77 provinces and depa’s funnel from 227 proposals to 37 declared smart cities, (ii) a single-coder hand coding of the 76 headline projects named in 21 endorsed city records, by the link of the monitoring-to-push chain their titles state, (iii) a province-level test of whether designation follows annual haze exposure, and (iv) counts reported by four open early-warning prototypes that we built and self-audited across flood, haze and shelter data.</p><p>Of 20 environment and safety headline projects, 15 stop at sensing (including 3 security-surveillance projects), 2 name an alert or dispatch function, and none names a decision hub. Provinces with a certified city were not detectably more haze-exposed (median PM2.5 21.7 against 25.0 µg/m³; Cliff’s δ = −0.32, 95% CI −0.61 to +0.01; Holm p = 0.11) and published no more open data (median 298 against 299 datasets). In searches of one province, Chiang Mai, 41% of 2,869 resources could not be parsed, 6 of 311 datasets carried a location, none of 177 shelter rows (174 distinct shelters) had a coordinate, and no procurement dataset was found among 311 datasets and 682 catalogue resources.</p><p>The evidence is consistent with H3, weakly consistent with H1 and H4, and cannot test H2, because procurement itself is not observed. It is descriptive: it shows that gaps are present and measurable, not that they cause the stalled programmes, and it contains no outcome series. Four prototype systems built from public data show what could be bypassed (integration, speed, freshness labels) and what could not (authority, asset registers, the person at two in the morning). As an option worth testing, each certified smart city could publish one tested path from sensor to shelter, with a named duty officer.</p><p class="kw"><b>Keywords</b> smart city · digital government · Thailand · early warning · inter-agency coordination · public procurement · open data · monitoring-to-push chain</p></div></section>
 
 <div class="cols">
 
@@ -1796,6 +1803,67 @@ z
 <p>World Meteorological Organization [WMO]. (2018). <i>Multi-hazard early warning systems: A checklist</i>. https://globalplatform.undrr.org/2022/sites/default/files/2022-02/Multi-hazard%20Early%20Warning%20Systems-%20A%20Checklist.pdf</p>
 </section>
 
+<section class="appx">
+<h2><span class="n">A</span>Appendix</h2>
+<p>Two tables make the coding and the province baselines auditable without asking anyone to trust the prose. Table A1 lists, for each of the 21 endorsed city records, the chain stage that each headline project's title states, in the order the record lists them, whether any project in the environment or safety domain reaches an alert or dispatch function, and whether the record names a partner. Thirteen records name a sensing project and nothing else; three name no chain link at all; three reach a decision function; two reach an alert. All eight records that name a partner are first-batch records, and none of the twelve second-batch records names one, which is the coordination pattern of Section 5.1 stated city by city. Table A2 lists the twenty province indicators used in the province analysis with their publisher, vintage and provincial coverage: seven are pre-2020 and the median vintage is 2022, so the province comparisons of Table 2 rest on data of unequal age. We treat that as a limitation on the comparison rather than as a finding about it.</p>
+
+<div class="tbl">
+<table>
+<caption><b>Table A1.</b> Chain stages of the headline projects named by the 21 endorsed city records, in the order the record lists them. S = sense, D = decide, P = push, — = no chain link stated, ? = programme named without a function. “Hazard → alert” counts the environment and safety projects of that record that name an alert or dispatch function.</caption>
+<thead><tr><th>Endorsed city</th><th class="r" style="width:10%">Batch</th><th style="width:34%">Stages, in order</th><th class="r" style="width:16%">Hazard → alert</th><th class="r" style="width:16%">Names a partner</th></tr></thead>
+<tbody>
+<tr><td>Phuket Smart City</td><td class="r">1</td><td>D — S D — D <span class="dim">(6)</span></td><td class="r">—</td><td class="r">1</td></tr>
+<tr><td>Khon Kaen Smart City</td><td class="r">1</td><td>— P — S — <span class="dim">(5)</span></td><td class="r">1</td><td class="r">1</td></tr>
+<tr><td>CMU Smart City<br><span class="dim">มหาวิทยาลัยเชียงใหม่เมืองอัจฉริยะ</span></td><td class="r">1</td><td>— S — — — <span class="dim">(5)</span></td><td class="r">—</td><td class="r">1</td></tr>
+<tr><td>Yala Smart City<br><span class="dim">ยะลาเมืองอัจฉริยะ</span></td><td class="r">1</td><td>— S — — <span class="dim">(4)</span></td><td class="r">—</td><td class="r">1</td></tr>
+<tr><td>Makkasan Smart City<br><span class="dim">เมืองอัจฉริยะมักกะสัน</span></td><td class="r">1</td><td>— — — — — <span class="dim">(5)</span></td><td class="r">—</td><td class="r">1</td></tr>
+<tr><td>Phra Ram 4 Smart City<br><span class="dim">เมืองอัจฉริยะย่านพระราม ๔</span></td><td class="r">1</td><td>— — — — <span class="dim">(4)</span></td><td class="r">—</td><td class="r">1</td></tr>
+<tr><td>Saensuk Smart City<br><span class="dim">แสนสุขสมาร์ตซิตี้</span></td><td class="r">1</td><td>— S S S <span class="dim">(4)</span></td><td class="r">—</td><td class="r">1</td></tr>
+<tr><td>Wangchan Valley Smart City<br><span class="dim">วังจันทร์วัลเลย์สมาร์ทซิตี้</span></td><td class="r">1</td><td>S — D — <span class="dim">(4)</span></td><td class="r">—</td><td class="r">1</td></tr>
+<tr><td>Sri Trang City<br><span class="dim">ศรีตรังซิตี้</span></td><td class="r">1</td><td>— S — <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Rayong Smart City</td><td class="r">2</td><td>— S — <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Smart City Chiang Rai</td><td class="r">2</td><td>— — S <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Nan Smart City</td><td class="r">2</td><td>S — — <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Korat Smart City</td><td class="r">2</td><td>— S — <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Smart City Ubon Ratchathani</td><td class="r">2</td><td>— S — <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Krabi Smart City</td><td class="r">2</td><td>S — — <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Phang Nga Smart City</td><td class="r">2</td><td>S D ? <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Satun Smart City</td><td class="r">2</td><td>— — S <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Koh Samui Smart City</td><td class="r">2</td><td>— — S <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Hat Yai Smart City</td><td class="r">2</td><td>P — — <span class="dim">(3)</span></td><td class="r">1</td><td class="r">0</td></tr>
+<tr><td>Pattani Smart City</td><td class="r">2</td><td>— — — <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+<tr><td>Narathiwat Smart City</td><td class="r">2</td><td>S — — <span class="dim">(3)</span></td><td class="r">—</td><td class="r">0</td></tr>
+</tbody></table>
+</div>
+
+<div class="tbl">
+<table>
+<caption><b>Table A2.</b> The twenty province indicators used in the province analysis: publisher, vintage and provincial coverage.</caption>
+<thead><tr><th>Indicator</th><th class="r" style="width:16%">Publisher</th><th class="r" style="width:12%">Year</th><th class="r" style="width:14%">Provinces</th></tr></thead>
+<tbody>
+<tr><td>Households with access to clean drinking water (%)</td><td class="r">NSO</td><td class="r">2010</td><td class="r">76</td></tr>
+<tr><td>Households with a hygienic toilet (%)</td><td class="r">NSO</td><td class="r">2010</td><td class="r">76</td></tr>
+<tr><td>Households that own their dwelling (%)</td><td class="r">NSO</td><td class="r">2010</td><td class="r">76</td></tr>
+<tr><td>Households in non-durable housing material (%)</td><td class="r">NSO</td><td class="r">2010</td><td class="r">76</td></tr>
+<tr><td>Population who moved within the province in 5 years (%)</td><td class="r">NSO</td><td class="r">2010</td><td class="r">76</td></tr>
+<tr><td>Population not living in their province of birth (%)</td><td class="r">NSO</td><td class="r">2010</td><td class="r">76</td></tr>
+<tr><td>Residential building permits granted (permits)</td><td class="r">NSO</td><td class="r">2019</td><td class="r">77</td></tr>
+<tr><td>Total labour force (employed + unemployed) (thousand people)</td><td class="r">NSO</td><td class="r">2026</td><td class="r">77</td></tr>
+<tr><td>Informal-sector labour force (thousand people)</td><td class="r">NSO</td><td class="r">2025</td><td class="r">77</td></tr>
+<tr><td>Province population (ICT survey base) (thousand people)</td><td class="r">NSO</td><td class="r">2022</td><td class="r">77</td></tr>
+<tr><td>Population using the internet (thousand people)</td><td class="r">NSO</td><td class="r">2023</td><td class="r">77</td></tr>
+<tr><td>Population using mobile phones (thousand people)</td><td class="r">NSO</td><td class="r">2022</td><td class="r">77</td></tr>
+<tr><td>Forest area as a share of province area (%)</td><td class="r">RFD</td><td class="r">2021</td><td class="r">77</td></tr>
+<tr><td>Annual PM2.5 concentration (µg/m³)</td><td class="r">PCD</td><td class="r">2024</td><td class="r">65</td></tr>
+<tr><td>Road deaths recorded in the province (deaths)</td><td class="r">RTDDI</td><td class="r">2025</td><td class="r">77</td></tr>
+<tr><td>Motorcycle share of road deaths (%)</td><td class="r">RTDDI</td><td class="r">2025</td><td class="r">77</td></tr>
+<tr><td>Electricity consumed per person (kWh per person per year)</td><td class="r">MOE</td><td class="r">2023</td><td class="r">77</td></tr>
+<tr><td>Share of electricity going to homes (%)</td><td class="r">MOE</td><td class="r">2023</td><td class="r">77</td></tr>
+<tr><td>Open datasets published by the province (datasets)</td><td class="r">DGA</td><td class="r">2026</td><td class="r">77</td></tr>
+<tr><td>Published open data offered as a data table (%)</td><td class="r">DGA</td><td class="r">2026</td><td class="r">77</td></tr>
+</tbody></table>
+</div>
+</section>
 
 </body>
 </html>
