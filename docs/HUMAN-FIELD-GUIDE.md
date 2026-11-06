@@ -36,6 +36,22 @@ Next editorial increment: establish a small contributor policy before adding pub
 
 The first pass should show the finding, image and a few facts. The second should reveal full source records, definitions and methods. Keep both printable. Compress repeated labels, empty insets and forced line breaks; never shrink body text or stretch prose to a full desktop width to make a page look shorter.
 
+### 6. Ask whether the ink can be READ
+
+An arranged page can still be unreadable. Text painted on a known flat ground must clear WCAG AA — 4.5:1, or 3:1 for large type. Text over a photograph is exempt, because the DOM does not carry a photograph's luminance; the scrims carry those surfaces.
+
+This is a token question before it is a copy question. `--4` is the structural hairline — a rule, not an ink — and it is 1.53:1 on white. The bright Wada ambers are graphic colours: #f99d1b is 2.13:1 on white, #f59e0b is 2.15:1. Both have a deepened sibling that clears the floor (`--gold-ink` #9a5d0a at 5.32:1, the seven `--pillar-*-text` tokens). When a fill has to carry words, it steps down; the bright hue stays where it is a bar, a dot, a block.
+
+### 7. Every scroll has to earn itself
+
+Every scroll claims the reader's interest. Scrolling a lot through mostly empty space makes them uninterested in the system, so: compact the page, and make the scroll lead to more interesting details rather than to more of the same.
+
+Measure page cost in SCREENS, not in paragraphs, and cap it — a ceiling only ever goes down. The waste is usually not the words; it is padding around them, and the same content rendered twice. A comparison table that repeats the card list below it is not information, it is a second copy. A hairline under a heading is structure; a centimetre of nothing above a ruled row is nothing.
+
+### 8. Never put a number in prose a reader can check against a list
+
+A spelled-out count is a claim the page has to keep. "Six mechanisms" above a list of nine is a lie the reader can catch in one glance. Prefer the verifiable statement — the range, the derived figure, the figure that comes from the data — over the number that has to be maintained by hand.
+
 ## Implemented in this pass
 
 - Badge row instead of badge tower; highest/lowest facts instead of a long score sentence.
@@ -437,3 +453,129 @@ body weight; only outline levels get scale."*
 - Every CSS edit went through a brace-matched, asserted script that
   verifies the selector resolves to exactly one rule and that braces
   balance before and after.
+
+## The fourth pass — a page you can read, and a page you can finish
+
+The third pass asked whether a page was *arranged* well. It never asked
+whether the words on it could be *read*. They could not.
+
+### The reading gate
+
+The massacre sweep gained a sixth rule: text painted on a known flat ground
+must clear WCAG AA (4.5:1, 3:1 for large type). Text over a photograph stays
+exempt — the DOM does not carry a photograph's luminance, and the scrims
+carry those surfaces.
+
+Across 22 routes × 2 locales × 2 widths it answered **791** times "no", and
+the answers fell into two families. Both were real; neither was a styling
+accident.
+
+| | the mistake | the discipline that already existed |
+| --- | --- | --- |
+| 388 of them | `--4` (#c5d3df), the structural hairline, used as type — **1.53:1** on white, in `.news-date`, on every route | a hairline is a rule; words take `--3` (5.8:1) or `--2` (8.2:1) |
+| the rest | the bright Wada ambers as type — #f99d1b **2.13:1**, #f59e0b **2.15:1** | `--gold-ink` (#9a5d0a, 5.32:1) and the seven `--pillar-*-text` tokens exist *because* the bright hues cannot carry words |
+
+Neither needed a new palette. Both needed the existing discipline applied
+where it had been missing: `--pillar-*-text` for the pillar names, the
+deepened Wada hues for the tag grounds and the bingo cell colours, `--3` for
+the micro labels.
+
+Three more real defects were hiding behind the first:
+
+- `.export-doc-link` was authored for the homepage's dark open-data band,
+  where it is right, and shipped onto `/methodology` and `/invest` unchanged:
+  **white text on a white page** — an invisible link.
+- Thai headings overflowed their own boxes by **1.5–3.1px**, because the
+  script stacks its tone marks above the em box and the line-height was 1.3.
+  A line-height is *leading*, not a fourth text size: the type law holds.
+- The partner cards set a sentence in the partner's accent colour. The
+  accent is the card's identity and stays a **graphic** — the 3px rule along
+  the top edge — and one of the nine (#C45C1A) sat at 4.03:1. The sentence
+  takes ink.
+
+### The instrument was wrong four times, and that mattered more than the count
+
+A rule that cries wolf is worse than no rule. Four of the sweep's rules were
+measuring the wrong thing, and each correction now has a planted case that
+fails without it.
+
+| the rule | what it measured | the truth |
+| --- | --- | --- |
+| the ground behind a text | the first opaque colour it found | **a translucent ground is a layer, not an answer** — a caption on a dark scrim (rgba(12,47,83,.82)) was measured against the *white page behind the scrim* and reported as white-on-white |
+| a floating control over text | the element's box | **the ink it covers** — the chat button overlapped the blank right-hand end of a 232px legend row whose words are 30px wide at the left; the reader sees nothing covered |
+| a label outside its box | the nearest ancestor with a border | **`display:contents` generates no box** — its children are laid out as if it were not there, so its rect is a zero rect at the origin of the page, and a city dossier's investment note was reported as 1051px to the right of its own band |
+| duplicate display text | the vertical offset | **the separation in both axes, within one display line** — seven grade letters in a three-column grid are 62–99px apart *across the row*, not on top of one another; and two matching emoji on a bingo board, where matching tiles are the entire point of the game, are two records that carry the same value |
+
+And one more, in the same family: **a numeral inside a panel the reader has
+not opened is not on the screen.** Both "4"s on `/showcase` live in closed
+tab panels — their rectangles are zero, but their text is still in the DOM.
+
+`scripts/audit/falsify-collide.mjs` now plants **28** cases instead of 15.
+A strong dark scrim must stay quiet; a pale and a weak scrim must be
+caught; a button over a word must be caught and a button over the blank end
+of a row must not; two identical numbers in a row must be caught and the
+same two numbers on separate records must not; and the same two numbers one
+display line apart must not either, while ten pixels apart must. **28/28
+pass.**
+
+### Every scroll has to earn itself
+
+Page cost is measured in **screens at 390**, and a ceiling only ever goes
+down. Two pages had real waste, and the waste was never the words:
+
+| page | before | after | what was actually removed |
+| --- | --- | --- | --- |
+| `/baseline` | 21.7 screens | **16.9** | the filter block, the score line, and the city rows' own padding |
+| `/invest` | 22.5 screens | **20.8** | 400px of padding around ten checklist rules, 360px around nine mechanism cards, and 985px of comparison table that duplicated the eight city cards below it |
+
+The city lens was the clearest case: the same eight cities appeared twice, as
+a six-column table and as eight expandable cards. On a desktop both fit and
+the table earns its keep. On a phone the table is a sideways-scrolling
+duplicate, so below 720px it is not rendered — and the one field the cards
+did not carry, the province, rides on the card itself, shown only when the
+city's name does not already identify it.
+
+The rest of the site was measured and found **dense rather than padded**:
+the waste instrument found 100–300px per page, not thousands. Cutting
+further would have meant editing copy, which is an editorial decision and
+not a layout one.
+
+### Every number a reader can check, now checks out
+
+Sixteen pages carry a spelled-out count. Each was checked against the DOM it
+sits above. Fifteen were right. Two were not, and both were the kind of
+claim the reader can catch:
+
+- **"Four batches, eight years"** sat above four batch cards reading 2019,
+  2021, 2023 and 2025. The reader can count that list, and six years is not
+  eight. The heading now states the range the cards show.
+- **"Over eight years of the programme"** on `/story` named a span the site
+  states nowhere else. The programme's life is now named without a number
+  the reader cannot check.
+
+And one from the earlier pass had already been taught the same way: the
+financial-mechanisms heading said "Six proven mechanisms" above a list of
+**nine**. The count was removed rather than restated, because a number that
+has to be maintained by hand will be wrong eventually.
+
+### The build was broken on the branch
+
+Commit `2c4c200` wired the topbar to `./CityPicker` and added its CSS, but
+the component and its test were never added to the repository. **HEAD did
+not build from a clean checkout** — `tsc -b` could not find the module, and
+CI would have failed at the type-check step. The component was good work, so
+it was landed rather than reverted.
+
+## Acceptance for the fourth pass
+
+- The sweep answers **0 findings** across 22 routes × 2 locales × 2 widths,
+  with 0 routes unmeasured, and exits 0.
+- The falsification harness passes **28/28**, including a planted case for
+  every instrument correction in this pass.
+- Legibility: every text on a known flat ground clears WCAG AA; text over a
+  photograph is exempt and says so.
+- Page cost: `/invest` 20.8 screens and `/baseline` 16.9 screens at 390,
+  with the ceilings lowered to those heights and the gate green.
+- Every spelled-out count in the prose matches the list it sits above.
+- **431 tests** pass, the build is clean, and the site is deployed and
+  verified at `https://sciti.nonarkara.org/`.

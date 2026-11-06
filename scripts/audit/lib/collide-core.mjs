@@ -94,10 +94,17 @@ export function collideCore() {
     // matching tiles are the entire point of the game) were called a
     // duplicate display.
     //
-    // Two identical display strings are a defect when they sit within two
-    // display lines of each other: that is when a reader reads them as the
+    // Two identical display strings are a duplicate when they sit within ONE
+    // display line of each other: that is when a reader reads them as the
     // same label stamped twice, rather than as two separate records that
     // happen to carry the same value.
+    //
+    // The threshold is the display size itself, not a multiple of it. At two
+    // lines the rule caught seven pillar-grade letters in a three-column
+    // mixer grid — 62px apart in the tightest locale, one letter-width
+    // apart — and called them duplicates of one another. They are seven
+    // different pillars' grades; a reader reads them as a column of values,
+    // not as one value printed seven times.
     let nearest = Infinity;
     for (let i = 0; i < v.length; i++) {
       for (let j = i + 1; j < v.length; j++) {
@@ -107,7 +114,7 @@ export function collideCore() {
         nearest = Math.min(nearest, Math.max(dx, dy));
       }
     }
-    const limit = Math.max(...v.map(x => x.fs)) * 2;
+    const limit = Math.max(...v.map(x => x.fs));
     out.dupDisplay.push({ v, nearest, limit, coVisible: nearest < limit });
   }
 

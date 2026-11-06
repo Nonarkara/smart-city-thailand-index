@@ -223,6 +223,21 @@ const FIXTURES = {
       </div>
     </div>
   `),
+  /*
+   * The boundary: ONE display line apart. Two 32px numbers with a 40px gap
+   * are two stacked values that happen to match — a reader reads them as
+   * two lines of a list, not as one number stamped twice. The threshold is
+   * the display size itself, so 40px is quiet and 10px is not.
+   */
+  "/fixture-duplicate-one-line": page(`
+    <div class="stage">
+      <h1>One line apart</h1>
+      <div style="display:flex;flex-direction:column;gap:40px">
+        <span style="font:700 32px system-ui,sans-serif">4.2</span>
+        <span style="font:700 32px system-ui,sans-serif">4.2</span>
+      </div>
+    </div>
+  `),
 };
 
 /* ------------------------------------------------------------------ */
@@ -373,6 +388,10 @@ try {
   const dupSeparate = await measure("/fixture-duplicate-separate");
   check("the same number on two separate records stays quiet", () => {
     assert.ok(dupSeparate.dupDisplay.every(d => !d.coVisible), `the rule compared vertical offsets only: ${JSON.stringify(dupSeparate.dupDisplay.slice(0, 2))}`);
+  });
+  const dupOneLine = await measure("/fixture-duplicate-one-line");
+  check("the same number one display line apart stays quiet", () => {
+    assert.ok(dupOneLine.dupDisplay.every(d => !d.coVisible), `the threshold is wider than one display line: ${JSON.stringify(dupOneLine.dupDisplay.slice(0, 2))}`);
   });
 
   // 11. The GATE's exit code, not just the core's verdict.
