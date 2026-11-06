@@ -279,9 +279,9 @@ export default function StoryPage({ locale, onNavigate }: Props) {
             <h3 style={{ fontSize: "var(--text-body)" }}>{translate(locale, { en: "1 · Go there", th: "1 · ไปให้ถึงพื้นที่", zh: "1 · 亲自到场" })}</h3>
             <p style={{ fontSize: "var(--text-body)" }}>
               {translate(locale, {
-                en: "Thailand has roughly 7,000 local administrative organisations. Over eight years of the programme, about half have been visited in person — by train, by bus, staying a week, eating and living in the community. Pain points do not survive a questionnaire; they surface on the fourth day.",
-                th: "ไทยมีองค์กรปกครองส่วนท้องถิ่นราว 7,000 แห่ง ตลอดแปดปีของโครงการ ได้ลงพื้นที่จริงไปแล้วราวครึ่งหนึ่ง ทั้งโดยรถไฟ รถโดยสาร พักค้างเป็นสัปดาห์ กินและใช้ชีวิตอยู่กับชุมชน ปัญหาที่แท้จริงไม่ปรากฏในแบบสอบถาม แต่โผล่ขึ้นมาในวันที่สี่",
-                zh: "泰国约有7,000个地方行政组织。在项目的八年间，其中约一半已被实地走访——搭火车、坐巴士，一住就是一周，与社区同吃同住。真正的痛点在问卷里活不下来，它们出现在第四天。",
+                en: "Thailand has roughly 7,000 local administrative organisations. Over the life of the programme, about half have been visited in person — by train, by bus, staying a week, eating and living in the community. Pain points do not survive a questionnaire; they surface on the fourth day.",
+                th: "ไทยมีองค์กรปกครองส่วนท้องถิ่นราว 7,000 แห่ง ตลอดช่วงที่โครงการดำเนินมา ได้ลงพื้นที่จริงไปแล้วราวครึ่งหนึ่ง ทั้งโดยรถไฟ รถโดยสาร พักค้างเป็นสัปดาห์ กินและใช้ชีวิตอยู่กับชุมชน ปัญหาที่แท้จริงไม่ปรากฏในแบบสอบถาม แต่โผล่ขึ้นมาในวันที่สี่",
+                zh: "泰国约有7,000个地方行政组织。在项目推进期间，其中约一半已被实地走访——搭火车、坐巴士，一住就是一周，与社区同吃同住。真正的痛点在问卷里活不下来，它们出现在第四天。",
               })}
             </p>
           </div>

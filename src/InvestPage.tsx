@@ -132,7 +132,7 @@ const insightCards: InsightCard[] = [
       en: "Use the pillar breakdown to shortlist questions for a site visit. This tier does not establish infrastructure adequacy, project viability, or expected returns. Verify operating services and local coverage separately.",
       th: "ใช้คะแนนรายด้านเตรียมคำถามสำหรับลงพื้นที่ ระดับนี้ไม่ได้ยืนยันความเพียงพอของโครงสร้างพื้นฐาน ความเป็นไปได้ของโครงการ หรือผลตอบแทน ต้องตรวจสอบบริการที่เปิดใช้งานและพื้นที่ให้บริการแยกกัน",
       zh: "用支柱评分准备实地考察问题。该层级不证明基础设施充足、项目可行或预期回报；须另行核实服务运营及覆盖范围。" } },
-{ tier: "Beta", tierColor: "var(--gold)", headline: {
+{ tier: "Beta", tierColor: "var(--gold-ink)", headline: {
       en: "45–64.9 · Investigate the trade-offs",
       th: "45–64.9 · ตรวจสอบข้อแลกเปลี่ยน",
       zh: "45–64.9 · 调查取舍" }, body: {

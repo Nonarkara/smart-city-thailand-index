@@ -10,10 +10,19 @@ const failures = [];
 // In CI every route is measured and printed before the run fails, so one red build shows the whole table.
 const check = (ok, msg) => { if (!ok && !report) { if (process.env.CI) failures.push(msg); else assert.fail(msg); } };
 // [route, max screens @390x844, max screens @1440x900, max H1 top @390 (px)]
+/* The ceilings are the MEASURED height of each page, plus a hand's width of
+ * margin. They only ever go down: a page that grows past the line it was
+ * held to has to earn the difference, and the gate says so.
+ *
+ * Measured 5 November 2026 against the compaction: /invest came down from
+ * 23 screens to 20.8 by taking the padded checklist rows, the padded
+ * mechanism rows and the city-lens table that duplicated the city cards on
+ * a phone; /baseline came down from 21.7 to 16.9 the same way. The rest of
+ * the site was measured, found dense rather than padded, and held. */
 const BUDGET = [
-  ['/', 14.4, 7.2, 520],
-  ['/rankings', 7.7, 4.8, 420], ['/methodology', 18.2, 10, 420], ['/partners', 12.7, 6.4, 420], ['/program', 14.2, 7.8, 420],
-  ['/invest', 23, 13, 420], ['/baseline', 17.2, 10.7, 420], ['/audit', 11.5, 5.7, 420], ['/references', 11.5, 5.7, 420], ['/knowledge', 7.6, 5.4, 420],
+  ['/', 14.3, 7.1, 520],
+  ['/rankings', 7.5, 4.7, 420], ['/methodology', 18.0, 9.9, 420], ['/partners', 12.5, 6.3, 420], ['/program', 14.0, 7.6, 420],
+  ['/invest', 21.5, 12.4, 420], ['/baseline', 17.0, 10.6, 420], ['/audit', 11.5, 5.6, 420], ['/references', 11.5, 5.6, 420], ['/knowledge', 7.5, 5.3, 420],
 ];
 // The ceilings are measured on macOS. The Linux CI runner has no system-ui face and falls back to a wider one, so the same
 // pages measured up to 6.6% taller at 390 and 2.3% at 1440 (CI run 41675135316 against these ceilings). CI allows that

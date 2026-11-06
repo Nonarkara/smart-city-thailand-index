@@ -616,7 +616,7 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       {/* ─── BATCH TIMELINE + KEY STATS ─── */}
       <section ref={batchRef} className={`section reveal stagger-4 ${batchVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, { en: "Timeline", th: "ไทม์ไลน์", zh: "时间线" })}</p>
-        <h2>{translate(locale, { en: "Four batches, eight years", th: "สี่รุ่น แปดปี", zh: "四批次，八年" })}</h2>
+        <h2>{translate(locale, { en: "Four batches, 2019–2025", th: "สี่รุ่น 2019–2025", zh: "四批次，2019–2025" })}</h2>
         <div className="program-batch-grid">
           {BATCHES.map(b => (
             <div key={b.batch} className="program-batch-card shadow-premium">
