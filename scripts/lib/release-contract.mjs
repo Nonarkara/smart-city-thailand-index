@@ -45,6 +45,11 @@ export const RENDERED_RELEASE_GATES = [
   'node scripts/audit/page-budget.mjs --serve', 'node scripts/audit/demo-journey.mjs --serve',
   'node scripts/audit/map-journey.mjs --serve',
   'node scripts/audit/quick-metric-geometry.mjs --serve',
+  // The massacre instrument's own guard: it plants a defect for every rule
+  // the sweep holds and fails if the sweep stays quiet on any of them.
+  // Without this step a sweep that has stopped discriminating would look
+  // exactly like a clean release.
+  'node scripts/audit/falsify-collide.mjs',
 ];
 export function checkRenderedValidationRun(run, expectedHead) {
   checkValidationRun(run, expectedHead);

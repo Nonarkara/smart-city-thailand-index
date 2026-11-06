@@ -144,6 +144,15 @@ bold "Preflight — sourced crayon companion geometry"
 node scripts/audit/plub-density.mjs --serve >"$LOG_DIR/cdpt-plub.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-plub.log"; die "companion art, source note or spatial regression failed"; }
 ok "raster art, source note, keyboard disclosure and old-panel mutation passed"
 
+bold "Preflight — the massacre instrument still fires"
+# An instrument that never fires is not an instrument. The sweep is what
+# catches a label painted over another label, a caption that cannot be read,
+# and a figure that has left its box; this harness plants those defects one
+# by one and fails if the sweep stays quiet on any of them. It is the only
+# gate that can tell whether the other gates would have caught anything.
+node scripts/audit/falsify-collide.mjs >"$LOG_DIR/cdpt-falsify.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-falsify.log"; die "the massacre sweep no longer discriminates: a planted defect went uncaught"; }
+ok "every planted defect caught; the clean build quiet"
+
 fi
 
 # ── C — commit ───────────────────────────────────────────────────────────────
