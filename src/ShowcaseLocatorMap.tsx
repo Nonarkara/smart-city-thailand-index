@@ -49,7 +49,10 @@ export default function ShowcaseLocatorMap({ locale }: { locale: Locale }) {
       attributionControl: true,
       worldCopyJump: false,
     });
-    L.tileLayer(BASEMAP_URL, BASEMAP_OPTIONS).addTo(map);
+    const tiles = L.tileLayer(BASEMAP_URL, BASEMAP_OPTIONS).addTo(map);
+    // Basemap tiles are decoration — the map container carries the accessible
+    // name. Mark each tile explicitly so no <img> ships without an alt.
+    tiles.on("tileload", (e: { tile: HTMLElement }) => { e.tile.setAttribute("alt", ""); });
 
     L.circleMarker(NST, {
       radius: 7,

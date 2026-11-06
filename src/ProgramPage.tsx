@@ -265,14 +265,80 @@ const BATCHES = [
 ];
 
 const PHOTOS_WORKSHOP = [
-  "/photos/IMG_7504.JPG", "/photos/IMG_6654.JPG", "/photos/IMG_6692.JPG",
-  "/photos/IMG_1382.JPG", "/photos/IMG_1447.JPG",
+  {
+    src: "/photos/IMG_7504.JPG",
+    alt: {
+      en: "Panel discussion at the ASEAN Startup Hackathon — Let's Re-imagine Our Cities Together, 2019",
+      th: "เวทีสนทนาที่ ASEAN Startup Hackathon — Let's Re-imagine Our Cities Together, 2019",
+      zh: "2019年东盟创业黑客松 panel 讨论——Let's Re-imagine Our Cities Together",
+    },
+  },
+  {
+    src: "/photos/IMG_6654.JPG",
+    alt: {
+      en: "Thailand–Korea videoconference on smart city cooperation, officials on screen",
+      th: "การประชุมทางไกลไทย–เกาหลีว่าด้วยความร่วมมือเมืองอัจฉริยะ เจ้าหน้าที่ปรากฏบนหน้าจอ",
+      zh: "泰韩智慧城市合作视频会议，官员出现在屏幕上",
+    },
+  },
+  {
+    src: "/photos/IMG_6692.JPG",
+    alt: {
+      en: "Group photograph at the depa office entrance",
+      th: "ภาพหมู่หน้าสำนักงาน depa",
+      zh: "depa 办公室入口的合影",
+    },
+  },
+  {
+    src: "/photos/IMG_1382.JPG",
+    alt: {
+      en: "Delegates in conference lanyards talking on a lounge sofa set",
+      th: "ผู้แทนที่สวยคอรายการประชุมสนทนากันบนชุดโซฟา",
+      zh: "佩戴会议证件的代表们在沙发上交谈",
+    },
+  },
+  {
+    src: "/photos/IMG_1447.JPG",
+    alt: {
+      en: "Volunteers in white shirts and red masks at an outdoor community event",
+      th: "อาสาสมัครใส่เสื้อขาวและหน้ากากแดงในกิจกรรมชุมชนกลางแจ้ง",
+      zh: "户外社区活动中的志愿者，身穿白衣、佩戴红色口罩",
+    },
+  },
 ];
 const PHOTOS_INTL = [
-  "/Photos international/20260317092525-_DON6841.jpg",
-  "/Photos international/20260317093438-_DON6939.jpg",
-  "/Photos international/Z03A9727-opq3949327416.jpg",
-  "/Photos international/JSCF2025-2495.jpg",
+  {
+    src: "/Photos international/20260317092525-_DON6841.jpg",
+    alt: {
+      en: "Panellists at the 2026 Smart City Summit and Expo, Taipei Nangang Exhibition Centre",
+      th: "ผู้แทนวงสนทนาที่ Smart City Summit and Expo 2026 ศูนย์แสดงสินค้าไทเปหนานกัง",
+      zh: "2026年智慧城市峰会暨展览的与会嘉宾，台北南港展览中心",
+    },
+  },
+  {
+    src: "/Photos international/20260317093438-_DON6939.jpg",
+    alt: {
+      en: "Dr Non Arkaraprasertkul speaking at the 2026 Smart City Summit and Expo, Taipei",
+      th: "ดร.นน อัครประเสริฐกุล กล่าวสุนทรพจน์ที่ Smart City Summit and Expo 2026 ไทเป",
+      zh: "Non Arkaraprasertkul 博士在2026年台北智慧城市峰会上发言",
+    },
+  },
+  {
+    src: "/Photos international/Z03A9727-opq3949327416.jpg",
+    alt: {
+      en: "Dr Non Arkaraprasertkul presenting at Tomorrow City, Shanghai",
+      th: "ดร.นน อัครประเสริฐกุล นำเสนอที่ Tomorrow City เซี่ยงไฮ้",
+      zh: "Non Arkaraprasertkul 博士在上海 Tomorrow City 演讲",
+    },
+  },
+  {
+    src: "/Photos international/JSCF2025-2495.jpg",
+    alt: {
+      en: "Dr Non Arkaraprasertkul presenting on stage at the Johor Smart City Forum 2025",
+      th: "ดร.นน อัครประเสริฐกุล นำเสนอบนเวที Johor Smart City Forum 2025",
+      zh: "Non Arkaraprasertkul 博士在2025年柔佛智慧城市论坛舞台上演讲",
+    },
+  },
 ];
 
 export default function ProgramPage({ locale, onNavigate }: Props) {
@@ -374,8 +440,8 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       {/* ─── PHOTO STRIP: Workshops ─── */}
       <div className="photo-strip">
         {PHOTOS_WORKSHOP.map(p => (
-          <div key={p} className="photo-strip-item" style={{ width: "220px", height: "140px" }}>
-            <img src={assetUrl(p)} alt="" loading="lazy" />
+          <div key={p.src} className="photo-strip-item" style={{ width: "220px", height: "140px" }}>
+            <img src={assetUrl(p.src)} alt={translate(locale, p.alt)} loading="lazy" />
           </div>
         ))}
       </div>
@@ -421,8 +487,8 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
       {/* ─── PHOTO STRIP: International ─── */}
       <div className="photo-strip">
         {PHOTOS_INTL.map(p => (
-          <div key={p} className="photo-strip-item" style={{ width: "280px", height: "170px" }}>
-            <img src={assetUrl(p)} alt="" loading="lazy" />
+          <div key={p.src} className="photo-strip-item" style={{ width: "280px", height: "170px" }}>
+            <img src={assetUrl(p.src)} alt={translate(locale, p.alt)} loading="lazy" />
           </div>
         ))}
       </div>

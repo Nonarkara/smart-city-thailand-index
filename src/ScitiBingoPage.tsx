@@ -394,7 +394,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
         ):(
           <span className="bingo-call-bar-empty">{t({en:"↓ Pick a dimension below to start",th:"↓ เลือกมิติด้านล่างเพื่อเริ่ม",zh:"↓ 在下方选择维度开始"})}</span>
         )}
-      <details className="bingo-mascot-brief"><summary><img src="/nong-plub/nong-plub-avatar-crayon.webp" width={24} height={24} alt=""/>{t({en:"One minute",th:"หนึ่งนาที",zh:"一分钟"})}</summary><PageMascot kind="bingo" locale={locale} embedded /></details>
+      <details className="bingo-mascot-brief"><summary><img src="/nong-plub/nong-plub-avatar-crayon.webp" width={24} height={24} alt={t({en:"Nong Plub, illustrated guide",th:"น้องพลับ ผู้แนะนำเมืองในภาพประกอบ",zh:"插画向导小普"})}/>{t({en:"One minute",th:"หนึ่งนาที",zh:"一分钟"})}</summary><PageMascot kind="bingo" locale={locale} embedded /></details>
       </div>
 
       {/* ── BOARD AREA (mobile row 3 / desktop left column) ── */}
