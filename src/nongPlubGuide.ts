@@ -33,4 +33,5 @@ export const GUIDE: Record<string, GuideFigure> = {
   point: { src: "/nong-plub/guide/nong-plub-point.webp", w: 227 },
   seat: { src: "/nong-plub/guide/nong-plub-seat.webp", w: 197 },
   plain: { src: "/nong-plub/guide/nong-plub-plain.webp", w: 227 },
+  invest: { src: "/nong-plub/guide/nong-plub-invest.webp", w: 179 },
 };

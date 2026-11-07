@@ -261,6 +261,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 .endpoint-link:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 img { display: block; max-width: 100%; }
 ul, ol { list-style: none; }
+details:not([open]) > :not(summary) { display: none !important; }
 
 /* Layout */
 /* The gutter lives INSIDE the column (padding, not a narrowed width) so a bare
@@ -2478,9 +2479,10 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .showcase-place { margin-bottom: 1.5rem; }
 .showcase-place-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1px; background: var(--5); border: 1px solid var(--5); }
 .showcase-place-map, .showcase-place-facts { background: var(--surface); }
+.showcase-place-map { overflow: hidden; }
 .showcase-place-facts { padding: 1.1rem 1.2rem; }
-.showcase-locator { position: relative; height: 100%; min-height: 320px; }
-.showcase-locator-canvas { position: absolute; inset: 0; }
+.showcase-locator { position: relative; height: 100%; min-height: 320px; overflow: hidden; }
+.showcase-locator-canvas { position: absolute; inset: 0; overflow: hidden; }
 .showcase-locator-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 400 var(--text-micro) var(--mono); color: var(--3); }
 .showcase-facts { margin: .5rem 0 0; }
 .showcase-fact-row { display: grid; grid-template-columns: 8.5rem 1fr; gap: .75rem; padding: .5rem 0; border-bottom: 1px solid var(--5); }
@@ -9569,6 +9571,27 @@ h2, h3, .home-section-title { font-family: var(--font); }
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+@media (max-width: 640px) {
+  .compare-basket {
+    margin: 0.75rem 0 1rem;
+    padding: 0.6rem 0.75rem;
+  }
+  .compare-subtitle {
+    margin-bottom: 0.6rem;
+  }
+  .compare-basket-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+  }
+  .compare-chip, .compare-chip-add {
+    flex: 0 0 auto;
+  }
+}
 .compare-chip {
   display: inline-flex;
   align-items: center;
@@ -10204,6 +10227,7 @@ body:has(.bingo-page) { overflow: hidden; }
   background: transparent;
   font: inherit;
   color: inherit;
+  overflow: hidden;
 }
 .bingo-cell:disabled { cursor: default; opacity: 1; }
 .bingo-cell-waiting .bingo-card-front { opacity: .68; }
@@ -10222,6 +10246,7 @@ body:has(.bingo-page) { overflow: hidden; }
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transition: transform .45s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
 }
 .bingo-card-front {
   background: var(--surface);
@@ -10270,7 +10295,17 @@ body:has(.bingo-page) { overflow: hidden; }
 
 /* Cell back */
 .bingo-logo-img   { width: 60%; height: 60%; object-fit: contain; display: block; }
-.bingo-back-label { color: #fff; font: 800 clamp(.7rem, 1.8vw, .72rem)/1 var(--mono); letter-spacing: .06em; margin-top: .15rem; text-transform: uppercase; }
+.bingo-back-label {
+  color: #fff;
+  font: 800 clamp(.7rem, 1.8vw, .72rem)/1 var(--mono);
+  letter-spacing: .06em;
+  margin-top: .15rem;
+  text-transform: uppercase;
+  max-width: 95%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* Per-grid-size mobile overrides — denser grids get smaller text so all
    three layers (number, emoji, label) fit without overflow. */
@@ -10578,8 +10613,11 @@ body:has(.bingo-page) { overflow: hidden; }
 }
 
 @media (max-width: 640px) {
+  .rankings-hero {
+    padding-top: 1.5rem;
+  }
   .knowledge-page .rankings-hero {
-    padding-top: 2rem;
+    padding-top: 1.5rem;
   }
   .knowledge-page .hero-title {
     line-height: 1.05;
@@ -10588,10 +10626,12 @@ body:has(.bingo-page) { overflow: hidden; }
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin: 0 -1.25rem .5rem;
-    padding: 0 1.25rem .45rem;
+    margin: 0 calc(-1 * var(--gutter, 1rem)) .5rem;
+    padding: 0 var(--gutter, 1rem) .45rem;
     scroll-snap-type: x proximity;
     scrollbar-width: none;
+    mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
   }
   .knowledge-page .kb-categories::-webkit-scrollbar {
     display: none;
@@ -14036,7 +14076,7 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 /* Investment incentives: ruled rows, label beside text, the note in Nong Plub's hand. No box, no extra type size. */
 .investment-fit { border-top: 1px solid var(--5); padding-block: 12px 0; }
 .investment-fit-band { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 0; border-bottom: 1px solid var(--5); }
-.investment-fit-band img { height: 104px; width: auto; flex: none; display: block; }
+.investment-fit-band img { height: 104px; width: auto; flex: none; display: block; margin-bottom: -1px; }
 .investment-fit-note { margin: 0; max-width: 65ch; flex: 1 1 0; min-width: 0; font-size: var(--text-body); line-height: 1.4; color: var(--ink); }
 .investment-fit-rows { margin: 0; }
 .investment-fit-rows > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); column-gap: 14px; padding: 6px 0; border-top: 1px solid var(--5); }
@@ -14051,7 +14091,7 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 @media (min-width: 721px) {
   .investment-fit { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 0 14px; }
   .investment-fit-band { display: contents; }
-  .investment-fit-band img { grid-column: 1; grid-row: 1 / span 2; height: 128px; align-self: end; }
+  .investment-fit-band img { grid-column: 1; grid-row: 1 / span 2; height: 128px; align-self: end; margin-bottom: 0; }
   .investment-fit-note { grid-column: 2; grid-row: 1; margin-bottom: 8px; }
   .investment-fit-rows { grid-column: 2; grid-row: 2; }
   .investment-fit-caveat { grid-column: 1 / -1; grid-row: 3; margin-top: 0; padding-left: 96px; }

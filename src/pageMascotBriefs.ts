@@ -2,7 +2,7 @@ import type { Locale } from "./types";
 import type { Route } from "./routing";
 
 export type PageMascotKind = Exclude<Route["kind"], "city" | "creative-economy">;
-export type MascotPose = "urban" | "heritage" | "temple" | "cafe" | "nature" | "welcome" | "explain" | "glance" | "peace" | "colour" | "turn" | "walk" | "ledger" | "portrait" | "point" | "seat" | "plain";
+export type MascotPose = "urban" | "heritage" | "temple" | "cafe" | "nature" | "welcome" | "explain" | "glance" | "peace" | "colour" | "turn" | "walk" | "ledger" | "portrait" | "point" | "seat" | "plain" | "invest";
 export interface PageMascotBrief {
   copy: Record<Locale, string>;
   action: { path: string; label: Record<Locale, string> };
@@ -153,7 +153,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "对照研究方法"
       }
     },
-    "pose": "explain"
+    "pose": "temple"
   },
   "audit": {
     "copy": {
@@ -185,7 +185,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "查看基线指标"
       }
     },
-    "pose": "cafe"
+    "pose": "seat"
   },
   "program": {
     "copy": {
@@ -249,7 +249,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "先核查证据"
       }
     },
-    "pose": "urban"
+    "pose": "invest"
   },
   "compare": {
     "copy": {
@@ -313,7 +313,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
         "zh": "返回城市档案"
       }
     },
-    "pose": "cafe"
+    "pose": "heritage"
   },
   "about": {
     "copy": {

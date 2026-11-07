@@ -82,7 +82,7 @@ const ROUTE_ACTIONS = [
   { route: "/why", action: ".page-guide-actions a", expect: "h1" },
   { route: "/showcase", action: ".showcase-hero-actions .cta-button", expect: "h1" },
   { route: "/partners", action: ".page-guide-actions a", expect: "h1" },
-  { route: "/map", action: ".map-guide-context a, .map-dash-header a", expect: "h1" },
+  { route: "/map", action: "circle.map-city-marker", expect: ".map-dash-header h1" },
   { route: "/asus", action: ".page-guide-actions a", expect: "h1" },
   { route: "/references", action: ".page-guide-actions a", expect: "h1" },
   { route: "/program", action: ".hero-actions .cta-button", expect: "h1" },
@@ -131,7 +131,6 @@ const ROUTES = process.env.SCITI_AUDIT_ROUTES
 // scrollWidth for bleed. Nothing here reads the stylesheet as text.
 // ───────────────────────────────────────────────────────────────────
 function measureMsh({ route, actionSel, expectSel, viewport }) {
-  const q = sel => { try { return document.querySelector(sel); } catch { return null; } };
   const all = sel => { try { return [...document.querySelectorAll(sel)]; } catch { return []; } };
   const rect = el => { if (!el) return null; const r = el.getBoundingClientRect(); return { top: r.top + scrollY, bottom: r.bottom + scrollY, left: r.left, right: r.right, w: r.width, h: r.height }; };
   const visible = el => {
@@ -140,6 +139,23 @@ function measureMsh({ route, actionSel, expectSel, viewport }) {
     if (cs.display === "none" || cs.visibility === "hidden" || parseFloat(cs.opacity) === 0) return false;
     const r = el.getBoundingClientRect();
     return r.width > 0 && r.height > 0;
+  };
+
+  const vh = innerHeight;
+  const onFirstScreen = b => b && b.top < vh && b.bottom > 0;
+  const q = sel => {
+    try {
+      const allMatches = document.querySelectorAll(sel);
+      for (const el of allMatches) {
+        if (visible(el) && onFirstScreen(rect(el))) return el;
+      }
+      for (const el of allMatches) {
+        if (visible(el)) return el;
+      }
+      return document.querySelector(sel);
+    } catch {
+      return null;
+    }
   };
 
   const findings = [];
@@ -156,12 +172,6 @@ function measureMsh({ route, actionSel, expectSel, viewport }) {
   const actionVisible = visible(actionEl);
   const expectEl = q(expectSel);
   const expectBox = rect(expectEl);
-
-  // The FIRST SCREEN is the visible viewport at scroll position 0.
-  // A tall phone shows more of the page than a short one, so this is
-  // measured per viewport, not assumed.
-  const vh = innerHeight;
-  const onFirstScreen = b => b && b.top < vh && b.bottom > 0;
 
   if (!actionEl) {
     add("FIRST-SCREEN-ACTION", "critical", `primary action "${actionSel}" not found; the route could not be measured`);
@@ -221,15 +231,35 @@ function measureMsh({ route, actionSel, expectSel, viewport }) {
     add("PAGE-BLEED", "critical",
       `content is ${overflow}px wider than the viewport (scrollWidth ${scrollW} vs ${docW})`);
   }
-  // An element that paints outside the viewport horizontally is bleeding
-  // even when the document happens to clip it.
+
+  // An element that paints outside the viewport is bleeding — UNLESS it
+  // sits inside a horizontal scroller, which is a legitimate pattern (a
+  // tab list, a chip row). There the content is not lost; it is one
+  // swipe away.
   //
-  // A PARKED element is not bleeding. The accessibility pattern — a skip
-  // link parked at left: -9999px until it takes focus — is deliberately
-  // off-canvas and the reader never sees it there. What bleeds is content
-  // that is CUT OFF at the edge: a small negative left, or a right edge
-  // past the viewport. So an element displaced by more than one viewport
-  // width is parked; anything else outside is a defect.
+  // A PARKED element is not bleeding either. The accessibility pattern —
+  // a skip link parked at left: -9999px until it takes focus — is
+  // deliberately off-canvas and the reader never sees it there.
+  //
+  // What bleeds is content CUT OFF at the edge with no way to reach it:
+  // no scroller to scroll, nothing to recover the lost column.
+  const inScroller = el => {
+    for (let p = el.parentElement; p; p = p.parentElement) {
+      const ox = getComputedStyle(p).overflowX;
+      if (ox === "auto" || ox === "scroll") return p;
+    }
+    return null;
+  };
+  const isClippedInsideViewport = el => {
+    for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+      const cs = getComputedStyle(p);
+      if (cs.overflow === "hidden" || cs.overflowX === "hidden") {
+        const pr = p.getBoundingClientRect();
+        if (pr.left >= -1 && pr.right <= docW + 1) return p;
+      }
+    }
+    return null;
+  };
   for (const el of all("body *")) {
     if (!visible(el)) continue;
     const r = el.getBoundingClientRect();
@@ -239,11 +269,10 @@ function measureMsh({ route, actionSel, expectSel, viewport }) {
       const parkedRight = r.left >= docW && r.left > docW * 2;
       const parkedVertical = r.bottom <= 0 && r.top < -docW;
       if (parkedLeft || parkedRight || parkedVertical) continue;
-      const cs = getComputedStyle(el);
-      // A deliberately full-bleed element inside a full-bleed parent is
-      // allowed to reach the edges; what is not allowed is a full-bleed
-      // element inside a COLUMN (the content column), which is the
-      // classic "page bleed" — content that lost its gutter.
+      const scroller = inScroller(el);
+      if (scroller) continue; // scrollable: not lost, one swipe away
+      const clipped = isClippedInsideViewport(el);
+      if (clipped) continue; // visually clipped within an onscreen container
       const parentBleed = el.parentElement && getComputedStyle(el.parentElement).width >= docW - 1;
       if (!parentBleed) {
         add("PAGE-BLEED", "major",
@@ -251,6 +280,46 @@ function measureMsh({ route, actionSel, expectSel, viewport }) {
           { bleedRight: Math.round(r.right), docW });
         break; // one offender is enough to name the defect
       }
+    }
+  }
+
+  // ── hidden controls ─────────────────────────────────────────────
+  // MSH tell #9: "Hidden information is the worst spatial hallucination,
+  // because it is a lie by occlusion." A control inside a horizontal
+  // scroller is acceptable WHEN THE READER CAN TELL there is more —
+  // a visible scrollbar, or a fade at the edge, or a control half-cut
+  // at the boundary that says "swipe".
+  //
+  // It is not acceptable when a whole group of controls sits beyond the
+  // cut with nothing to signal it. The reader sees three chips and
+  // concludes that three chips is the filter.
+  for (const scroller of all("body *")) {
+    const cs = getComputedStyle(scroller);
+    if (cs.overflowX !== "auto" && cs.overflowX !== "scroll") continue;
+    if (!visible(scroller)) continue;
+    const sb = scroller.getBoundingClientRect();
+    if (scroller.scrollWidth <= scroller.clientWidth + 1) continue;
+
+    // Affordance: a fade mask, or a control cut by the boundary (its
+    // right edge is inside the viewport but its left edge is not).
+    const mask = (cs.maskImage || cs.webkitMaskImage || "none");
+    const hasFade = mask !== "none" && !/^none/.test(mask);
+    const kids = [...scroller.querySelectorAll("button,a,input,select,[role=button],[role=tab],[role=option]")];
+    const hidden = kids.filter(k => {
+      const r = k.getBoundingClientRect();
+      const partiallyVisible = r.right > sb.left + 1 && r.left < sb.right - 1;
+      return !partiallyVisible;
+    });
+    const cut = kids.filter(k => {
+      const r = k.getBoundingClientRect();
+      return r.right > sb.left + 1 && r.left < sb.right - 1 && (r.left < sb.left || r.right > sb.right);
+    });
+
+    if (hidden.length && !cut.length && !hasFade) {
+      const labels = hidden.slice(0, 4).map(k => (k.textContent || "").trim().slice(0, 12)).join(", ");
+      add("HIDDEN-CONTROL", "major",
+        `${hidden.length} control(s) sit beyond the cut of "${(scroller.className || scroller.tagName).toString().slice(0, 34)}" (${scroller.scrollWidth}px of content in ${scroller.clientWidth}px) with no scrollbar, fade or cut edge to show they exist: ${labels}`,
+        { hidden: hidden.length, scrollW: scroller.scrollWidth, clientW: scroller.clientWidth });
     }
   }
 
@@ -305,6 +374,25 @@ function measureMsh({ route, actionSel, expectSel, viewport }) {
   if (heaviest.length && !statementIsHeavy) {
     add("HIERARCHY", "major",
       `the heaviest thing on the first screen is "${((heaviest[0].el.className || heaviest[0].el.tagName) + "").slice(0, 40)}", not the page's statement; the eye has no path`);
+  }
+
+  // ── map share ───────────────────────────────────────────────────
+  // MSH.md law 8: "Map-first surgical table (map/data products): map
+  // ≥60% of first desktop and first phone screen; panels are edge
+  // instruments; nothing covers the map on load."
+  // The map's SHARE OF THE FIRST SCREEN is what matters, not its share
+  // of the whole page: a map that starts 400px down has not earned the
+  // screen even if it is tall.
+  const mapEl = q(".map-dash-map, .map-dashboard");
+  if (mapEl) {
+    const mb = mapEl.getBoundingClientRect();
+    const visibleMapH = Math.max(0, Math.min(vh, mb.bottom) - Math.max(0, mb.top));
+    const share = visibleMapH / vh;
+    if (share < 0.60) {
+      add("MAP-SHARE", "major",
+        `the map owns ${(share * 100).toFixed(0)}% of the first screen (${Math.round(visibleMapH)}px of ${vh}px); MSH law 8 asks for 60%`,
+        { mapShare: +share.toFixed(3) });
+    }
   }
 
   return {

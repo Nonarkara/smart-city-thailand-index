@@ -5,7 +5,7 @@ import {PAGE_MASCOT_BRIEFS,type PageMascotKind,type MascotPose} from './pageMasc
 import {NONG_PLUB_ASSETS} from './nongPlubData';
 import {GUIDE} from './nongPlubGuide';
 import {toAppPath} from './routing';
-const POSES:Record<MascotPose,string>={...NONG_PLUB_ASSETS,welcome:'/nong-plub/nong-plub-welcome-crayon.webp',explain:'/nong-plub/nong-plub-explain-crayon.webp',glance:'/nong-plub/nong-plub-glance-crayon.webp',peace:'/nong-plub/nong-plub-peace-crayon.webp',colour:'/nong-plub/nong-plub-colour-crayon.webp',turn:'/nong-plub/nong-plub-turn-crayon.webp',walk:'/nong-plub/nong-plub-walk-crayon.webp',ledger:'/nong-plub/nong-plub-ledger-crayon.webp',portrait:'/nong-plub/nong-plub-portrait-crayon.webp',point:'/nong-plub/nong-plub-point-crayon.webp',seat:'/nong-plub/nong-plub-seat-crayon.webp',plain:'/nong-plub/nong-plub-plain-crayon.webp'};
+const POSES:Record<MascotPose,string>={...NONG_PLUB_ASSETS,welcome:'/nong-plub/nong-plub-welcome-crayon.webp',explain:'/nong-plub/nong-plub-explain-crayon.webp',glance:'/nong-plub/nong-plub-glance-crayon.webp',peace:'/nong-plub/nong-plub-peace-crayon.webp',colour:'/nong-plub/nong-plub-colour-crayon.webp',turn:'/nong-plub/nong-plub-turn-crayon.webp',walk:'/nong-plub/nong-plub-walk-crayon.webp',ledger:'/nong-plub/nong-plub-ledger-crayon.webp',portrait:'/nong-plub/nong-plub-portrait-crayon.webp',point:'/nong-plub/nong-plub-point-crayon.webp',seat:'/nong-plub/nong-plub-seat-crayon.webp',plain:'/nong-plub/nong-plub-plain-crayon.webp',invest:'/nong-plub/nong-plub-invest-crayon.webp'};
 const L=(locale:Locale,en:string,th:string,zh:string)=>locale==='th'?th:locale==='zh'?zh:en;
 
 /*

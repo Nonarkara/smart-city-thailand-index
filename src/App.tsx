@@ -218,6 +218,7 @@ export default function App() {
   const [topbarScrolled, setTopbarScrolled] = useState(false);
   const isDashboardRoute = route.kind === "home";
   const isCanvasRoute = route.kind === "canvas";
+  const isBingoRoute = route.kind === "bingo";
 
   useEffect(() => {
     const sync = () => {
@@ -500,10 +501,10 @@ export default function App() {
           </Suspense>
         </ErrorBoundary>
 
-        {!isCanvasRoute && <DataFeedback locale={locale} />}
+        {!isCanvasRoute && !isBingoRoute && <DataFeedback locale={locale} />}
       </main>
 
-      {(!isDashboardRoute && !isCanvasRoute) && (
+      {(!isDashboardRoute && !isCanvasRoute && !isBingoRoute) && (
         <>
           {/* ─── NEWS FEED ─── */}
           <section className="news-section">
@@ -619,7 +620,7 @@ export default function App() {
       )}
 
       {/* ─── GEMINI CHATBOT ─── */}
-      {!isCanvasRoute && (
+      {!isCanvasRoute && !isBingoRoute && (
         <Suspense fallback={null}>
           <GeminiChat locale={locale} />
         </Suspense>

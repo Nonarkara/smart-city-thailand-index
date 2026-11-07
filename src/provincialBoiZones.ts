@@ -436,8 +436,8 @@ const TAG_LABEL: Record<BoiTag, LocalizedText> = {
   },
   "decentralization-20-lowest-income": {
     en: "BOI Decentralization Tier",
-    th: "กลุ่มจังหวัดรายได้ต่อหัวต่ำ 20 อันดับ (BOI)",
-    zh: "BOI 低收入省份优惠层级",
+    th: "กลุ่ม 20 จังหวัดที่มีรายได้ต่อหัวต่ำ (BOI)",
+    zh: "BOI 20个人均收入最低府优惠层级",
   },
   "economic-corridor-NEC": { en: "Northern Economic Corridor", th: "ระเบียงเศรษฐกิจภาคเหนือ (NEC)", zh: "北部经济走廊（NEC）" },
   "economic-corridor-NeEC": {
