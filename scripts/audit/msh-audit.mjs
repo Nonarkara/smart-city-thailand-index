@@ -395,6 +395,51 @@ function measureMsh({ route, actionSel, expectSel, viewport }) {
     }
   }
 
+  // ── logos never boxed ───────────────────────────────────────────
+  // THE BOOK commandment 6: "Logos never boxed. No border, chip,
+  // tile, pill, shadow, or backing panel around a logo. Strip =
+  // logos + gap (+ plain text label). Unbox whole strips."
+  for (const img of all("img.institutional-logo, img.brand-logo, img.footer-logo")) {
+    if (!visible(img)) continue;
+    const cs = getComputedStyle(img);
+    if (cs.borderStyle !== "none" && parseFloat(cs.borderWidth) > 0) {
+      add("BOXED-LOGO", "critical", `logo "${img.className}" has a border (${cs.borderWidth})`);
+    }
+    if (cs.boxShadow !== "none" && !cs.boxShadow.startsWith("none")) {
+      add("BOXED-LOGO", "critical", `logo "${img.className}" has a box-shadow`);
+    }
+    const parent = img.parentElement;
+    if (parent && parent.tagName !== "BODY" && parent.tagName !== "PICTURE") {
+      const pcs = getComputedStyle(parent);
+      if (pcs.boxShadow !== "none" && !pcs.boxShadow.startsWith("none")) {
+        add("BOXED-LOGO", "critical", `logo container "${parent.className}" has a box-shadow`);
+      }
+      if (pcs.borderStyle !== "none" && parseFloat(pcs.borderWidth) > 0 && pcs.borderColor !== "transparent") {
+        add("BOXED-LOGO", "critical", `logo container "${parent.className}" has a border`);
+      }
+    }
+  }
+
+  // ── prose measure ───────────────────────────────────────────────
+  // THE BOOK commandment 18: "Prose measure ≤65ch (~45–75ch; Thai/ZH
+  // keep physical A4/A5 measure, ~30–45 Chinese characters)."
+  if (viewport.w >= 1024) {
+    for (const p of all("main p:not(.eyebrow):not(.cinematic-hero-eyebrow):not(.hero-slide-label)")) {
+      if (!visible(p)) continue;
+      const text = (p.textContent || "").trim();
+      if (text.length < 120) continue;
+      const r = p.getBoundingClientRect();
+      const cs = getComputedStyle(p);
+      const fs = parseFloat(cs.fontSize) || 14;
+      const maxAllowed = fs * 55;
+      if (r.width > maxAllowed) {
+        add("PROSE-MEASURE", "major",
+          `paragraph in "${(p.parentElement?.className || p.parentElement?.tagName || "").toString().slice(0, 30)}" spans ${Math.round(r.width)}px (${(r.width / fs).toFixed(1)}em); text: "${text.slice(0, 60)}"; THE BOOK law 18 asks for ≤65ch`,
+          { width: Math.round(r.width), fs });
+      }
+    }
+  }
+
   return {
     route, viewport: viewport.label, locale: document.documentElement.lang || "?",
     overflow, chromeH: Math.round(chromeH), chromeShare: +chromeShare.toFixed(3),

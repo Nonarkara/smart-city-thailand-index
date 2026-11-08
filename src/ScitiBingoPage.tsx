@@ -337,7 +337,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
           {clickCount}&nbsp;{t({en:"CLICKS",th:"คลิก",zh:"点击"})}
         </span>
         {sizeTabs&&<div className="bingo-size-tabs">{sizeTabs}</div>}
-        <button className="bingo-reset-pill" onClick={()=>reset()}>↻</button>
+        <button className="bingo-reset-pill" onClick={()=>reset()} aria-label={t({en:"Reset card",th:"เริ่มการ์ดใหม่",zh:"重置棋盘"})} title={t({en:"Reset card",th:"เริ่มการ์ดใหม่",zh:"重置棋盘"})}>↻</button>
       </div>
 
       {/* ── DESKTOP HEADER + WIN BANNER (hidden on mobile) ──
@@ -384,7 +384,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
           <>
             <span className="bingo-call-bar-emoji">🎉</span>
             <span className="bingo-call-bar-name">BINGO! {clickCount} clicks · {formatTimeShort(elapsed)}</span>
-            <button className="bingo-call-bar-reset" onClick={()=>reset()}>↻</button>
+            <button className="bingo-call-bar-reset" onClick={()=>reset()} aria-label={t({en:"Reset card",th:"เริ่มการ์ดใหม่",zh:"重置棋盘"})} title={t({en:"Reset card",th:"เริ่มการ์ดใหม่",zh:"重置棋盘"})}>↻</button>
           </>
         ):targetDim?(
           <>

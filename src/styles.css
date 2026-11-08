@@ -481,7 +481,7 @@ details:not([open]) > :not(summary) { display: none !important; }
 .brand-lockup::after {
   content: ""; position: absolute; inset: -12px -8px;
 }
-.brand-logo { width: auto; height: 28px; border-radius: var(--radius-xs); aspect-ratio: 1; }
+.brand-logo { width: auto; height: 28px; border-radius: 0; aspect-ratio: 1; }
 .brand-mark { display: none; }
 .brand-name { font-weight: 650; font-size: var(--text-body); line-height: 1.45; color: var(--ink); letter-spacing: -.02em; opacity: .8; }
 .nav-links { display: flex; align-items: center; gap: 0; }
@@ -13005,7 +13005,7 @@ main .section > div > h2 {
   padding-top: .8rem;
   border-top: 1px solid var(--5);
 }
-main .section > p, main .section > div > p { max-width: 65ch; }
+main p:not(.eyebrow):not(.cinematic-hero-eyebrow):not(.hero-slide-label):not(.home-collection-chip-meta) { max-width: min(65ch, 720px); }
 main .section > p + p { margin-top: .5rem; }
 main .section > h2 + p, main .section > div > h2 + p { margin-top: 0; }
 main .section h3 { color: var(--ink); font-weight: 750; }
@@ -13805,7 +13805,7 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .news-card-summary { flex: none; font: 400 var(--text-micro)/1.5 var(--font); -webkit-line-clamp: 2; }
 .news-card-meta { margin-top: 0; padding-top: 0; border-top: 0; justify-content: flex-start; gap: 12px; }
 @media (max-width: 719px) { .news-grid { grid-template-columns: 1fr; } }
-.invest-macro-withheld { margin: 8px 0 0; font: 400 var(--text-micro)/1.5 var(--font); color: var(--2); max-width: 90ch; }
+.invest-macro-withheld { margin: 8px 0 0; font: 400 var(--text-micro)/1.5 var(--font); color: var(--2); max-width: 65ch; }
 /* Invest essays: these three reuse the navy CCDR panel class on a light surface, so the pull-quote
    was white on white (an empty blue rule) and the box padded a 590px column beside a void. On a light
    essay the text is ink, the box is a hairline rule, and from 960px the title sits left of the prose. */
@@ -13872,7 +13872,7 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .home-strip-stats dd { margin: 0; font: 700 var(--text-display)/1 var(--mono); color: #fff; }
 .home-strip-stats dd .hero-stat-num { font: inherit; color: inherit; }
 .home-strip-stats dt { font: 500 var(--text-micro)/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #d1dce3; }
-.home-strip-note { display: grid; gap: 4px; align-content: start; max-width: 72ch; }
+.home-strip-note { display: grid; gap: 4px; align-content: start; max-width: 65ch; }
 .home-strip-note p { margin: 0; font: 400 var(--text-body)/1.5 var(--font); color: #e0e8ed; }
 .home-strip-note .hero-status-note { color: #d1dce3; font-size: var(--text-micro); }
 .home-strip-note a { color: #fff; font: 600 var(--text-body)/1.4 var(--font); width: fit-content; }
@@ -13942,7 +13942,7 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .home-strip-stats > div { display: flex; flex-direction: row; align-items: baseline; gap: 6px; }
 .home-strip-stats dd, .dashboard-home .home-strip-stats .hero-stat-num { font: 700 var(--text-body)/1.4 var(--mono); }
 .home-strip-stats dt { font: 400 var(--text-body)/1.4 var(--font); letter-spacing: 0; text-transform: none; color: #d1dce3; }
-.home-strip-note { display: block; max-width: 88ch; }
+.home-strip-note { display: block; max-width: 65ch; }
 .home-strip-note p { display: inline; }
 .home-strip-note a { display: inline; margin-left: 8px; white-space: nowrap; }
 .home-strip-edition { display: block; padding-top: 6px; }
@@ -14085,8 +14085,8 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
   .investment-fit-band + .investment-fit-rows > div:first-child { border-top: 1px solid var(--5); }
 }
 .investment-fit-rows dt { font: 700 var(--text-micro)/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--3); }
-.investment-fit-rows dd { margin: 0; font: 400 var(--text-body)/1.5 var(--font); color: var(--ink); max-width: 75ch; }
-.investment-fit-caveat { max-width: 120ch; margin: 6px 0 0; padding-top: 6px; border-top: 1px solid var(--5); font: 400 var(--text-micro)/1.6 var(--font); color: var(--3); }
+.investment-fit-rows dd { margin: 0; font: 400 var(--text-body)/1.5 var(--font); color: var(--ink); max-width: 65ch; }
+.investment-fit-caveat { max-width: 65ch; margin: 6px 0 0; padding-top: 6px; border-top: 1px solid var(--5); font: 400 var(--text-micro)/1.6 var(--font); color: var(--3); }
 .investment-fit-caveat a { color: inherit; text-decoration: underline; }
 @media (min-width: 721px) {
   .investment-fit { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 0 14px; }

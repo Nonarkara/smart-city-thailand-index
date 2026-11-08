@@ -927,7 +927,7 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
       <section className="section reveal visible">
         <p className="eyebrow">{t("Downloads", "ดาวน์โหลด", "下载")}</p>
         <h2>{t("Method paper and source", "เอกสารวิธีวิจัยและต้นฉบับ", "方法论文与源文件")}</h2>
-        <p className="hero-strapline" style={{ maxWidth: "56rem" }}>
+        <p className="hero-strapline" style={{ maxWidth: "65ch" }}>
           {t(
             "The downloadable paper is the same audited methodology now used on this page. The source is included so the paper can be inspected, updated, and regenerated directly from the repo.",
             "เอกสารที่ดาวน์โหลดได้คือวิธีวิจัยฉบับตรวจสอบเดียวกับที่ใช้บนหน้านี้ มีไฟล์ต้นฉบับให้ตรวจ แก้ และสร้างใหม่ได้ตรงจากรีโป",
