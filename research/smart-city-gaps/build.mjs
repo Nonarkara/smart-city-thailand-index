@@ -1,5 +1,5 @@
 // Renders paper.src.html -> paper.html (figures inlined) -> PDF via Chromium.
-import { chromium } from "/Users/nonarkara/Projects/thailand-smart-city/index/node_modules/playwright/index.mjs";
+import { chromium } from "@playwright/test";
 import fs from "fs"; import path from "path"; import url from "url";
 const here = path.dirname(url.fileURLToPath(import.meta.url));
 let html = fs.readFileSync(path.join(here, "paper.src.html"), "utf8");

@@ -2,7 +2,6 @@
 type Context = { request: Request; env: { ASSETS: { fetch: (request: Request) => Promise<Response> } } };
 
 const PAPER_FILES: Record<string, string> = {
-  "/research/smart-city-gaps": "text/html",
   "/research/smart-city-gaps/": "text/html",
   "/research/smart-city-gaps/index.html": "text/html",
   "/research/smart-city-gaps/SCITI_2026-11-05_DOC_smart-city-gaps-synthesis.pdf": "application/pdf",
@@ -18,6 +17,11 @@ function error(message: string, status: number, extra: HeadersInit = {}) {
 export async function onRequest({ request, env }: Context): Promise<Response> {
   if (request.method !== "GET" && request.method !== "HEAD") return error("Method not allowed", 405, { Allow: "GET, HEAD" });
   const url = new URL(request.url);
+  // Relative PDF links need the directory URL, including when shared without '/'.
+  if (url.pathname === "/research/smart-city-gaps") {
+    url.pathname += "/";
+    return Response.redirect(url.toString(), 308);
+  }
   // The paper viewer and its PDF are static files; exact paths only, each checked for its real type.
   const paper = PAPER_FILES[url.pathname];
   if (paper) {
