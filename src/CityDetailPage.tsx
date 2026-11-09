@@ -2056,7 +2056,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         <div className="record-grid" style={{ marginTop: "1rem" }}>
           <div className="record-item">
             <span className="record-label">{translate(locale, { en: "Lead step", th: "ขั้นนำ", zh: "领先步骤" })}</span>
-            <span className="record-value">{city.deliveryProfile.recommendedLeadStep}</span>
+            <span className="record-value">{(() => { const k = DELIVERY_STEP_BY_LEAD_STEP[city.deliveryProfile.recommendedLeadStep]; const st = DELIVERY_STEPS.find(d => d.key === k); return st ? compactStepLabel(st.label[locale]) : city.deliveryProfile.recommendedLeadStep; })()}</span>
           </div>
           <div className="record-item">
             <span className="record-label">{translate(locale, { en: "Baseline date", th: "วันที่ฐานข้อมูล", zh: "基线日期" })}</span>

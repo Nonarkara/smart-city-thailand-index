@@ -5511,7 +5511,7 @@ details[open] .kb-question::before { content: "−"; }
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   position: sticky;
-  top: 48px;
+  top: var(--topbar-h, 52px);
   z-index: 50;
   background: var(--bg);
 }
@@ -14115,3 +14115,29 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
   .investment-fit-caveat { grid-column: 1 / -1; grid-row: 3; margin-top: 0; padding-left: 96px; }
 }
 @media (max-width: 520px) { .investment-fit-rows > div { display: block; } .investment-fit-rows dt, .investment-fit-rows dd { display: inline; } .investment-fit-rows dt { margin-right: 8px; } }
+
+/* MSH: delivery rows read left to right as name / reason / status, on one measure.
+   A badge pinned 1000px from its own label is spatial hallucination. */
+.planning-step-header-row { display: grid; grid-template-columns: minmax(11rem, 16rem) minmax(0, 62ch) max-content; column-gap: 1.5rem; justify-content: start; align-items: baseline; margin-bottom: 0; }
+.planning-step-header-row > div { display: contents; }
+.planning-step { padding: .75rem 0; }
+.planning-step-title { margin-bottom: 0; }
+.planning-step-desc { max-width: none; }
+@media (max-width: 720px) {
+  .planning-step-header-row { grid-template-columns: minmax(0, 1fr) max-content; }
+  .planning-step-title { grid-column: 1; grid-row: 1; }
+  .planning-step-status { grid-column: 2; grid-row: 1; }
+  .planning-step-desc { grid-column: 1 / -1; grid-row: 2; }
+}
+/* Facts as a ruled strip sized to their words, not a key at one edge and a value at the other. */
+.planning-stack + .record-grid { flex-direction: row; flex-wrap: wrap; width: fit-content; max-width: 100%; border: 0; border-top: 1px solid var(--5); }
+.planning-stack + .record-grid .record-item { display: block; padding: .5rem 1.5rem .5rem 0; background: none; border: 0; }
+/* Radar: the chart is 280px, so its column is 280px; the grade centres on the chart, not on chart plus caption. */
+.rpg-layout { grid-template-columns: 280px minmax(0, 1fr); }
+.rpg-radar-panel { --radar: 280px; width: var(--radar); }
+.radar-chart { width: var(--radar); height: var(--radar); }
+.rpg-overall-grade { top: calc(var(--radar) / 2); }
+@media (max-width: 720px) {
+  .rpg-layout { grid-template-columns: 1fr; }
+  .rpg-radar-panel { --radar: 180px; max-width: none; }
+}

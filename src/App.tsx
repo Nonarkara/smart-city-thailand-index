@@ -251,6 +251,18 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Sticky sub-bars read the real header height, not a guessed 48px (Thai/CN lockups run taller).
+  useEffect(() => {
+    const bar = document.querySelector<HTMLElement>(".topbar");
+    if (!bar) return;
+    const set = () => document.documentElement.style.setProperty("--topbar-h", `${bar.offsetHeight}px`);
+    set();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(set);
+    ro.observe(bar);
+    return () => ro.disconnect();
+  }, []);
+
   // Track visitor once per session (fire-and-forget to Google Sheets)
   useEffect(() => { trackVisitor(window.location.pathname); }, []);
 
