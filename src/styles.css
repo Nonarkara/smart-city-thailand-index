@@ -14141,3 +14141,39 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
   .rpg-layout { grid-template-columns: 1fr; }
   .rpg-radar-panel { --radar: 180px; max-width: none; }
 }
+
+/* ── MSH templates: fill the measure, never strand it (owner, 9 Nov 2026) ───────── */
+/* Map: the portrait map takes the height, the instruments take the rest. */
+@media (min-width: 600px) { .map-dash-map > svg { width: auto; height: clamp(430px, 80svh, 760px); } }
+@media (min-width: 769px) {
+  .map-dash-body { grid-template-columns: max-content minmax(0, 1fr); }
+  .map-dash-sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 1.5rem; align-content: start; }
+  .map-dash-sidebar > .municipal-context-link, .map-dash-sidebar > .map-dash-sidebar-title, .map-dash-sidebar > .map-dash-legend { grid-column: 1 / -1; }
+}
+/* One Nong Plub per page. On a phone the hero cannot hold her, so she stands in the guide card;
+   from 720px she stands in the hero and the card carries only her note. */
+@media (min-width: 720px) {
+  .nong-plub-card.nong-plub-infographic .nong-plub-illustration { display: none; }
+  .nong-plub-card.nong-plub-infographic { grid-template-columns: minmax(0, 1fr); column-gap: 0; }
+  .nong-plub-card.nong-plub-infographic .nong-plub-intro-header { grid-column: 1; grid-row: 1; }
+  .nong-plub-card.nong-plub-infographic .nong-plub-story-col { grid-column: 1; grid-row: 2; align-self: start; }
+  .nong-plub-card.nong-plub-infographic .nong-plub-intro-notes { grid-column: 1; grid-row: 3; }
+}
+@media (min-width: 900px) {
+  .nong-plub-card.nong-plub-infographic { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); column-gap: 32px; }
+  .nong-plub-card.nong-plub-infographic .nong-plub-intro-header { grid-column: 1 / -1; }
+  .nong-plub-card.nong-plub-infographic .nong-plub-intro-notes { grid-column: 2; grid-row: 2; align-self: start; }
+}
+/* Ruled lists use the width: columns, not one 900px row with half a screen blank. */
+@media (min-width: 900px) {
+  .evidence-feed, .highlights-list, .action-steps-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2rem; align-items: start; }
+  .action-steps-list { gap: .4rem 2rem; }
+}
+.sources-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.source-card:nth-child(3n) { border-right: 1px solid var(--5); }
+/* One Nong Plub per page: the city hero carries her, so the incentives note stands without a second portrait. */
+@media (min-width: 721px) {
+  .investment-fit { grid-template-columns: minmax(0, 1fr); }
+  .investment-fit-note, .investment-fit-rows { grid-column: 1; }
+  .investment-fit-caveat { padding-left: 0; }
+}

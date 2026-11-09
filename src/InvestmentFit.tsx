@@ -38,7 +38,6 @@ export default function InvestmentFit({ city, locale }: { city: SmartCity; local
   return (
     <section className="section investment-fit" lang={locale === "zh" ? "zh-Hans" : locale}>
       <div className="investment-fit-band">
-        <img src="/nong-plub/guide/nong-plub-invest.webp" width={179} height={300} alt="" loading="lazy" />
         <p className="investment-fit-note mascot-hand">{NOTE[note][locale]}</p>
       </div>
       <dl className="investment-fit-rows">

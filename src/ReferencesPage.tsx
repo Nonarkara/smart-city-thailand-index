@@ -206,7 +206,7 @@ export default function ReferencesPage({ locale }: Props) {
           })}
         </p>
 
-        <div className="delivery-evidence-grid" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "1rem" }}>
+        <div className="delivery-evidence-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 420px), 1fr))", gap: "1rem" }}>
           {DELIVERY_EVIDENCE_REGISTRY.map((ev, i) => (
             <article
               key={i}

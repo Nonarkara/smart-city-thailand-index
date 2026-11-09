@@ -86,9 +86,9 @@ try {
       assert.ok(g.noteOffset <= 20, 'illustration imposed an empty narration track');
       assert.ok(g.evidenceGap <= 16, 'investment note separated from evidence');
       if (locale === 'en' && width === 1024) {
-        await page.addStyleTag({ content: '.investment-fit{display:block!important}.investment-fit-band{display:flex!important;align-items:flex-end!important}.investment-fit-note{margin-bottom:10px!important}' });
+        await page.addStyleTag({ content: '.investment-fit{display:block!important}.investment-fit-band{display:flex!important;align-items:flex-end!important;min-height:128px!important}.investment-fit-note{margin-bottom:10px!important}' });
         const bad = await geometry();
-        assert.ok(bad.noteOffset > 20, 'old bottom-aligned narration void must fail geometry');
+        assert.ok(bad.noteOffset > 20, 'a tall bottom-aligned narration band (the old portrait void) must fail geometry');
       }
     }
   }
