@@ -66,7 +66,8 @@ bounded guards do not certify every possible state of all 118 dossiers.
 
 ## Design Philosophy
 
-"Jony Ive meets Dieter Rams" — clarity, simplicity, elegance.
+**Design Scripture:** See **`STYLE.md`** — adopts **Design Principles: No MSH, No Slop, Real Balance** (9 Nov 2026, Asia/Bangkok).
+"Jony Ive meets Dieter Rams" — clarity, simplicity, elegance. No spatial hallucination (MSH), no AI slop, real MoMA balance.
 
 **Spatial hallucination is frontend enemy number one.** Short comparison
 records should first be composed as name/value plus shared metadata, rather
