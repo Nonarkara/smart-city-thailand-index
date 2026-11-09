@@ -130,3 +130,278 @@ jobs:
           path: dist
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # After a successful deploy on main, delete older site-dist and
+  # github-pages artifacts from this workflow. Keep the current run's
+  # copies: CDPT still downloads site-dist. spatial-regression-evidence
+  # and every other workflow are left alone. Retention is unchanged.
+  # Cleanup cannot fail the deploy.
+  prune-pages-artifacts:
+    needs: deploy
+    if: needs.deploy.result == 'success' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    permissions:
+      actions: write
+    steps:
+      - name: Delete older site-dist and github-pages artifacts
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
+        shell: bash
+        run: |
+          # shellcheck shell=bash
+          # sciti-prune-pages-artifacts
+          # After a successful main deploy, delete older site-dist and github-pages
+          # artifacts from this workflow only. Keep every copy that belongs to the
+          # current run. Paginate with the Link rel="next" header. Errors are logged
+          # and never fail the surrounding job.
+          # GitHub invokes this file with bash -e. Turn errexit off so one API error
+          # cannot skip the rest of the cleanup; the EXIT trap still exits 0.
+          work=""
+          set +e
+          set -uo pipefail
+
+          log() {
+            printf '%s\n' "$*"
+          }
+
+          finish() {
+            status=$?
+            if [[ -n "${work:-}" ]]; then
+              rm -rf "$work"
+            fi
+            if [[ "$status" -ne 0 ]]; then
+              printf '%s\n' "Artifact cleanup stopped (${status}); the deploy stays successful."
+            fi
+            exit 0
+          }
+          trap finish EXIT
+
+          next_link() {
+            local header="$1"
+            local line rest part
+            local -a parts=()
+            local rel_next_re='<([^>]+)>;[[:space:]]*rel="next"'
+            while IFS= read -r line; do
+              line="${line%$'\r'}"
+              case "$line" in
+                [Ll][Ii][Nn][Kk]:*)
+                  rest="${line#*:}"
+                  IFS=',' read -ra parts <<<"$rest"
+                  for part in "${parts[@]}"; do
+                    if [[ "$part" =~ $rel_next_re ]]; then
+                      printf '%s\n' "${BASH_REMATCH[1]}"
+                      return 0
+                    fi
+                  done
+                  ;;
+              esac
+            done <"$header"
+            return 0
+          }
+
+          split_http_message() {
+            python3 - "$1" "$2" "$3" <<'PY'
+          import pathlib, sys
+          src, header, body = sys.argv[1:]
+          raw = pathlib.Path(src).read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+          head, sep, rest = raw.partition(b"\n\n")
+          if not sep:
+              sys.exit(1)
+          pathlib.Path(header).write_bytes(head + b"\n")
+          pathlib.Path(body).write_bytes(rest)
+          PY
+          }
+
+          collect_named_artifacts() {
+            local name="$1"
+            local repo="$2"
+            local dest="$3"
+            local url="repos/${repo}/actions/artifacts?per_page=100&name=${name}"
+            local page=0
+            local seen="${dest}.seen"
+            local response="${dest}.response"
+            local header="${dest}.header"
+            local body="${dest}.body"
+            local next_url=""
+            local count=""
+            : >"$dest"
+            : >"$seen"
+            while [[ "$page" -lt 200 ]]; do
+              page=$((page + 1))
+              if grep -Fxq -- "$url" "$seen"; then
+                log "Listing ${name} repeated a page URL; stopping."
+                return 0
+              fi
+              printf '%s\n' "$url" >>"$seen"
+              if ! gh api --include -H "Accept: application/vnd.github+json" "$url" >"$response" 2>"${dest}.err"; then
+                log "Listing ${name} page ${page} failed; continuing with artifacts already listed."
+                cat "${dest}.err" >&2 || true
+                return 0
+              fi
+              if ! split_http_message "$response" "$header" "$body"; then
+                log "Listing ${name} page ${page} had no JSON body; stopping."
+                return 0
+              fi
+              count="$(jq '.artifacts | length' "$body" 2>/dev/null || true)"
+              if [[ ! "$count" =~ ^[0-9]+$ ]]; then
+                log "Listing ${name} page ${page} was not an artifact page; stopping."
+                return 0
+              fi
+              log "Listed ${count} ${name} artifact(s) on page ${page}."
+              if [[ "$count" -gt 0 ]]; then
+                # Unit separator keeps an empty workflow-run id. Tab is IFS whitespace,
+                # so a blank field would be swallowed and the row would shift.
+                if ! jq -r '.artifacts[] | [.id, (.workflow_run.id // ""), .name, (.size_in_bytes // 0)] | map(tostring) | join("\u001f")' "$body" >>"$dest"; then
+                  log "Could not read ${name} page ${page}; stopping."
+                  return 0
+                fi
+              fi
+              next_url="$(next_link "$header")"
+              if [[ -z "$next_url" ]]; then
+                return 0
+              fi
+              case "$next_url" in
+                https://api.github.com/*/actions/artifacts*) ;;
+                *)
+                  log "Unexpected next page for ${name}; stopping."
+                  return 0
+                  ;;
+              esac
+              url="$next_url"
+            done
+            log "Stopped listing ${name} after ${page} pages."
+            return 0
+          }
+
+          confirm_completed_workflow_run() {
+            local run_id="$1"
+            local repo="$2"
+            local cache_dir="$3"
+            local cache="${cache_dir}/run-${run_id}"
+            local status=""
+            local path=""
+            if [[ ! -s "$cache" ]]; then
+              if ! gh api -H "Accept: application/vnd.github+json" \
+                "repos/${repo}/actions/runs/${run_id}" \
+                --jq '[.status, .path] | map(tostring) | join("\u001f")' >"$cache" 2>"${cache_dir}/gh.err"; then
+                log "Could not read run ${run_id}; leaving its artifacts in place."
+                cat "${cache_dir}/gh.err" >&2 || true
+                printf 'unreadable\n' >"$cache"
+                return 1
+              fi
+            fi
+            if [[ "$(<"$cache")" == "unreadable" ]]; then
+              return 1
+            fi
+            IFS=$'\x1f' read -r status path <"$cache" || return 1
+            if [[ "$path" != ".github/workflows/github-pages.yml" ]]; then
+              log "Skipping run ${run_id}; workflow path is ${path:-unknown}."
+              return 1
+            fi
+            if [[ "$status" != "completed" ]]; then
+              log "Skipping run ${run_id}; status is ${status:-unknown}."
+              return 1
+            fi
+            return 0
+          }
+
+          main() {
+            local repo="${REPO:-}"
+            local current_run_id="${CURRENT_RUN_ID:-}"
+            local deleted=0
+            local freed=0
+            local name=""
+            local list=""
+            local id=""
+            local run_id=""
+            local artifact_name=""
+            local size_bytes=""
+            local seen_ids=""
+            if [[ -z "${GH_TOKEN:-}" || -z "$repo" || -z "$current_run_id" ]]; then
+              log "Missing GH_TOKEN, REPO, or CURRENT_RUN_ID; skipping artifact cleanup."
+              return 0
+            fi
+            if [[ ! "$current_run_id" =~ ^[0-9]+$ ]]; then
+              log "CURRENT_RUN_ID is not numeric; skipping artifact cleanup."
+              return 0
+            fi
+            if [[ ! "$repo" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]; then
+              log "Repository ${repo} is not an owner/name path; skipping artifact cleanup."
+              return 0
+            fi
+            if ! command -v gh >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1 || ! command -v python3 >/dev/null 2>&1; then
+              log "gh, jq, or python3 is unavailable; skipping artifact cleanup."
+              return 0
+            fi
+
+            work="$(mktemp -d 2>/dev/null)" || true
+            if [[ -z "$work" || ! -d "$work" ]]; then
+              work=""
+              log "Could not create a temp directory; skipping artifact cleanup."
+              return 0
+            fi
+            seen_ids="${work}/seen-ids"
+            : >"$seen_ids"
+            for name in site-dist github-pages; do
+              list="${work}/${name}.tsv"
+              collect_named_artifacts "$name" "$repo" "$list"
+              while IFS=$'\x1f' read -r id run_id artifact_name size_bytes; do
+                [[ -n "$id" ]] || continue
+                if [[ ! "$id" =~ ^[0-9]+$ ]]; then
+                  log "Skipping an artifact row with id ${id}; id is not numeric."
+                  continue
+                fi
+                if grep -Fxq -- "$id" "$seen_ids"; then
+                  continue
+                fi
+                printf '%s\n' "$id" >>"$seen_ids"
+                case "$artifact_name" in
+                  site-dist|github-pages) ;;
+                  *)
+                    log "Skipping artifact ${id} named ${artifact_name}; only site-dist and github-pages are removed."
+                    continue
+                    ;;
+                esac
+                if [[ -z "$run_id" ]]; then
+                  log "Skipping ${artifact_name} ${id}; it has no workflow run."
+                  continue
+                fi
+                if [[ ! "$run_id" =~ ^[0-9]+$ ]]; then
+                  log "Skipping ${artifact_name} ${id}; run id ${run_id} is not numeric."
+                  continue
+                fi
+                if [[ "$run_id" -eq "$current_run_id" ]]; then
+                  log "Keeping ${artifact_name} ${id} from current run ${current_run_id} (${size_bytes:-0} bytes)."
+                  continue
+                fi
+                if [[ "$run_id" -gt "$current_run_id" ]]; then
+                  log "Skipping ${artifact_name} ${id} from newer run ${run_id}."
+                  continue
+                fi
+                if ! confirm_completed_workflow_run "$run_id" "$repo" "$work"; then
+                  continue
+                fi
+                if [[ ! "${size_bytes:-}" =~ ^[0-9]+$ ]]; then
+                  size_bytes=0
+                fi
+                log "Deleting ${artifact_name} ${id} from run ${run_id} (${size_bytes} bytes)."
+                if ! gh api --method DELETE -H "Accept: application/vnd.github+json" \
+                  "repos/${repo}/actions/artifacts/${id}" >/dev/null 2>"${work}/delete.err"; then
+                  log "Delete failed for ${artifact_name} ${id}; continuing."
+                  cat "${work}/delete.err" >&2 || true
+                  continue
+                fi
+                deleted=$((deleted + 1))
+                freed=$((freed + size_bytes))
+              done <"$list"
+            done
+            log "Artifact cleanup finished: deleted ${deleted} older artifact(s), ${freed} bytes. Current run ${current_run_id} keeps its site-dist and github-pages artifacts."
+            return 0
+          }
+
+          main
