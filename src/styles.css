@@ -13274,6 +13274,19 @@ main .dossier-tab-content > .city-detail-hero { margin-top: 0; }
 .pick-chips { margin-top: 0; }
 .rankings-page .section { padding-block: 0; }
 .rankings-page .page-hero { padding-top: 12px; }
+/* Band-followed heroes carry no top air. Six routes kept the base 3.5rem
+ * of hero top padding below the presenter band and measured the site's
+ * largest unmarked void — 56px between the band's closing hairline and
+ * the hero's eyebrow (voids.mjs, 10 Nov 2026: /methodology, /story,
+ * /program, /partners, /knowledge, /discover). The band already closes
+ * the block above, and /references, /compare and /audit already carry
+ * this same fix, so the six join them at 1.25rem. */
+.methodology-page .methodology-hero,
+.story-page .story-hero,
+.discover-page .rankings-hero,
+.knowledge-page .rankings-hero,
+main > .page-guide ~ .rankings-hero,
+main > .page-guide ~ .partnerships-hero { padding-top: 1.25rem; }
 .lens-screening-note { margin: 0; font-size: var(--text-body); line-height: 1.5; }
 .lens-method-details > summary { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-block: 6px; cursor: pointer; list-style: none; }
 .lens-method-details > summary::-webkit-details-marker { display: none; }
@@ -13871,6 +13884,17 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
    to two lines on every phone row. Sentence-case body face keeps it to one. */
 .rank-row-caption { font-family: var(--font); text-transform: none; letter-spacing: 0; }
 .section > .invest-ccdr-panel.glass-card > .invest-ccdr-inner > .invest-reading-title { position: sticky; top: 64px; }
+/* The two reading callouts own one block step above them, at every width.
+   Their inline top margins used to sum with the prose paragraph's 16px
+   bottom inside the 960px reading grid — margins do not collapse in grid —
+   measuring 48px and 40px of unmarked air where the same panels show a
+   single step at phone width (voids.mjs, 10 Nov 2026). In block flow the
+   collapse gives 32px; in the grid the callout keeps 16px, and 16 + the
+   paragraph's 16 is the same 32px. One owner, one gap. */
+.invest-ccdr-inner > .invest-callout { margin-top: 2rem; }
+@media (min-width: 960px) {
+  .section > .invest-ccdr-panel.glass-card > .invest-ccdr-inner > .invest-callout { margin-top: 1rem; }
+}
 @media (max-width: 719px) {
   /* Phone row: the caption had a 179px column because the score block sat beside the whole text stack.
      Flatten it into a grid so the caption and peak/trough run the full width under the name. */

@@ -752,7 +752,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                 zh: "可下载的Moneyball省份资料是一项独立编辑分析，并非SCITI实时指标。所选省份是进一步研究的线索。评分或创意资产不能证明进入成本低、市场定价错误或投资回报。",
               })}
             </p>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--ink)", fontWeight: 600, marginTop: "2rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem" }}>
+            <p className="invest-callout" style={{ fontSize: "var(--text-body)", color: "var(--ink)", fontWeight: 600, borderLeft: "4px solid var(--teal)", paddingLeft: "1rem" }}>
               {translate(locale, {
                 en: "SCITI does not give investment advice. It gives you the data to make your own call — with the same rigor you would apply to any other asset class.",
                 th: "SCITI ไม่ได้ให้คำแนะนำการลงทุน แต่ให้ข้อมูลเพื่อให้คุณตัดสินใจด้วยตัวเอง — ด้วยความรัดกุมเช่นเดียวกับที่คุณใช้กับสินทรัพย์ประเภทอื่น",
@@ -796,7 +796,7 @@ export default function InvestPage({ locale, onNavigate }: Props) {
                 zh: "与府尹、PAO或市政府磋商并不等于取得资金或许可。审批路径取决于项目类型、产权、采购方式及资金计划。曼谷实行单独的都市行政制度，府尹由选举产生。应向负责机构确认实际审批与预算程序。",
               })}
             </p>
-            <p style={{ fontSize: "var(--text-body)", color: "var(--ink)", fontWeight: 600, marginTop: "1.5rem", borderLeft: "4px solid var(--teal)", paddingLeft: "1rem", lineHeight: 1.7 }}>
+            <p className="invest-callout" style={{ fontSize: "var(--text-body)", color: "var(--ink)", fontWeight: 600, borderLeft: "4px solid var(--teal)", paddingLeft: "1rem", lineHeight: 1.7 }}>
               {translate(locale, {
                 en: "Build a project-specific timetable covering budget applications, procurement, permits, construction and operation. SCITI has no verified universal two-year funding or four-year delivery rule. Test delays against local hazard seasons and service needs before committing capital.",
                 th: "จัดทำกำหนดเวลาเฉพาะโครงการ ครอบคลุมการของบ จัดซื้อจัดจ้าง ใบอนุญาต ก่อสร้าง และเปิดใช้งาน SCITI ไม่มีหลักฐานยืนยันกฎทั่วไปว่าต้องรอเงินสองปีหรือส่งมอบในสี่ปี ควรประเมินความล่าช้าเทียบกับฤดูภัยพิบัติและความต้องการบริการก่อนลงทุน",
