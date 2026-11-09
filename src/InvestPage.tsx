@@ -1072,22 +1072,9 @@ export default function InvestPage({ locale, onNavigate }: Props) {
             zh: "一份面向所有向泰国智慧城市项目部署资本者的实用清单。打印出来，付诸使用。",
           })}
         </p>
-        <div style={{
-          marginTop: "1.5rem",
-          borderTop: "2px solid var(--ink)",
-        }}>
+        <div className="invest-checklist">
           {checklist.map((item, i) => (
-            <div key={i} style={{
-              display: "grid",
-              gridTemplateColumns: "2.25rem 1fr",
-              gap: ".75rem",
-              /* The rows are ruled, not padded. Ten items × 1.25rem of top and
-                 bottom padding was 400px of nothing between ten instructions
-                 the reader has to scroll past. */
-              padding: ".7rem 0",
-              borderBottom: "1px solid var(--5)",
-              alignItems: "start",
-            }}>
+            <div key={i} className="invest-checklist-item">
               {/* The ordinal is a label, not a headline. At the display size
                   it shouted louder than the instruction it numbers. */}
               <span style={{

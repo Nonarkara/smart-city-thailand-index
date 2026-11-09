@@ -13806,6 +13806,24 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .news-card-meta { margin-top: 0; padding-top: 0; border-top: 0; justify-content: flex-start; gap: 12px; }
 @media (max-width: 719px) { .news-grid { grid-template-columns: 1fr; } }
 .invest-macro-withheld { margin: 8px 0 0; font: 400 var(--text-micro)/1.5 var(--font); color: var(--2); max-width: 65ch; }
+/* Ten due-diligence instructions. The 65ch measure wraps each one, and a single
+   column of those lines is what pushed /invest past its 1440 screen budget.
+   From 900px the spare width holds a second column, so the measure stays and
+   the reader meets 01–05 down the left, then 06–10 down the right. The rows
+   stay ruled: ten items × 1.25rem of padding was already spent. */
+.invest-checklist { margin-top: 1.5rem; border-top: 2px solid var(--ink); }
+.invest-checklist-item {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: .75rem;
+  padding: .7rem 0;
+  border-bottom: 1px solid var(--5);
+  align-items: start;
+  break-inside: avoid;
+}
+@media (min-width: 900px) {
+  .invest-checklist { columns: 2; column-gap: 32px; }
+}
 /* Invest essays: these three reuse the navy CCDR panel class on a light surface, so the pull-quote
    was white on white (an empty blue rule) and the box padded a 590px column beside a void. On a light
    essay the text is ink, the box is a hairline rule, and from 960px the title sits left of the prose. */
