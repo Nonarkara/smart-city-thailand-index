@@ -14311,3 +14311,37 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .references-page .rankings-hero { padding-top: 1.25rem !important; padding-bottom: .5rem !important; }
 .references-page .rankings-hero .hero-strapline { max-width: 65ch; margin-top: .35rem; }
 
+
+/* ─── Analysis tab: one statement per fact, rows that fit their words (MSH, 11 Nov 2026) ───
+   The factbook and dossier restated each other; the repeated rows were deleted in
+   CityDetailPage. What remains is ruled, not boxed, and carries prose at regular weight
+   so a sentence does not read as a headline. */
+main .city-factbook-grid { gap: .5rem; }
+main .city-factbook-group { border-width: 1px 0 0; background: none; }
+main .city-factbook-title { padding: .4rem 0; background: none; border-bottom: 0; }
+main .city-factbook-row { padding: .3rem 0; gap: .15rem .65rem; }
+main .city-factbook-value { font-weight: 500; line-height: 1.4; letter-spacing: 0; }
+main .city-factbook-note { line-height: 1.4; }
+@media (max-width: 719px) {
+  main .city-factbook-row { grid-template-columns: minmax(4.5rem, .6fr) minmax(0, 1.9fr); }
+  main .city-dossier-lead, main .city-dossier-panel { padding: .5rem 0; }
+  main .city-dossier-verification-grid { margin-top: .4rem; }
+}
+/* Scores block: the headline figure, its label and its delta share one baseline; the three
+   sub-scores sit in one row of three instead of two plus an orphan. */
+main .dev-score-main { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .6rem; }
+main .dev-score-breakdown { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; margin-top: .4rem; }
+main .investability-panel { padding: .6rem 0; margin-top: .6rem; }
+main .decomp-header { flex-wrap: wrap; gap: .1rem .8rem; }
+main .rpg-radar-panel { justify-self: center; }
+@media (max-width: 719px) { main .rpg-radar-panel svg { width: 150px; height: 150px; } main .rpg-layout { gap: .25rem; } }
+/* Ladder of needs: a signal is one running line (value, then its role, source, vintage, geography),
+   not four stacked lines. Provenance stays; the stack that carried it goes. */
+main .needs-ladder-rung-signals { display: block; margin-top: .3rem; }
+main .needs-ladder-rung-signals li { display: block; padding: .15rem 0; line-height: 1.5; }
+main .needs-ladder-signal-main, main .needs-ladder-signal-provenance { display: inline; }
+main .needs-ladder-signal-provenance > * { margin-left: .4rem; }
+main .needs-ladder-signal-provenance > span:not(.needs-ladder-signal-role)::before { content: "· "; }
+main .needs-ladder-signal-role { display: inline-block; line-height: 1.3; }
+main .needs-ladder-rung-weakest { padding-block: .4rem; }
+main .needs-ladder-signal-value { margin-left: .3rem; }

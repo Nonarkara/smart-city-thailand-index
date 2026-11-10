@@ -838,23 +838,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     worldExampleZh: city.financeSignal.line.zh,
     source: "SCITI city profile",
   };
-  const analogHeadline = comparison
-    ? `${comparison.worldCity}, ${comparison.country}`
-    : translate(locale, {
-        en: "No analog assigned yet",
-        th: "ยังไม่มีเมืองเทียบเคียง",
-        zh: "尚未指定类比城市",
-      });
   const leadAction = dossier?.leadRecommendation?.nextStep[locale] ?? getActionStepText(locale, primaryStep);
-  // The evidence line under "Immediate next move" must not be the same
-  // sentence as the note under "Lead mechanism" — they sit two rows apart
-  // in the same block, and a repeated note reads as a rendering fault.
   const leadActionEvidence = getActionExampleText(locale, primaryStep);
-  const developabilityLabel = locale === "zh"
-    ? developability.labelZh
-    : locale === "th"
-      ? developability.labelTh
-      : developability.label;
   const heroMeta = translate(locale, {
     en: `${provinceName} · ${getStatusSummary(city, locale, false)} · ${city.smartDimensions.length} smart dimensions`,
     th: `${provinceName} · ${getStatusSummary(city, locale, false)} · ${city.smartDimensions.length} มิติอัจฉริยะ`,
@@ -917,15 +902,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
           value: `${availableBasicFields.length}/${basicDataFields.length}`,
           note: missingBasicSummary,
         },
-        {
-          label: translate(locale, { en: "Provenance", th: "หลักฐานข้อมูล", zh: "溯源" }),
-          value: `${city.provenanceCount}`,
-          note: translate(locale, {
-            en: `${city.evidenceItems.length} evidence items · confidence ${city.dataConfidence ?? "medium"}`,
-            th: `หลักฐาน ${city.evidenceItems.length} รายการ · ความเชื่อมั่น ${city.dataConfidence ?? "medium"}`,
-            zh: `${city.evidenceItems.length} 条证据 · 置信度 ${city.dataConfidence ?? "medium"}`,
-          }),
-        },
       ]),
     },
     {
@@ -950,15 +926,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         {
           label: translate(locale, { en: "Land area", th: "พื้นที่", zh: "土地面积" }),
           value: landArea ? formatAreaKm2(landArea) : pendingValue,
-          note: landArea
-            ? density
-              ? translate(locale, {
-                  en: `Density ${formatDensity(density)}`,
-                  th: `ความหนาแน่น ${formatDensity(density)}`,
-                  zh: `人口密度 ${formatDensity(density)}`,
-                })
-              : densityMethodNote
-            : missingAreaLongNote,
+          // The next row states the density; repeating it here cost a line.
+          note: landArea ? (density ? undefined : densityMethodNote) : missingAreaLongNote,
         },
         {
           label: translate(locale, { en: "Population density", th: "ความหนาแน่นประชากร", zh: "人口密度" }),
@@ -1080,47 +1049,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       ]), locale),
     },
     {
-      id: "positioning",
-      title: translate(locale, {
-        en: "Context and positioning",
-        th: "บริบทและการวางตำแหน่ง",
-        zh: "城市语境与定位",
-      }),
-      items: compactFacts([
-        {
-          label: translate(locale, { en: "Global analog", th: "เมืองเทียบเคียง", zh: "全球类比" }),
-          value: analogHeadline,
-          note: comparison
-            ? (locale === "zh" ? comparison.whyZh : locale === "th" ? comparison.whyTh : comparison.why)
-            : cityContext?.unanswered
-              // A city with no analog says what is open instead of repeating
-              // a comparison it does not have.
-              ? getLocalizedText(locale, cityContext.unanswered)
-              : getLocalizedText(locale, research.compareNote),
-        },
-        {
-          label: translate(locale, { en: "Known for", th: "ขึ้นชื่อเรื่อง", zh: "代表特征" }),
-          value: contextHighlight,
-        },
-        {
-          label: translate(locale, { en: "Livelihood pattern", th: "วิถีเศรษฐกิจหลัก", zh: "生计结构" }),
-          // The row carries the city framing; the texture card carries the
-          // measured livelihood. Printing both here would put the same
-          // paragraph on the screen twice.
-          value: getContextText(
-            locale,
-            cityContext?.cityLine ?? cityContext?.livelihood,
-            getLocalizedText(locale, research.dailyLife),
-            getLocalizedText(locale, research.dailyLife),
-          ),
-        },
-        {
-          label: translate(locale, { en: "Main constraint", th: "ข้อจำกัดหลัก", zh: "主要限制" }),
-          value: analogyBreak,
-        },
-      ]),
-    },
-    {
       id: "investment",
       title: translate(locale, {
         en: "Investment frame",
@@ -1128,20 +1056,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
         zh: "投资框架",
       }),
       items: compactFacts([
-        {
-          label: translate(locale, { en: "Developability", th: "ศักยภาพพัฒนา", zh: "可开发性" }),
-          value: `${developability.total}% · ${developabilityLabel}`,
-          note: translate(locale, {
-            en: `Growth ${developability.growthCapacity}% · Infra ${developability.infraReadiness}% · Livability ${developability.livabilityBase}%`,
-            th: `เติบโต ${developability.growthCapacity}% · โครงสร้าง ${developability.infraReadiness}% · ความน่าอยู่ ${developability.livabilityBase}%`,
-            zh: `增长 ${developability.growthCapacity}% · 基础设施 ${developability.infraReadiness}% · 宜居 ${developability.livabilityBase}%`,
-          }),
-        },
-        {
-          label: translate(locale, { en: "Lead mechanism", th: "กลไกนำ", zh: "主机制" }),
-          value: leadInstrumentName,
-          note: dossier?.leadRecommendation?.reasonSummary[locale] ?? city.financeSignal.line[locale],
-        },
         {
           label: translate(locale, { en: "Immediate next move", th: "ก้าวถัดไปทันที", zh: "近期首要动作" }),
           value: leadAction,
@@ -1155,15 +1069,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
             : locale === "th"
               ? financing.competitiveAdvantageTh
               : financing.competitiveAdvantage,
-        },
-        {
-          label: translate(locale, { en: "Evidence posture", th: "สถานะหลักฐาน", zh: "证据状态" }),
-          value: `${dossier?.confidenceLabel ?? DATA_CONFIDENCE_LABELS[city.dataConfidence ?? "medium"][locale]} · ${city.provenanceCount}`,
-          note: translate(locale, {
-            en: `Catalogue date ${formatIsoDate(city.freshness.lastVerifiedAt)} · ${city.evidenceItems.length} evidence items`,
-            th: `วันที่ในทะเบียน ${formatIsoDate(city.freshness.lastVerifiedAt)} · หลักฐาน ${city.evidenceItems.length} รายการ`,
-            zh: `目录日期 ${formatIsoDate(city.freshness.lastVerifiedAt)} · ${city.evidenceItems.length} 条证据`,
-          }),
         },
       ]),
     },
@@ -1573,24 +1478,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                   </span>
                 </div>
                 <p className="city-dossier-thesis">{dossier.operatingSummary}</p>
-                <div className="record-grid city-dossier-record-grid">
-                  <div className="record-item">
-                    <span className="record-label">{translate(locale, { en: "Lead step", th: "ขั้นนำ", zh: "领先步骤" })}</span>
-                    <span className="record-value">{dossier.leadStepLabel}</span>
-                  </div>
-                  <div className="record-item">
-                    <span className="record-label">{translate(locale, { en: "Ready", th: "พร้อม", zh: "就绪" })}</span>
-                    <span className="record-value">{dossier.readySteps.length}/5</span>
-                  </div>
-                  <div className="record-item">
-                    <span className="record-label">{translate(locale, { en: "Building", th: "กำลังสร้าง", zh: "建设中" })}</span>
-                    <span className="record-value">{dossier.buildingSteps.length}/5</span>
-                  </div>
-                  <div className="record-item">
-                    <span className="record-label">{translate(locale, { en: "Gap", th: "ยังขาด", zh: "缺口" })}</span>
-                    <span className="record-value">{dossier.gapSteps.length}/5</span>
-                  </div>
-                </div>
               </div>
 
               <DossierReadingNotes notes={dossier.cards} />
@@ -1857,63 +1744,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                 </span>
               </div>
               <p className="city-analog-note">{contextHighlight}</p>
-            </div>
-
-            <div className="city-analog-metric-grid">
-              <div className="city-analog-metric">
-                <span className="city-analog-metric-label">{translate(locale, { en: "Population", th: "ประชากร", zh: "人口" })}</span>
-                <span className="city-analog-metric-value">{populationLabel}</span>
-                <span className="city-analog-metric-note">
-                  {comparison
-                    ? translate(locale, {
-                        en: `Peer reference ${comparison.population}`,
-                        th: `เมืองอ้างอิง ${comparison.population}`,
-                        zh: `对标参考 ${comparison.population}`,
-                      })
-                    : REGION_LABELS[city.region][locale]}
-                </span>
-              </div>
-              <div className="city-analog-metric">
-                <span className="city-analog-metric-label">{translate(locale, { en: "Land area", th: "พื้นที่", zh: "土地面积" })}</span>
-                <span className="city-analog-metric-value">{landArea ? formatAreaKm2(landArea) : pendingValue}</span>
-                <span className="city-analog-metric-note">
-                  {density
-                    ? translate(locale, {
-                        en: `Density ${formatDensity(density)}`,
-                        th: `ความหนาแน่น ${formatDensity(density)}`,
-                        zh: `人口密度 ${formatDensity(density)}`,
-                      })
-                    : missingAreaShortNote}
-                </span>
-              </div>
-              <div className="city-analog-metric">
-                <span className="city-analog-metric-label">{translate(locale, { en: "Avg. income", th: "รายได้เฉลี่ย", zh: "平均收入" })}</span>
-                <span className="city-analog-metric-value">
-                  {city.metrics.avgMonthlyIncome ? formatBahtCompact(city.metrics.avgMonthlyIncome) : "—"}
-                </span>
-                <span className="city-analog-metric-note">
-                  {city.metrics.gppPerCapita
-                    ? translate(locale, {
-                        en: `GPP/capita ${formatBahtCompact(city.metrics.gppPerCapita)}`,
-                        th: `GPP/หัว ${formatBahtCompact(city.metrics.gppPerCapita)}`,
-                        zh: `人均GPP ${formatBahtCompact(city.metrics.gppPerCapita)}`,
-                      })
-                    : translate(locale, { en: "Economic baseline still thin", th: "ฐานเศรษฐกิจยังบาง", zh: "经济基线仍偏薄" })}
-                </span>
-              </div>
-              <div className="city-analog-metric">
-                <span className="city-analog-metric-label">{translate(locale, { en: "Economic DNA", th: "DNA เศรษฐกิจ", zh: "经济DNA" })}</span>
-                <span className="city-analog-metric-value">{economicDNA}</span>
-                <span className="city-analog-metric-note">
-                  {city.metrics.gppGrowthRate != null
-                    ? translate(locale, {
-                        en: `Growth ${formatPercent(city.metrics.gppGrowthRate)}`,
-                        th: `เติบโต ${formatPercent(city.metrics.gppGrowthRate)}`,
-                        zh: `增长 ${formatPercent(city.metrics.gppGrowthRate)}`,
-                      })
-                    : translate(locale, { en: "Growth rate not curated yet", th: "ยังไม่มีอัตราเติบโต", zh: "增长率尚未整理" })}
-                </span>
-              </div>
             </div>
           </div>
 
