@@ -6962,6 +6962,8 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
     height: 100%;
   }
 
+  .city-hero-photo > img:first-child { position: absolute; inset: 0; }
+
   .city-hero-photo img {
     position: relative;
     width: 100%;
@@ -7674,6 +7676,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 
 .ranking-view-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   margin-bottom: 0.75rem;
   border-bottom: 1px solid var(--5);
@@ -7702,7 +7705,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
    padding and gap bring the row inside without touching the labels. */
 @media (max-width: 400px) {
   .ranking-view-tabs { min-width: 0; }
-  .ranking-view-tab { padding: 0.6rem 0.85rem; gap: 0.35rem; }
+  .ranking-view-tab { padding: .6rem min(.85rem, 2vw); gap: .35rem; }
 }
 .ranking-view-tab-icon {
   font-family: var(--mono);
@@ -8091,12 +8094,13 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 }
 .pick-chips {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: auto;
   padding-top: 0.35rem;
 }
 .pick-chip {
-  flex: 1 1 0;
+  flex: 1 1 5rem;
   display: flex;
   flex-direction: column;
   gap: 0.12rem;
@@ -8110,6 +8114,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--3);
+  overflow-wrap: anywhere;
 }
 .pick-chip-value {
   font: 700 var(--text-body) var(--mono);
@@ -12884,9 +12889,9 @@ body:has(.city-evidence-summary) .chat-fab,
 .invest-page > .investment-explorer h2 { font-size: var(--text-body); }
 /* Identity and score fit together; the photograph retains its context. */
 @media screen and (max-width: 719px) {
-  .city-hero-photo, .city-hero-gradient { height: 250px; min-height: 250px; max-height: 250px; margin-bottom: 0; }
-  .city-hero-photo-overlay { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; align-content: end; gap: .75rem; padding: 1rem; }
-  .city-hero-photo-copy { min-width: 0; }
+  .city-hero-photo, .city-hero-gradient { display: grid; height: auto; min-height: 250px; max-height: none; margin-bottom: 0; }
+  .city-hero-photo-overlay { position: relative; display: flex; flex-wrap: wrap; align-items: end; align-content: end; gap: .75rem; padding: 3.5rem 1rem 1rem; }
+  .city-hero-photo-copy { flex: 1 1 11rem; min-width: 0; }
   .city-hero-photo-title { font-size: var(--text-display); line-height: 1.05; }
   .city-hero-photo-score-card { min-width: 0; width: auto; padding: .5rem; }
   .city-hero-photo-score-note { max-width: 10ch; white-space: normal; }
@@ -13158,8 +13163,8 @@ main .decomp-row-header { letter-spacing: 0; text-transform: none; line-height: 
 
 /* The dossier's photograph identifies the place without occupying half a screen. */
 @media screen and (min-width: 720px) {
-  .city-hero-photo, .city-hero-gradient { height: 280px; min-height: 280px; max-height: 280px; }
-  .city-hero-photo-overlay { grid-template-columns: minmax(0, 1fr) auto; padding-block: 1.5rem; }
+  .city-hero-photo, .city-hero-gradient { display: grid; height: auto; min-height: 280px; max-height: none; }
+  .city-hero-photo-overlay { position: relative; grid-template-columns: minmax(0, 1fr) auto; padding-block: 1.5rem; }
 }
 main .city-detail-hero > .section-intro { max-width: 65ch; }
 /* Section labels lead the text; card labels remain a quieter second level. */
@@ -14030,6 +14035,14 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .home-strip-edition a { color: inherit; }
 .rank-row-unassessed { font: 500 var(--text-body)/1.4 var(--font); }
 @media (max-width: 719px) { .dashboard-home .home-city-guide .home-city-guide-byline { display: block; margin: 2px 0 0; } }
+@media (max-width: 719px) {
+  .dashboard-home .home-city-guide .home-city-guide-message { display: contents; }
+  .dashboard-home .home-city-guide .cinematic-hero-title { grid-column: 1 / -1; grid-row: 1; position: relative; z-index: 1; }
+  .dashboard-home .home-city-guide .home-city-guide-reading { grid-column: 1; grid-row: 2; padding-bottom: 12px; }
+  .dashboard-home .home-city-guide .home-city-guide-visual { grid-row: 1 / span 2; }
+  .dashboard-home .home-city-guide .home-hero-search { grid-row: 3; }
+  .dashboard-home .home-city-guide .home-city-guide-actions { grid-row: 4; }
+}
 @media (min-width: 1200px) { .page-shell:has(.dashboard-home) nav.topbar { padding-inline: calc((100% - var(--w)) / 2 + var(--gutter)); } }
 
 /* Second audit pass (independent auditor, 30 Oct 2026): header on the hero's own gutter below 1200,
@@ -14059,8 +14072,8 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .nong-plub-card.nong-plub-infographic .nong-plub-site-name{margin:0}
 .nong-plub-card.nong-plub-infographic .nong-plub-illustration{grid-column:1;grid-row:2;width:100%;height:auto;contain:size;object-fit:cover;object-position:50% 0;align-self:stretch;border-bottom:1px solid var(--5)}
 .nong-plub-card.nong-plub-infographic .nong-plub-story-col{grid-column:2;grid-row:2;align-self:stretch;max-width:none;border-bottom:1px solid var(--5)}
-.nong-plub-card.nong-plub-infographic .nong-plub-profile-label{display:flex;align-items:center;height:var(--plub-pitch);margin:0}
-.nong-plub-card.nong-plub-infographic .nong-plub-signals li{min-height:var(--plub-pitch);height:var(--plub-pitch)}
+.nong-plub-card.nong-plub-infographic .nong-plub-profile-label{display:flex;align-items:center;min-height:var(--plub-pitch);margin:0}
+.nong-plub-card.nong-plub-infographic .nong-plub-signals li{min-height:var(--plub-pitch)}
 .nong-plub-card.nong-plub-infographic .nong-plub-intro-notes{grid-column:1/-1;grid-row:3;padding-block:8px 10px}
 .nong-plub-card.nong-plub-infographic .nong-plub-extremes{margin:0 0 6px}
 .nong-plub-card.nong-plub-infographic .nong-plub-score-note{margin:0 0 6px}
