@@ -106,20 +106,43 @@ function measureBorderRoles() {
     for (const l of classify(el)) counts[l.role] += 1;
   }
 
-  // A SPECIAL SECTION: a section that carries its own painted ground or
-  // its own structural rule. A page made of one flat run has none.
-  const sections = [...document.querySelectorAll("main section, main > div, main > aside, main > header")];
+  // A SPECIAL SECTION: a GROUP that carries its own painted ground or its
+  // own structural rule, so the reader sees a division rather than one
+  // long flat run.
+  //
+  // The search covers the WHOLE PAGE, not only <main>: the news band and
+  // the newsletter block render as siblings of <main> in App.tsx, and a
+  // check that stops at </main> reports a page as flat when its special
+  // section is simply one level out.
+  //
+  // The search is over EVERY element, not only the direct children of
+  // <main>: a page's sections are usually nested (main > div > section),
+  // and a check that only looks one level down reports a page as flat
+  // when its special section is simply two levels deeper. A container
+  // that carries a treatment must also GROUP something — at least two
+  // element children — otherwise it is a leaf with a border, not a
+  // section.
   const special = [];
-  for (const s of sections) {
-    if (!visible(s)) continue;
-    const cs = getComputedStyle(s);
+  for (const el of document.querySelectorAll("main *, .news-section, .newsletter-section, .site-footer *")) {
+    if (!visible(el)) continue;
+    if (el.closest(".site-footer")) continue; // the footer is its own zone
+    const cs = getComputedStyle(el);
     const bg = cs.backgroundColor;
     const opaque = bg && bg !== "transparent" && !/rgba\([^)]*,\s*0\)/.test(bg);
-    const structural = classify(s).some(l => l.role === "structural" || l.role === "emphasis");
     const tinted = opaque && bg !== "rgb(255, 255, 255)" && bg !== "rgb(246, 248, 250)";
-    if (tinted || structural) {
-      special.push({ cls: String(s.className || s.tagName).slice(0, 40), tinted, structural });
-    }
+    const lines = classify(el);
+    const structural = lines.some(l => l.role === "structural" || l.role === "emphasis");
+    if (!tinted && !structural) continue;
+    // A section GROUPS content. Counting direct element children is too
+    // strict: a real section is often one wrapper (.section) around a
+    // heading and a body, so the wrapper has one child and the group
+    // lives one level down. Count the text-bearing descendants instead.
+    const grouped = [...el.querySelectorAll("h1,h2,h3,h4,p,li,td,th,img,button,a")].filter(k => {
+      const kr = k.getBoundingClientRect();
+      return kr.height > 4 && kr.width > 4 && (k.textContent || "").trim().length > 0;
+    }).length;
+    if (grouped < 2) continue; // a leaf with a rule is not a section
+    special.push({ cls: String(el.className || el.tagName).slice(0, 40), tinted, structural });
   }
 
   const roles = Object.entries(counts).filter(([, n]) => n > 0).map(([k]) => k);
