@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, type ReactNode } from "react";
 import { useCitySummaries } from "./cityApi";
 import { getCityName, translate } from "./cityPresentation";
-import { THAILAND_BOUNDS, CITY_COORDS as coords, projectTo, esriTileUrl, tierColor } from "./mapUtils";
+import { THAILAND_BOUNDS, CITY_COORDS as coords, createEsriMap, tierColor } from "./mapUtils";
 import { REGIONS_ORDERED, REGION_LABELS } from "./regions";
 import type { Locale, SmartCity } from "./types";
 import { TIER_LABELS } from "./types";
@@ -17,16 +17,14 @@ interface Props {
 const B = THAILAND_BOUNDS;
 const W = 560, H = 740;
 
-function project(lat: number, lng: number) {
-  return projectTo(lat, lng, B, W, H, 20);
-}
+const { project, imageUrl } = createEsriMap(B, W, H);
 
 type MapLayer = "base" | "satellite" | "terrain";
 
 const layerUrls: Record<MapLayer, string> = {
-  base: esriTileUrl(B, W, H, "light"),
-  satellite: esriTileUrl(B, W, H, "satellite"),
-  terrain: esriTileUrl(B, W, H, "topo"),
+  base: imageUrl("light"),
+  satellite: imageUrl("satellite"),
+  terrain: imageUrl("topo"),
 };
 
 const LAYER_LABELS: Record<MapLayer, { en: string; th: string; zh: string }> = {

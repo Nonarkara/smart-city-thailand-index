@@ -299,7 +299,8 @@ function CompareTable({
 }
 
 export default function ComparisonGrid({ locale, onNavigate, preselectedIds }: Props) {
-  const { data: cities } = useCitySummaries();
+  const { data } = useCitySummaries();
+  const cities = useMemo(() => data.filter(city => city.status !== "registered"), [data]);
   const sortedCities = useMemo(() => sortCities(cities, "composite"), [cities]);
   const validPreselected = useMemo(() => {
     if (!preselectedIds || preselectedIds.length === 0) return null;

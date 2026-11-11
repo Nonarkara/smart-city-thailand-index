@@ -1,5 +1,4 @@
-import { useMemo } from "react";
-import { MAP_BOUNDS, CITY_COORDS, NEIGHBOR_LABELS, projectTo, esriTileUrl, tierColor } from "./mapUtils";
+import { MAP_BOUNDS, CITY_COORDS, NEIGHBOR_LABELS, createEsriMap, tierColor } from "./mapUtils";
 import { getCityName, getDistinctProvinceName, translate } from "./cityPresentation";
 import type { Locale, SmartCity } from "./types";
 
@@ -13,14 +12,12 @@ interface Props {
 
 const W = 320;
 const H = 420;
+const { project, imageUrl } = createEsriMap(MAP_BOUNDS, W, H);
+const tileUrl = imageUrl("light", 2);
 
 export default function ThailandMiniMap({ cities, selectedCity, locale, onSelect, onNavigate }: Props) {
-  const tileUrl = useMemo(() => esriTileUrl(MAP_BOUNDS, W * 2, H * 2, "light"), []);
-
-  const proj = (lat: number, lng: number) => projectTo(lat, lng, MAP_BOUNDS, W, H, 12);
-
   const selectedCoord = selectedCity && CITY_COORDS[selectedCity.id];
-  const selectedPos = selectedCoord ? proj(selectedCoord[0], selectedCoord[1]) : null;
+  const selectedPos = selectedCoord ? project(selectedCoord[0], selectedCoord[1]) : null;
 
   return (
     <div className="mini-map-container">
@@ -34,7 +31,7 @@ export default function ThailandMiniMap({ cities, selectedCity, locale, onSelect
 
         {/* Neighbor labels */}
         {NEIGHBOR_LABELS.map(n => {
-          const p = proj(n.lat, n.lng);
+          const p = project(n.lat, n.lng);
           return (
             <text
               key={n.name}
@@ -52,7 +49,7 @@ export default function ThailandMiniMap({ cities, selectedCity, locale, onSelect
         {cities.map(city => {
           const coord = CITY_COORDS[city.id];
           if (!coord) return null;
-          const p = proj(coord[0], coord[1]);
+          const p = project(coord[0], coord[1]);
           const isSelected = selectedCity?.id === city.id;
           return (
             <circle

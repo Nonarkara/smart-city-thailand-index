@@ -9,26 +9,43 @@ export const MAP_BOUNDS = { minLat: 4.0, maxLat: 22.0, minLng: 92.0, maxLng: 110
 // Thailand-only bounding box (tight view for MapDashboardPage)
 export const THAILAND_BOUNDS = { minLat: 5.4, maxLat: 20.6, minLng: 97.2, maxLng: 105.8 };
 
-export function projectTo(
-  lat: number, lng: number,
-  bounds: typeof MAP_BOUNDS, width: number, height: number, pad = 20,
-) {
-  return {
-    x: ((lng - bounds.minLng) / (bounds.maxLng - bounds.minLng)) * (width - pad * 2) + pad,
-    y: ((bounds.maxLat - lat) / (bounds.maxLat - bounds.minLat)) * (height - pad * 2) + pad,
-  };
-}
+const ESRI_SERVICES = {
+  light: "Canvas/World_Light_Gray_Base",
+  satellite: "World_Imagery",
+  topo: "World_Topo_Map",
+} as const;
 
-export function esriTileUrl(
-  bounds: typeof MAP_BOUNDS, width: number, height: number,
-  layer: "light" | "satellite" | "topo" = "light",
-) {
-  const services: Record<string, string> = {
-    light: "Canvas/World_Light_Gray_Base",
-    satellite: "World_Imagery",
-    topo: "World_Topo_Map",
+const EARTH_RADIUS = 6_378_137;
+const toRadians = (degrees: number) => degrees * Math.PI / 180;
+const mercatorX = (lng: number) => EARTH_RADIUS * toRadians(lng);
+const mercatorY = (lat: number) => EARTH_RADIUS * Math.log(Math.tan(Math.PI / 4 + toRadians(lat) / 2));
+
+export function createEsriMap(bounds: typeof MAP_BOUNDS, width: number, height: number) {
+  const west = mercatorX(bounds.minLng);
+  const east = mercatorX(bounds.maxLng);
+  const south = mercatorY(bounds.minLat);
+  const north = mercatorY(bounds.maxLat);
+  const centerX = (west + east) / 2;
+  const centerY = (south + north) / 2;
+  // Match the image aspect ratio in Web Mercator so Esri and the SVG use the same extent.
+  const metresPerPixel = Math.max((east - west) / width, (north - south) / height);
+  const halfWidth = width * metresPerPixel / 2;
+  const halfHeight = height * metresPerPixel / 2;
+  const minX = centerX - halfWidth;
+  const maxY = centerY + halfHeight;
+  const bbox = [minX, centerY - halfHeight, centerX + halfWidth, maxY].join(",");
+
+  return {
+    project(lat: number, lng: number) {
+      return {
+        x: (mercatorX(lng) - minX) / metresPerPixel,
+        y: (maxY - mercatorY(lat)) / metresPerPixel,
+      };
+    },
+    imageUrl(layer: keyof typeof ESRI_SERVICES, pixelRatio = 1) {
+      return `https://server.arcgisonline.com/ArcGIS/rest/services/${ESRI_SERVICES[layer]}/MapServer/export?bbox=${bbox}&bboxSR=3857&imageSR=3857&size=${width * pixelRatio},${height * pixelRatio}&f=image&format=png`;
+    },
   };
-  return `https://server.arcgisonline.com/ArcGIS/rest/services/${services[layer]}/MapServer/export?bbox=${bounds.minLng},${bounds.minLat},${bounds.maxLng},${bounds.maxLat}&bboxSR=4326&size=${width},${height}&f=image&format=png`;
 }
 
 export function tierColor(tier: CityTier) {

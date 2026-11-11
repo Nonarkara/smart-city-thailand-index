@@ -23,9 +23,9 @@ import { getCityHeritage } from "./cityHeritage";
 import { getCityResearchSources, getLocalizedList, getLocalizedText, resolveCityResearch } from "./cityResearch";
 import {
   getCityName,
+  getDistinctProvinceName,
   getCityRealityLabel,
   getCityTagline,
-  getProvinceName,
   translate,
 } from "./cityPresentation";
 import { ResponsiveImage } from "./mediaAssets";
@@ -260,63 +260,6 @@ function getActionExampleText(
   if (locale === "th") return step.worldExampleTh;
   if (locale === "zh") return step.worldExampleZh;
   return step.worldExample;
-}
-
-function inferGeographyDescriptor(haystack: string, locale: Locale): string {
-  if (/island|beach|coastal|marine|andaman|gulf/i.test(haystack)) {
-    return translate(locale, {
-      en: "Island / coastal gateway",
-      th: "เมืองเกาะ / ประตูชายฝั่ง",
-      zh: "海岛 / 海岸门户",
-    });
-  }
-  if (/border|cross-border|corridor|trade town/i.test(haystack)) {
-    return translate(locale, {
-      en: "Border trade corridor",
-      th: "ระเบียงการค้าชายแดน",
-      zh: "边境贸易走廊",
-    });
-  }
-  if (/river|canal|lake|confluence/i.test(haystack)) {
-    return translate(locale, {
-      en: "Water-based urban system",
-      th: "ระบบเมืองยึดโยงน้ำ",
-      zh: "水系城市系统",
-    });
-  }
-  if (/campus|university|research|knowledge/i.test(haystack)) {
-    return translate(locale, {
-      en: "Campus / knowledge district",
-      th: "ย่านแคมปัส / ความรู้",
-      zh: "校园 / 知识城区",
-    });
-  }
-  if (/industrial|manufacturing|factory|petrochemical|eec|logistics/i.test(haystack)) {
-    return translate(locale, {
-      en: "Industrial growth corridor",
-      th: "ระเบียงอุตสาหกรรมเติบโต",
-      zh: "工业增长走廊",
-    });
-  }
-  if (/heritage|historic|temple|old town|cultural/i.test(haystack)) {
-    return translate(locale, {
-      en: "Historic urban core",
-      th: "แกนเมืองประวัติศาสตร์",
-      zh: "历史城市核心",
-    });
-  }
-  if (/cbd|metro|office|commercial district|capital/i.test(haystack)) {
-    return translate(locale, {
-      en: "Metropolitan commercial district",
-      th: "ย่านพาณิชย์ในมหานคร",
-      zh: "大都市商业城区",
-    });
-  }
-  return translate(locale, {
-    en: "Regional secondary city",
-    th: "เมืองศูนย์กลางภูมิภาค",
-    zh: "区域次级中心城市",
-  });
 }
 
 function isFactItem(value: FactItem | null): value is FactItem {
@@ -676,7 +619,6 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   }
 
   const cityName = getCityName(city, locale);
-  const provinceName = getProvinceName(city, locale);
   const cityTagline = getCityTagline(city, locale);
   const tierSymbol = city.tier === "alpha" ? "α" : city.tier === "beta" ? "β" : "γ";
   const overallGrade = statGrade(city.compositeScore);
@@ -697,8 +639,8 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   const developability = computeDevelopability(city);
   const steps = getTailoredSteps(city);
   const financing = getFinancingAdvice(city);
-  // Rank across all cities by composite score (descending). Ties share position; we use 1-indexed.
-  const citiesByComposite = [...allCities].sort((a, b) => b.compositeScore - a.compositeScore);
+  // Rank across assessed cities by composite score (descending). Ties share position; we use 1-indexed.
+  const citiesByComposite = allCities.filter(city => city.status !== "registered");
   const cityRank = citiesByComposite.filter(c => c.compositeScore > city.compositeScore).length + 1;
   const cityRankTotal = citiesByComposite.length;
   // Tier-median developability delta.
@@ -766,28 +708,7 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
     th: "คำนวณจากฐานประชากรและฐานพื้นที่ที่แก้ไขแล้ว โปรดดู scope ของแหล่งข้อมูลก่อนเทียบความหนาแน่นแบบเทศบาลแท้",
     zh: "根据已解析的人口与面积基线计算；比较精确市政密度前请先检查来源范围。",
   });
-  const geographicSignal = inferGeographyDescriptor(
-    [
-      comparison?.why ?? "",
-      getLocalizedText("en", research.compareNote),
-      getLocalizedText("en", research.signatureStory),
-      city.tagline,
-      city.metrics.industryComposition ?? "",
-    ].join(" "),
-    locale,
-  );
   const economicDNA = getLocalizedList(locale, research.industries).slice(0, 4).join(" · ");
-  const cityOrientation = hasPopulationBaseline
-    ? translate(locale, {
-      en: `${geographicSignal} in ${provinceName}. ${getStatusSummary(city, locale)} with ${city.smartDimensions.length} smart dimensions in play, serving a population base of ${populationLabel}${landArea ? ` across ${formatAreaKm2(landArea)}` : ""}.`,
-      th: `${geographicSignal}ใน${provinceName} ${getStatusSummary(city, locale)} ครอบคลุม ${city.smartDimensions.length} มิติอัจฉริยะ รองรับฐานประชากร ${populationLabel}${landArea ? ` บนพื้นที่ ${formatAreaKm2(landArea)}` : ""}.`,
-      zh: `${provinceName}的${geographicSignal}。${getStatusSummary(city, locale)}，覆盖 ${city.smartDimensions.length} 个智慧维度，服务人口基础约 ${populationLabel}${landArea ? `，面积 ${formatAreaKm2(landArea)}` : ""}。`,
-    })
-    : translate(locale, {
-      en: `${geographicSignal} in ${provinceName}. ${getStatusSummary(city, locale)} with ${city.smartDimensions.length} smart dimensions in play; the public population baseline is still pending${landArea ? ` for a ${formatAreaKm2(landArea)} area` : ""}.`,
-      th: `${geographicSignal}ใน${provinceName} ${getStatusSummary(city, locale)} ครอบคลุม ${city.smartDimensions.length} มิติอัจฉริยะ แต่ฐานประชากรสาธารณะยังรอยืนยัน${landArea ? ` สำหรับพื้นที่ ${formatAreaKm2(landArea)}` : ""}.`,
-      zh: `${provinceName}的${geographicSignal}。${getStatusSummary(city, locale)}，覆盖 ${city.smartDimensions.length} 个智慧维度；公开人口基线仍待核验${landArea ? `，面积 ${formatAreaKm2(landArea)}` : ""}。`,
-    });
   const contextHighlight = getContextText(
     locale,
     cityContext?.famousFor,
@@ -840,11 +761,15 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
   };
   const leadAction = dossier?.leadRecommendation?.nextStep[locale] ?? getActionStepText(locale, primaryStep);
   const leadActionEvidence = getActionExampleText(locale, primaryStep);
-  const heroMeta = translate(locale, {
-    en: `${provinceName} · ${getStatusSummary(city, locale, false)} · ${city.smartDimensions.length} smart dimensions`,
-    th: `${provinceName} · ${getStatusSummary(city, locale, false)} · ${city.smartDimensions.length} มิติอัจฉริยะ`,
-    zh: `${provinceName} · ${getStatusSummary(city, locale, false)} · ${city.smartDimensions.length} 个智慧维度`,
-  });  const riskProfileLabel = FINANCE_RISK_LABELS[city.financeProfile.riskProfile][locale];
+  const heroMeta = [
+    getDistinctProvinceName(city, locale),
+    translate(locale, {
+      en: `${city.smartDimensions.length} plan dimensions`,
+      th: `${city.smartDimensions.length} มิติในแผน`,
+      zh: `规划涵盖 ${city.smartDimensions.length} 个维度`,
+    }),
+  ].filter(Boolean).join(" · ");
+  const riskProfileLabel = FINANCE_RISK_LABELS[city.financeProfile.riskProfile][locale];
   const deliveryReadinessLabel = FINANCE_READINESS_LABELS[city.financeProfile.deliveryReadiness][locale];
   const riskPostureNote = city.financeProfile.riskProfile === "low"
     ? translate(locale, {
@@ -1263,7 +1188,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           th: "เรื่องราวเมืองที่คัดสรร — ต้องตรวจสอบแหล่งอ้างอิง",
           zh: "编辑背景叙述——仍需核查来源",
         })}</summary><p>{cityTagline}</p></details>
-        <p className="section-intro">{cityOrientation}</p>
         <InvestmentFit city={city} locale={locale} />
         <CityHeritageGallery city={city} locale={locale} />
 
@@ -1733,7 +1657,6 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
                   page is the friction this section is supposed to remove. */}
               <p className="city-analog-copy">{city.financeSignal.line[locale]}</p>
               <div className="city-analog-tag-row">
-                <span className="city-analog-tag">{geographicSignal}</span>
                 <span className="city-analog-tag">{economicDNA}</span>
                 <span className="city-analog-tag">
                   {translate(locale, {

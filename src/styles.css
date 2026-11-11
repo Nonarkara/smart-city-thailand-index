@@ -14020,14 +14020,15 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .home-strip-note a { display: inline; margin-left: 8px; white-space: nowrap; }
 .home-strip-edition { display: block; padding-top: 6px; }
 .home-strip-edition > span { display: inline; margin-right: 14px; }
-.home-strip-edition .hero-status-note { flex-basis: auto; display: block; margin-bottom: 2px; }
+.home-strip-edition .hero-status-note { display: inline; }
 
 /* The bar's content sits on the page column. */
 @media (min-width: 1200px) { .page-shell nav.topbar { padding-left: calc((100% - var(--w)) / 2 + var(--gutter)); padding-right: calc((100% - var(--w)) / 2 + var(--gutter)); } }
 
 /* Search is the one primary action: the three destinations are plain links, not a second button. */
 .dashboard-home .home-city-guide .home-city-guide-actions .home-city-guide-action { background: none; color: #fff; padding: 0; }
-.home-strip-edition > span:last-child { display: block; }
+.home-strip-edition a { color: inherit; }
+.rank-row-unassessed { font: 500 var(--text-body)/1.4 var(--font); }
 @media (max-width: 719px) { .dashboard-home .home-city-guide .home-city-guide-byline { display: block; margin: 2px 0 0; } }
 @media (min-width: 1200px) { .page-shell:has(.dashboard-home) nav.topbar { padding-inline: calc((100% - var(--w)) / 2 + var(--gutter)); } }
 

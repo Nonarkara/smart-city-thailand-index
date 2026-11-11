@@ -62,7 +62,7 @@ describe("App", () => {
     await user.click(screen.getByRole("menuitem", { name: "Cities" }));
     await user.click(screen.getByRole("menuitem", { name: "Rankings" }));
     await vi.dynamicImportSettled();
-    await screen.findByRole("heading", { name: /the moneyball of thai city investment/i });
+    await screen.findByRole("heading", { name: /thailand’s smart city rankings/i });
 
     expect(navLinks).not.toHaveClass("nav-links-open");
   });

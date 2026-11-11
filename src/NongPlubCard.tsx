@@ -1,9 +1,9 @@
 import React from "react";
-import { LEAGUE_LABELS, PILLAR_LABELS, type Locale, type SmartCity } from "./types";
+import { PILLAR_LABELS, type Locale, type SmartCity } from "./types";
 import { getNongPlubProfile } from "./nongPlubProfile";
 import { SCITI_DATA_CUTOFF_ISO } from "./methodologySpec";
 import { getNongPlubRecord, getNongPlubOutfitLabel, NONG_PLUB_AVATAR } from "./nongPlubData";
-import { getCityName, getDistinctProvinceName } from "./cityPresentation";
+import { getCityName } from "./cityPresentation";
 
 interface NongPlubCardProps {
   city: SmartCity;
@@ -15,7 +15,6 @@ export function NongPlubCard({ city, locale, className = "" }: NongPlubCardProps
   const record = getNongPlubRecord(city);
   const cityName = getCityName(city, locale);
   const profile = getNongPlubProfile(city);
-  const province = getDistinctProvinceName(city, locale);
   const outfitLabel = getNongPlubOutfitLabel(record.outfit, locale);
 
   const t = (en: string, th: string, zh: string) => {
@@ -32,7 +31,6 @@ export function NongPlubCard({ city, locale, className = "" }: NongPlubCardProps
     >
       <header className="nong-plub-intro-header">
         <h3 className="nong-plub-site-name mascot-hand">{t("One minute with Nong Plub", "หนึ่งนาทีกับน้องพลับ", "小普的一分钟导读")}</h3>
-        <p>{[city.league ? LEAGUE_LABELS[locale][city.league] : t("Project scope unverified", "ขอบเขตโครงการยังไม่ยืนยัน", "项目范围待核实"), province].filter(Boolean).join(" · ")}</p>
       </header>
       <img
         src={record.assetPath}

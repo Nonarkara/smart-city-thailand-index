@@ -10,7 +10,7 @@ import RankingsMapView from "./RankingsMapView";
 import { getCityPhotoAsset } from "./cityMedia";
 import { ResponsiveImage } from "./mediaAssets";
 import { useCitySummaries } from "./cityApi";
-import { computeDevelopability, getMoneyballProfile } from "./cityAnalytics";
+import { getMoneyballProfile } from "./cityAnalytics";
 import {
   getCityName,
   getCityRealityLabel,
@@ -33,6 +33,7 @@ import { toAppPath } from "./routing";
 interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
+  guide?: React.ReactNode;
 }
 
 type RegionFilter = SmartCity["region"] | "all";
@@ -237,7 +238,7 @@ function MoneyballPicksStrip({
   );
 }
 
-export default function RankingsPage({ locale, onNavigate }: Props) {
+export default function RankingsPage({ locale, onNavigate, guide }: Props) {
   const { data: cities } = useCitySummaries();
   const [viewMode, setViewMode] = useState<"directory" | "compare" | "map" | "gallery">("directory");
   const [lensId, setLensId] = useState<string>(() => getPresetById(new URLSearchParams(window.location.search).get("lens") ?? "balanced").id);
@@ -257,28 +258,28 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
 
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
   const lens = getPresetById(lensId);
+  const unassessed = t({ en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" });
   const isBalanced = lens.id === "balanced";
 
   const enriched = useMemo(
     () =>
       cities.map(city => {
-        const profile = getMoneyballProfile(city);
-        const readiness = computeDevelopability(city).total;
-        const edgeCount = profile.edges.filter(e => e.advantage).length;
+        if (city.status === "registered") return { city, edgeCount: 0, lensScore: null };
+        const edgeCount = getMoneyballProfile(city).edges.filter(e => e.advantage).length;
         const lensScore = isBalanced
           ? city.compositeScore
           : computePresetScore(city, lens);
-        return { city, readiness, edgeCount, lensScore };
+        return { city, edgeCount, lensScore };
       }),
     [cities, lens, isBalanced],
   );
 
-  const lensScoreValues = useMemo(() => enriched.map(e => e.lensScore), [enriched]);
+  const lensScoreValues = useMemo(() => enriched.flatMap(e => e.lensScore === null ? [] : [e.lensScore]).sort((a, b) => b - a), [enriched]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return enriched.filter(({ city }) => {
-      if (tierFilter !== "all" && city.tier !== tierFilter) return false;
+      if (tierFilter !== "all" && (city.status === "registered" || city.tier !== tierFilter)) return false;
       if (statusFilter !== "all" && city.status !== statusFilter) return false;
       if (regionFilter !== "all" && city.region !== regionFilter) return false;
       if (q.length > 0) {
@@ -292,7 +293,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
   }, [enriched, tierFilter, statusFilter, regionFilter, query]);
 
   const sorted = useMemo(() => {
-    return [...filtered].sort((a, b) => b.lensScore - a.lensScore);
+    return [...filtered].sort((a, b) => (b.lensScore ?? -1) - (a.lensScore ?? -1));
   }, [filtered]);
 
   // A filter in play means the reader already chose what they want — never cap
@@ -316,6 +317,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
       gamma: undefined,
     };
     for (const entry of enriched) {
+      if (entry.lensScore === null) continue;
       const t = entry.city.tier;
       if (!byTier[t] || entry.lensScore > byTier[t]!.lensScore) {
         byTier[t] = { city: entry.city, lensScore: entry.lensScore };
@@ -338,16 +340,16 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
         <section className="page-hero section reveal visible">
           <h1 className="hero-title">
             {t({
-              en: "The Moneyball of Thai city investment",
-              th: "มันนี่บอลของการลงทุนในเมืองไทย",
-              zh: "泰国城市投资的点球成金",
+              en: "Thailand’s smart city rankings",
+              th: "อันดับเมืองอัจฉริยะไทย",
+              zh: "泰国智慧城市排名",
             })}
           </h1>
           <p className="hero-strapline">
             {t({
-              en: "Choose a purpose to reweight the seven research scores. The diagram shows the weights; there are no hidden city bonuses. These are screening priorities, not forecasts of returns or personal suitability.",
-              th: "เลือกวัตถุประสงค์เพื่อปรับน้ำหนักคะแนนวิจัยทั้งเจ็ด แผนภาพแสดงน้ำหนัก ไม่มีโบนัสเมืองที่ซ่อนไว้ ใช้คัดกรองเบื้องต้น ไม่ใช่พยากรณ์ผลตอบแทนหรือความเหมาะสมส่วนบุคคล",
-              zh: "按用途调整七项研究评分的权重。图示列明权重，不含隐藏城市加分；用于初步筛选，不预测回报或个人适合程度。",
+              en: "Search the register or compare assessed cities by what matters to you.",
+              th: "ค้นหาในทะเบียน หรือเปรียบเทียบเมืองที่ประเมินแล้วตามเรื่องที่คุณให้ความสำคัญ",
+              zh: "搜索城市名录，或按您关注的维度比较已评估城市。",
             })}
           </p>
           <div className="rankings-primary-search">
@@ -374,8 +376,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
             </button>
           </div>
         </section>
-
-
+        {guide}
 
         <section className="section reveal visible">
           <label className="lens-select-label">
@@ -479,7 +480,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
           ) : viewMode === "gallery" ? (
             /* ─── GALLERY VIEW — editorial photo + fingerprint cards ─── */
             <div className="rankings-gallery">
-              {sorted.map(({ city, lensScore }, idx) => {
+              {sorted.map(({ city, lensScore }) => {
                 const photo = getCityPhotoAsset(city);
                 const provinceName = getDistinctProvinceName(city, locale);
                 const cityName = getCityName(city, locale);
@@ -490,7 +491,7 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                     type="button"
                     className="gallery-card"
                     onClick={() => onNavigate(`/city/${city.id}`)}
-                    aria-label={[cityName, provinceName, lensScore.toFixed(1)].filter(Boolean).join(" — ")}
+                    aria-label={[cityName, provinceName, lensScore?.toFixed(1) ?? unassessed].filter(Boolean).join(" — ")}
                   >
                     <div className="gallery-card-photo-wrap">
                       <ResponsiveImage
@@ -501,8 +502,8 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                         style={{ objectPosition: photo.objectPosition }}
                       />
                       <div className="gallery-card-overlay">
-                        <span className="gallery-card-rank">
-                          {String(idx + 1).padStart(2, "0")}
+                        {lensScore !== null && <><span className="gallery-card-rank">
+                          {String(lensScoreValues.indexOf(lensScore) + 1).padStart(2, "0")}
                         </span>
                         <CityFingerprint
                           scores={city.scores}
@@ -512,17 +513,17 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                           showGrid={true}
                           cityName={cityName}
                           className="gallery-card-fingerprint"
-                        />
+                        /></>}
                       </div>
                     </div>
                     <div className="gallery-card-body">
                       <div className="gallery-card-head">
                         <span className="gallery-card-name">{cityName}</span>
-                        <span className="gallery-card-score">{lensScore.toFixed(1)}</span>
+                        <span className="gallery-card-score">{lensScore?.toFixed(1) ?? unassessed}</span>
                       </div>
                       <div className="gallery-card-meta">
                         {provinceName && <span className="gallery-card-province">{provinceName}</span>}
-                        <span className={`gallery-card-tier gallery-card-tier-${city.tier}`}>{tierSym} {TIER_LABELS[locale][city.tier]}</span>
+                        {lensScore !== null && <span className={`gallery-card-tier gallery-card-tier-${city.tier}`}>{tierSym} {TIER_LABELS[locale][city.tier]}</span>}
                       </div>
                       <NongPlubMiniBadge city={city} locale={locale} asTag={true} />
                     </div>
@@ -593,13 +594,13 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
           {viewMode === "directory" ? (
             <div className="rank-list-wrap">
               <ol className="rank-list">
-                {visibleSorted.map(({ city, edgeCount, lensScore }, idx) => {
-                  const pct = percentile(lensScore, lensScoreValues);
+                {visibleSorted.map(({ city, edgeCount, lensScore }) => {
+                  const pct = lensScore === null ? null : percentile(lensScore, lensScoreValues);
                   const isSelected = selectedIds.includes(city.id);
                   const cityPath = `/city/${city.id}`;
                   const handleClick = (event: React.MouseEvent) => {
                     event.preventDefault();
-                    if (compareMode) toggleSelect(city.id);
+                    if (compareMode && lensScore !== null) toggleSelect(city.id);
                     else onNavigate(cityPath);
                   };
                   return (
@@ -612,9 +613,9 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                         className="rank-row-link"
                         onClick={handleClick}
                       >
-                        <span className="rank-row-num">{String(idx + 1).padStart(2, "0")}</span>
+                        <span className="rank-row-num">{lensScore === null ? "—" : String(lensScoreValues.indexOf(lensScore) + 1).padStart(2, "0")}</span>
                         {/* xs fingerprint — unique per-city visual marker */}
-                        <CityFingerprint
+                        {lensScore !== null && <CityFingerprint
                           scores={city.scores}
                           size={32}
                           fillOpacity={0.14}
@@ -622,14 +623,14 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                           showGrid={false}
                           cityName={getCityName(city, locale)}
                           className="rank-row-fingerprint"
-                        />
+                        />}
                         <div className="rank-row-body">
                           <div className="rank-row-head">
                             <span className="rank-row-name">
                               {getCityName(city, locale)}
-                              <span className="rank-row-tier" aria-hidden="true">
+                              {lensScore !== null && <span className="rank-row-tier" aria-hidden="true">
                                 {" "}· {tierSymbol(city.tier)}
-                              </span>
+                              </span>}
                             </span>
                             <span className="rank-row-caption">
                               {[getDistinctProvinceName(city, locale), getCityStatusLabel(city.status, locale), getCityRealityLabel(city.reality, locale)].filter(Boolean).join(" · ")}
@@ -643,13 +644,13 @@ export default function RankingsPage({ locale, onNavigate }: Props) {
                           </div>
                         </div>
                         <span className="rank-row-meta">
-                          <span className="rank-row-score">{lensScore.toFixed(1)}</span>
-                          <span className="rank-row-sub">
+                          <span className={lensScore === null ? "rank-row-score rank-row-unassessed" : "rank-row-score"}>{lensScore?.toFixed(1) ?? unassessed}</span>
+                          {pct !== null && <span className="rank-row-sub">
                             <span className="rank-row-pct">p{pct}</span>
                             <span className={`rank-row-edges ${edgeCount >= 3 ? "is-strong" : ""}`}>
                               {edgeCount} {t({ en: "edges", th: "จุดเด่น", zh: "优势" })}
                             </span>
-                          </span>
+                          </span>}
                         </span>
                       </a>
                     </li>

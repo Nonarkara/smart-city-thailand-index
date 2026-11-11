@@ -161,7 +161,7 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
   }, [cities]);
 
   const sortedForList = useMemo(
-    () => [...cities].sort((a, b) => b.compositeScore - a.compositeScore),
+    () => [...cities].sort((a, b) => Number(a.status === "registered") - Number(b.status === "registered") || b.compositeScore - a.compositeScore),
     [cities],
   );
 
@@ -205,8 +205,9 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
     markersRef.current = [];
 
     citiesWithCoords.forEach(({ city, coords }) => {
-      const size = markerSize(city.compositeScore);
-      const fill = tierColor(city.tier);
+      const assessed = city.status !== "registered";
+      const size = assessed ? markerSize(city.compositeScore) : 6;
+      const fill = assessed ? tierColor(city.tier) : "#566575";
       const marker = L.circleMarker([coords.lat, coords.lng], {
         radius: size / 2,
         weight: 1.5,
@@ -218,10 +219,12 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
 
       const provinceName = getProvinceName(city, locale);
       const cityName = getCityName(city, locale);
-      marker.bindTooltip(
-        `<strong>${cityName}</strong><br/>${provinceName} · ${city.compositeScore.toFixed(1)}`,
-        { direction: "top", offset: [0, -4], className: "ranking-map-tooltip" },
-      );
+      const tooltip = document.createElement("div");
+      const heading = document.createElement("strong");
+      heading.textContent = cityName;
+      const scoreLabel = assessed ? city.compositeScore.toFixed(1) : translate(locale, { en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" });
+      tooltip.append(heading, document.createElement("br"), `${provinceName} · ${scoreLabel}`);
+      marker.bindTooltip(tooltip, { direction: "top", offset: [0, -4], className: "ranking-map-tooltip" });
       marker.on("mouseover", () => setHoveredCity(city));
       marker.on("mouseout", () => setHoveredCity(null));
       marker.on("click", () => onNavigate(`/city/${city.id}`));
@@ -317,10 +320,10 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
                   onMouseEnter={() => setHoveredCity(city)}
                   onMouseLeave={() => setHoveredCity(null)}
                 >
-                  <span className="ranking-map-list-num">{String(idx + 1).padStart(2, "0")}</span>
+                  <span className="ranking-map-list-num">{city.status === "registered" ? "—" : String(idx + 1).padStart(2, "0")}</span>
                   <span className="ranking-map-list-name">{getCityName(city, locale)}</span>
                   <span className="ranking-map-list-province">{province}</span>
-                  <span className="ranking-map-list-score">{city.compositeScore.toFixed(1)}</span>
+                  <span className="ranking-map-list-score">{city.status === "registered" ? "—" : city.compositeScore.toFixed(1)}</span>
                 </a>
               </li>
             );
@@ -369,10 +372,10 @@ export default function RankingsMapView({ locale, cities, onNavigate }: Props) {
                   onMouseEnter={() => setHoveredCity(city)}
                   onMouseLeave={() => setHoveredCity(null)}
                 >
-                  <span className="ranking-map-list-num">{String(absoluteRank).padStart(2, "0")}</span>
+                  <span className="ranking-map-list-num">{city.status === "registered" ? "—" : String(absoluteRank).padStart(2, "0")}</span>
                   <span className="ranking-map-list-name">{getCityName(city, locale)}</span>
                   <span className="ranking-map-list-province">{province}</span>
-                  <span className="ranking-map-list-score">{city.compositeScore.toFixed(1)}</span>
+                  <span className="ranking-map-list-score">{city.status === "registered" ? "—" : city.compositeScore.toFixed(1)}</span>
                 </a>
               </li>
             );

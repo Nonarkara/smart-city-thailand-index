@@ -219,7 +219,7 @@ export const evidenceItems: EvidenceItem[] = [
 
   // ─── Wangchan Valley ───
   { cityId: "wangchan-valley", pillar: "livability", type: "field", titleEn: "Field visit observation: majority of the site is undeveloped, with early infrastructure phases underway.", titleTh: "การลงพื้นที่สังเกตการณ์: พื้นที่ส่วนใหญ่ยังไม่ได้รับการพัฒนา อยู่ในช่วงเริ่มต้นของโครงสร้างพื้นฐาน", titleZh: "实地踏查观察：大部分场地尚未开发，早期基础设施阶段正在进行中", source: "SLIC Field Team", date: "2025" },
-  { cityId: "wangchan-valley", pillar: "economy", type: "data", titleEn: "Population: 0 permanent residents. No commercial activity. GPP contribution: negligible.", titleTh: "ประชากร: 0 ผู้อยู่อาศัยถาวร ไม่มีกิจกรรมเชิงพาณิชย์ การมีส่วนร่วม GPP: น้อยมาก", titleZh: "常住人口为 0，没有商业活动，对 GPP 的贡献几乎可以忽略", source: "NSO / Field observation", date: "2025", metric: "population", value: "0" },
+  { cityId: "wangchan-valley", pillar: "wellbeing", type: "government", titleEn: "The education zone includes VISTEC, KVIS and the Wangchan Forest Learning Center.", titleTh: "เขตการศึกษามีสถาบันวิทยสิริเมธี โรงเรียนกำเนิดวิทย์ และศูนย์เรียนรู้ป่าวังจันทร์", titleZh: "教育区设有 VISTEC、KVIS 和旺婵森林学习中心。", source: "Thailand.go.th", url: "https://www.thailand.go.th/public/index.php/guide-book-detail/001_03_098", date: "2023" },
 
   // ─── Samyan ───
   { cityId: "samyan", pillar: "digital", type: "news", titleEn: "Samyan 5G testbed supporting 200+ startups at True Digital Park and Block 28", titleTh: "Samyan 5G testbed รองรับ 200+ สตาร์ทอัพที่ True Digital Park และ Block 28", titleZh: "Samyan 5G 试验场支持 True Digital Park 与 Block 28 的 200 多家创业公司", source: "True Digital Park", date: "2024" },

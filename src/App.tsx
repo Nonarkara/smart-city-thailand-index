@@ -461,12 +461,12 @@ export default function App() {
 
       {/* ─── CONTENT ─── */}
       <main id="main-content" className={`page-frame ${isDashboardRoute ? "page-frame-dashboard" : ""} ${isCanvasRoute ? "page-frame-canvas" : ""}`} key={getRouteKey(route)}>
-        {!["home","city","canvas","bingo","map"].includes(route.kind) && <PageMascot kind={route.kind} locale={locale} photo={PAGE_HERO_ASSETS[route.kind as StaticHeroKind] ? <PagePhotoHero route={route} locale={locale} /> : undefined} />}
+        {!["home","city","canvas","bingo","map","rankings"].includes(route.kind) && <PageMascot kind={route.kind} locale={locale} photo={PAGE_HERO_ASSETS[route.kind as StaticHeroKind] ? <PagePhotoHero route={route} locale={locale} /> : undefined} />}
         {isCanvasRoute && <PageMascot kind="canvas" locale={locale} />}
         <ErrorBoundary locale={locale}>
           <Suspense fallback={<PageSkeleton locale={locale} />}>
             {route.kind === "rankings" ? (
-              <RankingsPage locale={locale} onNavigate={navigate} />
+              <RankingsPage locale={locale} onNavigate={navigate} guide={<PageMascot kind="rankings" locale={locale} photo={<PagePhotoHero route={route} locale={locale} />} />} />
             ) : route.kind === "methodology" ? (
               <MethodologyPage locale={locale} onNavigate={navigate} />
             ) : route.kind === "story" ? (

@@ -439,40 +439,10 @@ export const CITY_INDUSTRY_TAGS: Record<string, TrilingualList> = {
 const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
   phuket: {
     industries: CITY_INDUSTRY_TAGS.phuket,
-    dailyLife: {
-      en: "Life runs on island shifts: dawn markets, hotel and boat crews by day, Old Town cafes in the afternoon, and Patong's service economy deep into the night.",
-      th: "ชีวิตเดินด้วยกะของเกาะ: ตลาดเช้า ทีมเรือและโรงแรมตอนกลางวัน คาเฟ่ย่านเมืองเก่าช่วงบ่าย และเศรษฐกิจบริการของป่าตองลากยาวไปถึงดึก",
-      zh: "这座海岛按轮班节奏生活：清晨市场、白天的酒店与船队、午后的老城咖啡馆，以及深夜仍在运转的芭东服务经济。",
-    },
-    signatureStory: {
-      en: "Phuket is where Thailand's smart-tourism vision translates into operations: multilingual safety systems, traffic control, and marine monitoring all matter because visitor trust is the economy.",
-      th: "ภูเก็ตคือจุดที่วิสัยทัศน์สมาร์ททัวริซึมของไทยถูกนำมาปฏิบัติจริง: ระบบความปลอดภัยหลายภาษา การควบคุมจราจร และการเฝ้าระวังทะเลมีความหมาย เพราะความเชื่อมั่นของนักท่องเที่ยวคือเศรษฐกิจ",
-      zh: "普吉是泰国智慧旅游愿景转化为实际行动的地方：多语言安全系统、交通调度与海洋监测之所以重要，是因为游客信任就是经济。",
-    },
-    funFact: {
-      en: "Phuket is a UNESCO Creative City of Gastronomy, so the island sells beaches by day and Baba-Nyonya food culture by night.",
-      th: "ภูเก็ตเป็นเมืองสร้างสรรค์ด้านอาหารของ UNESCO ดังนั้นเกาะนี้ขายทะเลตอนกลางวัน และขายวัฒนธรรมอาหารบาบ๋า-ย่าหยาในตอนกลางคืน",
-      zh: "普吉是联合国教科文组织“美食创意城市”，所以这里白天卖海滩，夜晚卖的是峇峇娘惹饮食文化。",
-    },
-    compareNote: {
-      en: "Best-in-class tourism machine with real digital plumbing, but island traffic and overtourism keep punching back.",
-      th: "เครื่องจักรท่องเที่ยวระดับหัวแถวที่มีระบบดิจิทัลจริง แต่รถติดแบบเกาะและแรงกดดันจากนักท่องเที่ยวก็ยังสวนกลับตลอด",
-      zh: "这是旅游机器里的尖子生，数字基础设施是真货，但海岛交通与过度旅游也一直在反击。",
-    },
-    sources: [
-      {
-        label: genericSourceLabel("UNESCO Creative Cities: Phuket", "UNESCO Creative Cities: Phuket", "UNESCO 创意城市: 普吉"),
-        url: "https://www.unesco.org/en/creative-cities/phuket",
-      },
-      {
-        label: genericSourceLabel("Phuket Smart City official platform", "แพลตฟอร์มทางการของ Phuket Smart City", "Phuket Smart City 官方平台"),
-        url: "https://www.phuketsmartcity.com/",
-      },
-      {
-        label: genericSourceLabel("TAT Newsroom on Phuket gastronomy", "TAT Newsroom เรื่องเมืองอาหารของภูเก็ต", "TAT 关于普吉美食城市"),
-        url: "https://www.tatnews.org/2019/12/phuket-a-unesco-city-of-gastronomy/",
-      },
-    ],
+    dailyLife: { en: "The education zone brings graduate research, secondary science education and forest learning into one campus.", th: "เขตการศึกษารวมงานวิจัยระดับบัณฑิตศึกษา การเรียนวิทยาศาสตร์ระดับมัธยม และการเรียนรู้เรื่องป่าไว้ในพื้นที่เดียวกัน", zh: "教育区将研究生科研、中学科学教育与森林学习汇集在同一园区。" },
+    signatureStory: { en: "Thailand’s public information portal identifies Wangchan Valley in Rayong as a base for the Eastern Economic Corridor of Innovation.", th: "เว็บไซต์ข้อมูลภาครัฐระบุว่าวังจันทร์วัลเลย์ในจังหวัดระยองเป็นพื้นที่สำคัญของเขตนวัตกรรมระเบียงเศรษฐกิจพิเศษภาคตะวันออก", zh: "泰国政府信息门户将位于罗勇府的旺婵谷列为东部经济走廊创新区的基地。" },
+    funFact: { en: "The education zone includes the Wangchan Forest Learning Center alongside VISTEC and KVIS.", th: "เขตการศึกษามีศูนย์เรียนรู้ป่าวังจันทร์อยู่ร่วมกับสถาบันวิทยสิริเมธีและโรงเรียนกำเนิดวิทย์", zh: "教育区内的旺婵森林学习中心与 VISTEC 和 KVIS 同处一地。" },
+    compareNote: { en: "Use the campus boundary when comparing services, population or access with a municipality.", th: "ใช้ขอบเขตพื้นที่โครงการเมื่อเปรียบเทียบบริการ ประชากร หรือการเข้าถึงกับเทศบาล", zh: "与市镇比较服务、人口或可达性时，请以园区边界为准。" },
   },
   samyan: {
     industries: CITY_INDUSTRY_TAGS.samyan,
@@ -1312,9 +1282,9 @@ const CITY_RESEARCH_PROFILES: Record<string, CityResearchProfile> = {
       zh: "玛卡桑铁路车间建于1910年，曾雇用数千名泰国铁路工程师。今天遗产建筑坐在锁着的大门后面，顾问们争论是拆除还是保留。",
     },
     compareNote: {
-      en: "Livability 30, economy 35, hospitality 25 — the index's lowest-scoring Bangkok district. A certified smart city with zero residents and zero built infrastructure. Pure potential, pure paralysis.",
-      th: "น่าอยู่ 30 เศรษฐกิจ 35 การท่องเที่ยว 25 — เขตกรุงเทพฯ คะแนนต่ำสุดในดัชนี เมืองอัจฉริยะรับรองที่ไม่มีผู้อยู่อาศัยและไม่มีโครงสร้างพื้นฐาน ศักยภาพล้วน อัมพาตล้วน",
-      zh: "宜居30，经济35，酒店25——指数中曼谷评分最低的区。一个零居民零建成基础设施的认证智慧城市。纯粹的潜力，纯粹的瘫痪。",
+      en: "For Makkasan, check the project boundary and separate existing rail facilities from proposed development. The resident count within that boundary needs a source.",
+      th: "สำหรับมักกะสัน ให้ตรวจขอบเขตโครงการและแยกสิ่งอำนวยความสะดวกด้านรถไฟที่มีอยู่จากโครงการพัฒนาในแผน จำนวนผู้อยู่อาศัยในขอบเขตนี้ยังต้องมีแหล่งข้อมูล",
+      zh: "比较玛卡桑时，请核查项目边界，并区分现有铁路设施与拟议开发。该边界内的居民人数仍需来源支持。",
     },
   },
   "phra-ram-4": {

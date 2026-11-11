@@ -33,6 +33,16 @@ describe("RankingsPage", () => {
     expect(extremes?.getAttribute("title")).toBe(label);
   });
 
+  it("keeps registry records searchable without assigning a rank or score", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);
+    await user.type(screen.getByRole("searchbox", { name: "Search" }), "Amnat Charoen");
+    const row = container.querySelector('.rank-row-link[href*="reg-amnat-charoen"]');
+    expect(row?.querySelector(".rank-row-score")).toHaveTextContent("Unassessed");
+    expect(row?.querySelector(".rank-row-num")).toHaveTextContent("—");
+    expect(row?.querySelector(".rank-row-pct, .rank-row-tier, .rank-row-fingerprint")).toBeNull();
+  });
+
   it("enters compare view after selecting cities in compare mode", async () => {
     const user = userEvent.setup();
     const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);

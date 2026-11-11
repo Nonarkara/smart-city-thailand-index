@@ -200,6 +200,8 @@ const BASELINE_PROVENANCE: BaselineProvenance = {
 };
 
 export interface CitySummaryDTO extends SmartCity {
+  /** Legacy numeric fields remain for existing clients. Use this to interpret their scope. */
+  assessmentStatus: "curated_estimate" | "unassessed";
   provenance: BaselineProvenance;
   rawMetricUnits: { population: "thousand people"; laborForce: "thousand people"; fdiInflow: "million THB" };
   keyMetrics: CityKeyMetric[];
@@ -1649,6 +1651,7 @@ function buildCitySummary(
 
   return {
     ...city,
+    assessmentStatus: city.status === "registered" ? "unassessed" : "curated_estimate",
     provenance: BASELINE_PROVENANCE,
     rawMetricUnits: { population: "thousand people", laborForce: "thousand people", fdiInflow: "million THB" },
     dataConfidence: applyEvidenceConfidenceCap(classifyDataConfidence(dataConfidenceScore), evidenceCount, city.status),
@@ -1714,7 +1717,7 @@ const CITY_EXPORT_ROW_LOOKUP = new Map(CITY_BUILDS.map(build => [build.detail.id
 export function escapeCsvField(value: string): string {
   // Excel treats a leading = + @ or a non-numeric leading - as a formula.
   // Keep genuine negative numbers numeric; neutralize everything else.
-  const formula = /^[=+@\t\r]/.test(value) || /^-(?!\d)/.test(value);
+  const formula = /^[=+@\t\r\n]/.test(value) || (value.startsWith("-") && !/^-\d+(?:\.\d+)?$/.test(value));
   const text = formula ? `'${value}` : value;
   if (/[",\n\r]/.test(text) || text !== value) {
     return `"${text.replace(/"/g, "\"\"")}"`;
@@ -1763,8 +1766,8 @@ export function getCitySummariesCsv(): string {
     region: city.region,
     status: city.status,
     reality: city.reality,
-    tier: city.tier,
-    composite_score: city.compositeScore.toFixed(1),
+    tier: city.assessmentStatus === "unassessed" ? "" : city.tier,
+    composite_score: city.assessmentStatus === "unassessed" ? "" : city.compositeScore.toFixed(1),
     data_confidence: city.dataConfidence ?? "medium",
     lead_mechanism: city.financeSignal.leadInstrumentName,
     lead_note: city.financeSignal.line.en,
@@ -1778,6 +1781,7 @@ export function getCitySummariesCsv(): string {
     confidence_basis: city.provenance.confidenceBasis,
     date_basis: city.provenance.dateBasis,
     geographic_scope: city.provenance.geographicScope,
+    assessment_status: city.assessmentStatus,
   })));
 }
 

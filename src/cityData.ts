@@ -216,9 +216,9 @@ export const certifiedCities: SmartCity[] = [
     ["economy", "energy", "environment", "governance", "living", "mobility", "people"],
     { livability: 18, economy: 22, safety: 46, wellbeing: 15, environment: 50, hospitality: 10, digital: 55 },
     { gppPerCapita: 1020000, avgMonthlyIncome: 32400, pm25Annual: 26.5, hospitalBedsPer10k: 18, crimeRatePer100k: 155, greenCoverage: 38, gppGrowthRate: 2.5, pm25Trend: "stable", waterQuality: 55, forestCoverage: 25, fdiInflow: 5800, industryComposition: "petrochemical/manufacturing 55%, services 30%, agriculture 15%", laborForce: 420, roadFatalityRate: 55 },
-    "Thailand's #1-ranked smart city on paper — PTT's 3,454-rai EEC campus with VISTEC and KVIS operational, but the biorefinery is two years delayed and zero residential occupancy has been published. The structural question underlying everything: World Bank CCDR 2025 documents the EEC facing a 40% water supply shortfall by 2037 under average hydrology — 72% in dry years — even after 32 planned infrastructure investments. Wangchan Valley's development thesis depends on EEC water security that does not yet exist.",
-    "เมืองอัจฉริยะอันดับ 1 บนกระดาษ — วิทยาเขต PTT 3,454 ไร่ใน EEC มี VISTEC และ KVIS เปิดดำเนินการแล้ว แต่โรงกลั่นชีวภาพล่าช้าสองปีและไม่มีข้อมูลการอยู่อาศัยจริง ธนาคารโลก CCDR 2025: EEC เผชิญกับการขาดแคลนน้ำ 40% ภายในปี 2580 ภายใต้อุทกวิทยาเฉลี่ย — 72% ในปีที่แห้งแล้ง วิสัยทัศน์การพัฒนาวังจันทร์วัลเลย์ขึ้นอยู่กับความมั่นคงทางน้ำ EEC ที่ยังไม่มีอยู่จริง",
-    ["VISTEC research university + KVIS science high school operational", "Biorefinery ~50% complete as of 2024 (promised 2022)", "PTT invested ฿4.5B Phase 1 — oil price crash 2020 slowed momentum", "World Bank CCDR 2025: EEC water shortfall 40% by 2037 (average), 72% in dry years — the constraint Wangchan Valley does not talk about"],
+    "Wangchan Valley is an innovation and education campus in Rayong. Its education zone includes VISTEC, KVIS and the Wangchan Forest Learning Center.",
+    "วังจันทร์วัลเลย์เป็นพื้นที่นวัตกรรมและการศึกษาในจังหวัดระยอง เขตการศึกษามีสถาบันวิทยสิริเมธี โรงเรียนกำเนิดวิทย์ และศูนย์เรียนรู้ป่าวังจันทร์",
+    ["VISTEC research institute", "KVIS science school", "Wangchan Forest Learning Center"],
   ),
 
   city(

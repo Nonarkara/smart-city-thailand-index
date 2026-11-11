@@ -62,6 +62,7 @@ describe("cityCdp derivation", () => {
     expect(escapeCsvField("=HYPERLINK(\"http://evil\")")).toBe("\"'=HYPERLINK(\"\"http://evil\"\")\"");
     expect(escapeCsvField("-not-a-number")).toBe("\"'-not-a-number\"");
     expect(escapeCsvField("-12.5")).toBe("-12.5");
+    expect(escapeCsvField("-1+2")).toBe(`"'-1+2"`);
     expect(escapeCsvField("a,b")).toBe("\"a,b\"");
     expect(escapeCsvField("phuket")).toBe("phuket");
   });
@@ -99,6 +100,9 @@ describe("city export units and provenance", () => {
     const summaries = parse(getCitySummariesCsv(), { columns: true });
     const facts = parse(getCityFactsCsv(), { columns: true });
     expect(summaries).toHaveLength(118);
+    const unassessed = summaries.filter(row => row.status === "registered");
+    expect(unassessed).toHaveLength(69);
+    expect(unassessed.every(row => row.assessment_status === "unassessed" && row.composite_score === "" && row.tier === "")).toBe(true);
     expect(facts).toHaveLength(getCityFactsRows().length);
     expect([...summaries, ...facts].every(row => row.locally_verified === "false" && row.input_basis === "curated_seed_baseline")).toBe(true);
     for (const city of cities) {
