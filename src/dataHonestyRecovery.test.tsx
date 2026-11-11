@@ -127,3 +127,14 @@ describe("quick metrics carry their evidence limits", () => {
     expect(root.querySelectorAll(".city-quick-metrics a")).toHaveLength(0);
   });
 });
+
+it("keeps registry-only dossiers free of derived assessment panels, including print markup", () => {
+  const root = document.createElement("div");
+  root.innerHTML = renderToStaticMarkup(<CityDetailPage cityId="reg-lamphun" locale="en" onNavigate={() => undefined} />);
+  expect(root.querySelector("#dossier-panel-1")).toHaveTextContent("City assessment pending");
+  expect(root.querySelector("#dossier-panel-2")).toHaveTextContent("Delivery assessment pending");
+  expect(root.querySelector("#dossier-panel-3")).toHaveTextContent("Local evidence coverage is pending");
+  expect(root.querySelector("#dossier-panel-4")).toHaveTextContent("Start with the project boundary");
+  expect(root.querySelector(".city-decision-strip, .city-evidence-finding, .action-steps-list")).toBeNull();
+  expect(root.querySelector(".city-heritage")).not.toBeNull();
+});

@@ -681,6 +681,9 @@ export default function CityDetailPage({ cityId, locale, onNavigate }: Props) {
       : dossier.leadRecommendation.instrumentName
     : city.financeSignal.leadInstrumentName;
   const isRegisteredProfile = city.status === "registered";
+  const pendingAssessment = (copy: { en: string; th: string; zh: string }) => (
+    <p className="section section-intro">{translate(locale, copy)}</p>
+  );
   const resolvedPopulation = getResolvedPopulationThousand(city);
   const resolvedLandArea = getResolvedLandAreaKm2(city, cityContext?.landArea);
   const resolvedDensity = getPopulationDensityPerKm2(city, cityContext?.landArea);
@@ -1188,10 +1191,10 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           th: "เรื่องราวเมืองที่คัดสรร — ต้องตรวจสอบแหล่งอ้างอิง",
           zh: "编辑背景叙述——仍需核查来源",
         })}</summary><p>{cityTagline}</p></details>
-        <InvestmentFit city={city} locale={locale} />
+        {!isRegisteredProfile && <InvestmentFit city={city} locale={locale} />}
         <CityHeritageGallery city={city} locale={locale} />
 
-        {(() => {
+        {!isRegisteredProfile && (() => {
           const rawCity = getCityById(cityId);
           return rawCity ? <NeedsLadder profile={computeNeedsLadder(rawCity)} locale={locale} /> : null;
         })()}
@@ -1203,7 +1206,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           return <OfficialRecognition record={depa} locale={locale} />;
         })()}
 
-        <div className="city-decision-strip" aria-label={translate(locale, { en: "Investor decision brief", th: "สรุปเพื่อการตัดสินใจลงทุน", zh: "投资决策速览" })}>
+        {!isRegisteredProfile && <div className="city-decision-strip" aria-label={translate(locale, { en: "Investor decision brief", th: "สรุปเพื่อการตัดสินใจลงทุน", zh: "投资决策速览" })}>
           <div className="city-decision-item">
             <span className="city-decision-label">{translate(locale, { en: "Lead mechanism", th: "กลไกนำ", zh: "主机制" })}</span>
             <strong className="city-decision-value">{leadInstrumentName}</strong>
@@ -1229,7 +1232,7 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             <strong className="city-decision-value">{dataCoverageValue}</strong>
             <span className="city-decision-note">{missingBasicSummary}</span>
           </div>
-        </div>
+        </div>}
 
         <div className="city-share-bar" style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '1rem', padding: '.75rem 0', borderTop: '1px solid var(--4)', borderBottom: '1px solid var(--4)' }}>
           <span style={{ font: `600 var(--text-micro) var(--font)`, color: 'var(--ink)', marginRight: '4px' }}>{translate(locale, { en: "Share:", th: "แชร์:", zh: "分享:" })}</span>
@@ -1252,9 +1255,9 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
             <strong>{translate(locale, { en: "Read this as a proposal stub.", th: "อ่านหน้านี้เป็นโปรไฟล์ข้อเสนอ", zh: "请把此页视为提案档案。" })}</strong>
             <span>
               {translate(locale, {
-                en: "This city is in the registry, but the quantitative baseline is still thin. The page keeps the investment frame visible while marking missing fields instead of inventing numbers.",
-                th: "เมืองนี้อยู่ในทะเบียนแล้ว แต่ฐานข้อมูลเชิงปริมาณยังบาง หน้านี้จึงคงกรอบการลงทุนไว้ พร้อมระบุช่องข้อมูลที่ยังขาด แทนการแต่งตัวเลขขึ้นมา",
-                zh: "这座城市已进入登记名单，但量化基线仍然很薄。本页保留投资框架，同时标出缺失字段，而不是编造数字。",
+                en: "The registry identifies this proposal. A city assessment needs local service and delivery evidence.",
+                th: "ทะเบียนระบุข้อเสนอนี้ การประเมินเมืองต้องใช้หลักฐานบริการและการดำเนินงานในพื้นที่",
+                zh: "名录记录了这项提案。城市评估需要当地服务和实施证据。",
               })}
             </span>
           </div>
@@ -1381,6 +1384,12 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
         {/* ─── TAB 2 · Analysis ─── */}
 
         <div className="dossier-tab-content">
+          {isRegisteredProfile ? pendingAssessment({
+          en: "City assessment pending. The registry entry has no published SCITI pillar scores.",
+          th: "เมืองนี้รอการประเมิน และยังไม่มีคะแนนรายด้านของ SCITI เผยแพร่",
+          zh: "城市评估待完成。该名录条目暂无已发布的 SCITI 分项评分。",
+          }) : <>
+
 
       {dossier && (
         <section className="section city-dossier-section">
@@ -1757,11 +1766,18 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           </div>
         </div>
       </section>
+          </>}
         </div>
 
         {/* ─── TAB 3 · Execution ─── */}
 
         <div className="dossier-tab-content">
+          {isRegisteredProfile ? pendingAssessment({
+          en: "Delivery assessment pending. Check the proposal boundary, responsible operator and service records before judging implementation.",
+          th: "การดำเนินงานรอการประเมิน ควรตรวจขอบเขตข้อเสนอ ผู้รับผิดชอบ และบันทึกการให้บริการ",
+          zh: "实施评估待完成。判断前请核查提案边界、责任运营方和服务记录。",
+          }) : <>
+
 
       <section className="section city-print-hide">
         <div className="planning-section-header">
@@ -1915,13 +1931,18 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           })}
         </div>
       </section>
+          </>}
         </div>
 
         {/* ─── TAB 4 · Evidence ─── */}
 
         <div className="dossier-tab-content">
 
-      <CityEvidenceSummary city={city} locale={locale} />
+      {isRegisteredProfile ? pendingAssessment({
+        en: "Local evidence coverage is pending. The provincial figures below provide regional context.",
+        th: "หลักฐานระดับพื้นที่ยังรอการตรวจสอบ ตัวเลขระดับจังหวัดด้านล่างใช้ประกอบบริบท",
+        zh: "本地证据覆盖情况待核查。下方府级数据提供区域背景。",
+      }) : <CityEvidenceSummary city={city} locale={locale} />}
 
       <AbsorptionReadout city={city} locale={locale} />
 
@@ -2039,6 +2060,11 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
 
         <div className="dossier-tab-content">
 
+      {isRegisteredProfile ? pendingAssessment({
+        en: "Start with the project boundary and the latest published plan. The links below can help locate the original records.",
+        th: "เริ่มจากขอบเขตโครงการและแผนฉบับล่าสุดที่เผยแพร่ ใช้ลิงก์ด้านล่างเพื่อค้นหาเอกสารต้นทาง",
+        zh: "先确认项目边界及最新公开计划。下方链接可帮助查找原始记录。",
+      }) : (
       <section className="section city-print-hide">
         <p className="eyebrow">{translate(locale, { en: "What to do next", th: "ก้าวต่อไป", zh: "下一步行动" })}</p>
         <h2>{translate(locale, { en: "Tailored action steps", th: "ขั้นตอนปฏิบัติเฉพาะเมืองนี้", zh: "定制行动步骤" })}</h2>
@@ -2055,10 +2081,11 @@ const DOSSIER_TAB_LABELS: Record<Locale, string[]> = {
           ))}
         </div>
       </section>
+      )}
 
       <section className="section">
         <p className="eyebrow">{translate(locale, { en: "Research links", th: "ลิงก์งานวิจัย", zh: "研究链接" })}</p>
-        <h2>{translate(locale, { en: "Go deeper without hallucinating", th: "ขุดต่อได้โดยไม่ต้องเดา", zh: "继续深挖而不靠幻觉" })}</h2>
+        <h2>{translate(locale, { en: "Sources for further research", th: "แหล่งข้อมูลสำหรับค้นคว้าต่อ", zh: "延伸研究资料" })}</h2>
         <div className="sources-grid">
           {researchLinks.map(link => (
             <div key={link.url} className="source-card">

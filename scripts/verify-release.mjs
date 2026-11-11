@@ -1,6 +1,7 @@
 // Read-only production contract audit. Run after build/deploy; never cache-bust URLs.
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import { parse } from 'csv-parse/sync';
 import { checkCityIndex, checkCityDetail, checkCityCsv, checkSnapshot } from './lib/release-contract.mjs';
 const origin = new URL(process.env.AUDIT_ORIGIN || 'https://sciti.nonarkara.org').origin;
 const read = path => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -25,6 +26,27 @@ await Promise.all(Array.from({ length: 4 }, async () => {
     checked++;
   }
 }));
+for (const name of ['cities-summary.csv', 'city-facts.csv']) {
+  const response = await request(`/api/exports/${name}`, 200, 'text/csv');
+  const csv = await response.text();
+  assert.equal(csv, await read(`dist/api-static/exports/${name}`), `published export differs: ${name}`);
+  const rows = parse(csv, { columns: true });
+  if (name === 'cities-summary.csv') {
+    assert.equal(rows.length, expected.length, 'summary CSV city coverage differs');
+    const registered = rows.filter(row => row.status === 'registered');
+    assert.equal(registered.length, expected.filter(city => city.status === 'registered').length);
+    for (const row of registered) {
+      assert.equal(row.assessment_status, 'unassessed', row.id);
+      assert.equal(row.composite_score, '', row.id);
+      assert.equal(row.readiness_score, '', row.id);
+    }
+  } else {
+    const registeredIds = new Set(expected.filter(city => city.status === 'registered').map(city => city.id));
+    assert.ok(rows.every(row => !registeredIds.has(row.city_id) || (
+      row.fact_type !== 'recommendation' && row.metric_key_or_recommendation_key !== 'compositeScore'
+    )), 'registry-only estimates leaked into the fact export');
+  }
+}
 for (const status of ['certified', 'promotion', 'registered']) {
   const payload = await (await request(`/api/cities?status=${status}&sort=economy`)).json();
   checkCityIndex(payload, expected.filter(city => city.status === status));
@@ -41,7 +63,7 @@ for (const path of ['/api/cities', '/api/cities/phuket', '/api/cities/phuket/exp
   const response = await request(path, 200, path.endsWith('.csv') ? 'text/csv' : 'application/json', 'HEAD');
   assert.equal((await response.arrayBuffer()).byteLength, 0, `${path}: HEAD has a body`);
 }
-const report = { origin, checkedAt: new Date().toISOString(), cities: checked, dossiers: checked, cityCsvs: checked, snapshot: manifest.sha256, checks: ['identity and full payload equality with build', 'CSV quoting/identity/full rows', 'status filters and descending economy order', 'snapshot full SHA-256 and bytes', 'missing routes JSON404/no-store', 'HEAD bodies and MIME/nosniff'] };
+const report = { origin, checkedAt: new Date().toISOString(), cities: checked, dossiers: checked, cityCsvs: checked, snapshot: manifest.sha256, checks: ['identity and full payload equality with build', 'CSV quoting/identity/full rows, including both aggregate exports and registry assessment scope', 'status filters and descending economy order', 'snapshot full SHA-256 and bytes', 'missing routes JSON404/no-store', 'HEAD bodies and MIME/nosniff'] };
 await mkdir('.tmp', { recursive: true });
 await writeFile('.tmp/release-contract.json', JSON.stringify(report, null, 2));
 console.log(`Release verified: ${checked} dossiers + ${checked} city CSVs, filters, snapshot checksum, missing routes and HEAD on ${origin}`);

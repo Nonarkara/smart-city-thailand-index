@@ -1566,9 +1566,9 @@ function buildExportRows(
     city_name_th: city.nameTh,
     province: city.province,
     fact_type: "summary",
-    metric_key_or_recommendation_key: "compositeScore",
-    value: city.compositeScore.toFixed(1),
-    unit: "score",
+    metric_key_or_recommendation_key: city.status === "registered" ? "assessmentStatus" : "compositeScore",
+    value: city.status === "registered" ? "unassessed" : city.compositeScore.toFixed(1),
+    unit: city.status === "registered" ? "" : "score",
     source_id: "sciti-index",
     source_url: "",
     observed_at: DEFAULT_VERIFIED_AT,
@@ -1608,7 +1608,7 @@ function buildExportRows(
     version: VERSION,
   }));
 
-  const recommendationRows = recommendations.flatMap(recommendation =>
+  const recommendationRows = (city.status === "registered" ? [] : recommendations).flatMap(recommendation =>
     recommendation.supports.map(support => ({
       city_id: city.id,
       city_name_en: city.nameEn,
@@ -1658,7 +1658,7 @@ function buildCitySummary(
     keyMetrics: buildKeyMetrics(city, observations),
     shortTailoredNote: buildShortTailoredNote(city, context),
     financeSignal: buildFinanceSignal(city, financeProfile, recommendations),
-    exportReady: recommendations.length > 0 && exportRows.length >= 6,
+    exportReady: city.status !== "registered" && recommendations.length > 0 && exportRows.length >= 6,
     freshness: {
       latestObservedAt,
       lastVerifiedAt: DEFAULT_VERIFIED_AT,
@@ -1769,9 +1769,9 @@ export function getCitySummariesCsv(): string {
     tier: city.assessmentStatus === "unassessed" ? "" : city.tier,
     composite_score: city.assessmentStatus === "unassessed" ? "" : city.compositeScore.toFixed(1),
     data_confidence: city.dataConfidence ?? "medium",
-    lead_mechanism: city.financeSignal.leadInstrumentName,
-    lead_note: city.financeSignal.line.en,
-    readiness_score: String(city.financeSignal.readinessScore),
+    lead_mechanism: city.assessmentStatus === "unassessed" ? "" : city.financeSignal.leadInstrumentName,
+    lead_note: city.assessmentStatus === "unassessed" ? "" : city.financeSignal.line.en,
+    readiness_score: city.assessmentStatus === "unassessed" ? "" : String(city.financeSignal.readinessScore),
     latest_observed_at: city.freshness.latestObservedAt,
     last_verified_at: city.freshness.lastVerifiedAt,
     provenance_count: String(city.provenanceCount),

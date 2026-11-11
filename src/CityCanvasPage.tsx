@@ -12,7 +12,8 @@ interface Props {
 }
 
 function CityCanvasSheet({ city, locale }: { city: SmartCity; locale: Locale }) {
-  const tierLabel = city.tier.toUpperCase();
+  const assessed = city.status !== "registered";
+  const unassessed = translate(locale, { en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" });
 
   return (
     <div className="city-canvas-sheet">
@@ -20,15 +21,15 @@ function CityCanvasSheet({ city, locale }: { city: SmartCity; locale: Locale }) 
       <header className="canvas-header">
         <div className="canvas-header-left">
           <div className="canvas-tier">
-            {translate(locale, { en: "TIER", th: "ระดับ", zh: "层级" })} / {tierLabel}
+            {assessed ? `${translate(locale, { en: "Tier", th: "ระดับ", zh: "层级" })} / ${city.tier.toUpperCase()}` : unassessed}
           </div>
           <h1 className="canvas-title">{getCityName(city, locale)}</h1>
           {getDistinctProvinceName(city, locale) && <div className="canvas-province">{getDistinctProvinceName(city, locale)}</div>}
         </div>
-        <div className="canvas-header-right">
+        {assessed && <div className="canvas-header-right">
           <div className="canvas-score">{city.compositeScore.toFixed(1)}</div>
           <div className="canvas-score-label">{translate(locale, { en: "CURATED SCORE /100", th: "คะแนนประเมินเต็ม 100", zh: "编辑评分／100" })}</div>
-        </div>
+        </div>}
       </header>
       <p className="canvas-source-note">{translate(locale, {
         en: `Research worksheet, not a financing or service-readiness assessment. Seed cutoff: ${SCITI_DATA_CUTOFF_ISO.slice(0, 10)}. Figures below are curated records; their original periods and local boundaries need checking in the dossier. Missing values are shown as —.`,
