@@ -51,6 +51,7 @@
  * A route that could not be loaded is NOT a pass.
  */
 import { chromium } from "@playwright/test";
+import { measureBorderRoles } from "./lib/msh-core.mjs";
 
 let BASE = process.argv[2] && !process.argv[2].startsWith("--") ? process.argv[2] : "http://[::1]:5188";
 const LOCALES = (process.argv[3] && !process.argv[3].startsWith("--") ? process.argv[3] : "en,th").split(",");
@@ -69,92 +70,7 @@ const ROUTES = process.env.SCITI_AUDIT_ROUTES
 //
 // This function is INLINED into the page below, not called from it:
 // a helper defined in this module does not exist inside page.evaluate.
-function measureBorderRoles() {
-  const visible = el => {
-    const cs = getComputedStyle(el);
-    if (cs.display === "none" || cs.visibility === "hidden" || parseFloat(cs.opacity) === 0) return false;
-    const r = el.getBoundingClientRect();
-    return r.width > 1 && r.height > 1;
-  };
-  const classify = el => {
-    const cs = getComputedStyle(el);
-    const sides = [
-      [cs.borderTopWidth, cs.borderTopStyle, cs.borderTopColor],
-      [cs.borderBottomWidth, cs.borderBottomStyle, cs.borderBottomColor],
-      [cs.borderLeftWidth, cs.borderLeftStyle, cs.borderLeftColor],
-      [cs.borderRightWidth, cs.borderRightStyle, cs.borderRightColor],
-    ];
-    const out = [];
-    for (const [w, style, color] of sides) {
-      const px = parseFloat(w) || 0;
-      if (px === 0 || style === "none" || style === "hidden") continue;
-      const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(color);
-      const rgb = m ? [Number(m[1]), Number(m[2]), Number(m[3])] : null;
-      // --ink is #111314, --teal is #007190, --5 is #e8eef3, --4 is #c5d3df.
-      const isInk = rgb && rgb[0] < 80 && rgb[1] < 80 && rgb[2] < 80;
-      let role = "cell";
-      if (px >= 3) role = "emphasis";
-      else if (px >= 2) role = "structural";
-      else if (isInk) role = "structural";
-      out.push({ px, role, color });
-    }
-    return out;
-  };
-  const counts = { structural: 0, cell: 0, emphasis: 0 };
-  for (const el of document.querySelectorAll("body *")) {
-    if (!visible(el)) continue;
-    for (const l of classify(el)) counts[l.role] += 1;
-  }
 
-  // A SPECIAL SECTION: a GROUP that carries its own painted ground or its
-  // own structural rule, so the reader sees a division rather than one
-  // long flat run.
-  //
-  // The search covers the WHOLE PAGE, not only <main>: the news band and
-  // the newsletter block render as siblings of <main> in App.tsx, and a
-  // check that stops at </main> reports a page as flat when its special
-  // section is simply one level out.
-  //
-  // The search is over EVERY element, not only the direct children of
-  // <main>: a page's sections are usually nested (main > div > section),
-  // and a check that only looks one level down reports a page as flat
-  // when its special section is simply two levels deeper. A container
-  // that carries a treatment must also GROUP something — at least two
-  // element children — otherwise it is a leaf with a border, not a
-  // section.
-  const special = [];
-  for (const el of document.querySelectorAll("main *, .news-section, .newsletter-section, .site-footer *")) {
-    if (!visible(el)) continue;
-    if (el.closest(".site-footer")) continue; // the footer is its own zone
-    const cs = getComputedStyle(el);
-    const bg = cs.backgroundColor;
-    const opaque = bg && bg !== "transparent" && !/rgba\([^)]*,\s*0\)/.test(bg);
-    const tinted = opaque && bg !== "rgb(255, 255, 255)" && bg !== "rgb(246, 248, 250)";
-    const lines = classify(el);
-    const structural = lines.some(l => l.role === "structural" || l.role === "emphasis");
-    if (!tinted && !structural) continue;
-    // A section GROUPS content. Counting direct element children is too
-    // strict: a real section is often one wrapper (.section) around a
-    // heading and a body, so the wrapper has one child and the group
-    // lives one level down. Count the text-bearing descendants instead.
-    const grouped = [...el.querySelectorAll("h1,h2,h3,h4,p,li,td,th,img,button,a")].filter(k => {
-      const kr = k.getBoundingClientRect();
-      return kr.height > 4 && kr.width > 4 && (k.textContent || "").trim().length > 0;
-    }).length;
-    if (grouped < 2) continue; // a leaf with a rule is not a section
-    special.push({ cls: String(el.className || el.tagName).slice(0, 40), tinted, structural });
-  }
-
-  const roles = Object.entries(counts).filter(([, n]) => n > 0).map(([k]) => k);
-  return {
-    counts,
-    roles,
-    roleCount: roles.length,
-    specialSections: special.length,
-    specialSample: special.slice(0, 3).map(s => s.cls),
-    lineTotal: counts.structural + counts.cell + counts.emphasis,
-  };
-}
 
 let server;
 if (process.argv.includes("--serve")) {
