@@ -14047,6 +14047,7 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .home-depth > summary { cursor: pointer; padding-block: 8px; min-height: 44px; align-content: center; border-top: 1px solid var(--5); font-weight: 650; }
 .home-depth > summary:focus-visible { outline-offset: -2px; }
 @media (max-width: 719px) {
+  .dashboard-home .home-city-guide .home-city-guide-reading { align-self: start; padding-top: 8px; }
   .dashboard-home .home-city-guide .home-city-guide-visual { grid-row: 4; min-height: 0; margin: 0; align-self: end; }
   .dashboard-home .home-city-guide .home-city-guide-art { position: static; width: 100%; max-height: 100px; object-fit: contain; object-position: bottom right; }
 }
