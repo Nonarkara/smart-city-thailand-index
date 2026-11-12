@@ -46,6 +46,9 @@ jobs:
       - run: node scripts/audit/plub-density.mjs --serve
       - run: node scripts/audit/type-and-rhythm.mjs --serve
       - run: node scripts/audit/falsify-collide.mjs
+      - run: node scripts/audit/msh-audit.mjs --serve
+      - run: node scripts/audit/border-roles.mjs --serve
+      - run: node scripts/audit/falsify-msh.mjs
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -99,6 +102,9 @@ jobs:
       - run: node scripts/audit/plub-density.mjs --serve
       - run: node scripts/audit/type-and-rhythm.mjs --serve
       - run: node scripts/audit/falsify-collide.mjs
+      - run: node scripts/audit/msh-audit.mjs --serve
+      - run: node scripts/audit/border-roles.mjs --serve
+      - run: node scripts/audit/falsify-msh.mjs
       # The Pages action uploads through the Pages store, which the
       # artifacts API does not list — CDPT could never download it, so the
       # validated-build path was dead. This plain artifact is what the

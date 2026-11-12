@@ -45,11 +45,17 @@ export const RENDERED_RELEASE_GATES = [
   'node scripts/audit/page-budget.mjs --serve', 'node scripts/audit/demo-journey.mjs --serve',
   'node scripts/audit/map-journey.mjs --serve',
   'node scripts/audit/quick-metric-geometry.mjs --serve',
+  // The first-screen, page-bleed and chrome-cost gate, and the gate that
+  // asks whether the page draws DIFFERENT LINES FOR DIFFERENT JOBS.
+  'node scripts/audit/msh-audit.mjs --serve', 'node scripts/audit/border-roles.mjs --serve',
   // The massacre instrument's own guard: it plants a defect for every rule
   // the sweep holds and fails if the sweep stays quiet on any of them.
   // Without this step a sweep that has stopped discriminating would look
   // exactly like a clean release.
   'node scripts/audit/falsify-collide.mjs',
+  // The same guard for the two new gates: 15 cases, each one a rule that
+  // must fire or must stay quiet.
+  'node scripts/audit/falsify-msh.mjs',
 ];
 export function checkRenderedValidationRun(run, expectedHead) {
   checkValidationRun(run, expectedHead);
