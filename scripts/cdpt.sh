@@ -121,6 +121,8 @@ ok "15 locale/width states preserve all records and readable type; oversized-car
 
 bold "Preflight — the type law (§11.7: one display statement per page)"
 node scripts/audit/type-and-rhythm.mjs --serve >"$LOG_DIR/cdpt-type.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-type.log"; die "type regression: a page carries more than one display-size statement, or a route was not measured"; }
+node scripts/audit/msh-audit.mjs --serve >"$LOG_DIR/cdpt-msh.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-msh.log"; die "MSH: the primary action left the first screen, content bled past the page, or the chrome cost too much"; }
+node scripts/audit/border-roles.mjs --serve >"$LOG_DIR/cdpt-borders.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-borders.log"; die "borders: every line on a page is the same line, or no section carries its own treatment"; }
 ok "every route measured; every display-size statement is the page title"
 
 bold "Preflight — identity and decision density"
@@ -151,6 +153,7 @@ bold "Preflight — the massacre instrument still fires"
 # by one and fails if the sweep stays quiet on any of them. It is the only
 # gate that can tell whether the other gates would have caught anything.
 node scripts/audit/falsify-collide.mjs >"$LOG_DIR/cdpt-falsify.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-falsify.log"; die "the massacre sweep no longer discriminates: a planted defect went uncaught"; }
+node scripts/audit/falsify-msh.mjs >"$LOG_DIR/cdpt-falsify-msh.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-falsify-msh.log"; die "the MSH gates no longer discriminate: a planted defect went uncaught"; }
 ok "every planted defect caught; the clean build quiet"
 
 fi
