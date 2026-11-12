@@ -89,7 +89,7 @@ const FIXTURES = {
       <h1>A composed page</h1>
       <p class="lede">The statement is here but the action is far below.</p>
       <div class="spacer"></div>
-      <a class="action" href="#">Do the thing</a>
+      <div class="page-guide-actions"><a class="action" href="#">Do the thing</a></div>
     </main>
   `),
   "/fixture-first-screen-absent": page(`
@@ -391,6 +391,7 @@ try {
   const mshBad = await runGate(MSH_RUNNER, { SCITI_AUDIT_ROUTES: "/fixture-first-screen-below" });
   check("the MSH runner fails on a page whose action is below the fold", () => {
     assert.notEqual(mshBad.code, 0, `the runner exited 0 on a defect:\n${mshBad.out.slice(0, 400)}`);
+    assert.match(mshBad.out, /primary action .* sits \d+px below the first screen/);
   });
 
   const borderBad = await runGate(BORDER_RUNNER, { SCITI_AUDIT_ROUTES: "/fixture-border-one-line" });
