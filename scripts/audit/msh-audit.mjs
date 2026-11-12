@@ -147,20 +147,17 @@ for (const route of ROUTES) {
       const ctx = await browser.newContext({ viewport: { width: viewport.w, height: viewport.h } });
       const page = await ctx.newPage();
       try {
+        await page.addInitScript(locale => {
+          localStorage.setItem("smart-city-thailand-locale", locale);
+        }, locale);
         await page.goto(BASE + route, { waitUntil: "domcontentloaded", timeout: 60000 });
-        await page.waitForTimeout(1400);
-        if (locale !== "en") {
-          await page.evaluate((want) => {
-            const btn = [...document.querySelectorAll("button, a")].find(b =>
-              new RegExp(`^(${want.toUpperCase()}|${want === "th" ? "ไทย" : "中文"})$`, "i").test((b.textContent || "").trim()));
-            if (btn) btn.click();
-          }, locale);
-          await page.waitForTimeout(1200);
-        }
+        await page.locator(spec.expect).first().waitFor({ state: "attached" });
+        await page.locator(spec.action).first().waitFor({ state: "attached" });
         await page.addStyleTag({ content: "*, *::before, *::after { transition: none !important; animation: none !important; }" });
-        await page.evaluate(() => document.querySelectorAll(".reveal").forEach(e => e.classList.add("visible")));
-        await page.waitForTimeout(250);
-
+        await page.evaluate(async () => {
+          document.querySelectorAll(".reveal").forEach(el => el.classList.add("visible"));
+          await document.fonts.ready;
+        });
         const r = await page.evaluate(measureMsh, { route, actionSel: spec.action, expectSel: spec.expect, viewport });
         results.push(r);
         const bad = r.findings.length;

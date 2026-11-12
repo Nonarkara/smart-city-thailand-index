@@ -382,9 +382,9 @@ export default function ProgramPage({ locale, onNavigate }: Props) {
         </h1>
         <p className="hero-strapline">
           {translate(locale, {
-            en: "A smart city is a process, not a result. No city reaches the status of a smart city by simply ticking boxes. Smart refers to the ability to comprehend, adapt, and transform — to cope with and improve the changing world. This is Thailand’s national framework for building cities where citizens come first and technology stays in the background.",
-            th: "เมืองอัจฉริยะคือกระบวนการ ไม่ใช่ผลลัพธ์ ไม่มีความเป็นเมืองอัจฉริยะได้หากเพียงแค่การทำเครื่องหมายในช่องสี่เหลี่ยม คำว่า “อัจฉริยะ” หมายถึงความสามารถในการเข้าใจ ปรับตัว และเปลี่ยนแปลง เพื่อรับมือและพัฒนาโลกที่เปลี่ยนแปลงไป นี่คือกรอบกระบวนการระดับชาติของไทยในการสร้างเมืองที่ประชาชนมาก่อนและเทคโนโลยีอยู่เบื้องหลัง",
-            zh: "智慧城市是一个过程，不是结果。没有城市可以通过简单的勾选而获得智慧城市地位。“智慧”是指理解、适应和转变的能力——以应对和改善变化的世界。这是泰国为建设以市民为中心、技术退居幕后的城市而制定的国家框架。"
+            en: "How Thailand’s smart city programme helps cities plan and deliver services for residents.",
+            th: "โครงการเมืองอัจฉริยะของไทยช่วยให้เมืองวางแผนและจัดบริการแก่ประชาชนอย่างไร",
+            zh: "了解泰国智慧城市计划如何帮助城市规划并为居民提供服务。"
           })}
         </p>
         <div className="hero-actions" style={{ marginTop: "1rem" }}>
