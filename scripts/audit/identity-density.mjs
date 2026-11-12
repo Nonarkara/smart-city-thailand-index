@@ -32,11 +32,14 @@ try {
   const search = page.locator('.home-hero-search');
   await search.waitFor();
   const checkFirstAction = async () => {
-    const searchBox = await search.boundingBox();
-    const guideBox = await page.locator('.home-city-guide-reading').boundingBox();
-    assert.ok(searchBox.y + searchBox.height <= 560, 'search left the first reading band');
-    assert.ok(searchBox.y + searchBox.height <= guideBox.y, 'intro precedes the city search');
-    assert.equal(await page.locator('.home-depth[open]').count(), 0, 'reference sections overwhelm the initial view');
+    const geometry = await page.evaluate(() => ({
+      searchBottom: document.querySelector('.home-hero-search').getBoundingClientRect().bottom,
+      guideTop: document.querySelector('.home-city-guide-reading').getBoundingClientRect().top,
+      expanded: document.querySelectorAll('.home-depth[open]').length,
+    }));
+    assert.ok(geometry.searchBottom <= 560, 'search left the first reading band');
+    assert.ok(geometry.searchBottom <= geometry.guideTop, 'intro precedes the city search');
+    assert.equal(geometry.expanded, 0, 'reference sections overwhelm the initial view');
   };
   await checkFirstAction();
   const enlarge = await page.addStyleTag({content: 'html {font-size: 200% !important}'});
