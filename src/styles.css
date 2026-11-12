@@ -14039,8 +14039,9 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .dashboard-home .home-city-guide .home-hero-search { grid-row: 2; }
 .dashboard-home .home-city-guide .home-city-guide-actions { grid-row: 3; margin-bottom: 0; }
 .dashboard-home .home-city-guide .home-city-guide-reading { grid-column: 1; grid-row: 4; align-self: center; }
-.dashboard-home .home-city-guide .home-city-guide-byline { white-space: normal; }
-.home-next-photo { min-height: 32px; width: fit-content; padding: 4px 0; color: #fff; font: 500 var(--text-micro)/1.4 var(--font); cursor: pointer; }
+.dashboard-home .home-city-guide .home-city-guide-byline { display: inline-block; white-space: nowrap; }
+.home-next-photo { display: block; min-height: 32px; width: fit-content; padding: 4px 0; color: #fff; font: 500 var(--text-micro)/1.4 var(--font); cursor: pointer; }
+.dashboard-home :is(.podium-photo-leader, .podium-photo-card) { background: #12354e; }
 .home-depth { margin-inline: auto; width: min(100%, var(--w)); padding-inline: var(--gutter); }
 .home-column > .home-depth { width: 100%; padding-inline: 0; }
 .home-depth > summary { cursor: pointer; padding-block: 8px; min-height: 44px; align-content: center; border-top: 1px solid var(--5); font-weight: 650; }
