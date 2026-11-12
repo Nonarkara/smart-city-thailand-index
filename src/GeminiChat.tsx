@@ -261,23 +261,23 @@ export default function GeminiChat({ locale }: Props) {
               "ผู้ช่วยนี้ส่งคำถามและข้อมูลบริบทเมืองไปยัง Google โดยเก็บ Gemini API key ของคุณในหน่วยความจำจนกว่าจะโหลดหน้าใหม่หรือลบออก ไม่บันทึกในที่เก็บข้อมูลเบราว์เซอร์ และไม่มี key ของโครงการฝังในเว็บไซต์",
               "此助手会将你的问题和城市上下文发送给 Google。你的 Gemini API key 仅保存在内存中，刷新或移除后即清除，不写入浏览器存储。网站不内置项目密钥。"
             )}</p>
-            <p style={{ marginBottom: "1rem", fontSize: "var(--text-body)", lineHeight: "1.4", opacity: 0.8, background: "rgba(0,0,0,0.2)", padding: "0.5rem" }}>
-              {t(
-                "How to get a free key: 1. Visit aistudio.google.com 2. Sign in 3. Click 'Get API key' 4. Create key in new project 5. Copy and paste here.",
-                "วิธีรับ Key ฟรี: 1. ไปที่ aistudio.google.com 2. ลงชื่อเข้าใช้ 3. คลิก 'Get API key' 4. สร้าง Key ในโปรเจกต์ใหม่ 5. คัดลอกมาวางที่นี่",
-                "如何获取免费密钥：1. 访问 aistudio.google.com 2. 登录 3. 点击 'Get API key' 4. 在新项目中创建密钥 5. 复制并粘贴到此处。"
-              )}
-            </p>
+            <ol className="chat-key-steps">
+              <li>{t("Visit aistudio.google.com and sign in.", "ไปที่ aistudio.google.com แล้วลงชื่อเข้าใช้", "访问 aistudio.google.com 并登录。")}</li>
+              <li>{t("Choose \"Get API key\" and create one in a new project.", "เลือก \"Get API key\" และสร้างในโปรเจกต์ใหม่", "选择 \"Get API key\" 并在新项目中创建。")}</li>
+              <li>{t("Copy it and paste it below.", "คัดลอกแล้ววางด้านล่าง", "复制后粘贴到下方。")}</li>
+            </ol>
+            <label className="chat-key-label" htmlFor="chat-gemini-key">
+              {t("Gemini API key", "Gemini API key", "Gemini API 密钥")}
+            </label>
             <input
+              id="chat-gemini-key"
               ref={keyInputRef}
-              className="chat-input"
+              className="chat-key-input"
               type="password"
               autoComplete="off"
-              aria-label={t("Gemini API key", "Gemini API key", "Gemini API 密钥")}
               value={apiKeyDraft}
               onChange={e => setApiKeyDraft(e.target.value)}
               placeholder={t("Paste Gemini API key", "วาง Gemini API key", "粘贴 Gemini API key")}
-              style={{ marginBottom: ".6rem" }}
             />
             <div className="chat-suggestions">
               <button className="chat-suggestion" onClick={persistApiKey} disabled={!apiKeyDraft.trim()}>
@@ -320,7 +320,11 @@ export default function GeminiChat({ locale }: Props) {
       </div>
 
       <div className="chat-input-row">
+        <label className="visually-hidden" htmlFor="chat-message">
+          {t("Ask about a city", "ถามเกี่ยวกับเมือง", "询问城市")}
+        </label>
         <input
+          id="chat-message"
           ref={inputRef}
           className="chat-input"
           value={input}
@@ -334,12 +338,8 @@ export default function GeminiChat({ locale }: Props) {
         </button>
       </div>
       {hasApiKey && (
-        <div style={{ padding: "0 .9rem .75rem", fontSize: "var(--text-micro)", color: "var(--3)" }}>
-          <button
-            type="button"
-            onClick={clearApiKey}
-            style={{ border: 0, background: "transparent", color: "var(--teal)", padding: 0, cursor: "pointer" }}
-          >
+        <div className="chat-key-foot">
+          <button type="button" className="chat-remove-key" onClick={clearApiKey}>
             {t("Remove key", "ลบ key", "移除 key")}
           </button>
         </div>

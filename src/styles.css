@@ -1608,7 +1608,8 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .meth-github-badge { font: 700 var(--text-micro) var(--mono); color: var(--bg); background: var(--ink); padding: .08rem .35rem; letter-spacing: .1em; text-transform: uppercase; }
 .meth-github-repo { margin-top: .55rem; font: 600 var(--text-body) var(--mono); }
 .meth-github-owner { color: var(--3); }
-.meth-github-slash { color: var(--4); }
+/* The separator between two source links. --4 as type read 1.43:1. */
+.meth-github-slash { color: var(--3); }
 .meth-github-name { color: var(--ink); }
 .meth-github-files { margin-top: .7rem; display: grid; gap: .18rem; }
 .meth-github-file { font: 400 var(--text-micro) var(--mono); color: var(--3); }
@@ -1761,22 +1762,73 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
  * they scroll up. */
 .chat-fab-tucked { transform: translateY(72px); opacity: 0; pointer-events: none; }
 .chat-fab:hover { opacity: .85; }
-.chat-panel { position: fixed; bottom: 1.25rem; right: max(1.25rem, calc(50vw - 720px + 1.25rem)); z-index: 150; width: 340px; max-height: 480px; display: flex; flex-direction: column; border: 1px solid var(--5); background: var(--bg); box-shadow: none; }
+.chat-panel { position: fixed; bottom: 1.25rem; right: max(1.25rem, calc(50vw - 720px + 1.25rem)); z-index: 150; width: 340px; max-height: min(480px, 62vh); display: flex; flex-direction: column; border: 1px solid var(--5); background: var(--bg); box-shadow: none; }
 .chat-header { display: flex; align-items: center; gap: .3rem; padding: .4rem .6rem; border-bottom: 1px solid var(--5); }
 .chat-title { font-weight: 700; font-size: var(--text-micro); }
 .chat-powered { font: 500 var(--text-micro) var(--mono); color: var(--3); margin-left: auto; }
 .chat-close { font-size: var(--text-body); padding: 0; min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; color: var(--3); }
-.chat-messages { flex: 1; overflow-y: auto; padding: .6rem; min-height: 180px; max-height: 320px; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 12px; min-height: 180px; max-height: 320px; }
 .chat-welcome { font-size: var(--text-micro); color: var(--2); }
-.chat-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: .35rem; }
+/* The key steps are a list, not a paragraph. Each step is its own line
+   with a hairline above it, so the eye can count them without reading
+   them. The old version ran "1. ... 2. ... 3. ..." together in one
+   sentence inside a dark slab — prose doing a list's job, at 3.9:1. */
+.chat-key-steps { margin: 12px 0 0; padding: 0; list-style: none; counter-reset: chat-step; }
+.chat-key-steps li {
+  counter-increment: chat-step;
+  position: relative;
+  padding: 8px 0 8px 24px;
+  border-top: 1px solid var(--5);
+  color: var(--2);
+}
+.chat-key-steps li::before {
+  content: counter(chat-step);
+  position: absolute; left: 0; top: 8px;
+  font: 600 var(--text-micro) var(--mono);
+  color: var(--3);
+}
+/* The key field is drawn like every other field on this site: a label
+   above a rule, 44px of hit area, nothing boxed. It used to be a bare
+   25px-tall input buried in a paragraph. */
+.chat-key-label {
+  display: block;
+  margin-top: 12px;
+  font: 600 var(--text-micro) var(--font);
+  color: var(--3);
+}
+.chat-key-input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid var(--4);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--text-body);
+  outline: 0;
+}
+.chat-key-input:focus-visible { border-bottom-color: var(--teal); outline: 2px solid var(--teal); outline-offset: 2px; }
+.chat-key-foot { padding: 0 12px 12px; font-size: var(--text-micro); color: var(--3); }
+.chat-remove-key {
+  border: 0;
+  padding: 8px 0;
+  min-height: 44px;
+  background: transparent;
+  color: var(--teal);
+  font: 600 var(--text-micro) var(--font);
+  cursor: pointer;
+}
+.chat-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .chat-suggestion { font: 600 var(--text-micro) var(--font); padding: .15rem .6rem; min-height: 44px; display: inline-flex; align-items: center; border: 1px solid var(--5); color: var(--teal); }
 .chat-suggestion:hover { background: var(--alpha-bg); }
 .chat-msg { margin-bottom: .35rem; }
 .chat-msg-user .chat-msg-content { background: var(--teal); color: #fff; padding: .3rem .5rem; font-size: var(--text-micro); line-height: 1.45; margin-left: 1.5rem; }
 .chat-msg-assistant .chat-msg-content { background: var(--surface); padding: .3rem .5rem; font-size: var(--text-micro); line-height: 1.45; margin-right: 1.5rem; white-space: pre-wrap; }
 .chat-typing { opacity: .4; }
-.chat-input-row { display: flex; border-top: 1px solid var(--5); }
-.chat-input { flex: 1; padding: .4rem .6rem; border: 0; font-size: var(--text-micro); background: 0; color: inherit; outline: 0; }
+.chat-input-row { display: flex; align-items: stretch; border-top: 1px solid var(--5); }
+.chat-input { flex: 1; min-width: 0; min-height: 44px; padding: 8px 12px; border: 0; background: transparent; color: inherit; font-size: var(--text-micro); outline: 0; }
 .chat-send { padding: .4rem .6rem; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; background: var(--teal); color: #fff; font-weight: 700; font-size: var(--text-micro); }
 .chat-send:disabled { opacity: .25; }
 
@@ -4688,7 +4740,10 @@ h2, h3 { font-family: var(--font); }
 .kb-question::before { content: "+"; font: 700 var(--text-body) var(--mono); color: var(--gold); width: 1rem; text-align: center; flex-shrink: 0; }
 details[open] .kb-question::before { content: "−"; }
 .kb-cat-badge {
-  font: 600 var(--text-micro) var(--mono); color: var(--teal); background: var(--teal-glow);
+  font: 600 var(--text-micro) var(--mono);
+  /* Teal on the teal glow read 4.43:1 — 0.07 short of AA across 72
+   * instances. A step darker on the same hue reads 5.72:1. */
+  color: #005f78; background: var(--teal-glow);
   padding: .1rem .3rem; text-transform: uppercase; letter-spacing: .06em;
   flex-shrink: 0;
 }
@@ -10266,7 +10321,22 @@ body:has(.bingo-page) { overflow: hidden; }
   overflow: hidden;
 }
 .bingo-cell:disabled { cursor: default; opacity: 1; }
-.bingo-cell-waiting .bingo-card-front { opacity: .68; }
+/* The waiting state used to dim the whole card front to opacity .68.
+   * Group opacity multiplies the TEXT as well as the ground, so the
+   * dimension-coloured card number fell from 4.91:1 to 2.75:1 and
+   * every one of the 24 cards failed AA. The dim now lives on the
+   * card's own ground and its label — never on the number, which is
+   * the one thing on the card that has to be read. */
+.bingo-cell-waiting .bingo-card-front { background: var(--5); }
+.bingo-cell-waiting .bingo-cell-num {
+  /* The same dimension hue, darkened with the colour-mix() idiom the
+     claim badges already use. It reads as that dimension and clears
+     AA at 6.73:1 on the dimmed face; at full strength it was 4.38:1. */
+  opacity: 1;
+  color: color-mix(in srgb, var(--cell-color, var(--3)) 80%, #000);
+}
+.bingo-cell-waiting .bingo-cell-text { opacity: .68; }
+.bingo-cell-waiting .bingo-cell-emoji { opacity: .68; }
 .bingo-cell:hover:not(.bingo-cell-marked):not(.bingo-cell-free):not(:disabled) .bingo-card-front { background: var(--surface-hover); }
 .bingo-cell-free { cursor: default; }
 .bingo-cell-free .bingo-card-front { background: var(--5); }
@@ -11829,7 +11899,10 @@ body.canvas-print-mode {
 }
 .needs-ladder-rung-index {
   font: 700 var(--text-micro) var(--mono);
-  color: var(--4);
+  /* --4 is the hairline token (CLAUDE.md: "hairline, never type"). As
+     type it read 1.43:1 on the surface. --3 is the muted tone the
+     stylesheet documents at 5.8:1. */
+  color: var(--3);
   min-width: 1.1rem;
 }
 .needs-ladder-rung-label {
@@ -12599,7 +12672,9 @@ body.canvas-print-mode {
   background: var(--surface);
   color: var(--2);
 }
-.baseline-row-dim.is-missing { background: transparent; color: var(--4); }
+/* The dash means "not measured". It has to be read, not merely
+   present, so it carries --3 rather than the hairline token. */
+.baseline-row-dim.is-missing { background: transparent; color: var(--3); }
 .baseline-row-score {
   grid-column: 3;
   grid-row: 1;
