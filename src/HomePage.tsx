@@ -1,12 +1,12 @@
 import PageMascot from "./PageMascot";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { useInView } from "./useInView";
 import NewsStrip from "./NewsStrip";
 import HomeDecisionGuide from "./HomeDecisionGuide";
 import { getHomeRoadEvidence } from "./homeRoadEvidence";
 import { useCitySummaries } from "./cityApi";
 import { summarizeCities } from "./cityCollections";
-import { getCityPhotoAsset, HOME_HERO_ASSETS, type HeroAsset } from "./cityMedia";
+import { getCityPhotoAsset, HOME_HERO_ASSETS } from "./cityMedia";
 import {
   getCityName,
   getProvinceName,
@@ -50,12 +50,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
 
   const [heroIndex, setHeroIndex] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % HOME_HERO_ASSETS.length);
-    }, 7000); // 7s display + 2.4s fade = ~9.4s per photo feels unhurried
-    return () => clearInterval(interval);
-  }, []);
+  const heroAsset = HOME_HERO_ASSETS[heroIndex];
 
   const { data: cities } = useCitySummaries();
   const stats = useMemo(() => summarizeCities(cities), [cities]);
@@ -110,39 +105,19 @@ export default function HomePage({ locale, onNavigate }: Props) {
     <div className="dashboard-home">
       {/* ─── CINEMATIC HERO ─── */}
       <section className="cinematic-hero reveal visible">
-        {(HOME_HERO_ASSETS as HeroAsset[]).map((asset, index) => {
-          const active = index === heroIndex;
-          return (
-            <div
-              key={asset.src}
-              className="hero-slide-wrapper"
-              style={{
-                opacity: active ? 1 : 0,
-                transition: "opacity 2.4s cubic-bezier(0.45, 0, 0.55, 1)",
-                zIndex: active ? 1 : 0,
-              }}
-              aria-hidden={!active}
-            >
-              <ResponsiveImage
-                src={asset.src}
-                alt={asset.label ? `Thai smart city — ${asset.label}` : "Thai smart city"}
-                className="cinematic-hero-img"
-                width={1920}
-                height={900}
-                loading={index === 0 ? "eager" : "lazy"}
-                fetchPriority={index === 0 ? "high" : "auto"}
-                sizes="100vw"
-                style={{ objectPosition: asset.objectPosition }}
-              />
-            </div>
-          );
-        })}
-        {/* City label — bottom-right credit for the active photo */}
-        {(HOME_HERO_ASSETS as HeroAsset[])[heroIndex]?.label && (
-          <span className="hero-slide-label">
-            {(HOME_HERO_ASSETS as HeroAsset[])[heroIndex].label}
-          </span>
-        )}
+        <div className="hero-slide-wrapper">
+          <ResponsiveImage
+            src={heroAsset.src}
+            alt={heroAsset.label ?? ""}
+            className="cinematic-hero-img"
+            width={1920}
+            height={900}
+            fetchPriority="high"
+            sizes="100vw"
+            style={{ objectPosition: heroAsset.objectPosition }}
+          />
+        </div>
+        <span className="hero-slide-label" aria-live="polite">{heroAsset.label}</span>
         <div className="cinematic-hero-overlay">
           <p className="cinematic-hero-eyebrow">
             SCITI 2026 — {t({ en: 'pronounced "City"', th: 'อ่านว่า "ซิตี้"', zh: '读作 "City"' })}
@@ -155,12 +130,13 @@ export default function HomePage({ locale, onNavigate }: Props) {
             onNavigate(q ? `/rankings?q=${encodeURIComponent(q)}` : "/rankings");
           }}>
             <label className="visually-hidden" htmlFor="home-hero-q">{t({ en: "Search a city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })}</label>
-            <input id="home-hero-q" name="q" type="search" autoComplete="off" placeholder={t({ en: "Search a city or province", th: "ค้นหาเมืองหรือจังหวัด", zh: "搜索城市或府" })} />
+            <input id="home-hero-q" name="q" type="search" autoComplete="off" placeholder={t({ en: "City or province", th: "เมืองหรือจังหวัด", zh: "城市或府" })} />
             <button type="submit" aria-label={t({ en: "Search", th: "ค้นหา", zh: "搜索" })}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           </form>
           } />
-
-
+          <button type="button" className="home-next-photo" onClick={() => setHeroIndex(index => (index + 1) % HOME_HERO_ASSETS.length)}>
+            {t({ en: "Next photo", th: "ภาพถัดไป", zh: "下一张照片" })} →
+          </button>
         </div>
       </section>
 
@@ -245,6 +221,82 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
+      <div className="home-column">
+        {/* ─── TOP 5 PHOTO PODIUM ─── */}
+        {top5.length >= 5 && (() => {
+          const leader = top5[0];
+          const leaderStats = (["livability", "economy", "safety"] as const)
+            .map(pillar => `${PILLAR_LABELS[locale][pillar]} ${leader.scores[pillar]}/100`);
+          const leaderPhoto = getCityPhotoAsset(leader);
+          return (
+            <section ref={podiumRef} className={`reveal stagger-2 ${podiumVisible ? "visible" : ""}`}>
+              <p className="eyebrow">{t({ en: "Top five · curated scores", th: "ห้าอันดับแรก · คะแนนวิจัย", zh: "前五名 · 编辑研究评分" })}</p>
+              <div className="podium-photo-layout">
+                <button type="button" className="podium-photo-leader" onClick={() => onNavigate(`/city/${leader.id}`)}>
+                  <ResponsiveImage
+                    src={leaderPhoto.src}
+                    alt={getCityName(leader, locale)}
+                    className="podium-photo-img"
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="(max-width: 768px) 100vw, 58vw"
+                    style={{ objectPosition: leaderPhoto.objectPosition }}
+                  />
+                  <div className="podium-photo-overlay">
+                    <div className="podium-photo-top">
+                      <div>
+                        <div className="podium-rank">01</div>
+                        <h3 className="podium-photo-name">{getCityName(leader, locale)}</h3>
+                      </div>
+                      <div className="podium-photo-scoreblock">
+                        <div className="podium-photo-score">{leader.compositeScore.toFixed(1)}</div>
+                      </div>
+                    </div>
+                    <div className="podium-photo-stats">
+                      {leaderStats.map((stat, i) => (
+                        <span key={i} className="podium-photo-stat">{stat}</span>
+                      ))}
+                    </div>
+                    <div className="podium-photo-vibe">{getCityVibe(leader, locale)}</div>
+                  </div>
+                </button>
+                <div className="podium-photo-grid">
+                  {top5.slice(1).map((city, i) => {
+                    const photo = getCityPhotoAsset(city);
+                    const cityStats = (["livability"] as const)
+                      .map(pillar => `${PILLAR_LABELS[locale][pillar]} ${city.scores[pillar]}/100`);
+                    return (
+                      <button key={city.id} type="button" className="podium-photo-card" onClick={() => onNavigate(`/city/${city.id}`)}>
+                        <ResponsiveImage
+                          src={photo.src}
+                          alt={getCityName(city, locale)}
+                          className="podium-photo-card-img"
+                          loading="lazy"
+                          sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
+                          style={{ objectPosition: photo.objectPosition }}
+                        />
+                        <div className="podium-photo-card-overlay">
+                          <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
+                          <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
+                          <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
+                          <div className="podium-photo-card-stats">
+                            {cityStats.map((stat, j) => (
+                              <span key={j} className="podium-photo-stat">{stat}</span>
+                            ))}
+                          </div>
+                          <span className={`podium-photo-card-vibe dashboard-ranking-vibe-${city.reality}`}>{getCityVibe(city, locale)}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+          );
+        })()}
+
+      <details className="home-depth" id="home-field-evidence">
+        <summary>{t({ en: "Field evidence and two city proposals", th: "หลักฐานภาคสนามและข้อเสนอสองเมือง", zh: "现场证据与两项城市提案" })}</summary>
       {/* ─── FIELD OPERATIONS & DELIVERY EVIDENCE ─── */}
       <section className="home-field-ops-section" aria-label={t({ en: "Field Operations & Delivery Evidence", th: "การปฏิบัติการภาคสนามและหลักฐานการส่งมอบ", zh: "现场运营与交付实证" })}>
         <div className="section">
@@ -403,7 +455,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
-      <div className="home-column">
+      </details>
+
+      <details className="home-depth" id="home-score-leaders">
+        <summary>{t({ en: "Scores by pillar and region, plus road-safety data", th: "คะแนนรายด้าน รายภาค และข้อมูลความปลอดภัยทางถนน", zh: "分项和区域评分及道路安全数据" })}</summary>
         {/* ─── PILLAR CHAMPIONS ─── */}
         <section
           ref={championsRef}
@@ -531,79 +586,10 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </section>
         )}
 
-        {/* ─── TOP 5 PHOTO PODIUM ─── */}
-        {top5.length >= 5 && (() => {
-          const leader = top5[0];
-          const leaderStats = (["livability", "economy", "safety"] as const)
-            .map(pillar => `${PILLAR_LABELS[locale][pillar]} ${leader.scores[pillar]}/100`);
-          const leaderPhoto = getCityPhotoAsset(leader);
-          return (
-            <section ref={podiumRef} className={`reveal stagger-2 ${podiumVisible ? "visible" : ""}`}>
-              <p className="eyebrow">{t({ en: "Top five · curated scores", th: "ห้าอันดับแรก · คะแนนวิจัย", zh: "前五名 · 编辑研究评分" })}</p>
-              <div className="podium-photo-layout">
-                <button type="button" className="podium-photo-leader" onClick={() => onNavigate(`/city/${leader.id}`)}>
-                  <ResponsiveImage
-                    src={leaderPhoto.src}
-                    alt={getCityName(leader, locale)}
-                    className="podium-photo-img"
-                    loading="eager"
-                    fetchPriority="high"
-                    sizes="(max-width: 768px) 100vw, 58vw"
-                    style={{ objectPosition: leaderPhoto.objectPosition }}
-                  />
-                  <div className="podium-photo-overlay">
-                    <div className="podium-photo-top">
-                      <div>
-                        <div className="podium-rank">01</div>
-                        <h3 className="podium-photo-name">{getCityName(leader, locale)}</h3>
-                      </div>
-                      <div className="podium-photo-scoreblock">
-                        <div className="podium-photo-score">{leader.compositeScore.toFixed(1)}</div>
-                      </div>
-                    </div>
-                    <div className="podium-photo-stats">
-                      {leaderStats.map((stat, i) => (
-                        <span key={i} className="podium-photo-stat">{stat}</span>
-                      ))}
-                    </div>
-                    <div className="podium-photo-vibe">{getCityVibe(leader, locale)}</div>
-                  </div>
-                </button>
-                <div className="podium-photo-grid">
-                  {top5.slice(1).map((city, i) => {
-                    const photo = getCityPhotoAsset(city);
-                    const cityStats = (["livability", "economy"] as const)
-                      .map(pillar => `${PILLAR_LABELS[locale][pillar]} ${city.scores[pillar]}/100`);
-                    return (
-                      <button key={city.id} type="button" className="podium-photo-card" onClick={() => onNavigate(`/city/${city.id}`)}>
-                        <ResponsiveImage
-                          src={photo.src}
-                          alt={getCityName(city, locale)}
-                          className="podium-photo-card-img"
-                          loading="lazy"
-                          sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
-                          style={{ objectPosition: photo.objectPosition }}
-                        />
-                        <div className="podium-photo-card-overlay">
-                          <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
-                          <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
-                          <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
-                          <div className="podium-photo-card-stats">
-                            {cityStats.map((stat, j) => (
-                              <span key={j} className="podium-photo-stat">{stat}</span>
-                            ))}
-                          </div>
-                          <span className={`podium-photo-card-vibe dashboard-ranking-vibe-${city.reality}`}>{getCityVibe(city, locale)}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-          );
-        })()}
+      </details>
 
+      <details className="home-depth" id="home-editorial">
+        <summary>{t({ en: "City shortlists and reading list", th: "รายชื่อเมืองคัดสรรและเรื่องน่าอ่าน", zh: "城市精选与阅读清单" })}</summary>
         {/* ─── EDITORIAL COLLECTIONS ─── */}
         <section
           ref={collectionsRef}
@@ -697,6 +683,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </div>
         </section>
 
+      </details>
+
         {/* ─── FEEDBACK & CONTRIBUTIONS ─── */}
         <section ref={feedbackRef} className={`section reveal stagger-4 ${feedbackVisible ? "visible" : ""}`}>
           <div className="feedback-cta glass-card shadow-premium">
@@ -705,6 +693,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <button className="cta-button" onClick={() => window.open("mailto:data@slic-index.org")}>{t({ en: "Submit Data", th: "ส่งข้อมูล", zh: "提交数据" })}</button>
           </div>
         </section>
+
+
       </div>
 
       {/* ═══ OPEN DATA: Big CSV Export Buttons ═══ */}
@@ -755,6 +745,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
         </div>
       </section>
 
+      <details className="home-depth" id="home-scoring">
+        <summary>{t({ en: "How the scores are calculated", th: "วิธีคำนวณคะแนน", zh: "评分如何计算" })}</summary>
       {/* ═══ TRANSPARENCY: How the numbers work ═══ */}
       <section className="transparency-section">
         <div className="transparency-inner">
@@ -810,6 +802,8 @@ export default function HomePage({ locale, onNavigate }: Props) {
           </div>
         </div>
       </section>
+
+      </details>
 
       {/* ═══ INVESTOR: Secondary city opportunities ═══ */}
       <section className="investor-section">

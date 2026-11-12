@@ -13,9 +13,9 @@ export interface PageMascotBrief {
 export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
   "home": {
     "copy": {
-      "en": "Start with a city. Compare its research profile, follow the sources and check what remains unknown.",
-      "th": "เริ่มจากเมืองที่สนใจ แล้วค่อยดูที่มาของตัวเลข ที่นี่มีโปรไฟล์วิจัย แหล่งข้อมูลสาธารณะ และช่องว่างของหลักฐานให้ค้นต่อ",
-      "zh": "先选一座城市，再看看数字从哪里来。这里汇集研究概况、公开来源与证据空白，方便继续查证。"
+      "en": "What’s it like to live there? Pick a city and see what the evidence can tell you.",
+      "th": "อยู่เมืองนั้นเป็นอย่างไร ลองเลือกเมืองแล้วดูว่าหลักฐานบอกอะไรได้บ้าง",
+      "zh": "在那里生活是什么样的？选一座城市，看看资料能告诉你什么。"
     },
     "action": {
       "path": "/rankings",

@@ -262,3 +262,7 @@ Verification: production-built local48 language/viewport states cover320/390/399
 
 ## Owner handwriting · 30 October 2026
 Owner explicitly requests NonArchitecture-Regular.ttf for all Nong Plub words. Named, load-bearing typography exception: use Non Architecture first for every mascot narration, heading and attributed provincial quote/tip, including print. Preserve data-table numerals, action controls and formal source/AI/baseline disclosures in their research/UI faces. The supplied font has77 glyphs (Latin/digits/limited punctuation), no Thai/CJK; existing licensed handwriting faces fill unsupported glyphs. Preserve the original font and owner copyright; conversion changes format only. Reference: the owner's actual handwriting; retain the earned compact geometry and test realistic strings instead of enlarging boxes for the font.
+
+## Homepage reading order
+
+The homepage is a city finder. Use the existing column grid and MoMA’s exhibition-index hierarchy as the reference for grouping and rule weight. The headline leads into search, then purpose-based comparison. Nong Plub’s note sits beside her portrait after the search controls. Use stronger section breaks for the first comparison and quiet rules for the research disclosures. The photos advance on request.

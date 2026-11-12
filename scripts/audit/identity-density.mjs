@@ -27,12 +27,31 @@ try {
   }
   browser = await chromium.launch();
   const page = await browser.newPage({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(origin);
+  const search = page.locator('.home-hero-search');
+  await search.waitFor();
+  const checkFirstAction = async () => {
+    const searchBox = await search.boundingBox();
+    const guideBox = await page.locator('.home-city-guide-reading').boundingBox();
+    assert.ok(searchBox.y + searchBox.height <= 560, 'search left the first reading band');
+    assert.ok(searchBox.y + searchBox.height <= guideBox.y, 'intro precedes the city search');
+    assert.equal(await page.locator('.home-depth[open]').count(), 0, 'reference sections overwhelm the initial view');
+  };
+  await checkFirstAction();
+  const enlarge = await page.addStyleTag({content: 'html {font-size: 200% !important}'});
+  await checkFirstAction();
+  await enlarge.evaluate(el => el.remove());
+  const regress = await page.addStyleTag({content: '.dashboard-home .home-city-guide .home-hero-search {grid-row: 5 !important}'});
+  await assert.rejects(checkFirstAction, /intro precedes|search left/, 'old search order escaped detection');
+  await regress.evaluate(el => el.remove());
   for (const locale of ['en', 'th', 'zh']) {
     for (const width of [390, 730, 1024, 1280, 1440, 1980]) {
       await page.setViewportSize({ width, height: width === 390 ? 844 : width === 1280 ? 720 : 900 });
       await page.goto(origin);
       await page.evaluate(value => localStorage.setItem('smart-city-thailand-locale', value), locale);
       await page.reload();
+      await page.locator('#home-editorial > summary').click();
       await page.locator('.home-collections').scrollIntoViewIfNeeded();
       await page.evaluate(() => document.fonts.ready);
       const geometry = await page.evaluate(() => {
@@ -82,6 +101,7 @@ try {
   await page.addStyleTag({content:'.map-dash-controls,.map-dash-filter,.map-dash-layers {flex-wrap:nowrap!important;max-width:none!important}.map-dash-controls button{white-space:nowrap!important;max-width:none!important}'});
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), 'original unwrapped map controls escaped overflow guard');
   await page.goto(origin);
+  await page.locator('#home-editorial > summary').click();
   await page.locator('[data-city-id="phuket"].home-collection-chip').focus();
   await page.keyboard.press('Enter');
   await page.waitForURL(url => url.pathname.replace(/\/$/, '') === '/city/phuket');
@@ -98,6 +118,7 @@ try {
   await prompt.click(); await prompt.click();
   assert.equal(await page.locator('.feedback-input').inputValue(), 'Local audit fixture; do not send');
   await page.goto(origin);
+  await page.locator('#home-editorial > summary').click();
   await page.locator('.home-collections').scrollIntoViewIfNeeded();
   const duplicate = await page.locator('[data-city-id="phuket"].home-collection-chip').evaluate(el=>{
     const meta=document.createElement('span');meta.className='home-collection-chip-meta';meta.textContent='Phuket';el.append(meta);
