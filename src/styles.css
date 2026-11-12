@@ -14461,3 +14461,9 @@ main .needs-ladder-signal-provenance > span:not(.needs-ladder-signal-role)::befo
 main .needs-ladder-signal-role { display: inline-block; line-height: 1.3; }
 main .needs-ladder-rung-weakest { padding-block: .4rem; }
 main .needs-ladder-signal-value { margin-left: .3rem; }
+
+/* Podium cards sit on a dark scrim. The reality tints are for light ground: teal read 3.0:1
+   and the planned red under 2:1 on the scrim. Lighter tints of the same three hues, >= 7:1. */
+.podium-photo-card .dashboard-ranking-vibe-operational { color: #7fd0e4; }
+.podium-photo-card .dashboard-ranking-vibe-partial { color: #fbbf5a; }
+.podium-photo-card .dashboard-ranking-vibe-planned { color: #f59ab0; }
