@@ -53,12 +53,10 @@ fi
 if [[ -n "${CDPT_REMOTE_TEST_RUN:-}" ]]; then
   bold "Build — use the artifact produced by the validated workflow"
   ARTIFACT_DIR="$(mktemp -d "$LOG_DIR/cdpt-ci.XXXXXX")"
-  # The Pages action (actions/upload-pages-artifact@v3) uploads through the
-  # Pages store, which the artifacts API does not list — `gh run download`
-  # could never fetch it, so this path was dead on arrival. The workflow now
-  # also uploads the built site as a plain artifact, and that is what is
-  # taken here.
-  gh run download "$CDPT_REMOTE_TEST_RUN" --name site-dist --dir "$ARTIFACT_DIR" || die "cannot download validated build"
+  # actions/upload-pages-artifact@v3 packs dist into artifact.tar and uploads
+  # that file with actions/upload-artifact under the name github-pages — the
+  # same artifact deploy-pages consumes. Download it; do not keep a second copy.
+  gh run download "$CDPT_REMOTE_TEST_RUN" --name github-pages --dir "$ARTIFACT_DIR" || die "cannot download validated build"
   if [[ -s "$ARTIFACT_DIR/artifact.tar" ]]; then
     mkdir "$ARTIFACT_DIR/site"
     tar -xf "$ARTIFACT_DIR/artifact.tar" -C "$ARTIFACT_DIR/site" || die "cannot extract validated build"
