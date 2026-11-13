@@ -253,7 +253,7 @@ export const instruments: FinancialInstrument[] = [
     name: "Asset Recycling",
     nameTh: "รีไซเคิลสินทรัพย์",
     category: "equity",
-    descEn: "Government sells or leases existing assets (buildings, land, utilities) to private sector, then reinvests proceeds in new smart infrastructure. Unlocks value from underperforming public assets.",
+    descEn: "Government sells or leases existing assets (buildings, land, utilities) to private sector, then reinvests proceeds in new smart infrastructure. Recovers value from underperforming public assets.",
     descTh: "รัฐขายหรือให้เช่าสินทรัพย์ที่มี (อาคาร ที่ดิน สาธารณูปโภค) ให้เอกชน แล้วนำเงินลงทุนในโครงสร้างพื้นฐานอัจฉริยะใหม่",
     applicableTiers: ["alpha"],
     applicableStages: ["operational"],

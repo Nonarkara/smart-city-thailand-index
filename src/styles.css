@@ -4095,7 +4095,21 @@ h2, h3 { font-family: var(--font); }
      bare photograph: 1.08:1 and 1.91:1 against the lightest pixel
      behind them. It now covers the card the way the city hero's does,
      and the card's own picture stays legible through it. */
-  background: linear-gradient(rgba(20,19,16,.45) 0%, rgba(26,24,20,.62) 62%);
+  /* Three-band scrim: the top row (rank, name, score) and the
+     bottom row (stats, vibe) each sit on an opaque ground, while the
+     photographic middle band stays open so the city picture still reads.
+     The top band must stay >= 78% opacity -- see the photo-overlay law
+     in CLAUDE.md and the pixel measurement in
+     scripts/audit/ (the .podium-photo-score element failed at 1.65:1
+     when this scrim was lightened to .45). */
+  background: linear-gradient(
+    rgba(18,17,15,.86) 0%,
+    rgba(18,17,15,.86) 26%,
+    rgba(20,19,16,.28) 46%,
+    rgba(22,20,17,.42) 62%,
+    rgba(26,24,20,.88) 84%,
+    rgba(26,24,20,.92) 100%
+  );
 }
 .podium-photo-top {
   display: flex; justify-content: space-between; align-items: flex-start;
@@ -4155,7 +4169,14 @@ h2, h3 { font-family: var(--font); }
   min-height: 155px; padding: .85rem;
   /* Same correction as the leader card: the rank sits at the top, so
      the scrim has to reach the top too. */
-  background: linear-gradient(rgba(20,19,16,.4) 0%, rgba(26,24,20,.58) 62%);
+  /* Same three-band logic as the leader, compressed: the card is
+     short, so the open photographic band is only the top third and the
+     text stack is carried by the strong lower half. */
+  background: linear-gradient(
+    rgba(20,19,16,.62) 0%,
+    rgba(22,20,17,.86) 34%,
+    rgba(26,24,20,.92) 100%
+  );
 }
 .podium-photo-card .podium-rank { font: 600 var(--text-micro) var(--mono); color: rgba(255,255,255,.92); text-shadow: 0 1px 3px rgba(0,0,0,.6); letter-spacing: .06em; }
 .podium-photo-card-name { font-size: var(--text-body); font-weight: 700; color: #fff; letter-spacing: -.02em; text-shadow: 0 1px 3px rgba(0,0,0,.5); }

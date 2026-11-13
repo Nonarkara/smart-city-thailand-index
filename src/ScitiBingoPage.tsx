@@ -400,7 +400,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
       <div className="bingo-main-area">
         <div className={`bingo-board-wrap${!targetDim?" bingo-board-locked":""}`}>
           {!targetDim&&(
-            <p className="bingo-board-hint-top">{t({en:"Choose a Stage Caller dimension first. Cards unlock after the call.",th:"เลือกมิติจากผู้ประกาศก่อน แล้วการ์ดจึงจะเปิดให้เล่น",zh:"请先选择舞台主持的维度，之后卡片才会解锁。"})}</p>
+            <p className="bingo-board-hint-top">{t({en:"Choose a Stage Caller dimension first. Cards open after the call.",th:"เลือกมิติจากผู้ประกาศก่อน แล้วการ์ดจึงจะเปิดให้เล่น",zh:"请先选择舞台主持的维度，之后卡片才会打开。"})}</p>
           )}
           {feedback&&(
             <div className={`bingo-feedback${feedback.correct?" bingo-feedback-correct":" bingo-feedback-wrong"}`}>

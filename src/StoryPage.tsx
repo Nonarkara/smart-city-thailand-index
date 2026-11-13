@@ -323,7 +323,7 @@ export default function StoryPage({ locale, onNavigate }: Props) {
           </div>
           <div className="story-shift-card glass-card shadow-premium" style={{ border: '0', borderRadius: '0' }}>
             <h3 style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "Central Planning → Local Grit", th: "แผนจากส่วนกลาง → พลังท้องถิ่น", zh: "中央规划 → 地方韧性" })}</h3>
-            <p style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "From waiting for Bangkok to empowerment of local consortiums like KKTS for resilience.", th: "ย้ายหน้าจากการรอฟังคำสั่งจากกรุงเทพเพื่อเสริมพลังท้องถิ่นในการพัฒนาความยืดหยุ่น", zh: "从等待曼谷指令转向赋权地方联盟（如KKTS）以增强韧性。" })}</p>
+            <p style={{ fontSize: 'var(--text-body)' }}>{translate(locale, { en: "From waiting for Bangkok to local control of consortiums like KKTS for resilience.", th: "ย้ายหน้าจากการรอฟังคำสั่งจากกรุงเทพสู่การควบคุมโดยสมาคมท้องถิ่นอย่าง KKTS เพื่อความยืดหยุ่น", zh: "从等待曼谷指令转向由地方联盟（如KKTS）自主掌控，以增强韧性。" })}</p>
           </div>
         </div>
       </section>
