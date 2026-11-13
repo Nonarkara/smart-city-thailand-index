@@ -4092,7 +4092,7 @@ h2, h3 { font-family: var(--font); }
      bare photograph: 1.08:1 and 1.91:1 against the lightest pixel
      behind them. It now covers the card the way the city hero's does,
      and the card's own picture stays legible through it. */
-  background: linear-gradient(rgba(20,19,16,.58) 0%, rgba(26,24,20,.86) 62%);
+  background: linear-gradient(rgba(20,19,16,.72) 0%, rgba(26,24,20,.88) 62%);
 }
 .podium-photo-top {
   display: flex; justify-content: space-between; align-items: flex-start;
@@ -4108,36 +4108,24 @@ h2, h3 { font-family: var(--font); }
 .podium-photo-score {
   font: 700 var(--text-display) var(--mono); color: var(--gold);
   letter-spacing: -.04em; line-height: 1;
-  /* The score sits at the top of the card, where the photo is lightest.
-     It carries its own dark plate so the number is the same brightness
-     whatever photograph is behind it. */
-  padding: .1rem .3rem;
-  background: rgba(20,19,16,.52);
+  /* Sits on the card's full scrim; no plate of its own. */
   text-shadow: 0 1px 6px rgba(0,0,0,.6);
 }
 .podium-photo-scoreblock { text-align: right; }
 .podium-photo-stats {
-  display: flex; flex-wrap: wrap; gap: .3rem; margin: .5rem 0;
+  display: flex; flex-wrap: wrap; gap: .2rem .8rem; margin: .5rem 0;
 }
 .podium-photo-stat {
   font: 500 var(--text-micro) var(--mono); color: rgba(255,255,255,.86);
-  padding: .2rem .5rem;
-  /* Its own ground, no blur. On the bare photo it read 2.80:1 with no
-     text-shadow at all. */
-  background: rgba(20,19,16,.52);
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 .podium-photo-vibe {
   font: 600 var(--text-micro) var(--mono); color: var(--gold);
   margin-bottom: .5rem;
-  padding: .1rem .3rem;
-  background: rgba(20,19,16,.52);
   text-shadow: 0 1px 3px rgba(0,0,0,.6);
 }
 .podium-photo-leader .podium-rank {
   font: 700 var(--text-micro) var(--mono); color: rgba(255,255,255,.92);
-  padding: .1rem .3rem;
-  background: rgba(20,19,16,.52);
   text-shadow: 0 1px 3px rgba(0,0,0,.6);
   letter-spacing: .08em;
 }
@@ -4164,9 +4152,9 @@ h2, h3 { font-family: var(--font); }
   min-height: 155px; padding: .85rem;
   /* Same correction as the leader card: the rank sits at the top, so
      the scrim has to reach the top too. */
-  background: linear-gradient(rgba(20,19,16,.56) 0%, rgba(26,24,20,.84) 62%);
+  background: linear-gradient(rgba(20,19,16,.7) 0%, rgba(26,24,20,.86) 62%);
 }
-.podium-photo-card .podium-rank { font: 600 var(--text-micro) var(--mono); color: rgba(255,255,255,.92); padding: .1rem .3rem; background: rgba(20,19,16,.52); text-shadow: 0 1px 3px rgba(0,0,0,.6); letter-spacing: .06em; }
+.podium-photo-card .podium-rank { font: 600 var(--text-micro) var(--mono); color: rgba(255,255,255,.92); text-shadow: 0 1px 3px rgba(0,0,0,.6); letter-spacing: .06em; }
 .podium-photo-card-name { font-size: var(--text-body); font-weight: 700; color: #fff; letter-spacing: -.02em; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
 .podium-photo-card-score { font: 700 var(--text-display) var(--mono); color: var(--gold); letter-spacing: -.03em; line-height: 1; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
 .podium-photo-card-stats { display: flex; flex-wrap: wrap; gap: .2rem; margin: .2rem 0; }

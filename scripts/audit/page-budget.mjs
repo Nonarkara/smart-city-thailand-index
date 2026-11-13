@@ -18,11 +18,16 @@ const check = (ok, msg) => { if (!ok && !report) { if (process.env.CI) failures.
  * 23 screens to 20.8 by taking the padded checklist rows, the padded
  * mechanism rows and the city-lens table that duplicated the city cards on
  * a phone; /baseline came down from 21.7 to 16.9 the same way. The rest of
- * the site was measured, found dense rather than padded, and held. */
+ * the site was measured, found dense rather than padded, and held.
+ *
+ * 13 November 2026: re-measured. The home page had been held at 14.3/7.1 while it
+ * actually stood at 6.6/3.6, so its ceiling allowed it to double; now 7.5/4.2. The
+ * long routes' section spacing is already ~1.5% of their height (/invest 280 of
+ * 17,500 px): what remains is content, and cutting content is an editorial call. */
 const BUDGET = [
-  ['/', 14.3, 7.1, 520],
-  ['/rankings', 7.5, 4.7, 420], ['/methodology', 18.0, 9.9, 420], ['/partners', 12.5, 6.3, 420], ['/program', 14.0, 7.6, 420],
-  ['/invest', 21.5, 12.4, 420], ['/baseline', 17.0, 10.6, 420], ['/audit', 11.5, 5.6, 420], ['/references', 11.5, 5.6, 420], ['/knowledge', 7.5, 5.3, 420],
+  ['/', 7.5, 4.2, 520],
+  ['/rankings', 7.5, 4.6, 420], ['/methodology', 18.0, 9.9, 420], ['/partners', 12.5, 6.2, 420], ['/program', 13.8, 7.4, 420],
+  ['/invest', 21.0, 12.1, 420], ['/baseline', 17.0, 10.6, 420], ['/audit', 11.5, 5.0, 420], ['/references', 11.5, 5.0, 420], ['/knowledge', 7.5, 5.2, 420],
 ];
 // The ceilings are measured on macOS. The Linux CI runner has no system-ui face and falls back to a wider one, so the same
 // pages measured up to 6.6% taller at 390 and 2.3% at 1440 (CI run 41675135316 against these ceilings). CI allows that
