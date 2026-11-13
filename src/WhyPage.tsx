@@ -8,7 +8,6 @@ interface Props {
 }
 
 interface BenefitBlock {
-  icon: string;
   lens: { en: string; th: string; zh: string };
   title: { en: string; th: string; zh: string };
   body: { en: string; th: string; zh: string };
@@ -16,7 +15,6 @@ interface BenefitBlock {
 
 const benefits: BenefitBlock[] = [
   {
-    icon: "📊",
     lens: { en: "Capital allocation", th: "การจัดสรรทุน", zh: "资本配置" },
     title: { en: "For investors: discover what's beyond Bangkok", th: "สำหรับนักลงทุน: ค้นพบสิ่งที่อยู่นอกเหนือจากกรุงเทพฯ", zh: "投资者：发现曼谷以外的机遇" },
     body: {
@@ -26,7 +24,6 @@ const benefits: BenefitBlock[] = [
     },
   },
   {
-    icon: "🏛️",
     lens: { en: "Benchmarking", th: "การเทียบเคียง", zh: "基准比较" },
     title: { en: "For cities: know where you stand, learn from peers", th: "สำหรับเมือง: รู้ว่าคุณอยู่ตรงไหน เรียนรู้จากเพื่อน", zh: "城市：了解自身定位，向同行学习" },
     body: {
@@ -36,7 +33,6 @@ const benefits: BenefitBlock[] = [
     },
   },
   {
-    icon: "👥",
     lens: { en: "Accountability", th: "ความรับผิดรับชอบ", zh: "问责" },
     title: { en: "For citizens: hold your city accountable", th: "สำหรับประชาชน: ตรวจสอบเมืองของคุณ", zh: "市民：让你的城市承担责任" },
     body: {
@@ -46,7 +42,6 @@ const benefits: BenefitBlock[] = [
     },
   },
   {
-    icon: "🌏",
     lens: { en: "Regional model", th: "โมเดลระดับภูมิภาค", zh: "区域模型" },
     title: { en: "For researchers: examine and reuse the methods", th: "สำหรับนักวิจัย: ศึกษาและใช้ระเบียบวิธีต่อ", zh: "研究者：审视与复用方法" },
     body: {
@@ -56,7 +51,6 @@ const benefits: BenefitBlock[] = [
     },
   },
   {
-    icon: "🎯",
     lens: { en: "Policy targeting", th: "การกำหนดเป้าหมายนโยบาย", zh: "政策瞄准" },
     title: { en: "For policymakers: evidence-based decisions", th: "สำหรับผู้กำหนดนโยบาย: ตัดสินใจบนหลักฐาน", zh: "政策制定者：基于证据的决策" },
     body: {
@@ -126,7 +120,6 @@ export default function WhyPage({ locale, onNavigate }: Props) {
       <section ref={benefitRef} className={`section reveal stagger-2 ${benefitVisible ? "visible" : ""}`}>
         {benefits.map((b, i) => (
           <div key={i} className="benefit-block">
-            <div className="benefit-icon">{b.icon}</div>
             <div className="benefit-content">
               <p className="benefit-lens">{translate(locale, b.lens)}</p>
               <h2 className="benefit-title">{translate(locale, b.title)}</h2>

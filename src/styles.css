@@ -1540,9 +1540,12 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .photo-strip-label { position: absolute; bottom: 0; left: 0; right: 0; padding: .4rem .5rem; background: linear-gradient(rgba(0,0,0,.72) 0%, rgba(0,0,0,.86) 60%); color: #fff; font: 700 var(--text-micro) var(--font); text-shadow: 0 1px 2px rgba(0,0,0,.5); }
 
 /* ─── BENEFITS / WHY ─── */
-.benefit-block { display: grid; grid-template-columns: 1.8rem 1fr; gap: .5rem; padding: 1rem 0; border-bottom: 1px solid var(--5); align-items: start; }
+/* The block was a two-column grid whose first column held an emoji
+   icon. The "lens" line inside the block already names the thing, so
+   the column was a second, weaker label for it — and it spent 1.8rem
+   plus a gap on every block. One column now. */
+.benefit-block { padding: 1rem 0; border-bottom: 1px solid var(--5); }
 .benefit-block:first-child { border-top: 2px solid var(--ink); }
-.benefit-icon { font-size: var(--text-body); }
 .benefit-title { font-size: var(--text-body); font-weight: 700; margin-bottom: .25rem; }
 .benefit-body { font-size: var(--text-body); color: var(--2); line-height: 1.6; max-width: 560px; }
 .references-list { border-top: 2px solid var(--ink); }
@@ -10244,7 +10247,15 @@ body:has(.bingo-page) { overflow: hidden; }
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.bingo-call-bar-emoji { font-size: var(--text-body); flex-shrink: 0; }
+/* The real commissioned dimension mark. */
+.bingo-call-bar-mark {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+/* The win mark is typographic, not a sticker. */
+.bingo-win-mark { font-size: var(--text-body); flex-shrink: 0; color: var(--gold); }
 .bingo-call-bar-name {
   font: 700 var(--text-body) var(--font);
   color: #fff;
@@ -10454,7 +10465,22 @@ body:has(.bingo-page) { overflow: hidden; }
   min-height: 40px;
 }
 .bingo-dim-strip-btn:disabled { cursor: not-allowed; }
-.bingo-dim-strip-emoji { font-size: var(--text-body); }
+/* The real commissioned dimension mark, the same one the card back
+   draws. Sized to the strip and centred. */
+/* The current-call panel's mark — the real commissioned one. */
+.bingo-last-mark {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.bingo-dim-strip-mark {
+  width: 100%;
+  max-width: 26px;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+}
 .bingo-dim-strip-active { box-shadow: inset 0 0 0 2px rgba(255,255,255,.45); }
 
 /* ═══ DESKTOP LAYOUT (≥ 641px) ═══ */

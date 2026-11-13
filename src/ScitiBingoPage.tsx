@@ -95,7 +95,6 @@ const POOL: BingoTerm[] = [
  */
 const DIM_COLORS: Record<SmartDimension,string> = { environment:"#2E7D32", economy:"#1565C0", mobility:"#6A1B9A", energy:"#A63E00", people:"#00707A", living:"#C62828", governance:"#37474F" };
 const DIM_LABELS: Record<SmartDimension,T3> = { environment:{en:"Environment",th:"สิ่งแวดล้อม",zh:"环境"}, economy:{en:"Economy",th:"เศรษฐกิจ",zh:"经济"}, mobility:{en:"Mobility",th:"การเดินทาง",zh:"出行"}, energy:{en:"Energy",th:"พลังงาน",zh:"能源"}, people:{en:"People",th:"พลเมือง",zh:"市民"}, living:{en:"Living",th:"การดำรงชีวิต",zh:"生活"}, governance:{en:"Governance",th:"การบริหาร",zh:"治理"} };
-const DIM_EMOJIS: Record<SmartDimension,string> = { environment:"🌿", economy:"📈", mobility:"🚌", energy:"⚡", people:"👥", living:"🏠", governance:"🏛️" };
 const DIMS: SmartDimension[] = ["environment","economy","mobility","energy","people","living","governance"];
 
 function seededShuffle<T>(arr: T[], seed: number): T[] {
@@ -359,7 +358,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
         </section>
         {won&&(
           <div className="bingo-win-banner">
-            <span className="bingo-win-text">🎉 BINGO! 🎉</span>
+            <span className="bingo-win-text">BINGO!</span>
             <div className="bingo-win-score">
               <div className="bingo-win-stat">
                 <span className="bingo-win-stat-n">{formatTimeFull(elapsed)}</span>
@@ -382,13 +381,13 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
            style={targetDim&&!won?{background:DIM_COLORS[targetDim]}:undefined}>
         {won?(
           <>
-            <span className="bingo-call-bar-emoji">🎉</span>
+            <span className="bingo-win-mark" aria-hidden="true">★</span>
             <span className="bingo-call-bar-name">BINGO! {clickCount} clicks · {formatTimeShort(elapsed)}</span>
             <button className="bingo-call-bar-reset" onClick={()=>reset()} aria-label={t({en:"Reset card",th:"เริ่มการ์ดใหม่",zh:"重置棋盘"})} title={t({en:"Reset card",th:"เริ่มการ์ดใหม่",zh:"重置棋盘"})}>↻</button>
           </>
         ):targetDim?(
           <>
-            <span className="bingo-call-bar-emoji">{DIM_EMOJIS[targetDim]}</span>
+            <img src={DIM_LOGOS[targetDim]} alt="" className="bingo-call-bar-mark" loading="lazy"/>
             <span className="bingo-call-bar-name">Smart {t(DIM_LABELS[targetDim])}</span>
           </>
         ):(
@@ -425,7 +424,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
           {!targetDim&&<div className="bingo-call-status">{t({en:"Choose the first dimension to start.",th:"เลือกมิติแรกเพื่อเริ่ม",zh:"选择第一个维度后开始。"})}</div>}
           {targetDim&&(
             <div className="bingo-last-called" style={{background:DIM_COLORS[targetDim]}}>
-              <span className="bingo-last-emoji">{DIM_EMOJIS[targetDim]}</span>
+              <img src={DIM_LOGOS[targetDim]} alt="" className="bingo-last-mark" loading="lazy"/>
               <div>
                 <div className="bingo-last-called-label">{t({en:"Current Call:",th:"ประกาศปัจจุบัน:",zh:"当前呼叫："})}</div>
                 <div className="bingo-last-called-dim">Smart {t(DIM_LABELS[targetDim])}</div>
@@ -437,7 +436,6 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
               <button key={dim} className={`bingo-dim-btn${called?" bingo-dim-btn-called":""}${active?" bingo-dim-btn-active":""}`}
                 style={called?{background:DIM_COLORS[dim],borderColor:DIM_COLORS[dim],color:"#fff",opacity:active?1:.42}:{borderColor:DIM_COLORS[dim],color:DIM_COLORS[dim]}}
                 onClick={()=>callDim(dim)} disabled={called||won}>
-                <span className="bingo-dim-emoji">{DIM_EMOJIS[dim]}</span>
                 <span className="bingo-dim-name">Smart {t(DIM_LABELS[dim])}</span>
                 {called&&<span className="bingo-dim-tick">✓</span>}
               </button>
@@ -469,7 +467,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
             className={`bingo-dim-strip-btn${called?" bingo-dim-strip-called":""}${active?" bingo-dim-strip-active":""}`}
             style={{background:called?DIM_COLORS[dim]:"transparent",borderColor:DIM_COLORS[dim],opacity:called&&!active?.5:1}}
             onClick={()=>callDim(dim)} disabled={called||won}>
-            <span className="bingo-dim-strip-emoji">{DIM_EMOJIS[dim]}</span>
+            <img src={DIM_LOGOS[dim]} alt={t(DIM_LABELS[dim])} className="bingo-dim-strip-mark" loading="lazy"/>
           </button>
         );})}
       </div>
