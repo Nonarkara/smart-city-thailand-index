@@ -14510,3 +14510,11 @@ main .needs-ladder-signal-value { margin-left: .3rem; }
 .podium-photo-card .dashboard-ranking-vibe-operational { color: #7fd0e4; }
 .podium-photo-card .dashboard-ranking-vibe-partial { color: #fbbf5a; }
 .podium-photo-card .dashboard-ranking-vibe-planned { color: #f59ab0; }
+
+/* ─── /map first screen: the map starts above y=320 on a phone (MSH, 15 Nov 2026) ───
+   Two dense groups of word-sized controls are not isolated primary actions: 36px high,
+   not 44 (workspace CLAUDE.md §11.12, MSH ruling over §11.8), so the map keeps the screen.
+   The 44px bump had pushed the map to 303px locally and 320.5px on the Linux runner. */
+main .map-dash-controls { gap: .35rem; }
+main .map-dash-controls button { min-height: 36px; padding: .25rem .6rem; white-space: nowrap; }
+main .map-dash-header { padding-block: 8px 6px; }
