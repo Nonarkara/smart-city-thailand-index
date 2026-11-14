@@ -1061,8 +1061,10 @@ export default function KnowledgePage({ locale }: Props) {
 
       <section ref={listRef} className={`section reveal stagger-1 ${listVisible ? "visible" : ""}`}>
         <input
+          id="kb-search"
           type="text"
           className="kb-search shadow-premium"
+          aria-label={translate(locale, { en: "Search the knowledge base", th: "ค้นหาในคลังความรู้", zh: "搜索知识库" })}
           placeholder={locale === "th" ? "ค้นหา..." : locale === "zh" ? "搜索..." : "Search..."}
           value={search}
           onChange={e => setSearch(e.target.value)}
