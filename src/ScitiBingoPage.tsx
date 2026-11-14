@@ -298,7 +298,7 @@ export default function ScitiBingoPage({ locale, onNavigate }: Props) {
               ):(
                 <>
                   <span className="bingo-cell-num">{cardNumber}</span>
-                  <span className="bingo-cell-emoji">{cell.emoji}</span>
+                  <span className="bingo-cell-emoji">{cell.dim[0].toUpperCase()}</span>
                   <span className="bingo-cell-text">{t(cell.label)}</span>
                 </>
               )}

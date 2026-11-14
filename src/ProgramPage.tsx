@@ -14,8 +14,8 @@ interface Props {
 }
 
 const DIMENSION_ICONS: Record<SmartDimension, string> = {
-  economy: "📈", energy: "⚡", environment: "🌿",
-  governance: "🏛️", living: "🏠", mobility: "🚌", people: "👥",
+  economy: "E", energy: "N", environment: "V",
+  governance: "G", living: "L", mobility: "M", people: "P",
 };
 
 const DIMENSION_DESCS: Record<SmartDimension, { en: string; th: string; zh: string }> = {
