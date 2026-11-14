@@ -14212,7 +14212,7 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
  * natural size out of the sizing) and cropped by the footing hairline, so the three
  * columns share one top edge and one foot. Header is a single line. No portrait
  * floating centred in a void, no notes at a different height. */
-.nong-plub-card.nong-plub-infographic{--plub-pitch:24px;grid-template-columns:116px minmax(0,1fr);gap:6px 16px;align-items:start;max-width:none;padding-block:10px 0;margin-block:12px}
+.nong-plub-card.nong-plub-infographic{--plub-pitch:24px;grid-template-columns:116px minmax(0,1fr);gap:4px 16px;align-items:start;max-width:none;padding-block:10px 0;margin-block:12px}
 .nong-plub-card.nong-plub-infographic .nong-plub-intro-header{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 12px;grid-column:1/-1}
 .nong-plub-card.nong-plub-infographic .nong-plub-site-name{margin:0}
 .nong-plub-card.nong-plub-infographic .nong-plub-illustration{grid-column:1;grid-row:2;width:100%;height:auto;contain:size;object-fit:cover;object-position:50% 0;align-self:stretch;border-bottom:1px solid var(--5)}
