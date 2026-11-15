@@ -57,8 +57,11 @@ describe("RankingsPage", () => {
     await user.click(container.querySelector(".compare-launch-bar .btn-primary") as HTMLButtonElement);
 
     expect(screen.getByRole("button", { name: /back to directory/i })).toBeInTheDocument();
-    // ComparisonGrid is lazy-loaded — wait for the chunk to resolve through Suspense
-    await waitFor(() => expect(container.querySelectorAll(".compare-city-card")).toHaveLength(2));
+    // ComparisonGrid is lazy-loaded — wait for the chunk to resolve through
+    // Suspense. The default 1s budget is not enough for a dynamic import on
+    // a loaded CI machine: the chunk resolves, the assertion is simply asked
+    // before it arrives. 10s still fails fast if the chunk never lands.
+    await waitFor(() => expect(container.querySelectorAll(".compare-city-card")).toHaveLength(2), { timeout: 10000 });
     expect(screen.getAllByText(/phuket smart city/i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/samyan smart city/i)[0]).toBeInTheDocument();
   });
