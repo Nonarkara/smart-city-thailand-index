@@ -64,7 +64,7 @@ jobs:
             .tmp/demo-journey
             .tmp/map-journey
             .tmp/quick-metric-geometry
-          retention-days: 7
+          retention-days: 3
 
   deploy:
     if: github.event_name != 'pull_request'
@@ -105,15 +105,6 @@ jobs:
       - run: node scripts/audit/msh-audit.mjs --serve
       - run: node scripts/audit/border-roles.mjs --serve
       - run: node scripts/audit/falsify-msh.mjs
-      # The Pages action uploads through the Pages store, which the
-      # artifacts API does not list — CDPT could never download it, so the
-      # validated-build path was dead. This plain artifact is what the
-      # release step takes, and it is uploaded only after the gates pass.
-      - uses: actions/upload-artifact@v4
-        with:
-          name: site-dist
-          path: dist
-          retention-days: 1
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -129,7 +120,7 @@ jobs:
             .tmp/demo-journey
             .tmp/map-journey
             .tmp/quick-metric-geometry
-          retention-days: 7
+          retention-days: 3
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:

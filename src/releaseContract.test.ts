@@ -53,5 +53,21 @@ describe('release proof rejects nearby successes', () => {
     }
     expect(()=>checkRenderedValidationRun(run,'b'.repeat(40))).toThrow(/another revision/);
   });
+  it('publishes dist once through the Pages artifact and keeps other uploads for 3 days', () => {
+    const workflow = readFileSync('.github/workflows/github-pages.yml', 'utf8');
+    expect(workflow).not.toContain('name: site-dist');
+    const pagesUpload = workflow.indexOf('uses: actions/upload-pages-artifact@v3');
+    const deploy = workflow.indexOf('uses: actions/deploy-pages@v4');
+    expect(pagesUpload).toBeGreaterThan(-1);
+    expect(deploy).toBeGreaterThan(pagesUpload);
+    expect(workflow.slice(pagesUpload, deploy)).toContain('path: dist');
+    const uploads = workflow.split(/\n\s+- uses: /).filter(step => step.startsWith('actions/upload-artifact@v4'));
+    expect(uploads).toHaveLength(2);
+    for (const step of uploads) {
+      expect(step).toContain('retention-days: 3');
+      expect(step).not.toContain('path: dist');
+      expect(step).toContain('if: failure()');
+    }
+  });
 
 });
