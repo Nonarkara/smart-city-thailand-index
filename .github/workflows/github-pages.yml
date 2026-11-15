@@ -49,6 +49,14 @@ jobs:
       - run: node scripts/audit/msh-audit.mjs --serve
       - run: node scripts/audit/border-roles.mjs --serve
       - run: node scripts/audit/falsify-msh.mjs
+      - run: node scripts/audit/tap-targets.mjs --serve
+      - run: node scripts/audit/falsify-tap-targets.mjs
+      # Two gates that were written but ran nowhere, and were broken when
+      # they were written: home-trust waited on a block that had moved into
+      # a collapsed disclosure, compact-reading waited on a component that
+      # was removed on 28 Oct. Both are repaired and both now run.
+      - run: node scripts/audit/home-trust.mjs --serve
+      - run: node scripts/audit/compact-reading.mjs --serve
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -105,6 +113,14 @@ jobs:
       - run: node scripts/audit/msh-audit.mjs --serve
       - run: node scripts/audit/border-roles.mjs --serve
       - run: node scripts/audit/falsify-msh.mjs
+      - run: node scripts/audit/tap-targets.mjs --serve
+      - run: node scripts/audit/falsify-tap-targets.mjs
+      # Two gates that were written but ran nowhere, and were broken when
+      # they were written: home-trust waited on a block that had moved into
+      # a collapsed disclosure, compact-reading waited on a component that
+      # was removed on 28 Oct. Both are repaired and both now run.
+      - run: node scripts/audit/home-trust.mjs --serve
+      - run: node scripts/audit/compact-reading.mjs --serve
       # The Pages action uploads through the Pages store, which the
       # artifacts API does not list — CDPT could never download it, so the
       # validated-build path was dead. This plain artifact is what the

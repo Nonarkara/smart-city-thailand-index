@@ -56,6 +56,13 @@ export const RENDERED_RELEASE_GATES = [
   // The same guard for the two new gates: 15 cases, each one a rule that
   // must fire or must stay quiet.
   'node scripts/audit/falsify-msh.mjs',
+  // The tap-target gate, and the guard that proves it still fires.
+  'node scripts/audit/tap-targets.mjs --serve',
+  'node scripts/audit/falsify-tap-targets.mjs',
+  // Two gates that existed but ran nowhere, and were broken when they
+  // were written. Repaired, and now part of the release.
+  'node scripts/audit/home-trust.mjs --serve',
+  'node scripts/audit/compact-reading.mjs --serve',
 ];
 export function checkRenderedValidationRun(run, expectedHead) {
   checkValidationRun(run, expectedHead);

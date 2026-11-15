@@ -156,6 +156,21 @@ node scripts/audit/falsify-collide.mjs >"$LOG_DIR/cdpt-falsify.log" 2>&1 || { ta
 node scripts/audit/falsify-msh.mjs >"$LOG_DIR/cdpt-falsify-msh.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-falsify-msh.log"; die "the MSH gates no longer discriminate: a planted defect went uncaught"; }
 ok "every planted defect caught; the clean build quiet"
 
+# The tap-target gate, and the guard that proves the gate still fires.
+# Nothing measured an interactive target's size until this: seventeen gates
+# ran and the 44 px rule was unenforced.
+node scripts/audit/tap-targets.mjs --serve >"$LOG_DIR/cdpt-tap.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-tap.log"; die "tap targets: an interactive control is below the floor the law sets for its class"; }
+node scripts/audit/falsify-tap-targets.mjs >"$LOG_DIR/cdpt-falsify-tap.log" 2>&1 || { tail -30 "$LOG_DIR/cdpt-falsify-tap.log"; die "the tap-target gate no longer discriminates: a planted defect went uncaught"; }
+ok "every interactive target meets its floor; the gate still fires on planted defects"
+
+# Two gates that were written but ran nowhere, and were broken when they
+# were written: home-trust waited on a block that had moved into a
+# collapsed disclosure, compact-reading waited on a component removed on
+# 28 Oct. Repaired; now part of the release.
+node scripts/audit/home-trust.mjs --serve >"$LOG_DIR/cdpt-home-trust.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-home-trust.log"; die "home trust: the road-death evidence or the weekly digest lost its qualification"; }
+node scripts/audit/compact-reading.mjs --serve >"$LOG_DIR/cdpt-compact.log" 2>&1 || { tail -20 "$LOG_DIR/cdpt-compact.log"; die "compact reading: the city dossier grew past its reading budget"; }
+ok "the homepage trust signals and the city dossier's reading budget verified"
+
 fi
 
 # ── C — commit ───────────────────────────────────────────────────────────────
