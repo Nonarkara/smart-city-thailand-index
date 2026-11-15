@@ -125,6 +125,16 @@ export default function GlobeMap({ locale }: Props) {
     return new Set(partners.filter(p => p.country === hovered.country).map(p => p.id));
   }, [hovered]);
 
+  // The organisations in the hovered partner's country. Forty-five dots on a
+  // world graphic cannot each own a 44px touch target — the closest two
+  // country marks sit 1.1px apart on a 390px phone — so the country list in
+  // the tooltip is the equivalent path: every organisation is reachable by
+  // a full-size row, and a thumb never has to find a 9px dot.
+  const countryPartners = useMemo(() => {
+    if (!hovered) return [];
+    return partners.filter(p => p.country === hovered.country);
+  }, [hovered]);
+
   const onMove = useCallback((e: React.MouseEvent) => {
     const r = containerRef.current?.getBoundingClientRect();
     if (r) setMPos({ x: e.clientX - r.left, y: e.clientY - r.top });
@@ -237,7 +247,13 @@ export default function GlobeMap({ locale }: Props) {
                 }
               }}
               onFocus={() => setHovered(p)} onBlur={() => setHovered(null)}>
-              <circle cx={pt[0] + off} cy={pt[1]} r="12" fill="transparent" style={{ cursor: "pointer" }}
+              {/* The transparent circle is the touch target, not the dot.
+                  45 marks on a world graphic cannot each own 44px — the
+                  closest two country marks sit 1.1px apart on a phone — so
+                  the mark keeps the WCAG 2.2 AA 24px floor and the
+                  country's organisations are reachable as full-size rows
+                  in the tooltip. */}
+              <circle cx={pt[0] + off} cy={pt[1]} r="33" fill="transparent" style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHovered(p)} onMouseLeave={() => setHovered(null)} />
               {active && <circle cx={pt[0] + off} cy={pt[1]} r="9" fill={TYPE_COLORS[p.type]} opacity="0.22" />}
               <circle cx={pt[0] + off} cy={pt[1]}
@@ -263,7 +279,7 @@ export default function GlobeMap({ locale }: Props) {
 
       {/* HTML tooltip */}
       {hovered && (
-        <div className="globe-html-tooltip" style={{
+        <div className={`globe-html-tooltip${countryPartners.length > 1 ? " globe-tooltip-list" : ""}`} style={{
           left: mPos.x + 18, top: mPos.y - 8,
           transform: mPos.x > 580 ? "translateX(calc(-100% - 36px))" : "none",
         }}>
@@ -276,6 +292,24 @@ export default function GlobeMap({ locale }: Props) {
           </div>
           <p className="globe-tt-focus">{locale === "th" ? hovered.focusTh : hovered.focusEn}</p>
           {hovered.url && <span className="globe-tt-url">{hovered.url.replace(/^https?:\/\//, "").slice(0, 45)}</span>}
+          {countryPartners.length > 1 && (
+            <ul className="globe-tt-list" aria-label={locale === "th" ? `องค์กรใน${hovered.country}` : `Organisations in ${hovered.country}`}>
+              {countryPartners.map(p => (
+                <li key={p.id}>
+                  <button
+                    type="button"
+                    className={`globe-tt-row${p.id === hovered.id ? " is-current" : ""}`}
+                    onClick={() => setHovered(p)}
+                    aria-current={p.id === hovered.id ? "true" : undefined}
+                  >
+                    <span className="globe-tt-row-dot" style={{ background: TYPE_COLORS[p.type] ?? "#888" }} />
+                    <span className="globe-tt-row-name">{p.name}</span>
+                    <span className="globe-tt-row-type">{p.type}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
 

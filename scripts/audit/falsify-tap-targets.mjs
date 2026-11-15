@@ -69,6 +69,8 @@ const STYLE = `
   .dead { position: relative; }
   .skip { position: absolute; top: -40px; left: 0; }
   label { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .row { display: flex; align-items: center; width: 100%; min-height: 44px; }
 `;
 
 const PAGE = (body) => `<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -133,6 +135,23 @@ const CASES = [
   {
     name: "20x20 button whose ::after claims a 44px hit area",
     body: `<button class="tiny dead" aria-label="Do it">x</button>`,
+    expect: "caught",
+  },
+  {
+    name: "map mark, 24px, with an equivalent list path",
+    body: `<svg width="300" height="120" viewBox="0 0 300 120">
+      <g role="button" aria-label="Partner A">
+        <circle cx="40" cy="40" r="12" fill="transparent" />
+      </g></svg>
+      <ul class="list"><li><button class="row">Partner A</button></li></ul>`,
+    expect: "quiet",
+  },
+  {
+    name: "map mark, 9px, with no equivalent path",
+    body: `<svg width="300" height="120" viewBox="0 0 300 120">
+      <g role="button" aria-label="Partner A">
+        <circle cx="40" cy="40" r="4" fill="transparent" />
+      </g></svg>`,
     expect: "caught",
   },
 ];

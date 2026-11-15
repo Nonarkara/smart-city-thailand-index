@@ -4581,6 +4581,26 @@ h2, h3 { font-family: var(--font); }
 .globe-tt-focus { font-size: var(--text-micro); color: #A8A49C; line-height: 1.45; margin-bottom: .15rem; }
 .globe-tt-url { font: 500 var(--text-micro) var(--mono); color: #1A9A82; }
 
+/* The country's organisations, as full-size rows. The tooltip normally
+   cannot be touched (pointer-events:none) because it follows the cursor;
+   when it carries the country's list it has to be reachable, or the list
+   would be decoration. */
+.globe-tooltip-list { pointer-events: auto; max-width: 320px; }
+.globe-tt-list { list-style: none; margin: .45rem 0 0; padding: 0; border-top: 1px solid rgba(240,237,232,.18); }
+.globe-tt-list li { margin: 0; }
+.globe-tt-row {
+  display: flex; align-items: center; gap: .45rem;
+  width: 100%; min-height: 44px;          /* a real tap target (§11.8) */
+  padding: .3rem 0; text-align: left;
+  color: #F0EDE8; background: none; border: 0; border-bottom: 1px solid rgba(240,237,232,.12);
+  font: 500 var(--text-micro)/1.3 var(--font); cursor: pointer;
+}
+.globe-tt-row:hover, .globe-tt-row:focus-visible { background: rgba(240,237,232,.08); }
+.globe-tt-row.is-current { color: #fff; }
+.globe-tt-row-dot { width: 6px; height: 6px; flex-shrink: 0; }
+.globe-tt-row-name { flex: 1; min-width: 0; }
+.globe-tt-row-type { font: 500 var(--text-micro) var(--mono); color: #8A8780; text-transform: capitalize; }
+
 /* Dense legend bar */
 .globe-legend-bar {
   display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
@@ -13000,6 +13020,14 @@ body:has(.city-evidence-summary) .chat-fab,
 .investment-explorer-y-scale { position: absolute; top: 4.55%; bottom: 9.09%; left: 0; display: flex; flex-direction: column; justify-content: space-between; font: var(--text-body) var(--mono); pointer-events: none; }
 .investment-explorer-figure figcaption { font-size: var(--text-body); margin-block: .5rem; }
 .investment-explorer-detail { border-top: 3px solid var(--ink); padding-top: .75rem; }
+/* The explorer's onward link is an isolated action, not a sentence link:
+   it stands alone after the block instead of inside a paragraph, so it
+   needs a real target (44px on touch). Nothing is painted behind it, so
+   this is a hit area and not a slab. */
+.investment-explorer-detail > a {
+  display: inline-flex; align-items: center;
+  min-height: 44px;
+}
 .investment-explorer-detail p { font-size: var(--text-body); }
 .investment-explorer-scores { display: flex; gap: 1.5rem; border-block: 1px solid var(--3); padding-block: .75rem; }
 .investment-explorer-scores dd { margin: 0; font: 700 var(--text-display) var(--mono); }

@@ -58,12 +58,15 @@ export function tapMeasurementInPage({ route, viewportLabel }) {
     return r.width > 0 && r.height > 0;
   };
 
-  // A control parked outside the viewport until it is focused (the skip
-  // link) is not a target anyone can miss; it appears the moment it is
-  // needed.
-  const offScreen = el => {
+  // A control parked OUTSIDE the origin until it is focused (the skip
+  // link sits at top:-29px) is not a target anyone can miss; it appears
+  // the moment it is needed. Being merely BELOW the fold is not the same
+  // thing — that content is one scroll away and must still be measured,
+  // or the gate would quietly skip the globe map, the dossier tabs and
+  // everything else that sits lower on a page.
+  const parked = el => {
     const r = el.getBoundingClientRect();
-    return r.bottom <= 0 || r.top >= window.innerHeight || r.right <= 0 || r.left >= window.innerWidth;
+    return r.bottom <= 0 || r.right <= 0;
   };
 
   // The control's own effective hit area, probed one pixel at a time.
@@ -112,10 +115,23 @@ export function tapMeasurementInPage({ route, viewportLabel }) {
     const siblings = p ? [...p.querySelectorAll(INTERACTIVE)].filter(visible) : [];
     const dense = siblings.length >= 3;
 
+    // A MARK inside a graphic — a dot on a map, a node on a diagram. Its
+    // size is set by the data it shows, not by the interface: the globe
+    // map puts 45 organisations in 16 country marks, and the closest two
+    // sit 1.1px apart on a 390px phone, so 44px targets are geometrically
+    // impossible there. These keep the WCAG 2.2 AA 24px floor and the
+    // information has an equivalent full-size path (the country's
+    // organisations as 44px rows in the map's own tooltip).
+    // This is tested BEFORE the icon rule: a map mark carries no words
+    // either, and calling it an icon control would demand a 44px target
+    // the graphic cannot give.
+    if (el.namespaceURI && el.namespaceURI.includes("svg") && el.ownerSVGElement) return "MAP_DATA_MARK";
+
     // An icon or map control carries no words, so it can never be a
     // one-word slab; it gets the full 44 x 44.
     const isIcon = text.length === 0 && (el.getAttribute("aria-label") || el.getAttribute("title") || "");
     if (isIcon) return "ICON_CONTROL";
+
     if (dense) return "DENSE_GROUP";
     return "ISOLATED_ACTION";
   };
@@ -140,7 +156,7 @@ export function tapMeasurementInPage({ route, viewportLabel }) {
 
     const category = classify(target);
     if (category === "INLINE_LINK") continue;
-    if (offScreen(target)) continue;
+    if (parked(target)) continue;
 
     const eff = effectiveBox(target);
     count++;
@@ -153,6 +169,10 @@ export function tapMeasurementInPage({ route, viewportLabel }) {
     if (category === "DENSE_GROUP") {
       need = coarse ? 32 : 24;
       ok = h >= need;
+    } else if (category === "MAP_DATA_MARK") {
+      // WCAG 2.2 AA 2.5.8 Target Size (Minimum): 24 x 24.
+      need = 24;
+      ok = w >= need && h >= need;
     } else {
       need = coarse ? 44 : 32;
       ok = w >= need && h >= need;
