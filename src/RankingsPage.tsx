@@ -345,13 +345,6 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
               zh: "泰国智慧城市排名",
             })}
           </h1>
-          <p className="hero-strapline">
-            {t({
-              en: "Search the register or compare assessed cities by what matters to you.",
-              th: "ค้นหาในทะเบียน หรือเปรียบเทียบเมืองที่ประเมินแล้วตามเรื่องที่คุณให้ความสำคัญ",
-              zh: "搜索城市名录，或按您关注的维度比较已评估城市。",
-            })}
-          </p>
           <div className="rankings-primary-search">
             <input
               type="search"
@@ -376,7 +369,6 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
             </button>
           </div>
         </section>
-        {guide}
 
         <section className="section reveal visible">
           <label className="lens-select-label">
@@ -385,21 +377,6 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
               {PRESET_LENSES.map(preset => <option key={preset.id} value={preset.id}>{translate(locale, preset.label)}</option>)}
             </select>
           </label>
-          <div className="lens-chip-row" role="tablist" aria-label={t({ en: "Preset lenses", th: "เลนส์สำเร็จรูป", zh: "预设镜头" })}>
-            {PRESET_LENSES.map(preset => (
-              <button
-                key={preset.id}
-                type="button"
-                role="tab"
-                aria-selected={lensId === preset.id}
-                className={`lens-chip ${lensId === preset.id ? "active" : ""}`}
-                onClick={() => setLensId(preset.id)}
-              >
-                {translate(locale, preset.label)}
-              </button>
-            ))}
-          </div>
-
           <details className="lens-method-details">
             <summary><span className="lens-screening-note">{translate(locale, lens.tagline)}</span><span className="lens-method-toggle"><span className="lens-method-label">{t({ en: "Weights and limits", th: "น้ำหนักและข้อจำกัด", zh: "权重与局限" })}</span></span></summary>
           <div className="lens-panel">
@@ -535,46 +512,22 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
           <div className="directory-toolbar">
 
 
-            <div className="filter-chip-row" role="group" aria-label={t({ en: "Tier filter", th: "ตัวกรองระดับ", zh: "层级筛选" })}>
-              {(["all", "alpha", "beta", "gamma"] as const).map(key => (
-                <button
-                  key={key}
-                  type="button"
-                  className={`filter-chip ${tierFilter === key ? "active" : ""}`}
-                  onClick={() => setTierFilter(key)}
-                  aria-label={key === "all" ? undefined : TIER_LABELS[locale][key]}
-                  title={key === "all" ? undefined : TIER_LABELS[locale][key]}
-                >
-                  {key === "all" ? t({ en: "All", th: "ทั้งหมด", zh: "全部" }) : <span aria-hidden="true">{tierSymbol(key)}</span>}
-                </button>
-              ))}
-            </div>
-
-            <div className="filter-chip-row" role="group" aria-label={t({ en: "Status filter", th: "ตัวกรองสถานะ", zh: "状态筛选" })}>
-              {(["all", "certified", "promotion"] as const).map(key => (
-                <button
-                  key={key}
-                  type="button"
-                  className={`filter-chip ${statusFilter === key ? "active" : ""}`}
-                  onClick={() => setStatusFilter(key)}
-                >
-                  {key === "all" ? t({ en: "All", th: "ทั้งหมด", zh: "全部" }) : getCityStatusLabel(key, locale)}
-                </button>
-              ))}
-            </div>
-
-            <div className="filter-chip-row" role="group" aria-label={t({ en: "Region filter", th: "ตัวกรองภาค", zh: "区域筛选" })}>
+            <select aria-label={t({ en: "Tier filter", th: "ตัวกรองระดับ", zh: "层级筛选" })} value={tierFilter}
+              onChange={event => setTierFilter(event.target.value as TierFilter)}>
+              <option value="all">{t({ en: "All tiers", th: "ทุกระดับ", zh: "所有层级" })}</option>
+              {(["alpha", "beta", "gamma"] as const).map(key => <option key={key} value={key}>{TIER_LABELS[locale][key]}</option>)}
+            </select>
+            <select aria-label={t({ en: "Status filter", th: "ตัวกรองสถานะ", zh: "状态筛选" })} value={statusFilter}
+              onChange={event => setStatusFilter(event.target.value as StatusFilter)}>
+              <option value="all">{t({ en: "All statuses", th: "ทุกสถานะ", zh: "所有状态" })}</option>
+              {(["certified", "promotion"] as const).map(key => <option key={key} value={key}>{getCityStatusLabel(key, locale)}</option>)}
+            </select>
+            <select aria-label={t({ en: "Region filter", th: "ตัวกรองภาค", zh: "区域筛选" })} value={regionFilter}
+              onChange={event => setRegionFilter(event.target.value as RegionFilter)}>
               {(["all", "bangkok", "north", "northeast", "central", "east", "south"] as const).map(key => (
-                <button
-                  key={key}
-                  type="button"
-                  className={`filter-chip ${regionFilter === key ? "active" : ""}`}
-                  onClick={() => setRegionFilter(key)}
-                >
-                  {REGION_LABELS[locale][key]}
-                </button>
+                <option key={key} value={key}>{key === "all" ? t({ en: "All regions", th: "ทุกภูมิภาค", zh: "所有地区" }) : REGION_LABELS[locale][key]}</option>
               ))}
-            </div>
+            </select>
 
             <button
               type="button"
@@ -587,7 +540,9 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
               aria-label={compareMode ? t({ en: "Exit compare mode", th: "ออกจากโหมดเปรียบเทียบ", zh: "退出对比模式" }) : t({ en: "Compare mode", th: "โหมดเปรียบเทียบ", zh: "对比模式" })}
               title={compareMode ? t({ en: "Exit compare mode", th: "ออกจากโหมดเปรียบเทียบ", zh: "退出对比模式" }) : t({ en: "Compare mode", th: "โหมดเปรียบเทียบ", zh: "对比模式" })}
             >
-              <span aria-hidden="true">⇄</span>
+              {compareMode
+                ? t({ en: "Exit compare", th: "ออกจากการเปรียบเทียบ", zh: "退出对比" })
+                : t({ en: "Compare", th: "เปรียบเทียบ", zh: "对比" })}
             </button>
           </div>
 
@@ -738,6 +693,7 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
           )}
           </>)}
         </section>
+        {guide}
         <section className="section reveal visible">
           <div className="picks-section-header">
             <p className="eyebrow">{t({ en: "Editor's picks", th: "คัดสรรโดยบรรณาธิการ", zh: "编辑精选" })}</p>

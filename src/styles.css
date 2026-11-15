@@ -13503,10 +13503,7 @@ main > .page-guide ~ .partnerships-hero { padding-top: 1.25rem; }
   .lens-method-label { display: none; }
   .lens-method-toggle::after { content: '▾'; font-size: var(--text-body); }
   .lens-method-details[open] .lens-method-toggle::after { content: '▴'; }
-  .rankings-page .directory-toolbar { flex-wrap: nowrap; overflow-x: auto; gap: 8px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scrollbar-width: none; scroll-padding-inline: var(--gutter); }
-  .rankings-page .directory-toolbar::-webkit-scrollbar { display: none; }
-  .rankings-page .directory-toolbar > * { flex: none; }
-  .rankings-page .directory-toolbar .btn-tab { order: -1; margin-left: 0; }
+
 }
 .lens-method-details .lens-panel { margin-top: 8px; }
 .dashboard-home .cinematic-hero-overlay .hero-status-note { margin: 0 0 12px; font-size: var(--text-body); line-height: 1.4; color: #e0e8ed; }
@@ -14429,11 +14426,17 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 }
 
 /* ── MSH templates: fill the measure, never strand it (owner, 9 Nov 2026) ───────── */
-/* Map: the portrait map takes the height, the instruments take the rest. */
-@media (min-width: 600px) { .map-dash-map > svg { width: auto; height: clamp(430px, 80svh, 760px); } }
+/* Keep the projected map and its regional evidence on one bounded grid. */
+.map-dashboard { max-width: 69rem; margin-inline: auto; }
+.map-dash-map > svg {
+  width: min(100%, calc(clamp(430px, 80svh, 760px) * 560 / 740));
+  height: auto;
+  aspect-ratio: 560 / 740;
+  margin-inline: auto;
+}
 @media (min-width: 769px) {
-  .map-dash-body { grid-template-columns: max-content minmax(0, 1fr); }
-  .map-dash-sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 1.5rem; align-content: start; }
+  .map-dash-body { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); }
+  .map-dash-sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 0 1rem; align-content: start; }
   .map-dash-sidebar > .municipal-context-link, .map-dash-sidebar > .map-dash-sidebar-title, .map-dash-sidebar > .map-dash-legend { grid-column: 1 / -1; }
 }
 /* One Nong Plub per page. On a phone the hero cannot hold her, so she stands in the guide card;
@@ -14590,3 +14593,27 @@ main .needs-ladder-signal-value { margin-left: .3rem; }
 main .map-dash-controls { gap: .35rem; }
 main .map-dash-controls button { min-height: 36px; padding: .25rem .6rem; white-space: nowrap; }
 main .map-dash-header { padding-block: 8px 6px; }
+
+.rankings-page .lens-select-label { display: grid; width: min(100%, 26rem); }
+.rankings-page .directory-toolbar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 4px;
+  width: min(100%, 50rem);
+}
+.rankings-page .directory-toolbar select {
+  min-width: 0;
+  min-height: 36px;
+  padding-inline: 4px;
+  font: inherit;
+  border: 1px solid var(--5);
+  background: var(--bg);
+  color: var(--ink);
+}
+.rankings-page .directory-toolbar .btn-tab { margin: 0; }
+@media (max-width: 600px) {
+  .rankings-page .directory-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rankings-page .directory-toolbar .btn-tab { justify-self: start; }
+}
+.map-dash-caption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 16px; margin-block: 4px 8px; }
+.map-dashboard .map-dash-caption > p { margin: 0; }

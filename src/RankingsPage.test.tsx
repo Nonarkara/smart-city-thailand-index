@@ -11,7 +11,7 @@ describe("RankingsPage", () => {
     expect(firstRowBefore).not.toBeUndefined();
     const initialText = firstRowBefore?.textContent ?? "";
 
-    await user.click(screen.getByRole("tab", { name: "Economy & digital" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Choose a purpose" }), screen.getByRole("option", { name: "Economy & digital" }));
 
     const firstRowAfter = container.querySelectorAll(".rank-row-link")[0];
     expect(firstRowAfter?.textContent).not.toBe(initialText);

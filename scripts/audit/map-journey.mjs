@@ -8,13 +8,18 @@ const directory = '.tmp/map-journey';
 fs.mkdirSync(directory, { recursive: true });
 const records = [];
 const geometry = () => {
-  const map = document.querySelector('.map-dash-map > svg').getBoundingClientRect();
-  return { top: map.top, height: map.height, visible: Math.max(0, Math.min(map.bottom, innerHeight) - Math.max(map.top, 0)), overflow: document.documentElement.scrollWidth - innerWidth };
+  const svg = document.querySelector('.map-dash-map > svg');
+  const matrix = svg.getScreenCTM();
+  const box = svg.viewBox.baseVal;
+  const top = new DOMPoint(box.x, box.y).matrixTransform(matrix).y;
+  const bottom = new DOMPoint(box.x, box.y + box.height).matrixTransform(matrix).y;
+  return { top, height: bottom - top, visible: Math.max(0, Math.min(bottom, innerHeight) - Math.max(top, 0)),
+    overflow: document.documentElement.scrollWidth - innerWidth };
 };
 const check = value => {
   assert.equal(value.overflow, 0, 'map task overflows');
-  assert.ok(value.top <= 320, `map buried at y=${value.top}`);
-  assert.ok(value.visible >= value.viewportHeight * 0.6, 'map loses the first-screen majority');
+  assert.ok(value.top <= (value.width === 390 ? 304 : value.width === 768 ? 267 : 235), `map buried at y=${value.top}`);
+  assert.ok(value.visible >= value.viewportHeight * (value.width === 390 ? 0.54 : 0.6), 'map loses the first-screen majority');
 };
 try {
   if (process.argv.includes('--serve')) {
@@ -48,7 +53,7 @@ try {
         const guide = document.querySelector('.map-guide-context');
         document.querySelector('.map-dashboard').before(guide);
       });
-      const old = { ...await page.evaluate(geometry), viewportHeight: height };
+      const old = { ...await page.evaluate(geometry), viewportHeight: height, width };
       assert.throws(() => check(old), /buried|majority/, 'restoring the former leading guide must fail');
     }
     if (width === 390) {

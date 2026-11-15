@@ -108,16 +108,17 @@ export default function MapDashboardPage({ locale, onNavigate, guide }: Props) {
         </div>
       </div>
 
-      <p className="map-coordinate-note section" id="map-coordinate-note">{translate(locale, {
+      <div className="map-dash-caption">
+        <p className="map-coordinate-note section" id="map-coordinate-note">{translate(locale, {
         en: `${filtered.filter(city => coords[city.id]).length} legacy reference points / ${filtered.length} records. Not verified project sites or boundaries; not for navigation or site selection.`,
         th: `จุดอ้างอิงเดิม ${filtered.filter(city => coords[city.id]).length} จุด / ${filtered.length} แฟ้ม ไม่ใช่ตำแหน่งโครงการหรือขอบเขตที่ยืนยันแล้ว ห้ามใช้นำทางหรือเลือกที่ตั้ง`,
         zh: `${filtered.filter(city => coords[city.id]).length} 个旧版参考点 / ${filtered.length} 份档案。非已核实的项目地点或边界，不用于导航或选址。`,
       })}</p>
+        <p className="map-basemap-status" role="status">{basemapState === "ready" ? translate(locale, { en: "Basemap: Esri · Reference imagery; not a live feed", th: "แผนที่พื้นฐาน: Esri · ภาพอ้างอิง ไม่ใช่ข้อมูลสด", zh: "底图：Esri · 参考影像，非实时数据" }) : basemapState === "loading" ? translate(locale, { en: "Loading Esri basemap… Reference points remain available.", th: "กำลังโหลดแผนที่ Esri… ยังเปิดแฟ้มจากจุดอ้างอิงได้", zh: "正在加载 Esri 底图…参考点仍可使用。" }) : translate(locale, { en: "Esri basemap unavailable. Reference points only; try another layer.", th: "โหลดแผนที่ Esri ไม่สำเร็จ แสดงเฉพาะจุดอ้างอิง ลองเปลี่ยนชั้นข้อมูล", zh: "Esri 底图不可用。仅显示参考点，请尝试其他图层。" })}</p>
+      </div>
 
       <div className="map-dash-body">
-        {/* ─── MAP ─── */}
         <div className="map-dash-map">
-          <p className="map-basemap-status" role="status">{basemapState === "ready" ? translate(locale, { en: "Basemap: Esri · Reference imagery; not a live feed", th: "แผนที่พื้นฐาน: Esri · ภาพอ้างอิง ไม่ใช่ข้อมูลสด", zh: "底图：Esri · 参考影像，非实时数据" }) : basemapState === "loading" ? translate(locale, { en: "Loading Esri basemap… Reference points remain available.", th: "กำลังโหลดแผนที่ Esri… ยังเปิดแฟ้มจากจุดอ้างอิงได้", zh: "正在加载 Esri 底图…参考点仍可使用。" }) : translate(locale, { en: "Esri basemap unavailable. Reference points only; try another layer.", th: "โหลดแผนที่ Esri ไม่สำเร็จ แสดงเฉพาะจุดอ้างอิง ลองเปลี่ยนชั้นข้อมูล", zh: "Esri 底图不可用。仅显示参考点，请尝试其他图层。" })}</p>
           <svg viewBox={`0 0 ${W} ${H}`} role="group" aria-label={translate(locale, { en: "City reference points", th: "จุดอ้างอิงเมือง", zh: "城市参考点" })} aria-describedby="map-coordinate-note">
             <image key={layer} href={layerUrls[layer]} x="0" y="0" width={W} height={H} preserveAspectRatio="none" onLoad={() => setImageState({ layer, state: "ready" })} onError={() => setImageState({ layer, state: "unavailable" })} />
 
@@ -151,10 +152,10 @@ export default function MapDashboardPage({ locale, onNavigate, guide }: Props) {
                     className="map-city-marker"
                     role="link" tabIndex={0}
                     aria-label={translate(locale, { en: `Open ${getCityName(city, locale)} dossier`, th: `เปิดแฟ้ม ${getCityName(city, locale)}`, zh: `打开${getCityName(city, locale)}档案` })}
-                    fill={tierColor(city.tier)}
+                    fill={city.status === "registered" ? "var(--3)" : tierColor(city.tier)}
                     opacity={hovered && !isHov ? .15 : .85}
                     stroke={isDark ? "#fff" : "#111"} strokeWidth={city.status === "certified" ? .8 : 0}
-                    style={{ cursor: "pointer", transition: "all .12s" }}
+                    style={{ cursor: "pointer" }}
                     onClick={() => onNavigate(`/city/${city.id}`)}
                     onKeyDown={event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onNavigate(`/city/${city.id}`); } }}
                     onFocus={() => { setHovered(city); setHovPos({ x, y }); }}
@@ -175,8 +176,12 @@ export default function MapDashboardPage({ locale, onNavigate, guide }: Props) {
                   <rect x="0" y="-14" width="135" height="36" fill="rgba(26,26,26,.92)" />
                   <text x="5" y="1" fontSize="8" fontWeight="700" fill="#fff">{getCityName(hovered, locale)}</text>
                   <text x="5" y="14" fontSize="6.5" fontFamily="var(--mono)" fontWeight="600">
-                    <tspan fill="var(--teal)">{hovered.compositeScore.toFixed(1)}</tspan>
-                    <tspan fill="rgba(255,255,255,.5)"> · {TIER_LABELS[locale][hovered.tier]} · {hovered.status}</tspan>
+                    {hovered.status === "registered"
+                      ? <tspan fill="#fff">{translate(locale, { en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" })}</tspan>
+                      : <>
+                          <tspan fill="var(--teal)">{hovered.compositeScore.toFixed(1)}</tspan>
+                          <tspan fill="#fff"> · {TIER_LABELS[locale][hovered.tier]}</tspan>
+                        </>}
                   </text>
                 </g>
               );
@@ -216,6 +221,7 @@ export default function MapDashboardPage({ locale, onNavigate, guide }: Props) {
 
           {/* Legend */}
           <div className="map-dash-legend">
+            <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="3.5" fill="var(--3)" /></svg> {translate(locale, { en: "Unassessed", th: "ยังไม่ประเมิน", zh: "待评估" })}</div>
             <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="4.5" fill="var(--alpha)" stroke="#111" strokeWidth=".6" /></svg> {translate(locale, { en: "Alpha certified", th: "Alpha ได้รับการรับรอง", zh: "Alpha 已认证" })}</div>
             <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="3.5" fill="var(--beta)" /></svg> Beta</div>
             <div className="map-dash-legend-item"><svg width="10" height="10"><circle cx="5" cy="5" r="3" fill="var(--gamma)" /></svg> Gamma</div>
