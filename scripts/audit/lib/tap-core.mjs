@@ -102,18 +102,67 @@ export function tapMeasurementInPage({ route, viewportLabel }) {
 
     let sibText = "";
     if (p) for (const n of p.childNodes) if (n.nodeType === 3) sibText += n.textContent;
+
+    // A link inside running text. The law exempts it: "Links inside
+    // running text get an invisible hit area, not a taller line" — and
+    // WCAG 2.2 SC 2.5.8 carries the same exception for a target "in a
+    // sentence or block of text".
+    //
+    // Two shapes qualify. The first is a link inside a sentence: the
+    // parent carries text of its own. The second is a PARAGRAPH MADE OF
+    // LINKS — the evidence block on /audit prints "Source 1 ↗  Source 2 ↗"
+    // and nothing else. There is no sentence there, but the links are
+    // still running text, and a 44px box on each would overlap its
+    // neighbours, which is a defect of its own.
+    const inlineLevel = node => {
+      const d = getComputedStyle(node).display;
+      return d === "inline" || d === "inline-block";
+    };
+    const bare = p ? [...p.children].filter(visible) : [];
+    const paragraphOfLinks = bare.length > 0 && bare.every(inlineLevel);
     const inlineInProse =
       isAnchor && cs.display === "inline" && pcs && FLOW.has(pcs.display) &&
-      sibText.trim().length > 0 &&
+      (sibText.trim().length > 0 || paragraphOfLinks) &&
       cs.backgroundColor === "rgba(0, 0, 0, 0)" &&
       parseFloat(cs.borderTopWidth) === 0 &&
       parseFloat(cs.paddingTop) === 0;
     if (inlineInProse) return "INLINE_LINK";
 
-    // A dense group: this control has sibling controls in the same
-    // container, so the group is made touchable by layout.
-    const siblings = p ? [...p.querySelectorAll(INTERACTIVE)].filter(visible) : [];
-    const dense = siblings.length >= 3;
+    // A dense group of text controls: a set of controls presented
+    // together — a list of sources, a row of actions. Its structural
+    // signature is a list or a flex/grid container holding three or more
+    // controls.
+    //
+    // The OLD rule counted the controls in the control's DIRECT PARENT.
+    // That missed every list whose rows wrap each control in its own
+    // <li> — the baseline source registry is one link per row — and then
+    // demanded a 44px isolated action from a row that is plainly part of
+    // a group. So the group is now found by walking up to the nearest
+    // list or flex/grid ancestor that holds at least three controls.
+    const groupAncestor = el => {
+      let node = el;
+      for (let depth = 0; depth < 3; depth++) {
+        const parent = node.parentElement;
+        if (!parent) break;
+        const disp = getComputedStyle(parent).display;
+        const isList = parent.tagName === "UL" || parent.tagName === "OL";
+        const isRow = disp === "flex" || disp === "inline-flex" || disp === "grid" || disp === "inline-grid";
+        if (isList || isRow) {
+          const controls = [...parent.querySelectorAll(INTERACTIVE)].filter(visible).length;
+          if (controls >= 3) return true;
+        }
+        // A row of sibling controls is a group even when the container is a
+        // plain block: the citation list on /why is a div whose children are
+        // all links. The signature is that every child IS a control, so
+        // there is no prose in the row — it is controls presented together.
+        const kids = [...parent.children].filter(visible);
+        const kidControls = kids.filter(k => k.matches(INTERACTIVE)).length;
+        if (kidControls >= 3 && kidControls === kids.length) return true;
+        node = parent;
+      }
+      return false;
+    };
+    const dense = groupAncestor(el);
 
     // A MARK inside a graphic — a dot on a map, a node on a diagram. Its
     // size is set by the data it shows, not by the interface: the globe

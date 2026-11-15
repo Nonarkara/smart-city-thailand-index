@@ -1606,7 +1606,7 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .meth-github-inner { display: grid; grid-template-columns: 1fr auto; gap: 2.5rem; align-items: start; }
 .meth-github-text h2 { margin-bottom: .6rem; }
 .meth-github-text p { font-size: var(--text-body); color: var(--2); line-height: 1.62; max-width: 500px; margin-bottom: .85rem; }
-.meth-github-link { font: 700 var(--text-body) var(--font); color: var(--teal); text-decoration: none; }
+.meth-github-link { font: 700 var(--text-body) var(--font); color: var(--teal); text-decoration: none; display: inline-flex; align-items: center; min-height: 32px; }
 .meth-github-link:hover { text-decoration: underline; }
 .meth-github-mono { border: 1px solid var(--5); background: var(--surface); padding: 1rem 1.25rem; min-width: 280px; }
 .meth-github-badge { font: 700 var(--text-micro) var(--mono); color: var(--bg); background: var(--ink); padding: .08rem .35rem; letter-spacing: .1em; text-transform: uppercase; }
@@ -8077,6 +8077,35 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
   background: var(--ink);
   color: var(--bg, #fff);
 }
+/* The showcase locator carried no Leaflet chrome styling at all, so its
+   zoom control was Leaflet's rounded white box in a different typeface.
+   Same house treatment as the rankings map: zero radius, hairline border,
+   system-ui. */
+.showcase-locator-canvas .leaflet-control {
+  border-radius: 0;
+  border: 1px solid var(--ink);
+  background: var(--surface, #fff);
+  color: var(--ink);
+  font: 500 var(--text-body) var(--font);
+}
+.showcase-locator-canvas .leaflet-control-zoom a {
+  border-radius: 0;
+  background: var(--surface, #fff);
+  color: var(--ink);
+  border-color: var(--5);
+}
+.showcase-locator-canvas .leaflet-control-zoom a:hover {
+  background: var(--ink);
+  color: var(--bg, #fff);
+}
+/* A zoom button is an ICON control, so it carries the full 44 x 44 on
+   touch. Leaflet's default is 30 x 30, which a thumb cannot find. */
+.ranking-map-leaflet .leaflet-control-zoom a,
+.showcase-locator-canvas .leaflet-control-zoom a {
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+}
 .ranking-map-leaflet .leaflet-control-attribution {
   font: 500 var(--text-micro) var(--font);
   background: rgba(255, 255, 255, 0.85);
@@ -12113,6 +12142,12 @@ body.canvas-print-mode {
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   text-transform: uppercase;
+  /* Three of these sit side by side, so this is a dense group of text
+     controls, not an isolated action: label-plus-padding boxes, at least
+     32px high on touch and never below the 24px WCAG 2.2 AA floor. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
 }
 
 /* Comparison table — hairline grid, mono caps headers, dark row hover */
@@ -12347,7 +12382,7 @@ body.canvas-print-mode {
 }
 @media (max-width: 480px) {
   .asean-toolkit-box { padding: 1rem .85rem; }
-  .asean-toolkit-actions { flex-direction: column; gap: .25rem; }
+  .asean-toolkit-actions { flex-direction: column; align-items: flex-start; gap: .25rem; }
   .city-lens-tools { flex-direction: column; }
 }
 
@@ -13237,7 +13272,7 @@ main .depa-official-section { max-width: none; padding: .85rem 0 0; border: 0; b
 .depa-official-project-item span { display: block; margin-top: .2rem; color: var(--2); }
 .depa-plan-footer { border-top: 1px solid var(--3); margin-top: 1rem; padding-top: .75rem; display: grid; gap: .75rem; justify-items: start; }
 .depa-official-partnerships { margin: 0; max-width: 65ch; color: var(--2); }
-.depa-official-source { background: none; color: var(--teal); font: 650 var(--text-body)/1.4 var(--font); text-transform: none; letter-spacing: 0; padding: .3rem 0; text-decoration: underline; text-underline-offset: .2em; max-width: 100%; }
+.depa-official-source { background: none; color: var(--teal); font: 650 var(--text-body)/1.4 var(--font); text-transform: none; letter-spacing: 0; padding: .3rem 0; text-decoration: underline; text-underline-offset: .2em; max-width: 100%; min-height: 32px; }
 .depa-official-source::before { content: none; }
 @media (min-width: 900px) {
   .depa-plan-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 2rem; }
@@ -13487,6 +13522,15 @@ main > .page-guide ~ .partnerships-hero { padding-top: 1.25rem; }
 .icon-action { display: inline-grid; place-items: center; flex: none; width: 44px; height: 44px; color: var(--2); border: 1px solid var(--5); background: var(--bg); cursor: pointer; }
 .icon-action:hover { color: var(--ink); border-color: var(--2); }
 @media (pointer: coarse) { .rankings-primary-search .directory-search, .icon-action { min-height: 44px; } .icon-action { width: 44px; height: 44px; } }
+/* An isolated primary action takes the full 44px on touch. A dense group
+   of text controls keeps 32px — touchability comes from layout and from
+   fewer controls, never from padding every box to 44px. */
+@media (pointer: coarse) {
+  .meth-github-link, .depa-official-source { min-height: 44px; }
+  .asean-toolkit-link { min-height: 32px; }
+  .ranking-map-leaflet .leaflet-control-zoom a,
+  .showcase-locator-canvas .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 42px; }
+}
 .dashboard-home .cinematic-hero-actions { align-items: center; flex-wrap: wrap; }
 .dashboard-home .cinematic-hero-actions .cinematic-hero-explainer { margin: 0; padding: 0 4px; min-height: 44px; }
 .dashboard-home .cinematic-hero-stats { align-items: flex-start; }

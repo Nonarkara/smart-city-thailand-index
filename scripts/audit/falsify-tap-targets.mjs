@@ -40,6 +40,19 @@
  *                      hamburger failed this way: elementFromPoint 4px
  *                      outside the button returned the topbar.)
  *
+ *   THE GROUP RULE
+ *    13. CITATION LIST — five 32px rows in a plain block whose children
+ *                      are all controls. Quiet at 32px.
+ *    14. same list at 20px. Caught — the group floor is 32, not silence.
+ *    15. one link per row in a <ul>, 32px. Quiet.
+ *    16. same list at 20px. Caught.
+ *
+ *   THE INLINE EXCEPTION
+ *    17. PARAGRAPH OF LINKS — "Source 1 ↗  Source 2 ↗" and nothing else.
+ *                      Quiet: running text, WCAG 2.2 SC 2.5.8 inline.
+ *    18. A BOXED link inside that paragraph. Caught — the exception does
+ *                      not cover a control that paints a box.
+ *
  * Run: node scripts/audit/falsify-tap-targets.mjs
  */
 import { chromium } from "@playwright/test";
@@ -71,6 +84,14 @@ const STYLE = `
   label { display: flex; align-items: center; gap: 8px; min-height: 44px; }
   .list { list-style: none; margin: 0; padding: 0; }
   .row { display: flex; align-items: center; width: 100%; min-height: 44px; }
+  /* A citation list in a plain block: the container is not a ul and not a
+     flex row, but every child is a control. */
+  .refs a { display: flex; align-items: center; min-height: 32px; }
+  .refs a.short { min-height: 20px; }
+  /* One link per row in a list, wrapped in its own li. */
+  .src { display: flex; align-items: center; min-height: 32px; }
+  .src.short { min-height: 20px; }
+  .boxed { display: inline-block; padding: 4px 8px; background: #f6f8fa; }
 `;
 
 const PAGE = (body) => `<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -152,6 +173,61 @@ const CASES = [
       <g role="button" aria-label="Partner A">
         <circle cx="40" cy="40" r="4" fill="transparent" />
       </g></svg>`,
+    expect: "caught",
+  },
+  /* ── The group rule: a plain block whose children are all controls ────
+     This is the shape of the /why citation list: a div, not a ul, holding
+     nothing but links. It is a dense group, so 32px on touch is its floor —
+     not 44px, and not silence. */
+  {
+    name: "citation list in a plain block, five 32px rows",
+    body: `<div class="refs">
+      <a href="#">[1] Financial Times fDi Benchmark</a>
+      <a href="#">[2] World Bank urban data</a>
+      <a href="#">[3] NSO provincial statistics</a>
+      <a href="#">[4] ASEAN smart city toolkit</a>
+      <a href="#">[5] UNESCO creative cities</a></div>`,
+    expect: "quiet",
+  },
+  {
+    name: "citation list in a plain block, five 20px rows",
+    body: `<div class="refs">
+      <a class="short" href="#">[1] Financial Times fDi Benchmark</a>
+      <a class="short" href="#">[2] World Bank urban data</a>
+      <a class="short" href="#">[3] NSO provincial statistics</a>
+      <a class="short" href="#">[4] ASEAN smart city toolkit</a>
+      <a class="short" href="#">[5] UNESCO creative cities</a></div>`,
+    expect: "caught",
+  },
+  /* ── One link per row, wrapped in its own li ────────────────────────── */
+  {
+    name: "one link per row in a list, 32px rows",
+    body: `<ul class="list">
+      <li><a class="src" href="#">National Statistical Office</a></li>
+      <li><a class="src" href="#">Ministry of Interior</a></li>
+      <li><a class="src" href="#">Office of the Prime Minister</a></li></ul>`,
+    expect: "quiet",
+  },
+  {
+    name: "one link per row in a list, 20px rows",
+    body: `<ul class="list">
+      <li><a class="src short" href="#">National Statistical Office</a></li>
+      <li><a class="src short" href="#">Ministry of Interior</a></li>
+      <li><a class="src short" href="#">Office of the Prime Minister</a></li></ul>`,
+    expect: "caught",
+  },
+  /* ── The inline exception: a paragraph made of links ───────────────────
+     The evidence block on /audit prints "Source 1 ↗  Source 2 ↗" and
+     nothing else. Those are running text (WCAG 2.2 SC 2.5.8's inline
+     exception), so they are quiet. */
+  {
+    name: "a paragraph made only of links",
+    body: `<p><a href="#">Source 1 ↗</a> <a href="#">Source 2 ↗</a> <a href="#">Source 3 ↗</a></p>`,
+    expect: "quiet",
+  },
+  {
+    name: "a boxed link inside a paragraph of links",
+    body: `<p><a href="#">Source 1 ↗</a> <a class="boxed" href="#">Source 2 ↗</a></p>`,
     expect: "caught",
   },
 ];
