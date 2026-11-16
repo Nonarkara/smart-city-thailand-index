@@ -29,9 +29,15 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
   },
   "rankings": {
     "copy": {
-      "en": "Change the priorities and watch the comparison change. Scores help you form questions; open a dossier to check sources and assessment status.",
-      "th": "ลองเปลี่ยนสิ่งที่ให้ความสำคัญ แล้วดูผลเทียบเมือง ใช้คะแนนตั้งคำถาม ก่อนเปิดแฟ้มตรวจแหล่งข้อมูลและสถานะการประเมิน",
-      "zh": "换一组关注重点，看看城市比较如何变化。分数用来提出问题；打开档案，再核查来源与评估状态。"
+      // The band stands after the register, not above it: the page leads
+      // with the H1 and the first decision, and the band introduces what
+      // comes next. So the note names the reading task FROM HERE — the
+      // priorities control is above the reader, and saying so is more
+      // useful than pretending it is below. It does not restate the
+      // action link: a label that restates its control is deleted.
+      "en": "Read the order against the weights: change the priorities at the top and watch the ranking move. Scores raise questions — a dossier answers them with sources and assessment status.",
+      "th": "อ่านลำดับเทียบกับน้ำหนักจริง: เปลี่ยนสิ่งที่ให้ความสำคัญด้านบน แล้วดูอันดับที่ขยับ คะแนนช่วยตั้งคำถาม แฟ้มเมืองช่วยตอบด้วยแหล่งข้อมูลและสถานะการประเมิน",
+      "zh": "对照权重来读这个顺序：改变顶部的关注重点，看看排名如何移动。分数用来提出问题——城市档案用来源与评估状态给出答案。"
     },
     "action": {
       "path": "/compare",
