@@ -27,7 +27,11 @@
  *                                     a mouse. The law sets no width floor
  *                                     for a group, because the group is
  *                                     made touchable by layout.
- *   INLINE_LINK                    -> exempt: a link inside running text
+ *   INLINE_LINK                    -> exempt: a link inside a SENTENCE
+ *   LINK_ALONE                     -> 24px: a link that stands on its own
+ *                                     (a card's closing "Source 1 ↗") gets
+ *                                     the invisible hit area the law
+ *                                     describes, down to the WCAG floor
  *
  * THE MEASUREMENT
  * ---------------
@@ -108,25 +112,46 @@ export function tapMeasurementInPage({ route, viewportLabel }) {
     // WCAG 2.2 SC 2.5.8 carries the same exception for a target "in a
     // sentence or block of text".
     //
-    // Two shapes qualify. The first is a link inside a sentence: the
-    // parent carries text of its own. The second is a PARAGRAPH MADE OF
-    // LINKS — the evidence block on /audit prints "Source 1 ↗  Source 2 ↗"
-    // and nothing else. There is no sentence there, but the links are
-    // still running text, and a 44px box on each would overlap its
-    // neighbours, which is a defect of its own.
-    const inlineLevel = node => {
-      const d = getComputedStyle(node).display;
-      return d === "inline" || d === "inline-block";
+    // The exception is for a SENTENCE. A link that stands alone — the
+    // closing line of a card ("Source 1 ↗"), the credit under a
+    // photograph — is not inside a sentence: it is a control of its own,
+    // and a thumb has to find it. It gets the invisible hit area the law
+    // describes, down to the 24 px WCAG floor.
+    //
+    // "Inside a sentence" is decided by the link's INLINE CONTEXT, not by
+    // its direct parent: a link wrapped in a span inside a sentence is
+    // still inside that sentence, while a link standing between two
+    // paragraphs is not. So the context is the nearest block ancestor,
+    // and the prose is whatever flows in that block's inline run with the
+    // link — the block's own words, plus the words of its inline-level
+    // children, minus every link.
+    const proseInContext = block => {
+      if (!block) return "";
+      let out = "";
+      for (const c of block.childNodes) {
+        if (c.nodeType === 3) { out += c.textContent; continue; }
+        if (c.nodeType !== 1 || c.tagName === "A") continue;
+        const d = getComputedStyle(c).display;
+        if (d === "inline" || d === "inline-block") out += proseInContext(c);
+      }
+      return out;
     };
-    const bare = p ? [...p.children].filter(visible) : [];
-    const paragraphOfLinks = bare.length > 0 && bare.every(inlineLevel);
-    const inlineInProse =
+    let ctxBlock = p;
+    while (ctxBlock) {
+      const d = getComputedStyle(ctxBlock).display;
+      if (d !== "inline" && d !== "inline-block" && d !== "contents") break;
+      ctxBlock = ctxBlock.parentElement;
+    }
+    const plainInline =
       isAnchor && cs.display === "inline" && pcs && FLOW.has(pcs.display) &&
-      (sibText.trim().length > 0 || paragraphOfLinks) &&
       cs.backgroundColor === "rgba(0, 0, 0, 0)" &&
       parseFloat(cs.borderTopWidth) === 0 &&
-      parseFloat(cs.paddingTop) === 0;
-    if (inlineInProse) return "INLINE_LINK";
+      // Vertical padding is exactly the invisible hit area the law asks
+      // for, so it does not disqualify a link. HORIZONTAL padding does:
+      // that is a box, not a link.
+      parseFloat(cs.paddingLeft) === 0 &&
+      parseFloat(cs.paddingRight) === 0;
+    if (plainInline) return proseInContext(ctxBlock).trim().length > 0 ? "INLINE_LINK" : "LINK_ALONE";
 
     // A dense group of text controls: a set of controls presented
     // together — a list of sources, a row of actions. Its structural
@@ -222,6 +247,15 @@ export function tapMeasurementInPage({ route, viewportLabel }) {
       // WCAG 2.2 AA 2.5.8 Target Size (Minimum): 24 x 24.
       need = 24;
       ok = w >= need && h >= need;
+    } else if (category === "LINK_ALONE") {
+      // A text link standing on its own is not an isolated primary action
+      // and not a dense group of controls: it is a link, and the law gives
+      // it an invisible hit area rather than a taller line. The floor is
+      // the 24 px WCAG 2.2 AA minimum the law names. Vertical padding on
+      // an inline box grows the area a thumb can find without moving the
+      // line — which is exactly "an invisible hit area, not a taller line".
+      need = 24;
+      ok = h >= need;
     } else {
       need = coarse ? 44 : 32;
       ok = w >= need && h >= need;

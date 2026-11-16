@@ -37,7 +37,7 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
       // action link: a label that restates its control is deleted.
       "en": "Read the order against the weights: change the priorities at the top and watch the ranking move. Scores raise questions — a dossier answers them with sources and assessment status.",
       "th": "อ่านลำดับเทียบกับน้ำหนักจริง: เปลี่ยนสิ่งที่ให้ความสำคัญด้านบน แล้วดูอันดับที่ขยับ คะแนนช่วยตั้งคำถาม แฟ้มเมืองช่วยตอบด้วยแหล่งข้อมูลและสถานะการประเมิน",
-      "zh": "对照权重来读这个顺序：改变顶部的关注重点，看看排名如何移动。分数用来提出问题——城市档案用来源与评估状态给出答案。"
+      "zh": "对照权重读这份排名：把顶上的关注重点换一组，看看名次怎么动。分数用来提出问题——城市档案用来源与评估状态给出答案。"
     },
     "action": {
       "path": "/compare",

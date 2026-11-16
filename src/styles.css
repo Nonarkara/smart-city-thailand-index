@@ -1542,6 +1542,17 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 .photo-strip-item img { width: 100%; height: 100%; object-fit: cover; }
 .photo-strip-label { position: absolute; bottom: 0; left: 0; right: 0; padding: .4rem .5rem; background: linear-gradient(rgba(0,0,0,.72) 0%, rgba(0,0,0,.86) 60%); color: #fff; font: 700 var(--text-micro) var(--font); text-shadow: 0 1px 2px rgba(0,0,0,.5); }
 
+/* ─── STANDALONE SOURCE LINKS: an invisible hit area, not a taller line ──
+   A link that stands on its own — a card's closing "Source 1 ↗", the
+   credit under a photograph, a provenance row — is a control of its own,
+   not a link inside a sentence. Vertical padding on an inline box grows
+   the area a thumb can find WITHOUT moving the line: inline vertical
+   padding does not change the line box. Nothing is painted. */
+.evidence-source-link { padding-block: 4px; }
+.credit-source-link { padding-block: 6px; }
+.ladder-source-link { padding-block: 5px; }
+.city-record-source-link { padding-block: 5px; }
+
 /* ─── BENEFITS / WHY ─── */
 /* The block was a two-column grid whose first column held an emoji
    icon. The "lens" line inside the block already names the thing, so

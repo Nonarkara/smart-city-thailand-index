@@ -49,9 +49,15 @@
  *
  *   THE INLINE EXCEPTION
  *    17. PARAGRAPH OF LINKS — "Source 1 ↗  Source 2 ↗" and nothing else.
- *                      Quiet: running text, WCAG 2.2 SC 2.5.8 inline.
- *    18. A BOXED link inside that paragraph. Caught — the exception does
- *                      not cover a control that paints a box.
+ *                      Caught: the exception is for a SENTENCE, and a
+ *                      row of links is not one. It gets the invisible hit
+ *                      area the law describes, down to the 24px floor.
+ *    18. The same paragraph with that invisible hit area. Quiet.
+ *    19. A BOXED link inside a paragraph of links. Caught — the exception
+ *                      does not cover a control that paints a box.
+ *    20. A link standing alone, under the floor. Caught.
+ *    21. The same link with an invisible hit area. Quiet.
+ *    22. A link among labelled values, no prose. Caught.
  *
  * Run: node scripts/audit/falsify-tap-targets.mjs
  */
@@ -92,6 +98,10 @@ const STYLE = `
   .src { display: flex; align-items: center; min-height: 32px; }
   .src.short { min-height: 20px; }
   .boxed { display: inline-block; padding: 4px 8px; background: #f6f8fa; }
+  /* A standalone link with the invisible hit area the law describes:
+     vertical padding on an inline box. */
+  .hit { padding-block: 8px; }
+  .card { margin-bottom: 32px; }
 `;
 
 const PAGE = (body) => `<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -223,11 +233,54 @@ const CASES = [
   {
     name: "a paragraph made only of links",
     body: `<p><a href="#">Source 1 ↗</a> <a href="#">Source 2 ↗</a> <a href="#">Source 3 ↗</a></p>`,
+    expect: "caught",
+  },
+  {
+    name: "a paragraph of links with an invisible hit area",
+    body: `<p><a class="hit" href="#">Source 1 ↗</a> <a class="hit" href="#">Source 2 ↗</a> <a class="hit" href="#">Source 3 ↗</a></p>`,
     expect: "quiet",
   },
   {
     name: "a boxed link inside a paragraph of links",
     body: `<p><a href="#">Source 1 ↗</a> <a class="boxed" href="#">Source 2 ↗</a></p>`,
+    expect: "caught",
+  },
+  /* ── A link that stands alone ─────────────────────────────────────────
+     The law exempts a link inside a SENTENCE. These stand alone: a
+     card's closing "Source 1 ↗", a row of source links, a provenance
+     row. They get the invisible hit area the law describes, down to the
+     24px WCAG 2.2 AA floor. */
+  {
+    name: "a link standing alone, under the floor",
+    body: `<div class="card"><a href="#">Source 1 ↗</a></div>`,
+    expect: "caught",
+  },
+  {
+    name: "a link standing alone with an invisible hit area",
+    body: `<div class="card"><a class="hit" href="#">Source 1 ↗</a></div>`,
+    expect: "quiet",
+  },
+  {
+    name: "a row of source links with no prose around them",
+    body: `<p><a href="#">Source 1 ↗</a> <a href="#">Source 2 ↗</a></p>`,
+    expect: "caught",
+  },
+  {
+    name: "a link among labelled values, no prose",
+    body: `<span class="row"><span>scored input</span><a href="#">Source-linked baseline ↗</a></span>`,
+    expect: "caught",
+  },
+  /* ── The inline CONTEXT, not the direct parent ────────────────────────
+     A link wrapped in a span inside a sentence is still inside that
+     sentence; a link standing between two paragraphs is not. */
+  {
+    name: "a link in a span inside a sentence",
+    body: `<p>Caveat text before <span><a href="#">BOI Guide 2026</a></span> and text after.</p>`,
+    expect: "quiet",
+  },
+  {
+    name: "a link standing between two blocks",
+    body: `<div class="card"><div>Photo by CEphoto</div><div>CC BY-SA 4.0</div><a href="#">Source on Wikimedia →</a></div>`,
     expect: "caught",
   },
 ];

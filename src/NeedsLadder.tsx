@@ -128,7 +128,7 @@ export default function NeedsLadder({ profile, locale, className }: Props) {
                                 : locale === "th" ? "ใช้คำนวณ" : locale === "zh" ? "计入评分" : "scored input"}
                             </span>
                             {href ? (
-                              <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                              <a className="ladder-source-link" href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
                                 {sourceLabel} ↗
                               </a>
                             ) : <span>{sourceLabel}</span>}

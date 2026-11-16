@@ -408,7 +408,7 @@ export function CitySpotlight({ cityId, locale }: { cityId: string; locale: Loca
       <h3 style={{ fontSize: "var(--text-body)", marginBottom: ".5rem" }}>{record.title[locale]}</h3>
       <p style={{ fontSize: "var(--text-body)", lineHeight: 1.6, color: "var(--2)" }}>{record.text[locale]}</p>
       <div style={{ marginTop: "1rem", font: "700 var(--text-micro) var(--mono)", color: record.color }}>
-        {cityId === "phuket" ? <a href="https://www.mlit.go.jp/report/press/sogo07_hh_000591.html" target="_blank" rel="noopener noreferrer">{record.note[locale]} ↗</a> : record.note[locale]}
+        {cityId === "phuket" ? <a className="city-record-source-link" href="https://www.mlit.go.jp/report/press/sogo07_hh_000591.html" target="_blank" rel="noopener noreferrer">{record.note[locale]} ↗</a> : record.note[locale]}
       </div>
     </div>
   );

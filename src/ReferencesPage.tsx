@@ -231,7 +231,7 @@ export default function ReferencesPage({ locale }: Props) {
                 <span>{t(locale, ev.provenance)}</span>
               </div>
               <p style={{ margin: ".5rem 0 0", fontSize: "var(--text-body)", overflowWrap: "anywhere" }}>
-                {ev.urls.map((url, sourceIndex) => <a key={url} href={url} target="_blank" rel="noopener noreferrer" style={{ marginInlineEnd: ".75rem" }}>{t(locale, { en: "Source", th: "แหล่งข้อมูล", zh: "来源" })} {sourceIndex + 1} ↗</a>)}
+                {ev.urls.map((url, sourceIndex) => <a key={url} className="evidence-source-link" href={url} target="_blank" rel="noopener noreferrer" style={{ marginInlineEnd: ".75rem" }}>{t(locale, { en: "Source", th: "แหล่งข้อมูล", zh: "来源" })} {sourceIndex + 1} ↗</a>)}
               </p>
             </article>
           ))}
@@ -309,7 +309,7 @@ export default function ReferencesPage({ locale }: Props) {
               <div style={{ font: "700 var(--text-micro) var(--mono)", color: "var(--teal)", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: ".2rem" }}>{credit.cityId}</div>
               <div style={{ fontWeight: 600, marginBottom: ".15rem" }}>{credit.author}</div>
               <div style={{ color: "var(--3)", marginBottom: ".3rem" }}>{credit.license}</div>
-              <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--text-micro)", color: "var(--teal)" }}>
+              <a className="credit-source-link" href={credit.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--text-micro)", color: "var(--teal)" }}>
                 {t(locale, { en: "Source on Wikimedia", th: "แหล่งที่มา Wikimedia", zh: "Wikimedia 原文件" })} →
               </a>
             </div>
