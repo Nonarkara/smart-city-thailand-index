@@ -22,6 +22,12 @@ npx vite build      # Always verify both before pushing
   The Vercel handlers in `/api` still run if this repo is deployed to Vercel;
   they do not run on Cloudflare. Never let `/api/*` fall through to the SPA
   shell — clients will parse `index.html` as JSON.
+  **Unassessed cities carry no score on the wire** (18 Nov 2026): for
+  `assessmentStatus: "unassessed"` the API returns `scores`, `compositeScore`,
+  `tier` and `financeSignal` as `null` (and `financeProfile.readinessScore` /
+  `segment` on the dossier), matching the CSVs. `toPublicCity` in `src/cityCdp.ts`
+  does it; `restoreUnassessed` in `src/cityApi.ts` puts the bundle's own labelled
+  placeholders back for the UI. Do not hand an unassessed city a number to sort on.
 - GitHub Actions also auto-deploys to GitHub Pages on push to `main` (`gh run list --limit 1` to verify), but DNS for `sciti.nonarkara.org` resolves to Cloudflare — the GitHub Pages copy is a live mirror, not what users see.
 
 ### CDPT — the one-command ship sequence

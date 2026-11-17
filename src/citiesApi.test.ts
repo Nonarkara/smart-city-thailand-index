@@ -151,3 +151,42 @@ describe("city CDP APIs", () => {
     expect(String(cityResponse.body)).toContain("recommendation");
   });
 });
+
+describe("unassessed cities in the public API", () => {
+  const list = (query: Record<string, string> = {}) => {
+    const response = createMockResponse();
+    citiesHandler({ method: "GET", query }, response);
+    return (response.body as { data: Array<Record<string, unknown> & { id: string; assessmentStatus: string; compositeScore: number | null; tier: string | null }> }).data;
+  };
+
+  it("carries no score, composite, tier or finance signal for an unassessed city", () => {
+    const cities = list();
+    const unassessed = cities.filter(city => city.assessmentStatus === "unassessed");
+    expect(unassessed.length).toBeGreaterThan(0);
+    for (const city of unassessed) {
+      expect([city.scores, city.compositeScore, city.tier, city.financeSignal]).toEqual([null, null, null, null]);
+    }
+    for (const city of cities.filter(c => c.assessmentStatus !== "unassessed")) {
+      expect(typeof city.compositeScore).toBe("number");
+      expect(typeof city.tier).toBe("string");
+      expect(city.scores).not.toBeNull();
+    }
+  });
+
+  it("sorts unassessed cities after every assessed one and never matches them to a tier filter", () => {
+    const sorted = list();
+    const firstNull = sorted.findIndex(city => city.compositeScore === null);
+    expect(firstNull).toBeGreaterThan(0);
+    expect(sorted.slice(firstNull).every(city => city.compositeScore === null)).toBe(true);
+    expect(list({ tier: "gamma" }).every(city => city.tier === "gamma")).toBe(true);
+  });
+
+  it("nulls the same fields on the dossier, including its finance profile score", () => {
+    const id = list().find(city => city.assessmentStatus === "unassessed")!.id;
+    const response = createMockResponse();
+    cityDetailHandler({ method: "GET", query: { cityId: id } }, response);
+    const city = (response.body as { data: { scores: unknown; compositeScore: unknown; tier: unknown; financeSignal: unknown; financeProfile: { readinessScore: unknown; segment: unknown } } }).data;
+    expect([city.scores, city.compositeScore, city.tier, city.financeSignal]).toEqual([null, null, null, null]);
+    expect([city.financeProfile.readinessScore, city.financeProfile.segment]).toEqual([null, null]);
+  });
+});

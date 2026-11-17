@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCityDetail, getCitySummaries, type CityDetailDTO, type CitySummaryDTO } from "./cityCdp";
+import { getCityDetail, getCitySummaries, type CityDetailDTO, type CitySummaryDTO, type PublicCity } from "./cityCdp";
 
 type LoadState<T> = {
   data: T;
@@ -50,32 +50,56 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-export function isCitySummaryPayload(value: unknown): value is CitySummaryDTO {
+const PILLAR_KEYS = ["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"];
+
+export function isCitySummaryPayload(value: unknown): value is PublicCity<CitySummaryDTO> {
   if (!isRecord(value) || typeof value.id !== "string" || !value.id.trim()) return false;
+  if (typeof value.nameEn !== "string" || typeof value.nameTh !== "string" || typeof value.status !== "string") return false;
+  // The public API sends no score, composite, tier or finance signal for an unassessed city (null together).
+  const unassessedNulls = value.assessmentStatus === "unassessed"
+    && value.tier === null && value.compositeScore === null && value.scores === null && value.financeSignal === null;
   const scores = value.scores;
-  return typeof value.nameEn === "string" && typeof value.nameTh === "string"
-    && typeof value.status === "string" && typeof value.tier === "string"
+  const assessed = typeof value.tier === "string"
     && typeof value.compositeScore === "number" && Number.isFinite(value.compositeScore)
-    && isRecord(scores)
-    && ["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"]
-      .every(key => typeof scores[key] === "number" && Number.isFinite(scores[key]))
-    && Array.isArray(value.keyMetrics) && isRecord(value.freshness)
-    && isRecord(value.financeSignal) && isRecord(value.shortTailoredNote);
+    && isRecord(scores) && PILLAR_KEYS.every(key => typeof scores[key] === "number" && Number.isFinite(scores[key]))
+    && isRecord(value.financeSignal);
+  return (assessed || unassessedNulls)
+    && Array.isArray(value.keyMetrics) && isRecord(value.freshness) && isRecord(value.shortTailoredNote);
 }
 
-export function isCityIndexPayload(value: unknown): value is CitySummaryDTO[] {
+export function isCityIndexPayload(value: unknown): value is PublicCity<CitySummaryDTO>[] {
   return Array.isArray(value) && value.length > 0 && value.every(isCitySummaryPayload)
     && new Set(value.map(city => city.id)).size === value.length;
 }
 
-export function isCityDetailPayload(value: unknown, cityId: string): value is CityDetailDTO {
+export function isCityDetailPayload(value: unknown, cityId: string): value is PublicCity<CityDetailDTO> {
   return isCitySummaryPayload(value) && value.id === cityId
     && ["metricBlocks", "contextNotes", "financeRecommendations", "financeInstrumentCatalog", "evidenceItems", "dataRails"]
       .every(key => Array.isArray((value as unknown as Record<string, unknown>)[key]))
-    && isRecord((value as CityDetailDTO).deliveryProfile)
-    && isRecord((value as CityDetailDTO).financeProfile)
-    && (value as CityDetailDTO).financeProfile.cityId === cityId
-    && isRecord((value as CityDetailDTO).exportMetadata);
+    && isRecord((value as unknown as CityDetailDTO).deliveryProfile)
+    && isRecord((value as unknown as CityDetailDTO).financeProfile)
+    && (value as unknown as CityDetailDTO).financeProfile.cityId === cityId
+    && isRecord((value as unknown as CityDetailDTO).exportMetadata);
+}
+
+/**
+ * Pages are written against the in-bundle shape, where an unassessed city carries labelled
+ * placeholders and the UI branches on its assessment status before it reads one. The wire
+ * format deliberately has no such numbers, so put the bundle's own back; nothing is invented.
+ */
+export function restoreUnassessed<T extends CitySummaryDTO>(city: PublicCity<T>): T {
+  if (city.assessmentStatus !== "unassessed") return city as unknown as T;
+  const local = getCityDetail(city.id);
+  if (!local) throw new CityApiError(`No local record for unassessed city ${city.id}`, false);
+  const restored = {
+    ...city,
+    scores: local.scores,
+    compositeScore: local.compositeScore,
+    tier: local.tier,
+    financeSignal: local.financeSignal,
+  } as unknown as Record<string, unknown>;
+  if (restored.financeProfile) restored.financeProfile = local.financeProfile;
+  return restored as unknown as T;
 }
 
 async function fetchJsonOnce<T>(url: string, validate: (value: unknown) => value is T): Promise<T> {
@@ -154,7 +178,8 @@ async function loadCitySummaries(): Promise<CitySummaryDTO[]> {
     return citySummariesRequest;
   }
 
-  citySummariesRequest = fetchJson<CitySummaryDTO[]>(["/api/cities", "/api-static/cities.json"], isCityIndexPayload)
+  citySummariesRequest = fetchJson<PublicCity<CitySummaryDTO>[]>(["/api/cities", "/api-static/cities.json"], isCityIndexPayload)
+    .then(payload => payload.map(city => restoreUnassessed<CitySummaryDTO>(city)))
     .then(data => {
       citySummariesCache = data;
       return data;
@@ -180,10 +205,11 @@ async function loadCityDetail(cityId: string): Promise<CityDetailDTO> {
     return pending;
   }
 
-  const request = fetchJson<CityDetailDTO>([
+  const request = fetchJson<PublicCity<CityDetailDTO>>([
     `/api/cities/${encodeURIComponent(cityId)}`,
     `/api-static/cities/${encodeURIComponent(cityId)}.json`,
-  ], (value): value is CityDetailDTO => isCityDetailPayload(value, cityId))
+  ], (value): value is PublicCity<CityDetailDTO> => isCityDetailPayload(value, cityId))
+    .then(payload => restoreUnassessed<CityDetailDTO>(payload))
     .then(data => {
       cityDetailCache.set(cityId, data);
       return data;

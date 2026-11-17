@@ -1,4 +1,4 @@
-import { getCitiesApiPayload, getCityDetail, getCityFactsCsv, getCityFactsRows, getCitySummariesCsv } from "../src/cityCdp";
+import { getCitiesApiPayload, getPublicCityDetail, getCityFactsCsv, getCityFactsRows, getCitySummariesCsv } from "../src/cityCdp";
 import { parseCityListQuery } from "../src/cityListQuery";
 import type { CityStatus, CityTier, ScoringPillar } from "../src/types";
 
@@ -93,7 +93,7 @@ export function listCities(request: ApiRequest, requestId: string): ApiEnvelope 
 
 export function getCityOrNull(cityId: string | undefined) {
   if (!cityId) return undefined;
-  return getCityDetail(cityId);
+  return getPublicCityDetail(cityId);
 }
 
 export function getSummaryCsv() {

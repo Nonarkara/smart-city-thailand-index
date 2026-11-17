@@ -13,6 +13,7 @@ import type {
   CityStatus,
   CityTier,
   DataConfidence,
+  CityScores,
   Locale,
   ScoringPillar,
   SmartCity,
@@ -200,7 +201,7 @@ const BASELINE_PROVENANCE: BaselineProvenance = {
 };
 
 export interface CitySummaryDTO extends SmartCity {
-  /** Legacy numeric fields remain for existing clients. Use this to interpret their scope. */
+  /** "unassessed": the public API (PublicCity) carries no score, composite, tier or finance signal for it. */
   assessmentStatus: "curated_estimate" | "unassessed";
   provenance: BaselineProvenance;
   rawMetricUnits: { population: "thousand people"; laborForce: "thousand people"; fdiInflow: "million THB" };
@@ -1738,6 +1739,38 @@ export function getCityFinanceInstrumentCatalog(): FinanceInstrumentSeed[] {
   return FINANCE_INSTRUMENTS;
 }
 
+/**
+ * The wire shape. An unassessed (registered) city has no assessment, so the public API carries no
+ * score, composite, tier or finance signal for it: those fields hold in-bundle placeholders that
+ * the UI already labels "Unassessed" and the CSV exports already blank. Sending them as numbers
+ * made a placeholder sortable and filterable as if it were a result. The UI restores its own
+ * placeholders after the fetch (cityApi.ts); nothing here is a number a client could mistake.
+ */
+export type PublicCity<T extends CitySummaryDTO> = Omit<T, "scores" | "compositeScore" | "tier" | "financeSignal"> & {
+  scores: CityScores | null;
+  compositeScore: number | null;
+  tier: CityTier | null;
+  financeSignal: CityFinanceSignal | null;
+};
+
+export function toPublicCity<T extends CitySummaryDTO>(city: T): PublicCity<T> {
+  if (city.assessmentStatus !== "unassessed") return city as unknown as PublicCity<T>;
+  const financeProfile = (city as Partial<CityDetailDTO>).financeProfile;
+  return {
+    ...city,
+    scores: null,
+    compositeScore: null,
+    tier: null,
+    financeSignal: null,
+    ...(financeProfile ? { financeProfile: { ...financeProfile, readinessScore: null, segment: null } } : {}),
+  } as unknown as PublicCity<T>;
+}
+
+export function getPublicCityDetail(cityId: string): PublicCity<CityDetailDTO> | undefined {
+  const detail = CITY_DETAIL_LOOKUP.get(cityId);
+  return detail ? toPublicCity(detail) : undefined;
+}
+
 export function getCitySummaries(): CitySummaryDTO[] {
   return CITY_BUILDS.map(build => build.summary);
 }
@@ -1812,8 +1845,8 @@ export function getCitiesApiPayload(options?: {
   status?: "all" | CityStatus;
   tier?: "all" | CityTier;
   sort?: "composite" | ScoringPillar;
-}): CitySummaryDTO[] {
-  return filterCitySummaries(getCitySummaries(), options);
+}): PublicCity<CitySummaryDTO>[] {
+  return filterCitySummaries(getCitySummaries().map(toPublicCity), options);
 }
 
 export function getCityContextSummaryPrompt(limit = 20): string {

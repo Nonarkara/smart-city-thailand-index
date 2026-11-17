@@ -17,6 +17,7 @@ const bundleResult = await esbuild.build({
       export {
         getCitiesApiPayload,
         getCityDetail,
+        getPublicCityDetail,
         getCitySummaries,
         getCitySummariesCsv,
         getCityFactsCsv,
@@ -44,6 +45,7 @@ writeFileSync(tmpFile, bundleResult.outputFiles[0].text);
 const {
   getCitiesApiPayload,
   getCityDetail,
+  getPublicCityDetail,
   getCitySummaries,
   getCitySummariesCsv,
   getCityFactsCsv,
@@ -93,7 +95,7 @@ for (const summary of summaries) {
   if (!CITY_ID.test(summary.id)) {
     throw new Error(`API mirror: unsafe city id ${summary.id}`);
   }
-  const detail = getCityDetail(summary.id);
+  const detail = getPublicCityDetail(summary.id);
   if (!detail) {
     throw new Error(`API mirror: missing dossier for ${summary.id}`);
   }

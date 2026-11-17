@@ -22,9 +22,9 @@ const PILLARS = new Set<ScoringPillar>([
 
 type ListableCity = {
   status: string;
-  tier: string;
-  compositeScore: number;
-  scores: CityScores;
+  tier: string | null;
+  compositeScore: number | null;
+  scores: CityScores | null;
   nameEn: string;
 };
 
@@ -52,9 +52,12 @@ export function filterCitySummaries<T extends ListableCity>(cities: readonly T[]
     .filter(city => tier === "all" || city.tier === tier)
     .slice()
     .sort((left, right) => {
-      const leftScore = sort === "composite" ? left.compositeScore : left.scores[sort];
-      const rightScore = sort === "composite" ? right.compositeScore : right.scores[sort];
-      if (rightScore !== leftScore) return rightScore - leftScore;
+      // An unassessed city has no score; it sorts after every assessed one, never among them.
+      const leftScore = sort === "composite" ? left.compositeScore : left.scores?.[sort] ?? null;
+      const rightScore = sort === "composite" ? right.compositeScore : right.scores?.[sort] ?? null;
+      if (leftScore === null && rightScore !== null) return 1;
+      if (rightScore === null && leftScore !== null) return -1;
+      if (leftScore !== null && rightScore !== null && rightScore !== leftScore) return rightScore - leftScore;
       return left.nameEn.localeCompare(right.nameEn);
     });
 }

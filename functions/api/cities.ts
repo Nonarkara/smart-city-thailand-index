@@ -3,8 +3,9 @@ import { filterCitySummaries } from "../../src/cityListQuery";
 type CitySummary = {
   id: string;
   status: string;
-  tier: string;
-  compositeScore: number;
+  tier: string | null;
+  compositeScore: number | null;
+  assessmentStatus?: string;
   scores: {
     livability: number;
     economy: number;
@@ -13,7 +14,7 @@ type CitySummary = {
     environment: number;
     hospitality: number;
     digital: number;
-  };
+  } | null;
   nameEn: string;
 };
 
@@ -72,13 +73,19 @@ export async function onRequest(context: PagesContext): Promise<Response> {
     }
 
     const payload = await asset.json() as Envelope;
+    // An unassessed city carries no score, composite or tier (null together); an assessed one carries all three.
+    const PILLAR_KEYS = ["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"] as const;
+    const wellFormed = (city: CitySummary) => {
+      if (!city || typeof city.id !== "string" || city.id.trim().length === 0
+        || typeof city.nameEn !== "string" || typeof city.status !== "string") return false;
+      if (city.assessmentStatus === "unassessed") {
+        return city.tier === null && city.compositeScore === null && city.scores === null;
+      }
+      return typeof city.tier === "string" && Number.isFinite(city.compositeScore)
+        && !!city.scores && PILLAR_KEYS.every(key => Number.isFinite(city.scores![key]));
+    };
     if (!payload || payload.success !== true || !Array.isArray(payload.data)
-      || payload.data.length === 0 || !payload.data.every(city => city
-        && typeof city.id === "string" && city.id.trim().length > 0
-        && typeof city.nameEn === "string" && typeof city.status === "string"
-        && typeof city.tier === "string" && Number.isFinite(city.compositeScore)
-        && city.scores && ["livability", "economy", "safety", "wellbeing", "environment", "hospitality", "digital"]
-          .every(key => Number.isFinite(city.scores[key as keyof CitySummary["scores"]])))) {
+      || payload.data.length === 0 || !payload.data.every(wellFormed)) {
       throw new Error("Malformed city index");
     }
     if (new Set(payload.data.map(city => city.id)).size !== payload.data.length) {

@@ -15,6 +15,10 @@ async function request(path, status = 200, type = 'application/json', method = '
   return response;
 }
 checkCityIndex(await (await request('/api/cities')).json(), expected);
+for (const city of expected) {
+  const none = city.scores === null && city.compositeScore === null && city.tier === null && city.financeSignal === null;
+  assert.equal(none, city.assessmentStatus === 'unassessed', `${city.id}: an unassessed city must carry no score, composite, tier or finance signal, and an assessed one must carry them`);
+}
 const queue = [...expected];
 let checked = 0;
 await Promise.all(Array.from({ length: 4 }, async () => {
@@ -50,7 +54,8 @@ for (const name of ['cities-summary.csv', 'city-facts.csv']) {
 for (const status of ['certified', 'promotion', 'registered']) {
   const payload = await (await request(`/api/cities?status=${status}&sort=economy`)).json();
   checkCityIndex(payload, expected.filter(city => city.status === status));
-  assert.ok(payload.data.every((city, i, list) => i === 0 || list[i - 1].scores.economy >= city.scores.economy), 'economy sort direction differs');
+  const economy = city => city.scores?.economy ?? null;
+  assert.ok(payload.data.every((city, i, list) => i === 0 || economy(city) === null || (economy(list[i - 1]) !== null && economy(list[i - 1]) >= economy(city))), 'economy sort direction differs (unassessed cities sort last)');
 }
 const bytes = Buffer.from(await (await request(manifest.path)).arrayBuffer());
 checkSnapshot(bytes, manifest);

@@ -47,3 +47,20 @@ describe("city transport data boundaries", () => {
     expect(await response.json()).toMatchObject({ success: true, data: [] });
   });
 });
+
+describe("public wire shape for unassessed cities", () => {
+  it("validates, then restores the bundle's own record exactly (round trip)", async () => {
+    const { getCitySummaries, getCityDetail, getPublicCityDetail } = await import("./cityCdp");
+    const { isCityDetailPayload, isCitySummaryPayload, restoreUnassessed } = await import("./cityApi");
+    const id = getCitySummaries().find(city => city.assessmentStatus === "unassessed")!.id;
+    const wire = JSON.parse(JSON.stringify(getPublicCityDetail(id)));
+    expect(wire.compositeScore).toBeNull();
+    expect(isCityDetailPayload(wire, id)).toBe(true);
+    expect(restoreUnassessed(wire)).toEqual(JSON.parse(JSON.stringify(getCityDetail(id))));
+    // A half-nulled city is a malformed payload, not an unassessed one.
+    expect(isCitySummaryPayload({ ...wire, tier: "gamma" })).toBe(false);
+    // An assessed city with nulls is malformed too.
+    const assessed = JSON.parse(JSON.stringify(getCitySummaries().find(city => city.assessmentStatus !== "unassessed")));
+    expect(isCitySummaryPayload({ ...assessed, compositeScore: null })).toBe(false);
+  });
+});
