@@ -409,28 +409,21 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
                   zh: `显示 ${visibleScored.length} / ${scored.length} 座城市`,
                 })}
               </span>
+              {/* One bar, one action. It used to be two bars once the list was
+                  expanded, the first of them still offering "Show all 118"
+                  with all 118 already showing — a button that did nothing. */}
               <button
                 type="button"
                 className="filter-chip baseline-list-more-btn"
-                onClick={() => setShowAll(true)}
+                onClick={() => setShowAll(value => !value)}
               >
-                {t(locale, {
-                  en: `Show all ${scored.length}`,
-                  th: `ดูทั้งหมด ${scored.length}`,
-                  zh: `显示全部 ${scored.length}`,
-                })}
-              </button>
-            </div>
-          )}
-
-          {capped && showAll && scored.length > BASELINE_CAP && (
-            <div className="baseline-list-more">
-              <button
-                type="button"
-                className="filter-chip baseline-list-more-btn"
-                onClick={() => setShowAll(false)}
-              >
-                {t(locale, { en: "Collapse to top 25", th: "ย่อเหลือ 25 อันดับ", zh: "收起至前 25" })}
+                {showAll
+                  ? t(locale, { en: "Collapse to top 25", th: "ย่อเหลือ 25 เมือง", zh: "收起至前 25" })
+                  : t(locale, {
+                      en: `Show all ${scored.length}`,
+                      th: `ดูทั้งหมด ${scored.length}`,
+                      zh: `显示全部 ${scored.length}`,
+                    })}
               </button>
             </div>
           )}

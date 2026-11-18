@@ -1689,7 +1689,7 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
    share one metadata line under it. */
 .news-item {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr);
   column-gap: .75rem;
   row-gap: 2px;
   padding: .5rem 0;
@@ -1699,7 +1699,7 @@ main > .city-detail-hero, main > div > .city-detail-hero { padding-bottom: 0; }
 }
 .news-item .news-title { grid-column: 1 / -1; order: -1; }
 .news-item .news-date { align-self: end; }
-.news-item .news-source { align-self: end; justify-self: end; }
+.news-item .news-source { align-self: end; justify-self: start; }
 .news-item:hover { background: var(--surface); transform: none; }
 .news-date { font: 600 var(--text-micro) var(--mono); color: var(--3); }
 .news-title { font-size: var(--text-body); font-weight: 600; line-height: 1.3; }
@@ -11372,6 +11372,14 @@ body:has(.bingo-page) { overflow: hidden; }
 .partner-visual-link:hover {
   text-decoration: underline;
 }
+/* One partner record has no source URL. Its source name used to be a
+   link-looking span at opacity 0.4 — 1.9:1 on the card surface, far under
+   WCAG AA, and it invited a tap it could not answer. It is now plain text
+   in the body colour: a recorded source with nothing behind it. */
+.partner-visual-source-note {
+  font: 600 var(--text-micro) var(--mono);
+  color: var(--3);
+}
 
 @media (max-width: 768px) {
   .partner-visual-grid { grid-template-columns: 1fr; }
@@ -12744,16 +12752,16 @@ body.canvas-print-mode {
 }
 .baseline-facet-label {
   font: 600 var(--text-body)/1.3 var(--font);
-  display: flex;
-  /* The unit ("%") is part of the indicator's name, not a floating mark at
-     the far edge of the cell. */
-  justify-content: flex-start;
-  gap: .3rem;
-  align-items: baseline;
+  /* Not a flex container: as one, the text is an anonymous flex item whose
+     box ends where the first line ends, so a wrapping label left the unit
+     pinned to the cell's far edge — 174px of void from the last word. As a
+     block, the unit flows with the words and lands after the last one. */
+  display: block;
 }
 .baseline-facet-unit {
   font: 400 var(--text-micro) var(--mono);
   color: var(--3);
+  margin-left: .25rem;
 }
 .baseline-facet-select {
   min-height: 44px;
@@ -14131,7 +14139,8 @@ main .invest-ccdr-inner > p.invest-ccdr-source { color: var(--amber, #f59e0b) !i
 .news-card:hover { border-bottom-color: var(--teal); }
 .news-card-title { font: 600 var(--text-body)/1.35 var(--font); }
 .news-card-summary { flex: none; font: 400 var(--text-micro)/1.5 var(--font); -webkit-line-clamp: 2; }
-.news-card-meta { margin-top: 0; padding-top: 0; border-top: 0; justify-content: flex-start; gap: 12px; }
+.news-card-meta { margin-top: 0; padding-top: 0; border-top: 0; justify-content: flex-start; gap: 12px; flex-wrap: wrap; }
+.news-card-date { white-space: nowrap; flex: none; }
 @media (max-width: 719px) { .news-grid { grid-template-columns: 1fr; } }
 .invest-macro-withheld { margin: 8px 0 0; font: 400 var(--text-micro)/1.5 var(--font); color: var(--2); max-width: 65ch; }
 /* Ten due-diligence instructions. The 65ch measure wraps each one, and a single

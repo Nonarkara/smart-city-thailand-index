@@ -381,7 +381,7 @@ export default function PartnershipsPage({ locale, onNavigate }: Props) {
                     {p.sourceLabel} →
                   </a>
                 ) : (
-                  <span className="partner-visual-link" style={{ opacity: 0.4, cursor: "default" }}>{p.sourceLabel}</span>
+                  <span className="partner-visual-source-note">{p.sourceLabel}</span>
                 )}
                 {p.action && (
                   <button
