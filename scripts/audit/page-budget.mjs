@@ -23,11 +23,19 @@ const check = (ok, msg) => { if (!ok && !report) { if (process.env.CI) failures.
  * 13 November 2026: re-measured. The home page had been held at 14.3/7.1 while it
  * actually stood at 6.6/3.6, so its ceiling allowed it to double; now 7.5/4.2. The
  * long routes' section spacing is already ~1.5% of their height (/invest 280 of
- * 17,500 px): what remains is content, and cutting content is an editorial call. */
+ * 17,500 px): what remains is content, and cutting content is an editorial call.
+ *
+ * 19 November 2026: the scroll-economy pass. /baseline printed all 118 rows —
+ * ten phone screens of table — and now stops at a counted 25 with the rest
+ * behind one action; 16.96 -> 8.88 on a phone and 10.42 -> 5.54 on a desktop.
+ * /partners lost its boxed three-row fact table on phones (12.29 -> 11.14),
+ * the site-wide news band became ruled rows, and the home page lost the
+ * chip line above each reading title (6.63 -> 6.40). Every ceiling below was
+ * re-measured and lowered; none was raised. */
 const BUDGET = [
-  ['/', 7.5, 4.2, 520],
-  ['/rankings', 7.5, 4.6, 420], ['/methodology', 18.0, 9.9, 420], ['/partners', 12.5, 6.2, 420], ['/program', 13.8, 7.4, 420],
-  ['/invest', 21.0, 12.1, 420], ['/baseline', 17.0, 10.6, 420], ['/audit', 11.5, 5.0, 420], ['/references', 11.5, 5.0, 420], ['/knowledge', 7.5, 5.2, 420],
+  ['/', 6.55, 3.60, 520],
+  ['/rankings', 7.45, 4.45, 420], ['/methodology', 17.90, 9.75, 420], ['/partners', 11.30, 6.10, 420], ['/program', 13.60, 7.35, 420],
+  ['/invest', 20.90, 11.95, 420], ['/baseline', 9.05, 5.65, 420], ['/audit', 11.35, 4.95, 420], ['/references', 11.35, 4.95, 420], ['/knowledge', 7.35, 5.15, 420],
 ];
 // The ceilings are measured on macOS. The Linux CI runner has no system-ui face and falls back to a wider one, so the same
 // pages measured up to 6.6% taller at 390 and 2.3% at 1440 (CI run 41675135316 against these ceilings). CI allows that
@@ -62,7 +70,7 @@ try {
         };
       });
       const screens = m.height / h;
-      if (report || process.env.CI) console.log(`${route} ${w}: ${screens.toFixed(1)} screens, h1 y=${m.h1Top}, band=${m.band}, figure=${m.fig}`);
+      if (report || process.env.CI) console.log(`${route} ${w}: ${screens.toFixed(2)} screens, h1 y=${m.h1Top}, band=${m.band}, figure=${m.fig}`);
       check(m.overflow === 0, `${route}@${w}: horizontal overflow`);
       const allow = max * (process.env.CI ? (w < 720 ? CI_PHONE : CI_DESK) : 1);
       check(screens <= allow, `${route}@${w}: ${screens.toFixed(1)} screens exceeds budget ${max}${process.env.CI ? ` (x${w < 720 ? CI_PHONE : CI_DESK} CI font allowance)` : ''}. Compact it; do not raise the ceiling.`);
