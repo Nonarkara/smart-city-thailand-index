@@ -23,6 +23,9 @@ type Copy = { en: string; th: string; zh: string };
 
 const t = (locale: Locale, c: Copy) => (locale === "th" ? c.th : locale === "zh" ? c.zh : c.en);
 
+// How many baseline rows lead before the rest go behind one stated action.
+const BASELINE_CAP = 25;
+
 /**
  * A threshold is a one-sided filter on a real indicator, with its value
  * written out. A city official asks "which provinces have drinking water
@@ -97,6 +100,7 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
 
   const [query, setQuery] = useState("");
   const [picks, setPicks] = useState<Record<string, string>>({});
+  const [showAll, setShowAll] = useState(false);
 
   const thresholds = useMemo(() => {
     const map = new Map<string, Threshold>();
@@ -160,6 +164,16 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
   const unscored = passing.filter(r => r.d.composite == null);
 
   const activeCount = Object.keys(picks).length + (query.trim() ? 1 : 0);
+
+  // The register is the point of this page, so every row stays reachable. But
+  // 118 rows at 85px each is ten phone screens of table before the reader has
+  // looked at a single city — and the owner\'s law is that a scroll must earn
+  // itself. The top 25 lead; the rest sit behind one stated, counted action,
+  // the same progressive disclosure the rankings directory already uses. A
+  // reader who filters or searches is asking for a subset, so the cap lifts
+  // the moment they do.
+  const capped = activeCount === 0;
+  const visibleScored = capped && !showAll ? scored.slice(0, BASELINE_CAP) : scored;
   const maxDimension = Math.max(...DEPA_DIMENSION_ORDER.map(d => DIMENSION_WEIGHTS[d]));
 
   /**
@@ -381,10 +395,45 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
             <span className="baseline-th-score">{t(locale, { en: "Score · Cover", th: "คะแนน · ครอบคลุม", zh: "得分 · 覆盖" })}</span>
           </div>
           <ol className="baseline-table">
-            {scored.map((row, idx) => (
+            {visibleScored.map((row, idx) => (
               <BaselineRow key={row.city.id} index={idx + 1} row={row} locale={locale} onNavigate={onNavigate} />
             ))}
           </ol>
+
+          {capped && scored.length > BASELINE_CAP && (
+            <div className="baseline-list-more">
+              <span className="baseline-list-more-count">
+                {t(locale, {
+                  en: `Showing ${visibleScored.length} of ${scored.length} cities`,
+                  th: `แสดง ${visibleScored.length} จาก ${scored.length} เมือง`,
+                  zh: `显示 ${visibleScored.length} / ${scored.length} 座城市`,
+                })}
+              </span>
+              <button
+                type="button"
+                className="filter-chip baseline-list-more-btn"
+                onClick={() => setShowAll(true)}
+              >
+                {t(locale, {
+                  en: `Show all ${scored.length}`,
+                  th: `ดูทั้งหมด ${scored.length}`,
+                  zh: `显示全部 ${scored.length}`,
+                })}
+              </button>
+            </div>
+          )}
+
+          {capped && showAll && scored.length > BASELINE_CAP && (
+            <div className="baseline-list-more">
+              <button
+                type="button"
+                className="filter-chip baseline-list-more-btn"
+                onClick={() => setShowAll(false)}
+              >
+                {t(locale, { en: "Collapse to top 25", th: "ย่อเหลือ 25 อันดับ", zh: "收起至前 25" })}
+              </button>
+            </div>
+          )}
 
           {unscored.length > 0 && (
             <>
