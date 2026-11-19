@@ -369,6 +369,7 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
             </button>
           </div>
         </section>
+        {guide}
 
         <section className="section reveal visible">
           <label className="lens-select-label">
@@ -693,7 +694,6 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
           )}
           </>)}
         </section>
-        {guide}
         <section className="section reveal visible">
           <div className="picks-section-header">
             <p className="eyebrow">{t({ en: "Editor's picks", th: "คัดสรรโดยบรรณาธิการ", zh: "编辑精选" })}</p>

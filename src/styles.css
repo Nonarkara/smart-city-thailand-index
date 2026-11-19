@@ -14676,9 +14676,10 @@ main .map-dash-header { padding-block: 8px 6px; }
 
 .rankings-page .lens-select-label { display: grid; width: min(100%, 26rem); }
 .rankings-page .directory-toolbar {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
-  gap: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
   width: min(100%, 50rem);
 }
 .rankings-page .directory-toolbar select {
@@ -14692,8 +14693,9 @@ main .map-dash-header { padding-block: 8px 6px; }
 }
 .rankings-page .directory-toolbar .btn-tab { margin: 0; }
 @media (max-width: 600px) {
-  .rankings-page .directory-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .rankings-page .directory-toolbar .btn-tab { justify-self: start; }
+  .rankings-page .directory-toolbar { flex-direction: column; gap: 0.5rem; }
+  .rankings-page .directory-toolbar select { width: 100%; }
+  .rankings-page .directory-toolbar .btn-tab { width: 100%; justify-content: center; }
 }
 .map-dash-caption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 16px; margin-block: 4px 8px; }
 .map-dashboard .map-dash-caption > p { margin: 0; }
