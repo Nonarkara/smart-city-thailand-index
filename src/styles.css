@@ -14740,3 +14740,5 @@ main .map-dash-header { padding-block: 8px 6px; }
   .baseline-row-score { flex: 0 0 auto; margin-left: auto; }
   .baseline-row-dims { flex: 1 0 100%; }
 }
+.rankings-page .directory-search::placeholder { color: var(--3); opacity: 1; }
+[data-theme="dark"] .rankings-page { --teal: #69b9cc; }
