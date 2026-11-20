@@ -148,8 +148,11 @@ try {
   await page.goto(origin + "/baseline");
   await page.locator("#baseline-q").waitFor();
   const injected = await page.addStyleTag({ content: ".baseline-search { padding-top: 1000px !important; }" });
-  const displaced = await page.locator(".baseline-row-link").first().boundingBox();
-  check(displaced.y + await page.evaluate(() => scrollY) >= 900, "expanded-state guard missed the original displaced-result failure");
+  const displacedTop = await page.locator(".baseline-row-link").first().evaluate(async el => {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    return el.getBoundingClientRect().top + scrollY;
+  });
+  check(displacedTop >= 900, `expanded-state guard missed the original displaced-result failure: ${displacedTop}`);
   await injected.evaluate(el => el.remove());
   if (failures.length) assert.fail(failures.join('\n'));
   console.log('page budget ok');
