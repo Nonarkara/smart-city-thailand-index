@@ -14733,3 +14733,10 @@ main .map-dash-header { padding-block: 8px 6px; }
 .baseline-facet-label { flex: 1 1 10em; min-width: 0; overflow-wrap: anywhere; }
 .baseline-facet-select { min-width: min(7.25rem, 100%); }
 .baseline-facet-source { flex-basis: 100%; }
+@media (max-width: 719px) {
+  .baseline-row-link { display: flex; flex-wrap: wrap; gap: 4px 8px; }
+  .baseline-row-rank { flex: 0 0 2em; }
+  .baseline-row-city { flex: 1 1 10em; overflow-wrap: anywhere; }
+  .baseline-row-score { flex: 0 0 auto; margin-left: auto; }
+  .baseline-row-dims { flex: 1 0 100%; }
+}
