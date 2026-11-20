@@ -14728,3 +14728,8 @@ main .map-dash-header { padding-block: 8px 6px; }
 @media print {
   .baseline-coverage-details::details-content, .baseline-filter-details::details-content { display: block; content-visibility: visible; }
 }
+.baseline-masthead .hero-title { overflow-wrap: anywhere; }
+.baseline-facet { display: flex; flex-wrap: wrap; }
+.baseline-facet-label { flex: 1 1 10em; min-width: 0; overflow-wrap: anywhere; }
+.baseline-facet-select { min-width: min(7.25rem, 100%); }
+.baseline-facet-source { flex-basis: 100%; }

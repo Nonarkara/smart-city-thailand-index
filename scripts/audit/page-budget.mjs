@@ -123,6 +123,21 @@ try {
       check(result.y < 900, `baseline/${theme}/${width}: search result separated from input`);
     }
   }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(origin + "/baseline");
+  await page.locator("#baseline-q").waitFor();
+  await page.locator(".baseline-filter-details > summary").click();
+  const enlarged = await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
+  const zoomGeometry = await page.evaluate(() => ({
+    overflow: document.documentElement.scrollWidth - innerWidth,
+    overlaps: [...document.querySelectorAll(".baseline-facet")].some(el => {
+      const label = el.querySelector("label").getBoundingClientRect();
+      const select = el.querySelector("select").getBoundingClientRect();
+      return label.right > select.left + 1 && label.bottom > select.top + 1;
+    }),
+  }));
+  check(zoomGeometry.overflow === 0 && !zoomGeometry.overlaps, "enlarged baseline heading or filter labels bleed");
+  await enlarged.evaluate(el => el.remove());
   // Reproduce the former filter wall; the result must fall outside the same budget.
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(origin + "/baseline");
