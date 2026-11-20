@@ -130,6 +130,10 @@ try {
   const enlarged = await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
   const zoomGeometry = await page.evaluate(() => ({
     overflow: document.documentElement.scrollWidth - innerWidth,
+    protrusions: [...document.querySelectorAll("body *")].filter(el => {
+      const r = el.getBoundingClientRect();
+      return r.width && r.right > innerWidth + 1 && getComputedStyle(el).position !== "fixed";
+    }).slice(-8).map(el => ({ className: el.className, right: Math.round(el.getBoundingClientRect().right), text: el.textContent.slice(0, 60) })),
     rowOverlap: [...document.querySelectorAll(".baseline-row-link")].some(el => {
       const name = el.querySelector(".baseline-row-city").getBoundingClientRect();
       const score = el.querySelector(".baseline-row-score")?.getBoundingClientRect();

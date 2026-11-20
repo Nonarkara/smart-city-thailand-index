@@ -14742,3 +14742,8 @@ main .map-dash-header { padding-block: 8px 6px; }
 }
 .rankings-page .directory-search::placeholder { color: var(--3); opacity: 1; }
 [data-theme="dark"] .rankings-page { --teal: #69b9cc; }
+
+/* Source names must yield to the status column when text is enlarged. */
+.baseline-source { grid-template-columns: minmax(0, 1fr) auto; }
+.baseline-source-name,
+.baseline-source-title { min-width: 0; overflow-wrap: anywhere; }
