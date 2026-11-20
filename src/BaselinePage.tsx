@@ -518,6 +518,12 @@ function BaselineRow({
           {getCityName(city, locale)}
           {getDistinctProvinceName(city, locale) && <span className="baseline-row-province">{getDistinctProvinceName(city, locale)}</span>}
         </span>
+        <span className="baseline-row-score">
+          {d.composite}
+          <span className="baseline-row-coverage" title={t(locale, { en: "share of the published weight measured from source", th: "สัดส่วนน้ำหนักที่ประกาศไว้ซึ่งวัดได้จากแหล่งข้อมูลจริง", zh: "已从来源实测的公布权重比例" })}>
+            {Math.round(d.weightCoverage * 100)}%
+          </span>
+        </span>
         <span className="baseline-row-dims">
           {DEPA_DIMENSION_ORDER.map(dim => {
             const s = d.dimensions[dim].score;
@@ -536,12 +542,6 @@ function BaselineRow({
               </span>
             );
           })}
-        </span>
-        <span className="baseline-row-score">
-          {d.composite}
-          <span className="baseline-row-coverage" title={t(locale, { en: "share of the published weight measured from source", th: "สัดส่วนน้ำหนักที่ประกาศไว้ซึ่งวัดได้จากแหล่งข้อมูลจริง", zh: "已从来源实测的公布权重比例" })}>
-            {Math.round(d.weightCoverage * 100)}%
-          </span>
         </span>
       </a>
     </li>

@@ -115,7 +115,7 @@ try {
         heights: [...document.querySelectorAll(".baseline-row-link")].map(el => el.getBoundingClientRect().height),
       }));
       check(expanded.overflow === 0, `expanded baseline/${theme}/${width}: overflow`);
-      check(expanded.heights.every(height => height >= 44 && height <= 100), "expanded register has inflated or undersized records");
+      check(expanded.heights.every(height => height >= 44 && height <= 100), `expanded register/${theme}/${width} has invalid rows: ${expanded.heights.filter(height => height < 44 || height > 100).join(",")}`);
       await page.getByRole("button", { name: /Collapse to top/ }).click();
       check(await page.locator(".baseline-row").count() === initial, "register collapse failed");
       await page.locator("#baseline-q").fill("Phuket");
