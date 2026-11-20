@@ -266,3 +266,7 @@ Owner explicitly requests NonArchitecture-Regular.ttf for all Nong Plub words. N
 ## Homepage reading order
 
 The homepage is a city finder. Use the existing column grid and MoMA’s exhibition-index hierarchy as the reference for grouping and rule weight. The headline leads into search, then purpose-based comparison. Nong Plub’s note sits beside her portrait after the search controls. Use stronger section breaks for the first comparison and quiet rules for the research disclosures. The photos advance on request.
+
+## November 21 MSH review
+
+The research pages use a column grid. Search and the first result form the entry and exit of the baseline register. Coverage, indicator filters and missing-source explanations open independently. Methodology leads with pipeline and scoring, with project history at the end. Investment research opens beside the operating comparison tools. Dark source labels use the text palette. The page-budget audit covers expanded registers in both themes and rejects the former separation between search and results.

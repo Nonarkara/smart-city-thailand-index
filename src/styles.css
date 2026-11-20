@@ -14699,3 +14699,32 @@ main .map-dash-header { padding-block: 8px 6px; }
 }
 .map-dash-caption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 16px; margin-block: 4px 8px; }
 .map-dashboard .map-dash-caption > p { margin: 0; }
+
+/* The register's controls and results share one column; research depth opens on demand. */
+.research-depth { width: min(100%, var(--w)); margin-inline: auto; padding-inline: var(--gutter); }
+.research-depth > summary { border-top: 2px solid var(--ink); padding-block: 8px; min-height: 44px; align-content: center; font-weight: 650; cursor: pointer; }
+.research-depth > .section { padding-inline: 0; }
+.baseline-source-name { color: var(--ink); }
+.baseline-row-link:hover .baseline-row-city { color: var(--ink); text-decoration: underline; }
+.baseline-masthead .baseline-dims-caption, .baseline-masthead .baseline-search-label { color: #d1dce3; }
+.baseline-row-link { padding-block: 8px; }
+@media (max-width: 600px) {
+  .rankings-page .directory-toolbar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .rankings-page .directory-toolbar > * { width: 100%; min-width: 0; }
+}
+@media print {
+  .research-depth::details-content { display: block; content-visibility: visible; }
+  .research-depth .reveal { opacity: 1; transform: none; }
+}
+.baseline-coverage-details > summary, .baseline-filter-details > summary { min-height: 44px; align-content: center; cursor: pointer; font-weight: 650; }
+.baseline-coverage-details { margin-top: 8px; }
+.baseline-masthead { padding-block: 16px; }
+.baseline-masthead .baseline-search-head { margin-block: 12px 0; }
+.baseline-search { padding-top: 0; }
+.baseline-filter-details[open] { margin-bottom: 8px; }
+.baseline-gap-details .baseline-gap { padding-block: 8px; }
+.baseline-table-section { padding-bottom: 16px; }
+[data-theme="dark"] .invest-page { --teal: #69b9cc; }
+@media print {
+  .baseline-coverage-details::details-content, .baseline-filter-details::details-content { display: block; content-visibility: visible; }
+}

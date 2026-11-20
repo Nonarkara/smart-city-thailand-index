@@ -29,15 +29,9 @@ export const PAGE_MASCOT_BRIEFS: Record<PageMascotKind, PageMascotBrief> = {
   },
   "rankings": {
     "copy": {
-      // The band stands after the register, not above it: the page leads
-      // with the H1 and the first decision, and the band introduces what
-      // comes next. So the note names the reading task FROM HERE — the
-      // priorities control is above the reader, and saying so is more
-      // useful than pretending it is below. It does not restate the
-      // action link: a label that restates its control is deleted.
-      "en": "Read the order against the weights: change the priorities at the top and watch the ranking move. Scores raise questions — a dossier answers them with sources and assessment status.",
-      "th": "อ่านลำดับเทียบกับน้ำหนักจริง: เปลี่ยนสิ่งที่ให้ความสำคัญด้านบน แล้วดูอันดับที่ขยับ คะแนนช่วยตั้งคำถาม แฟ้มเมืองช่วยตอบด้วยแหล่งข้อมูลและสถานะการประเมิน",
-      "zh": "对照权重读这份排名：把顶上的关注重点换一组，看看名次怎么动。分数用来提出问题——城市档案用来源与评估状态给出答案。"
+      "en": "Choose your priorities, then open a city to check its evidence.",
+      "th": "เลือกเรื่องที่ให้ความสำคัญ แล้วเปิดแฟ้มเมืองเพื่อตรวจหลักฐาน",
+      "zh": "选择关注重点，再打开城市档案核查证据。"
     },
     "action": {
       "path": "/compare",
