@@ -133,15 +133,15 @@ try {
     rowOverlap: [...document.querySelectorAll(".baseline-row-link")].some(el => {
       const name = el.querySelector(".baseline-row-city").getBoundingClientRect();
       const score = el.querySelector(".baseline-row-score")?.getBoundingClientRect();
-      return score && name.right > score.left + 1 && name.bottom > score.top + 1;
+      return score && name.left < score.right - 1 && name.right > score.left + 1 && name.top < score.bottom - 1 && name.bottom > score.top + 1;
     }),
     overlaps: [...document.querySelectorAll(".baseline-facet")].some(el => {
       const label = el.querySelector("label").getBoundingClientRect();
       const select = el.querySelector("select").getBoundingClientRect();
-      return label.right > select.left + 1 && label.bottom > select.top + 1;
+      return label.left < select.right - 1 && label.right > select.left + 1 && label.top < select.bottom - 1 && label.bottom > select.top + 1;
     }),
   }));
-  check(zoomGeometry.overflow === 0 && !zoomGeometry.overlaps && !zoomGeometry.rowOverlap, "enlarged baseline heading or filter labels bleed");
+  check(zoomGeometry.overflow === 0 && !zoomGeometry.overlaps && !zoomGeometry.rowOverlap, `enlarged baseline heading or filter labels bleed: ${JSON.stringify(zoomGeometry)}`);
   await enlarged.evaluate(el => el.remove());
   // Reproduce the former filter wall; the result must fall outside the same budget.
   await page.setViewportSize({ width: 390, height: 844 });
@@ -149,7 +149,7 @@ try {
   await page.locator("#baseline-q").waitFor();
   const injected = await page.addStyleTag({ content: ".baseline-search { padding-top: 1000px !important; }" });
   const displaced = await page.locator(".baseline-row-link").first().boundingBox();
-  check(displaced.y >= 900, "expanded-state guard missed the original displaced-result failure");
+  check(displaced.y + await page.evaluate(() => scrollY) >= 900, "expanded-state guard missed the original displaced-result failure");
   await injected.evaluate(el => el.remove());
   if (failures.length) assert.fail(failures.join('\n'));
   console.log('page budget ok');
