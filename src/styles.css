@@ -14747,3 +14747,62 @@ main .map-dash-header { padding-block: 8px 6px; }
 .baseline-source { grid-template-columns: minmax(0, 1fr) auto; }
 .baseline-source-name,
 .baseline-source-title { min-width: 0; overflow-wrap: anywhere; }
+
+
+/* Home: one invitation module → search → destinations. The drawing rests on
+   the search field's top edge; headline, note and signature form one message. */
+.dashboard-home .home-city-guide { grid-template-columns: minmax(0, 600px); }
+.dashboard-home .home-city-guide-presenter {
+  grid-column: 1 / -1; grid-row: 1; display: grid;
+  grid-template-columns: minmax(0, 1fr) 108px; gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,.6);
+}
+.dashboard-home .home-city-guide .home-city-guide-message {
+  grid-column: 1; grid-row: 1; padding: 0 0 8px;
+}
+.dashboard-home .home-city-guide .home-city-guide-reading {
+  display: block; padding: 0; margin: 0;
+}
+.dashboard-home .home-city-guide .home-city-guide-copy { display: block; }
+.dashboard-home .home-city-guide .home-city-guide-byline { display: block; margin: 4px 0 0; }
+.dashboard-home .home-city-guide .home-city-guide-visual {
+  position: static; grid-column: 2; grid-row: 1; align-self: end;
+  contain: none; overflow: hidden; min-height: 0; width: auto; margin: 0;
+}
+.dashboard-home .home-city-guide .home-city-guide-art {
+  position: static; display: block; width: 100%; height: auto;
+  max-width: none; max-height: none; object-fit: contain;
+}
+.dashboard-home .home-city-guide .home-hero-search { grid-row: 2; }
+.dashboard-home .home-city-guide .home-city-guide-actions { grid-row: 3; }
+.home-purpose-controls button { padding-inline: 8px; }
+@media (min-width: 720px) {
+  .dashboard-home .home-city-guide-presenter { grid-template-columns: minmax(0, 1fr) 116px; }
+}
+
+.dashboard-home .home-photo-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0 12px; max-width: 600px;
+}
+.dashboard-home .home-photo-controls .hero-slide-label {
+  position: static; padding: 0; background: none; text-shadow: none;
+}
+.dashboard-home .cinematic-hero-overlay { padding-bottom: 12px; }
+
+/* Use the existing menu interaction when real navigation text no longer fits. */
+.topbar.topbar-compact .nav-toggle {
+  display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
+  width: 44px; height: 44px; padding: 8px; border: 1px solid var(--5);
+}
+.topbar.topbar-compact .nav-toggle span { display: block; width: 100%; height: 2px; background: var(--ink); }
+.topbar.topbar-compact .nav-links {
+  position: absolute; top: 100%; left: var(--gutter); right: var(--gutter);
+  display: none; flex-direction: column; align-items: stretch;
+  padding: 12px; border: 1px solid var(--5); background: var(--bg);
+  max-height: calc(100dvh - var(--topbar-h)); overflow-y: auto;
+}
+.topbar.topbar-compact .nav-groups { flex-direction: column; align-items: stretch; width: 100%; }
+.topbar.topbar-compact .nav-group { display: block; width: 100%; border-bottom: 1px solid var(--5); }
+.topbar.topbar-compact .nav-group-trigger { width: 100%; justify-content: space-between; min-height: 44px; padding: 8px; }
+.topbar.topbar-compact .nav-dropdown { position: static; width: 100%; min-width: 0; border: 0; border-top: 1px solid var(--5); }
+.topbar.topbar-compact .locale-segmented { align-self: start; }

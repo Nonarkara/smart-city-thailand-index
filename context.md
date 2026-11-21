@@ -270,3 +270,18 @@ The homepage is a city finder. Use the existing column grid and MoMA’s exhibit
 ## November 21 MSH review
 
 The research pages use a column grid. Search and the first result form the entry and exit of the baseline register. Coverage, indicator filters and missing-source explanations open independently. Methodology leads with pipeline and scoring, with project history at the end. Investment research opens beside the operating comparison tools. Dark source labels use the text palette. The page-budget audit covers expanded registers in both themes and rejects the former separation between search and results.
+
+### Home invitation geometry (21 November 2026)
+Column grid: headline + handwritten invitation/signature beside Nong Plub; her
+portrait terminates at the search field's top edge. Search and destination links follow in
+DOM/keyboard order. Photo control and place credit share a footer row. At normal
+370/390px text, all five purpose controls occupy one row with content-sized
+padding; enlarged text may wrap. `plub-density` measures the shared footing,
+contiguous signature and purpose rows, and rejects floating/orphan mutations.
+The former global hero-edge check passed a visibly detached portrait: it is not
+an adequate proxy for integrating the guide with the message.
+At enlarged text, the header's existing ResizeObserver also measures brand/nav
+fit and switches to the existing compact-menu interaction if they collide or
+cross the content edge. A width-only breakpoint failed at1024 (79px overflow)
+and1440 (overlap without overflow). The enlarged guard checks both conditions
+and opens a destination group in the compact menu before clearing the state.
