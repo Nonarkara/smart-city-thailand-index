@@ -285,3 +285,9 @@ fit and switches to the existing compact-menu interaction if they collide or
 cross the content edge. A width-only breakpoint failed at1024 (79px overflow)
 and1440 (overlap without overflow). The enlarged guard checks both conditions
 and opens a destination group in the compact menu before clearing the state.
+
+The actual-text-size container query (19em) adapts narrow enlarged reading:
+heading/portrait, then search, then the complete full-width note and links.
+Normal370/390 composition is unchanged. The original560px first-search budget
+remains; the obsolete requirement that any invitation follow search is replaced
+by its actual shared footing. At200%EN390, searchbottom488px (previous800px).

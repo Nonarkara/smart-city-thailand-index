@@ -14806,3 +14806,16 @@ main .map-dash-header { padding-block: 8px 6px; }
 .topbar.topbar-compact .nav-group-trigger { width: 100%; justify-content: space-between; min-height: 44px; padding: 8px; }
 .topbar.topbar-compact .nav-dropdown { position: static; width: 100%; min-width: 0; border: 0; border-top: 1px solid var(--5); }
 .topbar.topbar-compact .locale-segmented { align-self: start; }
+
+/* At enlarged text, keep the search in the first reading band. The portrait
+   remains beside the heading and on the search edge; the full note follows.
+   em is relative to this container's actual text size, not device width. */
+.dashboard-home .home-city-guide { container: home-invitation / inline-size; grid-template-columns: minmax(0, 480px) 108px; }
+@container home-invitation (max-width: 19em) {
+  .dashboard-home .home-city-guide-presenter,
+  .dashboard-home .home-city-guide .home-city-guide-message { display: contents; }
+  .dashboard-home .home-city-guide .cinematic-hero-title { grid-column: 1; grid-row: 1; margin-bottom: 8px; }
+  .dashboard-home .home-city-guide .home-city-guide-visual { grid-column: 2; grid-row: 1; width: 108px; }
+  .dashboard-home .home-city-guide .home-city-guide-reading { grid-column: 1 / -1; grid-row: 3; padding-top: 8px; }
+  .dashboard-home .home-city-guide .home-city-guide-actions { grid-column: 1 / -1; grid-row: 4; }
+}
