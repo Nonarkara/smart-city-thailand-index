@@ -90,7 +90,7 @@ VITE_SUPABASE_ANON_KEY=
 
 Seven pillars, fixed weights in `PILLAR_WEIGHTS` (`src/types.ts`): livability 25, economy 20, safety 15, wellbeing 15, environment 10, hospitality 10, digital 5. The composite is weighted arithmetic in `src/scoring.ts`. Method code **SCITI-2026-METH**, version **2026.04**, data cut-off **2026-04-04** (`src/methodologySpec.ts`). `assignTier` returns Alpha at 65 and above, Beta at 45 and below 65, and Gamma below 45.
 
-The source registry in `src/evidenceData.ts` names NSO, NESDC (GPP), the Pollution Control Department, the Royal Thai Police, the Ministry of Public Health, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, depa Smart City Office, City Data Platform Thailand, BOI, ONEP, the Royal Forest Department, field observation, and the Treasury Department. What each series actually covers, and where it does not, is on `/references` and in `src/claimRegistry.ts`. Dossiers are TypeScript in `src/cityData.ts` and `src/registeredCityData.ts`. The cited research snapshot is `src/researchSnapshot.json`, which points at one file under `public/research/`. `index.html` describes rankings and scores for 118 Thai smart cities.
+The source registry in `src/evidenceData.ts` names NSO, NESDC (GPP), the Pollution Control Department, the Royal Thai Police, the Ministry of Public Health, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, depa Smart City Office, City Data Platform Thailand, BOI, ONEP, the Royal Forest Department, field observation, and the Treasury Department. What each series covers is in the `descEn`, `descTh`, and `descZh` fields on those records in `src/evidenceData.ts`. Dossiers are TypeScript in `src/cityData.ts` and `src/registeredCityData.ts`. The cited research snapshot is `src/researchSnapshot.json`, which points at one file under `public/research/`. `index.html` describes rankings and scores for 118 Thai smart cities.
 
 ### License and credit
 
@@ -160,7 +160,7 @@ VITE_SUPABASE_ANON_KEY=
 
 เสาหลักเจ็ดเสา น้ำหนักคงที่ใน `PILLAR_WEIGHTS` (`src/types.ts`): ความน่าอยู่ 25 เศรษฐกิจ 20 ความปลอดภัย 15 คุณภาพชีวิต 15 สิ่งแวดล้อม 10 อัธยาศัย 10 ดิจิทัล 5 คะแนนรวมเป็นการถ่วงน้ำหนักธรรมดาใน `src/scoring.ts` รหัสวิธี **SCITI-2026-METH** เวอร์ชัน **2026.04** จุดตัดข้อมูล **2026-04-04** (`src/methodologySpec.ts`) `assignTier` ให้ Alpha ตั้งแต่ 65, Beta ตั้งแต่ 45 แต่ต่ำกว่า 65, และ Gamma ต่ำกว่า 45
 
-ทะเบียนแหล่งใน `src/evidenceData.ts` ระบุ สสช., สศช. (GPP), กรมควบคุมมลพิษ, สำนักงานตำรวจแห่งชาติ, กระทรวงสาธารณสุข, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, สำนักงานเมืองอัจฉริยะ depa, City Data Platform Thailand, BOI, สผ., กรมป่าไม้, การลงพื้นที่ และกรมธนารักษ์ ว่าแต่ละชุดคลุมถึงไหน ดูที่ `/references` และ `src/claimRegistry.ts` แฟ้มเมืองอยู่ใน `src/cityData.ts` กับ `src/registeredCityData.ts` สแนปช็อตวิจัยที่อ้างอิงอยู่ที่ `src/researchSnapshot.json` ซึ่งชี้ไปไฟล์เดียวใต้ `public/research/` `index.html` บรรยายอันดับและคะแนนของ 118 เมืองอัจฉริยะของไทย
+ทะเบียนแหล่งใน `src/evidenceData.ts` ระบุ สสช., สศช. (GPP), กรมควบคุมมลพิษ, สำนักงานตำรวจแห่งชาติ, กระทรวงสาธารณสุข, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, สำนักงานเมืองอัจฉริยะ depa, City Data Platform Thailand, BOI, สผ., กรมป่าไม้, การลงพื้นที่ และกรมธนารักษ์ แต่ละชุดคลุมถึงไหนอยู่ในฟิลด์ `descEn`, `descTh` และ `descZh` ของระเบียนนั้นใน `src/evidenceData.ts` แฟ้มเมืองอยู่ใน `src/cityData.ts` กับ `src/registeredCityData.ts` สแนปช็อตวิจัยที่อ้างอิงอยู่ที่ `src/researchSnapshot.json` ซึ่งชี้ไปไฟล์เดียวใต้ `public/research/` `index.html` บรรยายอันดับและคะแนนของ 118 เมืองอัจฉริยะของไทย
 
 ### สัญญาอนุญาตและเครดิต
 
@@ -230,12 +230,12 @@ VITE_SUPABASE_ANON_KEY=
 
 七个支柱，权重固定在 `PILLAR_WEIGHTS`（`src/types.ts`）：宜居 25、经济 20、安全 15、福祉 15、环境 10、人文 10、数字 5。综合分是 `src/scoring.ts` 里的加权算术。方法编号 **SCITI-2026-METH**，版本 **2026.04**，数据截止 **2026-04-04**（`src/methodologySpec.ts`）。`assignTier` 的切分是 Alpha 为 65 及以上，Beta 为 45 及以上且低于 65，Gamma 低于 45。
 
-`src/evidenceData.ts` 的来源登记包括泰国国家统计局、NESDC（府级生产总值）、污染控制局、泰国皇家警察、公共卫生部、GISTDA、Open-Meteo / Copernicus、世界银行公开数据、depa 智慧城市办公室、City Data Platform Thailand、BOI、ONEP、皇家林业局、实地观察，以及国库厅（กรมธนารักษ์）。每一组数据覆盖到哪里、没有覆盖到哪里，写在 `/references` 和 `src/claimRegistry.ts`。城市档案在 `src/cityData.ts` 和 `src/registeredCityData.ts`。被引用的研究快照是 `src/researchSnapshot.json`，它指向 `public/research/` 下的一个文件。`index.html` 写的是 118 座泰国智慧城市的排名与分数。
+`src/evidenceData.ts` 的来源登记包括泰国国家统计局、NESDC（府级生产总值）、污染控制局、泰国皇家警察、公共卫生部、GISTDA、Open-Meteo / Copernicus、世界银行公开数据、depa 智慧城市办公室、City Data Platform Thailand、BOI、ONEP、皇家林业局、实地观察，以及国库厅（กรมธนารักษ์）。每一组数据覆盖到哪里，写在这些记录的 `descEn`、`descTh` 和 `descZh` 字段里，同在 `src/evidenceData.ts`。城市档案在 `src/cityData.ts` 和 `src/registeredCityData.ts`。被引用的研究快照是 `src/researchSnapshot.json`，它指向 `public/research/` 下的一个文件。`index.html` 写的是 118 座泰国智慧城市的排名与分数。
 
 ### 许可与署名
 
-源代码为 [MIT](LICENSE)。版权 2026 数字经济发展促进局（depa）。
+源代码为 [MIT](LICENSE)。版权 2026 数字经济促进局（depa）。
 
 已发布的指数数据在 `index.html` 中标明为 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)。照片沿用各自记录上的许可（`src/photoCredits.ts`）。
 
-由 **Dr Non Arkaraprasertkul**（นน อัครประเสริฐกุล）开发，任职于数字经济与社会部 depa 智慧城市促进部门。应用内知识库以及 `src/ProgramPage.tsx` 中的 Hitachi Review 引文，将其职务写为智慧城市促进高级专家。
+由 **Dr Non Arkaraprasertkul**（นน อัครประเสริฐกุล）开发。应用内知识库写的是 depa 智慧城市推广部门高级专家。`src/ProgramPage.tsx` 的 Hitachi Review 引文写的职务是 depa 智慧城市推广高级专家。
