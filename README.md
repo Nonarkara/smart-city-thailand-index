@@ -22,13 +22,13 @@ Public web app for Thailand’s smart-city index. It records what is running in 
 
 ### What this is
 
-SCITI is a trilingual (English, Thai, Chinese — on screen the Chinese label is **CN**) React app: city dossiers, a map, rankings, comparisons, and a written method. depa’s Smart City Local certification reviews plans and readiness. This index asks what is operating. The knowledge-base copy in `src/KnowledgePage.tsx` describes the work as independent of the certification decision, and as work from depa’s Smart City Promotion Department, not as a body outside depa.
+SCITI is a trilingual (English, Thai, Chinese — on screen the Chinese label is **CN**) React app: city dossiers, a map, rankings, comparisons, and a written method. depa’s Smart City Local certification reviews plans and readiness. This index asks what is operating. This page’s own line is that the scoring is inspired by SLIC. The knowledge base in `src/KnowledgePage.tsx` calls SCITI an independent assessment tool, and says it was developed by Dr. Non A., Senior Expert at depa’s Smart City Promotion Department, using the SLIC (Smart Liveable Cities Index) methodology.
 
 It is not a census of every Thai municipality, and this repository does not contain a gazette that makes a SCITI rank a statutory national ranking.
 
 ### Who it is for
 
-People deciding where to live, study, work, visit, or invest, and anyone who needs the same public record before asking a city a sharper question. The about page states the limit in one line: a score is a research estimate, not a service guarantee and not investment advice. A city record may be a province, a municipality, a district, a campus, or a special zone. Those units are not interchangeable.
+The about page (`src/AboutPage.tsx`) says the purpose is to help people ask better questions about where to live, learn, work, visit or invest. It also says a score is a research estimate, not a service guarantee or an investment recommendation. `CityLeague` in `src/types.ts` is a province, a municipality, a district, a campus, a special zone, or a township. Mae Moh is a township. The about page names the first five. Those units are not interchangeable.
 
 Corrections and data submissions go to [data@slic-index.org](mailto:data@slic-index.org) or [non.ar@depa.or.th](mailto:non.ar@depa.or.th), the addresses the interface already publishes.
 
@@ -88,9 +88,9 @@ VITE_SUPABASE_ANON_KEY=
 
 ### Data and method
 
-Seven pillars, fixed weights in `PILLAR_WEIGHTS` (`src/types.ts`): livability 25, economy 20, safety 15, wellbeing 15, environment 10, hospitality 10, digital 5. The composite is weighted arithmetic in `src/scoring.ts`. Method code **SCITI-2026-METH**, version **2026.04**, data cut-off **2026-04-04** (`src/methodologySpec.ts`). Delivery tiers there: Alpha at 65 and above, Beta at 45 and above, Gamma below 45.
+Seven pillars, fixed weights in `PILLAR_WEIGHTS` (`src/types.ts`): livability 25, economy 20, safety 15, wellbeing 15, environment 10, hospitality 10, digital 5. The composite is weighted arithmetic in `src/scoring.ts`. Method code **SCITI-2026-METH**, version **2026.04**, data cut-off **2026-04-04** (`src/methodologySpec.ts`). `assignTier` returns Alpha at 65 and above, Beta at 45 and below 65, and Gamma below 45.
 
-The source registry in `src/evidenceData.ts` names NSO, NESDC (GPP), the Pollution Control Department, the Royal Thai Police, the Ministry of Public Health, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, depa Smart City Office, City Data Platform Thailand, BOI, ONEP, the Royal Forest Department, field observation, and the Treasury Department. What each series actually covers, and where it does not, is on `/references` and in `src/claimRegistry.ts`. Dossiers are TypeScript in `src/cityData.ts` and `src/registeredCityData.ts`. The cited research snapshot is `src/researchSnapshot.json`, which points at one file under `public/research/`. `index.html` describes the published set as 118 city records.
+The source registry in `src/evidenceData.ts` names NSO, NESDC (GPP), the Pollution Control Department, the Royal Thai Police, the Ministry of Public Health, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, depa Smart City Office, City Data Platform Thailand, BOI, ONEP, the Royal Forest Department, field observation, and the Treasury Department. What each series actually covers, and where it does not, is on `/references` and in `src/claimRegistry.ts`. Dossiers are TypeScript in `src/cityData.ts` and `src/registeredCityData.ts`. The cited research snapshot is `src/researchSnapshot.json`, which points at one file under `public/research/`. `index.html` describes rankings and scores for 118 Thai smart cities.
 
 ### License and credit
 
@@ -108,15 +108,13 @@ Developed by **Dr Non Arkaraprasertkul** (นน อัครประเสร�
 
 ### นี่คืออะไร
 
-SCITI เป็นเว็บแอปดัชนีเมืองอัจฉริยะของไทย สามภาษา (อังกฤษ ไทย จีน — บนจอใช้ตัวย่อ **CN**) รวมแฟ้มเมือง แผนที่ อันดับ หน้าเปรียบเทียบ และระเบียบวิธีที่อ่านได้ การรับรอง Smart City Local ของ depa ดูแผนและความพร้อม ดัชนีนี้ถามว่าอะไรเดินอยู่จริง แนวคิดคะแนนมาจาก SLIC (Smart Liveable Cities Index) ตามข้อความในคลังความรู้
+SCITI เป็นเว็บแอปดัชนีเมืองอัจฉริยะของไทย สามภาษา (อังกฤษ ไทย จีน — บนจอใช้ตัวย่อ **CN**) รวมแฟ้มเมือง แผนที่ อันดับ หน้าเปรียบเทียบ และระเบียบวิธีที่อ่านได้ การรับรอง Smart City Local ของ depa ดูแผนและความพร้อม ดัชนีนี้ถามว่าอะไรเดินอยู่จริง หน้านี้บรรยายเองว่าแนวให้คะแนนได้แรงจาก SLIC คลังความรู้ใน `src/KnowledgePage.tsx` เรียก SCITI ว่าเครื่องมือประเมินอิสระ และบอกว่าพัฒนาโดย ดร.ณณ ผู้เชี่ยวชาญอาวุโส ฝ่ายส่งเสริมเมืองอัจฉริยะ depa โดยใช้ระเบียบวิธี SLIC (Smart Liveable Cities Index)
 
-ที่เก็บนี้ไม่ใช่ [SLIC Index V3](https://github.com/Nonarkara/SLIC-Index) และไม่ใช่เว็บเล่าเรื่องเมือง [Nonarkara/sciti](https://github.com/Nonarkara/sciti)
-
-คลังความรู้ระบุว่างานนี้เป็นของฝ่ายส่งเสริมเมืองอัจฉริยะ depa และแยกจากการตัดสินรับรอง ไม่ได้อ้างว่าอยู่นอก depa ในรีโปนี้ไม่มีราชกิจจานุเบกษาที่ทำให้ลำดับ SCITI เป็นดัชนีแห่งชาติตามกฎหมาย
+ที่เก็บนี้ไม่ใช่ [SLIC Index V3](https://github.com/Nonarkara/SLIC-Index) และไม่ใช่เว็บเล่าเรื่องเมือง [Nonarkara/sciti](https://github.com/Nonarkara/sciti) ในรีโปนี้ไม่มีราชกิจจานุเบกษาที่ทำให้ลำดับ SCITI เป็นดัชนีแห่งชาติตามกฎหมาย
 
 ### ใครใช้
 
-คนที่กำลังเลือกเมืองเพื่ออยู่อาศัย เรียน ทำงาน เที่ยว หรือลงทุน และคนที่ต้องดูบันทึกสาธารณะชุดเดียวกันก่อนจะถามเมืองต่อ หน้าเกี่ยวกับแพลตฟอร์มเขียนไว้ตรงๆ ว่าคะแนนเป็นค่าประมาณจากงานวิจัย ไม่ใช่การรับประกันบริการ และไม่ใช่คำแนะนำการลงทุน ระเบียนหนึ่งรายการอาจเป็นจังหวัด เทศบาล เขต วิทยาเขต หรือเขตพิเศษ ใช้แทนกันไม่ได้
+หน้าเกี่ยวกับแพลตฟอร์ม (`src/AboutPage.tsx`) บอกว่ามีไว้เพื่อช่วยตั้งคำถามที่ดีขึ้นเกี่ยวกับเมืองที่จะอยู่อาศัย เรียน ทำงาน ท่องเที่ยว หรือลงทุน และบอกว่าคะแนนคือค่าประมาณวิจัย ไม่ใช่การรับประกันบริการหรือคำแนะนำลงทุน หน้าเกี่ยวกับแพลตฟอร์มระบุจังหวัด เทศบาล เขต วิทยาเขต หรือเขตพิเศษ `CityLeague` ใน `src/types.ts` มีประเภทที่หกคือชุมชน แม่เมาะเป็นชุมชน หน่วยเหล่านี้ใช้แทนกันไม่ได้
 
 ส่งข้อมูลหรือแก้ตัวเลขที่ตรวจได้ที่ [data@slic-index.org](mailto:data@slic-index.org) หรือ [non.ar@depa.or.th](mailto:non.ar@depa.or.th) ซึ่งเป็นที่อยู่ที่หน้าเว็บใช้อยู่แล้ว
 
@@ -160,9 +158,9 @@ VITE_SUPABASE_ANON_KEY=
 
 ### ข้อมูลและระเบียบวิธี
 
-เสาหลักเจ็ดเสา น้ำหนักคงที่ใน `PILLAR_WEIGHTS` (`src/types.ts`): ความอยู่ได้ 25 เศรษฐกิจ 20 ความปลอดภัย 15 สุขภาวะ 15 สิ่งแวดล้อม 10 การต้อนรับ 10 ดิจิทัล 5 คะแนนรวมเป็นการถ่วงน้ำหนักธรรมดาใน `src/scoring.ts` รหัสวิธี **SCITI-2026-METH** เวอร์ชัน **2026.04** จุดตัดข้อมูล **2026-04-04** (`src/methodologySpec.ts`) ระดับการส่งมอบในไฟล์นั้น: Alpha ตั้งแต่ 65, Beta ตั้งแต่ 45, Gamma ต่ำกว่า 45
+เสาหลักเจ็ดเสา น้ำหนักคงที่ใน `PILLAR_WEIGHTS` (`src/types.ts`): ความน่าอยู่ 25 เศรษฐกิจ 20 ความปลอดภัย 15 คุณภาพชีวิต 15 สิ่งแวดล้อม 10 อัธยาศัย 10 ดิจิทัล 5 คะแนนรวมเป็นการถ่วงน้ำหนักธรรมดาใน `src/scoring.ts` รหัสวิธี **SCITI-2026-METH** เวอร์ชัน **2026.04** จุดตัดข้อมูล **2026-04-04** (`src/methodologySpec.ts`) `assignTier` ให้ Alpha ตั้งแต่ 65, Beta ตั้งแต่ 45 แต่ต่ำกว่า 65, และ Gamma ต่ำกว่า 45
 
-ทะเบียนแหล่งใน `src/evidenceData.ts` ระบุ สสช., สศช. (GPP), กรมควบคุมมลพิษ, สำนักงานตำรวจแห่งชาติ, กระทรวงสาธารณสุข, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, สำนักงานเมืองอัจฉริยะ depa, City Data Platform Thailand, BOI, สผ., กรมป่าไม้, การลงพื้นที่ และกรมธนารักษ์ ว่าแต่ละชุดคลุมถึงไหน ดูที่ `/references` และ `src/claimRegistry.ts` แฟ้มเมืองอยู่ใน `src/cityData.ts` กับ `src/registeredCityData.ts` สแนปช็อตวิจัยที่อ้างอิงอยู่ที่ `src/researchSnapshot.json` ซึ่งชี้ไปไฟล์เดียวใต้ `public/research/` `index.html` บรรยายชุดที่เผยแพร่เป็น 118 ระเบียน
+ทะเบียนแหล่งใน `src/evidenceData.ts` ระบุ สสช., สศช. (GPP), กรมควบคุมมลพิษ, สำนักงานตำรวจแห่งชาติ, กระทรวงสาธารณสุข, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, สำนักงานเมืองอัจฉริยะ depa, City Data Platform Thailand, BOI, สผ., กรมป่าไม้, การลงพื้นที่ และกรมธนารักษ์ ว่าแต่ละชุดคลุมถึงไหน ดูที่ `/references` และ `src/claimRegistry.ts` แฟ้มเมืองอยู่ใน `src/cityData.ts` กับ `src/registeredCityData.ts` สแนปช็อตวิจัยที่อ้างอิงอยู่ที่ `src/researchSnapshot.json` ซึ่งชี้ไปไฟล์เดียวใต้ `public/research/` `index.html` บรรยายอันดับและคะแนนของ 118 เมืองอัจฉริยะของไทย
 
 ### สัญญาอนุญาตและเครดิต
 
@@ -180,13 +178,13 @@ VITE_SUPABASE_ANON_KEY=
 
 ### 这是什么
 
-SCITI 是泰国智慧城市指数的网页应用，界面为英文、泰文和中文（屏幕上的中文缩写是 **CN**）。里面是城市档案、地图、排名、对比，以及写明的计算方法。depa 的 Smart City Local 认证看的是方案和准备程度；这个指数问的是城市里已经在运行的东西。计分思路来自 SLIC（Smart Liveable Cities Index），应用内的知识库原文如此。
+SCITI 是泰国智慧城市指数的网页应用，界面为英文、泰文和中文（屏幕上的中文缩写是 **CN**）。里面是城市档案、地图、排名、对比，以及写明的计算方法。depa 的 Smart City Local 认证看的是方案和准备程度；这个指数问的是城市里已经在运行的东西。本页自己的说法是计分受 SLIC 启发。`src/KnowledgePage.tsx` 的知识库称 SCITI 为独立评估工具，并写明它由 depa 智慧城市推广部门高级专家 Non A. 博士开发，采用 SLIC（智慧宜居城市指数）方法。
 
-本仓库不是 [SLIC Index V3](https://github.com/Nonarkara/SLIC-Index)，也不是城市叙事站 [Nonarkara/sciti](https://github.com/Nonarkara/sciti)。知识库写明，这项工作独立于认证决定，同时属于 depa 智慧城市促进部门，并不自称站在 depa 之外。仓库里没有把 SCITI 名次定为法定国家排名的政府公报。
+本仓库不是 [SLIC Index V3](https://github.com/Nonarkara/SLIC-Index)，也不是城市叙事站 [Nonarkara/sciti](https://github.com/Nonarkara/sciti)。仓库里没有把 SCITI 名次定为法定国家排名的政府公报。
 
 ### 给谁用
 
-给正在选择居住、学习、工作、旅行或投资地点的人，也给需要先看同一份公开记录、再向一座城市追问的人。关于页写得很直接：分数是研究估算，不是服务保证，也不是投资建议。一条城市记录可能是府、市镇、区、校园或特别区域，这些单位不能互相替换。
+关于页（`src/AboutPage.tsx`）写明，目的是帮助人们更好地思考居住、学习、工作、旅行或投资的地点。它还写明，分数属于研究估算，并非服务保证或投资建议。关于页写出的是府、市镇、区、校园或特别区域。`src/types.ts` 的 `CityLeague` 还有第六种：镇。Mae Moh 是镇。这些单位不能互相替换。
 
 可核对的更正和数据，寄到界面已经公开的 [data@slic-index.org](mailto:data@slic-index.org) 或 [non.ar@depa.or.th](mailto:non.ar@depa.or.th)。
 
@@ -230,9 +228,9 @@ VITE_SUPABASE_ANON_KEY=
 
 ### 数据与方法
 
-七个支柱，权重固定在 `PILLAR_WEIGHTS`（`src/types.ts`）：宜居 25、经济 20、安全 15、福祉 15、环境 10、接待 10、数字 5。综合分是 `src/scoring.ts` 里的加权算术。方法编号 **SCITI-2026-METH**，版本 **2026.04**，数据截止 **2026-04-04**（`src/methodologySpec.ts`）。该文件中的交付层级：Alpha 为 65 及以上，Beta 为 45 及以上，Gamma 低于 45。
+七个支柱，权重固定在 `PILLAR_WEIGHTS`（`src/types.ts`）：宜居 25、经济 20、安全 15、福祉 15、环境 10、人文 10、数字 5。综合分是 `src/scoring.ts` 里的加权算术。方法编号 **SCITI-2026-METH**，版本 **2026.04**，数据截止 **2026-04-04**（`src/methodologySpec.ts`）。`assignTier` 的切分是 Alpha 为 65 及以上，Beta 为 45 及以上且低于 65，Gamma 低于 45。
 
-`src/evidenceData.ts` 的来源登记包括泰国国家统计局、NESDC（府级生产总值）、污染控制局、泰国皇家警察、公共卫生部、GISTDA、Open-Meteo / Copernicus、世界银行公开数据、depa 智慧城市办公室、City Data Platform Thailand、BOI、ONEP、皇家林业局、实地观察，以及财政部。每一组数据覆盖到哪里、没有覆盖到哪里，写在 `/references` 和 `src/claimRegistry.ts`。城市档案在 `src/cityData.ts` 和 `src/registeredCityData.ts`。被引用的研究快照是 `src/researchSnapshot.json`，它指向 `public/research/` 下的一个文件。`index.html` 把已发布的集合写成 118 条城市记录。
+`src/evidenceData.ts` 的来源登记包括泰国国家统计局、NESDC（府级生产总值）、污染控制局、泰国皇家警察、公共卫生部、GISTDA、Open-Meteo / Copernicus、世界银行公开数据、depa 智慧城市办公室、City Data Platform Thailand、BOI、ONEP、皇家林业局、实地观察，以及国库厅（กรมธนารักษ์）。每一组数据覆盖到哪里、没有覆盖到哪里，写在 `/references` 和 `src/claimRegistry.ts`。城市档案在 `src/cityData.ts` 和 `src/registeredCityData.ts`。被引用的研究快照是 `src/researchSnapshot.json`，它指向 `public/research/` 下的一个文件。`index.html` 写的是 118 座泰国智慧城市的排名与分数。
 
 ### 许可与署名
 
