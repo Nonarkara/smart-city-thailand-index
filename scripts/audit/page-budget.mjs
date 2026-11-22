@@ -147,17 +147,30 @@ try {
   }));
   check(zoomGeometry.overflow === 0 && !zoomGeometry.overlaps && !zoomGeometry.rowOverlap, `enlarged baseline heading or filter labels bleed: ${JSON.stringify(zoomGeometry)}`);
   await enlarged.evaluate(el => el.remove());
-  // Reproduce the former filter wall; the result must fall outside the same budget.
+  // Reproduce the former filter wall; the result must move with the injected pad.
+  // An absolute y>=900 check raced the style flush on CI (the row was still
+  // at its unpadded place, about 810px) even though the site bytes had not
+  // changed. Measure the shift after a forced reflow instead.
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(origin + "/baseline");
   await page.locator("#baseline-q").waitFor();
-  const injected = await page.addStyleTag({ content: ".baseline-search { padding-top: 1000px !important; }" });
-  const displacedTop = await page.locator(".baseline-row-link").first().evaluate(async el => {
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    return el.getBoundingClientRect().top + scrollY;
+  await page.locator(".baseline-row-link").first().waitFor();
+  const displacement = await page.evaluate(async () => {
+    const row = document.querySelector(".baseline-row-link");
+    const search = document.querySelector(".baseline-search");
+    const top = () => row.getBoundingClientRect().top + scrollY;
+    const before = top();
+    const style = document.createElement("style");
+    style.textContent = ".baseline-search { padding-top: 1000px !important; }";
+    document.head.appendChild(style);
+    void search.offsetHeight;
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const after = top();
+    const paddingTop = getComputedStyle(search).paddingTop;
+    style.remove();
+    return { before, after, delta: after - before, paddingTop };
   });
-  check(displacedTop >= 900, `expanded-state guard missed the original displaced-result failure: ${displacedTop}`);
-  await injected.evaluate(el => el.remove());
+  check(displacement.paddingTop === "1000px" && displacement.delta >= 900, `expanded-state guard missed the original displaced-result failure: ${JSON.stringify(displacement)}`);
   if (failures.length) assert.fail(failures.join('\n'));
   console.log('page budget ok');
 } finally { await browser?.close(); await server?.close(); }
