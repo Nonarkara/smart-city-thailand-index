@@ -82,6 +82,82 @@ try {
       if (w === 390 && route !== '/knowledge') check(m.h1Top <= maxH1, `${route}: H1 starts ${m.h1Top}px down; the page leads with chrome`);
     }
   }
+  // Expanded registers must remain usable in both themes, not only fit while closed.
+  for (const theme of ["light", "dark"]) {
+    for (const width of [390, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(origin + "/baseline");
+      await page.locator("#baseline-q").waitFor();
+      await page.evaluate(theme => {
+        localStorage.setItem("smart-city-thailand-theme", theme);
+      }, theme);
+      await page.reload();
+      await page.locator("#baseline-q").waitFor();
+      await page.evaluate(() => document.fonts.ready);
+      const search = await page.locator("#baseline-q").boundingBox();
+      check(search.y + search.height < 650, `baseline/${theme}/${width}: search buried`);
+      const sourceContrast = await page.locator(".baseline-source-name").first().evaluate(el => {
+        const channels = color => color.match(/[\d.]+/g).slice(0, 3).map(Number);
+        const luminance = color => channels(color).map(value => {
+          const component = value / 255;
+          return component <= 0.04045 ? component / 12.92 : ((component + 0.055) / 1.055) ** 2.4;
+        }).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
+        const foreground = luminance(getComputedStyle(el).color);
+        const background = luminance(getComputedStyle(el.closest(".baseline-sources")).backgroundColor);
+        return (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
+      });
+      check(sourceContrast >= 4.5, `baseline/${theme}: unreadable source contrast ${sourceContrast.toFixed(2)}`);
+      const initial = await page.locator(".baseline-row").count();
+      await page.getByRole("button", { name: /Show all/ }).click();
+      check(await page.locator(".baseline-row").count() === 118, "expanded register lost cities");
+      const expanded = await page.evaluate(() => ({
+        overflow: document.documentElement.scrollWidth - innerWidth,
+        heights: [...document.querySelectorAll(".baseline-row-link")].map(el => el.getBoundingClientRect().height),
+      }));
+      check(expanded.overflow === 0, `expanded baseline/${theme}/${width}: overflow`);
+      check(expanded.heights.every(height => height >= 44 && height <= 100), `expanded register/${theme}/${width} has invalid rows: ${expanded.heights.filter(height => height < 44 || height > 100).join(",")}`);
+      await page.getByRole("button", { name: /Collapse to top/ }).click();
+      check(await page.locator(".baseline-row").count() === initial, "register collapse failed");
+      await page.locator("#baseline-q").fill("Phuket");
+      const result = await page.locator(".baseline-row-link").first().boundingBox();
+      check(result.y < 900, `baseline/${theme}/${width}: search result separated from input`);
+    }
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(origin + "/baseline");
+  await page.locator("#baseline-q").waitFor();
+  await page.locator(".baseline-filter-details > summary").click();
+  const enlarged = await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
+  const zoomGeometry = await page.evaluate(() => ({
+    overflow: document.documentElement.scrollWidth - innerWidth,
+    protrusions: [...document.querySelectorAll("body *")].filter(el => {
+      const r = el.getBoundingClientRect();
+      return r.width && r.right > innerWidth + 1 && getComputedStyle(el).position !== "fixed";
+    }).slice(-8).map(el => ({ className: el.className, right: Math.round(el.getBoundingClientRect().right), text: el.textContent.slice(0, 60) })),
+    rowOverlap: [...document.querySelectorAll(".baseline-row-link")].some(el => {
+      const name = el.querySelector(".baseline-row-city").getBoundingClientRect();
+      const score = el.querySelector(".baseline-row-score")?.getBoundingClientRect();
+      return score && name.left < score.right - 1 && name.right > score.left + 1 && name.top < score.bottom - 1 && name.bottom > score.top + 1;
+    }),
+    overlaps: [...document.querySelectorAll(".baseline-facet")].some(el => {
+      const label = el.querySelector("label").getBoundingClientRect();
+      const select = el.querySelector("select").getBoundingClientRect();
+      return label.left < select.right - 1 && label.right > select.left + 1 && label.top < select.bottom - 1 && label.bottom > select.top + 1;
+    }),
+  }));
+  check(zoomGeometry.overflow === 0 && !zoomGeometry.overlaps && !zoomGeometry.rowOverlap, `enlarged baseline heading or filter labels bleed: ${JSON.stringify(zoomGeometry)}`);
+  await enlarged.evaluate(el => el.remove());
+  // Reproduce the former filter wall; the result must fall outside the same budget.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(origin + "/baseline");
+  await page.locator("#baseline-q").waitFor();
+  const injected = await page.addStyleTag({ content: ".baseline-search { padding-top: 1000px !important; }" });
+  const displacedTop = await page.locator(".baseline-row-link").first().evaluate(async el => {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    return el.getBoundingClientRect().top + scrollY;
+  });
+  check(displacedTop >= 900, `expanded-state guard missed the original displaced-result failure: ${displacedTop}`);
+  await injected.evaluate(el => el.remove());
   if (failures.length) assert.fail(failures.join('\n'));
   console.log('page budget ok');
 } finally { await browser?.close(); await server?.close(); }

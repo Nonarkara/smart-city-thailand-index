@@ -210,6 +210,22 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
             })}
           </p>
 
+          <div className="baseline-search-head">
+            <label className="baseline-search-label" htmlFor="baseline-q">
+              {t(locale, { en: "Find a city", th: "ค้นหาเมือง", zh: "查找城市" })}
+            </label>
+            <input
+              id="baseline-q"
+              className="baseline-search-input"
+              type="search"
+              placeholder={t(locale, { en: "City or province", th: "ชื่อเมืองหรือจังหวัด", zh: "城市或省份" })}
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+            />
+          </div>
+
+          <details className="baseline-coverage-details">
+            <summary>{t(locale, { en: "Dimension weights and coverage", th: "น้ำหนักและความครอบคลุมรายมิติ", zh: "维度权重与覆盖范围" })}</summary>
           {/* The seven dimensions, as a strip. Weight is the bar length;
               a hatched cell means the dimension has no baseline yet. The
               right-hand figure is how many of the 118 cities carry a score
@@ -250,6 +266,7 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
               );
             })}
           </div>
+          </details>
         </div>
       </section>
 
@@ -263,6 +280,8 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
           either kind, it would be a section that says nothing, which is
           exactly the spatial hallucination this project is trying to
           remove. ── */}
+      <details className="research-depth baseline-gap-details">
+        <summary>{t(locale, { en: "Coverage limits and missing measurements", th: "ข้อจำกัดความครอบคลุมและตัวชี้วัดที่ยังขาด", zh: "覆盖限制与缺失测量" })}</summary>
       <section className="baseline-gap">
         <div className="section baseline-gap-inner">
           <p className="eyebrow">
@@ -313,22 +332,13 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ─── SEARCH ───────────────────────────────────────────────────── */}
+      </details>
       <section className="baseline-search">
         <div className="section">
-          <div className="baseline-search-head">
-            <label className="baseline-search-label" htmlFor="baseline-q">
-              {t(locale, { en: "Find a city", th: "ค้นหาเมือง", zh: "查找城市" })}
-            </label>
-            <input
-              id="baseline-q"
-              className="baseline-search-input"
-              type="search"
-              placeholder={t(locale, { en: "City or province", th: "ชื่อเมืองหรือจังหวัด", zh: "城市或省份" })}
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-            />
-          </div>
 
+
+          <details className="baseline-filter-details">
+            <summary>{t(locale, { en: "Filter by indicator", th: "กรองตามตัวชี้วัด", zh: "按指标筛选" })}{activeCount > 0 ? ` · ${activeCount}` : ""}</summary>
           <div className="baseline-facets" role="group" aria-label={t(locale, { en: "Filter by indicator", th: "กรองตามตัวชี้วัด", zh: "按指标筛选" })}>
             {usableFacets.map(facet => (
               <div key={facet.id} className="baseline-facet">
@@ -375,6 +385,7 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
             })}
           </p>
 
+          </details>
           <p className="baseline-count">
             {t(locale, {
               en: `${scored.length} of ${cities.length} cities shown${activeCount ? ` · ${activeCount} filter${activeCount > 1 ? "s" : ""} applied` : ""}`,
@@ -507,6 +518,12 @@ function BaselineRow({
           {getCityName(city, locale)}
           {getDistinctProvinceName(city, locale) && <span className="baseline-row-province">{getDistinctProvinceName(city, locale)}</span>}
         </span>
+        <span className="baseline-row-score">
+          {d.composite}
+          <span className="baseline-row-coverage" title={t(locale, { en: "share of the published weight measured from source", th: "สัดส่วนน้ำหนักที่ประกาศไว้ซึ่งวัดได้จากแหล่งข้อมูลจริง", zh: "已从来源实测的公布权重比例" })}>
+            {Math.round(d.weightCoverage * 100)}%
+          </span>
+        </span>
         <span className="baseline-row-dims">
           {DEPA_DIMENSION_ORDER.map(dim => {
             const s = d.dimensions[dim].score;
@@ -525,12 +542,6 @@ function BaselineRow({
               </span>
             );
           })}
-        </span>
-        <span className="baseline-row-score">
-          {d.composite}
-          <span className="baseline-row-coverage" title={t(locale, { en: "share of the published weight measured from source", th: "สัดส่วนน้ำหนักที่ประกาศไว้ซึ่งวัดได้จากแหล่งข้อมูลจริง", zh: "已从来源实测的公布权重比例" })}>
-            {Math.round(d.weightCoverage * 100)}%
-          </span>
         </span>
       </a>
     </li>

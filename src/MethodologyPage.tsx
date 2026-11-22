@@ -380,180 +380,6 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
         </p>
       </section>
 
-      {/* ─── NAME ETYMOLOGY ─── */}
-      <section className="section meth-etymology reveal visible">
-        <div className="meth-etymology-block">
-          <div className="meth-etymology-row">
-            <span className="meth-ety-form">SCITI</span>
-            <span className="meth-ety-eq">=</span>
-            <span className="meth-ety-def">{t("Smart City Thailand Index", "ดัชนีเมืองอัจฉริยะไทย", "泰国智慧城市指数")}</span>
-          </div>
-          <div className="meth-etymology-row">
-            <span className="meth-ety-form"><span className="meth-ety-sma">Sma</span><span className="meth-ety-sciti">SCITI</span></span>
-            <span className="meth-ety-eq">=</span>
-            <span className="meth-ety-def">{t("Sma- (Smart) + SCITI — same index, compressed", "Sma- (Smart) + SCITI — ดัชนีเดิม ในรูปย่อ", "Sma-（Smart）+ SCITI——同一指数，压缩形式")}</span>
-          </div>
-          <div className="meth-etymology-row">
-            <span className="meth-ety-form meth-ety-samastiti">Samastiti</span>
-            <span className="meth-ety-eq">≈</span>
-            <span className="meth-ety-def">{t("สมาร์ทซิตี้ — Thai phonetic for Smart City · all three are one", "สมาร์ทซิตี้ — การออกเสียงภาษาไทยของ Smart City · ทั้งสามคือหนึ่ง", "สมาร์ทซิตี้——Smart City的泰语音译 · 三形同一")}</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── VERSION JOURNEY ─── */}
-      <section className="section reveal visible">
-        <p className="eyebrow">{t("Version history", "ประวัติเวอร์ชัน", "版本历史")}</p>
-        <h2>{t("From a public question to a city data platform", "จากคำถามสาธารณะสู่แพลตฟอร์มข้อมูลเมือง", "从一个公开问题到城市数据平台")}</h2>
-        <p className="section-intro" style={{ marginBottom: "1.5rem" }}>
-          {t(
-            "This is version 2026.04 — the fourth major iteration. Each version asked a harder question than the last.",
-            "นี่คือเวอร์ชัน 2026.04 — การปรับปรุงครั้งใหญ่ครั้งที่สี่ แต่ละเวอร์ชันตั้งคำถามที่ยากกว่าเดิม",
-            "这是 2026.04 版本——第四次重大迭代。每个版本都比上一个问了更难的问题。",
-          )}
-        </p>
-        <div className="meth-version-timeline">
-          {[
-            {
-              ver: "v0", date: "2024",
-              label: { en: "The provocation", th: "การตั้งคำถาม", zh: "一声质疑" },
-              desc: {
-                en: "A public post asked a simple question: Thailand had certified 30 smart cities. Which of them actually worked? No index. No scoring. Just the question, which proved enough to start a serious conversation.",
-                th: "โพสต์สาธารณะตั้งคำถามง่ายๆ ว่า ไทยรับรองเมืองอัจฉริยะ 30 แห่งแล้ว มีกี่แห่งที่เดินจริง? ยังไม่มีดัชนี ยังไม่มีคะแนน มีเพียงคำถาม ซึ่งเพียงพอที่จะเริ่มบทสนทนาที่จริงจัง",
-                zh: "一篇公开帖提出了一个简单问题：泰国已认证 30 座智慧城市，哪些真正运转？当时没有指数，也没有评分，只有这个问题，却足以开启一场严肃讨论。",
-              },
-            },
-            {
-              ver: "v1", date: "2025-Q1",
-              label: { en: "The prototype", th: "ต้นแบบ", zh: "原型" },
-              desc: {
-                en: "30 cities, hand-collected data from public sources, 3 rough pillars, no confidence model. Built to prove the idea was worth building properly. It was ugly. It worked.",
-                th: "30 เมือง รวบรวมข้อมูลมือจากแหล่งสาธารณะ 3 เสาหลักคร่าวๆ ไม่มีโมเดลความเชื่อมั่น สร้างขึ้นเพื่อพิสูจน์ว่าไอเดียนี้ควรสร้างอย่างจริงจัง มันน่าเกลียด แต่ใช้งานได้",
-                zh: "30 座城市，人工从公开来源收集数据，3 个粗略支柱，没有置信模型。建它是为了证明这个想法值得认真去做。丑，但能用。",
-              },
-            },
-            {
-              ver: "v2", date: "2025-Q3",
-              label: { en: "The Smart City Summit", th: "งาน Smart City Summit", zh: "智慧城市峰会版" },
-              desc: {
-                en: "174 cities tracked for the Thailand Smart City Summit 2026. Expanded to 5 pillars. First proper evidence registry. Still a slide deck, not a live index — but the structure started to hold.",
-                th: "ติดตาม 174 เมืองสำหรับงาน Thailand Smart City Summit 2026 ขยายเป็น 5 เสาหลัก ทะเบียนหลักฐานครั้งแรกที่จริงจัง ยังเป็นชุดสไลด์ ไม่ใช่ดัชนีสด — แต่โครงสร้างเริ่มแข็งแกร่งขึ้น",
-                zh: "为泰国智慧城市峰会 2026 追踪 174 座城市。扩展至 5 个支柱。首个正式的证据名录。仍是演示文稿，还不是实时指数——但结构开始站稳了。",
-              },
-            },
-            {
-              ver: "2026.04", date: "2026-04",
-              label: { en: "This version — SCITI 2026", th: "เวอร์ชันนี้ — SCITI 2026", zh: "当前版本——SCITI 2026" },
-              desc: {
-                en: `118 certified, promotion-zone and registered city records, seven research pillars and a confidence model. Certification entries draw on depa source documents. The platform supports comparison and source review; registration alone is not an assessment.`,
-                th: `แฟ้มเมืองรับรอง เขตส่งเสริม และเมืองที่ขึ้นทะเบียน 118 แห่ง เจ็ดเสาวิจัย และโมเดลความเชื่อมั่น ข้อมูลรับรองอ้างอิงเอกสารต้นทางของ depa แพลตฟอร์มช่วยเปรียบเทียบและตรวจแหล่งข้อมูล การขึ้นทะเบียนเพียงอย่างเดียวไม่ใช่การประเมิน`,
-                zh: `涵盖118个认证、推广及注册城市档案，采用七项研究维度与置信模型。认证资料依据depa原始文件。平台用于比较和来源核查；仅有注册并不等于完成评估。`,
-              },
-              current: true,
-            },
-          ].map(v => (
-            <div key={v.ver} className={`meth-version-item${v.current ? " meth-version-current" : ""}`}>
-              <div className="meth-version-tag">
-                <span className="meth-version-label">{v.ver}</span>
-                <span className="meth-version-date">{v.date}</span>
-              </div>
-              <div className="meth-version-body">
-                <p className="meth-version-name">{translate(locale, v.label)}</p>
-                <p className="meth-version-desc">{translate(locale, v.desc)}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ─── WHAT WE BUILT WITH ─── */}
-      <section className="section reveal visible">
-        <p className="eyebrow">{t("Stack", "เทคโนโลยีที่ใช้", "技术栈")}</p>
-        <h2>{t("What this is made of, for non-programmers", "สร้างจากอะไร สำหรับคนที่ไม่ได้เขียนโค้ด", "对非程序员说明：这是用什么做的")}</h2>
-        <div className="meth-stack-grid">
-          {[
-            {
-              name: "React 19 + TypeScript",
-              what: {
-                en: "The interface layer. Every city card, pillar bar, and ranking list you see is a React component — a reusable block of logic and display. TypeScript means the data shapes are enforced: if a city's score field contains text instead of a number, the build fails.",
-                th: "ชั้น interface ทุกการ์ดเมือง แถบเสาหลัก และลิสต์อันดับที่เห็นคือ React component — บล็อกของ logic และการแสดงผลที่ใช้ซ้ำได้ TypeScript ทำให้ตัวข้อมูลถูกบังคับ: ถ้าฟิลด์คะแนนของเมืองมีข้อความแทนตัวเลข build จะล้มเหลว",
-                zh: "界面层。你看到的每个城市卡片、支柱条形图和排名列表都是 React 组件——可复用的逻辑与显示块。TypeScript 强制数据格式：如果城市分数字段包含文本而非数字，构建就会失败。",
-              },
-            },
-            {
-              name: "Vite 6",
-              what: {
-                en: "The build tool. It bundles all the code and data into the fast static files you download when you open this page. The entire index deploys to GitHub Pages in under 2 seconds.",
-                th: "เครื่องมือ build รวม code และข้อมูลทั้งหมดเป็นไฟล์สถิตที่เร็ว ซึ่งคุณดาวน์โหลดเมื่อเปิดหน้านี้ ทั้งดัชนีดีพลอยไปที่ GitHub Pages ในเวลาไม่ถึง 2 วินาที",
-                zh: "构建工具。将所有代码和数据打包成快速的静态文件，就是你打开这个页面时下载的内容。整个索引部署到 GitHub Pages 不到 2 秒。",
-              },
-            },
-            {
-              name: t("Data as TypeScript constants", "ข้อมูลเป็น TypeScript constants", "数据作为 TypeScript 常量"),
-              what: {
-                en: "No database. City scores live inside the code itself, in `src/cityData.ts`. This sounds weird until you realize it means the data is version-controlled, auditable by anyone with a browser, and impossible to update without a commit. A commit is a permanent public record.",
-                th: "ไม่มีฐานข้อมูล คะแนนเมืองอยู่ใน code เอง ใน src/cityData.ts ฟังดูแปลก จนกว่าจะรู้ว่ามันหมายความว่าข้อมูลถูกควบคุมเวอร์ชัน ตรวจสอบได้โดยใครก็ตามที่มี browser และอัปเดตไม่ได้โดยไม่มี commit commit คือบันทึกสาธารณะถาวร",
-                zh: "没有数据库。城市分数存在代码本身中，在 src/cityData.ts 里。这听起来奇怪，直到你意识到：这意味着数据有版本控制，任何有浏览器的人都可以审计，且不提交就无法更新。提交是永久的公开记录。",
-              },
-            },
-            {
-              name: "GitHub Pages + GitHub Actions",
-              what: {
-                en: "Every push to the main branch automatically deploys to the live URL. The CI pipeline builds the app, runs type checks, and publishes. No servers, no cloud bills, no DevOps team. Just a push.",
-                th: "ทุก push ไปที่ main branch จะ deploy ไปยัง URL สดโดยอัตโนมัติ CI pipeline build app รันการตรวจสอบ type และเผยแพร่ ไม่มีเซิร์ฟเวอร์ ไม่มีค่า cloud ไม่มีทีม DevOps แค่ push",
-                zh: "每次推送到主分支都会自动部署到实时 URL。CI 流水线构建应用、运行类型检查并发布。没有服务器，没有云账单，没有 DevOps 团队。只是一次推送。",
-              },
-            },
-            {
-              name: t("Zero CSS frameworks", "ไม่มี CSS framework", "零 CSS 框架"),
-              what: {
-                en: "No Tailwind, no Bootstrap, no shadcn. Every rule in `src/styles.css` was written by hand. Design tokens enforce zero border-radius, zero drop shadows, and a three-size typography rule site-wide — rules that an AI can accidentally break without a committed policy.",
-                th: "ไม่มี Tailwind ไม่มี Bootstrap ไม่มี shadcn ทุก rule ใน src/styles.css เขียนด้วยมือ Design tokens บังคับให้ border-radius เป็นศูนย์ drop shadows เป็นศูนย์ และกฎ typography 3 ขนาดทั่วทั้งเว็บ — กฎที่ AI อาจทำเสียโดยไม่ตั้งใจโดยไม่มีนโยบายที่บันทึกไว้",
-                zh: "没有 Tailwind，没有 Bootstrap，没有 shadcn。src/styles.css 中的每条规则都是手写的。设计令牌强制执行全站零 border-radius、零投影和三尺寸排版规则——这些规则在没有书面政策的情况下，AI 可能会不小心破坏。",
-              },
-            },
-          ].map(item => (
-            <div key={item.name} className="meth-stack-card">
-              <div className="meth-stack-name">{item.name}</div>
-              <p className="meth-stack-what">{translate(locale, item.what)}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ─── GITHUB + TRANSPARENCY ─── */}
-      <section className="section reveal visible meth-github-section">
-        <div className="meth-github-inner">
-          <div className="meth-github-text">
-            <p className="eyebrow">{t("Open source", "โอเพนซอร์ส", "开源")}</p>
-            <h2>{t("Everything is on GitHub", "ทุกอย่างอยู่บน GitHub", "一切都在 GitHub 上")}</h2>
-            <p>
-              {t(
-                "The city scores, the composite formula, the evidence registry, the CSS design tokens — all of it is public. You can read the commit history, file an issue if you find an error, or fork the whole thing and run it for your own city.",
-                "คะแนนเมือง สูตรคะแนนรวม ทะเบียนหลักฐาน design tokens ของ CSS — ทั้งหมดสาธารณะ คุณอ่านประวัติ commit ได้ เปิด issue ถ้าเจอข้อผิดพลาด หรือ fork ทั้งหมดและรันสำหรับเมืองของคุณเอง",
-                "城市分数、综合公式、证据名录、CSS 设计令牌——全部公开。你可以读取提交历史，发现错误时提交 issue，或者 fork 整个项目为自己的城市运行。",
-              )}
-            </p>
-            <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="meth-github-link">
-              {t("View repository →", "ดู repository →", "查看仓库 →")}
-            </a>
-          </div>
-          <div className="meth-github-mono">
-            <span className="meth-github-badge">github.com</span>
-            <div className="meth-github-repo">
-              <span className="meth-github-owner">Nonarkara</span>
-              <span className="meth-github-slash"> / </span>
-              <span className="meth-github-name">smart-city-thailand-index</span>
-            </div>
-            <div className="meth-github-files">
-              {["src/cityData.ts", "src/scoring.ts", "src/depaOfficialData.ts", "src/evidenceData.ts"].map(f => (
-                <div key={f} className="meth-github-file">— {f}</div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ─── DATA FLOW DIAGRAM (LAYPERSON) ─── */}
       <section className="section reveal visible">
         <p className="eyebrow">{t("How it works", "มันทำงานยังไง", "它是如何运作的")}</p>
@@ -952,6 +778,183 @@ export default function MethodologyPage({ locale, onNavigate }: Props) {
           </a>
         </div>
       </section>
+      <details className="research-depth">
+        <summary>{t("Project history and technical construction", "ประวัติโครงการและเทคโนโลยีที่ใช้", "项目沿革与技术实现")}</summary>
+      {/* ─── NAME ETYMOLOGY ─── */}
+      <section className="section meth-etymology reveal visible">
+        <div className="meth-etymology-block">
+          <div className="meth-etymology-row">
+            <span className="meth-ety-form">SCITI</span>
+            <span className="meth-ety-eq">=</span>
+            <span className="meth-ety-def">{t("Smart City Thailand Index", "ดัชนีเมืองอัจฉริยะไทย", "泰国智慧城市指数")}</span>
+          </div>
+          <div className="meth-etymology-row">
+            <span className="meth-ety-form"><span className="meth-ety-sma">Sma</span><span className="meth-ety-sciti">SCITI</span></span>
+            <span className="meth-ety-eq">=</span>
+            <span className="meth-ety-def">{t("Sma- (Smart) + SCITI — same index, compressed", "Sma- (Smart) + SCITI — ดัชนีเดิม ในรูปย่อ", "Sma-（Smart）+ SCITI——同一指数，压缩形式")}</span>
+          </div>
+          <div className="meth-etymology-row">
+            <span className="meth-ety-form meth-ety-samastiti">Samastiti</span>
+            <span className="meth-ety-eq">≈</span>
+            <span className="meth-ety-def">{t("สมาร์ทซิตี้ — Thai phonetic for Smart City · all three are one", "สมาร์ทซิตี้ — การออกเสียงภาษาไทยของ Smart City · ทั้งสามคือหนึ่ง", "สมาร์ทซิตี้——Smart City的泰语音译 · 三形同一")}</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── VERSION JOURNEY ─── */}
+      <section className="section reveal visible">
+        <p className="eyebrow">{t("Version history", "ประวัติเวอร์ชัน", "版本历史")}</p>
+        <h2>{t("From a public question to a city data platform", "จากคำถามสาธารณะสู่แพลตฟอร์มข้อมูลเมือง", "从一个公开问题到城市数据平台")}</h2>
+        <p className="section-intro" style={{ marginBottom: "1.5rem" }}>
+          {t(
+            "This is version 2026.04 — the fourth major iteration. Each version asked a harder question than the last.",
+            "นี่คือเวอร์ชัน 2026.04 — การปรับปรุงครั้งใหญ่ครั้งที่สี่ แต่ละเวอร์ชันตั้งคำถามที่ยากกว่าเดิม",
+            "这是 2026.04 版本——第四次重大迭代。每个版本都比上一个问了更难的问题。",
+          )}
+        </p>
+        <div className="meth-version-timeline">
+          {[
+            {
+              ver: "v0", date: "2024",
+              label: { en: "The provocation", th: "การตั้งคำถาม", zh: "一声质疑" },
+              desc: {
+                en: "A public post asked a simple question: Thailand had certified 30 smart cities. Which of them actually worked? No index. No scoring. Just the question, which proved enough to start a serious conversation.",
+                th: "โพสต์สาธารณะตั้งคำถามง่ายๆ ว่า ไทยรับรองเมืองอัจฉริยะ 30 แห่งแล้ว มีกี่แห่งที่เดินจริง? ยังไม่มีดัชนี ยังไม่มีคะแนน มีเพียงคำถาม ซึ่งเพียงพอที่จะเริ่มบทสนทนาที่จริงจัง",
+                zh: "一篇公开帖提出了一个简单问题：泰国已认证 30 座智慧城市，哪些真正运转？当时没有指数，也没有评分，只有这个问题，却足以开启一场严肃讨论。",
+              },
+            },
+            {
+              ver: "v1", date: "2025-Q1",
+              label: { en: "The prototype", th: "ต้นแบบ", zh: "原型" },
+              desc: {
+                en: "30 cities, hand-collected data from public sources, 3 rough pillars, no confidence model. Built to prove the idea was worth building properly. It was ugly. It worked.",
+                th: "30 เมือง รวบรวมข้อมูลมือจากแหล่งสาธารณะ 3 เสาหลักคร่าวๆ ไม่มีโมเดลความเชื่อมั่น สร้างขึ้นเพื่อพิสูจน์ว่าไอเดียนี้ควรสร้างอย่างจริงจัง มันน่าเกลียด แต่ใช้งานได้",
+                zh: "30 座城市，人工从公开来源收集数据，3 个粗略支柱，没有置信模型。建它是为了证明这个想法值得认真去做。丑，但能用。",
+              },
+            },
+            {
+              ver: "v2", date: "2025-Q3",
+              label: { en: "The Smart City Summit", th: "งาน Smart City Summit", zh: "智慧城市峰会版" },
+              desc: {
+                en: "174 cities tracked for the Thailand Smart City Summit 2026. Expanded to 5 pillars. First proper evidence registry. Still a slide deck, not a live index — but the structure started to hold.",
+                th: "ติดตาม 174 เมืองสำหรับงาน Thailand Smart City Summit 2026 ขยายเป็น 5 เสาหลัก ทะเบียนหลักฐานครั้งแรกที่จริงจัง ยังเป็นชุดสไลด์ ไม่ใช่ดัชนีสด — แต่โครงสร้างเริ่มแข็งแกร่งขึ้น",
+                zh: "为泰国智慧城市峰会 2026 追踪 174 座城市。扩展至 5 个支柱。首个正式的证据名录。仍是演示文稿，还不是实时指数——但结构开始站稳了。",
+              },
+            },
+            {
+              ver: "2026.04", date: "2026-04",
+              label: { en: "This version — SCITI 2026", th: "เวอร์ชันนี้ — SCITI 2026", zh: "当前版本——SCITI 2026" },
+              desc: {
+                en: `118 certified, promotion-zone and registered city records, seven research pillars and a confidence model. Certification entries draw on depa source documents. The platform supports comparison and source review; registration alone is not an assessment.`,
+                th: `แฟ้มเมืองรับรอง เขตส่งเสริม และเมืองที่ขึ้นทะเบียน 118 แห่ง เจ็ดเสาวิจัย และโมเดลความเชื่อมั่น ข้อมูลรับรองอ้างอิงเอกสารต้นทางของ depa แพลตฟอร์มช่วยเปรียบเทียบและตรวจแหล่งข้อมูล การขึ้นทะเบียนเพียงอย่างเดียวไม่ใช่การประเมิน`,
+                zh: `涵盖118个认证、推广及注册城市档案，采用七项研究维度与置信模型。认证资料依据depa原始文件。平台用于比较和来源核查；仅有注册并不等于完成评估。`,
+              },
+              current: true,
+            },
+          ].map(v => (
+            <div key={v.ver} className={`meth-version-item${v.current ? " meth-version-current" : ""}`}>
+              <div className="meth-version-tag">
+                <span className="meth-version-label">{v.ver}</span>
+                <span className="meth-version-date">{v.date}</span>
+              </div>
+              <div className="meth-version-body">
+                <p className="meth-version-name">{translate(locale, v.label)}</p>
+                <p className="meth-version-desc">{translate(locale, v.desc)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── WHAT WE BUILT WITH ─── */}
+      <section className="section reveal visible">
+        <p className="eyebrow">{t("Stack", "เทคโนโลยีที่ใช้", "技术栈")}</p>
+        <h2>{t("What this is made of, for non-programmers", "สร้างจากอะไร สำหรับคนที่ไม่ได้เขียนโค้ด", "对非程序员说明：这是用什么做的")}</h2>
+        <div className="meth-stack-grid">
+          {[
+            {
+              name: "React 19 + TypeScript",
+              what: {
+                en: "The interface layer. Every city card, pillar bar, and ranking list you see is a React component — a reusable block of logic and display. TypeScript means the data shapes are enforced: if a city's score field contains text instead of a number, the build fails.",
+                th: "ชั้น interface ทุกการ์ดเมือง แถบเสาหลัก และลิสต์อันดับที่เห็นคือ React component — บล็อกของ logic และการแสดงผลที่ใช้ซ้ำได้ TypeScript ทำให้ตัวข้อมูลถูกบังคับ: ถ้าฟิลด์คะแนนของเมืองมีข้อความแทนตัวเลข build จะล้มเหลว",
+                zh: "界面层。你看到的每个城市卡片、支柱条形图和排名列表都是 React 组件——可复用的逻辑与显示块。TypeScript 强制数据格式：如果城市分数字段包含文本而非数字，构建就会失败。",
+              },
+            },
+            {
+              name: "Vite 6",
+              what: {
+                en: "The build tool. It bundles all the code and data into the fast static files you download when you open this page. The entire index deploys to GitHub Pages in under 2 seconds.",
+                th: "เครื่องมือ build รวม code และข้อมูลทั้งหมดเป็นไฟล์สถิตที่เร็ว ซึ่งคุณดาวน์โหลดเมื่อเปิดหน้านี้ ทั้งดัชนีดีพลอยไปที่ GitHub Pages ในเวลาไม่ถึง 2 วินาที",
+                zh: "构建工具。将所有代码和数据打包成快速的静态文件，就是你打开这个页面时下载的内容。整个索引部署到 GitHub Pages 不到 2 秒。",
+              },
+            },
+            {
+              name: t("Data as TypeScript constants", "ข้อมูลเป็น TypeScript constants", "数据作为 TypeScript 常量"),
+              what: {
+                en: "No database. City scores live inside the code itself, in `src/cityData.ts`. This sounds weird until you realize it means the data is version-controlled, auditable by anyone with a browser, and impossible to update without a commit. A commit is a permanent public record.",
+                th: "ไม่มีฐานข้อมูล คะแนนเมืองอยู่ใน code เอง ใน src/cityData.ts ฟังดูแปลก จนกว่าจะรู้ว่ามันหมายความว่าข้อมูลถูกควบคุมเวอร์ชัน ตรวจสอบได้โดยใครก็ตามที่มี browser และอัปเดตไม่ได้โดยไม่มี commit commit คือบันทึกสาธารณะถาวร",
+                zh: "没有数据库。城市分数存在代码本身中，在 src/cityData.ts 里。这听起来奇怪，直到你意识到：这意味着数据有版本控制，任何有浏览器的人都可以审计，且不提交就无法更新。提交是永久的公开记录。",
+              },
+            },
+            {
+              name: "GitHub Pages + GitHub Actions",
+              what: {
+                en: "Every push to the main branch automatically deploys to the live URL. The CI pipeline builds the app, runs type checks, and publishes. No servers, no cloud bills, no DevOps team. Just a push.",
+                th: "ทุก push ไปที่ main branch จะ deploy ไปยัง URL สดโดยอัตโนมัติ CI pipeline build app รันการตรวจสอบ type และเผยแพร่ ไม่มีเซิร์ฟเวอร์ ไม่มีค่า cloud ไม่มีทีม DevOps แค่ push",
+                zh: "每次推送到主分支都会自动部署到实时 URL。CI 流水线构建应用、运行类型检查并发布。没有服务器，没有云账单，没有 DevOps 团队。只是一次推送。",
+              },
+            },
+            {
+              name: t("Zero CSS frameworks", "ไม่มี CSS framework", "零 CSS 框架"),
+              what: {
+                en: "No Tailwind, no Bootstrap, no shadcn. Every rule in `src/styles.css` was written by hand. Design tokens enforce zero border-radius, zero drop shadows, and a three-size typography rule site-wide — rules that an AI can accidentally break without a committed policy.",
+                th: "ไม่มี Tailwind ไม่มี Bootstrap ไม่มี shadcn ทุก rule ใน src/styles.css เขียนด้วยมือ Design tokens บังคับให้ border-radius เป็นศูนย์ drop shadows เป็นศูนย์ และกฎ typography 3 ขนาดทั่วทั้งเว็บ — กฎที่ AI อาจทำเสียโดยไม่ตั้งใจโดยไม่มีนโยบายที่บันทึกไว้",
+                zh: "没有 Tailwind，没有 Bootstrap，没有 shadcn。src/styles.css 中的每条规则都是手写的。设计令牌强制执行全站零 border-radius、零投影和三尺寸排版规则——这些规则在没有书面政策的情况下，AI 可能会不小心破坏。",
+              },
+            },
+          ].map(item => (
+            <div key={item.name} className="meth-stack-card">
+              <div className="meth-stack-name">{item.name}</div>
+              <p className="meth-stack-what">{translate(locale, item.what)}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── GITHUB + TRANSPARENCY ─── */}
+      <section className="section reveal visible meth-github-section">
+        <div className="meth-github-inner">
+          <div className="meth-github-text">
+            <p className="eyebrow">{t("Open source", "โอเพนซอร์ส", "开源")}</p>
+            <h2>{t("Everything is on GitHub", "ทุกอย่างอยู่บน GitHub", "一切都在 GitHub 上")}</h2>
+            <p>
+              {t(
+                "The city scores, the composite formula, the evidence registry, the CSS design tokens — all of it is public. You can read the commit history, file an issue if you find an error, or fork the whole thing and run it for your own city.",
+                "คะแนนเมือง สูตรคะแนนรวม ทะเบียนหลักฐาน design tokens ของ CSS — ทั้งหมดสาธารณะ คุณอ่านประวัติ commit ได้ เปิด issue ถ้าเจอข้อผิดพลาด หรือ fork ทั้งหมดและรันสำหรับเมืองของคุณเอง",
+                "城市分数、综合公式、证据名录、CSS 设计令牌——全部公开。你可以读取提交历史，发现错误时提交 issue，或者 fork 整个项目为自己的城市运行。",
+              )}
+            </p>
+            <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="meth-github-link">
+              {t("View repository →", "ดู repository →", "查看仓库 →")}
+            </a>
+          </div>
+          <div className="meth-github-mono">
+            <span className="meth-github-badge">github.com</span>
+            <div className="meth-github-repo">
+              <span className="meth-github-owner">Nonarkara</span>
+              <span className="meth-github-slash"> / </span>
+              <span className="meth-github-name">smart-city-thailand-index</span>
+            </div>
+            <div className="meth-github-files">
+              {["src/cityData.ts", "src/scoring.ts", "src/depaOfficialData.ts", "src/evidenceData.ts"].map(f => (
+                <div key={f} className="meth-github-file">— {f}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </details>
 
     </div>
   );

@@ -117,7 +117,6 @@ export default function HomePage({ locale, onNavigate }: Props) {
             style={{ objectPosition: heroAsset.objectPosition }}
           />
         </div>
-        <span className="hero-slide-label" aria-live="polite">{heroAsset.label}</span>
         <div className="cinematic-hero-overlay">
           <p className="cinematic-hero-eyebrow">
             SCITI 2026 — {t({ en: 'pronounced "City"', th: 'อ่านว่า "ซิตี้"', zh: '读作 "City"' })}
@@ -134,9 +133,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <button type="submit" aria-label={t({ en: "Search", th: "ค้นหา", zh: "搜索" })}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           </form>
           } />
+          <div className="home-photo-controls">
           <button type="button" className="home-next-photo" onClick={() => setHeroIndex(index => (index + 1) % HOME_HERO_ASSETS.length)}>
             {t({ en: "Next photo", th: "ภาพถัดไป", zh: "下一张照片" })} →
           </button>
+          <span className="hero-slide-label" aria-live="polite">{heroAsset.label}</span>
+          </div>
         </div>
       </section>
 

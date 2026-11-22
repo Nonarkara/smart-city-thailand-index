@@ -136,6 +136,14 @@ export default function TopbarNav({ locale, currentKind, currentCityId, onNaviga
     };
   }, [openGroup]);
 
+  // Closing the compact menu also closes its submenu. Otherwise returning
+  // to desktop reveals the last compact submenu over the page.
+  const [previousMobileOpen, setPreviousMobileOpen] = useState(mobileOpen);
+  if (mobileOpen !== previousMobileOpen) {
+    setPreviousMobileOpen(mobileOpen);
+    if (!mobileOpen) setOpenGroup(null);
+  }
+
   const [prevKind, setPrevKind] = useState(currentKind);
   if (currentKind !== prevKind) {
     setPrevKind(currentKind);

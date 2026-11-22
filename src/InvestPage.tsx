@@ -607,6 +607,8 @@ export default function InvestPage({ locale, onNavigate }: Props) {
 
       <InvestmentExplorer locale={locale} onNavigate={onNavigate} />
 
+      <details className="research-depth">
+        <summary>{translate(locale, { en: "Investment context and research", th: "บริบทการลงทุนและงานวิจัย", zh: "投资背景与研究" })}</summary>
       {/* ═══════════ SECTION 2: WHAT IS MONEYBALL ═══════════ */}
       <section className="section reveal visible" style={{ paddingTop: 0 }}>
         <div className="invest-ccdr-panel glass-card" style={{ border: "1px solid var(--border)", background: "var(--1)" }}>
@@ -938,11 +940,15 @@ export default function InvestPage({ locale, onNavigate }: Props) {
       </section>
 
       {/* ═══════════ 3.5. CITY-BY-CITY INVESTMENT LENS — ASEAN toolkit cross-reference ═══════════ */}
-      <InvestCityLens locale={locale} onNavigate={onNavigate} />
 
       {/* ═══════════ 4. CITY INVESTMENT DIRECTORY ═══════════ */}
+      </details>
+
+      <InvestCityLens locale={locale} onNavigate={onNavigate} />
       <InvestCityDirectory locale={locale} onNavigate={onNavigate} />
 
+      <details className="research-depth">
+        <summary>{translate(locale, { en: "Financing mechanisms and risk factors", th: "กลไกการเงินและปัจจัยเสี่ยง", zh: "融资机制与风险因素" })}</summary>
       {/* ═══════════ 5. FINANCIAL MECHANISMS ═══════════ */}
       <section ref={mechRef} className={`section reveal stagger-4 ${mechVisible ? "visible" : ""}`}>
         <p className="eyebrow">{translate(locale, {
@@ -1053,6 +1059,8 @@ export default function InvestPage({ locale, onNavigate }: Props) {
           ))}
         </div>
       </section>
+
+      </details>
 
       {/* ═══════════ 7. DUE DILIGENCE CHECKLIST ═══════════ */}
       <section ref={ddRef} className={`section reveal stagger-1 ${ddVisible ? "visible" : ""}`}>

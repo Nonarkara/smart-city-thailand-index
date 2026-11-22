@@ -255,12 +255,30 @@ export default function App() {
   useEffect(() => {
     const bar = document.querySelector<HTMLElement>(".topbar");
     if (!bar) return;
-    const set = () => document.documentElement.style.setProperty("--topbar-h", `${bar.offsetHeight}px`);
+    const set = () => {
+      // Measure the expanded navigation before deciding whether it fits. Width
+      // breakpoints alone miss enlarged text and longer translated labels.
+      bar.classList.remove("topbar-compact");
+      const brand = bar.querySelector<HTMLElement>(".topbar-brand");
+      const links = bar.querySelector<HTMLElement>(".nav-links");
+      if (brand && links && links.offsetWidth && window.innerWidth > 900) {
+        const b = brand.getBoundingClientRect(), n = links.getBoundingClientRect();
+        const edge = bar.getBoundingClientRect().right - parseFloat(getComputedStyle(bar).paddingRight);
+        const name = brand.querySelector<HTMLElement>(".brand-name");
+        const nameStyle = name && getComputedStyle(name);
+        const line = nameStyle && (parseFloat(nameStyle.lineHeight) || parseFloat(nameStyle.fontSize) * 1.5);
+        const crushedBrand = brand.scrollWidth > brand.clientWidth + 1 || Boolean(name && line && name.offsetHeight > line * 2.1);
+        bar.classList.toggle("topbar-compact", crushedBrand || n.left < b.right + 8 || n.right > edge + 1);
+      }
+      document.documentElement.style.setProperty("--topbar-h", `${bar.offsetHeight}px`);
+    };
     set();
     if (typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(set);
     ro.observe(bar);
-    return () => ro.disconnect();
+    for (const el of bar.querySelectorAll(".topbar-brand, .nav-links")) ro.observe(el);
+    window.addEventListener("resize", set);
+    return () => { ro.disconnect(); window.removeEventListener("resize", set); };
   }, []);
 
   // Track visitor once per session (fire-and-forget to Google Sheets)

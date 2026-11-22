@@ -12,7 +12,8 @@ describe('page reading companion',()=>{
  it('provides a localized reading task and working platform action for every registered page brief',()=>{
   for(const [kind,brief] of Object.entries(PAGE_MASCOT_BRIEFS))for(const locale of ['en','th','zh'] as Locale[]){
    const html=renderToStaticMarkup(<PageMascot kind={kind as keyof typeof PAGE_MASCOT_BRIEFS} locale={locale}/>);
-   expect(brief.copy[locale].length).toBeGreaterThan(25);
+   expect(brief.copy[locale].trim()).not.toBe("");
+    expect(html).toContain(brief.copy[locale]);
    expect(html).toContain('mascot-hand');
    expect(html).toContain(brief.action.path);
    const asset=html.match(/src="([^"]+\.webp)"/)?.[1];

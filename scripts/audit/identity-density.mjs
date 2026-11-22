@@ -34,19 +34,22 @@ try {
   const checkFirstAction = async () => {
     const geometry = await page.evaluate(() => ({
       searchBottom: document.querySelector('.home-hero-search').getBoundingClientRect().bottom,
-      guideTop: document.querySelector('.home-city-guide-reading').getBoundingClientRect().top,
+      footingGap: Math.abs(document.querySelector('.home-city-guide-art').getBoundingClientRect().bottom-document.querySelector('.home-hero-search').getBoundingClientRect().top),
       expanded: document.querySelectorAll('.home-depth[open]').length,
     }));
     assert.ok(geometry.searchBottom <= 560, 'search left the first reading band');
-    assert.ok(geometry.searchBottom <= geometry.guideTop, 'intro precedes the city search');
+    assert.ok(geometry.footingGap <= 2, 'presenter detached from city search');
     assert.equal(geometry.expanded, 0, 'reference sections overwhelm the initial view');
   };
+  await page.evaluate(()=>document.fonts.ready);
   await checkFirstAction();
   const enlarge = await page.addStyleTag({content: 'html {font-size: 200% !important}'});
+  await page.waitForFunction(()=>parseFloat(getComputedStyle(document.querySelector('.home-city-guide-copy')).fontSize)>=28);
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   await checkFirstAction();
   await enlarge.evaluate(el => el.remove());
   const regress = await page.addStyleTag({content: '.dashboard-home .home-city-guide .home-hero-search {grid-row: 5 !important}'});
-  await assert.rejects(checkFirstAction, /intro precedes|search left/, 'old search order escaped detection');
+  await assert.rejects(checkFirstAction, /presenter detached|search left/, 'old search order escaped detection');
   await regress.evaluate(el => el.remove());
   for (const locale of ['en', 'th', 'zh']) {
     for (const width of [390, 730, 1024, 1280, 1440, 1980]) {
