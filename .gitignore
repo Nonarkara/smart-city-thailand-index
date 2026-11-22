@@ -28,3 +28,13 @@ cea-submission/gdrive-pack/
 
 # Cloudflare local deployment state
 .wrangler/
+
+# Generated Lighthouse CI reports (npm run perf:lighthouse)
+.lighthouseci/
+
+# Test and local tooling output
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+.vite/

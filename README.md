@@ -1,148 +1,64 @@
+<p align="center">
+  <a href="#english">English</a> · <a href="#thai">ภาษาไทย</a> · <a href="#chinese">简体中文</a>
+</p>
+
 # Smart City Thailand Index (SCITI)
 
 <p align="center">
-  <img src="docs/hero-banner.png" alt="Manga-style illustration of a researcher at a glass dashboard over a colour-coded map of Thailand. Scores and weights on the dashboard are artwork, not live SCITI telemetry." width="100%">
+  <img src="docs/hero-banner.png" alt="Illustration of a researcher at a glass dashboard over a map of Thailand. Figures on the glass are artwork, not live SCITI scores." width="100%">
 </p>
 
-<p align="center"><em>Studio banner for the public repo. The HUD on the glass — six dimension bars, a 74/100 gauge, "Data / Policy / Implementation / Outcome" weights — is illustration only. It is not live telemetry, and those labels and weights are not the published SCITI method.</em></p>
+<p align="center"><em>Studio drawing for this page. The gauges on the glass are not live telemetry and are not the published pillar weights.</em></p>
 
-Thailand's smart city index — **measuring reality, not paper plans.**
+Public web app for Thailand’s smart-city index. It records what is running in a city, not what a plan promises. The scoring line is inspired by SLIC (Smart Liveable Cities Index). This repository is not [SLIC Index V3](https://github.com/Nonarkara/SLIC-Index) and not the editorial city-narrative site [Nonarkara/sciti](https://github.com/Nonarkara/sciti).
 
-SCITI (pronounced "City") is a trilingual (EN / TH / **CN**) scorecard of Thai smart cities. [depa](https://www.depa.or.th) Smart City Local certification mainly evaluates **plans and readiness**. This index scores **what is actually running**: housing and flood exposure, jobs and income, road deaths and crime, health access, air and green cover, civic warmth, and whether digital systems change outcomes rather than headlines.
-
-> Scores are based on real-world outcomes, not plans or proposals.
-> A city that has a beautiful proposal but nothing built scores low.
-> A city where people actually live well scores high.
->
-> — `src/cityData.ts`
-
-**Live:** [sciti.nonarkara.org](https://sciti.nonarkara.org) · [smart-city-thailand-index.vercel.app](https://smart-city-thailand-index.vercel.app)
-
-No city lobbied for rank. No investor paid for placement. Corrections with checkable evidence are welcome at [data@slic-index.org](mailto:data@slic-index.org).
+**Live:** [nonarkara.github.io/smart-city-thailand-index](https://nonarkara.github.io/smart-city-thailand-index/) · [sciti.nonarkara.org](https://sciti.nonarkara.org) (`public/CNAME`)
 
 ---
 
-## What this is
+<a id="english"></a>
 
-SCITI is an **open assessment instrument** for Thailand's Smart City programme: seven weighted pillars, a deterministic composite, Alpha / Beta / Gamma delivery tiers, and a public audit trail. The FAQ in `src/KnowledgePage.tsx` describes it as an independent assessment tool — independent of the **certification decision**, not a claim that the work sits outside depa.
+## English
 
-It was developed by Dr. Non A., Senior Expert at depa's Smart City Promotion Department, Ministry of Digital Economy and Society (MDES), using the SLIC (Smart Liveable Cities Index) methodology. This repository is the source of the live site, the scoring code, and the encoded city dossiers.
+### What this is
 
-It is **not** a census of every Thai municipality. It is **not** a black-box vendor ranking. It is **not**, on the evidence in this repo, a gazetted national ranking (see [Ethical use](#ethical-use)).
+SCITI is a trilingual (English, Thai, Chinese — on screen the Chinese label is **CN**) React app: city dossiers, a map, rankings, comparisons, and a written method. depa’s Smart City Local certification reviews plans and readiness. This index asks what is operating. The knowledge-base copy in `src/KnowledgePage.tsx` describes the work as independent of the certification decision, and as work from depa’s Smart City Promotion Department, not as a body outside depa.
 
-### Relation to [SLIC-Index V3](https://github.com/Nonarkara/SLIC-Index)
+It is not a census of every Thai municipality, and this repository does not contain a gazette that makes a SCITI rank a statutory national ranking.
 
-SCITI is the Thailand-programme sibling of [SLIC Index V3](https://github.com/Nonarkara/SLIC-Index). Same research lineage, same demand that every score be traceable, same React 19 + TypeScript + Vite stack, same EN / TH / CN surface. They are **not** the same ranking.
+### Who it is for
 
-| | [SLIC-Index V3](https://github.com/Nonarkara/SLIC-Index) | SCITI (this repo) |
-|---|---|---|
-| Scope | Global livability ranking | Thailand Smart City programme |
-| Question | What is left after rent? | Is this "smart city" operational, or a paper plan? |
-| Pillars | 5 (Growth, Viability, Capability, Community, Creative) | 7 (see [How it works](#how-it-works)) |
-| Live | [slic.nonarkara.org](https://slic.nonarkara.org/) | [sciti.nonarkara.org](https://sciti.nonarkara.org) |
+People deciding where to live, study, work, visit, or invest, and anyone who needs the same public record before asking a city a sharper question. The about page states the limit in one line: a score is a research estimate, not a service guarantee and not investment advice. A city record may be a province, a municipality, a district, a campus, or a special zone. Those units are not interchangeable.
 
-The compare view (`src/ComparePage.tsx`) is adapted from SLIC V3's side-by-side page, scaled from five pillars to SCITI's seven.
+Corrections and data submissions go to [data@slic-index.org](mailto:data@slic-index.org) or [non.ar@depa.or.th](mailto:non.ar@depa.or.th), the addresses the interface already publishes.
 
----
+### How to read it
 
-## Philosophy
+| View | Path |
+|---|---|
+| Home | `/` |
+| City map | `/map` |
+| Rankings | `/rankings` |
+| Your city | `/discover` |
+| Compare | `/compare` |
+| City dossier | `/city/:id` |
+| Data and sources | `/references` |
+| Methodology | `/methodology` |
+| Knowledge base | `/knowledge` |
+| Evidence bingo | `/bingo` |
+| Provincial baseline | `/baseline` |
+| Mission | `/about` |
+| Manifesto | `/story` |
+| Nakhon Si Thammarat showcase | `/showcase` |
+| Programme | `/program` |
+| Partners | `/partners` |
+| Invest | `/invest` |
 
-**Seven pillars. One composite. Zero black boxes.** (`src/MethodologyPage.tsx`)
+The header groups these under Home, Cities, Method, Places & people, and Network (`src/TopbarNav.tsx`). Routing is custom (`src/routing.ts`). There is no React Router.
 
-City rankings usually hide the formula, sell a league table, and leave mayors arguing with a score they cannot reproduce. SCITI is built the other way around:
+### Run and build
 
-1. **Outcomes over paper.** Certification can acknowledge a plan. The index asks whether sensors run, data stays online, air is breathable, roads kill fewer people, and residents can afford to live there.
-2. **The math is public.** Pillar weights are a frozen vector in `src/types.ts`. The composite is ordinary weighted arithmetic in `src/scoring.ts`. Once pillar scores are fixed, tier assignment is automatic — no committee override, no hidden bonus, no paid placement.
-3. **Data lives in git.** Dossiers are TypeScript constants (`src/cityData.ts`, `src/registeredCityData.ts`), not an unreadable database dump. A score change is a commit. A commit is a public record.
-4. **Uncertainty is labelled.** Confidence (`high` / `medium` / `low`) is computed separately and does **not** secretly alter the composite. Registry-only rows stay low-confidence until city-level evidence exists.
-5. **Challenge is part of the method.** A low score is a workplan, not a verdict. Corrections that come with a public dataset, official document, working platform, or field record are in scope. Press releases are not.
-
-The banner art on this page is part of that honesty: a civic studio drawing of looking *through* a dashboard, not a screenshot of production telemetry.
-
----
-
-## Ethical use
-
-Treat SCITI as an **open, auditable assessment**. Do not treat it as an official government index unless you can cite a published instrument that says so.
-
-This repository documents:
-
-- **Who built it** — depa Smart City Promotion Department (site footer, JSON-LD in `index.html`, MIT copyright line).
-- **What it is not** — it is not depa Smart City Local certification. Certification evaluates boundaries, infrastructure plans, CDP design, projects, and participation models. SCITI scores operational evidence. A certified city can still be Gamma. (`src/KnowledgePage.tsx`)
-- **What this repo does not contain** — a ministerial regulation, Cabinet resolution, or depa gazette that designates SCITI as Thailand's statutory national city ranking. Until such a document is on the record, do not present a SCITI rank as government endorsement, as a substitute for certification, or as a funding decision on its own.
-
-Use it well:
-
-- **Cite the method.** Name SCITI, the method code (`SCITI-2026-METH`, version `2026.04` in `src/methodologySpec.ts`), the data cut-off, and the confidence label.
-- **Show the seven bars**, not only the composite. A single number hides trade-offs.
-- **Do not launder illustration as data.** Do not quote the banner HUD (six dimensions, 74/100, 15%×5 + 10%) as SCITI scores. The live pillars and weights are in the next section.
-- **Do not smear a city.** Gamma means evidence of delivery is thin, not that residents failed. The FAQ: a Gamma city is a signal that the next work should be specific.
-- **Do not imply paid placement.** No city, developer, vendor, or sponsor paid for inclusion, weighting, or editorial treatment in this index.
-- **Respect privacy.** The public dataset is city- and province-level. Do not attempt to re-identify individuals from this project.
-
-Corrections: [data@slic-index.org](mailto:data@slic-index.org) or via [sciti.nonarkara.org](https://sciti.nonarkara.org). Bring evidence another person can check.
-
----
-
-## How it works
-
-Two layers (`src/KnowledgePage.tsx`): research assigns each pillar a 0–100 score from public indicators, evidence items, and field verification; deterministic math then produces the composite, tier, and confidence label.
-
-Seven scoring pillars and fixed weights, from `PILLAR_WEIGHTS` in `src/types.ts` (they sum to 100). These are **not** the six HUD categories in the banner, and they are **not** depa's seven programme dimensions (`economy`, `energy`, `environment`, `governance`, `living`, `mobility`, `people` in `src/types.ts`).
-
-| Pillar | Weight | What the code scores |
-|--------|--------|----------------------|
-| Livability | 25% | Housing / infrastructure / daily life (75%) + GISTDA flood-frequency factor (25%) |
-| Economy | 20% | Jobs, GPP, growth, affordability |
-| Safety | 15% | Road fatality rate (30%) + crime exposure (40%) + disaster resilience (30%) |
-| Wellbeing | 15% | Healthcare, education, family-friendliness |
-| Environment | 10% | Air quality, green space, sustainability |
-| Hospitality | 10% | Culture, tourism, belonging |
-| Digital | 5% | Enabling tech — not a halo effect |
-
-Composite (`src/scoring.ts`, `formatCompositeFormula` in `src/methodologySpec.ts`):
-
-```
-Composite = (LIV×25 + ECO×20 + SAF×15 + WEL×15 + ENV×10 + HOS×10 + DIG×5) / 100
-```
-
-Tiers, from `TIER_THRESHOLDS` in `src/methodologySpec.ts`. Read them as **delivery tiers**, not prestige labels:
-
-- **Alpha** — composite ≥ 65 (stronger evidence of real operation)
-- **Beta** — composite ≥ 45 (mixed: some parts work, some still need proof)
-- **Gamma** — below 45 (mostly planned, lightly evidenced, or not yet producing public outcomes)
-
-Method code **SCITI-2026-METH**, version **2026.04**, data cut-off **2026-04-04** (`src/methodologySpec.ts`).
-
-Full write-up: [`/methodology`](https://sciti.nonarkara.org/methodology). Audit trail: [`/audit`](https://sciti.nonarkara.org/audit). Open dataset: [`/data/cities.json`](https://sciti.nonarkara.org/data/cities.json).
-
-### What is in the dataset (quoted from source)
-
-These are **programme and file counts from the code**, not a census of every Thai municipality.
-
-**depa national registry** (January 2026), from `src/claimRegistry.ts`:
-
-- 37 certified cities
-- 190 promotion cities
-- 227 submitted proposals
-
-**Records encoded in this repository:**
-
-- **37 certified** Smart City Local dossiers — `src/cityData.ts` (`certifiedCities`; batches 1–4)
-- **Selected promotion-zone dossiers** drawn from depa's 190 — `src/cityData.ts` (`promotionZoneCities`)
-- **69 registered entries** with default baseline scores and `dataConfidence: "low"` — `src/registeredCityData.ts` ("69 encoded entries (from depa's ~190-zone promotion pool)")
-
-`allCities` is the union of those three arrays (`src/cityData.ts`). The homepage counts cities at runtime from that union; it does not hard-code a total. Tests and the JSON-LD block in `index.html` currently describe the published set as **118** Thai smart cities.
-
-Evidence depth is **not equal**. This release is an index dataset, not the complete national proposal registry. Registry-only rows stay low-confidence until city-level evidence exists.
-
-National programme target cited in the claim registry (not SCITI's own sample size): at least 105 livable smart cities in the 2024–2027 plan period.
-
----
-
-## How to run or fork
-
-Requires **Node.js 20+** (GitHub Actions uses Node 20 for scheduled sync and Node 24 for Pages). The SPA serves the bundled city dataset locally; a backend is optional.
+Node.js 20 or newer. The weekly sync workflow uses Node 20. The GitHub Pages workflow uses Node 24.
 
 ```bash
 git clone https://github.com/Nonarkara/smart-city-thailand-index.git
@@ -151,51 +67,177 @@ npm install
 npm run dev
 ```
 
-Dev server: **http://localhost:5188** (`package.json` / Vite `--port 5188`).
+Dev server: <http://localhost:5188>.
 
 ```bash
-npm run test:run   # Vitest
-npm run lint       # ESLint
-npm run build      # tsc -b && vite build
+npm run test:run
+npm run lint
+npm run build
 ```
 
-`npm run build` is the CI type-check path (`tsc -b`, not `tsc --noEmit`). After a production build, `postbuild` writes `dist/data/cities.json` for crawlers and downloads.
+`npm run build` is `tsc -b && vite build`. The postbuild step writes the static API files, `cities.json`, Open Graph city pages, and the heritage register into `dist/`. Do not commit `dist/`, `node_modules`, or `.env`.
 
-To **fork** the method rather than restyle the UI, start with:
-
-| Path | Role |
-|------|------|
-| `src/types.ts` | Pillar weights, city types, locales (`en` / `th` / `zh`) |
-| `src/scoring.ts` | Composite, tiers, flood and road-safety blends |
-| `src/methodologySpec.ts` | Method code, cut-off, confidence |
-| `src/cityData.ts` | Certified + selected promotion dossiers |
-| `src/registeredCityData.ts` | Registry-only baseline rows |
-| `src/claimRegistry.ts` | Displayed national figures with sources |
-| `src/routing.ts` | Client router (no React Router) |
-| `src/cityCdp.ts` | Per-city dossiers, finance notes, CSV exports |
-
-Keep weights summing to 100, keep scores in 0–100, and keep every displayed national figure sourced. If you publish a fork, say so in the method code and do not present it as SCITI.
-
-Optional (live City Data Platform / API only — leave unset to read the repo dataset):
+Optional, only if you point the app at Supabase. Leave them unset to read the dataset in this repo.
 
 ```
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
 ```
 
-Do not commit keys or `.env` files. Optional backend setup is in `database/README.md`.
+`public/CNAME` is `sciti.nonarkara.org`. Project notes say that hostname is served from Cloudflare Pages, and that GitHub Actions also publishes a Pages copy from `main`. `vercel.json` is an SPA rewrite for a Vercel deploy. This page does not include deploy tokens.
 
-Stack: React 19, Vite 6, TypeScript 5.8. Interface languages: English, Thai, Chinese (on-screen abbreviation **CN**). Routing is custom (`src/routing.ts`); do not add React Router.
+### Data and method
 
-Production for [sciti.nonarkara.org](https://sciti.nonarkara.org) is Cloudflare Pages. GitHub Actions also deploys a Pages mirror on push to `main`. This README does not include deploy credentials.
+Seven pillars, fixed weights in `PILLAR_WEIGHTS` (`src/types.ts`): livability 25, economy 20, safety 15, wellbeing 15, environment 10, hospitality 10, digital 5. The composite is weighted arithmetic in `src/scoring.ts`. Method code **SCITI-2026-METH**, version **2026.04**, data cut-off **2026-04-04** (`src/methodologySpec.ts`). Delivery tiers there: Alpha at 65 and above, Beta at 45 and above, Gamma below 45.
+
+The source registry in `src/evidenceData.ts` names NSO, NESDC (GPP), the Pollution Control Department, the Royal Thai Police, the Ministry of Public Health, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, depa Smart City Office, City Data Platform Thailand, BOI, ONEP, the Royal Forest Department, field observation, and the Treasury Department. What each series actually covers, and where it does not, is on `/references` and in `src/claimRegistry.ts`. Dossiers are TypeScript in `src/cityData.ts` and `src/registeredCityData.ts`. The cited research snapshot is `src/researchSnapshot.json`, which points at one file under `public/research/`. `index.html` describes the published set as 118 city records.
+
+### License and credit
+
+Source code is [MIT](LICENSE). Copyright 2026 Digital Economy Promotion Agency (depa).
+
+Published index data is named as [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) in `index.html`. Photographs keep the license on each record (`src/photoCredits.ts`).
+
+Developed by **Dr Non Arkaraprasertkul** (นน อัครประเสริฐกุล), Smart City Promotion, depa, Ministry of Digital Economy and Society. The in-app knowledge base and the Hitachi Review citation in `src/ProgramPage.tsx` give the role as Senior Expert in Smart City Promotion.
 
 ---
 
-## License
+<a id="thai"></a>
 
-- **Source code** — [MIT](LICENSE) (copyright 2026 Digital Economy Promotion Agency (depa)).
-- **Published index data** (scores, rankings, generated `cities.json`) — [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as stated on the site footer and in `index.html` JSON-LD. Attribution: Smart City Thailand Index (SCITI), depa.
-- **Photographs** keep their original licenses (often CC BY / CC BY-SA); see `src/photoCredits.ts`.
-- **Hero banner** (`docs/hero-banner.png`) is studio illustration for this README, not a data product.
+## ภาษาไทย
 
-Fork, cite, teach, replicate, and critique. Keep the source visible, preserve the declared method, and do not imply paid placement or official ranking status this repository does not document.
+### นี่คืออะไร
+
+SCITI เป็นเว็บแอปดัชนีเมืองอัจฉริยะของไทย สามภาษา (อังกฤษ ไทย จีน — บนจอใช้ตัวย่อ **CN**) รวมแฟ้มเมือง แผนที่ อันดับ หน้าเปรียบเทียบ และระเบียบวิธีที่อ่านได้ การรับรอง Smart City Local ของ depa ดูแผนและความพร้อม ดัชนีนี้ถามว่าอะไรเดินอยู่จริง แนวคิดคะแนนมาจาก SLIC (Smart Liveable Cities Index) ตามข้อความในคลังความรู้
+
+ที่เก็บนี้ไม่ใช่ [SLIC Index V3](https://github.com/Nonarkara/SLIC-Index) และไม่ใช่เว็บเล่าเรื่องเมือง [Nonarkara/sciti](https://github.com/Nonarkara/sciti)
+
+คลังความรู้ระบุว่างานนี้เป็นของฝ่ายส่งเสริมเมืองอัจฉริยะ depa และแยกจากการตัดสินรับรอง ไม่ได้อ้างว่าอยู่นอก depa ในรีโปนี้ไม่มีราชกิจจานุเบกษาที่ทำให้ลำดับ SCITI เป็นดัชนีแห่งชาติตามกฎหมาย
+
+### ใครใช้
+
+คนที่กำลังเลือกเมืองเพื่ออยู่อาศัย เรียน ทำงาน เที่ยว หรือลงทุน และคนที่ต้องดูบันทึกสาธารณะชุดเดียวกันก่อนจะถามเมืองต่อ หน้าเกี่ยวกับแพลตฟอร์มเขียนไว้ตรงๆ ว่าคะแนนเป็นค่าประมาณจากงานวิจัย ไม่ใช่การรับประกันบริการ และไม่ใช่คำแนะนำการลงทุน ระเบียนหนึ่งรายการอาจเป็นจังหวัด เทศบาล เขต วิทยาเขต หรือเขตพิเศษ ใช้แทนกันไม่ได้
+
+ส่งข้อมูลหรือแก้ตัวเลขที่ตรวจได้ที่ [data@slic-index.org](mailto:data@slic-index.org) หรือ [non.ar@depa.or.th](mailto:non.ar@depa.or.th) ซึ่งเป็นที่อยู่ที่หน้าเว็บใช้อยู่แล้ว
+
+### อ่านดัชนียังไง
+
+หน้าแรก `/` · แผนที่ `/map` · อันดับ `/rankings` · เมืองคุณ `/discover` · เทียบเมือง `/compare` · แฟ้มเมือง `/city/:id` · ข้อมูลและแหล่งที่มา `/references` · ระเบียบวิธี `/methodology` · คลังความรู้ `/knowledge` · บิงโกหลักฐาน `/bingo` · ข้อมูลพื้นฐาน `/baseline` · พันธกิจ `/about` · ปฏิญญา `/story` · นครศรีต้นแบบ `/showcase` · โครงการ `/program` · พันธมิตร `/partners` · ลงทุน `/invest`
+
+เมนูบนรวมหน้าเหล่านี้เป็นห้ากลุ่มใน `src/TopbarNav.tsx` เส้นทางเขียนเองใน `src/routing.ts` ไม่ได้ใช้ React Router
+
+**ไซต์:** [nonarkara.github.io/smart-city-thailand-index](https://nonarkara.github.io/smart-city-thailand-index/) และ [sciti.nonarkara.org](https://sciti.nonarkara.org) (ค่าใน `public/CNAME`) บันทึกโปรเจกต์ระบุว่าโดเมนนี้เสิร์ฟจาก Cloudflare Pages และ GitHub Actions ยังเผยแพร่สำเนา Pages จากสาขา `main`
+
+### รันและบิลด์
+
+ใช้ Node.js 20 ขึ้นไป เวิร์กโฟลว์ซิงก์รายสัปดาห์ใช้ Node 20 เวิร์กโฟลว์ GitHub Pages ใช้ Node 24
+
+```bash
+git clone https://github.com/Nonarkara/smart-city-thailand-index.git
+cd smart-city-thailand-index
+npm install
+npm run dev
+```
+
+เซิร์ฟเวอร์พัฒนาอยู่ที่ <http://localhost:5188>
+
+```bash
+npm run test:run
+npm run lint
+npm run build
+```
+
+`npm run build` คือ `tsc -b && vite build` ขั้นตอน postbuild เขียนไฟล์ API คงที่ `cities.json` หน้า Open Graph ของแต่ละเมือง และทะเบียนภาพมรดก ลงใน `dist/` อย่าคอมมิต `dist/` `node_modules` หรือ `.env`
+
+ถ้าจะชี้แอปไปที่ Supabase ค่อยใส่สองตัวนี้ ไม่ใส่ก็อ่านชุดข้อมูลในรีโป
+
+```
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+```
+
+`vercel.json` เป็นกฎ rewrite ของ SPA สำหรับการดีพลอยบน Vercel หน้านี้ไม่มีโทเคนสำหรับดีพลอย
+
+### ข้อมูลและระเบียบวิธี
+
+เสาหลักเจ็ดเสา น้ำหนักคงที่ใน `PILLAR_WEIGHTS` (`src/types.ts`): ความอยู่ได้ 25 เศรษฐกิจ 20 ความปลอดภัย 15 สุขภาวะ 15 สิ่งแวดล้อม 10 การต้อนรับ 10 ดิจิทัล 5 คะแนนรวมเป็นการถ่วงน้ำหนักธรรมดาใน `src/scoring.ts` รหัสวิธี **SCITI-2026-METH** เวอร์ชัน **2026.04** จุดตัดข้อมูล **2026-04-04** (`src/methodologySpec.ts`) ระดับการส่งมอบในไฟล์นั้น: Alpha ตั้งแต่ 65, Beta ตั้งแต่ 45, Gamma ต่ำกว่า 45
+
+ทะเบียนแหล่งใน `src/evidenceData.ts` ระบุ สสช., สศช. (GPP), กรมควบคุมมลพิษ, สำนักงานตำรวจแห่งชาติ, กระทรวงสาธารณสุข, GISTDA, Open-Meteo / Copernicus, World Bank Open Data, สำนักงานเมืองอัจฉริยะ depa, City Data Platform Thailand, BOI, สผ., กรมป่าไม้, การลงพื้นที่ และกรมธนารักษ์ ว่าแต่ละชุดคลุมถึงไหน ดูที่ `/references` และ `src/claimRegistry.ts` แฟ้มเมืองอยู่ใน `src/cityData.ts` กับ `src/registeredCityData.ts` สแนปช็อตวิจัยที่อ้างอิงอยู่ที่ `src/researchSnapshot.json` ซึ่งชี้ไปไฟล์เดียวใต้ `public/research/` `index.html` บรรยายชุดที่เผยแพร่เป็น 118 ระเบียน
+
+### สัญญาอนุญาตและเครดิต
+
+ซอร์สโค้ดเป็น [MIT](LICENSE) ลิขสิทธิ์ 2026 สำนักงานส่งเสริมเศรษฐกิจดิจิทัล (depa)
+
+ข้อมูลดัชนีที่เผยแพร่ระบุเป็น [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) ใน `index.html` ภาพถ่ายคงสัญญาอนุญาตของแต่ละรายการ (`src/photoCredits.ts`)
+
+พัฒนาโดย **ดร. นน อัครประเสริฐกุล** ฝ่ายส่งเสริมเมืองอัจฉริยะ depa กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม คลังความรู้ในแอปและบรรณานุกรม Hitachi Review ใน `src/ProgramPage.tsx` ระบุตำแหน่งเป็นผู้เชี่ยวชาญอาวุโสด้านการส่งเสริมเมืองอัจฉริยะ
+
+---
+
+<a id="chinese"></a>
+
+## 简体中文
+
+### 这是什么
+
+SCITI 是泰国智慧城市指数的网页应用，界面为英文、泰文和中文（屏幕上的中文缩写是 **CN**）。里面是城市档案、地图、排名、对比，以及写明的计算方法。depa 的 Smart City Local 认证看的是方案和准备程度；这个指数问的是城市里已经在运行的东西。计分思路来自 SLIC（Smart Liveable Cities Index），应用内的知识库原文如此。
+
+本仓库不是 [SLIC Index V3](https://github.com/Nonarkara/SLIC-Index)，也不是城市叙事站 [Nonarkara/sciti](https://github.com/Nonarkara/sciti)。知识库写明，这项工作独立于认证决定，同时属于 depa 智慧城市促进部门，并不自称站在 depa 之外。仓库里没有把 SCITI 名次定为法定国家排名的政府公报。
+
+### 给谁用
+
+给正在选择居住、学习、工作、旅行或投资地点的人，也给需要先看同一份公开记录、再向一座城市追问的人。关于页写得很直接：分数是研究估算，不是服务保证，也不是投资建议。一条城市记录可能是府、市镇、区、校园或特别区域，这些单位不能互相替换。
+
+可核对的更正和数据，寄到界面已经公开的 [data@slic-index.org](mailto:data@slic-index.org) 或 [non.ar@depa.or.th](mailto:non.ar@depa.or.th)。
+
+### 怎么读
+
+首页 `/` · 城市地图 `/map` · 排名 `/rankings` · 你的城市 `/discover` · 对比 `/compare` · 城市档案 `/city/:id` · 数据与来源 `/references` · 方法论 `/methodology` · 知识库 `/knowledge` · 证据宾果 `/bingo` · 省级基线 `/baseline` · 使命 `/about` · 宣言 `/story` · 洛坤样板 `/showcase` · 计划 `/program` · 合作伙伴 `/partners` · 投资 `/invest`
+
+顶栏把这些收成五组，见 `src/TopbarNav.tsx`。路由写在 `src/routing.ts`，没有使用 React Router。
+
+**站点：** [nonarkara.github.io/smart-city-thailand-index](https://nonarkara.github.io/smart-city-thailand-index/) 与 [sciti.nonarkara.org](https://sciti.nonarkara.org)（`public/CNAME`）。项目说明写明该域名由 Cloudflare Pages 提供，GitHub Actions 也会从 `main` 发布一份 Pages 副本。
+
+### 本地运行和构建
+
+需要 Node.js 20 或更高版本。每周同步工作流使用 Node 20，GitHub Pages 工作流使用 Node 24。
+
+```bash
+git clone https://github.com/Nonarkara/smart-city-thailand-index.git
+cd smart-city-thailand-index
+npm install
+npm run dev
+```
+
+开发服务器：<http://localhost:5188>
+
+```bash
+npm run test:run
+npm run lint
+npm run build
+```
+
+`npm run build` 即 `tsc -b && vite build`。postbuild 会把静态 API、`cities.json`、各城市的 Open Graph 页面和遗产图像登记写入 `dist/`。不要提交 `dist/`、`node_modules` 或 `.env`。
+
+只有在把应用指向 Supabase 时才需要下面两项。留空则读取仓库里的数据集。
+
+```
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+```
+
+`vercel.json` 是给 Vercel 部署用的 SPA 重写规则。本页不包含部署令牌。
+
+### 数据与方法
+
+七个支柱，权重固定在 `PILLAR_WEIGHTS`（`src/types.ts`）：宜居 25、经济 20、安全 15、福祉 15、环境 10、接待 10、数字 5。综合分是 `src/scoring.ts` 里的加权算术。方法编号 **SCITI-2026-METH**，版本 **2026.04**，数据截止 **2026-04-04**（`src/methodologySpec.ts`）。该文件中的交付层级：Alpha 为 65 及以上，Beta 为 45 及以上，Gamma 低于 45。
+
+`src/evidenceData.ts` 的来源登记包括泰国国家统计局、NESDC（府级生产总值）、污染控制局、泰国皇家警察、公共卫生部、GISTDA、Open-Meteo / Copernicus、世界银行公开数据、depa 智慧城市办公室、City Data Platform Thailand、BOI、ONEP、皇家林业局、实地观察，以及财政部。每一组数据覆盖到哪里、没有覆盖到哪里，写在 `/references` 和 `src/claimRegistry.ts`。城市档案在 `src/cityData.ts` 和 `src/registeredCityData.ts`。被引用的研究快照是 `src/researchSnapshot.json`，它指向 `public/research/` 下的一个文件。`index.html` 把已发布的集合写成 118 条城市记录。
+
+### 许可与署名
+
+源代码为 [MIT](LICENSE)。版权 2026 数字经济发展促进局（depa）。
+
+已发布的指数数据在 `index.html` 中标明为 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)。照片沿用各自记录上的许可（`src/photoCredits.ts`）。
+
+由 **Dr Non Arkaraprasertkul**（นน อัครประเสริฐกุล）开发，任职于数字经济与社会部 depa 智慧城市促进部门。应用内知识库以及 `src/ProgramPage.tsx` 中的 Hitachi Review 引文，将其职务写为智慧城市促进高级专家。
