@@ -127,7 +127,12 @@ try {
   await page.goto(origin + "/baseline");
   await page.locator("#baseline-q").waitFor();
   await page.locator(".baseline-filter-details > summary").click();
+  const rootPx = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize));
   const enlarged = await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
+  // Chromium can resolve an inline <style> load before the sheet changes used
+  // values. Measuring in that gap reads the unmutated page: the enlarged-text
+  // guard would pass at 16px, and the wall below would be reported missing.
+  await page.waitForFunction(base => parseFloat(getComputedStyle(document.documentElement).fontSize) >= base * 1.99, rootPx, { timeout: 5000 });
   const zoomGeometry = await page.evaluate(() => ({
     overflow: document.documentElement.scrollWidth - innerWidth,
     protrusions: [...document.querySelectorAll("body *")].filter(el => {
@@ -152,10 +157,11 @@ try {
   await page.goto(origin + "/baseline");
   await page.locator("#baseline-q").waitFor();
   const injected = await page.addStyleTag({ content: ".baseline-search { padding-top: 1000px !important; }" });
-  const displacedTop = await page.locator(".baseline-row-link").first().evaluate(async el => {
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    return el.getBoundingClientRect().top + scrollY;
-  });
+  await page.waitForFunction(() => {
+    const search = document.querySelector(".baseline-search");
+    return !!search && getComputedStyle(search).paddingTop === "1000px";
+  }, null, { timeout: 5000 });
+  const displacedTop = await page.locator(".baseline-row-link").first().evaluate(el => el.getBoundingClientRect().top + scrollY);
   check(displacedTop >= 900, `expanded-state guard missed the original displaced-result failure: ${displacedTop}`);
   await injected.evaluate(el => el.remove());
   if (failures.length) assert.fail(failures.join('\n'));
