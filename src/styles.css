@@ -4247,14 +4247,43 @@ h2, h3 { font-family: var(--font); }
   .podium-photo-img, .podium-photo-card-img { transition: none; }
 }
 @media (min-width: 769px) {
-  /* The side tiles are ~200px. The score stays on its own row so a long
-     Thai name keeps the width, and the caption padding is tight enough
-     that the photograph still shows above it. */
-  .podium-photo-card-overlay { padding: 1.3rem .5rem .4rem; }
-  .podium-photo-card-head { grid-template-columns: auto minmax(0, 1fr); row-gap: .1rem; }
-  .podium-photo-card .podium-rank { grid-area: 1 / 1; align-self: end; }
-  .podium-photo-card-score { grid-area: 1 / 2; justify-self: end; }
-  .podium-photo-card-name { grid-area: 2 / 1 / 3 / -1; }
+  /* Side tiles stay 155px. The caption is three tight lines — name,
+     then the score with one pillar, then the second pillar and the
+     cue — so the photograph keeps the top half. */
+  .podium-photo-card-overlay {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: baseline;
+    column-gap: .35rem;
+    row-gap: 0;
+    padding: .8rem .45rem .28rem;
+    background: linear-gradient(
+      rgba(18,17,15,0) 0,
+      rgba(18,17,15,.9) .64rem,
+      rgba(18,17,15,.94) 100%
+    );
+  }
+  .podium-photo-card-head { display: contents; }
+  .podium-photo-card-name { grid-column: 1 / -1; grid-row: 1; line-height: 1.15; }
+  .podium-photo-card .podium-rank { grid-column: 1; grid-row: 2; line-height: 1; }
+  .podium-photo-card-score { grid-column: 2; grid-row: 2; justify-self: start; font-size: var(--text-body); line-height: 1; }
+  .podium-photo-card-stats { grid-column: 3; grid-row: 2; margin: 0; justify-self: end; }
+  .podium-photo-card-foot {
+    grid-column: 1 / -1; grid-row: 3;
+    flex-wrap: nowrap; justify-content: flex-end; gap: .3rem; margin: 0;
+    letter-spacing: -.02em;
+  }
+  /* The desktop tile matches the Samyan frame, so a plain cover shows
+     the black sky. A wider frame crops onto the lit tower and the
+     green banner, the subject the phone crop already shows. */
+  .podium-photo-card[data-city="samyan"] .podium-photo-card-img {
+    width: 160%;
+    max-width: none;
+    object-position: center 58% !important;
+  }
+  .podium-photo-card[data-city="chiang-mai-old-town"] .podium-photo-card-img {
+    object-position: center 62% !important;
+  }
 }
 
 @media (max-width: 768px) {

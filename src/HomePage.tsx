@@ -277,7 +277,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
                     const cityStats = (["livability"] as const)
                       .map(pillar => `${PILLAR_LABELS[locale][pillar]} ${city.scores[pillar]}/100`);
                     return (
-                      <a key={city.id} className="podium-photo-card" href={toAppPath(`/city/${city.id}`)} onClick={event => openCity(event, city.id)}>
+                      <a key={city.id} data-city={city.id} className="podium-photo-card" href={toAppPath(`/city/${city.id}`)} onClick={event => openCity(event, city.id)}>
                         <ResponsiveImage
                           src={photo.src}
                           alt={getCityName(city, locale)}
