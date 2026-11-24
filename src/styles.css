@@ -4251,6 +4251,7 @@ h2, h3 { font-family: var(--font); }
      then the score with one pillar, then the second pillar and the
      cue — so the photograph keeps the top half. */
   .podium-photo-card-overlay {
+    position: static;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: baseline;
@@ -4266,8 +4267,28 @@ h2, h3 { font-family: var(--font); }
   .podium-photo-card-head { display: contents; }
   .podium-photo-card-name { grid-column: 1 / -1; grid-row: 1; line-height: 1.15; }
   .podium-photo-card .podium-rank { grid-column: 1; grid-row: 2; line-height: 1; }
-  .podium-photo-card-score { grid-column: 2; grid-row: 2; justify-self: start; font-size: var(--text-body); line-height: 1; }
-  .podium-photo-card-stats { grid-column: 3; grid-row: 2; margin: 0; justify-self: end; }
+  /* The score sits in the photograph's top-right, larger than the name.
+     A radial fade keeps the digits on a dark ground and dies out before
+     it becomes a box. It is out of the caption, so it cannot meet the pillar line. */
+  .podium-photo-card-score {
+    position: absolute;
+    top: .35rem;
+    right: .4rem;
+    z-index: 2;
+    font-size: 26px;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,.75);
+  }
+  .podium-photo-card-score::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -.22rem -.28rem -.36rem -.4rem;
+    background: rgba(18,17,15,.94);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 0 72%, transparent 100%);
+    mask-image: radial-gradient(ellipse at center, #000 0 72%, transparent 100%);
+  }
+  .podium-photo-card-stats { grid-column: 2 / -1; grid-row: 2; margin: 0; justify-self: end; }
   .podium-photo-card-foot {
     grid-column: 1 / -1; grid-row: 3;
     flex-wrap: nowrap; justify-content: flex-end; gap: .3rem; margin: 0;
@@ -4279,7 +4300,7 @@ h2, h3 { font-family: var(--font); }
   .podium-photo-card[data-city="samyan"] .podium-photo-card-img {
     width: 160%;
     max-width: none;
-    object-position: center 58% !important;
+    object-position: 34% 58% !important;
   }
   .podium-photo-card[data-city="chiang-mai-old-town"] .podium-photo-card-img {
     object-position: center 62% !important;
