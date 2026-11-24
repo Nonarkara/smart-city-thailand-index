@@ -14,7 +14,7 @@
     "cdp:export-seeds": "node scripts/export-city-cdp-seeds.mjs",
     "assets:prune-public": "node scripts/prune-public-assets.mjs",
     "assets:build-responsive": "node scripts/build-responsive-images.mjs",
-    "perf:lighthouse": "lhci autorun --config=./lighthouserc.json",
+    "perf:lighthouse": "npx --yes @lhci/cli@0.15.1 autorun --config=./lighthouserc.json",
     "check": "npm run lint && npm run test:run && npm run build",
     "cdpt": "bash scripts/cdpt.sh",
     "postbuild": "node scripts/generate-city-og-pages.mjs && node scripts/generate-cities-json.mjs && node scripts/generate-api-artifacts.mjs && node scripts/generate-heritage-register.mjs && node scripts/generate-municipal-context.mjs",
@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
-    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.61.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -49,7 +48,7 @@
     "postcss": "^8.5.28",
     "sharp": "^0.35.5",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.58.0",
+    "typescript-eslint": "^8.74.0",
     "vite": "^6.2.0",
     "vitest": "^4.1.2"
   }
