@@ -4104,47 +4104,49 @@ h2, h3 { font-family: var(--font); }
 /* ─── #1 Leader: Large photo card ─── */
 .podium-photo-leader {
   position: relative; overflow: hidden; cursor: pointer;
+  display: flex; flex-direction: column;
   width: 100%; text-align: left; min-height: 320px;
+  color: #fff; text-decoration: none;
   border-radius: var(--radius-sm);
-  transition: transform .25s var(--ease);
 }
 .podium-photo-leader picture,
 .podium-photo-card picture { display: block; width: 100%; height: 100%; }
-.podium-photo-leader:hover { transform: none; }
 .podium-photo-leader > picture,
 .podium-photo-card > picture {
   position: absolute; inset: 0; display: block;
 }
-.podium-photo-img {
+.podium-photo-img,
+.podium-photo-card-img {
   width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: filter .2s var(--ease);
 }
 .podium-photo-overlay {
   position: relative; z-index: 1;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  min-height: 320px; padding: 1.5rem;
-  /* The scrim used to start transparent and only darken toward the
-     bottom, so the rank and the score at the TOP of the card sat on
-     bare photograph: 1.08:1 and 1.91:1 against the lightest pixel
-     behind them. It now covers the card the way the city hero's does,
-     and the card's own picture stays legible through it. */
-  /* Three-band scrim. The photograph reads through the open middle
-     band; the top band carries the rank, name and score, and the bottom
-     band carries the stats and vibe. A per-element plate was tried and
-     measured at 2.38:1 / 3.09:1 / 4.36:1 on three elements — below their
-     WCAG floor — and it read as scattered dark boxes. A single scrim with
-     an open middle does both jobs without the chips. */
-  background: linear-gradient(
-    rgba(18,17,15,.86) 0%,
-    rgba(18,17,15,.86) 20%,
-    rgba(20,19,16,.30) 30%,
-    rgba(22,20,17,.22) 54%,
-    rgba(26,24,20,.86) 63%,
-    rgba(26,24,20,.92) 100%
-  );
+  display: flex; flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 320px; padding: 0;
+  /* The photograph was going black because this overlay painted
+     86–92% black across the whole card. The scrim now belongs to the
+     two text groups. The gap between them is the picture. */
+  background: none;
 }
 .podium-photo-top {
   display: flex; justify-content: space-between; align-items: flex-start;
   margin-bottom: auto;
+  padding: 1.15rem 1.25rem 1.25rem;
+  background: linear-gradient(
+    rgba(18,17,15,.94) 0%,
+    rgba(18,17,15,.9) calc(100% - 1rem),
+    rgba(18,17,15,0) 100%
+  );
+}
+.podium-photo-bottom {
+  padding: 1.25rem 1.25rem 1.05rem;
+  background: linear-gradient(
+    rgba(18,17,15,0) 0%,
+    rgba(18,17,15,.9) 1rem,
+    rgba(18,17,15,.94) 100%
+  );
 }
 .podium-photo-name {
   /* Was --text-display (32px) in an <h3>, the same size as the section <h2>
@@ -4161,7 +4163,7 @@ h2, h3 { font-family: var(--font); }
 }
 .podium-photo-scoreblock { text-align: right; }
 .podium-photo-stats {
-  display: flex; flex-wrap: wrap; gap: .2rem .8rem; margin: .5rem 0;
+  display: flex; flex-wrap: wrap; gap: .2rem .8rem; margin: .15rem 0 .35rem;
 }
 .podium-photo-stat {
   font: 500 var(--text-micro) var(--mono); color: rgba(255,255,255,.86);
@@ -4169,7 +4171,7 @@ h2, h3 { font-family: var(--font); }
 }
 .podium-photo-vibe {
   font: 600 var(--text-micro) var(--mono); color: var(--gold);
-  margin-bottom: .5rem;
+  margin-bottom: .35rem;
   text-shadow: 0 1px 3px rgba(0,0,0,.6);
 }
 .podium-photo-leader .podium-rank {
@@ -4186,32 +4188,74 @@ h2, h3 { font-family: var(--font); }
 }
 .podium-photo-card {
   position: relative; overflow: hidden; cursor: pointer;
+  display: flex; flex-direction: column; justify-content: flex-end;
   width: 100%; text-align: left; min-height: 155px;
+  color: #fff; text-decoration: none;
   border-radius: var(--radius-sm);
-  transition: transform .25s var(--ease);
-}
-.podium-photo-card:hover { transform: none; }
-.podium-photo-card-img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
 }
 .podium-photo-card-overlay {
   position: relative; z-index: 1;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  min-height: 155px; padding: .85rem;
-  /* Same three-band logic as the leader, compressed: the card is
-     short, so the open photographic band is only the top third and the
-     text stack is carried by the strong lower half. */
+  display: flex; flex-direction: column; gap: .12rem;
+  margin-top: auto;
+  padding: 1.35rem .9rem .65rem;
+  /* This gradient used to start at 72% and reach 92% at the bottom,
+     so it painted the photograph out. It now fades only through the
+     top padding; every glyph sits on the opaque band. */
   background: linear-gradient(
-    rgba(20,19,16,.72) 0%,
-    rgba(22,20,17,.86) 30%,
-    rgba(26,24,20,.92) 100%
+    rgba(18,17,15,0) 0,
+    rgba(18,17,15,.9) 1.15rem,
+    rgba(18,17,15,.94) 100%
   );
 }
+.podium-photo-card-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: .5rem;
+  align-items: end;
+}
 .podium-photo-card .podium-rank { font: 600 var(--text-micro) var(--mono); color: rgba(255,255,255,.92); text-shadow: 0 1px 3px rgba(0,0,0,.6); letter-spacing: .06em; }
-.podium-photo-card-name { font-size: var(--text-body); font-weight: 700; color: #fff; letter-spacing: -.02em; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
+.podium-photo-card-name {
+  min-width: 0;
+  font-size: var(--text-body); font-weight: 700; color: #fff;
+  letter-spacing: -.02em; line-height: 1.35;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
 .podium-photo-card-score { font: 700 var(--text-display) var(--mono); color: var(--gold); letter-spacing: -.03em; line-height: 1; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
-.podium-photo-card-stats { display: flex; flex-wrap: wrap; gap: .2rem; margin: .2rem 0; }
-.podium-photo-card-vibe { font: 600 var(--text-micro) var(--mono); }
+.podium-photo-card-stats { display: flex; flex-wrap: wrap; gap: .2rem; margin: 0; }
+.podium-photo-card-vibe { font: 600 var(--text-micro)/1.35 var(--mono); }
+.podium-photo-card-foot {
+  display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: baseline; gap: .15rem .6rem;
+}
+.podium-photo-cue {
+  font: 600 var(--text-micro)/1.35 var(--font);
+  color: #fff;
+  white-space: nowrap;
+}
+.podium-photo-leader:hover .podium-photo-img,
+.podium-photo-card:hover .podium-photo-card-img { filter: brightness(1.08); }
+.podium-photo-leader:active .podium-photo-img,
+.podium-photo-card:active .podium-photo-card-img { filter: brightness(.92); }
+.podium-photo-leader:hover .podium-photo-cue,
+.podium-photo-card:hover .podium-photo-cue { text-decoration: underline; }
+.podium-photo-leader:focus-visible,
+.podium-photo-card:focus-visible {
+  outline: 2.5px solid var(--depa-yellow, #fff200);
+  outline-offset: -4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .podium-photo-img, .podium-photo-card-img { transition: none; }
+}
+@media (min-width: 769px) {
+  /* The side tiles are ~200px. The score stays on its own row so a long
+     Thai name keeps the width, and the caption padding is tight enough
+     that the photograph still shows above it. */
+  .podium-photo-card-overlay { padding: 1.3rem .5rem .4rem; }
+  .podium-photo-card-head { grid-template-columns: auto minmax(0, 1fr); row-gap: .1rem; }
+  .podium-photo-card .podium-rank { grid-area: 1 / 1; align-self: end; }
+  .podium-photo-card-score { grid-area: 1 / 2; justify-self: end; }
+  .podium-photo-card-name { grid-area: 2 / 1 / 3 / -1; }
+}
 
 @media (max-width: 768px) {
   .podium-photo-layout { grid-template-columns: 1fr; }
@@ -5764,9 +5808,11 @@ details[open] .kb-question::before { content: "−"; }
 
   .podium-photo-layout { grid-template-columns: 1fr; }
   .podium-photo-leader { min-height: 220px; }
-  .podium-photo-overlay { min-height: 220px; padding: .8rem; }
+  .podium-photo-overlay { min-height: 220px; padding: 0; }
+  .podium-photo-top { padding: .8rem .85rem 1.05rem; }
+  .podium-photo-bottom { padding: 1.05rem .85rem .75rem; }
   .podium-photo-grid { grid-template-columns: 1fr 1fr; }
-  .podium-photo-card { min-height: 120px; }
+  .podium-photo-card { min-height: 172px; }
 
   .bar-score-label { font-size: var(--text-micro); }
 
@@ -6588,7 +6634,7 @@ a.audit-kpi-source:hover { color: var(--alpha); text-decoration: underline; }
 /* P4: Mobile 640px gap */
 @media (max-width: 640px) {
   .podium-photo-grid { grid-template-columns: 1fr; }
-  .podium-photo-card { min-height: 140px; }
+  .podium-photo-card { min-height: 172px; }
   .city-quick-metrics { gap: .15rem; }
   .city-qm { flex: 1 1 28%; min-width: 0; }
   .program-concepts-grid { grid-template-columns: 1fr; }

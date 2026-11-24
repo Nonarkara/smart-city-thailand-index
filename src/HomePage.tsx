@@ -1,5 +1,5 @@
 import PageMascot from "./PageMascot";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type MouseEvent } from "react";
 import { useInView } from "./useInView";
 import NewsStrip from "./NewsStrip";
 import HomeDecisionGuide from "./HomeDecisionGuide";
@@ -100,6 +100,12 @@ export default function HomePage({ locale, onNavigate }: Props) {
   }, [cities]);
 
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
+  const detailCue = t({ en: "See details", th: "ดูรายละเอียด", zh: "查看详情" });
+  const openCity = (event: MouseEvent<HTMLAnchorElement>, cityId: string) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    event.preventDefault();
+    onNavigate(`/city/${cityId}`);
+  };
 
   return (
     <div className="dashboard-home">
@@ -234,7 +240,7 @@ export default function HomePage({ locale, onNavigate }: Props) {
             <section ref={podiumRef} className={`reveal stagger-2 ${podiumVisible ? "visible" : ""}`}>
               <p className="eyebrow">{t({ en: "Top five · curated scores", th: "ห้าอันดับแรก · คะแนนวิจัย", zh: "前五名 · 编辑研究评分" })}</p>
               <div className="podium-photo-layout">
-                <button type="button" className="podium-photo-leader" onClick={() => onNavigate(`/city/${leader.id}`)}>
+                <a className="podium-photo-leader" href={toAppPath(`/city/${leader.id}`)} onClick={event => openCity(event, leader.id)}>
                   <ResponsiveImage
                     src={leaderPhoto.src}
                     alt={getCityName(leader, locale)}
@@ -254,21 +260,24 @@ export default function HomePage({ locale, onNavigate }: Props) {
                         <div className="podium-photo-score">{leader.compositeScore.toFixed(1)}</div>
                       </div>
                     </div>
-                    <div className="podium-photo-stats">
-                      {leaderStats.map((stat, i) => (
-                        <span key={i} className="podium-photo-stat">{stat}</span>
-                      ))}
+                    <div className="podium-photo-bottom">
+                      <div className="podium-photo-stats">
+                        {leaderStats.map((stat, i) => (
+                          <span key={i} className="podium-photo-stat">{stat}</span>
+                        ))}
+                      </div>
+                      <div className="podium-photo-vibe">{getCityVibe(leader, locale)}</div>
+                      <span className="podium-photo-cue">{detailCue} →</span>
                     </div>
-                    <div className="podium-photo-vibe">{getCityVibe(leader, locale)}</div>
                   </div>
-                </button>
+                </a>
                 <div className="podium-photo-grid">
                   {top5.slice(1).map((city, i) => {
                     const photo = getCityPhotoAsset(city);
                     const cityStats = (["livability"] as const)
                       .map(pillar => `${PILLAR_LABELS[locale][pillar]} ${city.scores[pillar]}/100`);
                     return (
-                      <button key={city.id} type="button" className="podium-photo-card" onClick={() => onNavigate(`/city/${city.id}`)}>
+                      <a key={city.id} className="podium-photo-card" href={toAppPath(`/city/${city.id}`)} onClick={event => openCity(event, city.id)}>
                         <ResponsiveImage
                           src={photo.src}
                           alt={getCityName(city, locale)}
@@ -278,17 +287,22 @@ export default function HomePage({ locale, onNavigate }: Props) {
                           style={{ objectPosition: photo.objectPosition }}
                         />
                         <div className="podium-photo-card-overlay">
-                          <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
-                          <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
-                          <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
+                          <div className="podium-photo-card-head">
+                            <div className="podium-rank">{String(i + 2).padStart(2, "0")}</div>
+                            <h3 className="podium-photo-card-name">{getCityName(city, locale)}</h3>
+                            <div className="podium-photo-card-score">{city.compositeScore.toFixed(1)}</div>
+                          </div>
                           <div className="podium-photo-card-stats">
                             {cityStats.map((stat, j) => (
                               <span key={j} className="podium-photo-stat">{stat}</span>
                             ))}
                           </div>
-                          <span className={`podium-photo-card-vibe dashboard-ranking-vibe-${city.reality}`}>{getCityVibe(city, locale)}</span>
+                          <div className="podium-photo-card-foot">
+                            <span className={`podium-photo-card-vibe dashboard-ranking-vibe-${city.reality}`}>{getCityVibe(city, locale)}</span>
+                            <span className="podium-photo-cue">{detailCue} →</span>
+                          </div>
                         </div>
-                      </button>
+                      </a>
                     );
                   })}
                 </div>
