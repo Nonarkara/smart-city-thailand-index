@@ -55,4 +55,17 @@ describe("HomePage", () => {
       expect(image.getAttribute("src")).toBeTruthy();
     });
   });
+
+  it("links every podium card to that city's dossier", () => {
+    const onNavigate = vi.fn();
+    const { container } = render(<HomePage locale="th" onNavigate={onNavigate} />);
+    const top = [...allCities].sort((a, b) => b.compositeScore - a.compositeScore).slice(0, 5);
+    const cards = [...container.querySelectorAll<HTMLAnchorElement>(".podium-photo-leader, .podium-photo-card")];
+
+    expect(cards.map(card => card.tagName)).toEqual(["A", "A", "A", "A", "A"]);
+    expect(cards.map(card => card.getAttribute("href"))).toEqual(top.map(city => `/city/${city.id}`));
+    cards.forEach(card => expect(card).toHaveTextContent("ดูรายละเอียด"));
+    fireEvent.click(cards[1]);
+    expect(onNavigate).toHaveBeenCalledWith(`/city/${top[1].id}`);
+  });
 });
