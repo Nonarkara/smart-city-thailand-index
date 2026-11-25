@@ -18,9 +18,9 @@ const RUNG_LABELS: Record<LadderRungId, { en: string; th: string; zh: string }> 
   protection: { en: "Safety, health & nature", th: "ความปลอดภัย สุขภาพ ธรรมชาติ", zh: "安全、健康与自然" },
   belonging: { en: "Community & hospitality", th: "ชุมชนและอัธยาศัย", zh: "社区与待客之道" },
   livelihood: { en: "Jobs, land & BOI incentives", th: "งาน ที่ดิน สิทธิประโยชน์ BOI", zh: "就业、土地与BOI优惠" },
-  reach: { en: "Reach to regional hubs", th: "ระยะทางสู่ศูนย์กลางภูมิภาค", zh: "通达区域枢纽" },
+  reach: { en: "Straight-line distance to a hub", th: "ระยะทางเส้นตรงถึงศูนย์กลาง", zh: "到区域枢纽的直线距离" },
   convenience: { en: "Convenience of daily life", th: "ความสะดวกในชีวิตประจำวัน", zh: "日常生活便利度" },
-  affordability: { en: "Affordability", th: "ความคุ้มค่าค่าครองชีพ", zh: "生活可负担性" },
+  affordability: { en: "Household cost proxies", th: "ตัวชี้วัดแทนภาระค่าครองชีพ", zh: "家庭生活成本代理指标" },
   calm: { en: "Calm — low commute stress", th: "ความสงบ — ความเครียดจากการเดินทาง", zh: "宁静 — 低通勤压力" },
 };
 

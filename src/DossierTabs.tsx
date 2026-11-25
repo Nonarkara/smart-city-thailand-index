@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Locale } from "./types";
+
+const sectionIds = ["overview", "analysis", "execution", "evidence", "next-steps"];
 
 interface Props {
   labels: string[];
@@ -26,11 +28,30 @@ interface Props {
  * whole document, not the one tab that happened to be open.
  */
 export default function DossierTabs({ labels, children, locale }: Props) {
-  const [active, setActive] = useState(0);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(() => {
+    const section = new URLSearchParams(window.location.search).get("section");
+    return Math.max(0, sectionIds.findIndex(id => id === section));
+  });
+
+  useEffect(() => {
+    const section = new URLSearchParams(window.location.search).get("section");
+    if (sectionIds.some(id => id === section && id !== "overview")) {
+      listRef.current?.scrollIntoView?.({ block: "start" });
+    }
+  }, []);
+
+  const selectTab = (index: number) => {
+    setActive(index);
+    const url = new URL(window.location.href);
+    if (index === 0) url.searchParams.delete("section");
+    else url.searchParams.set("section", sectionIds[index]);
+    window.history.replaceState(window.history.state, "", url);
+  };
 
   return (
     <div className="dossier-tabs">
-      <div className="dossier-tab-list" role="tablist" aria-label={
+      <div ref={listRef} className="dossier-tab-list" role="tablist" aria-label={
         locale === "th" ? "ส่วนของแฟ้มข้อมูลเมือง" :
         locale === "zh" ? "城市档案分区" :
         "City dossier sections"
@@ -45,14 +66,14 @@ export default function DossierTabs({ labels, children, locale }: Props) {
             aria-controls={`dossier-panel-${i}`}
             tabIndex={active === i ? 0 : -1}
             className={`dossier-tab ${active === i ? "active" : ""}`}
-            onClick={() => setActive(i)}
+            onClick={() => selectTab(i)}
             onKeyDown={event => {
               const next = event.key === "ArrowRight" ? (i + 1) % labels.length
                 : event.key === "ArrowLeft" ? (i + labels.length - 1) % labels.length
                 : event.key === "Home" ? 0 : event.key === "End" ? labels.length - 1 : null;
               if (next === null) return;
               event.preventDefault();
-              setActive(next);
+              selectTab(next);
               document.getElementById(`dossier-tab-${next}`)?.focus();
             }}
           >

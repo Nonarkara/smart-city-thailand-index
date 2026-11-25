@@ -13,14 +13,28 @@ export default function CityEvidenceSummary({ city, locale }: { city: SmartCity;
   const measured = DEPA_DIMENSION_ORDER.filter(domain => result.dimensions[domain].contributions.some(row => row.raw !== null)).length;
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
   return <section className="section city-evidence-summary" aria-labelledby="city-evidence-title">
-    <h2 id="city-evidence-title">{t({ en: "What the baseline observes — and what it does not", th: "สิ่งที่ข้อมูลฐานบอกได้ — และสิ่งที่บอกไม่ได้", zh: "基线能说明什么 — 不能说明什么" })}</h2>
-    <p className="city-evidence-finding">{t({ en: `Baseline observations in ${measured} of 7 domains; local infrastructure adequacy remains unverified`, th: `มีข้อมูลฐาน ${measured} จาก 7 มิติ แต่ยังยืนยันความเพียงพอของโครงสร้างพื้นฐานในพื้นที่ไม่ได้`, zh: `${measured} 个领域有基线观测（共 7 个）；当地基础设施是否充足仍待核实` })}</p>
-    <p>{t({ en: "The livability assessment uses SCITI’s curated seven pillars. The depa baseline below measures a different set of seven domains. Available observations do not establish whether local infrastructure is sufficient.", th: "การประเมินความน่าอยู่ใช้เกณฑ์เจ็ดด้านที่ SCITI คัดสรร ส่วนข้อมูลฐานตามกรอบ depa ด้านล่างวัดเจ็ดมิติอีกชุดหนึ่ง การมีข้อมูลไม่ได้ยืนยันว่าโครงสร้างพื้นฐานในพื้นที่เพียงพอ", zh: "宜居评估采用 SCITI 策划的七项支柱。下方 depa 基线衡量另一组七个领域。有观测数据并不代表当地基础设施充足。" })}</p>
+    <h2 id="city-evidence-title">{t({ en: "What the baseline can tell you", th: "สิ่งที่ข้อมูลฐานบอกได้ — และสิ่งที่บอกไม่ได้", zh: "基线能说明什么 — 不能说明什么" })}</h2>
+    <p className="city-evidence-finding">{t({ en: `Baseline inputs in ${measured} of 7 domains; local infrastructure adequacy remains unverified`, th: `มีข้อมูลฐาน ${measured} จาก 7 มิติ แต่ยังยืนยันความเพียงพอของโครงสร้างพื้นฐานในพื้นที่ไม่ได้`, zh: `${measured} 个领域有基线输入（共 7 个）；当地基础设施是否充足仍待核实` })}</p>
+    <p>{t({ en: "The livability assessment uses SCITI’s curated seven pillars. The depa baseline below measures a different set of seven domains. Available inputs do not establish whether local infrastructure is sufficient.", th: "การประเมินความน่าอยู่ใช้เกณฑ์เจ็ดด้านที่ SCITI คัดสรร ส่วนข้อมูลฐานตามกรอบ depa ด้านล่างวัดเจ็ดมิติอีกชุดหนึ่ง การมีข้อมูลไม่ได้ยืนยันว่าโครงสร้างพื้นฐานในพื้นที่เพียงพอ", zh: "宜居评估采用 SCITI 策划的七项支柱。下方 depa 基线衡量另一组七个领域。有输入数据并不代表当地基础设施充足。" })}</p>
+    {city.status !== "registered" && result.composite !== null && (
+      <p>{t({
+        en: `Curated livability composite: ${city.compositeScore.toFixed(1)}/100. Seven-domain baseline: ${result.composite}/100. Each uses different inputs and weights.`,
+        th: `คะแนนรวมความน่าอยู่ที่คัดสรร ${city.compositeScore.toFixed(1)}/100 คะแนนฐานเจ็ดมิติ ${result.composite}/100 ทั้งสองใช้ข้อมูลและน้ำหนักต่างกัน`,
+        zh: `策划宜居综合分 ${city.compositeScore.toFixed(1)}/100，七领域基线分 ${result.composite}/100。两者使用不同的输入和权重。`,
+      })}</p>
+    )}
     <p className="city-baseline-disclosure">{t({ en: "City metrics are curated baseline inputs. Catalogue dates and confidence labels describe the baseline, not local observation or verification. Agency links identify source families; check the original series before citing a city value.", th: "ตัวเลขเมืองเป็นข้อมูลฐานที่คัดสรร วันที่ในทะเบียนและระดับความเชื่อมั่นอธิบายชุดข้อมูล ไม่ได้ยืนยันการสำรวจหรือตรวจสอบในพื้นที่ ลิงก์หน่วยงานระบุประเภทแหล่งข้อมูล ควรตรวจชุดข้อมูลต้นฉบับก่อนอ้างตัวเลขของเมือง", zh: "城市指标属于编辑整理的基线输入。目录日期和置信标签描述基线，不代表本地观测或核验。机构链接标识来源类别；引用城市数值前应核查原始序列。" })}</p>
+    {city.id === "phuket" && (
+      <p>{t({
+        en: "Before citing outcomes: the reported traffic improvement lacks a linked measurement report. The finance screen uses research proxies. Check project costs, demand and operating evidence before use.",
+        th: "ก่อนอ้างผลลัพธ์ รายงานการปรับปรุงจราจรไม่มีลิงก์รายงานการวัด คะแนนคัดกรองการเงินใช้ตัวชี้วัดแทน ควรตรวจต้นทุน อุปสงค์ และหลักฐานการดำเนินงานของโครงการก่อนใช้",
+        zh: "引用成效前，请注意交通改善说法缺少测量报告链接。融资筛选采用研究代理指标。使用前请核查项目成本、需求和运营证据。",
+      })}</p>
+    )}
     <details className="city-evidence-details"><summary>{t({ en: "Explore evidence across seven domains", th: "ดูหลักฐานทั้งเจ็ดมิติ", zh: "查看七个领域的证据" })}</summary>
-      <p>{t({ en: `Provincial context: ${getProvinceName(city, locale)}. Cities in the same province can share these observations. Counts below describe observed indicators, not operational services.`, th: `บริบทระดับจังหวัด: ${getProvinceName(city, locale)} เมืองในจังหวัดเดียวกันอาจใช้ข้อมูลชุดเดียวกัน จำนวนด้านล่างหมายถึงตัวชี้วัดที่มีข้อมูล ไม่ใช่จำนวนบริการที่เปิดใช้งาน`, zh: `省级背景：${getProvinceName(city, locale)}。同省城市可能共用这些观测值。以下数量是有数据的指标数，并非运营服务数。` })}</p>
+      <p>{t({ en: `Provincial context: ${getProvinceName(city, locale)}. Cities in the same province can share these inputs. The table counts available inputs, including estimates and derived values.`, th: `บริบทระดับจังหวัด: ${getProvinceName(city, locale)} เมืองในจังหวัดเดียวกันอาจใช้ข้อมูลชุดเดียวกัน ตารางนับตัวชี้วัดที่มีข้อมูล รวมค่าประมาณและค่าคำนวณ`, zh: `省级背景：${getProvinceName(city, locale)}。同省城市可能共用这些输入。下表统计有输入的指标，包括估算值与衍生值。` })}</p>
       <table><caption>{t({ en: "Evidence availability · not infrastructure adequacy", th: "ความพร้อมของข้อมูล · ไม่ใช่ความเพียงพอของโครงสร้างพื้นฐาน", zh: "证据可用性 · 非基础设施充足程度" })}</caption>
-        <thead><tr><th>{t({ en: "Domain", th: "มิติ", zh: "领域" })}</th><th>{t({ en: "Observed / selected", th: "มีข้อมูล / ที่เลือกวัด", zh: "已观测 / 已选指标" })}</th><th>{t({ en: "Provincial indicators", th: "ตัวชี้วัดระดับจังหวัด", zh: "省级指标" })}</th></tr></thead>
+        <thead><tr><th>{t({ en: "Domain", th: "มิติ", zh: "领域" })}</th><th>{t({ en: "Inputs / selected", th: "มีข้อมูล / ที่เลือกวัด", zh: "有输入 / 已选指标" })}</th><th>{t({ en: "Provincial indicators", th: "ตัวชี้วัดระดับจังหวัด", zh: "省级指标" })}</th></tr></thead>
         <tbody>{DEPA_DIMENSION_ORDER.map(domain => {
           const rows = result.dimensions[domain].contributions;
           const observed = rows.filter(row => row.raw !== null);

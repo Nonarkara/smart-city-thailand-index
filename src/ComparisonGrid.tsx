@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { groupCitiesByTier, sortCities } from "./cityCollections";
 import { getLocalizedList, getLocalizedText, resolveCityResearch } from "./cityResearch";
 import { useCitySummaries } from "./cityApi";
@@ -18,6 +18,7 @@ interface Props {
   locale: Locale;
   onNavigate: (path: string) => void;
   preselectedIds?: string[];
+  onSelectionChange?: (ids: string[]) => void;
 }
 
 type CompareSelection = {
@@ -298,21 +299,20 @@ function CompareTable({
   );
 }
 
-export default function ComparisonGrid({ locale, onNavigate, preselectedIds }: Props) {
+export default function ComparisonGrid({ locale, onNavigate, preselectedIds, onSelectionChange }: Props) {
   const { data } = useCitySummaries();
   const cities = useMemo(() => data.filter(city => city.status !== "registered"), [data]);
   const sortedCities = useMemo(() => sortCities(cities, "composite"), [cities]);
-  const validPreselected = useMemo(() => {
-    if (!preselectedIds || preselectedIds.length === 0) return null;
-    const known = new Set(cities.map(c => c.id));
-    const filtered = preselectedIds.filter(id => known.has(id)).slice(0, MAX_COMPARE);
-    return filtered.length > 0 ? filtered : null;
-  }, [preselectedIds, cities]);
-  const defaultIds = useMemo(
-    () => validPreselected ?? sortedCities.slice(0, MAX_COMPARE).map(city => city.id),
-    [validPreselected, sortedCities],
-  );
-  const [selection, setSelection] = useState<CompareSelection>({ ids: defaultIds, cursor: 0 });
+  const defaultIds = useMemo(() => sortedCities.slice(0, MAX_COMPARE).map(city => city.id), [sortedCities]);
+  const [selection, setSelection] = useState<CompareSelection>(() => {
+    const known = new Set(cities.map(city => city.id));
+    const ids = preselectedIds?.filter(id => known.has(id)).slice(0, MAX_COMPARE) ?? defaultIds;
+    return { ids: ids.length || onSelectionChange ? ids : defaultIds, cursor: 0 };
+  });
+
+  useEffect(() => {
+    onSelectionChange?.(selection.ids);
+  }, [onSelectionChange, selection.ids]);
 
   const groupedCities = useMemo(() => {
     const grouped = groupCitiesByTier(cities);

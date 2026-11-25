@@ -24,8 +24,12 @@ export default function CityResearchAppendix({city, locale}: {city: SmartCity; l
         const definition=INDICATORS.find(def=>def.id===row.id)!;
         const series=definition.provinceId?PROVINCE_BASELINE.find(series=>series.id===definition.provinceId):undefined;
         const period=series?`${series.year}${series.quarter?` Q${series.quarter}`:""}`:t(unknown);
+        const evidenceType = row.raw === null ? t({en:"Missing input",th:"ไม่มีข้อมูล",zh:"缺少输入"})
+          : definition.origin === "province" ? t({en:"Provincial series",th:"ข้อมูลระดับจังหวัด",zh:"省级数据"})
+          : definition.origin === "derived" ? t({en:"Derived indicator",th:"ตัวชี้วัดจากการคำนวณ",zh:"衍生指标"})
+          : t({en:"Curated city input",th:"ข้อมูลเมืองที่คัดสรร",zh:"编辑整理的城市输入"});
         return <article key={row.id} className="research-indicator"><h3>{row.label[locale]}</h3><dl>
-          <dt>{t({en:"Observation",th:"ค่าที่สำรวจ",zh:"观测值"})}</dt><dd>{row.raw===null?t({en:"Missing — not zero",th:"ไม่มีข้อมูล — ไม่ใช่ศูนย์",zh:"缺失，非零值"}):row.raw.toLocaleString(locale)} {series?.unit??""}</dd>
+          <dt>{evidenceType}</dt><dd>{row.raw===null?t({en:"Missing — not zero",th:"ไม่มีข้อมูล — ไม่ใช่ศูนย์",zh:"缺失，非零值"}):row.raw.toLocaleString(locale)} {series?.unit??""}</dd>
           <dt>{t({en:"Period / scope",th:"ช่วงเวลา / ขอบเขต",zh:"时期 / 范围"})}</dt><dd>{period} · {series?`${resolveProvince(city.province)} (${t({en:"province",th:"จังหวัด",zh:"省级"})})`:t({en:"See source note; local scope not established",th:"ดูหมายเหตุแหล่งข้อมูล ยังไม่ยืนยันขอบเขตระดับพื้นที่",zh:"参见来源说明；当地范围尚未确认"})}</dd>
           <dt>{t({en:"Source",th:"แหล่งข้อมูล",zh:"来源"})}</dt><dd>{series?<><a href={series.catalogUrl}>{series.publisher}</a> · {series.dataset} / {series.table}</>:row.source[locale]}</dd>
           <dt>{t({en:"Interpretation",th:"การตีความ",zh:"解读"})}</dt><dd>{row.relative?t({en:"Relative to the cohort; not a service standard",th:"เทียบกับกลุ่มข้อมูล ไม่ใช่มาตรฐานบริการ",zh:"相对群体位置，并非服务标准"}):t({en:"Indicator scale; not a local service verdict",th:"มาตราส่วนตัวชี้วัด ไม่ใช่ข้อสรุปบริการในพื้นที่",zh:"指标量表，并非当地服务结论"})}</dd>

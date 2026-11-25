@@ -159,6 +159,7 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
     return list;
   }, [cities, derivations, facets, picks, thresholds, query, locale]);
 
+  const scoredTotal = rows.filter(row => row.d.composite !== null).length;
   const passing = rows.filter(r => r.passes);
   const scored = passing.filter(r => r.d.composite != null).sort((a, b) => b.d.composite! - a.d.composite!);
   const unscored = passing.filter(r => r.d.composite == null);
@@ -197,16 +198,16 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
           </p>
           <h1 className="hero-title">
             {t(locale, {
-              en: "Seven dimensions, measured from source",
-              th: "เจ็ดมิติ วัดจากข้อมูลต้นทาง",
-              zh: "七大维度，取自源头数据",
+              en: "Seven smart-city dimensions",
+              th: "เจ็ดมิติเมืองอัจฉริยะ",
+              zh: "智慧城市七大维度",
             })}
           </h1>
           <p className="hero-strapline">
             {t(locale, {
-              en: `depa's seven smart-city dimensions, scored for ${scored.length} of ${cities.length} cities from data that already exists. Every score is computed from a named source — none is typed in.`,
-              th: `มิติเมืองอัจฉริยะ 7 ด้านของ depa คิดคะแนนให้ ${scored.length} จาก ${cities.length} เมือง จากข้อมูลที่มีอยู่แล้ว ทุกคะแนนคำนวณจากแหล่งข้อมูลที่ระบุชื่อ ไม่มีการใส่คะแนนด้วยมือ`,
-              zh: `depa 的七大智慧城市维度，基于既有数据为 ${cities.length} 座城市中的 ${scored.length} 座评分。每个分数都由具名来源计算得出，没有一个是手工填写的。`,
+              en: `Baseline scores for ${scoredTotal} of ${cities.length} cities use provincial data, curated estimates and derived inputs. Input coverage does not establish local service coverage.`,
+              th: `คะแนนฐาน ${scoredTotal} จาก ${cities.length} เมืองใช้ข้อมูลจังหวัด ค่าประมาณที่คัดสรร และค่าคำนวณ ความครบของข้อมูลไม่ได้ยืนยันความครอบคลุมบริการในพื้นที่`,
+              zh: `${cities.length} 座城市中有 ${scoredTotal} 座获得基线评分，采用省级数据、整理估计和衍生指标。输入数据的覆盖率并不代表当地服务覆盖率。`,
             })}
           </p>
 
@@ -308,9 +309,9 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
                   zh: "这些维度尚未核实到省级全国数据源。SCITI 不以主观判断评分，而是将其公开为空。因此综合分未覆盖全部已公布权重，并如实标注。",
                 })
               : t(locale, {
-                  en: "All seven dimensions are measured from a named source. Two measurements inside them are still absent, and both are named rather than approximated: there is no machine-readable province-level renewable-energy share, and Thailand publishes no province-level e-government index.",
-                  th: "ทั้งเจ็ดมิติวัดจากแหล่งข้อมูลที่ระบุชื่อแล้ว ภายในนั้นยังขาดตัวชี้วัดสองตัว ซึ่งถูกระบุไว้แทนการประมาณ ได้แก่ สัดส่วนพลังงานทดแทนระดับจังหวัดที่อ่านเป็นตัวเลขได้ และดัชนีรัฐบาลอิเล็กทรอนิกส์ระดับจังหวัดซึ่งประเทศไทยไม่มี",
-                  zh: "七个维度均已由具名来源测量。其中仍有两项测量缺失，均如实列明而非估算：没有机器可读的省级可再生能源占比，泰国也没有省级电子政务指数。",
+                  en: "The model has inputs across all seven dimensions. Two measurements inside them are still absent, and both are named rather than approximated: there is no machine-readable province-level renewable-energy share, and Thailand publishes no province-level e-government index.",
+                  th: "แบบจำลองมีข้อมูลครบทั้งเจ็ดมิติ ภายในนั้นยังขาดตัวชี้วัดสองตัว ซึ่งถูกระบุไว้แทนการประมาณ ได้แก่ สัดส่วนพลังงานทดแทนระดับจังหวัดที่อ่านเป็นตัวเลขได้ และดัชนีรัฐบาลอิเล็กทรอนิกส์ระดับจังหวัดซึ่งประเทศไทยไม่มี",
+                  zh: "模型的七个维度均有输入。其中仍有两项测量缺失，均如实列明而非估算：没有机器可读的省级可再生能源占比，泰国也没有省级电子政务指数。",
                 })}
           </p>
           <ul className="baseline-gap-list">
@@ -335,10 +336,32 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
       </details>
       <section className="baseline-search">
         <div className="section">
+          <p className="baseline-count" aria-live="polite">
+            {t(locale, {
+              en: `${passing.length} matching records · ${scored.length} with a baseline score${activeCount ? ` · ${activeCount} filter${activeCount > 1 ? "s" : ""} applied` : ""}`,
+              th: `ตรงเงื่อนไข ${passing.length} แฟ้ม · มีคะแนนฐาน ${scored.length}${activeCount ? ` · ใช้ตัวกรอง ${activeCount} รายการ` : ""}`,
+              zh: `${passing.length} 条匹配档案 · ${scored.length} 条有基线分数${activeCount ? ` · 已应用 ${activeCount} 个筛选` : ""}`,
+            })}
+          </p>
+        </div>
+      </section>
 
-
+      {/* ─── THE TABLE ────────────────────────────────────────────────── */}
+      <section className="baseline-table-section">
+        <div className="section">
+          <div className="baseline-table-header" aria-hidden="true">
+            <span className="baseline-th-rank">#</span>
+            <span className="baseline-th-city">{t(locale, { en: "City / Province", th: "เมือง / จังหวัด", zh: "城市 / 省份" })}</span>
+            <span className="baseline-th-dims">{t(locale, { en: "7 Smart Dimensions (Env · Mob · Liv · Peo · Eng · Eco · Gov)", th: "7 มิติอัจฉริยะ (สิ่งแวดล้อม · เดินทาง · อยู่ดี · พลเมือง · พลังงาน · เศรษฐกิจ · รัฐ)", zh: "7 大维度 (环境 · 出行 · 宜居 · 人才 · 能源 · 经济 · 治理)" })}</span>
+            <span className="baseline-th-score">{t(locale, { en: "Score · Cover", th: "คะแนน · ครอบคลุม", zh: "得分 · 覆盖" })}</span>
+          </div>
+          {visibleScored[0] && (
+            <ol className="baseline-table">
+              <BaselineRow index={1} row={visibleScored[0]} locale={locale} onNavigate={onNavigate} />
+            </ol>
+          )}
           <details className="baseline-filter-details">
-            <summary>{t(locale, { en: "Filter by indicator", th: "กรองตามตัวชี้วัด", zh: "按指标筛选" })}{activeCount > 0 ? ` · ${activeCount}` : ""}</summary>
+            <summary>{t(locale, { en: "Filter by indicator", th: "กรองตามตัวชี้วัด", zh: "按指标筛选" })}{Object.keys(picks).length > 0 ? ` · ${Object.keys(picks).length}` : ""}</summary>
           <div className="baseline-facets" role="group" aria-label={t(locale, { en: "Filter by indicator", th: "กรองตามตัวชี้วัด", zh: "按指标筛选" })}>
             {usableFacets.map(facet => (
               <div key={facet.id} className="baseline-facet">
@@ -386,30 +409,13 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
           </p>
 
           </details>
-          <p className="baseline-count">
-            {t(locale, {
-              en: `${scored.length} of ${cities.length} cities shown${activeCount ? ` · ${activeCount} filter${activeCount > 1 ? "s" : ""} applied` : ""}`,
-              th: `แสดง ${scored.length} จาก ${cities.length} เมือง${activeCount ? ` · ใช้ตัวกรอง ${activeCount} รายการ` : ""}`,
-              zh: `显示 ${cities.length} 座城市中的 ${scored.length} 座${activeCount ? ` · 已应用 ${activeCount} 个筛选` : ""}`,
-            })}
-          </p>
-        </div>
-      </section>
-
-      {/* ─── THE TABLE ────────────────────────────────────────────────── */}
-      <section className="baseline-table-section">
-        <div className="section">
-          <div className="baseline-table-header" aria-hidden="true">
-            <span className="baseline-th-rank">#</span>
-            <span className="baseline-th-city">{t(locale, { en: "City / Province", th: "เมือง / จังหวัด", zh: "城市 / 省份" })}</span>
-            <span className="baseline-th-dims">{t(locale, { en: "7 Smart Dimensions (Env · Mob · Liv · Peo · Eng · Eco · Gov)", th: "7 มิติอัจฉริยะ (สิ่งแวดล้อม · เดินทาง · อยู่ดี · พลเมือง · พลังงาน · เศรษฐกิจ · รัฐ)", zh: "7 大维度 (环境 · 出行 · 宜居 · 人才 · 能源 · 经济 · 治理)" })}</span>
-            <span className="baseline-th-score">{t(locale, { en: "Score · Cover", th: "คะแนน · ครอบคลุม", zh: "得分 · 覆盖" })}</span>
-          </div>
-          <ol className="baseline-table">
-            {visibleScored.map((row, idx) => (
-              <BaselineRow key={row.city.id} index={idx + 1} row={row} locale={locale} onNavigate={onNavigate} />
-            ))}
-          </ol>
+          {visibleScored.length > 1 && (
+            <ol className="baseline-table" start={2}>
+              {visibleScored.slice(1).map((row, idx) => (
+                <BaselineRow key={row.city.id} index={idx + 2} row={row} locale={locale} onNavigate={onNavigate} />
+              ))}
+            </ol>
+          )}
 
           {capped && scored.length > BASELINE_CAP && (
             <div className="baseline-list-more">
@@ -474,9 +480,9 @@ export default function BaselinePage({ locale, onNavigate }: Props) {
           </p>
           <h2 className="baseline-sources-title">
             {t(locale, {
-              en: `${SOURCE_REGISTRY.length} verified sources, ${indicators.length} scored indicators`,
-              th: `${SOURCE_REGISTRY.length} แหล่งข้อมูลที่ยืนยันแล้ว ${indicators.length} ตัวชี้วัดที่ให้คะแนน`,
-              zh: `${SOURCE_REGISTRY.length} 个已核实来源，${indicators.length} 个计分指标`,
+              en: `${SOURCE_REGISTRY.length} source links checked, ${indicators.length} scored indicators`,
+              th: `${SOURCE_REGISTRY.length} ลิงก์แหล่งข้อมูลที่ตรวจแล้ว ${indicators.length} ตัวชี้วัดที่ให้คะแนน`,
+              zh: `${SOURCE_REGISTRY.length} 个已检查的来源链接，${indicators.length} 个计分指标`,
             })}
           </h2>
           <ul className="baseline-source-list">
@@ -520,7 +526,7 @@ function BaselineRow({
         </span>
         <span className="baseline-row-score">
           {d.composite}
-          <span className="baseline-row-coverage" title={t(locale, { en: "share of the published weight measured from source", th: "สัดส่วนน้ำหนักที่ประกาศไว้ซึ่งวัดได้จากแหล่งข้อมูลจริง", zh: "已从来源实测的公布权重比例" })}>
+          <span className="baseline-row-coverage" title={t(locale, { en: "Share of model weight with an input value, including estimates", th: "สัดส่วนน้ำหนักที่มีข้อมูล รวมค่าประมาณ", zh: "有输入值的权重比例，包括估计值" })}>
             {Math.round(d.weightCoverage * 100)}%
           </span>
         </span>
@@ -533,9 +539,9 @@ function BaselineRow({
                 key={dim}
                 className={`baseline-row-dim${s == null ? " is-missing" : ""}`}
                 title={t(locale, {
-                  en: `${DIMENSION_LABELS[dim][locale]} — ${Math.round(cov * 100)}% of its published weight measured`,
-                  th: `${DIMENSION_LABELS[dim][locale]} — วัดได้ ${Math.round(cov * 100)}% ของน้ำหนักที่ประกาศไว้`,
-                  zh: `${DIMENSION_LABELS[dim][locale]} — 已实测其公布权重的 ${Math.round(cov * 100)}%`,
+                  en: `${DIMENSION_LABELS[dim][locale]} — ${Math.round(cov * 100)}% of its weight has an input`,
+                  th: `${DIMENSION_LABELS[dim][locale]} — มีข้อมูล ${Math.round(cov * 100)}% ของน้ำหนัก`,
+                  zh: `${DIMENSION_LABELS[dim][locale]} — ${Math.round(cov * 100)}% 权重有输入`,
                 })}
               >
                 {s == null ? "—" : Math.round(s)}

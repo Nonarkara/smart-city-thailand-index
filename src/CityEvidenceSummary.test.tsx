@@ -7,7 +7,7 @@ describe("city evidence interpretation", () => {
   it("does not equate populated baseline data with adequate services", () => {
     render(<CityEvidenceSummary city={allCities[0]} locale="en" />);
     expect(screen.getByText(/local infrastructure adequacy remains unverified/)).toBeTruthy();
-    expect(screen.getByText(/not operational services/)).toBeTruthy();
+    expect(screen.getByText(/including estimates and derived values/)).toBeTruthy();
     expect(screen.getAllByRole("row")).toHaveLength(8);
   });
   it("exposes shared provincial context for every city rather than calling it local evidence", () => {

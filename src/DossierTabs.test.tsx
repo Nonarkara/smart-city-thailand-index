@@ -2,7 +2,10 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, expect, it } from "vitest";
 import DossierTabs from "./DossierTabs";
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  window.history.replaceState(null, "", "/");
+});
 
 /**
  * The contract changed on purpose. The panels used to be mounted by a
@@ -53,4 +56,16 @@ it("supports arrow-key navigation with focus following the selected tab",()=>{
   fireEvent.keyDown(screen.getByRole("tab",{name:"Overview"}),{key:"ArrowRight"});
   expect(screen.getByRole("tab",{name:"Evidence"})).toHaveAttribute("aria-selected","true");
   expect(screen.getByRole("tab",{name:"Evidence"})).toHaveFocus();
+});
+
+
+it("opens the Evidence section from a copied dossier URL", () => {
+  window.history.replaceState(null, "", "/city/phuket/?section=evidence");
+  const labels = ["Overview", "Analysis", "Execution", "Evidence", "Next Steps"];
+  render(<DossierTabs locale="en" labels={labels}>
+    {labels.map(label => <p key={label}>{label} content</p>)}
+  </DossierTabs>);
+  expect(screen.getByRole("tab", { name: "Evidence" })).toHaveAttribute("aria-selected", "true");
+  fireEvent.click(screen.getByRole("tab", { name: "Overview" }));
+  expect(window.location.search).toBe("");
 });
