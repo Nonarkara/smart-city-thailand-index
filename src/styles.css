@@ -14819,3 +14819,16 @@ main .map-dash-header { padding-block: 8px 6px; }
   .dashboard-home .home-city-guide .home-city-guide-reading { grid-column: 1 / -1; grid-row: 3; padding-top: 8px; }
   .dashboard-home .home-city-guide .home-city-guide-actions { grid-column: 1 / -1; grid-row: 4; }
 }
+
+.dossier-tab-list { scroll-margin-top: var(--topbar-h, 52px); }
+
+/* The institutional bar is light in both themes. The open menu uses the page palette. */
+@media (min-width: 901px) {
+  [data-theme="dark"] .topbar:not(.topbar-compact) .nav-links { background: transparent; }
+}
+[data-theme="dark"] .topbar .nav-links-open :is(.nav-link, .theme-toggle) { color: var(--ink); }
+[data-theme="dark"] .map-dashboard .map-layer-btn.active { color: #79d0e4; }
+[data-theme="dark"] .topbar .nav-links-open .nav-link.active {
+  background: var(--ink);
+  color: var(--bg);
+}

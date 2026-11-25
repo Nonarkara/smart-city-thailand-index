@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import RankingsPage from "./RankingsPage";
 
 describe("RankingsPage", () => {
+  afterEach(() => window.history.replaceState(null, "", "/"));
   it("re-ranks the directory when a different preset lens is selected", async () => {
     const user = userEvent.setup();
     const { container } = render(<RankingsPage locale="en" onNavigate={vi.fn()} />);

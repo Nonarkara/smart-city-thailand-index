@@ -106,7 +106,7 @@ const L = {
   distanceToBangkok: { en: "Distance to Bangkok", th: "ระยะทางถึงกรุงเทพฯ", zh: "距曼谷距离" },
   distanceToPhuket: { en: "Distance to Phuket", th: "ระยะทางถึงภูเก็ต", zh: "距普吉距离" },
   digitalPillar: { en: "Digital pillar", th: "เสาหลักดิจิทัล", zh: "数字支柱" },
-  smartDimensions: { en: "Smart dimensions active", th: "มิติอัจฉริยะที่ใช้งาน", zh: "活跃智慧维度" },
+  smartDimensions: { en: "Smart dimensions in the plan", th: "มิติอัจฉริยะในแผน", zh: "规划中的智慧维度" },
   avgIncome: { en: "Avg. monthly income", th: "รายได้เฉลี่ยต่อเดือน", zh: "月均收入" },
   landPrice: { en: "Land price", th: "ราคาที่ดิน", zh: "地价" },
   costOfLiving: { en: "Cost-of-living index", th: "ดัชนีค่าครองชีพ", zh: "生活成本指数" },

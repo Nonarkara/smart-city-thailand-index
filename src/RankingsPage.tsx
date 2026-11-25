@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 
 // ComparisonGrid renders only after the user enters compare mode, and it
 // drags the full cityResearch corpus (~100 kB) with it — lazy keeps that
@@ -39,6 +39,28 @@ interface Props {
 type RegionFilter = SmartCity["region"] | "all";
 type TierFilter = CityTier | "all";
 type StatusFilter = SmartCity["status"] | "all";
+
+type ViewMode = "directory" | "compare" | "map" | "gallery";
+const viewModes: readonly ViewMode[] = ["directory", "compare", "map", "gallery"];
+const tiers: readonly TierFilter[] = ["all", "alpha", "beta", "gamma"];
+const statuses: readonly StatusFilter[] = ["all", "certified", "promotion"];
+const regions: readonly RegionFilter[] = ["all", "bangkok", "north", "northeast", "central", "east", "south"];
+
+function readOption<T extends string>(value: string | null, choices: readonly T[], fallback: T): T {
+  return choices.find(choice => choice === value) ?? fallback;
+}
+
+function replaceRankingUrl(values: Record<string, string>, ids: string[]) {
+  const url = new URL(window.location.href);
+  for (const [key, value] of Object.entries(values)) {
+    if (value) url.searchParams.set(key, value);
+    else url.searchParams.delete(key);
+  }
+  url.searchParams.delete("city");
+  for (const id of ids) url.searchParams.append("city", id);
+  if (url.href !== window.location.href) window.history.replaceState(window.history.state, "", url);
+}
+
 
 const PILLAR_ORDER: ScoringPillar[] = [
   "livability",
@@ -240,21 +262,37 @@ function MoneyballPicksStrip({
 
 export default function RankingsPage({ locale, onNavigate, guide }: Props) {
   const { data: cities } = useCitySummaries();
-  const [viewMode, setViewMode] = useState<"directory" | "compare" | "map" | "gallery">("directory");
-  const [lensId, setLensId] = useState<string>(() => getPresetById(new URLSearchParams(window.location.search).get("lens") ?? "balanced").id);
-  const [tierFilter, setTierFilter] = useState<TierFilter>("all");
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
-  const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
-  const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get("q") ?? "");
-  const [compareMode, setCompareMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [initial] = useState(() => new URLSearchParams(window.location.search));
+  const [viewMode, setViewMode] = useState<ViewMode>(() => readOption(initial.get("view"), viewModes, "directory"));
+  const [lensId, setLensId] = useState<string>(() => getPresetById(initial.get("lens") ?? "balanced").id);
+  const [tierFilter, setTierFilter] = useState<TierFilter>(() => readOption(initial.get("tier"), tiers, "all"));
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>(() => readOption(initial.get("status"), statuses, "all"));
+  const [regionFilter, setRegionFilter] = useState<RegionFilter>(() => readOption(initial.get("region"), regions, "all"));
+  const [query, setQuery] = useState(() => initial.get("q") ?? "");
+  const [compareMode, setCompareMode] = useState(() => initial.get("select") === "1");
+  const [selectedIds, setSelectedIds] = useState<string[]>(() =>
+    [...new Set(initial.getAll("city").filter(id => cities.some(city => city.id === id && city.status !== "registered")))].slice(0, 5),
+  );
   // Progressive disclosure. The directory renders all 118 cities by default,
   // which measured 16,294px tall at 1440 — a wall with no hierarchy: the eye
   // lands on row 01 and has no way to know a row 90 exists. Webflow rule 6
   // (white space) and rule 2 (hierarchy) both fail at that length. The first
   // RANK_CAP rows carry the story; the rest are one deliberate click away, and
   // the count is stated so the reader knows the wall is capped, not truncated.
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(() => initial.get("all") === "1");
+
+  useEffect(() => {
+    replaceRankingUrl({
+      q: query,
+      lens: lensId === "balanced" ? "" : lensId,
+      tier: tierFilter === "all" ? "" : tierFilter,
+      status: statusFilter === "all" ? "" : statusFilter,
+      region: regionFilter === "all" ? "" : regionFilter,
+      view: viewMode === "directory" ? "" : viewMode,
+      select: compareMode ? "1" : "",
+      all: showAll ? "1" : "",
+    }, selectedIds);
+  }, [query, lensId, tierFilter, statusFilter, regionFilter, viewMode, compareMode, showAll, selectedIds]);
 
   const t = (copy: { en: string; th: string; zh: string }) => translate(locale, copy);
   const lens = getPresetById(lensId);
@@ -688,7 +726,7 @@ export default function RankingsPage({ locale, onNavigate, guide }: Props) {
                 {t({ en: "← Back to directory", th: "← กลับสู่สารบบ", zh: "← 返回名录" })}
               </button>
               <Suspense fallback={<div className="loading" role="status" aria-live="polite" aria-label="Loading comparison" />}>
-                <ComparisonGrid locale={locale} onNavigate={onNavigate} preselectedIds={selectedIds} />
+                <ComparisonGrid locale={locale} preselectedIds={selectedIds} onSelectionChange={setSelectedIds} onNavigate={onNavigate} />
               </Suspense>
             </div>
           )}
