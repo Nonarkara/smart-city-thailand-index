@@ -14891,3 +14891,83 @@ main .map-dash-header { padding-block: 8px 6px; }
   .dashboard-home .home-city-guide .home-city-guide-reading { grid-column: 1 / -1; grid-row: 3; padding-top: 8px; }
   .dashboard-home .home-city-guide .home-city-guide-actions { grid-column: 1 / -1; grid-row: 4; }
 }
+
+/* Ranked photos own their space. The dark surface is limited to the caption. */
+.podium-photo-leader {
+  display: grid;
+  grid-template-rows: minmax(136px, 1fr) auto;
+}
+.podium-photo-leader > picture {
+  position: relative;
+  min-height: 0;
+}
+.podium-photo-leader > picture > img {
+  position: absolute;
+  inset: 0;
+}
+.podium-photo-leader > img { min-height: 0; }
+.podium-photo-leader .podium-photo-overlay {
+  display: block;
+  min-height: 0;
+  background: #12110f;
+  padding: 8px 12px;
+}
+.podium-photo-leader :is(.podium-photo-top, .podium-photo-bottom) {
+  background: none;
+  padding: 0;
+}
+.podium-photo-leader .podium-photo-top { margin-bottom: 4px; gap: 8px; }
+.podium-photo-leader .podium-photo-top > div:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.podium-photo-leader .podium-photo-score { font-size: var(--text-body); }
+.podium-photo-leader .podium-photo-bottom {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+}
+.podium-photo-leader .podium-photo-stats { width: 100%; margin: 0; }
+.podium-photo-leader .podium-photo-vibe { margin: 0; }
+
+@media (max-width: 768px) {
+  .podium-photo-card {
+    display: grid;
+    grid-template: minmax(100px, 1fr) auto / minmax(0, 1fr);
+    justify-content: stretch;
+  }
+  .podium-photo-card > picture {
+    position: relative;
+    min-height: 0;
+  }
+  .podium-photo-card > picture > img {
+    position: absolute;
+    inset: 0;
+  }
+  .podium-photo-card > img { min-height: 0; }
+  .podium-photo-card .podium-photo-card-overlay {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0 4px;
+    margin: 0;
+    padding: 4px 8px;
+    background: #12110f;
+  }
+  .podium-photo-card-head { display: contents; }
+  .podium-photo-card-name { grid-column: 1 / -1; grid-row: 1; }
+  .podium-photo-card .podium-rank { grid-column: 1; grid-row: 2; }
+  .podium-photo-card-score { grid-column: 2; grid-row: 2; font-size: var(--text-body); }
+  .podium-photo-card-stats { grid-column: 3; grid-row: 2; justify-self: end; }
+  .podium-photo-card-foot { grid-column: 1 / -1; grid-row: 3; }
+  .podium-photo-card[data-city="samyan"] .podium-photo-card-img { object-position: center 70% !important; }
+  .podium-photo-card[data-city="chiang-mai-old-town"] .podium-photo-card-img { object-position: center 64% !important; }
+}
+
+@media (min-width: 769px) {
+  /* Leave room for the two-line city name in the Thai fallback face. */
+  .podium-photo-card .podium-photo-card-name { line-height: 1.25; }
+  .podium-photo-card-overlay { padding-block: 3px; }
+}
