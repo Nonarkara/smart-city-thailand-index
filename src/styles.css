@@ -4118,7 +4118,6 @@ h2, h3 { font-family: var(--font); }
 .podium-photo-img,
 .podium-photo-card-img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: filter .2s var(--ease);
 }
 .podium-photo-overlay {
   position: relative; z-index: 1;
@@ -4232,10 +4231,6 @@ h2, h3 { font-family: var(--font); }
   color: #fff;
   white-space: nowrap;
 }
-.podium-photo-leader:hover .podium-photo-img,
-.podium-photo-card:hover .podium-photo-card-img { filter: brightness(1.08); }
-.podium-photo-leader:active .podium-photo-img,
-.podium-photo-card:active .podium-photo-card-img { filter: brightness(.92); }
 .podium-photo-leader:hover .podium-photo-cue,
 .podium-photo-card:hover .podium-photo-cue { text-decoration: underline; }
 .podium-photo-leader:focus-visible,
@@ -4243,68 +4238,49 @@ h2, h3 { font-family: var(--font); }
   outline: 2.5px solid var(--depa-yellow, #fff200);
   outline-offset: -4px;
 }
-@media (prefers-reduced-motion: reduce) {
-  .podium-photo-img, .podium-photo-card-img { transition: none; }
-}
 @media (min-width: 769px) {
-  /* Side tiles stay 155px. The caption is three tight lines — name,
-     then the score with one pillar, then the second pillar and the
-     cue — so the photograph keeps the top half. */
   .podium-photo-card-overlay {
-    position: static;
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: auto auto minmax(0, 1fr);
     align-items: baseline;
-    column-gap: .35rem;
-    row-gap: 0;
-    padding: .8rem .45rem .28rem;
-    background: linear-gradient(
-      rgba(18,17,15,0) 0,
-      rgba(18,17,15,.9) .64rem,
-      rgba(18,17,15,.94) 100%
-    );
+    gap: 0 4px;
+    padding: 4px 8px;
+    background: #12110f;
   }
+
   .podium-photo-card-head { display: contents; }
   .podium-photo-card-name { grid-column: 1 / -1; grid-row: 1; line-height: 1.15; }
   .podium-photo-card .podium-rank { grid-column: 1; grid-row: 2; line-height: 1; }
-  /* The score sits in the photograph's top-right, larger than the name.
-     A radial fade keeps the digits on a dark ground and dies out before
-     it becomes a box. It is out of the caption, so it cannot meet the pillar line. */
-  .podium-photo-card-score {
-    position: absolute;
-    top: .35rem;
-    right: .4rem;
-    z-index: 2;
-    font-size: var(--text-display);
-    line-height: 1;
-    text-shadow: 0 1px 2px rgba(0,0,0,.75);
-  }
-  .podium-photo-card-score::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: -.3rem -.35rem -.45rem -.5rem;
-    background: rgba(18,17,15,.94);
-    -webkit-mask-image: radial-gradient(ellipse at center, #000 0 78%, transparent 100%);
-    mask-image: radial-gradient(ellipse at center, #000 0 78%, transparent 100%);
-  }
-  .podium-photo-card-stats { grid-column: 2 / -1; grid-row: 2; margin: 0; justify-self: end; }
+  .podium-photo-card-score { grid-column: 2; grid-row: 2; font-size: var(--text-body); }
+  .podium-photo-card-stats { grid-column: 3; grid-row: 2; justify-self: end; }
   .podium-photo-card-foot {
-    grid-column: 1 / -1; grid-row: 3;
-    flex-wrap: nowrap; justify-content: flex-end; gap: .3rem; margin: 0;
-    letter-spacing: -.02em;
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-content: space-between;
+    gap: 0 4px;
   }
-  /* The desktop tile matches the Samyan frame, so a plain cover shows
-     the black sky. A wider frame crops onto the lit tower and the
-     green banner, the subject the phone crop already shows. */
+
+  /* The night photo reads by its lit station entrance and signage. */
   .podium-photo-card[data-city="samyan"] .podium-photo-card-img {
     width: 160%;
     max-width: none;
-    object-position: 34% 58% !important;
+    object-position: 34% 70% !important;
   }
+
   .podium-photo-card[data-city="chiang-mai-old-town"] .podium-photo-card-img {
     object-position: center 62% !important;
   }
+}
+
+/* Narrow tablets give the paired captions more width before the desktop
+   leader expands. This keeps the photos above the caption without taller tiles. */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .podium-photo-layout { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+}
+
+/* At tablet widths the side captions need the other half of the grid. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .podium-photo-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -14914,4 +14890,84 @@ main .map-dash-header { padding-block: 8px 6px; }
   .dashboard-home .home-city-guide .home-city-guide-visual { grid-column: 2; grid-row: 1; width: 108px; }
   .dashboard-home .home-city-guide .home-city-guide-reading { grid-column: 1 / -1; grid-row: 3; padding-top: 8px; }
   .dashboard-home .home-city-guide .home-city-guide-actions { grid-column: 1 / -1; grid-row: 4; }
+}
+
+/* Ranked photos own their space. The dark surface is limited to the caption. */
+.podium-photo-leader {
+  display: grid;
+  grid-template-rows: minmax(136px, 1fr) auto;
+}
+.podium-photo-leader > picture {
+  position: relative;
+  min-height: 0;
+}
+.podium-photo-leader > picture > img {
+  position: absolute;
+  inset: 0;
+}
+.podium-photo-leader > img { min-height: 0; }
+.podium-photo-leader .podium-photo-overlay {
+  display: block;
+  min-height: 0;
+  background: #12110f;
+  padding: 8px 12px;
+}
+.podium-photo-leader :is(.podium-photo-top, .podium-photo-bottom) {
+  background: none;
+  padding: 0;
+}
+.podium-photo-leader .podium-photo-top { margin-bottom: 4px; gap: 8px; }
+.podium-photo-leader .podium-photo-top > div:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.podium-photo-leader .podium-photo-score { font-size: var(--text-body); }
+.podium-photo-leader .podium-photo-bottom {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+}
+.podium-photo-leader .podium-photo-stats { width: 100%; margin: 0; }
+.podium-photo-leader .podium-photo-vibe { margin: 0; }
+
+@media (max-width: 768px) {
+  .podium-photo-card {
+    display: grid;
+    grid-template: minmax(100px, 1fr) auto / minmax(0, 1fr);
+    justify-content: stretch;
+  }
+  .podium-photo-card > picture {
+    position: relative;
+    min-height: 0;
+  }
+  .podium-photo-card > picture > img {
+    position: absolute;
+    inset: 0;
+  }
+  .podium-photo-card > img { min-height: 0; }
+  .podium-photo-card .podium-photo-card-overlay {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0 4px;
+    margin: 0;
+    padding: 4px 8px;
+    background: #12110f;
+  }
+  .podium-photo-card-head { display: contents; }
+  .podium-photo-card-name { grid-column: 1 / -1; grid-row: 1; }
+  .podium-photo-card .podium-rank { grid-column: 1; grid-row: 2; }
+  .podium-photo-card-score { grid-column: 2; grid-row: 2; font-size: var(--text-body); }
+  .podium-photo-card-stats { grid-column: 3; grid-row: 2; justify-self: end; }
+  .podium-photo-card-foot { grid-column: 1 / -1; grid-row: 3; }
+  .podium-photo-card[data-city="samyan"] .podium-photo-card-img { object-position: center 70% !important; }
+  .podium-photo-card[data-city="chiang-mai-old-town"] .podium-photo-card-img { object-position: center 64% !important; }
+}
+
+@media (min-width: 769px) {
+  /* Leave room for the two-line city name in the Thai fallback face. */
+  .podium-photo-card .podium-photo-card-name { line-height: 1.25; }
+  .podium-photo-card-overlay { padding-block: 3px; }
 }
